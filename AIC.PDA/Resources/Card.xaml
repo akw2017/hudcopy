@@ -1,0 +1,374 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AIC.PDA.Views"
+                    xmlns:localControls="clr-namespace:AIC.PDA.Controls"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Style x:Key="SensorAdapterButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <Grid x:Name="RootGrid">
+                            <localControls:SensorAdapterControl Style="{StaticResource SensorAdapterControlStyle1}"/>
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <!--<Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SensorAdapterControlStyle" TargetType="{x:Type localControls:SensorAdapterControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:SensorAdapterControl}">
+                    <Border Background="{TemplateBinding Background}"
+        					BorderBrush="{TemplateBinding BorderBrush}"
+        					BorderThickness="{TemplateBinding BorderThickness}" Margin="0">
+                        <Grid x:Name="RootGrid">
+                            <Ellipse x:Name="OutterEllipse" Margin="0" Stroke="White" StrokeThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="40"/>
+                            <Ellipse x:Name="InnerEllipse" Margin="0" Stroke="White" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30"/>
+                            <Ellipse x:Name="centerEllipse" Margin="0" Stroke="White"  Fill="White" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="5" Height="5"/>
+                            <Path x:Name="CyclePath" Data="M128.982,1 L128.982,82 M256.964,128.982 L175.964,128.982 M128.982,256.964 L128.982,175.964 M1.0000023,128.982 L82.000002,128.982" 
+                                  Height="40" Margin="0" Stretch="Fill" Stroke="#FFFDFDFD" StrokeThickness="2" RenderTransformOrigin="0.5,0.500000020821099" HorizontalAlignment="Center" Width="40" VerticalAlignment="Center">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="45"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="OutterEllipse" Property="Stroke" Value="Gray"/>
+                            <Setter TargetName="InnerEllipse" Property="Stroke" Value="Gray"/>
+                            <Setter TargetName="centerEllipse" Property="Stroke" Value="Gray"/>
+                            <Setter TargetName="centerEllipse" Property="Fill" Value="Gray"/>
+                            <Setter TargetName="CyclePath" Property="Stroke" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AnalogCardStyle" TargetType="{x:Type localControls:AnalogCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:AnalogCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="模拟输入" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DigitTachometerCardStyle" TargetType="{x:Type localControls:DigitTachometerCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:DigitTachometerCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="数字转速" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EddyCurrentDisplacementCardStyle" TargetType="{x:Type localControls:EddyCurrentDisplacementCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:EddyCurrentDisplacementCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="电涡流位移" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EddyCurrentKeyPhaseCardStyle" TargetType="{x:Type localControls:EddyCurrentKeyPhaseCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:EddyCurrentKeyPhaseCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="电涡流键相" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EddyCurrentTachometerCardStyle" TargetType="{x:Type localControls:EddyCurrentTachometerCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:EddyCurrentTachometerCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="电涡流转速" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="IEPECardStyle" TargetType="{x:Type localControls:IEPECardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:IEPECardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="IEPE" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="RelayCardStyle" TargetType="{x:Type localControls:RelayCardControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type localControls:RelayCardControl}">
+                    <materialDesign:ColorZone Mode="PrimaryDark" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="继电器" HorizontalAlignment="Center" FontSize="15" Margin="5"/>
+                            <ListBox ItemsSource="{Binding Channels}" Grid.Row="1" HorizontalAlignment="Center"
+                                     SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PDAEditorView}}, Path=DataContext.SelectedChannel}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <localControls:SensorAdapterControl Width="80" Height="80" Style="{StaticResource SensorAdapterControlStyle}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2"  Margin="0,5,0,5">
+                                <Run Text="{Binding CardId.IP,Mode=OneWay}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardId.CardNum,Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <DataTemplate x:Key="AnalogCardDataTemplate">
+        <Grid Width="110" Height="400">
+            <localControls:AnalogCardControl Style="{StaticResource AnalogCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="AnalogCardEditingDataTemplate">
+        <localControls:AnalogCardControl Style="{StaticResource AnalogCardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DigitTachometerCardDataTemplate">
+        <Grid Width="110" Height="400">
+            <localControls:DigitTachometerCardControl Style="{StaticResource DigitTachometerCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="DigitTachometerCardEditingDataTemplate">
+        <localControls:DigitTachometerCardControl Style="{StaticResource DigitTachometerCardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EddyCurrentDisplacementCardDataTemplate">
+        <Grid Width="110" Height="400">
+            <localControls:EddyCurrentDisplacementCardControl Style="{StaticResource EddyCurrentDisplacementCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="EddyCurrentDisplacementCardEditingDataTemplate">
+        <localControls:EddyCurrentDisplacementCardControl Style="{StaticResource EddyCurrentDisplacementCardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EddyCurrentKeyPhaseCardDataTemplate">
+        <Grid  Width="110" Height="400">
+            <localControls:EddyCurrentKeyPhaseCardControl Style="{StaticResource EddyCurrentKeyPhaseCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="EddyCurrentKeyPhaseCardEditingDataTemplate">
+        <localControls:EddyCurrentKeyPhaseCardControl Style="{StaticResource EddyCurrentKeyPhaseCardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EddyCurrentTachometerCardDataTemplate">
+        <Grid Width="110" Height="400">
+            <localControls:EddyCurrentTachometerCardControl Style="{StaticResource EddyCurrentTachometerCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="EddyCurrentTachometerCardEditingDataTemplate">
+        <localControls:EddyCurrentTachometerCardControl Style="{StaticResource EddyCurrentTachometerCardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="IEPECardDataTemplate">
+        <Grid Width="110" Height="400">
+            <localControls:IEPECardControl Style="{StaticResource IEPECardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="IEPECard4EditingDataTemplate">
+        <localControls:IEPECardControl Style="{StaticResource IEPECardStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RelayCardDataTemplate">
+        <Grid  Width="110" Height="400">
+            <localControls:RelayCardControl Style="{StaticResource RelayCardStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="RelayCardEditingDataTemplate">
+        <localControls:RelayCardControl Style="{StaticResource RelayCardStyle}"/>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48C5AC49-1DEE-41F1-8F9F-8E4BBEF00F19}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.Cloud.DataReplayer</RootNamespace>
+    <AssemblyName>AIC.Cloud.DataReplayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Arction.Direct3D9, Version=6.1.0.4001, Culture=neutral, PublicKeyToken=72f55fbd6901f0e5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\LightningChartUltimate\Arction.Direct3D9.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Arction.DirectX, Version=6.1.0.4001, Culture=neutral, PublicKeyToken=72f55fbd6901f0e5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\LightningChartUltimate\Arction.DirectX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Arction.WPF.LightningChartUltimate, Version=6.1.0.4001, Culture=neutral, PublicKeyToken=72f55fbd6901f0e5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\LightningChartUltimate\Arction.WPF.LightningChartUltimate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\log4net.2.0.2\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\MathNet.Numerics.Signed-3.2.0\MathNet.Numerics.Signed\Net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Composition">
+      <HintPath>..\..\..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm">
+      <HintPath>..\..\..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
+      <HintPath>..\..\..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
+      <HintPath>..\..\..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx">
+      <HintPath>..\..\..\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent">
+      <HintPath>..\..\..\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment">
+      <HintPath>..\..\..\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20612.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Rx-Core.2.1.30214.0\lib\Net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.0.20612.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Rx-Interfaces.2.1.30214.0\lib\Net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.0.20612.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Rx-Linq.2.1.30214.0\lib\Net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataReplayerPresentationModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\MultiSelectComboBox.xaml.cs">
+      <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SlidingListBox.cs" />
+    <Compile Include="ViewModels\AlarmPointTrendDataViewModel.cs" />
+    <Compile Include="ViewModels\AMSReplayDataViewModel.cs" />
+    <Compile Include="ViewModels\PowerSpectrumDensityDataViewModel.cs" />
+    <Compile Include="ViewModels\PowerSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\VibrationChannelDataChangedHandler.cs" />
+    <Compile Include="ViewModels\DivFreMeanModel.cs" />
+    <Compile Include="ViewModels\ChannelToken.cs" />
+    <Compile Include="ViewModels\DataReplayerViewModel.cs" />
+    <Compile Include="ViewModels\DivFreSeries.cs" />
+    <Compile Include="ViewModels\FrequencyDomainDataViewModel.cs" />
+    <Compile Include="ViewModels\HistoricalDataViewModel.cs" />
+    <Compile Include="ViewModels\OffDesignConditionDataViewModel.cs" />
+    <Compile Include="ViewModels\OffDesignConditionObject.cs" />
+    <Compile Include="ViewModels\OrderAnalysisDataViewModel.cs" />
+    <Compile Include="ViewModels\OrderAnalysisObject.cs" />
+    <Compile Include="ViewModels\OrthoDataViewModel.cs" />
+    <Compile Include="ViewModels\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\RPM3DSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\RPM3DSpectrumObject.cs" />
+    <Compile Include="ViewModels\SignalMonitorValue.cs" />
+    <Compile Include="ViewModels\Time3DSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\TimeDomainDataViewModel.cs" />
+    <Compile Include="Views\AlarmPointTrendDataView.xaml.cs">
+      <DependentUpon>AlarmPointTrendDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AMSReplayDataView.xaml.cs">
+      <DependentUpon>AMSReplayDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataReplayerView.xaml.cs">
+      <DependentUpon>DataReplayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DynamicFittingDataView.xaml.cs">
+      <DependentUpon>DynamicFittingDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrequencyDomainDataView.xaml.cs">
+      <DependentUpon>FrequencyDomainDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OffDesignConditionDataView.xaml.cs">
+      <DependentUpon>OffDesignConditionDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderAnalysisDataView.xaml.cs">
+      <DependentUpon>OrderAnalysisDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrthoDataView.xaml.cs">
+      <DependentUpon>OrthoDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerSpectrumDensityDataView.xaml.cs">
+      <DependentUpon>PowerSpectrumDensityDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProgressDialog.xaml.cs">
+      <DependentUpon>ProgressDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReplaySDK.cs" />
+    <Compile Include="Views\RPM3DSpectrumDataView.xaml.cs">
+      <DependentUpon>RPM3DSpectrumDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SnapshotView.xaml.cs">
+      <DependentUpon>SnapshotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Time3DSpectrumView.xaml.cs">
+      <DependentUpon>Time3DSpectrumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerSpectrumDataView.xaml.cs">
+      <DependentUpon>PowerSpectrumDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeDomainDataView.xaml.cs">
+      <DependentUpon>TimeDomainDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideoReplayerView.xaml.cs">
+      <DependentUpon>VideoReplayerView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AIC.DataModelProvider\AIC.DataModelProvider.csproj">
+      <Project>{46d068f1-a3fa-4b94-b9a2-967039691c00}</Project>
+      <Name>AIC.DataModelProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AICMathTools\AICMathTools.csproj">
+      <Project>{06b0d9a6-17b2-4fa2-8d2b-ef4593e3b4a3}</Project>
+      <Name>AICMathTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AICMath\AIC.Mathmatics.csproj">
+      <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
+      <Name>AIC.Mathmatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Common\AIC.Server.Common.csproj">
+      <Project>{d69018a4-498f-4193-9071-b25f5735a368}</Project>
+      <Name>AIC.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Contract\AIC.Server.Storage.Contract.csproj">
+      <Project>{ce9107d5-beaa-4652-938c-89e21c934d09}</Project>
+      <Name>AIC.Server.Storage.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Interface\AIC.Server.Storage.Interface.csproj">
+      <Project>{9b6e49a0-3d3d-40ce-924e-4f0e8c120e1d}</Project>
+      <Name>AIC.Server.Storage.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Video.Contract\AIC.Server.Video.Contract.csproj">
+      <Project>{3ffb53b8-3cdc-41ce-8d99-280d0ff9aa12}</Project>
+      <Name>AIC.Server.Video.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Video.Interface\AIC.Server.Video.Interface.csproj">
+      <Project>{dedf3abd-b8f7-49c4-b1ce-a4cd1d9ee6fb}</Project>
+      <Name>AIC.Server.Video.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Themes\AIC.Themes.csproj">
+      <Project>{3f41830e-d4ab-4e55-8430-e18376030831}</Project>
+      <Name>AIC.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Applications\AIC.Cloud.Applications.csproj">
+      <Project>{0e59acac-7327-42d3-9511-7bd47b080336}</Project>
+      <Name>AIC.Cloud.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Interface\AIC.Cloud.Interface.csproj">
+      <Project>{1ac8a824-7925-479d-9421-6d7c37e3799c}</Project>
+      <Name>AIC.Cloud.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Presentation\AIC.Cloud.Presentation.csproj">
+      <Project>{c161dc8e-522f-4373-b8d8-5bad236418f8}</Project>
+      <Name>AIC.Cloud.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemsFilter\ItemsFilter.csproj">
+      <Project>{aab57bb1-a448-457c-ad53-16b32a1c1f1d}</Project>
+      <Name>ItemsFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Database\AIC.Cloud.Business.DataProvider\AIC.Cloud.Database.csproj">
+      <Project>{4d5cc526-5963-427b-b326-0b502932225d}</Project>
+      <Name>AIC.Cloud.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Domain\AIC.Cloud.Domain\AIC.Cloud.Domain.csproj">
+      <Project>{7ebaabb6-997f-4f96-b1f8-0eb276381b0e}</Project>
+      <Name>AIC.Cloud.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Resources\SignalMonitorValueDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MultiSelectComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AlarmPointTrendDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AMSReplayDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DataReplayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DynamicFittingDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrequencyDomainDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OffDesignConditionDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrderAnalysisDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrthoDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PowerSpectrumDensityDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProgressDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RPM3DSpectrumDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SnapshotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Time3DSpectrumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PowerSpectrumDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TimeDomainDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VideoReplayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lock.png" />
+    <Resource Include="Images\play.png" />
+    <Resource Include="Images\TileHeight.png" />
+    <Resource Include="Images\TileWidth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Fitting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\XSize.png" />
+    <Resource Include="Images\YSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Resize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Align.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HorizontalAlign.png" />
+    <Resource Include="Images\VerticalAlign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Animation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SpeedDown.png" />
+    <Resource Include="Images\SpeedUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\band.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Screenshot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VData.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

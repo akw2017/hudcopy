@@ -1,0 +1,9 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\CitizenSoftwareLib.Common.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\CitizenSoftwareLib.Common.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\Crc32C.NET.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\Snappy.NET.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\Crc32C.NET.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Release\Snappy.NET.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Release\CitizenSoftwareLib.Common.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Release\CitizenSoftwareLib.Common.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Release\CitizenSoftwareLib.Common.pdb

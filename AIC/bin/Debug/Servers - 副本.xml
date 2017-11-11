@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Server id="0001">
+    <Name>航天智控监测技术研究院服务器</Name>
+    <IP>192.168.0.210</IP>
+    <Port>8888</Port>
+	  <Factory>航天智控监测技术研究院测试工厂</Factory>
+	  <Longitude>116.404</Longitude>
+	  <Latitude>39.915</Latitude>
+	  <IsLogin>0</IsLogin>
+	  <LoginResult></LoginResult>
+	  <Permission></Permission>
+  </Server>
+</Root>

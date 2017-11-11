@@ -1,0 +1,315 @@
+﻿/* Author : zhengyangyong */
+using AIC.M9600.Common.DTO;
+using AIC.M9600.Common.DTO.Device;
+using AIC.M9600.Common.DTO.Web;
+using CitizenSoftwareLib.Network.Socket;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AIC.M9600.Client.DataProvider
+{
+    /// <summary>
+    /// 上位机配置操作接口(LM系列表)
+    /// </summary>
+    public class DataProvider
+    {
+        private static JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
+
+        private NetworkTransfer _transfer = null;
+
+        public DataProvider(string ip, int port, ushort majorVersion, ushort minorVersion)
+            : this(ip, port, majorVersion, minorVersion, TimeSpan.FromSeconds(8))
+        { }
+
+        public DataProvider(string ip, int port, ushort majorVersion, ushort minorVersion, TimeSpan timeout)
+        {
+            _transfer = new NetworkTransfer(ip, port, majorVersion, minorVersion, timeout);
+        }
+
+        /// <summary>
+        /// 查询AIC.M9600.Common.MasterDB.Generated
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="columns">需要返回的列字段，如果需要返回全部请设置null</param>
+        /// <param name="condition">where条件，不带where，例如id = @0，参数使用@0，@1，@2，@3...</param>
+        /// <param name="args">对应的参数列表</param>
+        /// <returns></returns>
+        public WebResponse<List<T>> Query<T>(ICollection<string> columns, string condition, object[] args)
+        {
+            try
+            {
+                var response = _transfer.Query(typeof(T).Name, columns, condition, args);
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse<List<T>>.Success(JsonConvert.DeserializeObject<List<T>>(response[1]));
+                }
+                else
+                {
+                    return WebResponse<List<T>>.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<List<T>>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 创建AIC.M9600.Common.MasterDB.Generated
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="objs">要插入的T对象列表，逐渐如果是自增长则不必设置</param>
+        /// <returns></returns>
+        public WebResponse<long[]> Add<T>(ICollection<T> objs)
+        {
+            try
+            {
+                var response = _transfer.Add(typeof(T).Name, JsonConvert.SerializeObject(objs));
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse<long[]>.Success(JsonConvert.DeserializeObject<long[]>(response[1]));
+                }
+                else
+                {
+                    return WebResponse<long[]>.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<long[]>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 更新AIC.M9600.Common.MasterDB.Generated
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// /// <param name="columns">需要更新的列字段，如果需要全部更新请设置null</param>
+        /// <param name="objs">要更新的T对象列表</param>
+        /// <returns></returns>
+        public WebResponse Modify<T>(ICollection<string> columns, ICollection<T> objs)
+        {
+            try
+            {
+                var response = _transfer.Modify(typeof(T).Name, columns, JsonConvert.SerializeObject(objs));
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse.Success();
+                }
+                else
+                {
+                    return WebResponse.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 复合操作
+        /// </summary>
+        /// <param name="addObjs">需要添加的对象，Key是类名</param>
+        /// <param name="modifyObjs">需要更新的对象，Key是类名</param>
+        /// <returns></returns>
+        public WebResponse<IDictionary<string, ICollection<long>>> Complex(IDictionary<string, ICollection<object>> addObjs,
+            IDictionary<string, Tuple<ICollection<string>, ICollection<object>>> modifyObjs,
+            IDictionary<string, Tuple<string, ICollection<object>>> deleteObjs)
+        {
+            try
+            {
+                var response = _transfer.Complex(JsonConvert.SerializeObject(addObjs), JsonConvert.SerializeObject(modifyObjs), JsonConvert.SerializeObject(deleteObjs));
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse<IDictionary<string, ICollection<long>>>.Success(JsonConvert.DeserializeObject<IDictionary<string, ICollection<long>>>(response[1]));
+                }
+                else
+                {
+                    return WebResponse<IDictionary<string, ICollection<long>>>.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<IDictionary<string, ICollection<long>>>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 删除AIC.M9600.Common.MasterDB.Generated
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="primaryKeyColumn">类型的主键，目前系统都是id</param>
+        /// <param name="ids">需要删除的id列表</param>
+        /// <returns></returns>
+        public WebResponse Delete<T>(string primaryKeyColumn, ICollection<object> ids)
+        {
+            try
+            {
+                var response = _transfer.Delete(typeof(T).Name, primaryKeyColumn, ids);
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse.Success();
+                }
+                else
+                {
+                    return WebResponse.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 与设备沟通
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configType">配置类型</param>
+        /// <param name="configObj">配置数据对象</param>
+        /// <param name="deviceIP">设备的IP</param>
+        /// <param name="devicePort">设备的端口</param>
+        /// <returns></returns>
+        public WebResponse<string> CommunicateDevice(string ip, int port, string deviceContent,
+            IDictionary<string, ICollection<object>> addObjs, IDictionary<string, Tuple<ICollection<string>, ICollection<object>>> modifyObjs, IDictionary<string, Tuple<string, ICollection<object>>> deleteObjs)
+        {
+            try
+            {
+                var response = _transfer.CommunicateDevice(ip, port, deviceContent,
+                    JsonConvert.SerializeObject(addObjs), JsonConvert.SerializeObject(modifyObjs), JsonConvert.SerializeObject(deleteObjs));
+                if (response[0] == ResponseCode.SERVER_OK)
+                {
+                    return WebResponse<string>.Success(response[1]);
+                }
+                else
+                {
+                    return WebResponse<string>.Failed(response[0], response[1]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<string>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 查询最新数据
+        /// </summary>
+        /// <param name="invalidSecond">无效秒数，含义是如果某测点最后一次上传的时间距今超过了这个秒数，则视为无效不返回。如果希望无视设置为0</param>
+        /// <param name="itemGuids">如果希望返回全部设置为null</param>
+        /// <returns></returns>
+        public WebResponse<LatestSampleData> QueryLatestSampleData(int invalidSecond, HashSet<Guid> itemGuids)
+        {
+            try
+            {
+                var response = _transfer.QueryLatestSampleData(invalidSecond, itemGuids);
+                if (Encoding.UTF8.GetString(response[0]) == ResponseCode.SERVER_OK)
+                {
+                    var lastestSampleData = JsonConvert.DeserializeObject<LatestSampleData>(Encoding.UTF8.GetString(response[1]));
+                    if(response.Length > 2)
+                    {
+                        response.Skip(2).AsParallel().ForAll(waveformBytes =>
+                        {
+                            using (MemoryStream stream = new MemoryStream(waveformBytes))
+                            {
+                                stream.Position = 0;
+                                using (BinaryReader reader = new BinaryReader(stream, Encoding.UTF8))
+                                {
+                                    var recordLab = Guid.Parse(Encoding.UTF8.GetString(reader.ReadBytes(32)));
+                                    var samplePoint = reader.ReadUInt32();
+                                    var wavedata = reader.ReadBytes((int)samplePoint * 4);
+                                    var waveform = JsonConvert.DeserializeObject<IWaveformData>(Encoding.UTF8.GetString(reader.ReadBytes((int)stream.Length - 32 - 4 - wavedata.Length)), _serializerSettings);
+                                    waveform.WaveData = wavedata;
+                                    waveform.RecordLab = recordLab;
+                                    waveform.SamplePoint = (int?)samplePoint;
+
+                                    var wavedataSlot = lastestSampleData.WaveformSlot.SingleOrDefault(slot => slot.RecordLab == recordLab);
+                                    if(wavedataSlot != null)
+                                    {
+                                        (wavedataSlot as ISlotWaveformData).Waveform = waveform;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    return WebResponse<LatestSampleData>.Success(lastestSampleData);
+                }
+                else
+                {
+                    return WebResponse<LatestSampleData>.Failed(Encoding.UTF8.GetString(response[0]), Encoding.UTF8.GetString(response[1]));
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<LatestSampleData>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 查询历史数据
+        /// </summary>
+        /// <typeparam name="T">AIC.M9600.Common.SlaveDB.Generated下ORM对象</typeparam>
+        /// <param name="itemGuid">测点ID</param>
+        /// <param name="columns">需要返回的列，如果需要全部返回填写null</param>
+        /// <param name="startTime">ACQDatetime开始时间</param>
+        /// <param name="endTime">ACQDatetime结束时间</param>
+        /// <param name="condition">筛选条件，不需要增加ACQDatetime的过滤，startTime和endTime会自动注入</param>
+        /// <param name="args">条件参数</param>
+        /// <returns>结果集合</returns>
+        public WebResponse<List<T>> QueryHistorySampleData<T>(Guid itemGuid, string[] columns, DateTime startTime, DateTime endTime, string condition, object[] args)
+        {
+            try
+            {
+                if (startTime <= endTime)
+                {
+                    var response = _transfer.QueryHistorySampleData(typeof(T).Name, itemGuid, columns, startTime, endTime, condition, args);
+                    if (response[0] == ResponseCode.SERVER_OK)
+                    {
+                        return WebResponse<List<T>>.Success(JsonConvert.DeserializeObject<List<T>>(response[1]));
+                    }
+                    else
+                    {
+                        return WebResponse<List<T>>.Failed(response[0], response[1]);
+                    }
+                }
+                else
+                {
+                    return WebResponse<List<T>>.Failed(ResponseCode.CLIENT_INPUT_ERROR, "startTime,endTime");
+                }
+            }
+            catch (Exception ex)
+            {
+                return WebResponse<List<T>>.Failed(ResponseCode.CLIENT_EXCEPTION, ex.ToString());
+            }
+        }
+
+
+        /// <summary>
+        /// 测试数据上传，请勿使用！！！！
+        /// </summary>
+        /// <returns></returns>
+        //public bool UploadDeviceSmapleData(SampleData data, CompressMode requestCompressMode)
+        //{
+        //    try
+        //    {
+        //        var response = _transfer.UploadDeviceSmapleData(data, requestCompressMode);
+        //        return response == SpecialResponseContent.SERVER_OK;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+    }
+
+
+}

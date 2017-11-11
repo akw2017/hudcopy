@@ -1,0 +1,450 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+using System.Reflection;
+
+namespace AIC.M9600.Common.PetaPoco
+{
+    public class SQLServer:IDisposable
+    {
+        private SqlConnection _conn = null;
+        private SqlTransaction _trans = null;
+
+        private SQLServer(string databaseConnectionString)
+        {
+            _conn = new SqlConnection(databaseConnectionString);
+        }
+
+        ~SQLServer()
+        {
+            CompleteDatabase(false);
+        }
+
+        #region  Transaction Method
+        public static SQLServer GetInstance(string databaseConnectionString)
+        {
+            try
+            {
+                SQLServer db = new SQLServer(databaseConnectionString);
+                db._conn.Open();
+                return db;
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public static SQLServer GetTransactionInstance(string databaseConnectionString)
+        {
+            try
+            {
+                SQLServer db = new SQLServer(databaseConnectionString);
+                db._conn.Open();
+                db._trans = db._conn.BeginTransaction();
+                return db;
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public bool HadTransaction()
+        {
+            return this._trans == null;
+        }
+
+        public static SQLServer GetTransactionInstance(string databaseConnectionString, IsolationLevel level)
+        {
+            try
+            {
+                SQLServer db = new SQLServer(databaseConnectionString);
+                db._conn.Open();
+                db._trans = db._conn.BeginTransaction(level);
+                return db;
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void StartTransaction(bool commitOldTransaction)
+        {
+            if (this._trans != null)
+            {
+                if (commitOldTransaction) _trans.Commit();
+                else _trans.Rollback();
+                _trans.Dispose();
+            }
+            this._trans = this._conn.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+
+        public void StartTransaction(IsolationLevel level, bool commitOldTransaction)
+        {
+            if (this._trans != null)
+            {
+                if (commitOldTransaction) _trans.Commit();
+                else _trans.Rollback();
+                _trans.Dispose();
+            }
+            this._trans = this._conn.BeginTransaction(level);
+        }
+
+        public int ExecuteNonQuery(string sql, CommandType type, IList<string> paramStrings, IList<object> paramValues)
+        {
+            SqlCommand cmd = null;
+            try
+            {
+
+                if (_trans != null)
+                {
+                    cmd = new SqlCommand(sql, _conn, _trans);
+                }
+                else
+                {
+                    cmd = new SqlCommand(sql, _conn);
+                }
+                cmd.CommandType = type;
+                cmd.CommandTimeout = 120;
+                if (paramStrings != null)
+                {
+                    for (int i = 0; i < paramStrings.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramStrings[i], paramValues[i] == null ? DBNull.Value : paramValues[i]);
+                    }
+                }
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null) cmd.Dispose();
+            }
+        }
+
+        public int ExecuteNonQuery(string sql, IList<string> paramStrings, IList<object> paramValues)
+        {
+            return this.ExecuteNonQuery(sql, CommandType.Text, paramStrings, paramValues);
+        }
+
+        public int ExecuteNonQuery(string sql, params object[] paramValues)
+        {
+            return this.ExecuteNonQuery(sql, CommandType.Text, GetDefaultParamStringList(paramValues), paramValues);
+        }
+
+        public T ExecuteScalar<T>(string sql, CommandType type, IList<string> paramStrings, IList<object> paramValues)
+        {
+            SqlCommand cmd = null;
+            try
+            {
+                if (_trans != null)
+                {
+                    cmd = new SqlCommand(sql, _conn, _trans);
+                }
+                else
+                {
+                    cmd = new SqlCommand(sql, _conn);
+                }
+                cmd.CommandType = type;
+                cmd.CommandTimeout = 120;
+                if (paramStrings != null)
+                {
+                    for (int i = 0; i < paramStrings.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramStrings[i], paramValues[i] == null ? DBNull.Value : paramValues[i]);
+                    }
+                }
+                object result = cmd.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    Type t = typeof(T);
+                    if (t.Equals(typeof(string)))
+                    {
+                        return (T)Convert.ChangeType(result, typeof(string));
+                    }
+                    else if (t.IsValueType)
+                    {
+                        if (t.IsGenericType)
+                        {
+                            if (t.Name == "Nullable`1")
+                            {
+                                if(t.Equals(typeof(Nullable<int>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(int));
+                                }
+                                else if (t.Equals(typeof(Nullable<long>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(long));
+                                }
+                                else if (t.Equals(typeof(Nullable<double>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(double));
+                                }
+                                else if (t.Equals(typeof(Nullable<float>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(float));
+                                }
+                                else if (t.Equals(typeof(Nullable<decimal>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(decimal));
+                                }
+                                else if (t.Equals(typeof(Nullable<bool>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(bool));
+                                }
+                                else if (t.Equals(typeof(Nullable<DateTime>)))
+                                {
+                                    return (T)Convert.ChangeType(result, typeof(DateTime));
+                                }
+                                else throw new Exception();
+                            }
+                            else throw new Exception();
+                        }
+                        else
+                        {
+                            if (t.Equals(result.GetType()))
+                            {
+                                return (T)result;
+                            }
+                            else
+                            {
+                                return (T)Convert.ChangeType(result, t);
+                            }
+                        }
+                    }
+                    else throw new Exception();
+                }
+                else return default(T);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null) cmd.Dispose();
+            }
+        }
+
+        public T ExecuteScalar<T>(string sql, IList<string> paramStrings, IList<object> paramValues)
+        {
+            return this.ExecuteScalar<T>(sql, CommandType.Text, paramStrings, paramValues);
+        }
+
+        public T ExecuteScalar<T>(string sql, params object[] paramValues)
+        {
+            return this.ExecuteScalar<T>(sql, CommandType.Text, GetDefaultParamStringList(paramValues), paramValues);
+        }
+
+        public DataTable ExecuteDataTable(string sql, CommandType type, IList<string> paramStrings, IList<object> paramValues)
+        {
+            SqlCommand cmd = null;
+            DataTable dt = new DataTable();
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                if (_trans != null)
+                {
+                    cmd = new SqlCommand(sql, _conn, _trans);
+                }
+                else
+                {
+                    cmd = new SqlCommand(sql, _conn);
+                }
+                cmd.CommandType = type;
+                cmd.CommandTimeout = 120;
+                if (paramStrings != null)
+                {
+                    for (int i = 0; i < paramStrings.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramStrings[i], paramValues[i] == null ? DBNull.Value : paramValues[i]);
+                    }
+                }
+                sda = new SqlDataAdapter(cmd);
+                sda.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                dt.Dispose();
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null) cmd.Dispose();
+                if (sda != null) sda.Dispose();
+            }
+        }
+
+        public DataTable ExecuteDataTable(string sql, IList<string> paramStrings, IList<object> paramValues)
+        {
+            return this.ExecuteDataTable(sql, CommandType.Text, paramStrings, paramValues);
+        }
+
+        public DataTable ExecuteDataTable(string sql, params object[] paramValues)
+        {
+            return this.ExecuteDataTable(sql, CommandType.Text, GetDefaultParamStringList(paramValues), paramValues);
+        }
+
+        public IDataReader ExecuteDataReader(string sql, CommandType type, IList<string> paramStrings, IList<object> paramValues)
+        {
+            SqlCommand cmd = null;
+            try
+            {
+                if (_trans != null)
+                {
+                    cmd = new SqlCommand(sql, _conn, _trans);
+                }
+                else
+                {
+                    cmd = new SqlCommand(sql, _conn);
+                }
+                cmd.CommandType = type;
+                cmd.CommandTimeout = 120;
+                if (paramStrings != null)
+                {
+                    for (int i = 0; i < paramStrings.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramStrings[i], paramValues[i] == null ? DBNull.Value : paramValues[i]);
+                    }
+                }
+                return cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null) cmd.Dispose();
+            }
+        }
+
+        public IDataReader ExecuteDataReader(string sql, IList<string> paramStrings, IList<object> paramValues)
+        {
+            return this.ExecuteDataReader(sql, CommandType.Text, paramStrings, paramValues);
+        }
+
+        public IDataReader ExecuteDataReader(string sql, params object[] paramValues)
+        {
+            return this.ExecuteDataReader(sql, CommandType.Text, GetDefaultParamStringList(paramValues), paramValues);
+        }
+
+        public void EndTransaction(bool commitTransaction)
+        {
+            if (_trans != null)
+            {
+                if (commitTransaction) _trans.Commit();
+                else _trans.Rollback();
+                _trans.Dispose();
+            }
+            _trans = null;
+        }
+
+        public void CompleteDatabase(bool commitTransaction)
+        {
+            try
+            {
+                EndTransaction(commitTransaction);
+                if (_conn != null)
+                {
+                    _conn.Close();
+                    _conn.Dispose();
+                }
+            }
+            catch { }
+        }
+
+        public void CompleteDatabase()
+        {
+            this.CompleteDatabase(false);
+        }
+
+        public List<string> ExecuteAllTableName()
+        {
+            SqlCommand cmd = null;
+            DataTable dt = new DataTable();
+            SqlDataAdapter sda = null;
+            List<string> result = null;
+            try
+            {
+
+                if (_trans != null)
+                {
+                    cmd = new SqlCommand("select name from sysobjects where type = 'U'", _conn, _trans);
+                }
+                else
+                {
+                    cmd = new SqlCommand("select name from sysobjects where type = 'U'", _conn);
+                }
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandTimeout = 120;
+                sda = new SqlDataAdapter(cmd);
+                sda.Fill(dt);
+                result = new List<string>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    result.Add(dr["name"].ToString());
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                dt.Dispose();
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null) cmd.Dispose();
+                if (sda != null) sda.Dispose();
+                if (dt != null) dt.Dispose();
+            }
+        }
+
+        public IList<string> GetDefaultParamStringList(object[] paramValues)
+        {
+            if (paramValues != null)
+            {
+                List<string> paramstringlist = new List<string>();
+                for (int i = 0; i < paramValues.Length; i++) paramstringlist.Add("@" + i.ToString());
+                return paramstringlist;
+            }
+            else return null;
+        }
+
+        public void BulkCopy(string tableName,DataTable table, DataRow[] datas, int batchSize, int bulkCopyTimeout)
+        {
+            SqlBulkCopy sbc = null;
+            try
+            {
+                sbc = new SqlBulkCopy(this._conn);
+                sbc.BatchSize = batchSize;
+                sbc.BulkCopyTimeout = bulkCopyTimeout;
+                sbc.DestinationTableName = tableName;
+                for (int j = 0; j < table.Columns.Count; j++)
+                {
+                    sbc.ColumnMappings.Add(table.Columns[j].ColumnName, table.Columns[j].ColumnName);
+                }
+                sbc.WriteToServer(datas);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (sbc != null)
+                {
+                    sbc.Close();
+                    sbc = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            CompleteDatabase(false);
+        }
+
+        #endregion
+    }
+}

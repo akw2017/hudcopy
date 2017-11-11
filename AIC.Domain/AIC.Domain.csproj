@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2317B509-BFA6-46C6-B4FC-FB1C98B4A778}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.Domain</RootNamespace>
+    <AssemblyName>AIC.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\XBAP Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\XBAP Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|AnyCPU'">
+    <OutputPath>bin\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|x86'">
+    <OutputPath>bin\x86\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Akka">
+      <HintPath>..\packages\Akka.1.0.8\lib\net45\Akka.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BindableValue.cs" />
+    <Compile Include="CardIdentity.cs" />
+    <Compile Include="ChannelIdentity.cs" />
+    <Compile Include="DBConst.cs" />
+    <Compile Include="DomainModule.cs" />
+    <Compile Include="Filter\BandPassFilter.cs" />
+    <Compile Include="Filter\FilterHelper.cs" />
+    <Compile Include="Filter\FilterProcessor.cs" />
+    <Compile Include="Filter\HighPassFilter.cs" />
+    <Compile Include="Filter\LowPassFilter.cs" />
+    <Compile Include="InSignalCategory.cs" />
+    <Compile Include="IPairable.cs" />
+    <Compile Include="MachComponent\Bearing.cs" />
+    <Compile Include="MachComponent\BearingComponent.cs" />
+    <Compile Include="MachComponent\Belt.cs" />
+    <Compile Include="MachComponent\BeltComponent.cs" />
+    <Compile Include="MachComponent\Device.cs" />
+    <Compile Include="MachComponent\DivFreThresholdProportion.cs" />
+    <Compile Include="MachComponent\Gear.cs" />
+    <Compile Include="MachComponent\GearComponent.cs" />
+    <Compile Include="MachComponent\IMach.cs" />
+    <Compile Include="MachComponent\IMachComponent.cs" />
+    <Compile Include="MachComponent\Impeller.cs" />
+    <Compile Include="MachComponent\ImpellerComponent.cs" />
+    <Compile Include="MachComponent\Motor.cs" />
+    <Compile Include="MachComponent\MotorComponent.cs" />
+    <Compile Include="MachComponent\NaturalFre.cs" />
+    <Compile Include="MachComponent\NegationDivFreStrategy.cs" />
+    <Compile Include="MachComponent\Shaft.cs" />
+    <Compile Include="MachComponent\ShaftComponent.cs" />
+    <Compile Include="ModelWrappers\Base\ChangeTrackingCollection.cs" />
+    <Compile Include="ModelWrappers\Base\IValidatableTrackingObject.cs" />
+    <Compile Include="ModelWrappers\Base\ModelWrapper.cs" />
+    <Compile Include="ModelWrappers\Base\NotifyDataErrorInfoBase.cs" />
+    <Compile Include="ModelWrappers\Interface\ICardWrapper.cs" />
+    <Compile Include="ModelWrappers\Interface\IChannelWrapper.cs" />
+    <Compile Include="ModelWrappers\Interface\IPDAWrapper.cs" />
+    <Compile Include="ModelWrappers\Generated\Filters\BandPassFilterWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\Filters\FilterProcessorWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\Filters\HighPassFilterWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\Filters\LowPassFilterWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\GearComponentWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\GearWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Generated\VibrationProcessorWrapper.g.cs" />
+    <Compile Include="ModelWrappers\Validator\GearComponentWrapperValidator.cs" />
+    <Compile Include="ModelWrappers\Validator\GearWrapperValidator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TreeItemLocation.cs" />
+    <Compile Include="VibrationParm.cs" />
+    <Compile Include="VibrationProcessor.cs" />
+    <Compile Include="XMLElement\DeviceDocument.cs" />
+    <Compile Include="XMLElement\EquipmentDocument.cs" />
+    <Compile Include="XMLElement\DeviceElement.cs" />
+    <Compile Include="XMLElement\EquipmentElement.cs" />
+    <Compile Include="XMLElement\SignalElement\AnalogInElement.cs" />
+    <Compile Include="XMLElement\SignalElement\CompositionElement.cs" />
+    <Compile Include="XMLElement\SignalElement\ConnectionElement.cs" />
+    <Compile Include="XMLElement\SignalElement\ConnectorElement.cs" />
+    <Compile Include="XMLElement\SignalElement\DesignElements.cs" />
+    <Compile Include="XMLElement\SignalElement\DigitalElement.cs" />
+    <Compile Include="XMLElement\SignalElement\DivFreElement.cs" />
+    <Compile Include="XMLElement\SignalElement\ImageDesignElement.cs" />
+    <Compile Include="XMLElement\SignalElement\VedioElement.cs" />
+    <Compile Include="XMLElement\SignalElement\WaveElement.cs" />
+    <Compile Include="XMLElement\SignalElement\VibrationElement.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
+      <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
+      <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.MatlabMath\AIC.MatlabMath.csproj">
+      <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
+      <Name>AIC.MatlabMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FluentValidation\FluentValidation.csproj">
+      <Project>{dae0249b-4f69-4ac9-9a17-aa23e0795316}</Project>
+      <Name>FluentValidation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

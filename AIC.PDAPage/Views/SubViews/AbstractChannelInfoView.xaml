@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="AIC.PDAPage.Views.SubViews.AbstractChannelInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:subview="clr-namespace:AIC.PDAPage.Views.SubViews"
+             xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"      
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
+        <core:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+        <DataTemplate x:Key="enumComboItemTemplate">
+            <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="5*"/>-->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="14*"/>-->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="通用设置"  VerticalAlignment="Center" FontWeight="Bold"/>
+        <!--<subview:OrganizationView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"/>-->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="设备名称:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding T_Device_Name}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="设备编号:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding T_Device_Code}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="设备Guid:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding T_Device_Guid}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="测点名称:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding T_Item_Name}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="测点编号:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding T_Item_Code}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="测点Guid:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding T_Item_Guid}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="通道号:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CHNum}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="子通道号:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding SubCHNum}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True" />
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="是否上传:" VerticalAlignment="Center"/>
+        <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsUploadData}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="单位:" VerticalAlignment="Center" Visibility="{Binding IsShowUnit,Converter={StaticResource boolToVisibilityConverter}}"/>
+        <!--<TextBox Grid.Row="5" Grid.Column="3" Text="{Binding Unit}" Style="{DynamicResource MetroTextBox}"/>-->
+        <ComboBox Grid.Row="5" Grid.Column="3" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="True" Visibility="{Binding IsShowUnit,Converter={StaticResource boolToVisibilityConverter}}"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="单值类型:" VerticalAlignment="Center" Visibility="{Binding IsShowSVType,Converter={StaticResource boolToVisibilityConverter}}"/>
+
+        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding SVTypeCategory}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}" Visibility="{Binding IsShowSVType,Converter={StaticResource boolToVisibilityConverter}}">
+
+            <ComboBox.SelectedItem>
+                <MultiBinding Converter="{StaticResource codeSelectedItemConverter}">
+                    <Binding Path="SVTypeCode" />
+                    <Binding Path="SVTypeCategory" Mode="OneWay"/>
+                </MultiBinding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"  Margin="-1,0,-1,0">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="零点:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedItem,ElementName=myComBox}" Style="{DynamicResource MetroTextBox}"
+                    Text="{Binding ZeroValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                </TextBox>
+            </Grid>
+        </Border>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="本地存储策略:" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding LocalSaveCategory}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+            <ComboBox.SelectedItem>
+                <MultiBinding Converter="{StaticResource codeSelectedItemConverter}">
+                    <Binding Path="LocalSaveCode" />
+                    <Binding Path="LocalSaveCategory" Mode="OneWay"/>
+                </MultiBinding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="是否旁路:" VerticalAlignment="Center"/>
+        <CheckBox Grid.Row="8" Grid.Column="3" IsChecked="{Binding IsBypass}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="延时报警:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="9" Grid.Column="1" Style="{DynamicResource MetroTextBox}"
+            Text="{Binding DelayAlarmTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+        </TextBox>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="NotOK延时报警:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="9" Grid.Column="3" Style="{DynamicResource MetroTextBox}"
+            Text="{Binding NotOKDelayAlarmTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+        </TextBox>
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="启用逻辑表达式:" VerticalAlignment="Center"/>
+        <CheckBox Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsLogic}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="10" Grid.Column="2" Text="逻辑表达式:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="10" Grid.Column="3" Text="{Binding LogicExpression,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+        <TextBlock Grid.Row="11" Grid.Column="0" Text="备注:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding Remarks,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+        <TextBlock Grid.Row="11" Grid.Column="2" Text="附加信息:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="11" Grid.Column="3" Text="{Binding Extra_Information,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+        <!--<subview:AlarmStrategyView Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="4" DataContext="{Binding AlarmStrategy}"/>-->
+    </Grid>
+</UserControl>

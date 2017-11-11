@@ -1,0 +1,165 @@
+﻿using CitizenSoftwareLib.Common;
+using Snappy;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+
+namespace CitizenSoftwareLib.Network.Socket
+{
+    public class TCPContext:IDisposable
+    {
+        public byte[] Buffer { get; set; }
+        public TcpClient Client { get; set; }
+        public Stream Stream { get; set; }
+        public int RetryCount { get; set; }
+        public string LocalName { get; private set; }
+        public string RemoteName { get; private set; }
+
+        private List<byte> _caches = new List<byte>();
+        public List<byte> Caches
+        {
+            get { return _caches; }
+        }
+
+        public TCPContext(TcpClient client,Stream stream)
+        {
+            Buffer = new byte[8192];
+            Stream = stream;
+            Client = client;
+            RetryCount = 5;
+            LocalName = string.Concat(((IPEndPoint)Client.Client.LocalEndPoint).Address.ToString(), ":", ((IPEndPoint)Client.Client.LocalEndPoint).Port);
+            RemoteName = string.Concat(((IPEndPoint)Client.Client.RemoteEndPoint).Address.ToString(), ":", ((IPEndPoint)Client.Client.RemoteEndPoint).Port);
+        }
+
+        public void ResetRetryCount()
+        {
+            RetryCount = 5;
+        }
+
+        public bool DecrementRetryCount()
+        {
+            RetryCount--;
+            return RetryCount <= 0;
+        }
+
+        public List<TCPMessage> ExtractMessage()
+        {
+            List<TCPMessage> messages = null;
+            if (_caches.Count > 4)
+            {
+                messages = new List<TCPMessage>();
+                while (_caches.Count > 4)
+                {
+                    int len = BitConverter.ToInt32(_caches.Take(4).ToArray(), 0);
+                    if (_caches.Count >= len + 4)
+                    {
+                        TCPMessage message = new TCPMessage();
+                        using (var stream = new MemoryStream(_caches.Skip(4).ToArray()))
+                        {
+                            stream.Position = 0;
+                            using (var br = new BinaryReader(stream))
+                            {
+                                message.RequestCompressMode = (CompressMode)br.ReadByte();
+                                message.ResponseCompressMode = (CompressMode)br.ReadByte();
+                                message.Session = Encoding.UTF8.GetString(br.ReadBytes(32));
+                                message.Type = br.ReadInt16();
+                                message.MajorVerson = br.ReadUInt16();
+                                message.MinorVersion = br.ReadUInt16();
+                                uint dataCount = br.ReadUInt32();
+                                message.Datas = new byte[dataCount][];
+                                
+                                if(message.RequestCompressMode != CompressMode.None)
+                                {
+                                    byte[] temp = br.ReadBytes(len - (int)stream.Position);
+                                    if (message.RequestCompressMode == CompressMode.Snappy)
+                                    {
+                                        temp = SnappyCodec.Uncompress(temp);
+                                    }
+                                    else if (message.RequestCompressMode == CompressMode.Gzip)
+                                    {
+                                        temp = GzipOperator.Decompress(temp);
+                                    }
+                                    else throw new Exception("Unknow CompressMode");
+                                    using (var tempStream = new MemoryStream(temp))
+                                    {
+                                        using (var tempReader = new BinaryReader(tempStream))
+                                        {
+                                            for(uint i = 0;i < dataCount;i++)
+                                            {
+                                                uint tempLen = tempReader.ReadUInt32();
+                                                message.Datas[i] = tempReader.ReadBytes((int)tempLen);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (uint i = 0; i < dataCount; i++)
+                                    {
+                                        uint tempLen = br.ReadUInt32();
+                                        message.Datas[i] = br.ReadBytes((int)tempLen);
+                                    }
+                                }
+                            }
+                        }
+
+                        messages.Add(message);
+                        _caches.RemoveRange(0, len + 4);
+                    }
+                    else break;
+                }
+            }
+            return messages;
+        }
+
+        public void AcceptBuffer(int count)
+        {
+            if (count != 0)
+            {
+                if (count == Buffer.Length)
+                {
+                    _caches.AddRange(Buffer);
+                }
+                else
+                {
+                    byte[] temp = new byte[count];
+                    Array.Copy(Buffer, temp, count);
+                    _caches.AddRange(temp);
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (Stream != null)
+            {
+                try
+                {
+                    Stream.Close();
+                }
+                catch { }
+                Stream = null;
+            }
+            if (Client != null)
+            {
+                try
+                {
+                    Client.Close();
+                }
+                catch { }
+                Client = null;
+            }
+
+            if (Buffer != null) Buffer = null;
+        }
+
+        public bool IsClosed
+        {
+            get { return Buffer == null; }
+        }
+    }
+}

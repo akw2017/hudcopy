@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:s="clr-namespace:DiagramDesigner;assembly=DiagramDesigner">
+
+    <!--<ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
+        <Grid Margin="-5" >
+            <s:Connector DataContext="{Binding LeftConnector}" Orientation="{Binding Orientation, Mode=TwoWay}" Position="{Binding Position, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <s:Connector DataContext="{Binding TopConnector}" Orientation="{Binding Orientation, Mode=TwoWay}" Position="{Binding Position, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <s:Connector DataContext="{Binding RightConnector}" Orientation="{Binding Orientation, Mode=TwoWay}" Position="{Binding Position, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <s:Connector DataContext="{Binding BottomConnector}" Orientation="{Binding Orientation, Mode=TwoWay}" Position="{Binding Position, Mode=TwoWay}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        </Grid>
+    </ControlTemplate>-->
+
+    <ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
+        <Grid Margin="-5" >
+            <s:Connector DataContext="{Binding LeftConnector}" Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <s:Connector DataContext="{Binding TopConnector}" Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <s:Connector DataContext="{Binding RightConnector}" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <s:Connector DataContext="{Binding BottomConnector}" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        </Grid>
+    </ControlTemplate>
+
+</ResourceDictionary>

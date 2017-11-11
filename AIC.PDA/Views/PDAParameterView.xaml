@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="AIC.PDA.Views.PDAParameterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+             xmlns:contorls="clr-namespace:AIC.ColorThemes;assembly=AIC.ColorThemes"
+             xmlns:local="clr-namespace:AIC.PDA.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}" />
+        <Style TargetType="{x:Type CheckBox}" />
+
+        <x:Array x:Key="SampleFreArray" Type="{x:Type sys:String}">
+            <sys:String>100Hz</sys:String>
+            <sys:String>200Hz</sys:String>
+            <sys:String>500Hz</sys:String>
+            <sys:String>1KHz</sys:String>
+            <sys:String>2KHz</sys:String>
+            <sys:String>5KHz</sys:String>
+            <sys:String>10KHz</sys:String>
+            <sys:String>20KHz</sys:String>
+            <sys:String>50KHz</sys:String>
+            <sys:String>100KHz</sys:String>
+        </x:Array>
+        <x:Array x:Key="SamplePointArray" Type="{x:Type sys:Int32}">
+            <sys:Int32>256</sys:Int32>
+            <sys:Int32>512</sys:Int32>
+            <sys:Int32>1024</sys:Int32>
+            <sys:Int32>2048</sys:Int32>
+            <sys:Int32>4096</sys:Int32>
+            <sys:Int32>8192</sys:Int32>
+            <sys:Int32>16384</sys:Int32>
+            <sys:Int32>32768</sys:Int32>
+        </x:Array>
+        <core:ThousandWithKStuffixConverter x:Key="thousandWithKStuffixConverter" />
+        <core:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
+        <core:MathConverter x:Key="mathConverter" />
+        <Style TargetType="ComboBox" >
+            <Setter Property="core:ChangeBehavior.OriginalValueConverter" Value="{StaticResource enumDescriptionConverter}"/>
+        </Style>
+
+        <DataTemplate x:Key="enumComboItemTemplate">
+            <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="6,0,6,0" VerticalAlignment="Center" Text="PDA" FontSize="20" HorizontalAlignment="Left"/>
+        <TextBlock VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Run>IP:</Run>
+            <Run Text="{Binding PDA.IP,Mode=OneWay}"></Run>
+            <Run>板卡数:</Run>
+            <Run Text="{Binding PDA.Count,Mode=OneWay}"></Run>
+        </TextBlock>
+        <Grid Margin="0,0,10,10" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel contorls:TitleControlElement.TitleWidth="150">
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="主无线MAC地址" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.MasterWirelessMAC,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="PDA别名" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.PDAAliasName,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="PDA MAC地址" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.PDAMAC,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="服务器IP" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.ServerIP,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="服务器端口" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.ServerPort,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="上传模式" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBox Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.UploadMode,UpdateSourceTrigger=PropertyChanged}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="下载压缩" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <CheckBox Margin="11,11,0,0" FontSize="18" IsChecked="{Binding PDA.IsZipDownload,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="上传压缩" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <CheckBox Margin="11,11,0,0" FontSize="18" IsChecked="{Binding PDA.IsZipUpload,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+                    </contorls:TitleControl>
+                </StackPanel>
+
+                <StackPanel contorls:TitleControlElement.TitleWidth="100" Grid.Column="1">
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="分析频率" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <ComboBox Margin="11,11,0,0" FontSize="18"
+                              ItemsSource="{StaticResource  SampleFreArray}"  
+                              SelectedItem="{Binding PDA.SampleFre, Mode=TwoWay, Converter={StaticResource thousandWithKStuffixConverter}}">
+                        </ComboBox>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="采样频率" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <TextBlock Margin="11,11,0,0" FontSize="18" Text="{Binding PDA.SampleFre, Mode=OneWay, Converter={StaticResource mathConverter}, ConverterParameter=x*2.56}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="采样点数" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <ComboBox Margin="11,11,0,0" FontSize="18"
+                              ItemsSource="{StaticResource SamplePointArray}" SelectedItem="{Binding PDA.SamplePoint,UpdateSourceTrigger=PropertyChanged}">
+                        </ComboBox>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="采样类型" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <ComboBox Margin="11,11,0,0" FontSize="18" ItemTemplate="{StaticResource enumComboItemTemplate}"
+                              core:EnumHelper.Enum="{x:Type coreType:SampleType}" SelectedItem="{Binding PDA.SampleType}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="触发类型" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <ComboBox Margin="11,11,0,0" FontSize="18" ItemTemplate="{StaticResource enumComboItemTemplate}"
+                              core:EnumHelper.Enum="{x:Type coreType:TriggerType}" SelectedItem="{Binding PDA.TriggerType}"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="4G" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <CheckBox Margin="11,11,0,0" FontSize="18" IsChecked="{Binding PDA.Is4G,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="同步" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <CheckBox Margin="11,11,0,0" FontSize="18" IsChecked="{Binding PDA.IsSyn,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+                    </contorls:TitleControl>
+
+                    <contorls:TitleControl>
+                        <contorls:TitleControl.Header>
+                            <TextBlock Text="旁路" Margin="11,11,0,0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </contorls:TitleControl.Header>
+                        <CheckBox Margin="11,11,0,0" FontSize="18" IsChecked="{Binding PDA.IsTotalBypass,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+                    </contorls:TitleControl>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ListBox x:Name="triggerListBox" ItemsSource="{Binding PDA.TriggerChannels}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                <Run Text="{Binding IP}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding CardNum}"/>
+                                <Run>-</Run>
+                                <Run Text="{Binding ChannelNum}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+ 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button  Content="保存"  Width="100"  Command="{Binding SaveCommand}" Margin="5,0,5,0"/>
+            <Button Content="重置" Width="100" Command="{Binding ResetCommand}" Margin="5,0,5,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

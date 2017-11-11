@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="AIC.HistoryDataPage.Views.OffDesignConditionDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lcu="http://www.arction.com/schemas/" 
+             xmlns:views="clr-namespace:AIC.HistoryDataPage.Views"
+             xmlns:viewModels="clr-namespace:AIC.HistoryDataPage.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="307" d:DesignWidth="428">
+    <Grid>
+        <Grid Margin="3">
+            <Grid Name="gridChart" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TabControl x:Name="DocumentTabContro" Style="{x:Null}" ItemsSource="{Binding Path=Channels}" SelectedItem="{Binding SelectedOffCondition, Mode=TwoWay}">
+                    <TabControl.Resources>
+                        <DataTemplate DataType="{x:Type viewModels:BaseWaveChannelToken}">
+                            <Grid Margin="-5" >
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="{Binding Channel.Name}"/>
+                                    <Run Text="{Binding Channel.MSSN}"/>
+                                    <TextBlock.ToolTip>
+                                        <TextBlock>
+                                            <Run Text="{Binding Channel.GroupCOName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Channel.CorporationName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Channel.WorkShopName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Channel.DevName}"/>
+                                            <Run Text="{Binding Channel.DevSN}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Channel.Name}"/>
+                                            <Run Text="{Binding Channel.MSSN}"/>
+                                        </TextBlock>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:DivFreChannelToken}">
+                            <Grid Margin="-5" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Channel.DisPlayName}" >
+                                    <TextBlock.ToolTip>
+                                        <TextBlock>
+                                            <Run Text="{Binding GroupCOName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding CorporationName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding WorkShopName}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding DevName}"/>
+                                            <Run Text="{Binding DevSN}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Name}"/>
+                                            <Run Text="{Binding MSSN}"/>
+                                            <Run>.</Run>
+                                            <Run Text="{Binding Channel.FreDescription}"/>
+                                        </TextBlock>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </TabControl.Resources>
+                 
+                    <!--<TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="-10" Background="#0f00" ToolTipService.InitialShowDelay="1000">
+                                <TextBlock Text="{Binding Title}" />
+                            </Grid>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>-->
+                </TabControl>
+                <ListBox x:Name="ContentListBox" Grid.Row="1" ItemsSource="{Binding Channels}" SelectedItem="{Binding SelectedOffCondition}">
+                    <!--<ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <views:DynamicFittingDataView />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>-->
+
+                    <ListBox.Resources>
+                        <ControlTemplate x:Key="WPFDocumentViewTemplate" TargetType="{x:Type ListBoxItem}">
+                            <views:DynamicFittingDataView />
+                        </ControlTemplate>
+                    </ListBox.Resources>
+
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Grid IsItemsHost="True" />
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <!--<Setter Property="OverridesDefaultStyle" Value="True" />-->
+                            <Setter Property="Template" Value="{StaticResource WPFDocumentViewTemplate}" />
+                            <Style.Triggers>
+                                <!--<DataTrigger Binding="{Binding XamlDocumentType}" Value="AgDocument">
+                                <Setter Property="Template" Value="{StaticResource AgDocumentViewTemplate}" />
+                            </DataTrigger>-->
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Grid>
+        <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        <Path Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+    </Grid>
+</UserControl>

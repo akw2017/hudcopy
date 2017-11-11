@@ -1,0 +1,609 @@
+﻿<UserControl x:Class="AIC.PDA.Views.IEPECardView2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIC.PDA.Views"
+             xmlns:localControls="clr-namespace:AIC.PDA.Controls"
+             xmlns:converters="clr-namespace:AIC.PDA.Converters"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DataTemplate1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Path Fill="#FFBBDF14" Height="Auto" Margin="0,5" Stroke="{x:Null}" VerticalAlignment="Stretch" Data="M31.938004,4.459001 L31.938004,19.791001 63.271004,19.791001 63.271004,4.459001 z M14.5,-1.7942504E-14 L50.5,-0.25 50.5,2.3749999 64.688004,2.6249999 64.688004,12.125 64.688004,21.625 50.5,21.375 50.5,24 14.5,24.25 14.5,17.625 0,17.937001 0.031749807,12.125 0,6.3130015 14.5,6.6250004 z" RenderTransformOrigin="0.5,0.500000015694006" Stretch="Fill">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                            <SkewTransform AngleY="0" AngleX="0"/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform Y="-0.25000000784699949"/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <TextBlock x:Name="cardNumTextBlock" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CardNum}" Margin="5,0" VerticalAlignment="Center" Foreground="White" d:LayoutOverrides="Width" FontFamily="/HUD;component/Fonts/#Vibrocentric" FontSize="18.667" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="channelNumTextBlock1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding ChannelNum}" Margin="5,0" VerticalAlignment="Center" Foreground="White" d:LayoutOverrides="Width" FontFamily="/HUD;component/Fonts/#Vibrocentric" FontSize="18.667" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="{StaticResource ListBox.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+                            <StackPanel  Height="Auto" Orientation="Horizontal">
+                                <Path Data="M2.4430001,76.375004 L17.502124,76.375004 17.502124,1 25.651,1 M20.984,3.094 L25.651,3.094 M0.99999999,72.922002 L0.99999999,79.922002 M17.526,80.625004 L17.526,147.844 26.026,147.844 M21.359,149.844 L26.026,149.844" Margin="0" Stretch="Fill" Stroke="White" StrokeThickness="2" Height="Auto" Width="30" d:LayoutOverrides="TopPosition, BottomPosition"/>
+                                <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Height="Auto">
+                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" d:IsHidden="True"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Border}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DataCardContainerStyle1" TargetType="{x:Type localControls:DataCardContainer}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type localControls:DataCardContainer}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="CycleStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="CycleTriggerPath">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:1" Value="360"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="AngleStoryboard" RepeatBehavior="Forever"/>
+                            <Storyboard x:Key="DataTransformStoryboard2">
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle1">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.23457633,-1.4999849 L-0.38401216,183.47027 L343.61602,184.19002"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle1">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.23457633,-1.4999849 L-0.38401216,183.47027 L343.61602,184.19002"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Angle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="rectangle1">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.23457633,-1.4999849 L-0.38401216,183.47027 L343.61602,184.19002"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M2.583,-0.084 L-71.801,0.916 L-71.801,203.416"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M2.583,-0.084 L-71.801,0.916 L-71.801,203.416"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Angle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="rectangle">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M2.583,-0.084 L-71.801,0.916 L-71.801,203.416"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AutoTriggerDataRect">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.13626291,-1.4999889 L-0.333,142.69 L90.167,142.69"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="AutoTriggerDataRect">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.13626291,-1.4999889 L-0.333,142.69 L90.167,142.69"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                                <DoubleAnimationUsingPath Duration="0:0:2" Source="Angle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="AutoTriggerDataRect">
+                                    <DoubleAnimationUsingPath.PathGeometry>
+                                        <PathGeometry Figures="M-0.13626291,-1.4999889 L-0.333,142.69 L90.167,142.69"/>
+                                    </DoubleAnimationUsingPath.PathGeometry>
+                                </DoubleAnimationUsingPath>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}" Margin="0">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="TriggerStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition GeneratedDuration="0"/>
+                                        <VisualTransition From="AngleTrigger" GeneratedDuration="0:0:0.7" To="CycleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="CycleTrigger" GeneratedDuration="0:0:0.7" To="AngleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.7" To="119" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CircleEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition From="AngleTrigger" GeneratedDuration="0:0:0.7" To="RPMTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="CycleTrigger" GeneratedDuration="0:0:0.7" To="RPMTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="RPMTrigger" GeneratedDuration="0:0:0.7" To="CycleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="RPMTrigger" GeneratedDuration="0:0:0.7" To="AngleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="AutoTrigger" GeneratedDuration="0:0:0.7" To="CycleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="AutoTrigger" GeneratedDuration="0:0:0.7" To="AngleTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="AutoTrigger" GeneratedDuration="0:0:0.7" To="RPMTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="RPMTrigger" GeneratedDuration="0:0:0.7" To="AutoTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="AngleTrigger" GeneratedDuration="0:0:0.7" To="AutoTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                        <VisualTransition From="CycleTrigger" GeneratedDuration="0:0:0.7" To="AutoTrigger">
+                                            <VisualTransition.GeneratedEasingFunction>
+                                                <CircleEase EasingMode="EaseOut"/>
+                                            </VisualTransition.GeneratedEasingFunction>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="CycleTrigger">
+                                        <Storyboard/>
+                                    </VisualState>
+                                    <VisualState x:Name="AngleTrigger">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path1">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="119"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="AutoTrigger">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path1">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="373.333"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="RPMTrigger">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path1">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="232.333"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="Root">
+                                <Ellipse x:Name="CycleEllipse" Fill="#7FFFFFFF" HorizontalAlignment="Left" Height="100" Margin="10,291.083,0,0" Stroke="White" VerticalAlignment="Top" Width="100"/>
+                                <Path x:Name="CycleTriggerPath" Data="M245,131 L245,209.5" Fill="{x:Null}" HorizontalAlignment="Left" Height="50" Margin="59.5,291.083,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="1" RenderTransformOrigin="0.5,1" d:LayoutOverrides="Height">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <TextBox x:Name="CycleText" HorizontalAlignment="Left" Height="18" Margin="20,332.083,0,0" TextWrapping="Wrap" Text="152" VerticalAlignment="Top" Width="80" Background="{x:Null}" TextDecorations="{x:Null}" FontFamily="/HUD;component/Fonts/#Vibrocentric" FontSize="16" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" />
+                                <Path x:Name="AngleTriggerPath" Data="M45.5,0.5 L54.5,0.5 54.5,10.756671 55.030853,10.817354 C58.688553,11.282306 62.190113,12.247482 65.464806,13.642144 L65.728096,13.758138 70.852886,4.8817425 78.647118,9.3817426 73.518478,18.264804 73.780148,18.457466 C76.583885,20.574552 79.096443,23.056818 81.247086,25.833528 L81.730301,26.48435 90.618256,21.352885 95.118256,29.147114 86.243225,34.271116 86.523041,34.928967 C87.87674,38.205927 88.802261,41.704794 89.229866,45.355839 L89.245049,45.5 99.5,45.5 99.5,54.5 89.243828,54.5 89.207481,54.831459 C88.782631,58.315067 87.904289,61.658649 86.633263,64.801373 L86.242584,65.728516 95.118256,70.852886 90.618256,78.647118 81.736061,73.518982 81.661079,73.622341 C79.423103,76.61705 76.770226,79.283623 73.787647,81.536865 L73.518639,81.735466 78.647118,90.618256 70.852886,95.118256 65.728188,86.24202 65.430542,86.372429 C62.165691,87.759247 58.675797,88.719315 55.030853,89.182648 L54.5,89.243332 54.5,99.5 45.5,99.5 45.5,89.243332 44.969147,89.182648 C41.311449,88.717697 37.809885,87.752518 34.535192,86.357857 L34.271904,86.241859 29.147114,95.118256 21.352885,90.618256 26.481522,81.735199 26.219854,81.542534 C23.416119,79.425446 20.90356,76.943184 18.752917,74.166473 L18.269702,73.515652 9.3817426,78.647118 4.8817425,70.852886 13.756776,65.728882 13.476964,65.071033 C12.123259,61.794071 11.197739,58.295208 10.770134,54.644161 L10.754949,54.5 0.5,54.5 0.5,45.5 10.756169,45.5 10.792523,45.168541 C11.217366,41.684933 12.095714,38.341352 13.366738,35.198627 L13.757416,34.271486 4.8817425,29.147114 9.3817426,21.352885 18.263937,26.481022 18.338922,26.377661 C20.576894,23.38295 23.229771,20.716373 26.212353,18.463132 L26.481363,18.264529 21.352885,9.3817426 29.147114,4.8817425 34.271814,13.757984 34.56946,13.627571 C37.834309,12.240757 41.324203,11.280685 44.969147,10.817354 L45.5,10.756671 z" Fill="#7F959595" HorizontalAlignment="Left" Height="100" Margin="128.5,291.083,0,0" Stretch="Fill" Stroke="White" Width="100" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Ellipse x:Name="RPMEllipse" Fill="#7F959595" HorizontalAlignment="Left" Margin="242,291,0,0" Stroke="White" Width="100" VerticalAlignment="Top" Height="100"/>
+                                <TextBlock x:Name="RPM" HorizontalAlignment="Left" Height="Auto" Margin="274.065,330.84,0,0" TextWrapping="Wrap" Text="RPM" VerticalAlignment="Top" FontSize="16"/>
+                                <Path x:Name="AutoTriggerEllipse" Data="M99.5,50 C99.5,77.338095 77.338095,99.5 50,99.5 C22.661905,99.5 0.5,77.338095 0.5,50 C0.5,22.661905 22.661905,0.5 50,0.5 C77.338095,0.5 99.5,22.661905 99.5,50 z M50.000002,0.99999967 L50.000002,9.0000063 M49.999997,99.000003 L49.999997,91.000003 M74.500004,7.5647537 L70.500004,14.492957 M92.435249,25.500001 L85.507046,29.500001 M99.000003,50.000003 L91.000003,50.000003 M92.435246,74.500004 L85.507043,70.500004 M74.499999,92.435249 L70.499999,85.507046 M25.499996,92.435246 L29.499996,85.507043 M7.5647507,74.499999 L14.492954,70.499999 M0.99999653,49.999997 L8.9999969,49.999997 M7.5647537,25.499996 L14.492957,29.499996 M25.500001,7.5647507 L29.500001,14.492954" Fill="#7F959595" HorizontalAlignment="Left" Height="100" Margin="383.417,291,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="100"/>
+                                <Path x:Name="AutoTriggerPath" Data="M245,131 L245,209.5" Fill="{x:Null}" HorizontalAlignment="Right" Height="50" Margin="0,291,286.083,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="1" RenderTransformOrigin="0.5,1" d:LayoutOverrides="Height">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <ListBox x:Name="TriggerChannelContainer" HorizontalAlignment="Left" Height="161.917" Margin="254,3.083,0,0" VerticalAlignment="Top" Width="203.666" Background="{x:Null}" ItemTemplate="{DynamicResource DataTemplate1}" Style="{DynamicResource ListBoxStyle1}" BorderBrush="{x:Null}" ItemsSource="{Binding TriggerChannels}"/>
+                                <Rectangle Fill="{x:Null}" Margin="525,187.25,0,0" Stroke="White" HorizontalAlignment="Left" Width="184" Height="410" VerticalAlignment="Top"/>
+                                <Path Data="M262.73211,441.00862 L262.56447,612.83903 648.47036,613.50765" Fill="{x:Null}" HorizontalAlignment="Left" Margin="178.616,396.31,0,0" Stretch="Fill" Stroke="White" Width="346" StrokeThickness="2" Height="187.69" VerticalAlignment="Top"/>
+                                <Path x:Name="path" Data="M378,113 L253.5,114 253.5,316.5" Fill="{x:Null}" HorizontalAlignment="Left" Height="204.5" Margin="178.616,81.25,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="75.384" RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Rectangle x:Name="rectangle" Fill="White" HorizontalAlignment="Left" Height="5" Margin="245.917,79.334,0,0" Stroke="White" VerticalAlignment="Top" Width="10" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle x:Name="rectangle1" Fill="White" HorizontalAlignment="Left" Height="5" Margin="175,396.31,0,0" Stroke="White" VerticalAlignment="Top" Width="10" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle x:Name="AutoTriggerDataRect" Fill="White" HorizontalAlignment="Right" Height="5" Margin="0,396.31,281.667,0" Stroke="White" VerticalAlignment="Top" Width="10" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Path Data="M475.37717,427.48817 L475,568.5 648.5,568.5" Fill="{x:Null}" HorizontalAlignment="Left" Margin="432,396.31,0,0" Stretch="Fill" Stroke="White" Width="92.5" StrokeThickness="2" Height="146.19" VerticalAlignment="Top"/>
+                                <Path Data="M129.33337,317.83368 L388.83274,317.83368" Fill="#7FFFFFFF" HorizontalAlignment="Left" Height="1.31" Margin="4.334,285.928,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="341.333"/>
+                                <Path Data="M129.33337,429.16735 L388.83274,429.16735" Fill="#7FFFFFFF" HorizontalAlignment="Left" Height="1.31" Margin="4.334,395,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Top" Width="341.333"/>
+                                <Path x:Name="path1" Data="M9.5,0.5 L0.5,9.5 0.5,85 9.5,94 M102.166,0.5 L111.166,9.5 111.166,85 102.166,94" Fill="{x:Null}" HorizontalAlignment="Left" Margin="4.334,294,0,0" Stretch="Fill" Stroke="#FFBBDF14" Width="111.666" RenderTransformOrigin="0.5,0.5" Height="94.5" VerticalAlignment="Top">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="EnumItemContainerStyle1" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" RenderTransformOrigin="0.5,0.5" Padding="{TemplateBinding Padding}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.ColumnSpan="2" Fill="#4C8C8D86" Margin="0" Stroke="{x:Null}"/>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Grid.Column="1" Margin="0"/>
+                                <Ellipse x:Name="ellipse" Fill="White" HorizontalAlignment="Center" Height="5" Margin="0" Stroke="{x:Null}" VerticalAlignment="Center" Width="5"/>
+                                <!--<Rectangle x:Name="SelectedRect" Grid.ColumnSpan="2" Fill="{x:Null}" Margin="0" Stroke="#FFBBDF14" Visibility="Collapsed"/>-->
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Selector.IsSelected" Value="true">
+                                <!--<Setter Property="Visibility" TargetName="SelectedRect" Value="Visible"/>-->
+                                <Setter Property="Fill" TargetName="ellipse" Value="#FFBBDF14"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="EnumItemsControlStyle1" TargetType="{x:Type localControls:EnumItemsControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type localControls:EnumItemsControl}">
+                        <Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Fill="White" HorizontalAlignment="Left" Height="4" Margin="6.833,1.772,0,0" Stroke="White" VerticalAlignment="Top" Width="2" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                                <Path Data="M8.8330003,3.3750131 L8.8330003,212.62462" Fill="White" HorizontalAlignment="Left" Margin="8.833,3.375,0,0" Stretch="Fill" Stroke="White" Width="1" Grid.RowSpan="2"/>
+                                <TextBlock x:Name="textBlock" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,0,0,0" Grid.RowSpan="1" TextWrapping="Wrap" Text="{TemplateBinding Title}" Width="Auto" FontSize="24" Foreground="#FFBBDF14"/>
+                                <ItemsPresenter Grid.Row="1" Grid.Column="1" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                                <localControls:ItemIndicator Grid.RowSpan="2" Grid.ColumnSpan="1" BorderBrush="#FFBBDF14"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+            <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+        <converters:AcronymConverter x:Key="acronymConverter"/>
+        <DataTemplate x:Key="DataTemplate2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="textBlock" Text="{Binding Converter={StaticResource acronymConverter}}" Foreground="White" d:LayoutOverrides="Width, Height" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/HUD;component/Fonts/#BatmanForeverAlternate" FontSize="32"/>
+                <TextBlock x:Name="detialsTxt" Text="加速度" FontSize="9" Grid.Row="1" Foreground="White" FontFamily="Microsoft YaHei UI Light"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" Value="True">
+                    <Setter TargetName="textBlock"  Property="Foreground" Value="#FFBBDF14"/>
+                    <Setter TargetName="detialsTxt"  Property="Foreground" Value="#FFBBDF14"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        <Style x:Key="ListBoxItemStyle2" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Padding" Value="4,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <Grid Height="Auto" Width="Auto">
+                                <Rectangle Stroke="{x:Null}" Fill="#4CF4F4F5"/>
+                                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Path x:Name="path" Data="M0.21875,1.921875 L0.21875,0.203 2.31225,0.203" HorizontalAlignment="Left" Height="5" Margin="0" Stretch="Fill" Stroke="#FFBBDF14" VerticalAlignment="Top" Width="5" Visibility="Collapsed"/>
+                                <Path x:Name="path1" Data="M0.21875,1.921875 L0.21875,0.203 2.31225,0.203" HorizontalAlignment="Right" Height="5" Margin="0" Stretch="Fill" Stroke="#FFBBDF14" VerticalAlignment="Top" Width="5" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                            <SkewTransform AngleY="0" AngleX="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path x:Name="path2" Data="M0.21875,1.921875 L0.21875,0.203 2.31225,0.203" HorizontalAlignment="Left" Height="5" Margin="0" Stretch="Fill" Stroke="#FFBBDF14" VerticalAlignment="Bottom" Width="5" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                                            <SkewTransform AngleY="0" AngleX="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path x:Name="path3" Data="M0.21875,1.921875 L0.21875,0.203 2.31225,0.203" HorizontalAlignment="Right" Height="5" Margin="0" Stretch="Fill" Stroke="#FFBBDF14" VerticalAlignment="Bottom" Width="5" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1" ScaleX="-1"/>
+                                            <SkewTransform AngleY="0" AngleX="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger  Property="IsSelected" Value="True">
+                                <Setter Property="Visibility" TargetName="path" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="path1" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="path2" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="path3" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="EnumItemsControlStyle2" TargetType="{x:Type localControls:EnumItemsControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type localControls:EnumItemsControl}">
+                        <Border x:Name="borderItems" Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Height="Auto" x:Name="gridItems">
+                                <Path Data="M36.094,3.025 L16,3.0353664 0.99999999,15.020302 0.99999999,140.89372 16,152 36.00006,152 M15.625,0.99999998 L36.093999,0.99999998 M16.334,149.979 L35.969,149.977" Fill="{x:Null}" HorizontalAlignment="Left" Margin="0" Stretch="Fill" Stroke="White" Width="37.094" StrokeThickness="2"/>
+                                <Path Data="M36.094,2.3743816 L16,2.3815224 0.99999999,10.657786 0.99999999,97.363618 16,105.014 36.000059,105.014 M15.625,1 L36.094,1 M15.625,103.6148 L36,103.6148" Fill="{x:Null}" HorizontalAlignment="Right" Margin="0" Stretch="Fill" Stroke="White" Width="37.094" StrokeThickness="2" RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                            <SkewTransform AngleY="0" AngleX="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <ItemsPresenter Grid.Row="1" Grid.Column="1" Margin="10,5"/>
+                                <Rectangle Fill="Transparent"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SampleFreControlStyle1" TargetType="{x:Type localControls:SampleFreControl}">
+            <Setter Property="MinWidth" Value="10"/>
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type localControls:SampleFreControl}">
+                        <Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="True">
+                            <Grid x:Name="root">
+                                <Path x:Name="sinPath" Data="M119.5,50.000006 C179,-121.47303 179,221.47303 238.5,50.000006 M0.5,50.000006 C60,-121.47303 60,221.47303 119.5,50.000006" HorizontalAlignment="Stretch" Height="Auto" Margin="-119,0,0,0" Stretch="Fill" Stroke="White" VerticalAlignment="Stretch" Width="Auto" RenderTransformOrigin="0.748953974895398,0.499999924451128">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform X="0"/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SamplePointControlStyle1" TargetType="{x:Type localControls:SamplePointControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type localControls:SamplePointControl}">
+                        <Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid x:Name="root">
+                                <localControls:Sine x:Name="sinPath" Stroke="White" StrokeThickness="1" AnimationWidth="{Binding Width, ElementName=___Ellipse4_}"/>
+                                <Ellipse x:Name="___Ellipse4_"  Height="10" Width="10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White" RenderTransformOrigin="0.5,0.5">
+                                    <Ellipse.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Card}">
+        <localControls:DataCardContainer Style="{DynamicResource DataCardContainerStyle1}" TiggerChannelSource="{Binding TriggerChannels}" Margin="332,80,300,58" Height="600" Width="720"/>
+        <localControls:EnumItemsControl x:Name="enumItems" HorizontalAlignment="Left" Margin="30,186.5,0,0" Width="151" Title="积分" Source="{x:Type coreType:Integration}" Style="{DynamicResource EnumItemsControlStyle1}" ItemContainerStyle="{DynamicResource EnumItemContainerStyle1}" Height="122" VerticalAlignment="Top" FontSize="18.667" 
+    			localControls:InSignalCategoryHelper.InSignalCategory="{Binding InSignalCategory}"/>
+        <localControls:EnumItemsControl HorizontalAlignment="Left" Margin="30,375,0,0" Width="181" Title="高通" Source="{x:Type coreType:HP}" Style="{DynamicResource EnumItemsControlStyle1}" ItemContainerStyle="{DynamicResource EnumItemContainerStyle1}" Height="153" VerticalAlignment="Top" FontSize="18.667" />
+        <localControls:EnumItemsControl HorizontalAlignment="Left" Margin="30,80,0,0" Width="220.333" Source="{x:Type coreType:InSignalCategory}" Height="60" VerticalAlignment="Top" FontSize="18.667" Style="{DynamicResource EnumItemsControlStyle2}" d:LayoutOverrides="VerticalAlignment" ItemTemplate="{DynamicResource DataTemplate2}" ItemsPanel="{DynamicResource ItemsPanelTemplate1}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ItemContainerStyle="{DynamicResource ListBoxItemStyle2}"
+    			localControls:ListBoxItemHelper.ItemWidth="50" Padding="0" SelectedIndex="1"  SelectedItem="{Binding InSignalCategory}"/>
+        <Grid x:Name="SampleFreGrid" HorizontalAlignment="Right"  Width="210.834" Height="52.333" Margin="0,30.334,32.166,0" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="101*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <localControls:SampleFreControl Style="{StaticResource SampleFreControlStyle1}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.ColumnSpan="1" Grid.RowSpan="2"/>
+            <TextBlock x:Name="textBlock" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,0,0,0" TextWrapping="Wrap" Text="采样频率" VerticalAlignment="Stretch" Height="Auto" Foreground="#FFB9D516" FontSize="18.667"/>
+            <Path Grid.Column="1" Data="M154.33333,0.66666667 L154.33333,145.49967" HorizontalAlignment="Left" Margin="2.5,0,0,0" Stretch="Fill" Stroke="WhiteSmoke" StrokeThickness="1" StrokeMiterLimit="100" Width="Auto" Grid.RowSpan="2"/>
+            <Path Data="M336.91667,448 L336.91667,454.83333" HorizontalAlignment="Left" Height="8.833" Margin="0.5,-0.979,0,0" Stretch="Fill" Stroke="WhiteSmoke" StrokeThickness="2" StrokeMiterLimit="100" VerticalAlignment="Top" Width="2" Grid.Column="1"/>
+            <TextBox x:Name="textBox" FontFamily="/HUD;component/Fonts/#Vibrocentric" Grid.Column="1" Height="Auto" Margin="4,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="102400" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,1" Foreground="White" FontSize="18" Width="Auto"/>
+            <Path Data="M8.0000002,1 L0.99999997,1 0.99999997,8.0000003 M122.834,1 L129.834,1 129.834,8.0000003 M122.78,51.333 L129.78,51.333 129.78,44.333 M8.0000002,51.333 L0.99999997,51.333 0.99999997,44.333" HorizontalAlignment="Stretch" Height="Auto" Stretch="Fill" Stroke="#FFB9D516" StrokeThickness="2" StrokeMiterLimit="100" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="2"/>
+        </Grid>
+        <Grid x:Name="SamplePointGrid" HorizontalAlignment="Right"  Width="210.834" Height="52.333" Margin="0,87.667,32.166,0" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="101*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <localControls:SamplePointControl Style="{DynamicResource SamplePointControlStyle1}" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="1" Grid.RowSpan="2"/>
+            <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,0,0,0" TextWrapping="Wrap" Text="采样点数" VerticalAlignment="Stretch" Height="Auto" Foreground="#FFB9D516" FontSize="18.667"/>
+            <Path Grid.Column="1" Data="M154.33333,0.66666667 L154.33333,145.49967" HorizontalAlignment="Left" Margin="2.5,0,0,0" Stretch="Fill" Stroke="WhiteSmoke" StrokeThickness="1" StrokeMiterLimit="100" Width="Auto" Grid.RowSpan="2"/>
+            <Path Data="M336.91667,448 L336.91667,454.83333" HorizontalAlignment="Left" Height="8.833" Margin="0.5,-0.979,0,0" Stretch="Fill" Stroke="WhiteSmoke" StrokeThickness="2" StrokeMiterLimit="100" VerticalAlignment="Top" Width="2" Grid.Column="1"/>
+            <TextBox x:Name="textBox1" FontFamily="/HUD;component/Fonts/#Vibrocentric" Grid.Column="1" Height="Auto" Margin="4,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="102400" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,1" Foreground="White" FontSize="16" Width="Auto"/>
+            <Path Data="M8.0000002,1 L0.99999997,1 0.99999997,8.0000003 M122.834,1 L129.834,1 129.834,8.0000003 M122.78,51.333 L129.78,51.333 129.78,44.333 M8.0000002,51.333 L0.99999997,51.333 0.99999997,44.333" HorizontalAlignment="Stretch" Height="Auto" Stretch="Fill" Stroke="#FFB9D516" StrokeThickness="2" StrokeMiterLimit="100" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="2"/>
+        </Grid>
+    </Grid>
+</UserControl>

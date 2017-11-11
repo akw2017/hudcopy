@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\bin\XBAP Debug\AIC.CoreType.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\bin\XBAP Debug\AIC.CoreType.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\XBAP Debug\AIC.CoreType.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\XBAP Debug\AIC.CoreType.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\XBAP Debug\AIC.CoreType.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\XBAP Debug\AIC.CoreType.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\XBAP Debug\AIC.CoreType.pdb

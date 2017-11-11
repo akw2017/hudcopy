@@ -1,0 +1,11 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\bin\Release\AIC.ColorThemes.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\bin\Release\AIC.ColorThemes.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\Themes\Colors.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes.g.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ColorThemes\obj\Release\AIC.ColorThemes.pdb

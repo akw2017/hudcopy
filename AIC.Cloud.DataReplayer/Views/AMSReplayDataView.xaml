@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="AIC.Cloud.DataReplayer.Views.AMSReplayDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:AIC.Cloud.DataReplayer.Views"
+             xmlns:userControl="clr-namespace:AIC.Cloud.DataReplayer.UserControls" 
+             xmlns:lcu="http://www.arction.com/schemas/" 
+             mc:Ignorable="d" 
+             d:DesignHeight="299" d:DesignWidth="453">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <!--<presentation:AnimatedRectangle/>-->
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid Margin="2" Background="#7F243859">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding Title}"  Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                <!--<ToggleButton Name="bandTogBtn" Margin="0,0,5,0" Click="BandTogBtnClick">
+                        <Image Source="../Images/band.png" Margin="1">
+                            <Image.ToolTip>
+                                <ToolTip Content="显示高级功能搜索区间" />
+                            </Image.ToolTip>
+                        </Image>
+                    </ToggleButton>
+                    <ComboBox ItemsSource="{Binding Channels}" SelectedItem="{Binding SelecetedSeriesToken}" Width="80" Margin="0,0,5,0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="White">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}.{1}.{2}.{3}.{4}.{5}.{6}">
+                                            <Binding Path="Channel.GroupCOName"/>
+                                            <Binding Path="Channel.CorporationName"/>
+                                            <Binding Path="Channel.WorkShopName"/>
+                                            <Binding Path="Channel.DevName"/>
+                                            <Binding Path="Channel.DevSN"/>
+                                            <Binding Path="Channel.Name"/>
+                                            <Binding Path="Channel.MSSN"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <userControl:MultiSelectComboBox ItemsSource="{Binding AllGraphTypes}" SelectedItems="{Binding SelectedGraphTypes}" Width="80"  Margin="0,0,5,0"/>
+                    <Button Margin="0,0,5,0" Command="{Binding SearchAdvancedCommand}">
+                        <Image Source="../Images/Search.png" Margin="1">
+                            <Image.ToolTip>
+                                <ToolTip Content="搜索" />
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    <Rectangle Width="1" Fill="White" Margin="0,0,5,0"/>-->
+                <!--<ToggleButton Name="animationTogBtn" Margin="0,0,5,0" Click="AnimationButtonClick">
+                        <Image Source="../Images/Animation.png" Margin="1">
+                            <Image.ToolTip>
+                                <ToolTip Content="播放波形" />
+                            </Image.ToolTip>
+                        </Image>
+                    </ToggleButton>
+                    <Button Name="SpeedUpBtn" Margin="0,0,5,0" Click="SpeedUpBtnClick">
+                        <Image Source="../Images/SpeedUp.png" Margin="1">
+                            <Image.ToolTip>
+                                <ToolTip Content="加速播放" />
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    <Button Name="SpeedDownBtn" Margin="0,0,5,0"  Click="SpeedDownBtnClick">
+                        <Image Source="../Images/SpeedDown.png" Margin="1">
+                            <Image.ToolTip>
+                                <ToolTip Content="减速播放"/>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>-->
+                <Button Content="复位" Click="ResetButton_Click" Width="30" Style="{StaticResource ButtonStyle}"/>
+                <RepeatButton FontFamily="Marlett" FontSize="20" Content="3" Margin="2,0" Click="MovePrevious_Click" Style="{StaticResource RepeatButtonStyle}"/>
+                <RepeatButton FontFamily="Marlett" FontSize="20" Content="7"  Click="MovePlay_Click" Style="{StaticResource RepeatButtonStyle}" RenderTransformOrigin="0.5,0.5">
+                    <RepeatButton.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform  Angle="270"/>
+                            <TranslateTransform X="0" Y="-1"/>
+                        </TransformGroup>
+                    </RepeatButton.RenderTransform>
+
+                </RepeatButton>
+                <RepeatButton FontFamily="Marlett" FontSize="20" Content="4"  Click="MoveNext_Click" Style="{StaticResource RepeatButtonStyle}"/>
+                <!--<TextBlock Text="总条数:" Foreground="White" VerticalAlignment="Center"/>-->
+                <TextBlock Text="{Binding AllCount}" Foreground="#FF85CBEB" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <!--<TextBlock Text="区间条数:" Foreground="White" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding AdvancedCount}" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>-->
+            </StackPanel>
+
+            <Grid Name="gridChart" Grid.Row="1">
+
+            </Grid>
+            <Button Grid.Row="1"  Style="{StaticResource ButtonStyle}" Width="25" Height="25"  Content="截图" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click">
+                <Button.ToolTip>
+                    <TextBlock Text="截图"/>
+                </Button.ToolTip>
+            </Button>
+        </Grid>
+        <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        <Path Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+    </Grid>
+</UserControl>

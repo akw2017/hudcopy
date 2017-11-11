@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="AIC.Cloud.DataReplayer.Views.OrderAnalysisDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}" CornerRadius="7"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <!--<presentation:AnimatedRectangle/>-->
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Margin="2" Background="#7F243859">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Title}" Foreground="#FF87CDEE" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Width="25"  Margin="5,0" Click="Button_Click_1">
+                    <Image Source="../Images/Resize.png" />
+                </Button>
+                <Button Width="25"  Margin="5,0" Click="Button_Click_2">
+                    <Image Source="../Images/Resize.png" />
+                </Button>
+                <Button Width="25"  Margin="5,0" Click="Button_Click_3">
+                    <Image Source="../Images/Resize.png" />
+                </Button>
+                <CheckBox Name="checkBoxOrthographic" Checked="checkBoxOrthographic_Checked" Unchecked="checkBoxOrthographic_Unchecked" Content="正交" VerticalAlignment="Center" Foreground="#FF87CDEE"/>
+                <TextBlock Name="textX" Width="50"/>
+                <TextBlock Name="textY" Width="50"/>
+                <TextBlock Name="textZ" Width="50"/>
+            </StackPanel>
+            <Grid Name="gridChart" Grid.Row="1">
+
+            </Grid>
+            <Button Grid.Row="1" Style="{StaticResource ButtonStyle}" Width="25" Height="25"  Content="截图" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click">
+                <Button.ToolTip>
+                    <TextBlock Text="截图"/>
+                </Button.ToolTip>
+            </Button>
+        </Grid>
+        <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        <Path Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+    </Grid>
+ 
+</UserControl>

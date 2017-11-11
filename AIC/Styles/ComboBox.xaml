@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:localControls="clr-namespace:AIC.Controls"
+                    xmlns:localBehaviors="clr-namespace:AIC.Core;assembly=AIC.Core">
+
+    <Style x:Key="ChangeNotifyComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+        <Setter Property="localBehaviors:ChangeBehavior.IsActive" Value="true"/>
+        <!--<Setter Property="localBehaviors:ChangeBehavior.OriginalValueConverter" Value="{StaticResource enumDescriptionConverter}"/>-->
+        <Style.Triggers>
+            <Trigger Property="localBehaviors:ChangeBehavior.IsChanged" Value="true">
+                <Setter Property="Background" Value="{StaticResource IsChangedBackgroundBrush}"/>
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},Path=(localBehaviors:ChangeBehavior.OriginalValue)}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

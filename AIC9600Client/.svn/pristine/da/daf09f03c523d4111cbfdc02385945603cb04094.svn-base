@@ -1,0 +1,25 @@
+﻿/* Author : zhengyangyong */
+using PetaPoco;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AIC.M9600.Common.SlaveDB
+{
+    public static class PetaPocoExtension
+    {
+        public static bool CheckTableExist(this Database orm, string targetTableName)
+        {
+            int? tableid = orm.ExecuteScalar<int?>("select object_id from sys.objects where name = @0 and type = 'U'", targetTableName);
+            return tableid.HasValue;
+        }
+
+        public static bool CheckTableExist(this Database orm, string originalTableName, DateTime time, string splitterExpression)
+        {
+            string targetTableName = PetaPocoGlobal.GetAddTimeFormatEnding(originalTableName, time, splitterExpression);
+            return CheckTableExist(orm, targetTableName);
+        }
+    }
+}

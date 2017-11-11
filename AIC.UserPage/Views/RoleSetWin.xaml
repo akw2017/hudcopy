@@ -1,0 +1,66 @@
+﻿<Controls:MetroWindow x:Class="AIC.UserPage.Views.RoleSetWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.UserPage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:convert="clr-namespace:AIC.UserPage.Converters"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="角色设置" Height="280" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/wrench_orange.png" Topmost="True">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <convert:GuidNameConverter x:Key="guidNameConverter"/>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>    
+    <Grid Background ="{DynamicResource AccentColorBrush2}">
+        <Grid Margin="20" Height="180" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>                          
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource name}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center"
+                Text = "{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <!--<Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource code}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtCode" VerticalContentAlignment="Center"
+                Text = "{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>-->
+            <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource sortNo}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtSortNo" VerticalContentAlignment="Center"
+                Text = "{Binding Sort_No, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource isAdmin}"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" x:Name="chkIsAdmin" IsChecked="{Binding Is_Admin}"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource isSuperAdmin}"/>
+            <CheckBox Grid.Row="4" Grid.Column="1" x:Name="chkIsSuperAdmin" IsChecked="{Binding Is_SuperAdmin}"/>
+            <Button Grid.Row="5" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="5" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

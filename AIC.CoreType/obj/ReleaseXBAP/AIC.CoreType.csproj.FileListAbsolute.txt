@@ -1,0 +1,17 @@
+C:\Users\Tom\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\Tom\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\Tom\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.pdb
+C:\Users\Tom\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.pdb
+G:\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.dll
+G:\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.pdb
+G:\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.csprojResolveAssemblyReference.cache
+G:\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.dll
+G:\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.pdb
+C:\Users\Tom Smith\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\Tom Smith\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.pdb
+C:\Users\Tom Smith\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\Tom Smith\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.pdb
+C:\Users\WangSongsong\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\WangSongsong\Desktop\AIC\AIC.CoreType\bin\ReleaseXBAP\AIC.CoreType.pdb
+C:\Users\WangSongsong\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.dll
+C:\Users\WangSongsong\Desktop\AIC\AIC.CoreType\obj\ReleaseXBAP\AIC.CoreType.pdb

@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="AIC.UserPage.Views.UserSetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIC.UserPage"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:prism="http://prismlibrary.com/"  
+             xmlns:page="clr-namespace:Wpf.PageNavigationControl;assembly=Wpf.PageNavigationControl"
+             xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid >
+        <Grid.RowDefinitions>           
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>             
+        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center"/>
+            <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
+                        <TextBlock Text="{DynamicResource search}" VerticalAlignment="Center" />                      
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <TextBlock Text="{DynamicResource menuUserManage}" VerticalAlignment="Center" Margin="20,0,0,0"/>
+            <TextBox DataContext="{Binding ElementName=table, Path=SelectedItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" IsReadOnly="True"/>
+            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
+                        <TextBlock Text="{DynamicResource edit}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                        <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>           
+        </StackPanel>
+        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*"
+                  ItemsSource="{Binding T_UserView}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding id}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding Name}"  MinWidth="60"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="{DynamicResource code}" Binding="{Binding Code}"  MinWidth="60"></DataGridTextColumn>-->
+                <DataGridTextColumn Header="{DynamicResource aliasName}" Binding="{Binding Alias_Name}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource password}" Binding="{Binding Password}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource role}" Binding="{Binding T_Role_Name}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource menu}" Binding="{Binding T_Menu_Name}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource organization}" Binding="{Binding T_OrganizationPrivilege_Name}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource personTelephone}" Binding="{Binding Person_Telephone}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource officeTelephone}" Binding="{Binding Office_Telephone}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource email}" Binding="{Binding Email}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource contact}" Binding="{Binding Contact}"  MinWidth="60"></DataGridTextColumn>    
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource MetroDataGridCell}"
+                       TargetType="{x:Type DataGridCell}">
+
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                </Style>
+            </DataGrid.Style>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+        <page:PageNavigation Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize, Mode=TwoWay}" 
+            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=OneWayToSource}" Grid.Row="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CurrentPageChanged">
+                    <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </page:PageNavigation>
+    </Grid>
+</UserControl>

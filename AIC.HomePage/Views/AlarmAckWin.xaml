@@ -1,0 +1,109 @@
+﻿<Controls:MetroWindow x:Class="AIC.HomePage.Views.AlarmAckWin"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
+        Title="报警栏确认" Height="340" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
+    <Control.Resources>
+        <!--<ResourceDictionary Source="/AIC.PDAPage;component/Themes/Generic.xaml" />-->
+    </Control.Resources>
+    <Grid Background = "{DynamicResource AccentColorBrush2}">
+        <Grid Margin="10" Height="280">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock VerticalAlignment="Center" >
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}">
+                        <Binding Path="DeviceItemName"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+                <TextBlock.ToolTip>
+                    <MultiBinding StringFormat="{}{0}">
+                        <Binding Path="FullName"/>
+                    </MultiBinding>
+                </TextBlock.ToolTip>
+            </TextBlock>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock x:Name="AMSText" Text="{Binding Result, StringFormat=F3, Mode=TwoWay}" VerticalAlignment="Center" Margin="2,0,2,0">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="Invalid">
+                                    <Setter  Property="Foreground" Value="Gray"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighNormal">
+                                    <Setter Property="Foreground" Value="#FF85CBEB" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="LowNormal">
+                                    <Setter Property="Foreground" Value="#FF85CBEB" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighAlert">
+                                    <Setter Property="Foreground" Value="DarkOrange"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="LowAlert">
+                                    <Setter Property="Foreground" Value="DarkOrange" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighDanger">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="LowDanger">
+                                    <Setter Property="Foreground" Value="Red" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Text="{Binding Unit}" VerticalAlignment="Center" Margin="1,0,0,0" />               
+            </StackPanel>
+
+            <DataGrid x:Name="table" Grid.Row="2" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*"
+                  ItemsSource="{Binding AlarmLimit}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="报警项" Binding="{Binding Name}"  MinWidth="60"></DataGridTextColumn>
+                    <DataGridTextColumn Header="报警值" Binding="{Binding Limit}"  MinWidth="60"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Style>
+                    <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                        <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                    </Style>
+                </DataGrid.Style>
+            </DataGrid>
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Button  x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                            <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Row="3" Grid.Column="2" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True" Margin="20,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                            <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

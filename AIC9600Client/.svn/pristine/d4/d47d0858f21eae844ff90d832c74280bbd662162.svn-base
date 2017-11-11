@@ -1,0 +1,312 @@
+﻿using CitizenSoftwareLib.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Net.Sockets;
+using System.Runtime.ExceptionServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+
+namespace CitizenSoftwareLib.Network.Socket
+{
+    public delegate void ClientMessageReceivedHandler(IPEndPoint from, Stream stream, List<TCPMessage> messages);
+    public delegate void ClientDisconnectedHandler(string client);
+    public delegate void ClientConnectedHandler(string client, Stream stream);
+
+    public class TCPServer : IDisposable
+    {
+        public int Port { get; private set; }
+        public string IPAddress { get; private set; }
+        public event ClientMessageReceivedHandler ClientMessageReceived = null;
+        public event ClientDisconnectedHandler ClientDisconnected = null;
+        public event ClientConnectedHandler ClientConnected = null;
+
+        public X509Certificate2 ServerCert { get; private set; }
+
+        private TcpListener _listener = null;
+        private bool _clientCertRequired = false;
+
+        private List<TCPContext> _clients = new List<TCPContext>();
+
+        public TCPServer(int port)
+            : this("localhost", port)
+        {
+        }
+
+        public bool IsListening
+        {
+            get { return _listener.Server.IsBound; }
+        }
+
+        public TCPServer(String ipAddress, int port, string serverCertPath = null, string serverCertPassword = null, bool? clientCertRequired = false)
+        {
+            this.IPAddress = ipAddress;
+            this.Port = port;
+            this._clientCertRequired = clientCertRequired.HasValue ? clientCertRequired.Value : false;
+
+            if (ipAddress == "localhost")
+            {
+                _listener = new TcpListener(System.Net.IPAddress.Any, port);
+            }
+            else
+            {
+                _listener = new TcpListener(System.Net.IPAddress.Parse(ipAddress), port);
+            }
+
+            if (!string.IsNullOrWhiteSpace(serverCertPath) && File.Exists(serverCertPath))
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(serverCertPassword))
+                    {
+                        ServerCert = new X509Certificate2(serverCertPath);
+                    }
+                    else
+                    {
+                        ServerCert = new X509Certificate2(serverCertPath, serverCertPassword);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogFactory.Get().Fatal(ex.ToString());
+                }
+            }
+
+            _listener.ExclusiveAddressUse = true;
+        }
+
+        public void Start()
+        {
+            LogFactory.Get().Info("Server Started");
+            _listener.Start();
+            _listener.BeginAcceptTcpClient(new AsyncCallback(AcceptTcpClient), null);
+        }
+
+        public void Stop()
+        {
+            LogFactory.Get().Info("Server Stopped");
+            _listener.Stop();
+            lock (_clients)
+            {
+                foreach (var client in _clients)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+
+        public void SendMessage(TCPMessage message)
+        {
+            lock (_clients)
+            {
+                _clients.AsParallel().ForAll(client =>
+                {
+                    try
+                    {
+                        message.WriteToStream(client.Stream);
+                    }
+                    catch { }
+                });
+            }
+        }
+
+        public void SendMessage(string[] clients, TCPMessage message)
+        {
+            lock (_clients)
+            {
+                _clients.Where((client) => clients.Contains(client.RemoteName)).AsParallel().ForAll(client =>
+                {
+                    try
+                    {
+                        message.WriteToStream(client.Stream);
+                    }
+                    catch { }
+                });
+            }
+        }
+
+        public List<string> SendMessage(Dictionary<string, TCPMessage> messages)
+        {
+            List<string> missing = new List<string>();
+            lock (_clients)
+            {
+                lock (_clients)
+                {
+                    messages.AsParallel().ForAll(message =>
+                    {
+                        try
+                        {
+                            var target = _clients.Find((client) => client.RemoteName == message.Key);
+                            if (target != null)
+                            {
+                                message.Value.WriteToStream(target.Stream);
+                            }
+                            else missing.Add(message.Key);
+                        }
+                        catch { missing.Add(message.Key); }
+                    });
+                }
+            }
+            return missing;
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        private void AcceptTcpClient(IAsyncResult obj)
+        {
+            TcpClient client = null;
+            try
+            {
+                client = _listener.EndAcceptTcpClient(obj);
+            }
+            catch { }
+            finally
+            {
+                try
+                {
+                    _listener.BeginAcceptTcpClient(new AsyncCallback(AcceptTcpClient), null);
+                }
+                catch { }
+            }
+
+            if (client != null)
+            {
+                client.ReceiveBufferSize = 8192;
+                client.SendBufferSize = 8192;
+                if (ServerCert != null)
+                {
+                    SslStream stream = new SslStream(client.GetStream(), false);
+                    TCPContext context = new TCPContext(client, stream);
+                    stream.BeginAuthenticateAsServer(ServerCert, _clientCertRequired, System.Security.Authentication.SslProtocols.Tls, false, new AsyncCallback(AuthenticateClient), context);
+                }
+                else
+                {
+                    TCPContext context = null;
+                    try
+                    {
+                        context = new TCPContext(client, client.GetStream());
+                        lock (_clients)
+                        {
+                            _clients.Add(context);
+                        }
+                        context.Stream.BeginRead(context.Buffer, 0, context.Buffer.Length, new AsyncCallback(MessageRead), context);
+                        if (this.ClientConnected != null)
+                        {
+                            this.ClientConnected(context.RemoteName, context.Stream);
+                        }
+                    }
+                    catch (IOException)
+                    {
+                        this.CloseTcpClient(context);
+                    }
+                }
+            }
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        private void AuthenticateClient(IAsyncResult obj)
+        {
+            TCPContext context = obj.AsyncState as TCPContext;
+            ((SslStream)context.Stream).EndAuthenticateAsServer(obj);
+            if (((SslStream)context.Stream).IsAuthenticated)
+            {
+                lock (_clients)
+                {
+                    _clients.Add(context);
+                }
+                try
+                {
+                    context.Stream.BeginRead(context.Buffer, 0, context.Buffer.Length, new AsyncCallback(MessageRead), context);
+                    if (this.ClientConnected != null)
+                    {
+                        this.ClientConnected(context.RemoteName, context.Stream);
+                    }
+                }
+                catch (IOException)
+                {
+                    this.CloseTcpClient(context);
+                }
+            }
+            else
+            {
+                this.CloseTcpClient(context);
+            }
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        private void MessageRead(IAsyncResult obj)
+        {
+            TCPContext context = obj.AsyncState as TCPContext;
+            List<TCPMessage> messages = null;
+            try
+            {
+                int count = context.Stream.EndRead(obj);
+                if (count != 0)
+                {
+                    context.ResetRetryCount();
+                    context.AcceptBuffer(count);
+                    messages = context.ExtractMessage();
+                }
+                else
+                {
+                    if (context.DecrementRetryCount())
+                    {
+                        this.CloseTcpClient(context);
+                    }
+                }
+                context.Stream.BeginRead(context.Buffer, 0, context.Buffer.Length, new AsyncCallback(MessageRead), context);
+            }
+            catch (IOException ex)
+            {
+                LogFactory.Get().Error(ex.ToString());
+                this.CloseTcpClient(context);
+            }
+            catch { }
+            finally
+            {
+                if (messages != null && messages.Count != 0 && ClientMessageReceived != null)
+                {
+                    try
+                    {
+                        ClientMessageReceived((IPEndPoint)context.Client.Client.RemoteEndPoint, context.Stream, messages);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogFactory.Get().Error(ex.ToString());
+                    }
+                }
+            }
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        private void CloseTcpClient(TCPContext context)
+        {
+            if (context != null)
+            {
+                try
+                {
+                    lock (_clients)
+                    {
+                        _clients.Remove(context);
+                        context.Dispose();
+                    }
+                    if (ClientDisconnected != null)
+                    {
+                        ClientDisconnected(context.RemoteName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogFactory.Get().Error(ex.ToString());
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            this.Stop();
+        }
+    }
+}

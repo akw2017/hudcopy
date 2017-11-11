@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AMP_Auto" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="AMP_Five" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="AMP_One" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Unit_Pressure" xml:space="preserve">
+    <value>Pa</value>
+  </data>
+  <data name="Unit_Tempature" xml:space="preserve">
+    <value>°C</value>
+  </data>
+  <data name="AVS_Acceleration" xml:space="preserve">
+    <value>加速度</value>
+  </data>
+  <data name="AVS_Displacement" xml:space="preserve">
+    <value>位移</value>
+  </data>
+  <data name="AVS_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="DigitalUnit_RPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
+  <data name="SensorType_Acceleration" xml:space="preserve">
+    <value>加速度</value>
+  </data>
+  <data name="SensorType_Displacement" xml:space="preserve">
+    <value>位移</value>
+  </data>
+  <data name="SensorType_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Winfun_Blackman" xml:space="preserve">
+    <value>布莱克曼窗</value>
+  </data>
+  <data name="Winfun_Haining" xml:space="preserve">
+    <value>海宁窗</value>
+  </data>
+  <data name="Winfun_Hamming" xml:space="preserve">
+    <value>海明窗</value>
+  </data>
+  <data name="Winfun_None" xml:space="preserve">
+    <value>不加窗</value>
+  </data>
+  <data name="Winfun_Triangle" xml:space="preserve">
+    <value>三角窗</value>
+  </data>
+  <data name="nType_Four" xml:space="preserve">
+    <value>AIC9800</value>
+  </data>
+  <data name="nType_One" xml:space="preserve">
+    <value>AIC3600</value>
+  </data>
+  <data name="nType_Three" xml:space="preserve">
+    <value>AIC1360</value>
+  </data>
+  <data name="nType_Two" xml:space="preserve">
+    <value>AIC8600</value>
+  </data>
+  <data name="nType_Zero" xml:space="preserve">
+    <value>AIC9900</value>
+  </data>
+  <data name="AlarmSaveStr_HostComputer" xml:space="preserve">
+    <value>上位机控制</value>
+  </data>
+  <data name="AlarmSaveStr_RealTime" xml:space="preserve">
+    <value>实时传递</value>
+  </data>
+  <data name="AlarmStrategt_Danger" xml:space="preserve">
+    <value>危险</value>
+  </data>
+  <data name="AlarmStrategt_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="AlarmStrategt_Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="SVType_Peak" xml:space="preserve">
+    <value>峰值</value>
+  </data>
+  <data name="SVType_PeakToPeak" xml:space="preserve">
+    <value>峰峰值</value>
+  </data>
+  <data name="SVType_RMS" xml:space="preserve">
+    <value>有效值</value>
+  </data>
+  <data name="CurveType_Bode" xml:space="preserve">
+    <value>波德</value>
+  </data>
+  <data name="CurveType_DoubleCoupling" xml:space="preserve">
+    <value>双通道耦合</value>
+  </data>
+  <data name="CurveType_Nyquist" xml:space="preserve">
+    <value>奈奎斯特</value>
+  </data>
+  <data name="CurveType_RPM3D" xml:space="preserve">
+    <value>转速三位谱</value>
+  </data>
+  <data name="CurveType_SignalTransient" xml:space="preserve">
+    <value>单通道瞬态</value>
+  </data>
+  <data name="CurveType_SingleContinuous" xml:space="preserve">
+    <value>单通道连续</value>
+  </data>
+  <data name="CurveType_Time3D" xml:space="preserve">
+    <value>时间三维谱</value>
+  </data>
+  <data name="VAlarmSaveStr_HostContinuousWave" xml:space="preserve">
+    <value>上位机连续波形</value>
+  </data>
+  <data name="VAlarmSaveStr_HostIntervalPoint" xml:space="preserve">
+    <value>上位机间隔点值</value>
+  </data>
+  <data name="VAlarmSaveStr_HostIntervalWave" xml:space="preserve">
+    <value>上位机间隔瞬态波形</value>
+  </data>
+  <data name="VAlarmSaveStr_HostNotIntervalPoint" xml:space="preserve">
+    <value>上位机非间隔点值</value>
+  </data>
+  <data name="VAlarmSaveStr_HostNotIntervalWave" xml:space="preserve">
+    <value>上位机非间隔瞬态波形</value>
+  </data>
+  <data name="VAlarmSaveStr_LM" xml:space="preserve">
+    <value>下位机上传</value>
+  </data>
+  <data name="TriggerType_Auto" xml:space="preserve">
+    <value>自由触发</value>
+  </data>
+  <data name="TriggerType_RPM" xml:space="preserve">
+    <value>转速触发</value>
+  </data>
+  <data name="TriggerType_Angle" xml:space="preserve">
+    <value>等角度转速触发</value>
+  </data>
+  <data name="Unit_RPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
+  <data name="Unit_Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="HP_FourHundred" xml:space="preserve">
+    <value>400Hz</value>
+  </data>
+  <data name="HP_Not" xml:space="preserve">
+    <value>不加高通</value>
+  </data>
+  <data name="HP_OneThousand" xml:space="preserve">
+    <value>1000Hz</value>
+  </data>
+  <data name="HP_Ten" xml:space="preserve">
+    <value>10Hz</value>
+  </data>
+  <data name="Unit_Acceleration" xml:space="preserve">
+    <value>m/s^2</value>
+  </data>
+  <data name="Unit_Displacement" xml:space="preserve">
+    <value>um</value>
+  </data>
+  <data name="Unit_Velocity" xml:space="preserve">
+    <value>mm/s</value>
+  </data>
+  <data name="CollectionChangedAction_Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="CollectionChangedAction_Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="SignalType_Analog" xml:space="preserve">
+    <value>模拟</value>
+  </data>
+  <data name="SignalType_Digital" xml:space="preserve">
+    <value>数字</value>
+  </data>
+  <data name="SignalType_Vibration" xml:space="preserve">
+    <value>振动</value>
+  </data>
+  <data name="AlarmGrade_Invalid" xml:space="preserve">
+    <value>无效</value>
+  </data>
+  <data name="AlarmGrade_HighDanger" xml:space="preserve">
+    <value>高危</value>
+  </data>
+  <data name="AlarmGrade_HighNormal" xml:space="preserve">
+    <value>高正常</value>
+  </data>
+  <data name="AlarmGrade_HighAlert" xml:space="preserve">
+    <value>高警</value>
+  </data>
+  <data name="ServerStatusType_Maintenance" xml:space="preserve">
+    <value>维护模式</value>
+  </data>
+  <data name="ServerStatusType_Online" xml:space="preserve">
+    <value>在线模式</value>
+  </data>
+  <data name="QueryCompressType_MaxAndMin_Absolute" xml:space="preserve">
+    <value>最大最小绝对值取样</value>
+  </data>
+  <data name="QueryCompressType_MaxAndMin_Normal" xml:space="preserve">
+    <value>最大最小取样</value>
+  </data>
+  <data name="QueryCompressType_Sequence" xml:space="preserve">
+    <value>顺序取样</value>
+  </data>
+  <data name="AlarmGradeFilter_All" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="AlarmGradeFilter_Danger" xml:space="preserve">
+    <value>危险</value>
+  </data>
+  <data name="AlarmGradeFilter_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="AlarmGradeFilter_Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="AlarmGradeFilter_WarningAndDanger" xml:space="preserve">
+    <value>警告与危险</value>
+  </data>
+  <data name="UserLevels_Administrator" xml:space="preserve">
+    <value>管理员</value>
+  </data>
+  <data name="UserLevels_Engineer" xml:space="preserve">
+    <value>工程师</value>
+  </data>
+  <data name="SignalDisplayType_Bode" xml:space="preserve">
+    <value>伯德</value>
+  </data>
+  <data name="SignalDisplayType_Ortho" xml:space="preserve">
+    <value>轴心轨迹</value>
+  </data>
+  <data name="SignalDisplayType_FrequencyDomain" xml:space="preserve">
+    <value>频域</value>
+  </data>
+  <data name="SignalDisplayType_Nyquist" xml:space="preserve">
+    <value>奈圭斯特</value>
+  </data>
+  <data name="SignalDisplayType_AMSTrend" xml:space="preserve">
+    <value>趋势</value>
+  </data>
+  <data name="SignalDisplayType_RPM3D" xml:space="preserve">
+    <value>转速三维谱</value>
+  </data>
+  <data name="SignalDisplayType_Time3DSpectrum" xml:space="preserve">
+    <value>时间三维谱</value>
+  </data>
+  <data name="SignalDisplayType_TimeDomain" xml:space="preserve">
+    <value>时域</value>
+  </data>
+  <data name="SignalDisplayType_Value" xml:space="preserve">
+    <value>数值</value>
+  </data>
+  <data name="DivFreType_Custom" xml:space="preserve">
+    <value>用户定义</value>
+  </data>
+  <data name="DivFreType_Range" xml:space="preserve">
+    <value>基于范围</value>
+  </data>
+  <data name="DivFreType_RPM" xml:space="preserve">
+    <value>基于转速</value>
+  </data>
+  <data name="SignalDisplayType_MultiDivFre" xml:space="preserve">
+    <value>分频报警</value>
+  </data>
+  <data name="SignalDisplayType_SingleDivFre" xml:space="preserve">
+    <value>单一分频报警</value>
+  </data>
+  <data name="SignalDisplayType_OffDesignCondition" xml:space="preserve">
+    <value>变工况</value>
+  </data>
+  <data name="SignalDisplayType_OrderAnalysis" xml:space="preserve">
+    <value>阶次分析</value>
+  </data>
+  <data name="AMP_Ten" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="AMP_Two" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SampleType_Continuous" xml:space="preserve">
+    <value>连续</value>
+  </data>
+  <data name="SampleType_Cycle" xml:space="preserve">
+    <value>周期</value>
+  </data>
+  <data name="SampleType_Transient" xml:space="preserve">
+    <value>瞬态</value>
+  </data>
+  <data name="SignalDisplayType_AlarmPointTrend" xml:space="preserve">
+    <value>报警点趋势</value>
+  </data>
+  <data name="SVType_AxialTranslation" xml:space="preserve">
+    <value>轴位移</value>
+  </data>
+  <data name="SVType_RPM" xml:space="preserve">
+    <value>转速</value>
+  </data>
+  <data name="AlarmGrade_LowAlert" xml:space="preserve">
+    <value>低警</value>
+  </data>
+  <data name="AlarmGrade_LowDanger" xml:space="preserve">
+    <value>低危</value>
+  </data>
+  <data name="AlarmGrade_LowNormal" xml:space="preserve">
+    <value>低正常</value>
+  </data>
+  <data name="RunningMode_Auto" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="RunningMode_Manual" xml:space="preserve">
+    <value>手动</value>
+  </data>
+  <data name="RunningState_Stable" xml:space="preserve">
+    <value>平稳运行</value>
+  </data>
+  <data name="RunningState_Start" xml:space="preserve">
+    <value>启机</value>
+  </data>
+  <data name="RunningState_Stop" xml:space="preserve">
+    <value>停机</value>
+  </data>
+  <data name="ComputeHost_Hardware" xml:space="preserve">
+    <value>硬件</value>
+  </data>
+  <data name="ComputeHost_Software" xml:space="preserve">
+    <value>软件</value>
+  </data>
+  <data name="TriggerType_Cycle" xml:space="preserve">
+    <value>等周期触发</value>
+  </data>
+  <data name="ThresholdMode_Auto" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="ThresholdMode_Manual" xml:space="preserve">
+    <value>手动</value>
+  </data>
+  <data name="ThresholdMode_None" xml:space="preserve">
+    <value>不启用</value>
+  </data>
+  <data name="FilterType_BandPass" xml:space="preserve">
+    <value>带通</value>
+  </data>
+  <data name="FilterType_HighPass" xml:space="preserve">
+    <value>高通</value>
+  </data>
+  <data name="FilterType_LowPass" xml:space="preserve">
+    <value>低通</value>
+  </data>
+  <data name="NaturalFreMode_Additive" xml:space="preserve">
+    <value>附加</value>
+  </data>
+  <data name="NaturalFreMode_Subtractive" xml:space="preserve">
+    <value>排除</value>
+  </data>
+  <data name="DiagnosisMethod_Energy" xml:space="preserve">
+    <value>能量</value>
+  </data>
+  <data name="DiagnosisMethod_FrequencyPeakValue" xml:space="preserve">
+    <value>频率峰值</value>
+  </data>
+  <data name="InSignalCategory_Acceleration" xml:space="preserve">
+    <value>加速度</value>
+  </data>
+  <data name="InSignalCategory_Cach" xml:space="preserve">
+    <value>缓存</value>
+  </data>
+  <data name="InSignalCategory_Displacement" xml:space="preserve">
+    <value>位移</value>
+  </data>
+  <data name="InSignalCategory_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Integration_None" xml:space="preserve">
+    <value>不积分</value>
+  </data>
+  <data name="Integration_One" xml:space="preserve">
+    <value>一次积分</value>
+  </data>
+  <data name="Integration_Two" xml:space="preserve">
+    <value>二次积分</value>
+  </data>
+</root>

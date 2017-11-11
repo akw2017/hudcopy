@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\bin\x86\Debug\AIC.CoreType.dll
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\bin\x86\Debug\AIC.CoreType.pdb
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\obj\x86\Debug\AIC.CoreType.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\obj\x86\Debug\AIC.CoreType.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\obj\x86\Debug\AIC.CoreType.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\obj\x86\Debug\AIC.CoreType.dll
+D:\SupportProject\AIC_HUD\AICHUID\AIC.CoreType\obj\x86\Debug\AIC.CoreType.pdb

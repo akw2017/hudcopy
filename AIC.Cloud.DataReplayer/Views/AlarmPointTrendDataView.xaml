@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="AIC.Cloud.DataReplayer.Views.AlarmPointTrendDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:presentation="http://www.aicmonitor.com/Presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <presentation:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <!--<presentation:AnimatedRectangle/>-->
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid >
+        <Grid Margin="2" Background="#7F243859">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Title}"  Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                <Label Content="通道:" Foreground="#FF87CDEE"/>
+                <ComboBox ItemsSource="{Binding ContractsCollection}" SelectedItem="{Binding SelecetedSeriesToken}" SelectionChanged="ComboBox_SelectionChanged" Width="80" Margin="0,0,5,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}.{1}.{2}.{3}.{4}.{5}.{6}">
+                                        <Binding Path="Channel.GroupCOName"/>
+                                        <Binding Path="Channel.CorporationName"/>
+                                        <Binding Path="Channel.WorkShopName"/>
+                                        <Binding Path="Channel.DevName"/>
+                                        <Binding Path="Channel.DevSN"/>
+                                        <Binding Path="Channel.Name"/>
+                                        <Binding Path="Channel.MSSN"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <ComboBox.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}.{1}.{2}.{3}.{4}.{5}.{6}">
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.GroupCOName"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.CorporationName"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.WorkShopName"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.DevName"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.DevSN"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.Name"/>
+                                    <Binding Path="SelecetedSeriesToken.Token.Token.MSSN"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+                <RadioButton Content="时域" Name="timeRadioBtn" Foreground="#FF87CDEE" IsChecked="True" VerticalAlignment="Center" Checked="timeRadioBtn_Checked"/>
+                <RadioButton Content="频域" Name="frequencyRadioBtn" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="frequencyRadioBtn_Checked"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="#FF87CDEE" Margin="5,0"/>
+                <Button Content="Graph" Command="{Binding ShowGraphCommand}" Margin="0,0,0,0" Style="{StaticResource ButtonStyle}"/>
+                <CheckBox Name="showAMSCheckBox" Foreground="#FF87CDEE" Content="AMS" Margin="5,0,0,0" Checked="showAMSCheckBox_Checked" Unchecked="showAMSCheckBox_Unchecked" VerticalAlignment="Center"/>
+            </StackPanel>
+            <Grid Name="gridChart" Grid.Row="1" Grid.RowSpan="2">
+                
+            </Grid>
+            <Button Grid.Row="1"  Style="{StaticResource ButtonStyle}" Width="25" Height="25"  Content="截图" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click">
+                <Button.ToolTip>
+                    <TextBlock Text="截图"/>
+                </Button.ToolTip>
+            </Button>
+        </Grid>
+        <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        <Path Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+    </Grid>
+</UserControl>

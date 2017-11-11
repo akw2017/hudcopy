@@ -1,0 +1,224 @@
+﻿using AIC.M9600.Client.DataProvider;
+using AIC.M9600.Common.DTO.Device;
+using AIC.M9600.Common.DTO.Web;
+using AIC.M9600.Common.MasterDB.Generated;
+using AIC.M9600.Common.SlaveDB.Generated;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace XClientAPIDemo
+{
+    class Program
+    {
+
+        public static void Complex<T>(DataProvider provider, ICollection<T> addobjs, ICollection<T> editobjs, ICollection<object> deleteids)
+        {
+            Dictionary<string, ICollection<object>> addDic = new Dictionary<string, ICollection<object>>();
+            if (addobjs != null)
+            {
+                addDic.Add(typeof(T).Name, addobjs.Select(p => p as object).ToList());
+            }
+            Dictionary<string, Tuple<ICollection<string>, ICollection<object>>> editDic = new Dictionary<string, Tuple<ICollection<string>, ICollection<object>>>();
+            if (editobjs != null)
+            {
+                editDic.Add(typeof(T).Name, new Tuple<ICollection<string>, ICollection<object>>(null, editobjs.Select(p => p as object).ToList()));
+            }
+            Dictionary<string, Tuple<string, ICollection<object>>> deleteDic = new Dictionary<string, Tuple<string, ICollection<object>>>();
+            if (deleteids != null)
+            {
+                deleteDic.Add(typeof(T).Name, new Tuple<string, ICollection<object>>("id", deleteids));
+            }
+            WebResponse<IDictionary<string, ICollection<long>>> complexResult = provider.Complex(addDic, editDic, deleteDic);
+            //先判断是不是OK          
+            if (complexResult.IsOK)
+            {
+                //添加成功
+                //foreach (var obj in addobjs)//更新到内存
+                //{
+                //    delete(ip, obj);
+                //}
+
+            }
+            else
+            {
+                //ErrorMessage是错误信息
+            }
+        }
+
+
+        static void Main(string[] args)
+        {
+            //string str = File.ReadAllText(@"D:\Work Data\其他资料\AICMonitor\AIC9000新在线\设计\111.txt",Encoding.Default);
+
+            //var obj = JsonConvert.DeserializeObject<IEPESlotData>(str);
+
+
+            //9601默认端口，查看服务器端WebPort配置
+            DataProvider client = new DataProvider("127.0.0.1", 9601,1,1);
+
+            #region 查询服务器版本
+            var version = client.QueryVersion();
+            if(version.IsOK)
+            {
+                var versionInfo = version.ResponseItem;
+            }
+            #endregion
+
+
+            //Complex<T_Menu>(client, new T_Menu[] {
+            //    new T_Menu()
+            //    {
+            //        Code = "001",
+            //        Guid = Guid.NewGuid(),
+            //        InternalNumber = 1,
+            //        Name = "001",
+            //        ShowText = "text",
+            //        Type = "type"
+            //    }
+            //}, null, null);
+
+            //var itemc = new Dictionary<string, Tuple<string, ICollection<object>>>();
+            //itemc.Add("T_User", new Tuple<string, ICollection<object>>("id", new object[] { 15 }));
+            //itemc.Add("T_Organization", new Tuple<string, ICollection<object>>("id", new object[] { 123 }));
+
+            //WebResponse<IDictionary<string, ICollection<long>>> result = client.Complex(null, null, itemc);
+
+
+
+            //ADD Query Modify Delete 的 T 在 AIC.M9600.Common.MasterDB.Generated
+
+            //#region Add
+            //WebResponse<long[]> addResult = client.Add<T_Item>(new T_Item[]
+            //{
+            //    new T_Item()
+            //    {
+            //        //设置属性，由于是Add，id自增长，所以id不必填写
+            //        Guid = Guid.Parse("7DA1DBFA-9F89-4DED-A796-9EA3D20CB4DF"),
+            //        ChannelHDID = "testchannel",
+            //        Name = "Name",
+            //        Code = "Code",
+            //        T_Device_Guid =Guid.Parse("7DA1DBFA-9F89-4DED-A796-9EA3D20CB4DF"),
+            //        T_Device_Code = "T_Device_Code",
+            //        Sort_No = 1,
+            //        Is_Disabled = false,
+            //        IP = "192.168.0.1",
+            //        Identifier = "Identifier",
+            //        ServerIP = "ServerIP",
+            //        ItemType = 1
+            //    }
+            //});
+
+            ////先判断是不是OK
+            //if (addResult.IsOK)
+            //{
+            //    //添加成功
+            //    long[] ids = addResult.ResponseItem;
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(addResult.ErrorMessage);
+            //}
+            //#endregion
+
+            //#region Query
+            //WebResponse<List<T_Item>> queryResult = client.Query<T_Item>(null, "id = @0", new object[] { 1 });
+
+            ////先判断是不是OK
+            //if (queryResult.IsOK)
+            //{
+            //    //查询成功
+            //    foreach (var item in queryResult.ResponseItem)
+            //    {
+            //        //业务逻辑
+            //    }
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(queryResult.ErrorMessage);
+            //}
+            //#endregion
+
+            //#region Modify
+            //WebResponse modifyResult = client.Modify<T_Item>(null, new T_Item[]
+            //{
+            //    //需要修改的Item,更新依据主键
+            //    queryResult.ResponseItem[0]
+            //});
+
+            ////先判断是不是OK
+            //if (modifyResult.IsOK)
+            //{
+            //    //更新成功
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(modifyResult.ErrorMessage);
+            //}
+            //#endregion
+
+            //#region Delete
+            ////删除1，2，3
+            //WebResponse deleteResult = client.Delete<T_Item>("id", new object[] { 1, 2, 3 });
+
+            ////先判断是不是OK
+            //if (deleteResult.IsOK)
+            //{
+            //    //删除成功
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(deleteResult.ErrorMessage);
+            //}
+            //#endregion
+
+            #region 查询实时数据
+            //WebResponse<LatestSampleData> latestResult = client.QueryLatestSampleData(0, null);
+
+            ////先判断是不是OK
+            //if (latestResult.IsOK)
+            //{
+            //    //分类数据缓存
+            //    //latestResult.ResponseItem.AnalogRransducerInSlot
+            //    //......
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(latestResult.ErrorMessage);
+            //}
+            #endregion
+
+            //#region 查询历史数据
+            //WebResponse<List<D_AnalogRransducerInSlot>> historyResult = client.QueryHistorySampleData<D_AnalogRransducerInSlot>(Guid.Parse("C8CACA7B-75AE-4CC6-8893-000000000001"),
+            //    //condition不需要注入ACQDatetime的过滤，startTime和endTime会自动注入，也不需要注入TestPoingId
+            //    //不支持in，如果需要多选，转化为(X = @0 or X = @1 or X = @2 ...)
+            //    null, DateTime.Now.AddDays(-1), DateTime.Now, "(AlarmGrade = @0 or AlarmGrade = @1)", new object[] { 3, 4 });
+
+            ////先判断是不是OK
+            //if (historyResult.IsOK)
+            //{
+            //    //查询成功
+            //    foreach (var item in historyResult.ResponseItem)
+            //    {
+            //        //业务逻辑
+            //    }
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(historyResult.ErrorMessage);
+            //}
+
+            //#endregion
+        }
+    }
+}

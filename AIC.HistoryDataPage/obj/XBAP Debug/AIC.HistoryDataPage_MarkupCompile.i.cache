@@ -1,0 +1,20 @@
+﻿AIC.HistoryDataPage
+
+
+library
+C#
+.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\
+AIC.HistoryDataPage
+none
+false
+TRACE;DEBUG;XBAP
+
+16-565789957
+
+47-918040510
+102-1590411256
+Themes\HistoryDataDiagramTemplate.xaml;Views\HistoryDataDiagramView.xaml;Views\HistoryDataListView.xaml;Views\HistoryDataStatisticsView.xaml;Views\SubViews\AlarmPointTrendDataView.xaml;Views\SubViews\RMSReplayDataView.xaml;Views\SubViews\DynamicFittingDataView.xaml;Views\SubViews\FrequencyDomainDataView.xaml;Views\SubViews\OffDesignConditionDataView.xaml;Views\SubViews\OrderAnalysisDataView.xaml;Views\SubViews\OrthoDataView.xaml;Views\SubViews\PowerSpectrumDataView.xaml;Views\SubViews\PowerSpectrumDensityDataView.xaml;Views\SubViews\RPM3DSpectrumDataView.xaml;Views\SubViews\Time3DSpectrumView.xaml;Views\SubViews\TimeDomainDataView.xaml;
+
+True
+

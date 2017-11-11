@@ -1,0 +1,177 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <s:String x:Key="strServer">Server</s:String>
+    <s:String x:Key="strSecondaryserver">Multiserver</s:String>
+    <s:String x:Key="strLogin">Login</s:String>
+    <s:String x:Key="strLock">Lock</s:String>
+    <s:String x:Key="strUnLock">UnLock</s:String>
+    <s:String x:Key="strUser">User</s:String>
+    <s:String x:Key="strRole">Role</s:String>
+    <s:String x:Key="strPassword">Password</s:String>
+    <s:String x:Key="strOK">OK</s:String>
+    <s:String x:Key="strYes">Yes</s:String>
+    <s:String x:Key="strNo">No</s:String>
+    <s:String x:Key="strCancel">Cancel</s:String>
+    <s:String x:Key="strClose">Close</s:String>
+    <s:String x:Key="strUserError">User name or password wrong</s:String>
+    <s:String x:Key="strPermissionError">Permission denied</s:String>
+    <s:String x:Key="strExit">Exit</s:String>
+    <s:String x:Key="strExitSystem">Exit system?</s:String>
+    <s:String x:Key="strStart">Start</s:String>
+    <s:String x:Key="strStop">Stop</s:String>
+
+    <s:String x:Key="strMainControlCard">MainControlCard</s:String>
+    <s:String x:Key="strWireMatchingCard">WireMatchingCard</s:String>
+    <s:String x:Key="strIEPESlot">IEPESlot</s:String>
+    <s:String x:Key="strEddyCurrentDisplacementSlot">EddyCurrentDisplacementSlot</s:String>
+    <s:String x:Key="strEddyCurrentKeyPhaseSlot">EddyCurrentKeyPhaseSlot</s:String>
+    <s:String x:Key="strEddyCurrentTachometerSlot">EddyCurrentTachometerSlot</s:String>
+    <s:String x:Key="strDigitTachometerSlot">DigitTachometerSlot</s:String>
+    <s:String x:Key="strAnalogRransducerInSlot">AnalogRransducerInSlot</s:String>
+    <s:String x:Key="strRelaySlot">RelaySlot</s:String>
+    <s:String x:Key="strDigitRransducerInSlot">DigitRransducerInSlot</s:String>
+    <s:String x:Key="strDigitRransducerOutSlot">DigitRransducerOutSlot</s:String>
+    <s:String x:Key="strAnalogRransducerOutSlot">AnalogRransducerOutSlot</s:String>
+    <s:String x:Key="strWaveGeneralSlot">WaveGeneralSlot</s:String>
+    <s:String x:Key="strSlot">Slot</s:String>
+    <s:String x:Key="strChannel">Channel</s:String>
+
+    <s:String x:Key="tabFirst">Home</s:String>   
+
+    <s:String x:Key="menuUser">User</s:String>
+    <s:String x:Key="menuLogin">Login</s:String>
+    <s:String x:Key="menuLogout">Logout</s:String>
+    <s:String x:Key="menuLock">Lock</s:String>
+    <s:String x:Key="menuUnLock">UnLock</s:String>
+    <s:String x:Key="menuExit">Exit</s:String>
+
+    <s:String x:Key="menuTheme">Theme</s:String>
+    <s:String x:Key="menuStyle">Style</s:String>
+    <s:String x:Key="menuWindow">Window</s:String>
+    <s:String x:Key="menuShowInTaskbar">ShowInTaskbar</s:String>
+    <s:String x:Key="menuTopmost">Topmost</s:String>
+    <s:String x:Key="menuMaximizeFullScreen">MaximizeFullScreen</s:String>
+
+    <s:String x:Key="menuHelp">Help</s:String>
+    <s:String x:Key="menuAbout">About</s:String>
+    <s:String x:Key="menuFeedback">Feedback</s:String>
+    <s:String x:Key="menuAbnormalList">AbnormalList</s:String>
+    <s:String x:Key="menuSystemLog">SystemLog</s:String>
+
+    <s:String x:Key="menuManage">Manage</s:String>
+    <s:String x:Key="menuUserManage">UserManage</s:String>
+    <s:String x:Key="menuRoleManage">RoleManage</s:String>
+    <s:String x:Key="menuMenuManage">MenuManage</s:String>
+    <s:String x:Key="menuOrganizationManage">OrganizationManage</s:String>
+    <s:String x:Key="menuManageLog">SettingLog</s:String>
+
+    <s:String x:Key="menuSetting">System</s:String>
+    <s:String x:Key="menuServerSetting">ServerSetting</s:String>
+    <s:String x:Key="menuCollectorSetting">CollectorSetting</s:String>
+    <s:String x:Key="menuEquipmentSetting">EquipmentSetting</s:String>
+
+    <s:String x:Key="menuData">Data</s:String>
+    <s:String x:Key="menuOnlineData">OnlineData</s:String>
+    <s:String x:Key="menuHistoricalData">HistoricalData</s:String>
+    <s:String x:Key="menuAlartmData">AlartmData</s:String>
+    <s:String x:Key="menuRunningMonitor">RunningMonitor</s:String>
+    <s:String x:Key="menuRunningAnalyze">RunningAnalyze</s:String>
+
+    <s:String x:Key="menuLanguage">Language</s:String>
+    <s:String x:Key="menuChinese">Chinese</s:String>
+    <s:String x:Key="menuEnglish">English</s:String>
+
+    <s:String x:Key="messagePDAManage1">This type cannot be added to a sub-frequency！！！</s:String>
+    <s:String x:Key="messagePDAManage2">Please bind the measuring points first！！！</s:String>
+    <s:String x:Key="messagePDAManage3">Determine to delete the organization structure？</s:String>
+    <s:String x:Key="messagePDAManage4">Determine unbinding？</s:String>
+    <s:String x:Key="messagePDAManage5">The test point has been bound, please reselect the test point！！！</s:String>
+    <s:String x:Key="messagePDAManage6">Please select the test point to be unbound！！！</s:String>
+    <s:String x:Key="messagePDAManage7">The number receiver already exists in the server without having to repeat it！！！</s:String>
+    <s:String x:Key="messagePDAManage8">Select the main board to copy！！！</s:String>
+    <s:String x:Key="messagePDAManage9">Empty recycle bin is not supported！！！</s:String>
+    <s:String x:Key="messagePDAManage10">The test point has been bound and cannot be restored！！！</s:String>
+    <s:String x:Key="messagePDAManage11">The corresponding channel does not exist and cannot be recovered！！！</s:String>
+    <s:String x:Key="messagePDAManage12">The channel has been bound and cannot be restored！！！</s:String>
+    <s:String x:Key="messagePDAManage13">Please select the test points in the organization structure！！！</s:String>
+
+    <s:String x:Key="delete">Delete</s:String>
+    <s:String x:Key="unbind">Unbind</s:String>
+    <s:String x:Key="search">Search</s:String>    
+    <s:String x:Key="add">Add</s:String>
+    <s:String x:Key="edit">Edit</s:String>
+    <s:String x:Key="default">Default</s:String>
+    <s:String x:Key="serverName">ServerName</s:String>
+    <s:String x:Key="serverIP">ServerIP</s:String>
+    <s:String x:Key="serverPort">ServerPort</s:String>
+    <s:String x:Key="serverManagement">ServerManagement</s:String>
+    <s:String x:Key="organizationName">OrganizationName</s:String>
+    <s:String x:Key="longitude">Longitude</s:String>
+    <s:String x:Key="latitude">Latitude</s:String>
+    <s:String x:Key="defaultlogin">Defaultlogin</s:String>
+    <s:String x:Key="servermode">Servermode</s:String>
+    <s:String x:Key="loginResult">LoginResult</s:String>
+    <s:String x:Key="permissions">Permissions</s:String>
+    <s:String x:Key="primaryserverIP">PrimaryServerIP</s:String>
+    <s:String x:Key="upload">Upload</s:String>
+    <s:String x:Key="refresh">Refresh</s:String>
+    <s:String x:Key="pdaip">PDAIP</s:String>
+    <s:String x:Key="senddown">SendDown</s:String>
+    <s:String x:Key="transmissionIdentifier">TransmissionCardIdentifier</s:String>
+    
+    <s:String x:Key="name">Name</s:String>
+    <s:String x:Key="code">Code</s:String>
+    <s:String x:Key="aliasName">AliasName</s:String>
+    <s:String x:Key="password">Password</s:String>
+    <s:String x:Key="role">Role</s:String>
+    <s:String x:Key="menu">Menu</s:String>
+    <s:String x:Key="button">Button</s:String>
+    <s:String x:Key="organization">Organization</s:String>
+    <s:String x:Key="personTelephone">PersonTelephone</s:String>
+    <s:String x:Key="officeTelephone">OfficeTelephone</s:String>
+    <s:String x:Key="email">Email</s:String>
+    <s:String x:Key="contact">Contact</s:String>
+
+    <s:String x:Key="sortNo">SortNo</s:String>
+    <s:String x:Key="isAdmin">IsAdmin</s:String>
+    <s:String x:Key="isSuperAdmin">IsSuperAdmin</s:String>
+
+    <s:String x:Key="type">Type</s:String>
+    <s:String x:Key="internalNumber">InternalNumber</s:String>
+    <s:String x:Key="showText">ShowText</s:String>
+
+    <s:String x:Key="isChecked">IsChecked</s:String>
+    <s:String x:Key="checkedExpanded">CheckedExpanded</s:String>
+
+    <s:String x:Key="operateRecord">OperateRecord</s:String>
+    <s:String x:Key="operateType">OperateType</s:String>
+    <s:String x:Key="operateDateTime">OperateDateTime</s:String>
+    <s:String x:Key="remarks">Remarks</s:String>
+    <s:String x:Key="end">End</s:String>
+
+    <s:String x:Key="menuOnlineDataList">OnlineDataList</s:String>
+    <s:String x:Key="menuOnlineDataTile">OnlineDataTile</s:String>
+    <s:String x:Key="menuOnlineDataDiagram">OnlineDataDiagram</s:String>
+    <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
+    <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
+    <s:String x:Key="menuOnlineDataStatistics">OnlineDataStatistics</s:String>
+    <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
+    <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
+    <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>
+
+    <s:String x:Key="deviceName">DeviceName</s:String>
+    <s:String x:Key="groupByDevice">GroupByDevice</s:String>
+
+    <s:String x:Key="addattachment">AddAttachment</s:String>
+
+    <s:String x:Key="pause">Pause</s:String>
+    <s:String x:Key="play">Play</s:String>
+    <s:String x:Key="screenShot">ScreenShot</s:String>
+
+    <s:String x:Key="alarm">Alarm</s:String>
+    <s:String x:Key="mute">Mute</s:String>
+
+    <s:String x:Key="clear">Clear</s:String>
+    <s:String x:Key="more">More</s:String>
+</ResourceDictionary>

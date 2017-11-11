@@ -1,0 +1,57 @@
+﻿/* Author : zhengyangyong */
+using AIC.M9600.Common.SlaveDB.Generated;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AIC.M9600.Common.DTO.Device
+{
+    public class IEPESlotData_DivFreeInfo : D_IEPESlot_DivFreInfo, ISlotData
+    {
+        public AlarmLimit[] AlarmLimit
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(this.AlarmLimitJSON))
+                {
+                    return JsonConvert.DeserializeObject<AlarmLimit[]>(this.AlarmLimitJSON);
+                }
+                else return null;
+            }
+            set
+            {
+                if (value == null) this.AlarmLimitJSON = null;
+                else
+                {
+                    this.AlarmLimitJSON = JsonConvert.SerializeObject(value);
+                }
+            }
+        }
+
+        [JsonIgnore]
+        public ExtraInfo ExtraInfo { get; set; }
+
+        [JsonIgnore]
+        public DateTime RegionACQDatetime
+        {
+            get { return new DateTime(ACQDatetime.Year, ACQDatetime.Month, 1); }
+        }
+
+        [JsonIgnore]
+        public SignalType Type
+        {
+            get { return (SignalType)Enum.Parse(typeof(SignalType), this.GetType().Name); }
+        }
+
+        public Dictionary<string, double> StatisticsInfo { get; set; }
+
+        public void SetTestPointIdAndUploadTime(Guid itemGuid, DateTime uploadTime)
+        {
+            this.T_Item_Guid = itemGuid;
+            this.UploadDatetime = uploadTime;
+        }
+    }
+}

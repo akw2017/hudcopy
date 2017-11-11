@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Server id="1">
+    <Name>航天智控监测技术研究院服务器</Name>
+    <IP>192.168.0.210</IP>
+    <Port>8888</Port>
+    <IsCloud>1</IsCloud>
+    <Factory>航天智控监测技术研究院测试工厂</Factory>
+    <Longitude>116.404</Longitude>
+    <Latitude>39.915</Latitude>
+    <IsLogin>1</IsLogin>
+    <LoginResult>0</LoginResult>
+    <Permission>无权限</Permission>
+  </Server>
+  <Server id="2">
+    <Name>11</Name>
+    <IP>127.0.0.1</IP>
+    <Port>0</Port>
+    <IsCloud>0</IsCloud>
+    <Factory>22</Factory>
+    <Longitude>116.404</Longitude>
+    <Latitude>39.915</Latitude>
+    <IsLogin>0</IsLogin>
+    <LoginResult>0</LoginResult>
+    <Permission>无权限</Permission>
+  </Server>
+  <Server id="3">
+    <Name>112</Name>
+    <IP>127.0.0.2</IP>
+    <Port>0</Port>
+    <IsCloud>0</IsCloud>
+    <Factory>11</Factory>
+    <Longitude>116.404</Longitude>
+    <Latitude>39.915</Latitude>
+    <IsLogin>0</IsLogin>
+    <LoginResult>0</LoginResult>
+    <Permission>无权限</Permission>
+  </Server>
+</Root>

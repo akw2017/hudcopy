@@ -1,0 +1,64 @@
+﻿<Controls:MetroWindow x:Class="AIC.HomePage.Views.LockWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.HomePage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:c="clr-namespace:AIC.HomePage.Controls"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="锁定" Height="220" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/lock_key.png" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/GreyStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background ="{DynamicResource DeepLinearAccentColorBrush}">
+        <Grid Margin="20" Height="140" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource strUser}" />
+            <TextBox x:Name="txtUser" Grid.Row="2" Grid.Column="1" Style="{DynamicResource MetroTextBox}"
+                Text = "{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource strPassword}"/>
+            <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="txtPwd" VerticalContentAlignment="Bottom" 
+                c:PasswordBoxHelper.Attach="True"
+                c:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </PasswordBox>
+            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>
+            <Button Grid.Row="5" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>          
+            <Button Grid.Row="5" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

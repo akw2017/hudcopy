@@ -1,0 +1,157 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"  
+                    xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+                    xmlns:Controls="clr-namespace:AIC.Themes.Controls;assembly=AIC.Themes"
+                    xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"                  
+                    xmlns:viewModel="clr-namespace:AIC.HistoryDataPage.ViewModels"
+                    xmlns:views="clr-namespace:AIC.HistoryDataPage.Views">
+
+
+    <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+    <core:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
+    <core:IntToUnitConverter x:Key="intToUnitConverter" />
+    <DataTemplate x:Key="enumComboItemTemplate">
+        <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="VInfoContractComboItemTemplate">
+        <TextBlock DataContext="{Binding}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}{1}{2}">
+                    <Binding Path="DevSN" />
+                    <Binding Path="Name" />
+                    <Binding Path="MSSN" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+
+    <Style x:Key="NoBorder" TargetType="Border">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Black" />
+    </Style>
+
+    <DataTemplate x:Key="ReplayTemplate" DataType="{x:Type viewModel:RMSReplayDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:RMSReplayDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TimeDomainTemplate" DataType="{x:Type viewModel:TimeDomainDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:TimeDomainDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FrequencyDomainTemplate" DataType="{x:Type viewModel:FrequencyDomainDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:FrequencyDomainDataView Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PowerSpectrumTemplate" DataType="{x:Type viewModel:PowerSpectrumDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:PowerSpectrumDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PowerSpectrumDensityTemplate" DataType="{x:Type viewModel:PowerSpectrumDensityDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:PowerSpectrumDensityDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OrthoTemplate" DataType="{x:Type viewModel:OrthoDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:OrthoDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OffDesignConditionTemplate" DataType="{x:Type viewModel:OffDesignConditionDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:OffDesignConditionDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OrderAnalysisTemplate" DataType="{x:Type viewModel:OrderAnalysisDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:OrderAnalysisDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Time3DSpectrumTemplate" DataType="{x:Type viewModel:Time3DSpectrumDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:Time3DSpectrumView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RPM3DSpectrumTemplate" DataType="{x:Type viewModel:RPM3DSpectrumDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:RPM3DSpectrumDataView/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AlarmPointTrendTemplate" DataType="{x:Type viewModel:AlarmPointTrendDataViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+                <views:AlarmPointTrendDataView />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

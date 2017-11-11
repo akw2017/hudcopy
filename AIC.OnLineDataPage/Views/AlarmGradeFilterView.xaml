@@ -1,0 +1,115 @@
+﻿<bsFilter:MultiValueFilterView x:Class="AIC.OnLineDataPage.Views.AlarmGradeFilterView"
+                                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:bsFilter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
+                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                               xmlns:converters="clr-namespace:AIC.OnLineDataPage.Converters"
+                               xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+                               DataContextChanged="MultiValueFilterView_DataContextChanged"
+                               mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    <bsFilter:MultiValueFilterView.Resources>
+        <!--<presentation:BoolToEffectConverter x:Key="BoolToEffectConverter" />-->
+        <ItemsPanelTemplate x:Key="CategoryItemsPanelTemplate">
+            <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+        <core:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
+        <converters:AlarmGradeToImageConverter x:Key="alarmGradeToImageConverter"/>
+        <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+            <!--<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>-->
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <!--<Setter Property="FontSize" Value="15"/>-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                            <BulletDecorator.Bullet>
+                                <Grid Height="24" Width="24">
+                                    <Rectangle x:Name="PART_Rect" Stroke="{DynamicResource AccentColorBrush}" StrokeThickness="3" RadiusX="5" RadiusY="5"/>
+                                    <Path x:Name="path" Width="18" Height="18" Stretch="Fill" Fill="{TemplateBinding Foreground}" Data="F1 M 23.7501,33.25L 34.8334,44.3333L 52.2499,22.1668L 56.9999,26.9168L 34.8334,53.8333L 19.0001,38L 23.7501,33.25 Z "/>
+                                </Grid>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="true">
+                                <Setter Property="Padding" Value="4,0,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Visibility" TargetName="path" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </bsFilter:MultiValueFilterView.Resources>
+    <bsFilter:MultiValueFilterView.Style>
+        <Style TargetType="{x:Type bsFilter:MultiValueFilterView}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type bsFilter:MultiValueFilterView}">
+                        <Grid>
+                            <Grid DataContext="{TemplateBinding Model}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="报警级别：" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                                <ListBox x:Name="PART_Items"
+                                         Grid.Column="1"                                        
+                                         ItemsPanel="{StaticResource CategoryItemsPanelTemplate}"
+                                         ItemsSource="{Binding AvailableValues}"
+                                         SelectionMode="Multiple" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ListBox}}}" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <StackPanel Margin="5,2,5,2" Orientation="Horizontal">                                                            
+                                                            <Ellipse x:Name="ellipse" Fill="#FF85CBEB" VerticalAlignment="Center" Height="24" Width="24"/>
+                                                            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding Converter={StaticResource ResourceKey=enumDescriptionConverter}}" VerticalAlignment="Center" />
+                                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource CheckBoxStyle}"/>
+                                                        </StackPanel>
+                                                        <ControlTemplate.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="Invalid">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="Gray"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="HighNormal">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="LowNormal">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="HighAlert">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="LowAlert">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="HighDanger">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="Red"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="LowDanger">
+                                                                <Setter TargetName="ellipse" Property="Fill" Value="Red" />
+                                                            </DataTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>                                                        
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </bsFilter:MultiValueFilterView.Style>
+</bsFilter:MultiValueFilterView>

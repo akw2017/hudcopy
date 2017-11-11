@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\x86\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\x86\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\x86\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\x86\Debug\AICMath.pdb
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\x86\Debug\AICMath.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\x86\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\x86\Debug\AICMath.pdb

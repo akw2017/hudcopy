@@ -1,0 +1,14 @@
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\bin\Debug\AICMath.pdb
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\Debug\AICMath.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUID\AICMath\obj\Debug\AICMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\bin\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\bin\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\bin\Debug\AICMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\obj\Debug\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\obj\Debug\AICMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICMath\obj\Debug\AICMath.csprojResolveAssemblyReference.cache

@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{258C4EF5-C2AF-4AEE-8057-BD4B1EF45FA8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.Core</RootNamespace>
+    <AssemblyName>AIC.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\XBAP Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\XBAP Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|AnyCPU'">
+    <OutputPath>bin\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|x86'">
+    <OutputPath>bin\x86\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvancedPropertyChangedEventArgs.cs" />
+    <Compile Include="AttachedCommandBehavior\BehaviorBinding.cs" />
+    <Compile Include="AttachedCommandBehavior\CommandBehavior.cs" />
+    <Compile Include="AttachedCommandBehavior\CommandBehaviorBinding.cs" />
+    <Compile Include="AttachedCommandBehavior\CommandBehaviorCollection.cs" />
+    <Compile Include="AttachedCommandBehavior\EventHandlerGenerator.cs" />
+    <Compile Include="AttachedCommandBehavior\ExecutionStrategy.cs" />
+    <Compile Include="AttachedCommandBehavior\SimpleCommand.cs" />
+    <Compile Include="Behaviors\ChangeBehavior.cs" />
+    <Compile Include="Behaviors\ControlMouseDownCommandBehavior.cs" />
+    <Compile Include="ControlModels\ITreeItemViewModel.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToUnitConverter.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
+    <Compile Include="Converters\NegateConverter.cs" />
+    <Compile Include="Converters\GradeToStringConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\ThousandWithKStuffixConverter.cs" />
+    <Compile Include="Converters\IsDivfreConverter.cs" />
+    <Compile Include="DataModels\D1_AnalogRransducerInSlot.cs" />
+    <Compile Include="DataModels\D1_AnalogRransducerOutSlot.cs" />
+    <Compile Include="DataModels\D1_DigitRransducerInSlot.cs" />
+    <Compile Include="DataModels\D1_DigitRransducerOutSlot.cs" />
+    <Compile Include="DataModels\D1_DigitTachometerSlot.cs" />
+    <Compile Include="DataModels\D1_DivFreInfo.cs" />
+    <Compile Include="DataModels\D1_EddyCurrentDisplacementSlot.cs" />
+    <Compile Include="DataModels\D1_EddyCurrentKeyPhaseSlot.cs" />
+    <Compile Include="DataModels\D1_EddyCurrentTachometerSlot.cs" />
+    <Compile Include="DataModels\D1_IEPESlot.cs" />
+    <Compile Include="DataModels\D1_MainControlCard.cs" />
+    <Compile Include="DataModels\D1_RelaySlot.cs" />
+    <Compile Include="DataModels\D1_RootSlot.cs" />
+    <Compile Include="DataModels\D1_Waveform.cs" />
+    <Compile Include="DataModels\D1_WaveGeneralSlot.cs" />
+    <Compile Include="DataModels\D1_WirelessScalarSlot.cs" />
+    <Compile Include="DataModels\D1_WirelessVibrationSlot.cs" />
+    <Compile Include="DataModels\IBaseTypeSlot.cs" />
+    <Compile Include="DisposableToken.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="Events\DataStatisticsEvent.cs" />
+    <Compile Include="Events\DataStatusEvent.cs" />
+    <Compile Include="Events\EventAggregatorService.cs" />
+    <Compile Include="Events\FittingCoeffEvent.cs" />
+    <Compile Include="Events\HideHtmlEvent.cs" />
+    <Compile Include="Events\SignalChangedEvent.cs" />
+    <Compile Include="Events\TestEvent.cs" />
+    <Compile Include="Events\LoginEvent.cs" />
+    <Compile Include="Events\RenameTreeItemFinishEvent.cs" />
+    <Compile Include="Events\RenameTreeItemEvent.cs" />
+    <Compile Include="Events\ServerChangedEvent.cs" />
+    <Compile Include="Events\ServerMarkEvent.cs" />
+    <Compile Include="Events\ThrowExceptionEvent.cs" />
+    <Compile Include="ExCommand\CommandReference.cs" />
+    <Compile Include="ExCommand\CustomCommandAction.cs" />
+    <Compile Include="ExCommand\ExCommandParameter.cs" />
+    <Compile Include="ExCommand\ExInvokeCommandAction.cs" />
+    <Compile Include="ExCommand\RoutedEventTrigger.cs" />
+    <Compile Include="FastObservableCollection.cs" />
+    <Compile Include="Filters\BandPassFilter.cs" />
+    <Compile Include="Filters\BandPassFilterValidator.cs" />
+    <Compile Include="Filters\HighPassFilter.cs" />
+    <Compile Include="Filters\HighPassFilterValidator.cs" />
+    <Compile Include="Filters\LowPassFilter.cs" />
+    <Compile Include="Filters\LowPassFilterValidator.cs" />
+    <Compile Include="Filters\NotifyDataErrorInfoBase.cs" />
+    <Compile Include="FluidWrapPanel\FluidLayoutManager.cs" />
+    <Compile Include="FluidWrapPanel\FluidMouseDragBehavior.cs" />
+    <Compile Include="FluidWrapPanel\FluidWrapPanel.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\ContentControlHelp.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\DragAdorner.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\Helper.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\InsertAdorner.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\ContentControlDragDropBehavior.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior\ItemsControlDragDropBehavior.cs" />
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="CommandReference.cs" />
+    <Compile Include="Converters\ComparisonBinding.cs" />
+    <Compile Include="Converters\EnumBooleanConverter.cs" />
+    <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Converters\EnumToVisibilityConverter.cs" />
+    <Compile Include="Converters\TypeOfConverter.cs" />
+    <Compile Include="Converters\VisibilityToBoolConverter.cs" />
+    <Compile Include="EventToCommandArgs.cs" />
+    <Compile Include="Extensions\DependencyObjectExtension.cs" />
+    <Compile Include="Behaviors\TreeViewInPlaceEditBehavior.cs" />
+    <Compile Include="Behaviors\TreeViewInPlaceEditBoxBehavior.cs" />
+    <Compile Include="Extensions\FrameworkElementExtension.cs" />
+    <Compile Include="FunctionalExtensions.cs" />
+    <Compile Include="LMModels\Iid.cs" />
+    <Compile Include="LMModels\T1_AbstractChannelInfo.cs" />
+    <Compile Include="LMModels\T1_AbstractSlotInfo.cs" />
+    <Compile Include="LMModels\T1_BaseChannelInfo.cs" />
+    <Compile Include="LMModels\T1_BaseSlot.cs" />
+    <Compile Include="LMModels\T1_Bearing.cs" />
+    <Compile Include="LMModels\T1_DBExportRecord.cs" />
+    <Compile Include="LMModels\T1_DBImportRecord.cs" />
+    <Compile Include="LMModels\T1_Diagnosis_Model.cs" />
+    <Compile Include="LMModels\T1_DivFreInfo.cs" />
+    <Compile Include="LMModels\T1_PDASendDown.cs" />
+    <Compile Include="LMModels\T1_MainControlCard.cs" />
+    <Compile Include="LMModels\T1_UserTable.cs" />
+    <Compile Include="LMModels\T1_RootCard.cs" />
+    <Compile Include="LMModels\T1_TransmissionCard.cs" />
+    <Compile Include="LMModels\T1_WirelessReceiveCard.cs" />
+    <Compile Include="LMModels\T1_WireMatchingCard.cs" />
+    <Compile Include="Helpers\ClassCopyHelper.cs" />
+    <Compile Include="Helpers\DialogHelper.cs" />
+    <Compile Include="LicenseKeyStrings.cs" />
+    <Compile Include="LMModels\T1_WX_Forwarding_Rule.cs" />
+    <Compile Include="Maybe.cs" />
+    <Compile Include="ControlModels\ContextMenuViewModel.cs" />
+    <Compile Include="Helpers\EqualityHelper.cs" />
+    <Compile Include="Models\ExceptionModel.cs" />
+    <Compile Include="Models\LoginInfo.cs" />
+    <Compile Include="ControlModels\MenuItemViewModel.cs" />
+    <Compile Include="Models\WireMatchingCardMetadata.cs" />
+    <Compile Include="Models\WirelessReceiveCardMetadata.cs" />
+    <Compile Include="Models\MainControlCardMetadata.cs" />
+    <Compile Include="Models\LoginInfoMetadata.cs" />
+    <Compile Include="Models\MainControlCard.cs" />
+    <Compile Include="Models\ModifyStatus.cs" />
+    <Compile Include="ControlModels\ToolBarItemViewModel.cs" />
+    <Compile Include="ControlModels\TreeItemViewModel.cs" />
+    <Compile Include="Models\RootCard.cs" />
+    <Compile Include="Models\ServerInfo.cs" />
+    <Compile Include="Models\ServerInfoMetadata.cs" />
+    <Compile Include="Models\ValidationExtension.cs" />
+    <Compile Include="Models\WirelessReceiveCard.cs" />
+    <Compile Include="Models\WireMatchingCard.cs" />
+    <Compile Include="NamePropertyChangedEventHandler.cs" />
+    <Compile Include="OrganizationModels\DepartmentTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\TransmissionCardTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\WireMatchingCardTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\WirelessReceiveCardTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\ChannelTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\DeviceTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\DivFreTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\ItemTreeItemViewMode.cs" />
+    <Compile Include="OrganizationModels\MainCardTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\OrganizationTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\ServerTreeItemViewModel.cs" />
+    <Compile Include="OrganizationModels\SlotTreeItemViewModel.cs" />
+    <Compile Include="LMModels\T1_Device.cs" />
+    <Compile Include="LMModels\T1_Item.cs" />
+    <Compile Include="LMModels\T1_Organization.cs" />
+    <Compile Include="Prism\ICreateRegionManagerScope.cs" />
+    <Compile Include="Prism\IRegionManagerAware.cs" />
+    <Compile Include="Prism\RegionManagerAwareBehavior.cs" />
+    <Compile Include="Prism\RoleBasedModuleInitializer.cs" />
+    <Compile Include="Prism\RolesAttribute.cs" />
+    <Compile Include="Prism\ScopedRegionNavigationContentLoader.cs" />
+    <Compile Include="Prism\StackPanelRegionAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionNames.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="ResultExtensions.cs" />
+    <Compile Include="LocalAddress.cs" />
+    <Compile Include="ServerAddress.cs" />
+    <Compile Include="Servers\IXmlDataService.cs" />
+    <Compile Include="Servers\XmlDataService.cs" />
+    <Compile Include="SignalModels\BaseDivfreSignal.cs" />
+    <Compile Include="SignalModels\BaseWaveSignal.cs" />
+    <Compile Include="SignalModels\BaseAlarmSignal.cs" />
+    <Compile Include="SignalModels\BaseTypeSignal.cs" />
+    <Compile Include="SignalModels\EddyCurrentDisplacementChannelSignal.cs" />
+    <Compile Include="SignalModels\EddyCurrentKeyPhaseChannelSignal.cs" />
+    <Compile Include="SignalModels\EddyCurrentTachometerChannelSignal.cs" />
+    <Compile Include="SignalModels\DigitTachometerChannelSignal.cs" />
+    <Compile Include="SignalModels\AnalogRransducerInChannelSignal.cs" />
+    <Compile Include="SignalModels\DigitRransducerInChannelSignal.cs" />
+    <Compile Include="SignalModels\DigitRransducerOutChannelSignal.cs" />
+    <Compile Include="SignalModels\AnalogRransducerOutChannelSignal.cs" />
+    <Compile Include="SignalModels\DivFreSignal.cs" />
+    <Compile Include="SignalModels\PointData.cs" />
+    <Compile Include="SignalModels\WirelessVibrationChannelSignal.cs" />
+    <Compile Include="SignalModels\WirelessScalarChannelSignal.cs" />
+    <Compile Include="SignalModels\RelayChannelSignal.cs" />
+    <Compile Include="SignalModels\IEPEChannelSignal.cs" />
+    <Compile Include="UserManageModels\IAnobject.cs" />
+    <Compile Include="UserManageModels\MyMenu.cs" />
+    <Compile Include="UserManageModels\MenuManageList.cs" />
+    <Compile Include="UserManageModels\MyOrganizationPrivilege.cs" />
+    <Compile Include="LMModels\T1_Menu.cs" />
+    <Compile Include="LMModels\T1_OperateRecord.cs" />
+    <Compile Include="LMModels\T1_OrganizationPrivilege.cs" />
+    <Compile Include="LMModels\T1_Role.cs" />
+    <Compile Include="LMModels\T1_User.cs" />
+    <Compile Include="LMModels\T1_UserAddition.cs" />
+    <Compile Include="Validation\RangeStringValidation.cs" />
+    <Compile Include="Validation\IPValidation.cs" />
+    <Compile Include="Validation\StringNullValidation.cs" />
+    <Compile Include="ValueObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.MatlabMath\AIC.MatlabMath.csproj">
+      <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
+      <Name>AIC.MatlabMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Client.DataProvider\AIC.M9600.Client.DataProvider.csproj">
+      <Project>{861b682b-4478-4f89-9d5b-2b5c3d837ec3}</Project>
+      <Name>AIC.M9600.Client.DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.DTO\AIC.M9600.Common.DTO.csproj">
+      <Project>{7a6ae9d1-4a2e-4ac1-8c28-ff1f6e39f76e}</Project>
+      <Name>AIC.M9600.Common.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.MasterDB\AIC.M9600.Common.MasterDB.csproj">
+      <Project>{63726288-9e7e-46b3-bad7-da329e3222a8}</Project>
+      <Name>AIC.M9600.Common.MasterDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.PetaPoco\AIC.M9600.Common.PetaPoco.csproj">
+      <Project>{7282de19-1303-48f0-a4b1-c421a5bd7262}</Project>
+      <Name>AIC.M9600.Common.PetaPoco</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.SlaveDB\AIC.M9600.Common.SlaveDB.csproj">
+      <Project>{56fd6a48-aebb-44a2-9725-1304a9bf87a9}</Project>
+      <Name>AIC.M9600.Common.SlaveDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FluentValidation\FluentValidation.csproj">
+      <Project>{dae0249b-4f69-4ac9-9a17-aa23e0795316}</Project>
+      <Name>FluentValidation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

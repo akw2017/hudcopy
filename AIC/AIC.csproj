@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99C9E82C-C594-446D-AA59-8FFBC43AD226}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC</RootNamespace>
+    <AssemblyName>AIC</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\SupportProject\AICOnlineSystemServer\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.2.1.750, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.2.1.750\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.6.2.0\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Thriple">
+      <HintPath>..\packages\Thriple.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="XamlAnimatedGif">
+      <HintPath>..\packages\XamlAnimatedGif.1.1.6\lib\net45\XamlAnimatedGif.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Behaviors\ChangeBehavior.cs" />
+    <Compile Include="Controls\IndexingStackPanel.cs" />
+    <Compile Include="Menus\ChildMenuViewModel.cs" />
+    <Compile Include="Menus\MenuItemViewModel.cs" />
+    <Compile Include="Menus\RootMenu.cs" />
+    <Compile Include="Menus\RootMenuViewModel.cs" />
+    <Compile Include="Menus\SecondMenuViewModel.cs" />
+    <Compile Include="ModuleTracker\CallbackLogger.cs" />
+    <Compile Include="ModuleTracker\DiscoveryMethod.cs" />
+    <Compile Include="ModuleTracker\DownloadTiming.cs" />
+    <Compile Include="ModuleTracker\ModuleInitializationStatus.cs" />
+    <Compile Include="ModuleTracker\ModuleTracker.cs" />
+    <Compile Include="ModuleTracker\ModuleTrackingState.cs" />
+    <Compile Include="Menus\AccentColorMenuData.cs" />
+    <Compile Include="ViewModels\SplashViewModel.cs" />
+    <Compile Include="Views\SplashView.xaml.cs">
+      <DependentUpon>SplashView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\IconsNonShared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ChangeNotifyControlBaseStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\GreyStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TitleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ValidationErrorTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\SplashView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Resources\Entypo.ttf" />
+    <Resource Include="Fonts\batmfa__.ttf" />
+    <Resource Include="Fonts\vibrocentric rg.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.AkkaSystem\AIC.AkkaSystem.csproj">
+      <Project>{e80fd487-9fe7-4248-905e-17ca4b8ea082}</Project>
+      <Name>AIC.AkkaSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.ColorThemes\AIC.ColorThemes.csproj">
+      <Project>{7e28925d-3d7a-4cb8-97d0-ef628f9a9653}</Project>
+      <Name>AIC.ColorThemes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
+      <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
+      <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Database\AIC.Database.csproj">
+      <Project>{5726890f-51cd-4c17-bb06-a3ea19eb3bbc}</Project>
+      <Name>AIC.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Domain\AIC.Domain.csproj">
+      <Project>{2317b509-bfa6-46c6-b4fc-fb1c98b4a778}</Project>
+      <Name>AIC.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.HomePage\AIC.HomePage.csproj">
+      <Project>{81c68241-29fc-406d-9e8d-d3cefafe81df}</Project>
+      <Name>AIC.HomePage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.OnLineMonitor\AIC.OnLineMonitor.csproj">
+      <Project>{96287a0e-5e00-4664-86c0-cc278f7a9741}</Project>
+      <Name>AIC.OnLineMonitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.PDAService\AIC.PDAService.csproj">
+      <Project>{01382c9f-7336-4bcd-844b-002f9d79af8a}</Project>
+      <Name>AIC.PDAService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.PDA\AIC.PDA.csproj">
+      <Project>{ab8b448c-dd74-4d60-a041-3e5d03a32180}</Project>
+      <Name>AIC.PDA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.ServiceInterface\AIC.ServiceInterface.csproj">
+      <Project>{1b41d49f-0857-482b-a58b-83ca1938ef0f}</Project>
+      <Name>AIC.ServiceInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.SignalCache\AIC.SignalCache.csproj">
+      <Project>{d26b97a9-638d-44fa-be46-af66af148930}</Project>
+      <Name>AIC.SignalCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.SignalService\AIC.RTDataService.csproj">
+      <Project>{4bd0d51b-6f99-4d14-a7f2-472a53118802}</Project>
+      <Name>AIC.RTDataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.TreeService\AIC.TreeService.csproj">
+      <Project>{04b33eec-a408-4860-8ad7-ad0aa33f2b8d}</Project>
+      <Name>AIC.TreeService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemsFilter\ItemsFilter.csproj">
+      <Project>{aab57bb1-a448-457c-ad53-16b32a1c1f1d}</Project>
+      <Name>ItemsFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModuleTracking\ModuleTracking.csproj">
+      <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
+      <Name>ModuleTracking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
+      <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
+      <Name>Wpf.CloseTabControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICOnlineSystemServer\AIC.OnlineSystem.Client\AIC.OnlineSystem.Client.csproj">
+      <Project>{c337a7c2-614b-4985-a726-e9c8370f4dc1}</Project>
+      <Name>AIC.OnlineSystem.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICOnlineSystemServer\AIC.OnlineSystem.Server.Core\AIC.OnlineSystem.Server.Core.csproj">
+      <Project>{078b30cc-f62a-4006-88a5-768c20857351}</Project>
+      <Name>AIC.OnlineSystem.Server.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICOnlineSystemServer\AIC.OnlineSystem.Server.DB\AIC.OnlineSystem.Server.DB.csproj">
+      <Project>{7910dc75-5d72-4fd8-94f7-4e7205b451cb}</Project>
+      <Name>AIC.OnlineSystem.Server.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICOnlineSystemServer\AIC.OnlineSystem.WCFContract\AIC.OnlineSystem.WCFContract.csproj">
+      <Project>{ac16ab0a-83d5-456b-8a1e-bf6b08a38f26}</Project>
+      <Name>AIC.OnlineSystem.WCFContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ss_left.png" />
+    <Resource Include="Images\ss_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Servers.xml">
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Htmls\BMapOffline.html" />
+    <Content Include="bin\Debug\Htmls\BMapOnline.html" />
+    <Resource Include="Images\application.png" />
+    <Resource Include="Images\database_error.png" />
+    <Resource Include="Images\database_go.png" />
+    <Resource Include="Images\database_lightning.png" />
+    <Resource Include="Images\database_refresh.png" />
+    <Resource Include="Images\database_save.png" />
+    <Resource Include="Images\brick_edit.png" />
+    <Resource Include="Images\database_gear.png" />
+    <Resource Include="Images\page_error.png" />
+    <Resource Include="Images\application_edit.png" />
+    <Resource Include="Images\users.png" />
+    <Resource Include="Images\user.png" />
+    <Resource Include="Images\chart_organisation.png" />
+    <Resource Include="Images\export.png" />
+    <Resource Include="Images\user_delete.png" />
+    <Resource Include="Images\user_go.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

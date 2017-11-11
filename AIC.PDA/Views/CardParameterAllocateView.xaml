@@ -1,0 +1,362 @@
+﻿<UserControl x:Class="AIC.PDA.Views.CardParameterAllocateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIC.PDA.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:domain="clr-namespace:AIC.Domain;assembly=AIC.Domain"
+             xmlns:localControls="clr-namespace:AIC.PDA.Controls"
+             xmlns:vm="clr-namespace:AIC.PDA.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.PDA;component/Resources/Card.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <core:TypeOfConverter x:Key="typeOfConverter"/>
+            <DataTemplate x:Key="CardDataTemplate">
+                <materialDesign:ColorZone Width="100" Height="100" Mode="PrimaryDark" >
+                    <Grid>
+                        <!--<Rectangle Stroke="White" StrokeThickness="1" Width="100" Height="100" Margin="0" d:IsLocked="True"/>-->
+                        <Path Data="M5.1666667,3.3333333 L55.587053,3.2747681 55.597661,4.7701749 23.166495,4.8336666 22.041318,5.9590836 14.583084,5.9590836 5.0841097,13.234909 z" HorizontalAlignment="Stretch" Height="10.979" Margin="0,-1.656,48.305,0" Stretch="Fill" Stroke="White" StrokeThickness="0.5" VerticalAlignment="Top" Width="Auto" Fill="White"/>
+                        <Path Data="M5.1666667,3.3333333 L55.587053,3.2747681 55.597661,4.7701749 23.166495,4.8336666 22.041318,5.9590836 14.583084,5.9590836 5.1551528,13.191666 z" HorizontalAlignment="Right" Height="10.935" Margin="0,0,-21.532,20.402" Stretch="Fill" Stroke="White" StrokeThickness="0.5" VerticalAlignment="Bottom" Width="51.622" Fill="White" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                    <SkewTransform AngleY="0" AngleX="0"/>
+                                    <RotateTransform Angle="-270"/>
+                                    <TranslateTransform X="0.058500000000002217" Y="0.058500000000002217"/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Data="M95.875,6.25 L95.875,60.666667" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" StrokeThickness="1" HorizontalAlignment="Right" Height="Auto" Margin="0,5.917,3.292,38.666" Stretch="Fill" VerticalAlignment="Stretch" Width="1"/>
+                        <Ellipse Margin="21.5,22.25,20.75,19.25" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50"/>
+                        <Ellipse Margin="25.375,26.5,24.625,23.5" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30"/>
+                        <Ellipse Margin="47.875,49,47.125,46" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" Fill="{StaticResource PrimaryHueDarkForegroundBrush}" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="5" Height="5" />
+                        <Path Data="M50.5625,32.5 L50.5625,44.3125" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" Height="13.812" Margin="49.375,30,48.625,0" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.554">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-45"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Data="M50.5625,32.5 L50.5625,44.3125" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" Height="13.812" Margin="49.375,30,48.625,0" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.554">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="45"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Data="M50.5625,32.5 L50.5625,44.3125" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" Height="13.812" Margin="49.375,30,48.625,0" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.554">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="135"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Data="M50.5625,32.5 L50.5625,44.3125" Stroke="{StaticResource PrimaryHueDarkForegroundBrush}" Height="13.812" Margin="49.375,30,48.625,0" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.554">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-135"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <TextBlock Text="{Binding CardId.IP}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                        <TextBlock Text="{Binding CardId.CardNum}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,5"/>
+                        <TextBlock x:Name="titleTxt" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,5"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:AnalogInCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="模拟输入"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:DigitTachometerCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="数字转速"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:EddyCurrentDisplacementCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="电涡流位移"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:EddyCurrentKeyPhaseCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="电涡流键相"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:EddyCurrentTachometerCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="电涡流转速"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:IEPECardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="IEPE"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding  Converter={StaticResource typeOfConverter}}" Value="{x:Type domain:RelayCardModel}" >
+                        <Setter TargetName="titleTxt" Property="Text" Value="继电器"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <vm:CardDataTemplateSelector x:Key="cardDataTemplateSelector" 
+                                         AnalogInCardDataTemplate="{StaticResource AnalogCardDataTemplate}"
+                                         DigitTachometerCardDataTemplate="{StaticResource DigitTachometerCardDataTemplate}"
+                                         EddyCurrentDisplacementCardDataTemplate="{StaticResource EddyCurrentDisplacementCardDataTemplate}"
+                                         EddyCurrentKeyPhaseCardDataTemplate="{StaticResource EddyCurrentKeyPhaseCardDataTemplate}"
+                                         EddyCurrentTachometerCardDataTemplate="{StaticResource EddyCurrentTachometerCardDataTemplate}"
+                                         IEPECardDataTemplate="{StaticResource IEPECardDataTemplate}"
+                                         RelayCardDataTemplate="{StaticResource RelayCardDataTemplate}"/>
+
+            <vm:CardEditingDataTemplateSelector x:Key="cardEditingDataTemplateSelector"
+                                                AnalogInCardDataTemplate="{StaticResource AnalogCardEditingDataTemplate}" 
+                                                DigitTachometerCardDataTemplate="{StaticResource DigitTachometerCardEditingDataTemplate}"
+                                                EddyCurrentDisplacementCardDataTemplate="{StaticResource EddyCurrentDisplacementCardEditingDataTemplate}"
+                                                EddyCurrentKeyPhaseCardDataTemplate="{StaticResource EddyCurrentKeyPhaseCardEditingDataTemplate}"
+                                                EddyCurrentTachometerCardDataTemplate="{StaticResource EddyCurrentTachometerCardEditingDataTemplate}"
+                                                IEPECardDataTemplate="{StaticResource IEPECard4EditingDataTemplate}" 
+                                                RelayCardDataTemplate="{StaticResource RelayCardEditingDataTemplate}"/>
+
+            <Style x:Key="ContentControlStyle1" TargetType="{x:Type ContentControl}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContentControl}">
+                            <Border Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <ContentPresenter />
+                                    <Rectangle Fill="Transparent"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Storyboard x:Key="OnClick1">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="wssContent">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="wssContent" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="2" />
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+            <Style x:Key="FocusVisual">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA"/>
+            <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
+            <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#3DDADADA"/>
+            <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
+            <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA"/>
+            <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
+            <Style x:Key="CardItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Padding" Value="4,1"/>
+                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                <Grid>
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <Rectangle Fill="Transparent"/>
+                                </Grid>
+                               
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--<UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="button">
+            <BeginStoryboard Storyboard="{StaticResource OnClick1}"/>
+        </EventTrigger>
+    </UserControl.Triggers>-->
+    <Grid x:Name="rootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="500"/>
+        </Grid.RowDefinitions>
+
+        <localControls:DataBoard ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}" 
+                                 Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 ItemTemplate="{StaticResource CardDataTemplate}" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <i:Interaction.Behaviors>
+                <core:ItemsControlDragDropBehavior ItemType="{x:Type domain:BaseCardModel}" DataTemplate="{StaticResource CardDataTemplate}"/>
+            </i:Interaction.Behaviors>
+        </localControls:DataBoard>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border  BorderBrush="{DynamicResource PrimaryHueMidBrush}"  BorderThickness="1" >
+                <Border Width="140" Height="450" Background="Black" CornerRadius="5" BorderThickness="5">
+                    <Grid x:Name="contentGrid"  >
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border x:Name="BorderOut">
+                            <!--PreviewMouseLeftButtonDown="backGrid_MouseLeftButtonDown"-->
+                            <Border x:Name="BorderIn">
+                                <ContentControl x:Name="allocateCardontent" MouseDoubleClick="backGrid_MouseLeftButtonDown" Content="{Binding AllocateCard, Mode=TwoWay}" Background="DarkGray"
+                                                ContentTemplateSelector="{StaticResource cardDataTemplateSelector}" Style="{DynamicResource ContentControlStyle1}">
+                                    <ContentControl.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </ContentControl.RenderTransform>
+                                    <i:Interaction.Behaviors>
+                                        <core:ContentControlDragDropBehavior x:Name="contentBehavior" ItemType="{x:Type domain:BaseCardModel}" DataTemplateSelector="{StaticResource cardDataTemplateSelector}"/>
+                                    </i:Interaction.Behaviors>
+                                </ContentControl>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </Border>
+
+            </Border>
+            <Button Content="拷贝" Height="50" Grid.Column="1" Command="{Binding CopyCardParameterCommand}"/>
+            <ListBox BorderBrush="{DynamicResource PrimaryHueLightBrush}" ItemsSource="{Binding AllocatedCards}" 
+                     ItemTemplateSelector="{StaticResource cardDataTemplateSelector}" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                     BorderThickness="1" Grid.Column="2" Background="{x:Null}" ItemContainerStyle="{DynamicResource CardItemContainerStyle}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <i:Interaction.Behaviors>
+                    <core:ItemsControlDragDropBehavior ItemType="{x:Type domain:BaseCardModel}"  DataTemplateSelector="{StaticResource cardDataTemplateSelector}"/>
+                </i:Interaction.Behaviors>
+            </ListBox>
+        </Grid>
+
+        <Grid x:Name="backGrid" Visibility="Collapsed" Grid.RowSpan="2">
+            <Border x:Name="backBorderOut"  Opacity="0">
+                <Border x:Name="backBorderIn" BorderBrush="Green" BorderThickness="5" Background="White">
+                    <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="BACKFACE" FontSize="40" Foreground="Red"/>
+                        <Button Content="Button" Click="Button_Click_1"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Grid>
+
+        <Viewport3D x:Name="vp3D" Grid.RowSpan="2" Visibility="Collapsed">
+            <Viewport3D.Camera>
+                <PerspectiveCamera x:Name="camera" Position="0,0,0.5" LookDirection="0,0,-1" FieldOfView="90" />
+            </Viewport3D.Camera>
+            <Viewport3D.Children>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <Model3DGroup>
+                            <DirectionalLight Color="#444" Direction="0,0,-1" />
+                            <AmbientLight Color="#BBB" />
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D TriangleIndices="0,1,2 2,3,0" TextureCoordinates="0,1 1,1 1,0 0,0" Positions="-0.5,-0.5,0 0.5,-0.5,0 0.5,0.5,0 -0.5,0.5,0" />
+                            </GeometryModel3D.Geometry>
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <VisualBrush Visual="{Binding ElementName=BorderIn}" Stretch="Uniform" x:Name="frontVisual"/>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.Material>
+                            <GeometryModel3D.BackMaterial>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <VisualBrush Visual="{Binding ElementName=backBorderIn}" Stretch="Uniform" x:Name="backVisual">
+                                            <VisualBrush.RelativeTransform>
+                                                <ScaleTransform ScaleX="-1" CenterX="0.5" />
+                                            </VisualBrush.RelativeTransform>
+                                        </VisualBrush>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.BackMaterial>
+                            <GeometryModel3D.Transform>
+                                <RotateTransform3D>
+                                    <RotateTransform3D.Rotation>
+                                        <AxisAngleRotation3D x:Name="rotate" Axis="0,1,0" Angle="0" />
+                                    </RotateTransform3D.Rotation>
+                                </RotateTransform3D>
+                            </GeometryModel3D.Transform>
+                        </GeometryModel3D>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D.Children>
+        </Viewport3D>
+    </Grid>
+</UserControl>

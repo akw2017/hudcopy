@@ -1,0 +1,126 @@
+
+-----------------------------------------
+时间:2017-11-02 17:27:31,324 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:28:09,729 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:29:32,179 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:30:20,112 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:33:53,890 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:37:59,328 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:39:50,649 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:41:55,122 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 152
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-02 17:44:11,555 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第38行
+日志内容:System.InvalidOperationException: HTML 文档不可用。
+   在 System.Windows.Controls.WebBrowser.InvokeScript(String scriptName, Object[] args)
+   在 AIC.HomePage.Views.MapView.timeCycle(Object sender, EventArgs e) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\Views\MapView.xaml.cs:行号 154
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+

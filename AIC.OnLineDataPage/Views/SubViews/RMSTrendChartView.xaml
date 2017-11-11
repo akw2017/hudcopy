@@ -1,0 +1,83 @@
+﻿<view:ChartViewBase x:Class="AIC.OnLineDataPage.Views.SubViews.RMSTrendChartView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:presentation="http://www.aicmonitor.com/Presentation"
+                   xmlns:view="clr-namespace:AIC.OnLineDataPage.Views.SubViews" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
+                   x:Name="timeDomainOnLineView"
+                   RenderTransformOrigin="0.5,0.5"           
+                   mc:Ignorable="d" 
+                   d:DesignHeight="300" d:DesignWidth="300">
+    <view:ChartViewBase.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </view:ChartViewBase.RenderTransform>
+    <view:ChartViewBase.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Key="OnLoaded">
+            <DoubleAnimation
+              Storyboard.TargetName="timeDomainOnLineView"
+              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+              From="0.0" To="1.0" Duration="0:0:0.3"/>
+            <DoubleAnimation
+              Storyboard.TargetName="timeDomainOnLineView"
+              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+              From="0.0" To="1.0" Duration="0:0:0.3"/>
+        </Storyboard>
+    </view:ChartViewBase.Resources>
+    <view:ChartViewBase.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard x:Name="OnLoaded2_BeginStoryboard" Storyboard="{StaticResource OnLoaded}"/>
+        </EventTrigger>
+    </view:ChartViewBase.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Name="gridChart" >
+
+        </Grid>
+        <TextBlock x:Name="txtValue" FontSize="16" Grid.Row="2"/>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="clearBufferBtn" Style="{StaticResource ButtonStyle}" Content="清除" Margin="5,0,0,0" Click="clearBufferBtn_Click"/>
+            <CheckBox x:Name="scrollCheckBox" Margin="5,0,0,0" VerticalAlignment="Center" Checked="scrollCheckBox_Checked" Unchecked="scrollCheckBox_Unchecked"/>
+            <Button Style="{StaticResource ButtonStyle}" Content="趋势" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click" >
+                <Button.ToolTip>
+                    <TextBlock Text="截图"/>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+    </Grid>
+</view:ChartViewBase>

@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/Brushes.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/ArrowButtons.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/Button.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/CheckBox.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/ComboBox.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/EditorTabControl.xaml" />     
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/RadioButton.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/ScrollBar.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/Slider.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/TabControl.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/TextBox.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/ToggleButton.xaml" />
+        <ResourceDictionary Source="/AIC.Themes;component/Themes/GridControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

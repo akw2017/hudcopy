@@ -1,0 +1,12 @@
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\AICXBap.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Styles\Brushes.baml
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Views\Shell.baml
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Views\ShellPage.baml
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\MyApp.baml
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Views\Shell.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Views\ShellPage.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\Views\SplashView.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\MyApp.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\AICXBap_Content.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\AICXBap_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUID\AICXBap\obj\x86\XBAP Debug\AICXBap_MarkupCompile.lref

@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48C5AC49-1DEE-41F1-8F9F-8E4BBEF00F19}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.Cloud.DataReplayer</RootNamespace>
+    <AssemblyName>AIC.Cloud.DataReplayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataReplayerPresentationModule.cs" />
+    <Compile Include="FFTTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\MultiSelectComboBox.xaml.cs">
+      <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SlidingListBox.cs" />
+    <Compile Include="ViewModels\AlarmPointTrendDataViewModel.cs" />
+    <Compile Include="ViewModels\AMSReplayDataViewModel.cs" />
+    <Compile Include="ViewModels\VibrationChannelDataChangedHandler.cs" />
+    <Compile Include="ViewModels\DivFreMeanModel.cs" />
+    <Compile Include="ViewModels\ChannelToken.cs" />
+    <Compile Include="ViewModels\DataReplayerViewModel.cs" />
+    <Compile Include="ViewModels\DivFreSeries.cs" />
+    <Compile Include="ViewModels\FrequencyDomainDataViewModel.cs" />
+    <Compile Include="ViewModels\HistoricalDataViewModel.cs" />
+    <Compile Include="ViewModels\OffDesignConditionDataViewModel.cs" />
+    <Compile Include="ViewModels\OffDesignConditionObject.cs" />
+    <Compile Include="ViewModels\OrderAnalysisDataViewModel.cs" />
+    <Compile Include="ViewModels\OrderAnalysisObject.cs" />
+    <Compile Include="ViewModels\OrthoDataViewModel.cs" />
+    <Compile Include="ViewModels\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\RPM3DSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\RPM3DSpectrumObject.cs" />
+    <Compile Include="ViewModels\SignalMonitorValue.cs" />
+    <Compile Include="ViewModels\Time3DSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\TimeDomainDataViewModel.cs" />
+    <Compile Include="Views\AlarmPointTrendDataView.xaml.cs">
+      <DependentUpon>AlarmPointTrendDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AMSReplayDataView.xaml.cs">
+      <DependentUpon>AMSReplayDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataReplayerView.xaml.cs">
+      <DependentUpon>DataReplayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DynamicFittingDataView.xaml.cs">
+      <DependentUpon>DynamicFittingDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrequencyDomainDataView.xaml.cs">
+      <DependentUpon>FrequencyDomainDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OffDesignConditionDataView.xaml.cs">
+      <DependentUpon>OffDesignConditionDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderAnalysisDataView.xaml.cs">
+      <DependentUpon>OrderAnalysisDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrthoDataView.xaml.cs">
+      <DependentUpon>OrthoDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProgressDialog.xaml.cs">
+      <DependentUpon>ProgressDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReplaySDK.cs" />
+    <Compile Include="Views\RPM3DSpectrumDataView.xaml.cs">
+      <DependentUpon>RPM3DSpectrumDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SnapshotView.xaml.cs">
+      <DependentUpon>SnapshotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Time3DSpectrumView.xaml.cs">
+      <DependentUpon>Time3DSpectrumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeDomainDataView.xaml.cs">
+      <DependentUpon>TimeDomainDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideoReplayerView.xaml.cs">
+      <DependentUpon>VideoReplayerView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AIC.DataModelProvider\AIC.DataModelProvider.csproj">
+      <Project>{46d068f1-a3fa-4b94-b9a2-967039691c00}</Project>
+      <Name>AIC.DataModelProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Common\AIC.Server.Common.csproj">
+      <Project>{d69018a4-498f-4193-9071-b25f5735a368}</Project>
+      <Name>AIC.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Contract\AIC.Server.Storage.Contract.csproj">
+      <Project>{ce9107d5-beaa-4652-938c-89e21c934d09}</Project>
+      <Name>AIC.Server.Storage.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Interface\AIC.Server.Storage.Interface.csproj">
+      <Project>{9b6e49a0-3d3d-40ce-924e-4f0e8c120e1d}</Project>
+      <Name>AIC.Server.Storage.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Video.Contract\AIC.Server.Video.Contract.csproj">
+      <Project>{3ffb53b8-3cdc-41ce-8d99-280d0ff9aa12}</Project>
+      <Name>AIC.Server.Video.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\SupportProject\AICServer7\AIC.Server.Video.Interface\AIC.Server.Video.Interface.csproj">
+      <Project>{dedf3abd-b8f7-49c4-b1ce-a4cd1d9ee6fb}</Project>
+      <Name>AIC.Server.Video.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AIC.Themes\AIC.Themes.csproj">
+      <Project>{3f41830e-d4ab-4e55-8430-e18376030831}</Project>
+      <Name>AIC.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Applications\AIC.Cloud.Applications.csproj">
+      <Project>{0e59acac-7327-42d3-9511-7bd47b080336}</Project>
+      <Name>AIC.Cloud.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Interface\AIC.Cloud.Interface.csproj">
+      <Project>{1ac8a824-7925-479d-9421-6d7c37e3799c}</Project>
+      <Name>AIC.Cloud.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.Cloud.Presentation\AIC.Cloud.Presentation.csproj">
+      <Project>{c161dc8e-522f-4373-b8d8-5bad236418f8}</Project>
+      <Name>AIC.Cloud.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Component\ItemsFilter\ItemsFilter.csproj">
+      <Project>{aab57bb1-a448-457c-ad53-16b32a1c1f1d}</Project>
+      <Name>ItemsFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Component\Rxx\Rxx.csproj">
+      <Project>{2cc2cdd3-2dd9-459a-828a-85ff3b1fd55b}</Project>
+      <Name>Rxx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Database\AIC.Cloud.Business.DataProvider\AIC.Cloud.Database.csproj">
+      <Project>{4d5cc526-5963-427b-b326-0b502932225d}</Project>
+      <Name>AIC.Cloud.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Domain\AIC.Cloud.Domain\AIC.Cloud.Domain.csproj">
+      <Project>{7ebaabb6-997f-4f96-b1f8-0eb276381b0e}</Project>
+      <Name>AIC.Cloud.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Common\AIC.Cloud.Applications\bin\Release\AIC.Cloud.Applications.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Database\AIC.Cloud.Business.DataProvider\bin\Release\AIC.Cloud.Database.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Domain\AIC.Cloud.Domain\bin\Release\AIC.Cloud.Domain.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Common\AIC.Cloud.Interface\bin\Release\AIC.Cloud.Interface.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Common\AIC.Cloud.Presentation\bin\Release\AIC.Cloud.Presentation.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Common\AIC.CoreType\bin\Release\AIC.CoreType.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\AIC.DataModelProvider\bin\Release\AIC.DataModelProvider.dll" />
+    <ReferencePath Include="D:\SupportProject\AICServer7\AIC.Server.Common\bin\Release\AIC.Server.Common.dll" />
+    <ReferencePath Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Contract\bin\Release\AIC.Server.Storage.Contract.dll" />
+    <ReferencePath Include="D:\SupportProject\AICServer7\AIC.Server.Storage.Interface\bin\Release\AIC.Server.Storage.Interface.dll" />
+    <ReferencePath Include="D:\SupportProject\AICServer7\AIC.Server.Video.Contract\bin\Release\AIC.Server.Video.Contract.dll" />
+    <ReferencePath Include="D:\SupportProject\AICServer7\AIC.Server.Video.Interface\bin\Release\AIC.Server.Video.Interface.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\AIC.Themes\bin\Release\AIC.Themes.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\LightningChartUltimate\Arction.Direct3D9.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\LightningChartUltimate\Arction.DirectX.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\LightningChartUltimate\Arction.WPF.LightningChartUltimate.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Component\ItemsFilter\bin\Release\ItemsFilter.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Galaktika\Ranet UILibrary.Olap v3.5\Framework\bin\log4net.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\MathNet.Numerics.Signed-3.2.0\MathNet.Numerics.Signed\Net40\MathNet.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\mscorlib.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.Concurrent.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.Enlightenment.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationFramework.Aero.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationFramework.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Component\Rxx\bin\Release\Rxx.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.Composition.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Numerics.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Rx-Core.2.1.30214.0\lib\Net40\System.Reactive.Core.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Rx-Interfaces.2.1.30214.0\lib\Net40\System.Reactive.Interfaces.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Rx-Linq.2.1.30214.0\lib\Net40\System.Reactive.Linq.dll" />
+    <ReferencePath Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\WindowsBase.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\WindowsFormsIntegration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Collections.Concurrent.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Collections.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ComponentModel.Annotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ComponentModel.EventBasedAsync.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Contracts.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Debug.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Tools.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Tracing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Dynamic.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Globalization.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.IO.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Linq.Expressions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Linq.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Linq.Queryable.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Net.NetworkInformation.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Net.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Net.Requests.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ObjectModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Emit.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Emit.ILGeneration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Emit.Lightweight.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Resources.ResourceManager.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.InteropServices.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.Serialization.Json.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.Serialization.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.Serialization.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Security.Principal.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ServiceModel.Duplex.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ServiceModel.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ServiceModel.NetTcp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ServiceModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.ServiceModel.Security.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Text.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Text.Encoding.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Text.RegularExpressions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Threading.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Threading.Tasks.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Threading.Tasks.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Threading.Timer.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Xml.ReaderWriter.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Xml.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Xml.XmlSerializer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\UserControls\MultiSelectComboBox.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\AlarmPointTrendDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\AMSReplayDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\DataReplayerView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\DynamicFittingDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\FrequencyDomainDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\OffDesignConditionDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\OrderAnalysisDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\OrthoDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\ProgressDialog.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\RPM3DSpectrumDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\SnapshotView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\Time3DSpectrumView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\TimeDomainDataView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\Views\VideoReplayerView.g.cs" />
+    <Compile Include="F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.7\Applications\DataReplayer\AIC.Cloud.DataReplayer\obj\Release\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>

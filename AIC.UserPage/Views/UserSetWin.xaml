@@ -1,0 +1,115 @@
+﻿<Controls:MetroWindow x:Class="AIC.UserPage.Views.UserSetWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.UserPage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:convert="clr-namespace:AIC.UserPage.Converters"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="用户设置" Height="460" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/wrench_orange.png" Topmost="True">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <convert:GuidNameConverter x:Key="guidNameConverter"/>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>    
+    <Grid Background ="{DynamicResource AccentColorBrush2}">
+        <Grid Margin="20" Height="360" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>               
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource name}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <!--<Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource code}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtCode" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>-->
+            <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource aliasName}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtAliasName" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Alias_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource password}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtPassword" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource role}"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cboRole" ItemsSource="{Binding T_Role}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                <ComboBox.SelectedItem>
+                    <MultiBinding Converter="{StaticResource guidNameConverter}">
+                        <Binding Path="T_User.T_Role_Guid" />
+                        <Binding Path="T_Role" Mode="OneWay"/>
+                    </MultiBinding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <Label Grid.Row="5" Grid.Column="0" Content="{DynamicResource menu}"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" x:Name="cboMenu" ItemsSource="{Binding T_Menu}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                <ComboBox.SelectedItem>
+                    <MultiBinding Converter="{StaticResource guidNameConverter}">
+                        <Binding Path="T_User.T_Menu_Guid" />
+                        <Binding Path="T_Menu" Mode="OneWay"/>
+                    </MultiBinding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <Label Grid.Row="6" Grid.Column="0" Content="{DynamicResource organization}"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="cboOrganization" ItemsSource="{Binding T_OrganizationPrivilege}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                <ComboBox.SelectedItem>
+                    <MultiBinding Converter="{StaticResource guidNameConverter}">
+                        <Binding Path="T_User.T_OrganizationPrivilege_Guid" />
+                        <Binding Path="T_OrganizationPrivilege" Mode="OneWay"/>
+                    </MultiBinding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <Label Grid.Row="7" Grid.Column="0" Content="{DynamicResource personTelephone}"/>
+            <TextBox Grid.Row="7" Grid.Column="1" x:Name="txtPersonTelephone" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Person_Telephone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="8" Grid.Column="0" Content="{DynamicResource officeTelephone}"/>
+            <TextBox Grid.Row="8" Grid.Column="1" x:Name="txtOfficeTelephone" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Office_Telephone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="9" Grid.Column="0" Content="{DynamicResource email}"/>
+            <TextBox Grid.Row="9" Grid.Column="1" x:Name="txtEmail" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="10" Grid.Column="0" Content="{DynamicResource contact}"/>
+            <TextBox Grid.Row="10" Grid.Column="1" x:Name="txtContact" VerticalContentAlignment="Center"
+                Text = "{Binding T_User.Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Button Grid.Row="11" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="11" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

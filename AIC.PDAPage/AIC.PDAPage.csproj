@@ -1,0 +1,640 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F45F77E4-17B9-4535-9A5A-92942192B080}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.PDAPage</RootNamespace>
+    <AssemblyName>AIC.PDAPage</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Test1</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\XBAP Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;XBAP</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\XBAP Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Test1</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|AnyCPU'">
+    <OutputPath>bin\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE;XBAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|x86'">
+    <OutputPath>bin\x86\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.6.2.0\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\PDASystemManageTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeNodeDebugInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TreeNodeSortWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WirelessVibrationChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WirelessScalarChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AnalogRransducerOutChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CardCopyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DigitRransducerOutChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitRransducerInChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DivFreInfoWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WirelessVibrationSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TransmissionCardWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RelayChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AnalogRransducerInChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentTachometerChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentKeyPhaseChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentDisplacementChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitTachometerChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\IEPEChannelInfoWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AnalogRransducerOutSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitRransducerOutSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitRransducerInSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RelaySlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AnalogRransducerInSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitTachometerSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentTachometerSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentKeyPhaseSlotWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EddyCurrentDisplacementSlotWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IEPESlotWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainControlCardWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDASystemManageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AbstractChannelInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AbstractSlotInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AlarmCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AlarmModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AlarmParaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\AlarmStrategyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\ComparativeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\DigitRransducerAdditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\DivFreInfoGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\DivFreInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\EddyCurrentRPMChannelInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\EddyCurrentRPMSampleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\EddyCurrentRPMSlotInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\OrganizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\RPMChannelInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\SampleModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\SourceChannelInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\TransformMethodView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\VibrationAdditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\VibrationChannelInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubViews\VibrationSlotInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WirelessReceiveCardWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WireMatchingCardWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Control\WrapBreakPanel.cs" />
+    <Compile Include="Converters\BoolColorConverter.cs" />
+    <Compile Include="Converters\BoolVisibilityConverter.cs" />
+    <Compile Include="Converters\CodeColorConverter.cs" />
+    <Compile Include="Converters\CodeNameConverter.cs" />
+    <Compile Include="Converters\IntAdd1Converter.cs" />
+    <Compile Include="Converters\IntBoolConverter.cs" />
+    <Compile Include="Converters\ListCountConverter.cs" />
+    <Compile Include="Converters\PlaceholderVisibilityConverter.cs" />
+    <Compile Include="Converters\StringGuidBoolConverter.cs" />
+    <Compile Include="Converters\StringWidthConverter.cs" />
+    <Compile Include="Converters\CodeSelectedItemConverter.cs" />
+    <Compile Include="Converters\IntVisibilityConverter.cs" />
+    <Compile Include="Converters\NullVisibilityConverter.cs" />
+    <Compile Include="Models\AddChannelClass.cs" />
+    <Compile Include="Models\CardCopyHelper.cs" />
+    <Compile Include="Models\CardParaCopyModel.cs" />
+    <Compile Include="Models\ForceDeleteChannelClass.cs" />
+    <Compile Include="Models\OrganizationSort.cs" />
+    <Compile Include="PDAPageModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModels\CardCopyViewModel.cs" />
+    <Compile Include="ViewModels\PDASystemManageViewModelMetadata.cs" />
+    <Compile Include="ViewModels\PDASystemManageViewModel.cs" />
+    <Compile Include="Models\TreeProcess.cs" />
+    <Compile Include="Views\TreeNodeDebugInfoWin.xaml.cs">
+      <DependentUpon>TreeNodeDebugInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeNodeSortWin.xaml.cs">
+      <DependentUpon>TreeNodeSortWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WirelessVibrationChannelInfoWin.xaml.cs">
+      <DependentUpon>WirelessVibrationChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WirelessScalarChannelInfoWin.xaml.cs">
+      <DependentUpon>WirelessScalarChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AnalogRransducerOutChannelInfoWin.xaml.cs">
+      <DependentUpon>AnalogRransducerOutChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CardCopyView.xaml.cs">
+      <DependentUpon>CardCopyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitRransducerOutChannelInfoWin.xaml.cs">
+      <DependentUpon>DigitRransducerOutChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitRransducerInChannelInfoWin.xaml.cs">
+      <DependentUpon>DigitRransducerInChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DivFreInfoWin.xaml.cs">
+      <DependentUpon>DivFreInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WirelessVibrationSlotWin.xaml.cs">
+      <DependentUpon>WirelessVibrationSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransmissionCardWin.xaml.cs">
+      <DependentUpon>TransmissionCardWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RelayChannelInfoWin.xaml.cs">
+      <DependentUpon>RelayChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AnalogRransducerInChannelInfoWin.xaml.cs">
+      <DependentUpon>AnalogRransducerInChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentTachometerChannelInfoWin.xaml.cs">
+      <DependentUpon>EddyCurrentTachometerChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentKeyPhaseChannelInfoWin.xaml.cs">
+      <DependentUpon>EddyCurrentKeyPhaseChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentDisplacementChannelInfoWin.xaml.cs">
+      <DependentUpon>EddyCurrentDisplacementChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitTachometerChannelInfoWin.xaml.cs">
+      <DependentUpon>DigitTachometerChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IEPEChannelInfoWin.xaml.cs">
+      <DependentUpon>IEPEChannelInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AnalogRransducerOutSlotWin.xaml.cs">
+      <DependentUpon>AnalogRransducerOutSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitRransducerOutSlotWin.xaml.cs">
+      <DependentUpon>DigitRransducerOutSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitRransducerInSlotWin.xaml.cs">
+      <DependentUpon>DigitRransducerInSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RelaySlotWin.xaml.cs">
+      <DependentUpon>RelaySlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AnalogRransducerInSlotWin.xaml.cs">
+      <DependentUpon>AnalogRransducerInSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitTachometerSlotWin.xaml.cs">
+      <DependentUpon>DigitTachometerSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentTachometerSlotWin.xaml.cs">
+      <DependentUpon>EddyCurrentTachometerSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentKeyPhaseSlotWin.xaml.cs">
+      <DependentUpon>EddyCurrentKeyPhaseSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EddyCurrentDisplacementSlotWin.xaml.cs">
+      <DependentUpon>EddyCurrentDisplacementSlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IEPESlotWin.xaml.cs">
+      <DependentUpon>IEPESlotWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainControlCardWin.xaml.cs">
+      <DependentUpon>MainControlCardWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDASystemManageView.xaml.cs">
+      <DependentUpon>PDASystemManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AbstractChannelInfoView.xaml.cs">
+      <DependentUpon>AbstractChannelInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AbstractSlotInfoView.xaml.cs">
+      <DependentUpon>AbstractSlotInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AlarmCategoryView.xaml.cs">
+      <DependentUpon>AlarmCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AlarmModeView.xaml.cs">
+      <DependentUpon>AlarmModeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AlarmParaView.xaml.cs">
+      <DependentUpon>AlarmParaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\AlarmStrategyView.xaml.cs">
+      <DependentUpon>AlarmStrategyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\ComparativeView.xaml.cs">
+      <DependentUpon>ComparativeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\DigitRransducerAdditionView.xaml.cs">
+      <DependentUpon>DigitRransducerAdditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\DivFreInfoGridView.xaml.cs">
+      <DependentUpon>DivFreInfoGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\DivFreInfoView.xaml.cs">
+      <DependentUpon>DivFreInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\EddyCurrentRPMChannelInfoView.xaml.cs">
+      <DependentUpon>EddyCurrentRPMChannelInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\EddyCurrentRPMSampleView.xaml.cs">
+      <DependentUpon>EddyCurrentRPMSampleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\EddyCurrentRPMSlotInfoView.xaml.cs">
+      <DependentUpon>EddyCurrentRPMSlotInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\OrganizationView.xaml.cs">
+      <DependentUpon>OrganizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\RPMChannelInfoView.xaml.cs">
+      <DependentUpon>RPMChannelInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\SampleModeView.xaml.cs">
+      <DependentUpon>SampleModeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\SourceChannelInfoView.xaml.cs">
+      <DependentUpon>SourceChannelInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\TransformMethodView.xaml.cs">
+      <DependentUpon>TransformMethodView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\VibrationAdditionView.xaml.cs">
+      <DependentUpon>VibrationAdditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\VibrationChannelInfoView.xaml.cs">
+      <DependentUpon>VibrationChannelInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\VibrationSlotInfoView.xaml.cs">
+      <DependentUpon>VibrationSlotInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WirelessReceiveCardWin.xaml.cs">
+      <DependentUpon>WirelessReceiveCardWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WireMatchingCardWin.xaml.cs">
+      <DependentUpon>WireMatchingCardWin.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
+      <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
+      <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.ServiceInterface\AIC.ServiceInterface.csproj">
+      <Project>{1b41d49f-0857-482b-a58b-83ca1938ef0f}</Project>
+      <Name>AIC.ServiceInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.MasterDB\AIC.M9600.Common.MasterDB.csproj">
+      <Project>{63726288-9e7e-46b3-bad7-da329e3222a8}</Project>
+      <Name>AIC.M9600.Common.MasterDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
+      <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
+      <Name>Wpf.CloseTabControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
+      <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
+      <Name>Xceed.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\page_white_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow_left.png" />
+    <Resource Include="Images\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\A.png" />
+    <Resource Include="Images\C.png" />
+    <Resource Include="Images\H.png" />
+    <Resource Include="Images\S.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\T.png" />
+    <Resource Include="Images\W.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\M.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

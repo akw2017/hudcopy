@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>C:\HTZKPublish\AICXBap\|publish\</PublishUrlHistory>
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
+    <StartProgram>C:\WINDOWS\System32\PresentationHost.exe</StartProgram>
+    <StartURL>D:\SupportProject\AIC_HUD\AICHUID\AICXBap\bin\XBAP Debug\AICXBap.xbap</StartURL>
+    <StartArguments>-debug "D:\SupportProject\AIC_HUD\AICHUID\AICXBap\bin\XBAP Debug\AICXBap.xbap"</StartArguments>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|x86'">
+    <StartProgram>C:\WINDOWS\System32\PresentationHost.exe</StartProgram>
+    <StartURL>D:\SupportProject\AIC_HUD\AICHUID\AICXBap\bin\XBAP Release\AICXBap.xbap</StartURL>
+    <StartArguments>-debug "D:\SupportProject\AIC_HUD\AICHUID\AICXBap\bin\XBAP Release\AICXBap.xbap"</StartArguments>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+</Project>

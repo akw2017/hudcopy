@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7A6AE9D1-4A2E-4AC1-8C28-FF1F6E39F76E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AIC.M9600.Common.DTO</RootNamespace>
+    <AssemblyName>AIC.M9600.Common.DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\SupportProject\AIC9600Server\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DeviceMessageType.cs" />
+    <Compile Include="Device\AlarmLimit.cs" />
+    <Compile Include="Device\EddyCurrentDisplacementSlotData_Waveform.cs" />
+    <Compile Include="Device\EddyCurrentKeyPhaseSlotData_Waveform.cs" />
+    <Compile Include="Device\EddyCurrentTachometerSlotData_Waveform.cs" />
+    <Compile Include="Device\ExtraInfo.cs" />
+    <Compile Include="Device\IEPESlotData_Waveform.cs" />
+    <Compile Include="Device\ISlotWaveformData.cs" />
+    <Compile Include="Device\SampleData.cs" />
+    <Compile Include="Device\AnalogRransducerInSlotData.cs" />
+    <Compile Include="Device\AnalogRransducerOutSlotData.cs" />
+    <Compile Include="Device\DigitRransducerInSlotData.cs" />
+    <Compile Include="Device\DigitRransducerOutSlotData.cs" />
+    <Compile Include="Device\DigitTachometerSlotData.cs" />
+    <Compile Include="Device\EddyCurrentDisplacementSlotData_DivFreInfo.cs" />
+    <Compile Include="Device\EddyCurrentDisplacementSlotData.cs" />
+    <Compile Include="Device\EddyCurrentKeyPhaseSlotData.cs" />
+    <Compile Include="Device\EddyCurrentTachometerSlotData.cs" />
+    <Compile Include="Device\IEPESlotData_DivFreeInfo.cs" />
+    <Compile Include="Device\ISlotData.cs" />
+    <Compile Include="Device\IEPESlotData.cs" />
+    <Compile Include="Device\RelaySlotData.cs" />
+    <Compile Include="Device\IWaveformData.cs" />
+    <Compile Include="Device\WaveformTypeAttribute.cs" />
+    <Compile Include="Device\WirelessScalarSlotData.cs" />
+    <Compile Include="Device\WirelessVibrationSlotData.cs" />
+    <Compile Include="Device\WirelessVibrationSlotData_DivFreInfo.cs" />
+    <Compile Include="Device\WirelessVibrationSlotData_Waveform.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalType.cs" />
+    <Compile Include="WebMessageType.cs" />
+    <Compile Include="Web\LatestSampleData.cs" />
+    <Compile Include="Web\VersionHistory.cs" />
+    <Compile Include="Web\VersionInfo.cs" />
+    <Compile Include="Web\WebResponse.cs" />
+    <Compile Include="ResponseCode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.M9600.Common.MasterDB\AIC.M9600.Common.MasterDB.csproj">
+      <Project>{63726288-9e7e-46b3-bad7-da329e3222a8}</Project>
+      <Name>AIC.M9600.Common.MasterDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.M9600.Common.SlaveDB\AIC.M9600.Common.SlaveDB.csproj">
+      <Project>{56fd6a48-aebb-44a2-9725-1304a9bf87a9}</Project>
+      <Name>AIC.M9600.Common.SlaveDB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

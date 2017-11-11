@@ -1,0 +1,193 @@
+﻿/* Author : zhengyangyong */
+using AIC.M9600.Common.DTO;
+using AIC.M9600.Common.DTO.Device;
+using AIC.M9600.Common.DTO.Web;
+using CitizenSoftwareLib.Network.Socket;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AIC.M9600.Client.DataProvider
+{
+    public class NetworkTransfer
+    {
+        private string _ip = null;
+        private int _port = 0;
+        private TimeSpan _timeout;
+        private ushort _majorVersion = 1;
+        private ushort _minorVersion = 1;
+
+        public NetworkTransfer(string ip, int port, ushort majorVersion, ushort minorVersion)
+            : this(ip, port, majorVersion, minorVersion,TimeSpan.FromSeconds(8))
+        { }
+
+        public NetworkTransfer(string ip, int port, ushort majorVersion, ushort minorVersion, TimeSpan timeout)
+        {
+            this._ip = ip;
+            this._port = port;
+            this._majorVersion = majorVersion;
+            this._minorVersion = minorVersion;
+            this._timeout = timeout;
+        }
+
+        public string[] Query(string tableName, ICollection<string> columns, string condition, object[] args)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    ResponseCompressMode = CompressMode.Snappy,
+                    Type = (short)WebMessageType.QueryRequest,
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    DataTexts = new string[] { tableName, JsonConvert.SerializeObject(columns), condition, JsonConvert.SerializeObject(args) }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] Add(string tableName, string json)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.AddRequest,
+                    DataTexts = new string[] { tableName, json }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] Modify(string tableName, ICollection<string> columns, string json)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.ModifyRequest,
+                    DataTexts = new string[] { tableName, JsonConvert.SerializeObject(columns), json }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] Complex(string addJson, string modifyJson,string deleteJson)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.ComplexRequest,
+                    DataTexts = new string[] { addJson, modifyJson, deleteJson }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] Delete(string tableName, string primaryKeyColumn, ICollection<object> ids)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.DeleteRequest,
+                    DataTexts = new string[] { tableName, primaryKeyColumn, JsonConvert.SerializeObject(ids) }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] CommunicateDevice(string ip, int port, string deviceContent,
+            string addJson, string modifyJson, string deleteJson)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    RequestCompressMode = CompressMode.Snappy,
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.CommunicateDeviceRequest,
+                    DataTexts = new string[] { ip, port.ToString(), deviceContent, addJson, modifyJson, deleteJson }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public byte[][] QueryLatestSampleData(int invalidSecond, HashSet<Guid> itemGuids)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    ResponseCompressMode = CompressMode.Snappy,
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.QueryLatestSampleDataRequest,
+                    DataTexts = new string[] { invalidSecond.ToString(), JsonConvert.SerializeObject(itemGuids) }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.Datas;
+            }
+        }
+
+        public string[] QueryHistorySampleData(string tableName, Guid itemGuid, string[] columns, DateTime startTime, DateTime endTime, string condition, object[] args)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    ResponseCompressMode = CompressMode.Snappy,
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)WebMessageType.QueryHistorySampleDataRequest,
+                    DataTexts = new string[] { tableName, itemGuid.ToString(), JsonConvert.SerializeObject(columns), startTime.Ticks.ToString(), endTime.Ticks.ToString(), condition, JsonConvert.SerializeObject(args) }
+                };
+                TCPMessage response = client.Request(request, _timeout);
+                return response.DataTexts;
+            }
+        }
+
+        public string[] UploadDeviceSmapleData(SampleData data, CompressMode requestCompressMode)
+        {
+            using (var client = GetClient())
+            {
+                TCPMessage request = new TCPMessage()
+                {
+                    RequestCompressMode = requestCompressMode,
+                    MajorVerson = _majorVersion,
+                    MinorVersion = _minorVersion,
+                    Type = (short)DeviceMessageType.UploadSampleDataRequest,
+                    DataTexts = new string[] { JsonConvert.SerializeObject(data) }
+                };
+                TCPMessage response = client.Request(request);
+                return response.DataTexts;
+            }
+        }
+
+        private TCPClient GetClient()
+        {
+            var client = new TCPClient(_ip, _port, false);
+            client.Connect();
+            return client;
+        }
+    }
+}

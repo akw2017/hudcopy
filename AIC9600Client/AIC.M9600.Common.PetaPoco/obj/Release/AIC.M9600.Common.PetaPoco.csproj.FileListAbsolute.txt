@@ -1,0 +1,5 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.PetaPoco\bin\Release\AIC.M9600.Common.PetaPoco.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.PetaPoco\bin\Release\AIC.M9600.Common.PetaPoco.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.PetaPoco\obj\Release\AIC.M9600.Common.PetaPoco.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.PetaPoco\obj\Release\AIC.M9600.Common.PetaPoco.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.PetaPoco\obj\Release\AIC.M9600.Common.PetaPoco.pdb

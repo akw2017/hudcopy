@@ -1,0 +1,59 @@
+﻿<Controls:MetroWindow x:Class="AIC.OnLineDataPage.Views.DigitRransducerInInfoWin"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
+        Title="数字变送器输入信号信息" Height="180" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
+    <Control.Resources>
+        <!--<ResourceDictionary Source="/AIC.PDAPage;component/Themes/Generic.xaml" />-->
+    </Control.Resources>
+    <Grid Background = "{DynamicResource AccentColorBrush2}">
+        <Grid Margin="10" Height="120">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="数采器类型:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ACQ_Unit_Type}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="异步/同步:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding AsySyn}" Style="{DynamicResource MetroTextBox}"  IsReadOnly="True"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="主板代码:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MainCardCode}" Style="{DynamicResource MetroTextBox}" IsReadOnly="True"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="波形代码:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding SynWaveCode}" Style="{DynamicResource MetroTextBox}"  IsReadOnly="True"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="硬件旁路:" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsHdBypass}" VerticalAlignment="Center" IsEnabled="False"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="硬件倍增:" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="2" Grid.Column="3" IsChecked="{Binding IsHdMultiplication}" VerticalAlignment="Center" IsEnabled="False"/>
+
+            <Button Grid.Row="3" Grid.Column="1" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="3" Grid.Column="2" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

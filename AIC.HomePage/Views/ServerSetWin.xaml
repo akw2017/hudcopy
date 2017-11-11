@@ -1,0 +1,97 @@
+﻿<Controls:MetroWindow x:Class="AIC.HomePage.Views.ServerSetWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.HomePage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="服务器地址设置" Height="370" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/wrench_orange.png" Topmost="True">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBox" >
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="Red" VerticalAlignment="Center" FontSize="18">!</TextBlock>
+                                <AdornedElementPlaceholder/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="BorderBrush" Value="Red" />
+                        <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>    
+    <Grid Background ="{DynamicResource AccentColorBrush2}">
+        <Grid Margin="20" Height="280" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="服务器名："/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center"
+                Text = "{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="1" Grid.Column="0" Content="服务器IP："/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtIP" VerticalContentAlignment="Center"
+                Text = "{Binding IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <!--<Label Grid.Row="2" Grid.Column="0" Content="服务器端口："/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtPort" VerticalContentAlignment="Center"
+                Text = "{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>-->
+            <Label Grid.Row="3" Grid.Column="0" Content="机构名称："/>
+            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtFactory" VerticalContentAlignment="Center"
+                Text = "{Binding Factory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="4" Grid.Column="0" Content="经度："/>
+            <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtLongitude" VerticalContentAlignment="Center"
+                Text = "{Binding Longitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="5" Grid.Column="0" Content="纬度："/>
+            <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtLatitude" VerticalContentAlignment="Center"
+                Text = "{Binding Latitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <Label Grid.Row="6" Grid.Column="0" Content="默认登录："/>
+            <CheckBox Grid.Row="6" Grid.Column="1" x:Name="chkIsLogin" IsChecked="{Binding IsLogin}"/>
+            <Label Grid.Row="7" Grid.Column="0" Content="设为云服务："/>
+            <CheckBox Grid.Row="7" Grid.Column="1" x:Name="chkIsCloud" IsChecked="{Binding IsCloud}"/>          
+            <Button Grid.Row="8" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="8" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

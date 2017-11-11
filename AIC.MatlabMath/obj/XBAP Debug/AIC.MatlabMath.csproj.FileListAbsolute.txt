@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\XBAP Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\XBAP Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\XBAP Debug\AIC.MatlabMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\XBAP Debug\AIC.MatlabMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\XBAP Debug\AIC.MatlabMath.csprojResolveAssemblyReference.cache

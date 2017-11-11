@@ -1,0 +1,229 @@
+﻿<UserControl x:Class="AIC.HistoryDataPage.Views.PowerSpectrumDensityDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"      
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:views="clr-namespace:AIC.HistoryDataPage.Views"          
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType" 
+             xmlns:lcu="http://www.arction.com/schemas/" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF87CDEE"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}" CornerRadius="7"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <!--<presentation:AnimatedRectangle/>-->
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#7F243859"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" Value="#FF20437E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+        <core:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        <core:EnumToVisibilityConverter x:Key="enumToVisibilityConverter" Reverse="False"/>
+        <core:BindingProxy x:Key="proxy" Data="{Binding}" />
+        
+        <ControlTemplate x:Key="DefaultErrorTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderThickness="1" BorderBrush="#FFdc000c" CornerRadius="0.7" VerticalAlignment="Top">
+                    <Grid>
+                        <Polygon x:Name="toolTipCorner" Grid.ZIndex="2" Margin="-1" Points="6,6 6,0 0,0"  Fill="#FFdc000c"  
+                                             HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True"/>
+                        <Polyline Grid.ZIndex="3" Points="7,7 0,0" Margin="-1" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True"
+                                              StrokeThickness="1.5" StrokeEndLineCap="Round" StrokeStartLineCap="Round" Stroke="White" />
+                        <AdornedElementPlaceholder x:Name="placeholder"/>
+                    </Grid>
+                </Border>
+                <Border Background="Red" Margin="3" CornerRadius="10" Width="20" Height="20" VerticalAlignment="Top"
+                    ToolTip="{Binding ElementName=placeholder,
+                             Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" ToolTipService.InitialShowDelay="0">
+                    <TextBlock Text="!" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </ControlTemplate>
+        <Style TargetType="{x:Type xctk:DoubleUpDown}" >
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}"/>
+        </Style>
+        <Style x:Key="NormalRadioButtonStyle" TargetType="{x:Type RadioButton}"/>
+        <Style x:Key="NormalCheckBoxStyle" TargetType="{x:Type CheckBox}"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Margin="2">
+            <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
+                <CheckBox x:Name="filterCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                <xctk:DropDownButton x:Name="dropDownButton" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Content="滤波" >
+                    <xctk:DropDownButton.DropDownContent>
+                        <Grid Width="200">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="bandPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="带通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}"/>
+                                <RadioButton x:Name="highPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="高通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}"/>
+                                <RadioButton x:Name="lowPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="低通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}"/>
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.BandPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.BPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.BPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.BPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.BPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="低逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.BPFilter.BPPassBandFreLow}" />
+                                <Label Grid.Row="4" Content="高逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.BPFilter.BPPassBandFreHigh}"/>
+                                <Label Grid.Row="5" Content="过渡带宽"/>
+                                <xctk:DoubleUpDown  Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.BPFilter.TransitionBandwidth}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.BPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.BPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.HighPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.HPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.HPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.HPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.HPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.HPFilter.PassbandFre}"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.HPFilter.StopbandFre}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.HPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.HPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.LowPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.LPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.LPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.LPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.LPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.LPFilter.PassbandFre}"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.LPFilter.StopbandFre}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.LPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.LPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                        </Grid>
+                    </xctk:DropDownButton.DropDownContent>
+                </xctk:DropDownButton>
+                <CheckBox x:Name="envelopeCheckBox" Content="包络" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked"  Unchecked="CheckBox_Unchecked"/>
+                <CheckBox x:Name="tffCheckBox" Content="TFF" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                <CheckBox x:Name="cepstrumCheckBox" Content="倒频谱" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                <CheckBox x:Name="dbCheckBox" Content="dB/Hz" Foreground="#FF87CDEE" VerticalAlignment="Center"  Checked="dbCheckBox_Checked" Unchecked="dbCheckBox_UnChecked" IsChecked="True"/>
+                <CheckBox Content="参数" HorizontalAlignment="Right" IsChecked="{Binding ShowDetail}" Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            </StackPanel>
+           
+            <Grid Name="gridChart" Grid.Row="1">
+                
+            </Grid>
+            <TextBlock Text="{Binding Title}"  Foreground="#FF87CDEE" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <Button Grid.Row="1" Style="{StaticResource ButtonStyle}" Height="25"  Content="截图" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click">
+                <Button.ToolTip>
+                    <TextBlock Text="截图"/>
+                </Button.ToolTip>
+            </Button>   
+        </Grid>
+        <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        <Path Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+        <Path Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+    </Grid>
+</UserControl>

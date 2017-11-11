@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="AIC.HomePage.Views.ServerSetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIC.HomePage"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:prism="http://prismlibrary.com/"  
+             xmlns:page="clr-namespace:Wpf.PageNavigationControl;assembly=Wpf.PageNavigationControl"
+             xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid >
+        <Grid.RowDefinitions>           
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>             
+        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="{DynamicResource serverName}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center"/>
+            <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
+                        <TextBlock Text="{DynamicResource search}" VerticalAlignment="Center" />                      
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <TextBlock Text="{DynamicResource serverManagement}" VerticalAlignment="Center" Margin="20,0,0,0"/>
+            <TextBox DataContext="{Binding ElementName=table, Path=SelectedItem}" Text="{Binding Path=IP}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" IsReadOnly="True"/>
+            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
+                        <TextBlock Text="{DynamicResource edit}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                        <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding DefaultCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/tick.png"  />
+                        <TextBlock Text="{DynamicResource default}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*"
+                  ItemsSource="{Binding ServerInfoShow}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource serverName}" Binding="{Binding Name}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource serverIP}" Binding="{Binding IP}" MinWidth="60"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="{DynamicResource serverPort}" Binding="{Binding Port}" MinWidth="60"></DataGridTextColumn>-->
+                <DataGridTextColumn Header="{DynamicResource organizationName}" Binding="{Binding Factory}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource longitude}" Binding="{Binding Longitude}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource latitude}" Binding="{Binding Latitude}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="{DynamicResource defaultlogin}" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image x:Name="image" VerticalAlignment="Center" Source="/AIC.Resources;component/Images/bullet_minus.png" Width="16" Height="16"></Image>
+                            <DataTemplate.Triggers>                                
+                                <DataTrigger Binding="{Binding IsLogin}" Value="True">
+                                    <Setter TargetName="image" Property="Source" Value="/AIC.Resources;component/Images/tick.png" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>                   
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="{DynamicResource servermode}" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image x:Name="image" VerticalAlignment="Center" Source="/AIC.Resources;component/Images/computer.png" Width="16" Height="16"></Image>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsCloud}" Value="True">
+                                    <Setter TargetName="image" Property="Source" Value="/AIC.Resources;component/Images/weather_cloud.png" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="{DynamicResource loginResult}" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image x:Name="image" VerticalAlignment="Center" Source="/AIC.Resources;component/Images/bullet_minus.png" Width="16" Height="16"></Image>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding LoginResult}" Value="True">
+                                    <Setter TargetName="image" Property="Source" Value="/AIC.Resources;component/Images/tick.png" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="{DynamicResource permissions}" Binding="{Binding Permission}" MinWidth="60"></DataGridTextColumn>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource MetroDataGridCell}"
+                       TargetType="{x:Type DataGridCell}">
+
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                </Style>
+            </DataGrid.Style>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+        <page:PageNavigation Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize}" 
+            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=TwoWay}" Grid.Row="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CurrentPageChanged">
+                    <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </page:PageNavigation>
+    </Grid>
+</UserControl>

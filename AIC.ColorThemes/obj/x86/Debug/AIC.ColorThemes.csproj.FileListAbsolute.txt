@@ -1,0 +1,11 @@
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\bin\x86\Debug\AIC.ColorThemes.dll
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\bin\x86\Debug\AIC.ColorThemes.pdb
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\Themes\Colors.baml
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes.g.resources
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes.dll
+D:\SupportProject\AIC_HUD\AICHUID\AIC.ColorThemes\obj\x86\Debug\AIC.ColorThemes.pdb

@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F76C5F66-B950-495E-A8E7-B1F092BA818C}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <RootNamespace>AICCYSH</RootNamespace>
+    <AssemblyName>AICCYSH</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <OutputType>winexe</OutputType>
+    <!-- Most people will use Publish dialog in Visual Studio to increment this -->
+    <SignManifests>true</SignManifests>
+    <MinFrameworkVersionRequired>3.0</MinFrameworkVersionRequired>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>C:\HTZKPublish\AICCYSH\</PublishUrl>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <ProductName>AIC</ProductName>
+    <PublisherName>AIC</PublisherName>
+    <SuiteName>AIC</SuiteName>
+    <ApplicationRevision>37</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+  </PropertyGroup>
+  <!-- XBAP -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'XBAP Debug' OR '$(Configuration)' == 'XBAP Release' ">
+    <!--  XBAP Flags  -->
+    <HostInBrowser>True</HostInBrowser>
+    <Install>false</Install>
+    <TargetZone>Internet</TargetZone>
+    <!-- XBAP Flags for Debugging  -->
+    <StartAction>Program</StartAction>
+    <StartProgram>$(WINDIR)\System32\PresentationHost.exe</StartProgram>
+    <ApplicationExtension>.xbap</ApplicationExtension>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+    <StartArguments>-debug "$(MSBuildProjectDirectory)\bin\$(Configuration)\$(AssemblyName)$(ApplicationExtension)"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <!--   XBAP Output Directories  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'XBAP Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <IntermediateOutputPath>.\obj\$(Configuration)\</IntermediateOutputPath>
+    <OutputPath>.\bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;XBAP</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'XBAP Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <IntermediateOutputPath>.\obj\$(Configuration)\</IntermediateOutputPath>
+    <OutputPath>.\bin\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;XBAP</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>AICCYSH_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0A0F7D3F206326E182573FF30982F1D4BF3B3599</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>AICCYSH_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>45.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\XBAP Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;XBAP</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|x86'">
+    <OutputPath>bin\x86\XBAP Release\</OutputPath>
+    <DefineConstants>TRACE;XBAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <!--   XBAP Output Directories  -->
+  <ItemGroup>
+    <Reference Include="Arction.Wpf.Charting.LightningChartUltimate, Version=8.0.2.4001, Culture=neutral, PublicKeyToken=6484d7bb14b95dd3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LightningChart\v8\Arction.Wpf.Charting.LightningChartUltimate.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\packages\MaterialDesignThemes.2.2.1.750\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.6.2.0\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="System.Printing" />
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
+    <Reference Include="XamlAnimatedGif, Version=1.1.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlAnimatedGif.1.1.10\lib\net45\XamlAnimatedGif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="MyApp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Chart\LicenseKeyStrings.cs" />
+    <Compile Include="ModuleTracker\CallbackLogger.cs" />
+    <Compile Include="ModuleTracker\DiscoveryMethod.cs" />
+    <Compile Include="ModuleTracker\DownloadTiming.cs" />
+    <Compile Include="ModuleTracker\ModuleInitializationStatus.cs" />
+    <Compile Include="ModuleTracker\ModuleTracker.cs" />
+    <Compile Include="ModuleTracker\ModuleTrackingState.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\SplashViewModel.cs" />
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellPage.xaml.cs">
+      <DependentUpon>ShellPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashView.xaml.cs">
+      <DependentUpon>SplashView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Styles\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ShellPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <None Include="AICCYSH_TemporaryKey.pfx" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Readme.txt" />
+    <Compile Include="MyApp.xaml.cs">
+      <DependentUpon>MyApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\application.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ss_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ss_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIC.ColorThemes\AIC.ColorThemes.csproj">
+      <Project>{7e28925d-3d7a-4cb8-97d0-ef628f9a9653}</Project>
+      <Name>AIC.ColorThemes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.DatabaseService\AIC.DatabaseService.csproj">
+      <Project>{924eaea3-3c39-418e-816f-8383f18285ad}</Project>
+      <Name>AIC.DatabaseService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
+      <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
+      <Name>AIC.HistoryDataPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.OnLineDataPage\AIC.OnLineDataPage.csproj">
+      <Project>{4d9542c6-3bcc-4c44-b371-1416b837c2a8}</Project>
+      <Name>AIC.OnLineDataPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.PDAPage\AIC.PDAPage.csproj">
+      <Project>{f45f77e4-17b9-4535-9a5a-92942192b080}</Project>
+      <Name>AIC.PDAPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.SignalProcess\AIC.SignalProcess.csproj">
+      <Project>{45e71da4-c7f7-47b1-a635-dff6a06b47ef}</Project>
+      <Name>AIC.SignalProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Themes\AIC.Themes.csproj">
+      <Project>{3f41830e-d4ab-4e55-8430-e18376030831}</Project>
+      <Name>AIC.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.UserPage\AIC.UserPage.csproj">
+      <Project>{5485c555-8a69-4e51-8b43-9b0fefe0b70d}</Project>
+      <Name>AIC.UserPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AICMath\AICMath.csproj">
+      <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
+      <Name>AICMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FluentValidation\FluentValidation.csproj">
+      <Project>{dae0249b-4f69-4ac9-9a17-aa23e0795316}</Project>
+      <Name>FluentValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Loya.Dameer\Loya.Dameer.csproj">
+      <Project>{e67965a7-6224-4441-9513-d724ff662307}</Project>
+      <Name>Loya.Dameer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Truss\Truss.csproj">
+      <Project>{d316baf2-3cc2-4e41-9b68-bf49ab9a0b6d}</Project>
+      <Name>Truss</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
+      <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>
+      <Name>Wpf.PageNavigationControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
+      <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
+      <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.HomePage\AIC.HomePage.csproj">
+      <Project>{81c68241-29fc-406d-9e8d-d3cefafe81df}</Project>
+      <Name>AIC.HomePage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.LocalResource\AIC.LocalConfiguration.csproj">
+      <Project>{9d1d2644-a75b-437c-981b-dfd643cd1180}</Project>
+      <Name>AIC.LocalConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.ServiceInterface\AIC.ServiceInterface.csproj">
+      <Project>{1b41d49f-0857-482b-a58b-83ca1938ef0f}</Project>
+      <Name>AIC.ServiceInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModuleTracking\ModuleTracking.csproj">
+      <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
+      <Name>ModuleTracking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
+      <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
+      <Name>Xceed.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\MyData\Configuration\Servers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="45.ico" />
+    <Content Include="AIC.html" />
+    <Content Include="Resources\AICMath.dll" />
+    <Content Include="Resources\AICMatlabDLL.dll" />
+    <Content Include="Resources\Danger.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Waring.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
