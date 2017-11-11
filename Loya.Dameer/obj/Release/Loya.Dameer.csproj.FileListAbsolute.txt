@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\bin\Release\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\bin\Release\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Release\Loya.Dameer.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Release\Loya.Dameer.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Release\Loya.Dameer.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Release\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Release\Loya.Dameer.pdb

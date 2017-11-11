@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<exceptionHelper>
+	<exceptionGroup type="Kent.Boogaart.Truss.Primitive.PropertyExpression">
+		<exception key="OnePartRequired" type="System.ArgumentException">
+			At least one PropertyExpressionPart is required.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Truss.Primitive.BindingBase">
+		<exception key="BindingMustBeActivatedInOwningContainer" type="System.InvalidOperationException">
+			A binding being activated must be present in the binding container within which it is being activated.
+		</exception>
+		<exception key="AlreadyActivated" type="System.InvalidOperationException">
+			This binding is already activated.
+		</exception>
+		<exception key="ActivatedOrNotActivated" type="System.InvalidOperationException">
+			{0}
+		</exception>		
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Truss.Primitive.SingleSourceBinding">
+		<exception key="SourcePropertyExpressionRequired" type="System.InvalidOperationException">
+			If the AttemptCreatePropertyExpressions method returns true, the SourcePropertyExpression property must be non-null.
+		</exception>
+
+		<exception key="TargetPropertyExpressionRequired" type="System.InvalidOperationException">
+			If the AttemptCreatePropertyExpressions method returns true, the TargetPropertyExpression property must be non-null.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Truss.Primitive.MultiSourceBinding">
+		<exception key="TargetPropertyExpressionRequired" type="System.InvalidOperationException">
+			If the AttemptCreateTargetPropertyExpression method returns true, the TargetPropertyExpression property must be non-null.
+		</exception>
+
+		<exception key="ConverterIsRequired" type="System.InvalidOperationException">
+			All MultiSourceBindings require a converter.
+		</exception>
+
+		<exception key="NoTargetPropertyExpression" type="System.InvalidOperationException">
+			A binding in the Bindings collection of a MultiSourceBinding does not yet have a target property expression, despite being activated.
+		</exception>
+
+		<exception key="ConverterMustReturnValue" type="System.InvalidOperationException">
+			The ConvertTargetToSource method on an IMultiValueConverter must return a non-null value.
+		</exception>
+
+		<exception key="ExpectedMoreOrLessValues" type="System.InvalidOperationException">
+			The converter for this MultiSourceBinding returned {0} values when {1} were expected.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Truss.Primitive.LambdaPropertyExpression">
+		<exception key="UnsupportedExpression" type="System.InvalidOperationException">
+			Lambda expression '{0}' is not supported.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Truss.BindingManager">
+		<exception key="Disposed" type="System.ObjectDisposedException">
+			BindingManager
+		</exception>
+	</exceptionGroup>
+</exceptionHelper>

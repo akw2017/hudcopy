@@ -1,0 +1,24 @@
+﻿Problems
+--------
+
+ - the BindingBase.VerifyXxx() methods are not thread-safe
+
+
+Notes
+-----
+
+DelegateConverter?
+
+DelegateConverter.CreateTargetToSourceConverter(o => o.ToString());
+
+DelegateConverter.CreateSourceToTargetConverter(o => o.ToString());
+
+new DelegateConverter(targetToSourceConverter, sourceToTargetConverter)
+
+EG.
+
+new DelegateConverter(o => o.String(), o => int.Parse(o));
+
+Limitations:
+ - no type or parameter in the lambda (write a converter if you need them)
+ - have to create via static methods because otherwise there's no way to differentiate direction

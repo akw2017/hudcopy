@@ -1,0 +1,14 @@
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Release\Wpf.PageNavigationControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Release\Wpf.PageNavigationControl.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\PageNavigation.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\PageNavigation.baml
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.g.resources
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.pdb

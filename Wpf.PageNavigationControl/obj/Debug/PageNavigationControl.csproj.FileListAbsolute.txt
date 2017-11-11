@@ -1,0 +1,13 @@
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\bin\Debug\PageNavigationControl.dll
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\bin\Debug\PageNavigationControl.pdb
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigation.g.cs
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl_MarkupCompile.cache
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl_MarkupCompile.lref
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigation.baml
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\Themes\Generic.baml
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl.g.resources
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl.Properties.Resources.resources
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl.csproj.GenerateResource.Cache
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl.dll
+D:\Documents\Visual Studio 2015\Projects\PointRoutingDemo\PageNavigationControl\obj\Debug\PageNavigationControl.pdb

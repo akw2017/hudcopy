@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="d:\program files (x86)\microsoft visual studio 14.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="14.0">
+ <Targets>
+  <Target Name="D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Release\ModularityWithUnity.ModuleTracking.dll">
+   <Modules>
+    <Module Name="modularitywithunity.moduletracking.dll">
+     <Namespaces>
+      <Namespace Name="ModuleTracking">
+       <Types>
+        <Type Name="WellKnownModuleNames" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ModulePDA" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="PDA" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2017-11-08 04:38:29Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">更正成员名称 'WellKnownModuleNames.ModulePDA' 中“PDA”的大小写，将其改为“Pda”。</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ModulePDAService" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="PDA" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2017-11-08 04:38:29Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">更正成员名称 'WellKnownModuleNames.ModulePDAService' 中“PDA”的大小写，将其改为“Pda”。</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>标识符的大小写应当正确</Name>
+   <Description>类型、命名空间和成员标识符应采用 Pascal 大小写格式。参数标识符应采用 Camel 大小写格式。这些标识符内由两个字母组成的首字母缩略词应全部大写，例如，应采用 System.IO，而不是 System.Io。由三个或更多个字母组成的首字母缩略词应采用 Pascal 大小写格式，例如，应采用 System.Xml，而不是 System.XML。Pascal 大小写格式约定每个单词的首字母大写，如 BackColor。Camel 大小写格式约定第一个单词的首字母小写，所有后续单词的首字母都大写，如 backgroundColor。尽管有些由两个字母组成的首字母缩略词习惯采用不完全大写形式，但不能因此而排斥此规则。例如，“DbConnection”很常见，但并不正确，应采用 DBConnection。为了与现有的非托管符号方案兼容，可能需要违反此规则。但一般来说，这些符号在使用它们的程序集之外不可见。</Description>
+   <Resolution Name="Member">更正成员名称 {1} 中“{0}”的大小写，将其改为“{2}”。</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182240.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">类别</String>
+  <String Key="Certainty">确定性</String>
+  <String Key="CollapseAll">全部折叠</String>
+  <String Key="CheckId">检查 ID</String>
+  <String Key="Error">错误</String>
+  <String Key="Errors">错误</String>
+  <String Key="ExpandAll">全部展开</String>
+  <String Key="Help">帮助</String>
+  <String Key="Line">行</String>
+  <String Key="Messages">消息</String>
+  <String Key="LocationNotStoredInPdb">[位置未存储在 Pdb 中]</String>
+  <String Key="Project">项目</String>
+  <String Key="Resolution">解析</String>
+  <String Key="Rule">规则</String>
+  <String Key="RuleFile">规则文件</String>
+  <String Key="RuleDescription">规则说明</String>
+  <String Key="Source">源</String>
+  <String Key="Status">状态</String>
+  <String Key="Target">目标</String>
+  <String Key="Warning">警告</String>
+  <String Key="Warnings">警告</String>
+  <String Key="ReportTitle">代码分析报告</String>
+ </Localized>
+</FxCopReport>

@@ -1,0 +1,70 @@
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+G:\WorkGoup\Programming\POCO Porperty Binding\Truss\truss-70298\trunk\Src\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\SourceCode\AICXbap\AICXbap9.9.6\Component\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Kent.Boogaart.Truss.pdb

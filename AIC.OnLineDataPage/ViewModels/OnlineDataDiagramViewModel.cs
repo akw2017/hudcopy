@@ -917,13 +917,13 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 if (args.ToString() == "Filter")
                 {
-                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Filter);
+                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Filter);                    
                 }
                 else if (args.ToString() == "Envelop")
                 {
                     ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Envelope);
                 }
-                else if (args.ToString() == "TFF")
+                else if (args.ToString() == "TFF") 
                 {
                     ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.TFF);
                 }

@@ -456,8 +456,7 @@
                                     </Grid>
                                 </xctk:DropDownButton.DropDownContent>
                             </xctk:DropDownButton>
-                            <RadioButton x:Name="envelopeCheckBox" Content="包络"  Margin="5,0" Style="{StaticResource RadioButtonStyle}" VerticalAlignment="Center"
-                                  IsChecked="{Binding SelectedSignal.VibrationProcessor.ProcessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Envelope}">
+                            <CheckBox x:Name="envelopeCheckBox" Content="包络" Margin="5,0" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="Envelop"/>
@@ -465,10 +464,9 @@
                                     <i:EventTrigger EventName="Unchecked">
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="Envelop"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </RadioButton>
-                            <RadioButton x:Name="tffCheckBox" Content="TFF" Margin="5,0" Style="{StaticResource RadioButtonStyle}" VerticalAlignment="Center"
-                                   IsChecked="{Binding SelectedSignal.VibrationProcessor.ProcessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TFF}">
+                                </i:Interaction.Triggers>                              
+                            </CheckBox>
+                            <CheckBox x:Name="tffCheckBox" Content="TFF" Margin="5,0" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="TFF"/>
@@ -476,10 +474,9 @@
                                     <i:EventTrigger EventName="Unchecked">
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="TFF"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </RadioButton>
-                            <RadioButton x:Name="cepstrumCheckBox" Content="倒频谱" Margin="5,0" Style="{StaticResource RadioButtonStyle}" VerticalAlignment="Center"
-                                   IsChecked="{Binding SelectedSignal.VibrationProcessor.ProcessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Cepstrum}" >
+                                </i:Interaction.Triggers>   
+                            </CheckBox>
+                            <CheckBox x:Name="cepstrumCheckBox" Content="倒频谱" Margin="5,0" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="Cepstrum"/>
@@ -487,8 +484,8 @@
                                     <i:EventTrigger EventName="Unchecked">
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="Cepstrum"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </RadioButton>
+                                </i:Interaction.Triggers>                              
+                            </CheckBox>
                         </StackPanel>
                         <WrapPanel ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                             <CheckBox Margin="5,0" Content="时域" IsChecked="False" Style="{StaticResource CheckBoxStyle}"> 

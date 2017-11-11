@@ -1,0 +1,7 @@
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\bin\Release\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\bin\Release\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Release\Wpf.WrapBreakPanel.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Release\Wpf.WrapBreakPanel.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Release\Wpf.WrapBreakPanel.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Release\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Release\Wpf.WrapBreakPanel.pdb

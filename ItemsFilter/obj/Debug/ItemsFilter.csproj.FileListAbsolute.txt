@@ -1,0 +1,85 @@
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\Bin\Debug\Themes\ItemsFilterStyle.xaml
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\Bin\Debug\ItemsFilter.dll
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\Bin\Debug\ItemsFilter.pdb
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\Themes\Generic.baml
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter.dll
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter.pdb
+C:\Users\WangSongsong\Downloads\itemsfilter-6d934b664c34dd33b3f98e452401b41350584b60\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Bin\Debug\ItemsFilter.dll
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\Bin\Debug\ItemsFilter.pdb
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\Themes\Generic.baml
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter.dll
+F:\WorkGoup\AIC\Develpment\在线监测系统\SourceCode\AICXbap9.8\Component\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\Bin\Debug\ItemsFilter.dll
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\Bin\Debug\ItemsFilter.pdb
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\Documents\Visual Studio 2015\Projects\TestItemFilter\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Bin\Debug\ItemsFilter.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\Bin\Debug\ItemsFilter.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Bin\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\Bin\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUID\Bin\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUID\Bin\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Bin\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\Bin\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.pdb

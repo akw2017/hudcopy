@@ -1,0 +1,230 @@
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Prism.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Prism.Wpf.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Prism.xml
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\Prism.Wpf.xml
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\Component\Prism\Prism 6\Prism-Samples-Wpf-master\Modularity\ModularityWithUnity\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Prism.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Prism.Wpf.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Prism.xml
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\Prism.Wpf.xml
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Prism.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Prism.Wpf.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Prism.xml
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\Prism.Wpf.xml
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.1\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Prism.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Prism.Wpf.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Prism.xml
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\Prism.Wpf.xml
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\诊断系统\SorceCode\AICSFD1.2.3\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.xml
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.xml
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+E:\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.xml
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.xml
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\supportproject\在线监测\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.xml
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\Prism.Wpf.xml
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AIC_HUD1.0\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Prism.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Prism.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Prism.xml
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\Prism.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AICHUID\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\ModularityWithUnity.ModuleTracking.pdb
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Prism.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Prism.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\System.Windows.Interactivity.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Prism.xml
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\Prism.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\de\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\en\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\es\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\it\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\obj\Debug\ModuleTracking.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.dll
+D:\SupportProject\AIC_HUD\AICHUD\ModuleTracking\obj\Debug\ModularityWithUnity.ModuleTracking.pdb

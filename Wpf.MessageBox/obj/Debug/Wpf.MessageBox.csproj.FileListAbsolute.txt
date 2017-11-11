@@ -1,0 +1,4 @@
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.MessageBox\obj\Debug\Wpf.MessageBox.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.MessageBox\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.MessageBox\obj\Debug\Wpf.MessageBox_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.MessageBox\obj\Debug\Wpf.MessageBox_MarkupCompile.lref

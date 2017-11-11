@@ -1,0 +1,1023 @@
+
+-----------------------------------------
+时间:2017-11-11 10:36:27,867 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: 无法在“System.Windows.Controls.ControlTemplate”的名称领域内找到“grid”名称。
+   在 System.Windows.Media.Animation.Storyboard.ResolveTargetName(String targetName, INameScope nameScope, DependencyObject element)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.BeginCommon(DependencyObject containingObject, INameScope nameScope, HandoffBehavior handoffBehavior, Boolean isControllable, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Begin(DependencyObject targetObject, INameScope nameScope, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+   在 System.Windows.StyleHelper.InvokeEventTriggerActions(FrameworkElement fe, FrameworkContentElement fce, Style ownerStyle, FrameworkTemplate frameworkTemplate, Int32 childIndex, RoutedEvent Event)
+   在 System.Windows.StyleHelper.ExecuteEventTriggerActionsOnContainer(Object sender, RoutedEventArgs e)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.BroadcastEventHelper.BroadcastEvent(DependencyObject root, RoutedEvent routedEvent)
+   在 System.Windows.BroadcastEventHelper.BroadcastLoadedEvent(Object root)
+   在 MS.Internal.LoadedOrUnloadedOperation.DoWork()
+   在 System.Windows.Media.MediaContext.FireLoadedPendingCallbacks()
+   在 System.Windows.Media.MediaContext.FireInvokeOnRenderCallbacks()
+   在 System.Windows.Media.MediaContext.RenderMessageHandlerCore(Object resizedCompositionTarget)
+   在 System.Windows.Media.MediaContext.AnimatedRenderMessageHandler(Object resizedCompositionTarget)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-11 10:36:48,511 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 10:36:49,441 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 10:36:50,448 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 10:38:25,015 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:25,966 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:26,968 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:28,143 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:29,208 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:30,211 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:31,174 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:32,132 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:33,230 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:34,181 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:35,268 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:36,174 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:37,205 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:40,331 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:41,270 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:42,288 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:43,319 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:44,294 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:45,259 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:38:46,275 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 10:41:31,771 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: 无法在“System.Windows.Controls.ControlTemplate”的名称领域内找到“grid”名称。
+   在 System.Windows.Media.Animation.Storyboard.ResolveTargetName(String targetName, INameScope nameScope, DependencyObject element)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.BeginCommon(DependencyObject containingObject, INameScope nameScope, HandoffBehavior handoffBehavior, Boolean isControllable, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Begin(DependencyObject targetObject, INameScope nameScope, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+   在 System.Windows.StyleHelper.InvokeEventTriggerActions(FrameworkElement fe, FrameworkContentElement fce, Style ownerStyle, FrameworkTemplate frameworkTemplate, Int32 childIndex, RoutedEvent Event)
+   在 System.Windows.StyleHelper.ExecuteEventTriggerActionsOnContainer(Object sender, RoutedEventArgs e)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.BroadcastEventHelper.BroadcastEvent(DependencyObject root, RoutedEvent routedEvent)
+   在 System.Windows.BroadcastEventHelper.BroadcastLoadedEvent(Object root)
+   在 MS.Internal.LoadedOrUnloadedOperation.DoWork()
+   在 System.Windows.Media.MediaContext.FireLoadedPendingCallbacks()
+   在 System.Windows.Media.MediaContext.FireInvokeOnRenderCallbacks()
+   在 System.Windows.Media.MediaContext.RenderMessageHandlerCore(Object resizedCompositionTarget)
+   在 System.Windows.Media.MediaContext.RenderMessageHandler(Object resizedCompositionTarget)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-11 10:48:55,426 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:04:08,127 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: 无法在“System.Windows.Controls.ControlTemplate”的名称领域内找到“grid”名称。
+   在 System.Windows.Media.Animation.Storyboard.ResolveTargetName(String targetName, INameScope nameScope, DependencyObject element)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.BeginCommon(DependencyObject containingObject, INameScope nameScope, HandoffBehavior handoffBehavior, Boolean isControllable, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Begin(DependencyObject targetObject, INameScope nameScope, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+   在 System.Windows.StyleHelper.InvokeEventTriggerActions(FrameworkElement fe, FrameworkContentElement fce, Style ownerStyle, FrameworkTemplate frameworkTemplate, Int32 childIndex, RoutedEvent Event)
+   在 System.Windows.StyleHelper.ExecuteEventTriggerActionsOnContainer(Object sender, RoutedEventArgs e)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.BroadcastEventHelper.BroadcastEvent(DependencyObject root, RoutedEvent routedEvent)
+   在 System.Windows.BroadcastEventHelper.BroadcastLoadedEvent(Object root)
+   在 MS.Internal.LoadedOrUnloadedOperation.DoWork()
+   在 System.Windows.Media.MediaContext.FireLoadedPendingCallbacks()
+   在 System.Windows.Media.MediaContext.FireInvokeOnRenderCallbacks()
+   在 System.Windows.Media.MediaContext.RenderMessageHandlerCore(Object resizedCompositionTarget)
+   在 System.Windows.Media.MediaContext.RenderMessageHandler(Object resizedCompositionTarget)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-11 11:04:20,069 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: 无法在“System.Windows.Controls.ControlTemplate”的名称领域内找到“grid”名称。
+   在 System.Windows.Media.Animation.Storyboard.ResolveTargetName(String targetName, INameScope nameScope, DependencyObject element)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.BeginCommon(DependencyObject containingObject, INameScope nameScope, HandoffBehavior handoffBehavior, Boolean isControllable, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Begin(DependencyObject targetObject, INameScope nameScope, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+   在 System.Windows.StyleHelper.InvokeEventTriggerActions(FrameworkElement fe, FrameworkContentElement fce, Style ownerStyle, FrameworkTemplate frameworkTemplate, Int32 childIndex, RoutedEvent Event)
+   在 System.Windows.StyleHelper.ExecuteEventTriggerActionsOnContainer(Object sender, RoutedEventArgs e)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.BroadcastEventHelper.BroadcastEvent(DependencyObject root, RoutedEvent routedEvent)
+   在 System.Windows.BroadcastEventHelper.BroadcastLoadedEvent(Object root)
+   在 MS.Internal.LoadedOrUnloadedOperation.DoWork()
+   在 System.Windows.Media.MediaContext.FireLoadedPendingCallbacks()
+   在 System.Windows.Media.MediaContext.FireInvokeOnRenderCallbacks()
+   在 System.Windows.Media.MediaContext.RenderMessageHandlerCore(Object resizedCompositionTarget)
+   在 System.Windows.Media.MediaContext.RenderMessageHandler(Object resizedCompositionTarget)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
+
+-----------------------------------------
+时间:2017-11-11 11:12:18,914 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:31,432 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:32,366 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:33,305 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:34,371 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:35,358 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:36,382 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:37,499 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:40,355 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:42,415 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:43,512 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:14:44,600 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:45,526 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:46,609 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:49,593 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:50,622 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:51,625 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:52,677 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:53,596 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:56,677 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:14:57,629 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:11,762 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:12,783 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:13,786 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:14,782 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:15,762 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:18,768 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:19,872 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:20,815 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:21,884 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:15:22,904 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第297行
+日志内容:未处理的严重异常
+-----------------------------------------
+
+System.NotSupportedException: 该类型的 CollectionView 不支持从调度程序线程以外的线程对其 SourceCollection 进行的更改。
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.InsertItem(Int32 index, T item)
+   在 System.Collections.ObjectModel.Collection`1.Add(T item)
+   在 AIC.DatabaseService.LoginUserService.ManageException(Tuple`2 tuple) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs:行号 285
+
+-----------------------------------------
+时间:2017-11-11 11:21:17,396 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:21:18,197 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:21:21,234 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:21:22,388 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:29:35,875 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 11:29:36,806 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据处理
+-----------------------------------------
+
+System.Exception: Error using ==> rceps at 37
+The Fourier transform of X contains zeros. Therefore, the real cepstrum of X does not exist.
+   在 AIC.MatlabMath.Algorithm.Cepstrum(Double[] input, Int32 samplePoint) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\Algorithm.Cepstrum.cs:行号 37
+   在 AIC.LocalConfiguration.SignalProcess.<>c.<ProcessSignal>b__29_2(KeyValuePair`2 keyValuePair) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\SignalProcess.cs:行号 704
+
+-----------------------------------------
+时间:2017-11-11 12:24:12,841 
+级别:FATAL 
+类名:AICWPF.App
+文件:D:\SupportProject\AIC_HUD\AICHUD\AICWPF\App.xaml.cs 第37行
+日志内容:System.InvalidOperationException: 无法在“System.Windows.Controls.ControlTemplate”的名称领域内找到“grid”名称。
+   在 System.Windows.Media.Animation.Storyboard.ResolveTargetName(String targetName, INameScope nameScope, DependencyObject element)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.ClockTreeWalkRecursive(Clock currentClock, DependencyObject containingObject, INameScope nameScope, DependencyObject parentObject, String parentObjectName, PropertyPath parentPropertyPath, HandoffBehavior handoffBehavior, HybridDictionary clockMappings, Int64 layer)
+   在 System.Windows.Media.Animation.Storyboard.BeginCommon(DependencyObject containingObject, INameScope nameScope, HandoffBehavior handoffBehavior, Boolean isControllable, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Begin(DependencyObject targetObject, INameScope nameScope, Int64 layer)
+   在 System.Windows.Media.Animation.BeginStoryboard.Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+   在 System.Windows.StyleHelper.InvokeEventTriggerActions(FrameworkElement fe, FrameworkContentElement fce, Style ownerStyle, FrameworkTemplate frameworkTemplate, Int32 childIndex, RoutedEvent Event)
+   在 System.Windows.StyleHelper.ExecuteEventTriggerActionsOnContainer(Object sender, RoutedEventArgs e)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.BroadcastEventHelper.BroadcastEvent(DependencyObject root, RoutedEvent routedEvent)
+   在 System.Windows.BroadcastEventHelper.BroadcastLoadedEvent(Object root)
+   在 MS.Internal.LoadedOrUnloadedOperation.DoWork()
+   在 System.Windows.Media.MediaContext.FireLoadedPendingCallbacks()
+   在 System.Windows.Media.MediaContext.FireInvokeOnRenderCallbacks()
+   在 System.Windows.Media.MediaContext.RenderMessageHandlerCore(Object resizedCompositionTarget)
+   在 System.Windows.Media.MediaContext.AnimatedRenderMessageHandler(Object resizedCompositionTarget)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+-----------------------------------------
+
