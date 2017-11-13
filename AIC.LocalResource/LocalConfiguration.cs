@@ -1,7 +1,6 @@
 ﻿using AIC.Core;
 using AIC.Core.Models;
 using AIC.Core.Servers;
-using AIC.ResourceDictionarie.Servers;
 using AIC.ServiceInterface;
 using System;
 using System.Collections.Generic;

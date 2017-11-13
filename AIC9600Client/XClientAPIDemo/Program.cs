@@ -59,14 +59,14 @@ namespace XClientAPIDemo
 
 
             //9601默认端口，查看服务器端WebPort配置
-            DataProvider client = new DataProvider("127.0.0.1", 9601, 1, 1, TimeSpan.FromSeconds(3000),true);
+            DataProvider client = new DataProvider("139.129.213.240", 9601, 1, 1);
 
             //#region 查询服务器版本
-            //var version = client.QueryVersion();
-            //if (version.IsOK)
-            //{
-            //    var versionInfo = version.ResponseItem;
-            //}
+            var version = client.QueryVersion();
+            if (version.IsOK)
+            {
+                var versionInfo = version.ResponseItem;
+            }
             //#endregion
 
 

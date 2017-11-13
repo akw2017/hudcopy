@@ -3,6 +3,7 @@ using AIC.Core.Servers;
 using AIC.Resources.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,13 @@ using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace AIC.ResourceDictionarie.Servers
+namespace AIC.Core.Servers
 {
     public class XmlDataService : IXmlDataService
     {
         public IList<ServerInfo> ReadXml(string dir)
         {
+            var sw = Stopwatch.StartNew();
             List<ServerInfo> list = new List<ServerInfo>();
             try
             {
@@ -48,7 +50,7 @@ namespace AIC.ResourceDictionarie.Servers
                     //infoItem.IsLogin = (element["IsLogin"].InnerText.Trim() == "1") ? IconAddress.Tick_Icon : IconAddress.Minus_Icon;
                     //infoItem.LoginResult = IconAddress.Minus_Icon;
                     //infoItem.Permission = "无权限";
-
+                    
                     foreach (XmlNode xmlNode in element.ChildNodes)
                     {
                         XmlElement xmlEle = (XmlElement)xmlNode;
@@ -90,21 +92,40 @@ namespace AIC.ResourceDictionarie.Servers
                         {
                             infoItem.IsLogin = (xmlEle.InnerText.Trim() == "1") ? true : false;                           
                         }
+                        if (xmlEle.Name == "UserName")
+                        {
+                            infoItem.UserName = xmlEle.InnerText;
+                        }
+                        if (xmlEle.Name == "UserPwd")
+                        {                            
+                            infoItem.UserPwd = MyEncrypt.DecryptDES(xmlEle.InnerText);                            
+                        }
+                        if (xmlEle.Name == "IsSaveUserName")
+                        {
+                            infoItem.IsSaveUserName = (xmlEle.InnerText.Trim() == "1") ? true : false;
+                        }
+                        if (xmlEle.Name == "IsSaveUserPwd")
+                        {
+                            infoItem.IsSaveUserPwd = (xmlEle.InnerText.Trim() == "1") ? true : false;
+                        }
                         infoItem.LoginResult = false;
                         infoItem.Permission = "无权限";
                     }
-                    list.Add(infoItem);
+                    list.Add(infoItem);                     
                 }
+               
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return list;
+            Console.WriteLine("解密消耗时间" + sw.Elapsed.ToString());
+            return list;            
         }
 
         public void WriteXml(string dir, IList<ServerInfo> list)
         {
+            var sw = Stopwatch.StartNew();
             try
             {
                 var arrayDataAsXElements = from c in list
@@ -120,7 +141,11 @@ namespace AIC.ResourceDictionarie.Servers
                                                     new XElement("Latitude", c.Latitude),
                                                     new XElement("IsLogin", (c.IsLogin == true) ? 1 : 0),
                                                     new XElement("LoginResult", (c.LoginResult == true) ? 0 : 1),
-                                                    new XElement("Permission", c.Permission)
+                                                    new XElement("Permission", c.Permission),
+                                                    new XElement("UserName", c.UserName),
+                                                    new XElement("UserPwd", MyEncrypt.EncryptDES(c.UserPwd)),
+                                                    new XElement("IsSaveUserName", (c.IsSaveUserName == true) ? 1 : 0),
+                                                    new XElement("IsSaveUserPwd", (c.IsSaveUserPwd == true) ? 1 : 0)
                                                 );
                 XElement peopleDoc = new XElement("Root", arrayDataAsXElements);
                 var doc = new XDocument(peopleDoc);
@@ -130,6 +155,7 @@ namespace AIC.ResourceDictionarie.Servers
             {
                 throw ex;
             }
+            Console.WriteLine("加密消耗时间" + sw.Elapsed.ToString());
         }
     }
 }

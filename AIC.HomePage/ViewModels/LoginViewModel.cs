@@ -113,30 +113,7 @@ namespace AIC.HomePage.ViewModels
             }
 
             LoginManage.Login(_loginUserService.InitLoginServer(serverinfo));
-        }
-
-        private async void LoginManage_LoginChanged(bool loginresult)
-        {
-            try
-            {
-                Status = ViewModelStatus.Querying;
-                //把登录配置保存到本地                  
-                _localConfiguration.WriteServerInfo(ServerInfo);
-                await _loginUserService.SetUserLogin();
-                _eventAggregator.GetEvent<LoginEvent>().Publish(_loginUserService.LoginInfo);
-                Status = ViewModelStatus.None;
-                //加载后续数据   
-                await _loginUserService.LazyLoading();
-            }
-            catch (Exception ex)
-            {
-                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("登录异常", ex));
-            }
-            finally
-            {
-                Status = ViewModelStatus.None;
-            }
-        }
+        }     
         #endregion
     }
 }

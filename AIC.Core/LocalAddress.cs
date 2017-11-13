@@ -26,5 +26,34 @@ namespace AIC.Core
         public readonly static string FifthVersion = sArray[4];
         //public readonly static string Version = MajorVersion.ToString() + "." + MinorVersion.ToString() 
         //    + "." + ThirdVersion.ToString() + "." + FourthVersion + "." + FifthVersion;
+
+        /// <summary>
+        /// 保存appSetting
+        /// </summary>
+        /// <param name="key">appSetting的KEY值</param>
+        /// <param name="value">appSetting的Value值</param>
+        public static void SetAppSetting(string key, string value)
+        {
+            // 创建配置文件对象
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (config.AppSettings.Settings[key] != null)
+            {
+                // 修改
+                config.AppSettings.Settings[key].Value = value;
+            }
+            else
+            {
+                // 添加
+                AppSettingsSection ass = (AppSettingsSection)config.GetSection("appSettings");
+                ass.Settings.Add(key, value);
+            }
+
+            // 保存修改
+            config.Save(ConfigurationSaveMode.Modified);
+
+            // 强制重新载入配置文件的连接配置节
+            ConfigurationManager.RefreshSection("appSettings");         
+        }
     }
 }

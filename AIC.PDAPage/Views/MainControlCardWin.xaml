@@ -7,6 +7,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:subview="clr-namespace:AIC.PDAPage.Views.SubViews"
         xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
@@ -14,7 +15,8 @@
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True" >
     <Control.Resources>
         <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
-        <convert:CodeNameConverter x:Key="codeNameConverter"/>        
+        <convert:CodeNameConverter x:Key="codeNameConverter"/>      
+        <System:Double x:Key="ContentFontSize">16</System:Double>
     </Control.Resources>
     <Grid Background = "{DynamicResource AccentColorBrush2}">
         <Grid Margin="10" Height="420">

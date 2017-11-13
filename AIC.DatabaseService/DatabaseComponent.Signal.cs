@@ -12,6 +12,7 @@ using AIC.ServiceInterface;
 using AIC.Core.Helpers;
 using AIC.Core.Events;
 using AIC.Core;
+using AIC.M9600.Common.DTO.Device;
 
 namespace AIC.DatabaseService
 {

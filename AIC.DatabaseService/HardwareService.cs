@@ -23,7 +23,7 @@ namespace AIC.DatabaseService
         private readonly IConvertFromDataBaseFormat _convertFromDataBaseFormat;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ICardProcess _cardProcess;
-        public ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }  
+        public ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }
         public Dictionary<string, T1_RootCard> T_RootCard { get; set; }
         public HardwareService(ILocalConfiguration localConfiguration, IConvertToDataBaseFormat convertToDataBaseFormat, IConvertFromDataBaseFormat convertFromDataBaseFormat, IDatabaseComponent databaseComponent, ICardProcess cardProcess)
         {
@@ -38,8 +38,8 @@ namespace AIC.DatabaseService
         }
 
         public void Initialize()
-        {            
-            
+        {
+
         }
 
         public void InitServers()
@@ -95,7 +95,7 @@ namespace AIC.DatabaseService
                     {
                         server.RemoveChild(maincard);
                         return channels;
-                    }                
+                    }
                 }
             }
             return null;
@@ -255,7 +255,7 @@ namespace AIC.DatabaseService
             if (t_rootcard.T_DivFreInfo != null)
             {
                 deleteDic.Add("T_DivFreInfo", new Tuple<string, ICollection<object>>("id", t_rootcard.T_DivFreInfo.Select(p => p.id as object).ToList()));
-            }         
+            }
 
             return deleteDic;
         }
@@ -263,12 +263,12 @@ namespace AIC.DatabaseService
         public void SaveCardToDatabase()
         {
             T_RootCard.Clear();
-            foreach(var server in ServerTreeItems)
+            foreach (var server in ServerTreeItems)
             {
                 //服务器IP地址
                 var serverip = server.ServerIP;
-                T1_RootCard t_rootCard = new T1_RootCard();              
-#region
+                T1_RootCard t_rootCard = new T1_RootCard();
+                #region
                 foreach (var maincardtree in server.Children)
                 {
                     var maincard_node = maincardtree as MainCardTreeItemViewModel;
@@ -276,7 +276,7 @@ namespace AIC.DatabaseService
                     t_rootCard.T_MainControlCard.Add(t_maincard);
                     string ip = maincard_node.MainControlCardIP;
 
-#region 有线板卡
+                    #region 有线板卡
                     if (maincard_node.WireMatchingCard != null)
                     {
                         foreach (var card in maincard_node.WireMatchingCard)
@@ -473,8 +473,8 @@ namespace AIC.DatabaseService
                             }
                         }
                     }
-#endregion
-#region 无线接收卡
+                    #endregion
+                    #region 无线接收卡
                     if (maincard_node.WirelessReceiveCard != null)
                     {
                         var t_wirelessReceiveCard = _convertToDataBaseFormat.WirelessReceiveCardConvert(maincard_node.WirelessReceiveCard, maincard_node.MainControlCardIP);
@@ -490,7 +490,7 @@ namespace AIC.DatabaseService
                                 string slaveId = card.SlaveIdentifier;
 
                                 if (card.WirelessScalarSlot != null)
-                                {                                   
+                                {
                                     I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.WirelessScalarSlot, ip, slaveId);
                                     t_rootCard.T_WirelessScalarSlot.Add(t_slot as T1_WirelessScalarSlot);
                                     int slotnum = card.WirelessScalarSlot.SlotNum;
@@ -500,12 +500,12 @@ namespace AIC.DatabaseService
                                         var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, slaveId, slotnum);
                                         t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
                                         I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, slaveId, slotnum);
-                                        t_rootCard.T_WirelessScalarChannelInfo.Add(t_channel as T1_WirelessScalarChannelInfo);                                        
+                                        t_rootCard.T_WirelessScalarChannelInfo.Add(t_channel as T1_WirelessScalarChannelInfo);
                                     }
                                 }
 
                                 if (card.WirelessVibrationSlot != null)
-                                {                                    
+                                {
                                     I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.WirelessVibrationSlot, ip, slaveId);
                                     t_rootCard.T_WirelessVibrationSlot.Add(t_slot as T1_WirelessVibrationSlot);
                                     int slotnum = card.WirelessVibrationSlot.SlotNum;
@@ -534,16 +534,16 @@ namespace AIC.DatabaseService
                             }
                         }
                     }
-#endregion
+                    #endregion
                 }
-#endregion
+                #endregion
                 T_RootCard.Add(serverip, t_rootCard);
             }
 
         }
 
         public void GetCardFromDatabase()
-        {            
+        {
             //从数据库取出，去重复
             //假设T_RootCard已经按ServerIP分好了，并且去掉没有T_MainControlCard主板的服务器。
             foreach (var server_node in ServerTreeItems)
@@ -554,15 +554,15 @@ namespace AIC.DatabaseService
                     continue;
                 }
                 var rootcard = T_RootCard[server_node.ServerIP];//(from p in T_RootCard.Values where p.T_MainControlCard[0].ServerIP == server_node.ServerIP select p).FirstOrDefault();
-                
+
                 foreach (var mainCard in rootcard.T_MainControlCard.OrderBy(p => p.IP))//按主板IP顺序
                 {
                     MainCardTreeItemViewModel maincard_node = new MainCardTreeItemViewModel(mainCard.IP);
                     maincard_node.MainControlCardIP = mainCard.IP;
-                    maincard_node.MainControlCard = _convertFromDataBaseFormat.MainControlCardConvert(mainCard);                   
+                    maincard_node.MainControlCard = _convertFromDataBaseFormat.MainControlCardConvert(mainCard);
                     //maincard_node.MainControlCard.T_MainControlCard = mainCard; //添加引用
 
-#region 有限板卡
+                    #region 有限板卡
                     var t_card = (from p in rootcard.T_WireMatchingCard where p.T_MainControlCard_IP == mainCard.IP orderby p.CardNum select p).ToList();//按卡号顺序
                     if (t_card.Count > 0)
                     {
@@ -570,10 +570,10 @@ namespace AIC.DatabaseService
                     }
                     maincard_node.IsExpanded = true;
 
-                    server_node.AddChild(maincard_node);                   
+                    server_node.AddChild(maincard_node);
                     for (int icard = 0; icard < t_card.Count; icard++)
                     {
-                        var card = _convertFromDataBaseFormat.WireMatchingCardConvert(t_card[icard]);                        
+                        var card = _convertFromDataBaseFormat.WireMatchingCardConvert(t_card[icard]);
                         //card.T_WireMatchingCard = t_card[icard];//添加引用
                         maincard_node.WireMatchingCard.Add(card);
                         WireMatchingCardTreeItemViewModel card_node = new WireMatchingCardTreeItemViewModel(card);
@@ -582,12 +582,12 @@ namespace AIC.DatabaseService
                         var t_abstractslot = (from p in rootcard.T_AbstractSlotInfo where p.T_WireMatchingCard_Code == t_card[icard].Code orderby p.SlotNum select p).ToList();//按槽号顺序
                         for (int islot = 0; islot < t_abstractslot.Count; islot++)
                         {
-#region IEPE 
+                            #region IEPE 
                             {
                                 var t_slot = (from p in rootcard.T_IEPESlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
                                 {
-                                    var slot = _convertFromDataBaseFormat.BaseSlotConvert(t_slot) as IEPESlot;                                    
+                                    var slot = _convertFromDataBaseFormat.BaseSlotConvert(t_slot) as IEPESlot;
                                     _convertFromDataBaseFormat.AbstractSlotInfoConvert(slot, t_abstractslot[islot]);
                                     //slot.T_IEPESlot = t_slot;//添加引用
                                     //slot.T_AbstractSlotInfo = t_abstractslot[islot];//添加引用
@@ -605,7 +605,7 @@ namespace AIC.DatabaseService
                                         var t_channel = (from p in rootcard.T_IEPEChannelInfo where p.T_AbstractChannelInfo_Code == t_abstractchannel[ichannel].Code select p).FirstOrDefault();
                                         if (t_channel != null)//t_channel一定不为空，除非数据不完整
                                         {
-                                            var channel = _convertFromDataBaseFormat.BaseChannelConvert(t_channel) as IEPEChannelInfo;                                            
+                                            var channel = _convertFromDataBaseFormat.BaseChannelConvert(t_channel) as IEPEChannelInfo;
                                             _convertFromDataBaseFormat.AbstractChannelInfoConvert(channel, t_abstractchannel[ichannel]);
                                             //channel.T_IEPEChannelInfo = t_channel;//添加引用
                                             //channel.T_AbstractChannelInfo = t_abstractchannel[ichannel];//添加引用
@@ -630,13 +630,13 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region EddyCurrentDisplacement 
+                            #endregion
+                            #region EddyCurrentDisplacement 
                             {
                                 var t_slot = (from p in rootcard.T_EddyCurrentDisplacementSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
                                 {
-                                    var slot = _convertFromDataBaseFormat.BaseSlotConvert(t_slot) as EddyCurrentDisplacementSlot;                                    
+                                    var slot = _convertFromDataBaseFormat.BaseSlotConvert(t_slot) as EddyCurrentDisplacementSlot;
                                     _convertFromDataBaseFormat.AbstractSlotInfoConvert(slot, t_abstractslot[islot]);
                                     //slot.T_EddyCurrentDisplacementSlot = t_slot;//添加引用
                                     //slot.T_AbstractSlotInfo = t_abstractslot[islot];//添加引用
@@ -654,14 +654,14 @@ namespace AIC.DatabaseService
                                         var t_channel = (from p in rootcard.T_EddyCurrentDisplacementChannelInfo where p.T_AbstractChannelInfo_Code == t_abstractchannel[ichannel].Code select p).FirstOrDefault();
                                         if (t_channel != null)//t_channel一定不为空，除非数据不完整
                                         {
-                                            var channel = _convertFromDataBaseFormat.BaseChannelConvert(t_channel) as EddyCurrentDisplacementChannelInfo;                                            
+                                            var channel = _convertFromDataBaseFormat.BaseChannelConvert(t_channel) as EddyCurrentDisplacementChannelInfo;
                                             _convertFromDataBaseFormat.AbstractChannelInfoConvert(channel, t_abstractchannel[ichannel]);
                                             //channel.T_EddyCurrentDisplacementChannelInfo = t_channel;//添加引用
                                             //channel.T_AbstractChannelInfo = t_abstractchannel[ichannel];//添加引用
                                             slot.EddyCurrentDisplacementChannelInfo.Add(channel);
-                                            ChannelTreeItemViewModel channel_node = new ChannelTreeItemViewModel(channel);                                            
+                                            ChannelTreeItemViewModel channel_node = new ChannelTreeItemViewModel(channel);
                                             slot_node.AddChild(channel_node);
-                                          
+
                                             //分频
                                             var t_divfreinfo = (from p in rootcard.T_DivFreInfo where p.T_AbstractChannelInfo_Code == t_abstractchannel[ichannel].Code orderby p.Create_Time select p).ToList();
                                             if (t_divfreinfo.Count > 0)
@@ -679,8 +679,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region EddyCurrentKeyPhase 
+                            #endregion
+                            #region EddyCurrentKeyPhase 
                             {
                                 var t_slot = (from p in rootcard.T_EddyCurrentKeyPhaseSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -717,8 +717,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region EddyCurrentTachometer 
+                            #endregion
+                            #region EddyCurrentTachometer 
                             {
                                 var t_slot = (from p in rootcard.T_EddyCurrentTachometerSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -755,8 +755,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region DigitTachometer 
+                            #endregion
+                            #region DigitTachometer 
                             {
                                 var t_slot = (from p in rootcard.T_DigitTachometerSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -793,8 +793,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region AnalogRransducerIn 
+                            #endregion
+                            #region AnalogRransducerIn 
                             {
                                 var t_slot = (from p in rootcard.T_AnalogRransducerInSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -831,8 +831,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region Relay 
+                            #endregion
+                            #region Relay 
                             {
                                 var t_slot = (from p in rootcard.T_RelaySlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -869,8 +869,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region DigitRransducerIn 
+                            #endregion
+                            #region DigitRransducerIn 
                             {
                                 var t_slot = (from p in rootcard.T_DigitRransducerInSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -907,8 +907,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region DigitRransducerOut 
+                            #endregion
+                            #region DigitRransducerOut 
                             {
                                 var t_slot = (from p in rootcard.T_DigitRransducerOutSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -945,8 +945,8 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
-#region AnalogRransducerOut 
+                            #endregion
+                            #region AnalogRransducerOut 
                             {
                                 var t_slot = (from p in rootcard.T_AnalogRransducerOutSlot where p.T_AbstractSlotInfo_Code == t_abstractslot[islot].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -983,12 +983,12 @@ namespace AIC.DatabaseService
                                     continue;
                                 }
                             }
-#endregion
+                            #endregion
                         }
                     }
-#endregion
+                    #endregion
 
-#region 无线接收卡
+                    #region 无线接收卡
 
                     var wirelessReceiveCard = (from p in rootcard.T_WirelessReceiveCard where p.T_MainControlCard_IP == mainCard.IP select p).FirstOrDefault();//只有一块接收板
                     if (wirelessReceiveCard != null)
@@ -1012,7 +1012,7 @@ namespace AIC.DatabaseService
                             TransmissionCardTreeItemViewModel card_node = new TransmissionCardTreeItemViewModel(card);
                             wirelesscard_node.AddChild(card_node);
 
-#region Scalar 
+                            #region Scalar 
                             {
                                 var t_slot = (from p in rootcard.T_WirelessScalarSlot where p.T_TransmissionCard_Code == t_transmissionCard[icard].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -1043,11 +1043,11 @@ namespace AIC.DatabaseService
 
                                             //分频                                           
                                         }
-                                    }                                   
+                                    }
                                 }
                             }
-#endregion
-#region WirelessVibration 
+                            #endregion
+                            #region WirelessVibration 
                             {
                                 var t_slot = (from p in rootcard.T_WirelessVibrationSlot where p.T_TransmissionCard_Code == t_transmissionCard[icard].Code select p).FirstOrDefault();
                                 if (t_slot != null)
@@ -1089,14 +1089,14 @@ namespace AIC.DatabaseService
                                                 }
                                             }
                                         }
-                                    }                                   
+                                    }
                                 }
                             }
-#endregion
-                            
+                            #endregion
+
                         }
                     }
-#endregion
+                    #endregion
 
                 }
             }
@@ -1115,9 +1115,9 @@ namespace AIC.DatabaseService
                         var maincard = server.Children.OfType<MainCardTreeItemViewModel>().Where(p => p.MainControlCardIP == maincardIP).FirstOrDefault();
                         var receivecard = maincard.Children.OfType<WirelessReceiveCardTreeItemViewModel>().FirstOrDefault();
 
-                        var t_rootcard = CardTreeGenerate.GenerateTransmissionCard(root, maincardIP, identifier);                        
+                        var t_rootcard = CardTreeGenerate.GenerateTransmissionCard(root, maincardIP, identifier);
 
-                        if (await _databaseComponent.UploadHardwave(serverIP, t_rootcard) == true)                        
+                        if (await _databaseComponent.UploadHardwave(serverIP, t_rootcard) == true)
                         {
                             var transmissionCard = root.WirelessReceiveCard.TransmissionCard.Where(p => p.SlaveIdentifier == identifier).FirstOrDefault();
                             maincard.WirelessReceiveCard.TransmissionCard.Add(transmissionCard);
@@ -1140,11 +1140,11 @@ namespace AIC.DatabaseService
                     var maincard = server.Children.OfType<MainCardTreeItemViewModel>().Where(p => p.MainControlCardIP == maincardIP).FirstOrDefault();
                     var receivecard = maincard.Children.OfType<WirelessReceiveCardTreeItemViewModel>().FirstOrDefault();
                     var transmissioncard = receivecard.Children.OfType<TransmissionCardTreeItemViewModel>().Where(p => p.SlaveIdentifier == identifier).FirstOrDefault();
-                   
+
                     var card = maincard.WirelessReceiveCard.TransmissionCard.Where(p => p.SlaveIdentifier == identifier).FirstOrDefault();
-                   
+
                     T1_RootCard t_rootcard = new T1_RootCard();
-                    CardTreeGenerate.FindTransmissionCard(t_rootcard, card);                 
+                    CardTreeGenerate.FindTransmissionCard(t_rootcard, card);
                     //找到所有的通道
                     var channels = _cardProcess.GetChannels(transmissioncard.Children);
                     var deleteDic = RootToDictionary(t_rootcard);

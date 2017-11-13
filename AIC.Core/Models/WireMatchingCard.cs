@@ -1310,6 +1310,17 @@ namespace AIC.Core.Models
             }
         }
 
+        private bool _isUploadWave;
+        public bool IsUploadWave //是否上传波形
+        {
+            get { return _isUploadWave; }
+            set
+            {
+                _isUploadWave = value;
+                OnPropertyChanged("IsUploadWave");
+            }
+        }
+
         private float _value;
         public float Value //单点绝对值报警槛值
         {

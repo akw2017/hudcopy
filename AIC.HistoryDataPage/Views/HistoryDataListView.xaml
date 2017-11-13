@@ -384,7 +384,7 @@
             <TextBox DataContext="{Binding ElementName=treeview, Path=SelectedItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
             <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
             <TextBlock Text="数据上限:" VerticalAlignment="Center" />
-            <TextBox Text="{Binding ChannelRecordLength}" Width="100" Height="25" VerticalAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
+            <TextBox Text="{Binding ChannelRecordLength}" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
             <TextBlock Text="数据类型:" VerticalAlignment="Center" Margin="5,0,0,0"/>
             <!--<ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:Unit}" SelectedItem="{Binding UnitFilter}" Style="{DynamicResource VirtualisedMetroComboBox}"/>-->
             <ComboBox Width="120" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False"/>
@@ -409,9 +409,9 @@
 
             <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>-->
             <TextBlock Text="查询时间" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False"  Value="{Binding StartTime}" Height="24" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
             <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center" />
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Height="24" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
 
             <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 

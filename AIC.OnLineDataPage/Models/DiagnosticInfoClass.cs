@@ -1,6 +1,8 @@
 ﻿using AIC.Core.Events;
 using AIC.Core.SignalModels;
 using AIC.CoreType;
+using AIC.M9600.Common.DTO.Device;
+using AIC.M9600.Common.SlaveDB.Generated;
 using AIC.MatlabMath;
 using System;
 using System.Collections.Generic;
@@ -129,9 +131,36 @@ namespace AIC.OnLineDataPage.Models
             }
         }
 
-        public static string GetDiagnosticInfo(string devicename, double[] Waveform, double SampleFre, int SamplePoint, float RPM)
+        public static string GetDiagnosticInfo(string devicename, Guid Guid, D_WirelessVibrationSlot_Waveform[] datas, float rpm)
+        {
+            var data = datas.FirstOrDefault();
+            if (data != null && data.WaveData != null)
+            {
+                return GetDiagnosticInfo(devicename, data.WaveData, data.SampleFre.Value, data.SamplePoint.Value, rpm);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public static string GetDiagnosticInfo(string devicename, Guid Guid, WirelessVibrationSlotData[] datas)
+        {
+            var data = datas.Where(p => p.T_Item_Guid == Guid).FirstOrDefault();
+            if (data != null && data.Waveform != null && data.Waveform.WaveData != null)
+            {
+                return GetDiagnosticInfo(devicename, data.Waveform.WaveData, data.SampleFre.Value, data.SamplePoint.Value, (float)data.RPM.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string GetDiagnosticInfo(string devicename, byte[] bytes, double SampleFre, int SamplePoint, float RPM)
         {
             string DiagnosticInfo, DiagnosticAdvice;
+
+            double[] Waveform = ByteToSingle(bytes);
             if (Waveform == null || SampleFre == 0 || SamplePoint == 0)
             {
                 DiagnosticInfo = devicename + "没有诊断波形";
@@ -233,6 +262,17 @@ namespace AIC.OnLineDataPage.Models
                 DiagnosticAdvice = null;
             }
             return DiagnosticInfo + "\r\n" + DiagnosticAdvice;
+        }
+
+        public static double[] ByteToSingle(byte[] bytes)
+        {
+            int length = bytes.Length / 4;
+            double[] data = new double[length];
+            for (int i = 0; i < length; i++)
+            {
+                data[i] = BitConverter.ToSingle(bytes, i * 4);
+            }
+            return data;
         }
 
         public static bool GetEnergy(double[] Frequency, double[] Amplitude, double frequency, double frequencyInterval, int number, out double energy, out double m)

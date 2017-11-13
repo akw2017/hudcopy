@@ -38,9 +38,9 @@
                 <TextBlock>组织管理</TextBlock>              
             </ComboBox>
             <TextBlock Text="{DynamicResource operateDateTime}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" Height="24"/>
+            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" VerticalAlignment="Center" />
             <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchEndTime}" Height="24"/>
+            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchEndTime}" VerticalAlignment="Center"/>
             <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">

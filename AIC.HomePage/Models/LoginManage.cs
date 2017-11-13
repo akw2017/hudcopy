@@ -93,12 +93,44 @@ namespace AIC.HomePage.Models
                     {
                         serverinfo.LoginResult = true;
                         serverinfo.Permission = "超级管理员";
+                        if (serverinfo.IsSaveUserName == true)
+                        {
+                            serverinfo.UserName = logininfo.UserName;
+                        }
+                        else
+                        {
+                            serverinfo.UserName = "";
+                        }
+                        if (serverinfo.IsSaveUserPwd == true)
+                        {
+                            serverinfo.UserPwd = logininfo.Password;
+                        }
+                        else
+                        {
+                            serverinfo.UserPwd = "";
+                        }
                     }
                     //副服务器登陆
                     else if (logininfo.HasSecondaryServer == true && serverinfo.IsLogin == true && serverinfo.Permission != "网络未连接")
                     {
                         serverinfo.LoginResult = true;
                         serverinfo.Permission = "超级管理员";
+                        if (serverinfo.IsSaveUserName == true)
+                        {
+                            serverinfo.UserName = logininfo.UserName;
+                        }
+                        else
+                        {
+                            serverinfo.UserName = "";
+                        }
+                        if (serverinfo.IsSaveUserPwd == true)
+                        {
+                            serverinfo.UserPwd = logininfo.Password;
+                        }
+                        else
+                        {
+                            serverinfo.UserPwd = "";
+                        }
                     }
                 }
 
@@ -122,6 +154,22 @@ namespace AIC.HomePage.Models
                 {
                     logininfo.ServerInfo = serverinfo;
                     serverinfo.LoginResult = true;
+                    if (serverinfo.IsSaveUserName == true)
+                    {
+                        serverinfo.UserName = logininfo.UserName;
+                    }
+                    else
+                    {
+                        serverinfo.UserName = "";
+                    }
+                    if (serverinfo.IsSaveUserPwd == true)
+                    {
+                        serverinfo.UserPwd = logininfo.Password;
+                    }
+                    else
+                    {
+                        serverinfo.UserPwd = "";
+                    }
                     if (role.Is_SuperAdmin)
                     {
                         serverinfo.Permission = "超级管理员";
@@ -142,6 +190,22 @@ namespace AIC.HomePage.Models
                     if (secondrole != null)
                     {
                         serverinfo.LoginResult = true;
+                        if (serverinfo.IsSaveUserName == true)
+                        {
+                            serverinfo.UserName = logininfo.UserName;
+                        }
+                        else
+                        {
+                            serverinfo.UserName = "";
+                        }
+                        if (serverinfo.IsSaveUserPwd == true)
+                        {
+                            serverinfo.UserPwd = logininfo.Password;
+                        }
+                        else
+                        {
+                            serverinfo.UserPwd = "";
+                        }
                         if (secondrole.Is_SuperAdmin)
                         {
                             serverinfo.Permission = "超级管理员";

@@ -289,6 +289,7 @@
     <Compile Include="ResultExtensions.cs" />
     <Compile Include="LocalAddress.cs" />
     <Compile Include="ServerAddress.cs" />
+    <Compile Include="Helpers\MyEncrypt.cs" />
     <Compile Include="Servers\IXmlDataService.cs" />
     <Compile Include="Servers\XmlDataService.cs" />
     <Compile Include="SignalModels\BaseDivfreSignal.cs" />

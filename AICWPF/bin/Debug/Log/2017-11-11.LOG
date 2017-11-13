@@ -1021,3 +1021,45 @@ The Fourier transform of X contains zeros. Therefore, the real cepstrum of X doe
    在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
 -----------------------------------------
 
+
+-----------------------------------------
+时间:2017-11-11 13:30:01,357 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据回放-频域-删除通道
+-----------------------------------------
+
+System.ArgumentOutOfRangeException: 要求非负数。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.RemoveRange(Int32 index, Int32 count)
+   在 AIC.HistoryDataPage.Views.FrequencyDomainDataView.OnChannelRemoved(ChannelToken token) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\FrequencyDomainDataView.xaml.cs:行号 198
+
+-----------------------------------------
+时间:2017-11-11 13:31:29,460 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据回放-频域-删除通道
+-----------------------------------------
+
+System.ArgumentOutOfRangeException: 要求非负数。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.RemoveRange(Int32 index, Int32 count)
+   在 AIC.HistoryDataPage.Views.FrequencyDomainDataView.OnChannelRemoved(ChannelToken token) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\FrequencyDomainDataView.xaml.cs:行号 198
+
+-----------------------------------------
+时间:2017-11-11 13:31:33,204 
+级别:ERROR 
+类名:AIC.DatabaseService.LoginUserService
+文件:D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\LoginUserService.cs 第287行
+日志内容:数据回放-频域-删除通道
+-----------------------------------------
+
+System.ArgumentOutOfRangeException: 要求非负数。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.RemoveRange(Int32 index, Int32 count)
+   在 AIC.HistoryDataPage.Views.FrequencyDomainDataView.OnChannelRemoved(ChannelToken token) 位置 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\FrequencyDomainDataView.xaml.cs:行号 198

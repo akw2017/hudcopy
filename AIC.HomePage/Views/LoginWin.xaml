@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"      
-        Title="登录" Height="295" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
+        Title="登录" Height="325" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,12 +19,13 @@
         </ResourceDictionary>       
     </Window.Resources>
     <Grid Background ="{DynamicResource DeepLinearAccentColorBrush}">
-        <Grid Margin="20" Height="215" >
+        <Grid Margin="20" Height="245" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>                
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -46,8 +47,10 @@
                 c:PasswordBoxHelper.Attach="True"
                 c:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </PasswordBox>
-            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>           
-            <Button Grid.Row="5" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+            <CheckBox Grid.Row="4" Grid.Column="0" Content="记住用户" IsChecked="{Binding ServerInfo.IsSaveUserName}" FontSize="16" Margin="5,0,0,0"></CheckBox>
+            <CheckBox Grid.Row="4" Grid.Column="1" Content="记住密码" IsChecked="{Binding ServerInfo.IsSaveUserPwd}" FontSize="16"></CheckBox>
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>           
+            <Button Grid.Row="6" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
@@ -55,7 +58,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>           
-            <Button Grid.Row="5" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
+            <Button Grid.Row="6" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
@@ -63,7 +66,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <Controls:ProgressRing x:Name="waitring" Grid.RowSpan="6" Grid.ColumnSpan="2"
+            <Controls:ProgressRing x:Name="waitring" Grid.RowSpan="7" Grid.ColumnSpan="2"
                                        Width="40"
                                        Height="40" Visibility="Hidden"/>
         </Grid>

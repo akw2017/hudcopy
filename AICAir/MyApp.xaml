@@ -30,32 +30,32 @@
                     
                     <System:Double x:Key="WindowTitleFontSize">20</System:Double>
                     <System:Double x:Key="NormalFontSize">20</System:Double>
-                    <System:Double x:Key="ContentFontSize">18</System:Double>
+                    <System:Double x:Key="ContentFontSize">20</System:Double>
                     <System:Double x:Key="FlatButtonFontSize">20</System:Double>                   
                     <System:Double x:Key="MenuFontSize">20</System:Double>
                     <System:Double x:Key="ContextMenuFontSize">20</System:Double>
                     <System:Double x:Key="StatusBarFontSize">20</System:Double>
-                    <Style TargetType="{x:Type TextElement}">
+                    <!--<Style TargetType="{x:Type TextElement}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
-                    <Style TargetType="{x:Type TextBlock}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type TextBlock}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
-                    <Style TargetType="{x:Type TextBox}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type TextBox}">
                         <Setter Property="FontSize" Value="18"/>
-                    </Style>
-                    <Style TargetType="{x:Type ListView}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type ListView}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
-                    <Style TargetType="{x:Type DataGrid}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type DataGrid}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
-                    <Style TargetType="{x:Type DataGridCell}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
-                    <Style TargetType="{x:Type ContentControl}">
+                    </Style>-->
+                    <!--<Style TargetType="{x:Type ContentControl}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>                   
+                    </Style>-->                   
                 </ResourceDictionary>
 
             </ResourceDictionary.MergedDictionaries>

@@ -1,4 +1,5 @@
-﻿using AIC.Core.ControlModels;
+﻿using AIC.Core;
+using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Helpers;
 using AIC.Core.LMModels;
@@ -224,8 +225,8 @@ namespace AIC.DatabaseService
             return TestInitAdmin(defaultserverinfo);
         }
         private LoginInfo TestInitAdmin(ServerInfo serverinfo)
-        {
-            LoginInfo.SetLoginInfo("", "", "", serverinfo);
+        {    
+            LoginInfo.SetLoginInfo(serverinfo.UserName, serverinfo.UserPwd, "", serverinfo);
             return LoginInfo;
         }
         #endregion

@@ -750,10 +750,6 @@ namespace AIC.DatabaseService
 
             var sw = Stopwatch.StartNew();
             await Task.WhenAll(lttask.ToArray());  
-            //foreach (var task in lttask)
-            //{              
-            //    await task;
-            //}
             Console.WriteLine("消耗时间" + sw.Elapsed.ToString());
             if (mainControlCardTask.Result.IsOK)
             {

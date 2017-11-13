@@ -59,9 +59,13 @@ namespace AIC.PDAPage.Views
             }
         }
 
+        private Point _lastMouseDown;
+        private OrganizationSort _lastOrganizationSort;
+        private OrganizationSort _nowOrganizationSort;
 
         private void LBoxSort_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            _lastMouseDown = e.GetPosition(LBoxSort);
             var pos = e.GetPosition(LBoxSort);
             HitTestResult result = VisualTreeHelper.HitTest(LBoxSort, pos);
             if (result == null)
@@ -69,13 +73,50 @@ namespace AIC.PDAPage.Views
                 return;
             }
             var listBoxItem = Utils.FindVisualParent<ListBoxItem>(result.VisualHit);
-            if (listBoxItem == null)// || listBoxItem.Content != LBoxSort.SelectedItem)
+            if (listBoxItem != null)
             {
-                return;
+                _lastOrganizationSort = _nowOrganizationSort;
+                _nowOrganizationSort = listBoxItem.Content as OrganizationSort;
             }
-            DataObject dataObj = new DataObject(listBoxItem.Content as OrganizationSort);
-            DragDrop.DoDragDrop(LBoxSort, dataObj, DragDropEffects.Move);
+               
+            
+            //var pos = e.GetPosition(LBoxSort);
+            //HitTestResult result = VisualTreeHelper.HitTest(LBoxSort, pos);
+            //if (result == null)
+            //{
+            //    return;
+            //}
+            //var listBoxItem = Utils.FindVisualParent<ListBoxItem>(result.VisualHit);
+            //if (listBoxItem == null)
+            //{
+            //    return;
+            //}
+            //DataObject dataObj = new DataObject(listBoxItem.Content as OrganizationSort);
+            //DragDrop.DoDragDrop(LBoxSort, dataObj, DragDropEffects.Move);
 
+        }
+
+        private void LBoxSort_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point currentPosition = e.GetPosition(LBoxSort);
+                if (Math.Abs(currentPosition.Y - _lastMouseDown.Y) > 6.0)
+                {
+                    HitTestResult result = VisualTreeHelper.HitTest(LBoxSort, currentPosition);
+                    if (result == null)
+                    {
+                        return;
+                    }
+                    var listBoxItem = Utils.FindVisualParent<ListBoxItem>(result.VisualHit);
+                    if (listBoxItem == null)
+                    {
+                        return;
+                    }
+                    DataObject dataObj = new DataObject(listBoxItem.Content as OrganizationSort);
+                    DragDrop.DoDragDrop(LBoxSort, dataObj, DragDropEffects.Move);
+                }
+            }
         }
 
         private void LBoxSort_OnDrop(object sender, DragEventArgs e)
@@ -117,8 +158,46 @@ namespace AIC.PDAPage.Views
         {
             this.Close();
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            if (e.Key == Key.Enter)
+            {               
+                btnOK.Focus();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                txt.Text = _lastOrganizationSort.Sort_No.ToString();               
+                btnClose.Focus();
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+
+            int index;
+            if (int.TryParse(txt.Text, out index) == true && _lastOrganizationSort != null)
+            {
+                if (index < 0)
+                {
+                    index = 0;
+                }
+                if (index > _OrganizationSorts.Count - 1)
+                {
+                    index = _OrganizationSorts.Count - 1;
+                }
+                _OrganizationSorts.Remove(_lastOrganizationSort);
+                _OrganizationSorts.Insert(index, _lastOrganizationSort);
+            }
+            else
+            {
+                txt.Text = _lastOrganizationSort.Sort_No.ToString();
+            }
+        }
     }
-   
+
 
     internal static class Utils
     {

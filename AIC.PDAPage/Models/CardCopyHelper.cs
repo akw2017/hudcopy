@@ -809,7 +809,7 @@ namespace AIC.PDAPage.Models
                     right.AlarmStrategy.Absolute.Category = left.AlarmStrategy.Absolute.Category;
                     right.AlarmStrategy.Absolute.Para = left.AlarmStrategy.Absolute.Para;
                     right.AlarmStrategy.Absolute.Mode = left.AlarmStrategy.Absolute.Mode;
-                    right.AlarmStrategy.Absolute.ModeCode = left.AlarmStrategy.Absolute.ModeCode;
+                    right.AlarmStrategy.Absolute.ModeCode = left.AlarmStrategy.Absolute.ModeCode;                  
                 }
                 if (left.AlarmStrategy.Comparative != null)
                 {
@@ -817,7 +817,7 @@ namespace AIC.PDAPage.Models
                     right.AlarmStrategy.Comparative.IntevalTime = left.AlarmStrategy.Comparative.IntevalTime;
                     right.AlarmStrategy.Comparative.Percent = left.AlarmStrategy.Comparative.Percent;
                     right.AlarmStrategy.Comparative.IsAllow = left.AlarmStrategy.Comparative.IsAllow;
-                    right.AlarmStrategy.Comparative.Para = left.AlarmStrategy.Comparative.Para;
+                    right.AlarmStrategy.Comparative.Para = left.AlarmStrategy.Comparative.Para;                    
                 }
             }
         }

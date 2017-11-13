@@ -10,7 +10,6 @@ using AIC.CoreType;
 using AIC.M9600.Client.DataProvider;
 using AIC.M9600.Common.DTO.Device;
 using AIC.M9600.Common.DTO.Web;
-using AIC.ResourceDictionarie.Servers;
 using AIC.ServiceInterface;
 using AIC.SignalProcess.Tests;
 using AIC.MatlabMath;
@@ -898,17 +897,17 @@ namespace AIC.LocalConfiguration
                 var paras = Algorithm.CalculatePara(vSg.WaveformList[processName]);
                 if (paras != null)
                 {
-                    //vSg.RmsValue = paras[0];
-                    //vSg.PeakValue = paras[1];
-                    //vSg.PeakPeakValue = paras[2];
-                    //vSg.Slope = paras[3];
-                    //vSg.Kurtosis = paras[4];
-                    //vSg.KurtosisValue = paras[5];
-                    //vSg.WaveIndex = paras[6];
-                    //vSg.PeakIndex = paras[7];
-                    //vSg.ImpulsionIndex = paras[8];
-                    //vSg.RootAmplitude = paras[9];
-                    //vSg.ToleranceIndex = paras[10];
+                    vSg.RmsValue = paras[0];
+                    vSg.PeakValue = paras[1];
+                    vSg.PeakPeakValue = paras[2];
+                    vSg.Slope = paras[3];
+                    vSg.Kurtosis = paras[4];
+                    vSg.KurtosisValue = paras[5];
+                    vSg.WaveIndex = paras[6];
+                    vSg.PeakIndex = paras[7];
+                    vSg.ImpulsionIndex = paras[8];
+                    vSg.RootAmplitude = paras[9];
+                    vSg.ToleranceIndex = paras[10];
                 }
             }
             if (processList.Contains("Frequency") || processList.Contains("PowerSpectrum") || processList.Contains("PowerSpectrumDensity"))

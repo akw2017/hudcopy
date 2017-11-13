@@ -19,12 +19,12 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="绝对值报警种类:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"/>
         <Border Grid.Row="1" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"  Margin="-1,0,-1,0">
-            <DataGrid x:Name="table" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Category}" ColumnWidth="*" >
+            <DataGrid x:Name="table" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Category}" ColumnWidth="Auto" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn MinWidth="60" Header="代码" Binding="{Binding Code}"></DataGridTextColumn>
-                    <DataGridTextColumn MinWidth="60" Header="名称" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridCheckBoxColumn MinWidth="60" Header="是否启用" Binding="{Binding IsAllow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridCheckBoxColumn>
-                    <DataGridTemplateColumn MinWidth="60" Header="单点绝对值报警槛值">
+                    <DataGridTextColumn MinWidth="60" Header="代码" IsReadOnly="True" Binding="{Binding Code}"></DataGridTextColumn>
+                    <DataGridTextColumn MinWidth="60" Header="名称" IsReadOnly="True" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn MinWidth="60" Header="启用" Binding="{Binding IsAllow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridCheckBoxColumn>
+                    <DataGridTemplateColumn MinWidth="60" Header="报警槛值">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox x:Name="txtValue"  Style="{DynamicResource MetroTextBox}" IsReadOnly="true"
@@ -39,7 +39,23 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <!--<DataGridTextColumn MinWidth="60" Header="单点绝对值报警槛值" Binding="{Binding Value}"></DataGridTextColumn>-->
-                    <DataGridTextColumn MinWidth="60" Header="绝对值报警方程" Binding="{Binding Formula}"></DataGridTextColumn>                   
+                    <!--<DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}"/>-->
+                    <DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}"/>
+                    <!--<DataGridTextColumn MinWidth="60" Header="报警方程" Binding="{Binding Formula}"/>-->
+                    <DataGridTemplateColumn MinWidth="60" Header="报警方程" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox x:Name="txtValue"  Style="{DynamicResource MetroTextBox}" IsReadOnly="true"
+                                    Text="{Binding Formula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                                </TextBox>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsAllow}" Value="true">
+                                        <Setter TargetName="txtValue" Property="IsReadOnly" Value="false"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>                   
                 </DataGrid.Columns>
                 <DataGrid.ColumnHeaderStyle>
                     <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >

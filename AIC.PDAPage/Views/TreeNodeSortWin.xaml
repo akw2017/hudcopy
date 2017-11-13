@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"       
         xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+       xmlns:System="clr-namespace:System;assembly=mscorlib"               
         mc:Ignorable="d"       
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
         Title="排序" Height="600" Width="600"
@@ -12,6 +13,7 @@
     <Controls:MetroWindow.Resources>
         <convert:IntVisibilityConverter x:Key="intVisibilityConverter"/>
         <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
+        <System:Double x:Key="ContentFontSize">16</System:Double>
     </Controls:MetroWindow.Resources>
     <Grid Background = "{DynamicResource AccentColorBrush2}">
         <Grid Margin="20">
@@ -25,18 +27,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="LBoxSort" Grid.ColumnSpan="4" Margin="2" AllowDrop="True" Drop="LBoxSort_OnDrop" PreviewMouseLeftButtonDown="LBoxSort_OnPreviewMouseLeftButtonDown">
+            <ListBox x:Name="LBoxSort" Grid.ColumnSpan="4" Margin="2" AllowDrop="True" Drop="LBoxSort_OnDrop" MouseMove="LBoxSort_MouseMove" PreviewMouseLeftButtonDown="LBoxSort_OnPreviewMouseLeftButtonDown">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                            <TextBlock Text="："></TextBlock>
-                            <TextBlock Text="{Binding Sort_No}"></TextBlock>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="：" VerticalAlignment="Center"></TextBlock>
+                            <TextBox Text="{Binding Sort_No}" KeyDown="TextBox_KeyDown" LostFocus="TextBox_LostFocus" VerticalAlignment="Center">
+                            </TextBox>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.Row="1" Grid.Column="1" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+            <Button Grid.Row="1" Grid.Column="1" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
@@ -44,7 +47,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="1" Grid.Column="2" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
+            <Button Grid.Row="1" Grid.Column="2" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />

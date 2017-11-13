@@ -2,7 +2,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\Danger.wav
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\Waring.wav
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\app.config
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AICAir.exe.config
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AICAir.xbap

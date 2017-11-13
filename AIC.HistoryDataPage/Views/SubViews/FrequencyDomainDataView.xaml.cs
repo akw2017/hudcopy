@@ -270,7 +270,7 @@ namespace AIC.HistoryDataPage.Views
             m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
             m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
 
-            //m_chart.ViewXY.YAxes.Clear();
+            m_chart.ViewXY.YAxes.Clear();
             m_chart.ViewXY.AxisLayout.Segments.Clear();
 
             m_chart.ViewXY.LegendBoxes[0].Visible = true;

@@ -724,5 +724,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Xceed.Wpf.Toolkit.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMatlabDLL.dll

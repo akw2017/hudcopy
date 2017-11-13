@@ -253,7 +253,6 @@
     <None Include="AICXBap_TemporaryKey.pfx" />
     <None Include="app.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Readme.txt" />

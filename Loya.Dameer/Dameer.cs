@@ -242,7 +242,7 @@ namespace Loya.Dameer
             <Border BorderThickness=""0"" CornerRadius=""1"">
                 <StackPanel Orientation=""Horizontal"" VerticalAlignment=""Center"" HorizontalAlignment=""Left"">
                     <CheckBox Name=""checkBox"" VerticalAlignment=""Center"" />
-                    <TextBox Name=""textBox"" BorderThickness=""0"" VerticalAlignment=""Center""/>
+                    <TextBox Name=""textBox"" FontSize=""18"" BorderThickness=""0"" VerticalAlignment=""Center""/>
                     <TextBlock Name=""textBlock"" Text=""▼""/>
                 </StackPanel>
             </Border>

@@ -53,3 +53,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\AIC.Resources.Prop
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\CheckBoxStyle.baml

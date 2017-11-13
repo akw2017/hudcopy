@@ -1094,7 +1094,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
-                        MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
                             Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif

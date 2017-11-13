@@ -36,7 +36,7 @@
                     <System:Double x:Key="MenuFontSize">20</System:Double>
                     <System:Double x:Key="ContextMenuFontSize">20</System:Double>
                     <System:Double x:Key="StatusBarFontSize">20</System:Double>
-                    <Style TargetType="{x:Type TextElement}">
+                    <!--<Style TargetType="{x:Type TextElement}">
                         <Setter Property="FontSize" Value="20"/>
                     </Style>
                     <Style TargetType="{x:Type TextBlock}">
@@ -56,7 +56,7 @@
                     </Style>
                     <Style TargetType="{x:Type ContentControl}">
                         <Setter Property="FontSize" Value="20"/>
-                    </Style>
+                    </Style>-->
                 </ResourceDictionary>
 
 

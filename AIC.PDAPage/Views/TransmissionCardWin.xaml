@@ -7,6 +7,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:subview="clr-namespace:AIC.PDAPage.Views.SubViews"
         xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"              
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
@@ -15,6 +16,7 @@
     <Control.Resources>
         <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
         <convert:CodeNameConverter x:Key="codeNameConverter"/>
+        <System:Double x:Key="ContentFontSize">16</System:Double>
     </Control.Resources>
     <Grid Background = "{DynamicResource AccentColorBrush2}">
         <Grid Margin="10" Height="150">
@@ -50,7 +52,7 @@
                 Text="{Binding SleepTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
             </TextBox>
             <TextBlock  Grid.Row="3" Grid.Column="0" Text="电量:" VerticalAlignment="Center"/>
-            <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding BatteryEnergy}" IsReadOnly="True" Style="{DynamicResource MetroTextBox}"/>
+            <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding BatteryEnergy, StringFormat=F3}" IsReadOnly="True" Style="{DynamicResource MetroTextBox}"/>
             <TextBlock  Grid.Row="3" Grid.Column="2" Text="备注:" VerticalAlignment="Center"/>
             <TextBox  Grid.Row="3" Grid.Column="3" Text="{Binding Remarks,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Style="{DynamicResource MetroTextBox}"/>
 

@@ -168,6 +168,11 @@ namespace AIC.Core.Models
             }
         }
 
+        public string UserName { get; set; }
+        public string UserPwd { get; set; }
+        public bool IsSaveUserName { get; set; }
+        public bool IsSaveUserPwd { get; set; }
+
         public ServerInfo()
         {
             IP = "127.0.0.1";

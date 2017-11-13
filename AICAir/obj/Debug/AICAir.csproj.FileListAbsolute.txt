@@ -192,7 +192,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\Danger.wav
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\Waring.wav
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\app.config
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe
