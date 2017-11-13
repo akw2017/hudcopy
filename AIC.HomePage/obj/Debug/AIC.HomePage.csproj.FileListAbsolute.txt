@@ -646,3 +646,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AlarmAckWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AlarmAckWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AlarmAckListWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AlarmAckListWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMatlabDLL.dll

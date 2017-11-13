@@ -170,16 +170,15 @@
     <Compile Include="DataModels\IBaseTypeSlot.cs" />
     <Compile Include="DisposableToken.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Events\CustomSystemEvent.cs" />
     <Compile Include="Events\DataStatisticsEvent.cs" />
     <Compile Include="Events\DataStatusEvent.cs" />
     <Compile Include="Events\EventAggregatorService.cs" />
     <Compile Include="Events\FittingCoeffEvent.cs" />
     <Compile Include="Events\HideHtmlEvent.cs" />
     <Compile Include="Events\SignalChangedEvent.cs" />
-    <Compile Include="Events\TestEvent.cs" />
+    <Compile Include="Events\SignalBroadcastingEvent.cs" />
     <Compile Include="Events\LoginEvent.cs" />
-    <Compile Include="Events\RenameTreeItemFinishEvent.cs" />
-    <Compile Include="Events\RenameTreeItemEvent.cs" />
     <Compile Include="Events\ServerChangedEvent.cs" />
     <Compile Include="Events\ServerMarkEvent.cs" />
     <Compile Include="Events\ThrowExceptionEvent.cs" />
@@ -246,6 +245,7 @@
     <Compile Include="Models\ExceptionModel.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="ControlModels\MenuItemViewModel.cs" />
+    <Compile Include="Models\CustomSystemException.cs" />
     <Compile Include="Models\WireMatchingCardMetadata.cs" />
     <Compile Include="Models\WirelessReceiveCardMetadata.cs" />
     <Compile Include="Models\MainControlCardMetadata.cs" />

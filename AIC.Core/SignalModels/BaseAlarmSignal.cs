@@ -1,11 +1,15 @@
 ﻿using AIC.CoreType;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 using AIC.M9600.Common.DTO.Device;
+using Prism.Events;
+using Microsoft.Practices.ServiceLocation;
+using AIC.Core.Events;
+using AIC.Core.Models;
+using System;
 
 namespace AIC.Core.SignalModels
 {
@@ -13,11 +17,12 @@ namespace AIC.Core.SignalModels
     {
         private IDisposable alarmGradeChangedSubscription;
         private IDisposable isNotOKChangedSubscription;
+        private static IEventAggregator _eventAggregator;
 
         public BaseAlarmSignal(Guid guid)
         {
             Guid = guid;
-            //SubscribeAlarmGrade(DBConst.AlarmDelay);
+            _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
 
         public void SubscribeAlarmGrade(double alarmDelay)
@@ -41,6 +46,16 @@ namespace AIC.Core.SignalModels
         private void OnAlarmGradeChanged(string propertyName)
         {
             DelayAlarmGrade = AlarmGrade;
+            //CustomSystemException ex = new CustomSystemException()
+            //{
+            //    Type = 201,
+            //    Degree = (int)AlarmGrade,
+            //    EventTime = DateTime.Now,
+            //    Remark = "",
+            //    T_Item_Guid = this.Guid,
+            //    T_Item_Type = 1,
+            //};
+            //_eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
         }
 
         private void OnIsNotOKChanged(string propertyName)
