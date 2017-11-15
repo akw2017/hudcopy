@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AIC.OnLineDataPage.ViewModels
+namespace AIC.OnLineDataPage.Models
 {
     public class SignalListViewModel : BindableBase
     {

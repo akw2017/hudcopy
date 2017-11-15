@@ -384,7 +384,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\CitizenSoftwareL
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\System.Reactive.Interfaces.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\de\FluentValidation.resources.dll

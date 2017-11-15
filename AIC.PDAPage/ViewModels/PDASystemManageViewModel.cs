@@ -965,6 +965,22 @@ namespace AIC.PDAPage.ViewModels
                 return debugCommand;
             }
         }
+
+        public DelegateCommand<object> editDeviceCommand;
+        public DelegateCommand<object> EditDeviceCommand
+        {
+            get
+            {
+                if (editDeviceCommand == null)
+                {
+                    editDeviceCommand = new DelegateCommand<object>(
+                        para => EditDevice(para)
+                        );
+                }
+                return editDeviceCommand;
+            }
+        }
+        
         #endregion
 
         #region 管理树
@@ -2069,6 +2085,62 @@ namespace AIC.PDAPage.ViewModels
             return source;
         }
 
+        //编辑设备
+        private void EditDevice(object para)
+        {
+            var devicetree = para as DeviceTreeItemViewModel;
+            if (devicetree != null && devicetree.T_Organization != null)
+            {
+                if (winshow == true)
+                {
+                    return;
+                }
+                try
+                {
+                    winshow = true;
+                    DeviceEditWin win = new DeviceEditWin(devicetree.T_Organization);
+                    win.Parachanged += Win_Parachanged;
+                    win.ShowDialog();
+                }
+                finally
+                {
+                    winshow = false;
+                }
+            }
+        }
+
+        private async void Win_Parachanged(T_Organization organization, string remarks)
+        {
+            try
+            {
+                Status = ViewModelStatus.Querying;
+                string oldremarks = organization.Remarks;
+                organization.Remarks = remarks;
+                Dictionary<string, Tuple<ICollection<string>, ICollection<object>>> editDic = new Dictionary<string, Tuple<ICollection<string>, ICollection<object>>>();
+                editDic.Add("T_Organization", new Tuple<ICollection<string>, ICollection<object>>(new string[] { "Remarks" }, new List<object> { organization }));
+                if (await _databaseComponent.Complex(ServerIP, null, editDic, null) == true)
+                {
+
+                }
+                else
+                {
+                    organization.Remarks = oldremarks;
+#if XBAP
+                    MessageBox.Show("服务器错误!", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                    Xceed.Wpf.Toolkit.MessageBox.Show("服务器错误!", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                }
+            }
+            catch (Exception ex)
+            {
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("编辑设备", ex));
+            }
+            finally
+            {
+                Status = ViewModelStatus.None;
+            }
+        }
         #endregion
 
         #region 拖拽,先禁用，启用需重新检查

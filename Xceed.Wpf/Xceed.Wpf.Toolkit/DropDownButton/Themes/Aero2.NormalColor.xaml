@@ -72,7 +72,8 @@
                                              RenderChecked="{TemplateBinding IsOpen}"
                                              RenderEnabled="{TemplateBinding IsEnabled}"
                                              RenderMouseOver="{Binding IsMouseOver, ElementName=PART_DropDownButton}"
-                                             RenderPressed="{Binding IsPressed, ElementName=PART_DropDownButton}">
+                                             RenderPressed="{Binding IsPressed, ElementName=PART_DropDownButton}"
+                                             FontSize="{TemplateBinding FontSize}">
                            <Grid>
                               <Grid.ColumnDefinitions>
                                  <ColumnDefinition Width="*" />

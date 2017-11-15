@@ -780,7 +780,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\WpfAnimatedGif.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Newtonsoft.Json.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\de\FluentValidation.resources.dll
@@ -876,3 +875,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\OnlineDataSt
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\OnlineDataStatisticsView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.VirtualizingWrapPanel.pdb

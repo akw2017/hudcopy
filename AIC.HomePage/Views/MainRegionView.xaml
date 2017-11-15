@@ -472,10 +472,10 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding NavigateCommand}" CommandParameter="test" Visibility="Collapsed" >
+                <Button Command="{Binding NavigateCommand}" CommandParameter="test" Visibility="Collapsed">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
                             <TextBlock Text="测试" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button.Content>

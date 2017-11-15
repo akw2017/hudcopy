@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG
 
-17798702662
+18258179452
 
-37-2013854634
-101-2090572301
-Views\AlarmAckListWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAlarmWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\HomeView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\MapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
+38856928618
+1021071756222
+Views\AlarmAckListWin.xaml;Views\TestWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAlarmWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\HomeView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\MapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
 
 True
 

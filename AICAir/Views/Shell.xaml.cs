@@ -1,4 +1,5 @@
-﻿using AICAir.ViewModels;
+﻿using AIC.ServiceInterface;
+using AICAir.ViewModels;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
@@ -10,12 +11,18 @@ namespace AICAir.Views
     /// </summary>
     public partial class Shell : MetroWindow
     {
-        public Shell()
+        private readonly ILoginUserService _loginUserService;
+        public Shell(ILoginUserService loginUserService)
         {
-            InitializeComponent();            
+            InitializeComponent();
+            _loginUserService = loginUserService;
         }
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (_loginUserService.LoginInfo.LoginStatus == false)
+            {
+                Application.Current.Shutdown();
+            }
 #if XBAP
             MessageBoxResult result = MessageBox.Show((string)Application.Current.Resources["strExitSystem"], (string)Application.Current.Resources["strExit"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
 #else
@@ -24,6 +31,10 @@ namespace AICAir.Views
             if (result != MessageBoxResult.OK)
             {
                 e.Cancel = true;
+            }
+            else
+            {
+                Application.Current.Shutdown();
             }
 
         }

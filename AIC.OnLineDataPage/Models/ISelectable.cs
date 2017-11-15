@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AIC.OnLineDataPage.ViewModels
+namespace AIC.OnLineDataPage.Models
 {
     public interface ISelectable
     {

@@ -29,7 +29,7 @@
     <ProductName>AIC.Desktop</ProductName>
     <PublisherName>AIC</PublisherName>
     <SuiteName>AIC</SuiteName>
-    <ApplicationRevision>44</ApplicationRevision>
+    <ApplicationRevision>46</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -341,6 +341,10 @@
     <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
       <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>
       <Name>Wpf.PageNavigationControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
+      <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
+      <Name>Wpf.VirtualizingWrapPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wpf.WrapBreakPanel\Wpf.WrapBreakPanel.csproj">
       <Project>{534ba357-3aa8-454c-84c6-423ba82f7ee1}</Project>

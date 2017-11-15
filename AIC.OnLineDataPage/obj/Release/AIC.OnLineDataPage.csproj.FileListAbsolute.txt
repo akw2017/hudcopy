@@ -186,3 +186,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.pdb

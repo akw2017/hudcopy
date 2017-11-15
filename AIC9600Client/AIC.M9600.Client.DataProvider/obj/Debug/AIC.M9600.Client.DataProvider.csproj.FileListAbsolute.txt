@@ -59,7 +59,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\Newtonsoft.Json.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Client.DataProvider\obj\Debug\AIC.M9600.Client.DataProvider.csprojResolveAssemblyReference.cache

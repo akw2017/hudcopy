@@ -867,6 +867,12 @@ namespace AIC.HomePage.ViewModels
                 await _loginUserService.LazyLoading();                
                 return;
             }
+            else if (viewName == "test")
+            {
+                TestWin win = new TestWin();
+                win.Show();
+                return;
+            }
             else
             {
                 return;

@@ -319,3 +319,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Debug\Wpf.VirtualizingWrapPanel.pdb

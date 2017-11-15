@@ -195,7 +195,7 @@ namespace AIC.HistoryDataPage.Views
                     }
                     AnnotationXY annotation = m_chart.ViewXY.Annotations[1];
                     var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    branches.RemoveRange(firstIndex-1, 2);
+                    branches.RemoveRange(firstIndex, 2);
                     StringBuilder sb = new StringBuilder();
                     foreach (var branch in branches)
                     {

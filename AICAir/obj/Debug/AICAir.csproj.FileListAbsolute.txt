@@ -371,3 +371,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.pdb

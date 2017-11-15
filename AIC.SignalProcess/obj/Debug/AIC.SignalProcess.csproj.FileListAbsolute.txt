@@ -291,7 +291,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Kent.Boogaart.Helpe
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Kent.Boogaart.HelperTrinity.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\System.Reactive.Interfaces.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\de\FluentValidation.resources.dll

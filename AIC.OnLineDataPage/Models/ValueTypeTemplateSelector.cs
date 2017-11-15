@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AIC.OnLineDataPage.ViewModels
+namespace AIC.OnLineDataPage.Models
 {
     public class ValueTypeTemplateSelector : DataTemplateSelector
     {

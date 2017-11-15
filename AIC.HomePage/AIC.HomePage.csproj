@@ -219,6 +219,9 @@
     <Compile Include="Views\AlarmAckListWin.xaml.cs">
       <DependentUpon>AlarmAckListWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TestWin.xaml.cs">
+      <DependentUpon>TestWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VersionWin.xaml.cs">
       <DependentUpon>VersionWin.xaml</DependentUpon>
     </Compile>
@@ -293,6 +296,10 @@
     <Page Include="Views\AlarmAckListWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TestWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\VersionWin.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -419,6 +426,10 @@
     <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
       <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>
       <Name>Wpf.PageNavigationControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
+      <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
+      <Name>Wpf.VirtualizingWrapPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
       <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>

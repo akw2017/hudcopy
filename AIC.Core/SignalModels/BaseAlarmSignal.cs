@@ -45,24 +45,177 @@ namespace AIC.Core.SignalModels
 
         private void OnAlarmGradeChanged(string propertyName)
         {
+            string alarmstring = GetAlarmEventString();
+            int itemtype = GetSignType();
+
             DelayAlarmGrade = AlarmGrade;
-            //CustomSystemException ex = new CustomSystemException()
-            //{
-            //    Type = 201,
-            //    Degree = (int)AlarmGrade,
-            //    EventTime = DateTime.Now,
-            //    Remark = "",
-            //    T_Item_Guid = this.Guid,
-            //    T_Item_Type = 1,
-            //};
-            //_eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
+            PublishMessage(201, AlarmGrade, alarmstring, this.Guid, itemtype);
         }
 
         private void OnIsNotOKChanged(string propertyName)
         {
+            string alarmstring = (IsNotOK == true) ? "断线事件发生" : "断线事件消失";
+            int itemtype = GetSignType();
+
             DelayIsNotOK = IsNotOK;
+            PublishMessage(202, AlarmGrade, alarmstring, this.Guid, itemtype);
         }
 
+        private string GetAlarmEventString()
+        {
+            string str = null;
+            switch (DelayAlarmGrade)
+            {
+                case AlarmGrade.Invalid:
+                case AlarmGrade.LowNormal:
+                case AlarmGrade.HighNormal:
+                    switch (AlarmGrade)
+                    {
+                        case AlarmGrade.LowPreAlert:
+                        case AlarmGrade.HighPreAlert:
+                            str = "预警事件发生";
+                            break;
+                        case AlarmGrade.LowAlert:
+                        case AlarmGrade.HighAlert:
+                            str = "警告事件发生";
+                            break;
+                        case AlarmGrade.LowDanger:
+                        case AlarmGrade.HighDanger:
+                            str = "危险事件发生";
+                            break;
+                    }
+                    break;
+                case AlarmGrade.LowPreAlert:
+                case AlarmGrade.HighPreAlert:
+                    switch (AlarmGrade)
+                    {
+                        case AlarmGrade.Invalid:
+                        case AlarmGrade.LowNormal:
+                        case AlarmGrade.HighNormal:
+                            str = "预警事件消失";
+                            break;
+                        case AlarmGrade.LowAlert:
+                        case AlarmGrade.HighAlert:
+                            str = "预警->警告事件发生";
+                            break;
+                        case AlarmGrade.LowDanger:
+                        case AlarmGrade.HighDanger:
+                            str = "预警->危险事件发生";
+                            break;
+                    }
+                    break;
+                case AlarmGrade.LowAlert:
+                case AlarmGrade.HighAlert:
+                    switch (AlarmGrade)
+                    {
+                        case AlarmGrade.Invalid:
+                        case AlarmGrade.LowNormal:
+                        case AlarmGrade.HighNormal:
+                            str = "警告事件消失";
+                            break;
+                        case AlarmGrade.LowPreAlert:
+                        case AlarmGrade.HighPreAlert:
+                            str = "警告->预警事件发生";
+                            break;
+                        case AlarmGrade.LowDanger:
+                        case AlarmGrade.HighDanger:
+                            str = "警告->危险事件发生";
+                            break;
+                    }
+                    break;
+                case AlarmGrade.LowDanger:
+                case AlarmGrade.HighDanger:
+                    switch (AlarmGrade)
+                    {
+                        case AlarmGrade.Invalid:
+                        case AlarmGrade.LowNormal:
+                        case AlarmGrade.HighNormal:
+                            str = "危险事件消失";
+                            break;
+                        case AlarmGrade.LowPreAlert:
+                        case AlarmGrade.HighPreAlert:
+                            str = "危险->预警事件发生";
+                            break;
+                        case AlarmGrade.LowAlert:
+                        case AlarmGrade.HighAlert:
+                            str = "危险->警告事件发生";
+                            break;
+                    }
+                    break;
+            }
+            return str;
+        }
+
+        private int GetSignType()
+        {
+            if (this is IEPEChannelSignal)
+            {
+                return (int)ChannelType.IEPEChannelInfo;
+            }
+            else if (this is EddyCurrentDisplacementChannelSignal)
+            {
+                return (int)ChannelType.EddyCurrentDisplacementChannelInfo;
+            }
+            else if(this is EddyCurrentKeyPhaseChannelSignal)
+            {
+                return (int)ChannelType.EddyCurrentKeyPhaseChannelInfo;
+            }
+            else if (this is EddyCurrentTachometerChannelSignal)
+            {
+                return (int)ChannelType.EddyCurrentTachometerChannelInfo;
+            }
+            else if (this is DigitTachometerChannelSignal)
+            {
+                return (int)ChannelType.DigitTachometerChannelInfo;
+            }
+            else if (this is AnalogRransducerInChannelSignal)
+            {
+                return (int)ChannelType.AnalogRransducerInChannelInfo;
+            }
+            else if (this is AnalogRransducerOutChannelSignal)
+            {
+                return (int)ChannelType.AnalogRransducerOutChannelInfo;
+            }
+            else if (this is DigitRransducerInChannelSignal)
+            {
+                return (int)ChannelType.DigitRransducerInChannelInfo;
+            }
+            else if (this is DigitRransducerOutChannelSignal)
+            {
+                return (int)ChannelType.DigitRransducerOutChannelInfo;
+            }
+            else if (this is RelayChannelSignal)
+            {
+                return (int)ChannelType.RelayChannelInfo;
+            }           
+            else if (this is WirelessScalarChannelSignal)
+            {
+                return (int)ChannelType.WirelessScalarChannelInfo;
+            }
+            else if (this is WirelessVibrationChannelSignal)
+            {
+                return (int)ChannelType.WirelessVibrationChannelInfo;
+            }
+            return (int)ChannelType.None;
+        }
+
+        private void PublishMessage(int type, AlarmGrade grade, string alarmstring, Guid guid, int itemtype)
+        {
+            if (alarmstring == null || itemtype == (int)ChannelType.None)
+            {
+                return;
+            }
+            CustomSystemException ex = new CustomSystemException()
+            {
+                Type = type,
+                Degree = (int)grade,
+                EventTime = DateTime.Now,
+                Remark = alarmstring,
+                T_Item_Guid = guid,
+                T_Item_Type = itemtype,
+            };
+            _eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
+        }
         #region 属性
         private DateTime? aCQDatetime;
         public DateTime? ACQDatetime//采集时间     

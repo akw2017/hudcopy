@@ -261,7 +261,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\System.Reactive.Interfaces.x
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\System.Reactive.Linq.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\de\FluentValidation.resources.dll

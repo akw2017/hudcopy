@@ -6,13 +6,13 @@
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:views="clr-namespace:AIC.OnLineDataPage.Views"
                     xmlns:subviews="clr-namespace:AIC.OnLineDataPage.Views.SubViews"
-                    xmlns:viewModel="clr-namespace:AIC.OnLineDataPage.ViewModels">
+                    xmlns:models="clr-namespace:AIC.OnLineDataPage.Models">
 
     <core:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
     <core:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
     <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
 
-    <DataTemplate x:Key="ValueTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="ValueTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -126,7 +126,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="TimeDomainTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="TimeDomainTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -189,7 +189,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="FrequencyDomainTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="FrequencyDomainTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -251,7 +251,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="Time3DSpectrumDomainTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="Time3DSpectrumDomainTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -313,7 +313,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="RPM3DSpectrumDomainTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="RPM3DSpectrumDomainTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"></core:FluidMouseDragBehavior>
@@ -375,7 +375,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="OrthoTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="OrthoTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -437,7 +437,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="AMSTrendTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="AMSTrendTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -499,7 +499,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="OrderAnalysisTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="OrderAnalysisTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -561,7 +561,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="MultiDivFreTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="MultiDivFreTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -623,7 +623,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="BodeTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="BodeTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -684,7 +684,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="NyquistTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="NyquistTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -745,7 +745,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="PowerSpectrumTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="PowerSpectrumTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
@@ -808,7 +808,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="PowerSpectrumDensityTemplate" DataType="{x:Type viewModel:SignalTileViewModel}">
+    <DataTemplate x:Key="PowerSpectrumDensityTemplate" DataType="{x:Type models:SignalTileViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>

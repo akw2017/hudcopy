@@ -5,7 +5,7 @@ using AIC.OnLineDataPage.ViewModels.SubViewModels;
 using Prism.Commands;
 using Prism.Mvvm;
 
-namespace AIC.OnLineDataPage.ViewModels
+namespace AIC.OnLineDataPage.Models
 {
     public class SignalTileViewModel : BindableBase, ISelectable
     {

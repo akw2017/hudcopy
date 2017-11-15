@@ -11,13 +11,19 @@ namespace AIC.OnLineDataPage.Views.SubViews
         private bool initialized = false;
         static ChartViewBase()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ChartViewBase), new FrameworkPropertyMetadata(typeof(ChartViewBase)));
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(ChartViewBase), new FrameworkPropertyMetadata(typeof(ChartViewBase)));
         }
 
         public ChartViewBase()
         {
             Loaded += ChartViewBase_Loaded;
-            Unloaded += ChartViewBase_Unloaded;
+            Unloaded += ChartViewBase_Unloaded;           
+            IsVisibleChanged += ChartViewBase_IsVisibleChanged;
+        }
+
+        private void ChartViewBase_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+             
         }
 
         public ChartViewModelBase ViewModel { get; set; }

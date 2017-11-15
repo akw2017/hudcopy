@@ -157,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DeviceEditWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TreeNodeDebugInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -408,6 +412,9 @@
     <Compile Include="ViewModels\PDASystemManageViewModelMetadata.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModel.cs" />
     <Compile Include="Models\TreeProcess.cs" />
+    <Compile Include="Views\DeviceEditWin.xaml.cs">
+      <DependentUpon>DeviceEditWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TreeNodeDebugInfoWin.xaml.cs">
       <DependentUpon>TreeNodeDebugInfoWin.xaml</DependentUpon>
     </Compile>

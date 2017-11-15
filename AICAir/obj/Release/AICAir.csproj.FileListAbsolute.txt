@@ -183,3 +183,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.TrustInfo.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.VirtualizingWrapPanel.pdb

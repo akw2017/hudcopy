@@ -125,7 +125,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style  TargetType="{x:Type ScrollBar}">
+    <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Template" Value="{StaticResource VerticalScrollBar}"/>

@@ -374,6 +374,10 @@
       <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
       <Name>ModuleTracking</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
+      <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
+      <Name>Wpf.VirtualizingWrapPanel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.WrapBreakPanel\Wpf.WrapBreakPanel.csproj">
       <Project>{534ba357-3aa8-454c-84c6-423ba82f7ee1}</Project>
       <Name>Wpf.WrapBreakPanel</Name>

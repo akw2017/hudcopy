@@ -23,6 +23,7 @@ using AIC.Core.SignalModels;
 using System.Windows;
 using Wpf.PageNavigationControl;
 using AIC.Core.ExCommand;
+using AIC.OnLineDataPage.ViewModels.SubViewModels;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -36,7 +37,7 @@ namespace AIC.OnLineDataPage.ViewModels
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
             _cardProcess = cardProcess;
-            InitTree();            
+            InitTree();
         }
 
         #region 管理树
@@ -99,7 +100,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     OnPropertyChanged("CurrentSignalDisplayType");
                 }
             }
-        }    
+        }
 
         private SignalTileViewModel selectedSignalMonitor;
         public SignalTileViewModel SelectedSignalMonitor
@@ -162,7 +163,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                 }
             }
-        }        
+        }
 
         private Orientation orientation = Orientation.Horizontal;
         public Orientation Orientation
@@ -283,7 +284,7 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return this.showFunctionsCommand ?? (this.showFunctionsCommand = new DelegateCommand<object>(para => this.ShowFunctions(para)));
             }
-        }     
+        }
 
         private DelegateCommand<object> clearAllCommand;
         public DelegateCommand<object> ClearAllCommand
@@ -292,7 +293,7 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return this.clearAllCommand ?? (this.clearAllCommand = new DelegateCommand<object>(para => this.ClearAll(para)));
             }
-        }      
+        }
 
         private DelegateCommand<object> listBoxLoadedComamnd;
         public DelegateCommand<object> ListBoxLoadedComamnd
@@ -312,7 +313,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-      
+
         #endregion
 
         #region 添加、删除显示
@@ -430,7 +431,7 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 viewModel.Close();
                 SignalMonitors.Remove(viewModel);
-            }           
+            }
         }
 
         private void ClearAll(object args)
@@ -439,7 +440,7 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 viewModel.Close();
             }
-            SignalMonitors.Clear();           
+            SignalMonitors.Clear();
         }
 
         private void ShowFunctions(object args)
@@ -503,7 +504,7 @@ namespace AIC.OnLineDataPage.ViewModels
             SignalTileViewModel viewModel = new SignalTileViewModel(sg);
             viewModel.ItemWidth = itemWidth;
             viewModel.ItemHeight = itemHeight;
-            viewModel.SetDisplayModeAsync(signalDisplayType); 
+            viewModel.SetDisplayModeAsync(signalDisplayType);
             viewModel.CloseCommand = DeleteCommand;
             return viewModel;
         }
@@ -520,7 +521,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     var sg = SelectedSignalMonitor.Signal;
                     if (sg.SupportFunView(CurrentSignalDisplayType))
-                    {                       
+                    {
                         SelectedSignalMonitor.SetDisplayModeAsync(CurrentSignalDisplayType);
                         if (SelectedSignalMonitor.DataViewModel != null)
                         {
@@ -534,7 +535,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-拼图视图-选取信号", ex));
             }
         }
-     
+
         #endregion
 
         #region 页面控制       
@@ -569,16 +570,16 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     lineCount = (int)(ExtentHeight / ItemHeight);
                     startNo = (int)(HorizontalOffset / ItemWidth);
-                    endNo = (int)Math.Ceiling((HorizontalOffset + listWidth) / ItemWidth);                    
+                    endNo = (int)Math.Ceiling((HorizontalOffset + listWidth) / ItemWidth);
                 }
                 else if (Orientation == Orientation.Horizontal)//竖向滑动
                 {
                     lineCount = (int)(ExtentWidth / ItemWidth);
                     startNo = (int)(VerticalOffset / ItemHeight);
-                    endNo = (int)Math.Ceiling((VerticalOffset + listHeight) / ItemHeight);                    
+                    endNo = (int)Math.Ceiling((VerticalOffset + listHeight) / ItemHeight);
                 }
                 GetItemsIsUpated(lineCount, startNo, endNo);
-            } 
+            }
         }
 
         private void GetItemsIsUpated(int linecount, int startno, int endno)
@@ -591,16 +592,16 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
 
                 if (i >= startno * linecount && i < endno * linecount)
-                {  
+                {
                     SignalMonitors[i].DataViewModel.IsUpdated = true;
                 }
                 else
                 {
                     SignalMonitors[i].DataViewModel.IsUpdated = true;
                 }
-            }              
+            }
         }
-        
+
         #endregion
     }
 }

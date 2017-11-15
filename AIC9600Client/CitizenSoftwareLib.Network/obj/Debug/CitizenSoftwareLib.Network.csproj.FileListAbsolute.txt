@@ -31,7 +31,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\De
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Snappy.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\CitizenSoftwareLib.Common.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Crc32C.NET.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.dll

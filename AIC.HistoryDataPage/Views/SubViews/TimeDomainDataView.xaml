@@ -77,7 +77,7 @@
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
                 <CheckBox x:Name="filterCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-                <xctk:DropDownButton x:Name="dropDownButton" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Content="滤波">
+                <xctk:DropDownButton x:Name="dropDownButton" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="#FF87CDEE" Content="滤波">
                     <xctk:DropDownButton.DropDownContent>
                         <Grid Width="280">
                             <Grid.RowDefinitions>

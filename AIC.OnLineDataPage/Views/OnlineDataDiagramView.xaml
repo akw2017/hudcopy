@@ -16,7 +16,7 @@
              xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"             
-             xmlns:viewModels="clr-namespace:AIC.OnLineDataPage.ViewModels"
+             xmlns:models="clr-namespace:AIC.OnLineDataPage.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
@@ -27,7 +27,7 @@
                 <ResourceDictionary Source="/AIC.OnLineDataPage;component/Themes/OnlineDataDiagramTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <command:CommandReference x:Key="AddCommandReference" Command="{Binding AddCommand}"/>
-            <viewModels:ValueTypeTemplateSelector x:Key="valueTypeTemplateSelector" 
+            <models:ValueTypeTemplateSelector x:Key="valueTypeTemplateSelector" 
                                                   DefaultTemplate="{StaticResource defaultValueTempalte}"
                                                   ImageTemplate="{StaticResource imageValueTemplate}"/>
             <core:EnumBooleanConverter x:Key="enumBooleanConverter" />

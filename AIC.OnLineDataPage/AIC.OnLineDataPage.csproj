@@ -243,12 +243,12 @@
     <Compile Include="ViewModels\OnlineDataDiagnosisViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataOverviewViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataStatisticsViewModel.cs" />
-    <Compile Include="ViewModels\SignalListViewModel.cs" />
+    <Compile Include="Models\SignalListViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\NyquistChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\ChartViewModelBase.cs" />
     <Compile Include="ViewModels\OnlineDataListViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataTileViewModel.cs" />
-    <Compile Include="ViewModels\SignalTileViewModel.cs" />
+    <Compile Include="Models\SignalTileViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\BodeChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\RPM3DChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\Time3DChartViewModel.cs" />
@@ -260,8 +260,8 @@
     <Compile Include="ViewModels\SubViewModels\PowerSpectrumChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\OrderAnalysisChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\TimeDomainChartViewModel.cs" />
-    <Compile Include="ViewModels\ISelectable.cs" />
-    <Compile Include="ViewModels\ValueTypeTemplateSelector.cs" />
+    <Compile Include="Models\ISelectable.cs" />
+    <Compile Include="Models\ValueTypeTemplateSelector.cs" />
     <Compile Include="Views\ExampleUtils.cs" />
     <Compile Include="Views\InfoViews\AnalogRransducerInInfoWin.xaml.cs">
       <DependentUpon>AnalogRransducerInInfoWin.xaml</DependentUpon>
@@ -443,6 +443,10 @@
     <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
       <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>
       <Name>Wpf.PageNavigationControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
+      <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
+      <Name>Wpf.VirtualizingWrapPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
       <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
