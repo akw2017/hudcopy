@@ -5,6 +5,7 @@ using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.Core.Servers;
 using AIC.Core.UserManageModels;
+using AIC.CoreType;
 using AIC.M9600.Common.MasterDB.Generated;
 using AIC.Resources.Models;
 using AIC.ServiceInterface;

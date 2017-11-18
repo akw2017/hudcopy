@@ -58,8 +58,8 @@ namespace AIC.ServiceInterface
         Task<RootCard> ComplexWithJson(string serverip, string ip, string json, IDictionary<string, ICollection<object>> addObjs,
         IDictionary<string, Tuple<ICollection<string>, ICollection<object>>> modifyObjs,
         IDictionary<string, Tuple<string, ICollection<object>>> deleteObjs);
-       
-        Task<T1_Role> UserLogin(string ip, string user, string pwd);
+
+        Task<Tuple<T1_Role, T1_User>> UserLogin(string ip, string user, string pwd);
         Task<string> UserPing(string ip);
 
         Task<Dictionary<string, LatestSampleData>> GetLatestData();

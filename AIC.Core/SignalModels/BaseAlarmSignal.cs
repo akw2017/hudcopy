@@ -47,18 +47,20 @@ namespace AIC.Core.SignalModels
         {
             string alarmstring = GetAlarmEventString();
             int itemtype = GetSignType();
+            CustomSystemDegree degree = (this.AlarmGrade == AlarmGrade.DisConnect)? CustomSystemDegree.Information : (CustomSystemDegree)((int)this.AlarmGrade & 0xff);
+            CustomSystemType alarm = (this.AlarmGrade == AlarmGrade.DisConnect) ? CustomSystemType.DisConnect : CustomSystemType.Alarm;
 
             DelayAlarmGrade = AlarmGrade;
-            PublishMessage(201, AlarmGrade, alarmstring, this.Guid, itemtype);
+            PublishMessage(alarm, degree, alarmstring, this.Guid, itemtype);
         }
 
         private void OnIsNotOKChanged(string propertyName)
         {
-            string alarmstring = (IsNotOK == true) ? "断线事件发生" : "断线事件消失";
+            string alarmstring = (IsNotOK == true) ? "通道异常事件发生" : "通道异常事件消失";
             int itemtype = GetSignType();
 
-            DelayIsNotOK = IsNotOK;
-            PublishMessage(202, AlarmGrade, alarmstring, this.Guid, itemtype);
+            DelayIsNotOK = IsNotOK;           
+            PublishMessage(CustomSystemType.IsNotOK, CustomSystemDegree.Information, alarmstring, this.Guid, itemtype);
         }
 
         private string GetAlarmEventString()
@@ -66,22 +68,47 @@ namespace AIC.Core.SignalModels
             string str = null;
             switch (DelayAlarmGrade)
             {
+                case AlarmGrade.DisConnect:
+                    switch (AlarmGrade)
+                    {
+                        case AlarmGrade.Invalid:
+                        case AlarmGrade.LowNormal:
+                        case AlarmGrade.HighNormal:
+                            str = ItemName + "." +  "断线事件恢复";
+                            break;
+                        case AlarmGrade.LowPreAlert:
+                        case AlarmGrade.HighPreAlert:
+                            str = ItemName + "." +  "断线->预警事件发生";
+                            break;
+                        case AlarmGrade.LowAlert:
+                        case AlarmGrade.HighAlert:
+                            str = ItemName + "." +  "断线->警告事件发生";
+                            break;
+                        case AlarmGrade.LowDanger:
+                        case AlarmGrade.HighDanger:
+                            str = ItemName + "." +  "断线->危险事件发生";
+                            break;
+                    }
+                    break;
                 case AlarmGrade.Invalid:
                 case AlarmGrade.LowNormal:
                 case AlarmGrade.HighNormal:
                     switch (AlarmGrade)
                     {
+                        case AlarmGrade.DisConnect:
+                            str = ItemName + "." +  "断线事件发生";
+                            break;
                         case AlarmGrade.LowPreAlert:
                         case AlarmGrade.HighPreAlert:
-                            str = "预警事件发生";
+                            str = ItemName + "." +  "预警事件发生";
                             break;
                         case AlarmGrade.LowAlert:
                         case AlarmGrade.HighAlert:
-                            str = "警告事件发生";
+                            str = ItemName + "." +  "警告事件发生";
                             break;
                         case AlarmGrade.LowDanger:
                         case AlarmGrade.HighDanger:
-                            str = "危险事件发生";
+                            str = ItemName + "." +  "危险事件发生";
                             break;
                     }
                     break;
@@ -89,18 +116,21 @@ namespace AIC.Core.SignalModels
                 case AlarmGrade.HighPreAlert:
                     switch (AlarmGrade)
                     {
+                        case AlarmGrade.DisConnect:
+                            str = ItemName + "." +  "断线事件发生";
+                            break;
                         case AlarmGrade.Invalid:
                         case AlarmGrade.LowNormal:
                         case AlarmGrade.HighNormal:
-                            str = "预警事件消失";
+                            str = ItemName + "." +  "预警事件消失";
                             break;
                         case AlarmGrade.LowAlert:
                         case AlarmGrade.HighAlert:
-                            str = "预警->警告事件发生";
+                            str = ItemName + "." +  "预警->警告事件发生";
                             break;
                         case AlarmGrade.LowDanger:
                         case AlarmGrade.HighDanger:
-                            str = "预警->危险事件发生";
+                            str = ItemName + "." +  "预警->危险事件发生";
                             break;
                     }
                     break;
@@ -108,18 +138,21 @@ namespace AIC.Core.SignalModels
                 case AlarmGrade.HighAlert:
                     switch (AlarmGrade)
                     {
+                        case AlarmGrade.DisConnect:
+                            str = ItemName + "." +  "断线事件发生";
+                            break;
                         case AlarmGrade.Invalid:
                         case AlarmGrade.LowNormal:
                         case AlarmGrade.HighNormal:
-                            str = "警告事件消失";
+                            str = ItemName + "." +  "警告事件消失";
                             break;
                         case AlarmGrade.LowPreAlert:
                         case AlarmGrade.HighPreAlert:
-                            str = "警告->预警事件发生";
+                            str = ItemName + "." +  "警告->预警事件发生";
                             break;
                         case AlarmGrade.LowDanger:
                         case AlarmGrade.HighDanger:
-                            str = "警告->危险事件发生";
+                            str = ItemName + "." +  "警告->危险事件发生";
                             break;
                     }
                     break;
@@ -127,18 +160,21 @@ namespace AIC.Core.SignalModels
                 case AlarmGrade.HighDanger:
                     switch (AlarmGrade)
                     {
+                        case AlarmGrade.DisConnect:
+                            str = ItemName + "." +  "断线事件发生";
+                            break;
                         case AlarmGrade.Invalid:
                         case AlarmGrade.LowNormal:
                         case AlarmGrade.HighNormal:
-                            str = "危险事件消失";
+                            str = ItemName + "." +  "危险事件消失";
                             break;
                         case AlarmGrade.LowPreAlert:
                         case AlarmGrade.HighPreAlert:
-                            str = "危险->预警事件发生";
+                            str = ItemName + "." +  "危险->预警事件发生";
                             break;
                         case AlarmGrade.LowAlert:
                         case AlarmGrade.HighAlert:
-                            str = "危险->警告事件发生";
+                            str = ItemName + "." +  "危险->警告事件发生";
                             break;
                     }
                     break;
@@ -199,7 +235,7 @@ namespace AIC.Core.SignalModels
             return (int)ChannelType.None;
         }
 
-        private void PublishMessage(int type, AlarmGrade grade, string alarmstring, Guid guid, int itemtype)
+        private void PublishMessage(CustomSystemType type, CustomSystemDegree grade, string alarmstring, Guid guid, int itemtype)
         {
             if (alarmstring == null || itemtype == (int)ChannelType.None)
             {
@@ -207,10 +243,10 @@ namespace AIC.Core.SignalModels
             }
             CustomSystemException ex = new CustomSystemException()
             {
-                Type = type,
+                Type = (int)type,
                 Degree = (int)grade,
                 EventTime = DateTime.Now,
-                Remark = alarmstring,
+                Remarks = alarmstring,
                 T_Item_Guid = guid,
                 T_Item_Type = itemtype,
             };

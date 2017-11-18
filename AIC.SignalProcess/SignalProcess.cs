@@ -448,8 +448,8 @@ namespace AIC.LocalConfiguration
                         sg.IsRunning = false;
                         if (sg is BaseAlarmSignal)
                         {
-                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.UnConnect;
-                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.UnConnect;//断线不延时                          
+                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
+                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                          
                         }
                     }
                     return false;
@@ -462,8 +462,8 @@ namespace AIC.LocalConfiguration
                         sg.IsRunning = false;
                         if (sg is BaseAlarmSignal)
                         {
-                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.UnConnect;
-                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.UnConnect;//断线不延时                                                 
+                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
+                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                                                 
                         }
                     }
                 }
@@ -604,15 +604,15 @@ namespace AIC.LocalConfiguration
                 {
                     sg.IsConnected = false;
                     sg.IsRunning = false;
-                    sg.AlarmGrade = AlarmGrade.UnConnect;
-                    sg.DelayAlarmGrade = AlarmGrade.UnConnect;//断线不延时
+                    sg.AlarmGrade = AlarmGrade.DisConnect;
+                    sg.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时
                     if (sg is BaseDivfreSignal && (sg as BaseDivfreSignal).DivFres.Count() > 0)
                     {
                         foreach(var divfre in (sg as BaseDivfreSignal).DivFres)
                         {
                             divfre.IsConnected = false;
-                            divfre.AlarmGrade = AlarmGrade.UnConnect;
-                            divfre.DelayAlarmGrade = AlarmGrade.UnConnect;//断线不延时                           
+                            divfre.AlarmGrade = AlarmGrade.DisConnect;
+                            divfre.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                           
                         }
                     }
                 }

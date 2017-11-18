@@ -15,30 +15,30 @@ namespace AIC.HomePage.Models
 {
     public static class LoginManage
     {
-        private static LoginWin loginWin;
-        private static bool loginSucceed; 
+        private static LoginWin win;
+        private static bool succeed; 
         private static IDatabaseComponent _databaseComponent;
 
-        public delegate void TransferLoginResult(bool loginresult);
+        public delegate void TransferLoginResult(bool result);
         public static event TransferLoginResult LoginChanged;
 
 
-        public static bool Login(LoginInfo logininfo)
+        public static bool Enter(LoginInfo logininfo)
         {
-            loginSucceed = false;
+            succeed = false;
             logininfo.RrrorInformation = "";//清空信息
-            if (loginWin == null || loginWin.IsVisible == false)
+            if (win == null || win.IsVisible == false)
             {
-                loginWin = new LoginWin(logininfo);
-                loginWin.Title = (string)Application.Current.Resources["strLogin"];
-                loginWin.Parachanged += Win_Parachanged;
-                loginWin.Show();
+                win = new LoginWin(logininfo);
+                win.Title = (string)Application.Current.Resources["strLogin"];
+                win.Parachanged += Win_Parachanged;
+                win.Show();
             }
             else
             {
-                loginWin.SetLogin(logininfo);
+                win.SetLogin(logininfo);
             }
-            return loginSucceed;
+            return succeed;
         }
 
         private async static void Win_Parachanged(LoginInfo logininfo)
@@ -49,7 +49,7 @@ namespace AIC.HomePage.Models
             //if (pingresult != "OK")
             //{
             //    logininfo.RrrorInformation = pingresult;
-            //    loginWin.WaitStop();
+            //    win.WaitStop();
             //    return;
             //}
 
@@ -76,7 +76,7 @@ namespace AIC.HomePage.Models
                     if (logininfo.ServerInfo.IP == task.Key)
                     {
                         logininfo.RrrorInformation = task.Value.Result;
-                        loginWin.WaitStop();
+                        win.WaitStop();
                         return;
                     }
 
@@ -93,6 +93,7 @@ namespace AIC.HomePage.Models
                     {
                         serverinfo.LoginResult = true;
                         serverinfo.Permission = "超级管理员";
+                        serverinfo.T_User = null;
                         if (serverinfo.IsSaveUserName == true)
                         {
                             serverinfo.UserName = logininfo.UserName;
@@ -115,6 +116,7 @@ namespace AIC.HomePage.Models
                     {
                         serverinfo.LoginResult = true;
                         serverinfo.Permission = "超级管理员";
+                        serverinfo.T_User = null;
                         if (serverinfo.IsSaveUserName == true)
                         {
                             serverinfo.UserName = logininfo.UserName;
@@ -134,17 +136,17 @@ namespace AIC.HomePage.Models
                     }
                 }
 
-                loginSucceed = true;                
-                loginWin.Close();
-                LoginChanged(loginSucceed);
+                succeed = true;                
+                win.Close();
+                LoginChanged(succeed);
                 return;
             }
 
-            var role = await _databaseComponent.UserLogin(logininfo.ServerInfo.IP, logininfo.UserName, logininfo.Password);
-            if (role == null)
+            var role_user = await _databaseComponent.UserLogin(logininfo.ServerInfo.IP, logininfo.UserName, logininfo.Password);
+            if (role_user == null)
             {
                 logininfo.RrrorInformation = (string)Application.Current.Resources["strUserError"];
-                loginWin.WaitStop();
+                win.WaitStop();
                 return;
             }
 
@@ -154,6 +156,7 @@ namespace AIC.HomePage.Models
                 {
                     logininfo.ServerInfo = serverinfo;
                     serverinfo.LoginResult = true;
+                    serverinfo.T_User = role_user.Item2;
                     if (serverinfo.IsSaveUserName == true)
                     {
                         serverinfo.UserName = logininfo.UserName;
@@ -170,11 +173,11 @@ namespace AIC.HomePage.Models
                     {
                         serverinfo.UserPwd = "";
                     }
-                    if (role.Is_SuperAdmin)
+                    if (role_user.Item1.Is_SuperAdmin)
                     {
                         serverinfo.Permission = "超级管理员";
                     }
-                    else if (role.Is_Admin)
+                    else if (role_user.Item1.Is_Admin)
                     {
                         serverinfo.Permission = "管理员";
                     }
@@ -186,10 +189,11 @@ namespace AIC.HomePage.Models
                 //副服务器登陆
                 else if (logininfo.HasSecondaryServer == true && serverinfo.IsLogin == true && serverinfo.Permission != "网络未连接")
                 {
-                    var secondrole = await _databaseComponent.UserLogin(serverinfo.IP, logininfo.UserName, logininfo.Password);
-                    if (secondrole != null)
+                    var secondrole_user = await _databaseComponent.UserLogin(serverinfo.IP, logininfo.UserName, logininfo.Password);
+                    if (secondrole_user != null)
                     {
                         serverinfo.LoginResult = true;
+                        serverinfo.T_User = secondrole_user.Item2;
                         if (serverinfo.IsSaveUserName == true)
                         {
                             serverinfo.UserName = logininfo.UserName;
@@ -206,11 +210,11 @@ namespace AIC.HomePage.Models
                         {
                             serverinfo.UserPwd = "";
                         }
-                        if (secondrole.Is_SuperAdmin)
+                        if (secondrole_user.Item1.Is_SuperAdmin)
                         {
                             serverinfo.Permission = "超级管理员";
                         }
-                        else if (secondrole.Is_Admin)
+                        else if (secondrole_user.Item1.Is_Admin)
                         {
                             serverinfo.Permission = "管理员";
                         }
@@ -222,9 +226,9 @@ namespace AIC.HomePage.Models
                 }
             }
 
-            loginSucceed = true;
-            loginWin.Close();
-            LoginChanged(loginSucceed);
+            succeed = true;
+            win.Close();
+            LoginChanged(succeed);
         }
     }
 }

@@ -24,6 +24,8 @@ using System.Xml.Linq;
 using Wpf.PageNavigationControl;
 using AIC.Core.LMModels;
 using AIC.M9600.Common.MasterDB.Generated;
+using AIC.CoreType;
+using AIC.Core;
 
 namespace AIC.UserPage.ViewModels
 {
@@ -282,7 +284,7 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private async void Win_Parachanged(T1_User user, string oldname, ModifyStatus mode)
+        private async void Win_Parachanged(T1_User user, string oldname, string oldpwd, ModifyStatus mode)
         {
             //long max = T_User.Count;
             //if (T_User.Count > 0)
@@ -311,6 +313,7 @@ namespace AIC.UserPage.ViewModels
                                 user.T_Role_Name = (from role in T_Role where role.Guid == user.T_Role_Guid select role.Name).FirstOrDefault();
                                 user.T_Menu_Name = (from menu in T_Menu where menu.Guid == user.T_Menu_Guid select menu.Name).FirstOrDefault();
                                 user.T_OrganizationPrivilege_Name = (from organization in T_OrganizationPrivilege where organization.Guid == user.T_OrganizationPrivilege_Guid select organization.Name).FirstOrDefault();
+                                user.Password = MyEncrypt.EncryptDES(user.Password);
                                 if (await _databaseComponent.Add<T_User>(_databaseComponent.MainServerIp, user) == true)
                                 {
                                     //T_User.Add(user);//在DatabaseComponent添加
@@ -348,6 +351,11 @@ namespace AIC.UserPage.ViewModels
                                     user.T_Role_Name = (from role in T_Role where role.Guid == user.T_Role_Guid select role.Name).FirstOrDefault();
                                     user.T_Menu_Name = (from menu in T_Menu where menu.Guid == user.T_Menu_Guid select menu.Name).FirstOrDefault();
                                     user.T_OrganizationPrivilege_Name = (from organization in T_OrganizationPrivilege where organization.Guid == user.T_OrganizationPrivilege_Guid select organization.Name).FirstOrDefault();
+                                    if (user.Password != oldpwd)
+                                    {
+                                        user.Password = MyEncrypt.EncryptDES(user.Password);
+                                    }
+
                                     if (await _databaseComponent.Modify<T_User>(_databaseComponent.MainServerIp, null, user) == true)
                                     {
                                         T_User[i] = user;

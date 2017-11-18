@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>             
         <StackPanel Grid.Row="0" Orientation="Horizontal" >
             <TextBlock Text="{DynamicResource serverName}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center"/>
             <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -29,7 +29,7 @@
                 </Button.Content>
             </Button>
             <TextBlock Text="{DynamicResource serverManagement}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-            <TextBox DataContext="{Binding ElementName=table, Path=SelectedItem}" Text="{Binding Path=IP}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" IsReadOnly="True"/>
+            <TextBox DataContext="{Binding ElementName=table, Path=SelectedItem}" Text="{Binding Path=IP}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>
             <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -142,7 +142,7 @@
             </i:Interaction.Triggers>
         </DataGrid>
         <page:PageNavigation Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize}" 
-            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=TwoWay}" Grid.Row="2">
+            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=TwoWay}" Grid.Row="2" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CurrentPageChanged">
                     <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />

@@ -11,13 +11,19 @@
              xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:convert="clr-namespace:AIC.UserPage.Converters"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
-            <convert:IntOperateStringConverter x:Key="intOperateStringConverter"/>         
+            <convert:IntOperateStringConverter x:Key="intOperateStringConverter"/>
+            <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+            <DataTemplate x:Key="enumComboItemTemplate">
+                <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid >
@@ -28,15 +34,9 @@
         </Grid.RowDefinitions>             
         <StackPanel Grid.Row="0" Orientation="Horizontal" >
             <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" Height="24"/>
-            <TextBlock Text="{DynamicResource operateType}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox Grid.Row="5" Grid.Column="3" SelectedIndex="{Binding SearchOperateType}" Controls:TextBoxHelper.ClearTextButton="True" Style="{DynamicResource VirtualisedMetroComboBox}" Height="24" Width="100">
-                <!--<TextBlock>登陆</TextBlock>-->
-                <TextBlock>用户管理</TextBlock>
-                <TextBlock>角色管理</TextBlock>
-                <TextBlock>菜单管理</TextBlock>
-                <TextBlock>组织管理</TextBlock>              
-            </ComboBox>
+            <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" />
+            <TextBlock Text="{DynamicResource operateType}" Margin="4,0,0,0" VerticalAlignment="Center"/>          
+            <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:OperateType}" SelectedItem="{Binding OperateType}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center"/>
             <TextBlock Text="{DynamicResource operateDateTime}" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" VerticalAlignment="Center" />
             <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center"/>

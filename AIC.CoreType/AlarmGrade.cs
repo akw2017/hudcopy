@@ -10,8 +10,8 @@ namespace AIC.CoreType
 {
     public enum AlarmGrade
     {
-        [EnumDescription(EnumValue = AlarmGrade.UnConnect)]
-        UnConnect = -1,
+        [EnumDescription(EnumValue = AlarmGrade.DisConnect)]
+        DisConnect = -1,
         [EnumDescription(EnumValue = AlarmGrade.LowDanger)]
         LowDanger = 0x10000,
         [EnumDescription(EnumValue = AlarmGrade.LowAlert)]

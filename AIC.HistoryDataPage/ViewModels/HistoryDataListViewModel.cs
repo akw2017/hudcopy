@@ -845,34 +845,6 @@ namespace AIC.HistoryDataPage.ViewModels
             anInfoCollection.Clear();
             divFreCollection.Clear();
         }
-       
-        private string GetDescription(Enum iValue)
-        {
-            FieldInfo fi = iValue.GetType().GetField(iValue.ToString());
-
-            if (fi != null)
-            {
-                var attributes = (EnumDescription[])fi.GetCustomAttributes(typeof(EnumDescription), false);
-
-                if (attributes.Length == 0)
-                {
-                    var descriptions = (DescriptionAttribute[])fi.
-                        GetCustomAttributes(typeof(DescriptionAttribute), false);
-                    if (descriptions.Length > 0)
-                    {
-                        return descriptions[0].Description;
-                    }
-                }
-
-                return ((attributes.Length > 0) &&
-                            (!String.IsNullOrEmpty(attributes[0].GetDescription())))
-                        ? attributes[0].GetDescription()
-                        : iValue.ToString();
-            }
-
-            return null;
-        }
-
     }
 
     public class AMSObject

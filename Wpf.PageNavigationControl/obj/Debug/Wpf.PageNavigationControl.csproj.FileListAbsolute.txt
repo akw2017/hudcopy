@@ -54,3 +54,7 @@ D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\Wpf.PageNav
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\Wpf.PageNavigationControl.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\Wpf.PageNavigationControl.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\TrendNavigation.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Debug\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Debug\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Debug\TrendNavigation.baml

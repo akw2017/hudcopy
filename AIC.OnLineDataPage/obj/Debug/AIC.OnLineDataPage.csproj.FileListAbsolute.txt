@@ -877,3 +877,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\OnlineDataTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\OnlineDataTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.pdb

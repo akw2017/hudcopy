@@ -25,13 +25,14 @@ namespace AIC.UserPage.Views
     /// </summary>
     public partial class UserSetWin : MetroWindow
     {
-        public delegate void TransferParaData(T1_User info, string oldName, ModifyStatus mode);
+        public delegate void TransferParaData(T1_User info, string oldName, string oldpwd, ModifyStatus mode);
         public event TransferParaData Parachanged;
 
         public UserSetWin(T1_User user, List<T1_Role> role, List<T1_Menu> menu, List<T1_OrganizationPrivilege> organization, ModifyStatus mode)
         {
             InitializeComponent();
             oldName = user.Name;
+            oldPwd = user.Password;
 
             Mode = mode;
             switch (mode)
@@ -75,7 +76,7 @@ namespace AIC.UserPage.Views
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {          
-            Parachanged(T_User, oldName, Mode);
+            Parachanged(T_User, oldName, oldPwd, Mode);
             this.Close();
         }
 
@@ -89,5 +90,6 @@ namespace AIC.UserPage.Views
         ModifyStatus Mode { get; set; }
 
         private string oldName;
+        private string oldPwd;
     }
 }

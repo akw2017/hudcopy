@@ -1,4 +1,5 @@
-﻿using AIC.CoreType;
+﻿using AIC.Core.Helpers;
+using AIC.CoreType;
 using System;
 using System.ComponentModel;
 using System.Reflection;
@@ -27,7 +28,7 @@ namespace AIC.Core
             {
                 if (value is Enum)
                 {
-                    return GetDescription((Enum)value);
+                    return GetEnumDescription.GetDescription((Enum)value);
                 }
                 else
                 {
@@ -50,32 +51,32 @@ namespace AIC.Core
 
         #region Helpers
 
-        public static string GetDescription(Enum iValue)
-        {
-            FieldInfo fi = iValue.GetType().GetField(iValue.ToString());
+        //public static string GetDescription(Enum iValue)
+        //{
+        //    FieldInfo fi = iValue.GetType().GetField(iValue.ToString());
 
-            if (fi != null)
-            {
-                var attributes = (EnumDescription[])fi.GetCustomAttributes(typeof(EnumDescription), false);
+        //    if (fi != null)
+        //    {
+        //        var attributes = (EnumDescription[])fi.GetCustomAttributes(typeof(EnumDescription), false);
 
-                if (attributes.Length == 0)
-                {
-                    var descriptions = (DescriptionAttribute[])fi.
-                        GetCustomAttributes(typeof(DescriptionAttribute), false);
-                    if (descriptions.Length > 0)
-                    {
-                        return descriptions[0].Description;
-                    }
-                }
+        //        if (attributes.Length == 0)
+        //        {
+        //            var descriptions = (DescriptionAttribute[])fi.
+        //                GetCustomAttributes(typeof(DescriptionAttribute), false);
+        //            if (descriptions.Length > 0)
+        //            {
+        //                return descriptions[0].Description;
+        //            }
+        //        }
 
-                return ((attributes.Length > 0) &&
-                            (!String.IsNullOrEmpty(attributes[0].GetDescription())))
-                        ? attributes[0].GetDescription()
-                        : iValue.ToString();
-            }
+        //        return ((attributes.Length > 0) &&
+        //                    (!String.IsNullOrEmpty(attributes[0].GetDescription())))
+        //                ? attributes[0].GetDescription()
+        //                : iValue.ToString();
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         #endregion
     }

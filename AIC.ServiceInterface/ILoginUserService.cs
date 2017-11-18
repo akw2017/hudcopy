@@ -2,6 +2,7 @@
 using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.Core.UserManageModels;
+using AIC.CoreType;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace AIC.ServiceInterface
         LoginInfo LoginInfo { get; set; }        
         MenuManageList MenuManageList { get; set; }
         ObservableCollection<ExceptionModel> ExceptionModel { get; }
+        ObservableCollection<CustomSystemException> CustomSystemException { get; }
         void Initialize();
 
         LoginInfo InitLoginServer(ServerInfo serverinfo);

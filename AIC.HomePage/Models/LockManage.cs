@@ -11,16 +11,16 @@ using System.Windows;
 
 namespace AIC.HomePage.Models
 {
-    public class LockManage
+    public static class LockManage
     {
-        private static LockWin loginWin;
-        private static bool loginSucceed;
-        private IDatabaseComponent _databaseComponent;
+        private static LockWin win;
+        private static bool succeed;
+        private static IDatabaseComponent _databaseComponent;
 
         //仅仅是为了兼容网页模式ShowDialog不生效
         private static bool winshow = false;
 
-        public bool Lock(LoginInfo logininfo)
+        public static bool Lock(LoginInfo logininfo)
         {
             if (winshow == true)
             {
@@ -30,13 +30,13 @@ namespace AIC.HomePage.Models
             {
                 winshow = true;
                 LoginInfo lockinfo = logininfo.ShallowClone();
-                loginSucceed = false;
+                succeed = false;
                 logininfo.RrrorInformation = "";//清空信息
-                loginWin = new LockWin(logininfo);
-                loginWin.Title = (string)Application.Current.Resources["strLock"];
-                loginWin.Parachanged += Win_Parachanged;
-                loginWin.ShowDialog();
-                return loginSucceed;
+                win = new LockWin(logininfo);
+                win.Title = (string)Application.Current.Resources["strLock"];
+                win.Parachanged += Win_Parachanged;
+                win.ShowDialog();
+                return succeed;
             }
             finally
             {
@@ -44,7 +44,7 @@ namespace AIC.HomePage.Models
             }
         }
 
-        public bool UnLock(LoginInfo logininfo)
+        public static bool UnLock(LoginInfo logininfo)
         {
             if (winshow == true)
             {
@@ -54,36 +54,37 @@ namespace AIC.HomePage.Models
             {
                 winshow = true;
                 LoginInfo lockinfo = logininfo.ShallowClone();
-                loginSucceed = false;
+                succeed = false;
                 logininfo.RrrorInformation = "";//清空信息
-                loginWin = new LockWin(logininfo);
-                loginWin.Title = (string)Application.Current.Resources["strUnLock"];
-                loginWin.Parachanged += Win_Parachanged;
-                loginWin.ShowDialog();
-                return loginSucceed;
+                win = new LockWin(logininfo);
+                win.Title = (string)Application.Current.Resources["strUnLock"];
+                win.Parachanged += Win_Parachanged;
+                win.ShowDialog();
+                return succeed;
             }
             finally
             {
                 winshow = false;
             }
         }
-        private async void Win_Parachanged(LoginInfo logininfo)
+        private static async void Win_Parachanged(LoginInfo logininfo)
         {
             _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
 
             if (logininfo.UserName == "superadmin" && logininfo.Password == "superadmin")
             {
-                loginSucceed = true;
-                loginWin.Close();
+                succeed = true;
+                win.Close();
             }
             else if (await _databaseComponent.UserLogin(logininfo.ServerInfo.IP, logininfo.UserName, logininfo.Password) != null)
             {
-                loginSucceed = true;
-                loginWin.Close();
+                succeed = true;
+                win.Close();
             }
             else
             {
-                logininfo.RrrorInformation = (string)Application.Current.Resources["strUserError"];                
+                logininfo.RrrorInformation = (string)Application.Current.Resources["strUserError"];
+                win.WaitStop();
             }
         }
     }

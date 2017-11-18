@@ -60,6 +60,9 @@ namespace AIC.HistoryDataPage.Views
                 if (viewModel == null || !(token is BaseWaveChannelToken)) return;
                 m_chart.BeginUpdate();
 
+                var axisYnone = m_chart.ViewXY.YAxes.Where(o => o.Units.Text == "none").SingleOrDefault();
+                m_chart.ViewXY.YAxes.Remove(axisYnone);
+
                 BaseWaveChannelToken vToken = token as BaseWaveChannelToken;
 
                 AxisY axisY = new AxisY(m_chart.ViewXY);
@@ -154,13 +157,25 @@ namespace AIC.HistoryDataPage.Views
 
                     AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
                     var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    branches.RemoveAt(firstIndex);
+                    branches.RemoveAt(firstIndex + 1);
                     StringBuilder sb = new StringBuilder();
                     foreach (var branch in branches)
                     {
                         sb.AppendLine(branch);
                     }
                     annotation.Text = sb.ToString().Trim(); 
+                }
+
+                if (m_chart.ViewXY.YAxes.Count == 0)
+                {
+                    m_chart.ViewXY.Annotations.Clear();
+
+                    AxisY axisYnone = new AxisY(m_chart.ViewXY);
+                    axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
+                    axisYnone.AxisThickness = 2;
+                    axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                    axisYnone.Units.Text = "none";
+                    m_chart.ViewXY.YAxes.Add(axisYnone);
                 }
                 m_chart.EndUpdate();
             }
@@ -224,7 +239,14 @@ namespace AIC.HistoryDataPage.Views
             //m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Color = Color.FromArgb(100, 135, 205, 238);
             //m_chart.ViewXY.XAxes[0].VerticalAlign = AlignmentVertical.Top;
 
-            //m_chart.ViewXY.YAxes.Clear();
+            m_chart.ViewXY.YAxes.Clear();
+            AxisY axisYnone = new AxisY(m_chart.ViewXY);
+            axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
+            axisYnone.AxisThickness = 2;
+            axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+            axisYnone.Units.Text = "none";
+            m_chart.ViewXY.YAxes.Add(axisYnone);
+
             m_chart.ViewXY.LegendBoxes[0].Visible = false;
 
             m_chart.ViewXY.ZoomToFit();

@@ -237,6 +237,11 @@
                         <Image Source="/AIC.Resources;component/Images/chart_bar.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="趋势" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataTrend" >
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/chart_curve.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{DynamicResource menuData}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
                 <MenuItem Header="{DynamicResource menuAlartmData}" Command="{Binding NavigateCommand}" CommandParameter="MenuAlarmData" Visibility="{Binding MenuManageList.MenuAlarmData.Visibility}">
@@ -312,6 +317,11 @@
                 <MenuItem Header="{DynamicResource menuLogout}" Command="{Binding LogoutCommand}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/user_delete.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="修改密码" Command="{Binding EditPwdCommand}" Visibility="{Binding LoginVisibility}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/AIC.Resources;component/Images/user_key.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="{DynamicResource menuLock}" Command="{Binding LockCommand}">
@@ -398,6 +408,11 @@
                 <MenuItem Header="{DynamicResource menuSystemLog}" Command="{Binding SystemLogCommand}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/folder_error.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="系统事件" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryEventList">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/monitor_lightning.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="截屏文件" Command="{Binding ScreenShotFolderCommand}">
@@ -545,7 +560,7 @@
                         <Run>&#160;断线:</Run>
                         <Run Text="{Binding UnConnectCount}" />
                         </TextBlock>
-                        <ToggleButton x:Name="mutebtn" IsChecked="{Binding Mute}" Template="{StaticResource SoundToggleButton}" Margin="2,0,0,0"/>
+                        <ToggleButton x:Name="mutebtn" IsChecked="{Binding Mute}" FontSize="20" Template="{StaticResource SoundToggleButton}" Margin="2,0,0,0"/>
                     </StackPanel>
                 </StatusBarItem>
                 <Separator  Grid.Column="1" Style="{StaticResource MetroStatusBarSeparator}" />

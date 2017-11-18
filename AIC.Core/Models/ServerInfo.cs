@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using AIC.Core.LMModels;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -168,6 +169,7 @@ namespace AIC.Core.Models
             }
         }
 
+        public T1_User T_User { get; set; }
         public string UserName { get; set; }
         public string UserPwd { get; set; }
         public bool IsSaveUserName { get; set; }

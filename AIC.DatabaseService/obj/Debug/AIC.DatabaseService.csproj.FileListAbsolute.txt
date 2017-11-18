@@ -378,5 +378,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Debug\AIC.DatabaseServi
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Debug\AIC.DatabaseService.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.Resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMatlabDLL.dll

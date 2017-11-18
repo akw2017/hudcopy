@@ -218,6 +218,7 @@
     <Compile Include="Behaviors\TreeViewInPlaceEditBoxBehavior.cs" />
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="FunctionalExtensions.cs" />
+    <Compile Include="Helpers\GetEnumDescription.cs" />
     <Compile Include="LMModels\Iid.cs" />
     <Compile Include="LMModels\T1_AbstractChannelInfo.cs" />
     <Compile Include="LMModels\T1_AbstractSlotInfo.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\WirelessReceiveCard.cs" />
     <Compile Include="Models\WireMatchingCard.cs" />
     <Compile Include="NamePropertyChangedEventHandler.cs" />
+    <Compile Include="Controls\PasswordBoxHelper.cs" />
     <Compile Include="OrganizationModels\DepartmentTreeItemViewModel.cs" />
     <Compile Include="OrganizationModels\TransmissionCardTreeItemViewModel.cs" />
     <Compile Include="OrganizationModels\WireMatchingCardTreeItemViewModel.cs" />

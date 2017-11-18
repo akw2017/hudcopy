@@ -29,7 +29,7 @@
     <ProductName>AIC.Desktop</ProductName>
     <PublisherName>AIC</PublisherName>
     <SuiteName>AIC</SuiteName>
-    <ApplicationRevision>46</ApplicationRevision>
+    <ApplicationRevision>51</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -265,6 +265,9 @@
     <Content Include="Resources\Danger.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\msg.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Waring.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -281,6 +284,10 @@
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
       <Name>AIC.HistoryDataPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.HistoryEventPage\AIC.HistoryEventPage.csproj">
+      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
+      <Name>AIC.HistoryEventPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.HomePage\AIC.HomePage.csproj">
       <Project>{81c68241-29fc-406d-9e8d-d3cefafe81df}</Project>

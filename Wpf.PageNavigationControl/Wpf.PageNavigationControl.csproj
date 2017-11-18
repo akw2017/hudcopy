@@ -67,9 +67,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TrendNavigation.xaml.cs">
+      <DependentUpon>TrendNavigation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageNavigationMetadata.cs" />
     <Compile Include="PathButton.cs" />
     <Compile Include="ValidationExtension.cs" />
+    <Page Include="TrendNavigation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PageNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -78,9 +85,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="CustomControl1.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PageNavigation.xaml.cs">
@@ -115,6 +119,12 @@
     <Resource Include="Images\resultset_last.png" />
     <Resource Include="Images\resultset_next.png" />
     <Resource Include="Images\resultset_previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Loya.Dameer\Loya.Dameer.csproj">
+      <Project>{e67965a7-6224-4441-9513-d724ff662307}</Project>
+      <Name>Loya.Dameer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

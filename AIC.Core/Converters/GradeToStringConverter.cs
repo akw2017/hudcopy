@@ -28,7 +28,7 @@ namespace AIC.Core
                     case AlarmGrade.LowAlert: return "警告";
                     case AlarmGrade.HighDanger: 
                     case AlarmGrade.LowDanger: return "危险";
-                    case AlarmGrade.UnConnect:return "断线";
+                    case AlarmGrade.DisConnect:return "断线";
                 }
             }
             return null;

@@ -562,3 +562,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\AIC.MatlabMath.dl
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataStatisticsView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataStatisticsView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.xml

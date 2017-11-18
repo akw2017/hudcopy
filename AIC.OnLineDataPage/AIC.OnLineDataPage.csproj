@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="ViewModels\OnlineDataDiagramViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataDiagnosisViewModel.cs" />
+    <Compile Include="ViewModels\OnlineDataTrendViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataOverviewViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataStatisticsViewModel.cs" />
     <Compile Include="Models\SignalListViewModel.cs" />
@@ -298,6 +299,9 @@
     </Compile>
     <Compile Include="Views\OnlineDataDiagnosisView.xaml.cs">
       <DependentUpon>OnlineDataDiagnosisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OnlineDataTrendView.xaml.cs">
+      <DependentUpon>OnlineDataTrendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OnlineDataListView.xaml.cs">
       <DependentUpon>OnlineDataListView.xaml</DependentUpon>
@@ -436,6 +440,10 @@
       <Project>{aab57bb1-a448-457c-ad53-16b32a1c1f1d}</Project>
       <Name>ItemsFilter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Loya.Dameer\Loya.Dameer.csproj">
+      <Project>{e67965a7-6224-4441-9513-d724ff662307}</Project>
+      <Name>Loya.Dameer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
       <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
       <Name>Wpf.CloseTabControl</Name>
@@ -447,6 +455,10 @@
     <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
       <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
       <Name>Wpf.VirtualizingWrapPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.WrapBreakPanel\Wpf.WrapBreakPanel.csproj">
+      <Project>{534ba357-3aa8-454c-84c6-423ba82f7ee1}</Project>
+      <Name>Wpf.WrapBreakPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
       <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
@@ -523,6 +535,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OnlineDataDiagnosisView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OnlineDataTrendView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

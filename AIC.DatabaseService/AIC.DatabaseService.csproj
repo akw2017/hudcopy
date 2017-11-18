@@ -166,9 +166,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AIC.CoreType\AIC.CoreType.csproj">
+      <Project>{969f2406-e381-4cfe-b951-18266c5a5f00}</Project>
+      <Name>AIC.CoreType</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
       <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
       <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.ServiceInterface\AIC.ServiceInterface.csproj">
       <Project>{1b41d49f-0857-482b-a58b-83ca1938ef0f}</Project>

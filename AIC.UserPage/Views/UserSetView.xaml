@@ -63,7 +63,7 @@
                 <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding Name}"  MinWidth="60"></DataGridTextColumn>
                 <!--<DataGridTextColumn Header="{DynamicResource code}" Binding="{Binding Code}"  MinWidth="60"></DataGridTextColumn>-->
                 <DataGridTextColumn Header="{DynamicResource aliasName}" Binding="{Binding Alias_Name}"  MinWidth="60"></DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource password}" Binding="{Binding Password}"  MinWidth="60"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="{DynamicResource password}" Binding="{Binding Password}"  MinWidth="60"></DataGridTextColumn>-->
                 <DataGridTextColumn Header="{DynamicResource role}" Binding="{Binding T_Role_Name}"  MinWidth="60"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource menu}" Binding="{Binding T_Menu_Name}"  MinWidth="60"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource organization}" Binding="{Binding T_OrganizationPrivilege_Name}"  MinWidth="60"></DataGridTextColumn>

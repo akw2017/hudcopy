@@ -135,6 +135,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Views\TaskbarNotifier.xaml.cs">
+      <DependentUpon>TaskbarNotifier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WaitingDlg.xaml.cs">
       <DependentUpon>WaitingDlg.xaml</DependentUpon>
     </Compile>
@@ -302,6 +305,10 @@
     <Page Include="Themes\zh-cn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaskbarNotifier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WaitingDlg.xaml">
       <SubType>Designer</SubType>
@@ -562,6 +569,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\chart_pie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\monitor_lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\user_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\user_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\chart_curve.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

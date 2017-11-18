@@ -24,6 +24,7 @@ using System.Xml.Linq;
 using Wpf.PageNavigationControl;
 using AIC.Core.LMModels;
 using AIC.M9600.Common.MasterDB.Generated;
+using AIC.CoreType;
 
 namespace AIC.UserPage.ViewModels
 {

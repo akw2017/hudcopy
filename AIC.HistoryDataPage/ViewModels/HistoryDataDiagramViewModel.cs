@@ -817,10 +817,10 @@ namespace AIC.HistoryDataPage.ViewModels
                 List<IWaveformData> result = new List<IWaveformData>();
                 foreach (var token in validTokens)
                 {
-                    var divtoken = token as BaseDivfreChannelToken;
+                    var divtoken = token as BaseDivfreChannelToken; 
 
                     List<D_WirelessVibrationSlot_Waveform> data = null;
-                    if (divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)
+                    if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
                     {
                         data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit"}, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                     }

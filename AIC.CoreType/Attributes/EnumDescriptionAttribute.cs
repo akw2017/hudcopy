@@ -64,7 +64,6 @@ namespace AIC.CoreType
             return GetResourceString(enumType.Assembly, sb.ToString());
         }
 
-
         /// <summary>
         /// Gets the resource string.
         /// </summary>

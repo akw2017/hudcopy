@@ -112,7 +112,7 @@ namespace AIC.HomePage.ViewModels
                 return;
             }
 
-            LoginManage.Login(_loginUserService.InitLoginServer(serverinfo));
+            LoginManage.Enter(_loginUserService.InitLoginServer(serverinfo));
         }     
         #endregion
     }

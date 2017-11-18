@@ -1,16 +1,19 @@
 ﻿using AIC.Core;
 using AIC.Core.Events;
+using AIC.Core.Helpers;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Views;
+using AIC.HistoryEventPage.Views;
 using AIC.HomePage.Menus;
 using AIC.HomePage.Models;
 using AIC.HomePage.Views;
 using AIC.OnLineDataPage.Views;
 using AIC.PDAPage.Views;
 using AIC.Resources.Models;
+using AIC.Resources.Views;
 using AIC.ServiceInterface;
 using AIC.UserPage.Views;
 using MahApps.Metro;
@@ -29,6 +32,7 @@ using System.Linq;
 using System.Media;
 using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -75,6 +79,7 @@ namespace AIC.HomePage.ViewModels
 
             MenuManageList = _loginUserService.MenuManageList;
             ExceptionModel = _loginUserService.ExceptionModel;
+            CustomSystemException = _loginUserService.CustomSystemException;
 
             readDataTimer.Tick += new EventHandler(timeCycle);
             readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -83,6 +88,7 @@ namespace AIC.HomePage.ViewModels
             WhenPropertyChanged.Where(o => o.ToString() == "Alarm").Subscribe(OnAlarmGradeChanged);
 
             _eventAggregator.GetEvent<LoginEvent>().Subscribe(LoginFinishEvent);
+            _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);
 
             LoginManage.LoginChanged += LoginManage_LoginChanged;
         }
@@ -90,6 +96,8 @@ namespace AIC.HomePage.ViewModels
 
         #region 字段和属性
         private ObservableCollection<ExceptionModel> ExceptionModel;
+
+        private ObservableCollection<CustomSystemException> CustomSystemException;
 
         private MenuManageList menuManageList;
         public MenuManageList MenuManageList
@@ -461,6 +469,15 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
+        private ICommand editPwdCommand;
+        public ICommand EditPwdCommand
+        {
+            get
+            {
+                return this.editPwdCommand ?? (this.editPwdCommand = new DelegateCommand<object>(para => this.EditPwd()));
+            }
+        }        
+
         private ICommand lockCommand;
         public ICommand LockCommand
         {
@@ -617,7 +634,7 @@ namespace AIC.HomePage.ViewModels
             //如果没有登录
             if (_loginUserService.GetUserLoginStatus() == false)
             {               
-                LoginManage.Login(_loginUserService.DefaultLoginServer());               
+                LoginManage.Enter(_loginUserService.DefaultLoginServer());               
             }
             else
             {
@@ -629,11 +646,11 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
-        private async void LoginManage_LoginChanged(bool loginresult)
+        private async void LoginManage_LoginChanged(bool result)
         {
             try
             {
-                if (loginresult)
+                if (result)
                 {
                     Status = ViewModelStatus.Querying;
                     //把登录配置保存到本地
@@ -685,6 +702,24 @@ namespace AIC.HomePage.ViewModels
                 }
             }
         }
+
+        private void EditPwd()
+        {
+            if (PwdEditManage.Enter(_loginUserService.LoginInfo))
+            {
+                IRegion region = this._regionManager.Regions["MainTabRegion"];
+                var views = region.Views.ToList();
+                for (int i = 0; i < views.Count; i++)
+                {
+                    var viewObj = views[i];
+                    ICloseable view = viewObj as ICloseable;
+                    if (view.Closer.Visibility == Visibility.Visible)
+                    {
+                        view.Closer.LockVisibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
         private void Lock()
         {
             //如果没有登录
@@ -692,7 +727,7 @@ namespace AIC.HomePage.ViewModels
             {
                 return;
             }
-            if (new LockManage().Lock(_loginUserService.LoginInfo))
+            if (LockManage.Lock(_loginUserService.LoginInfo))
             {
                 IRegion region = this._regionManager.Regions["MainTabRegion"];
                 var views = region.Views.ToList();
@@ -717,7 +752,7 @@ namespace AIC.HomePage.ViewModels
             {
                 return;
             }
-            if (new LockManage().UnLock(_loginUserService.LoginInfo))
+            if (LockManage.UnLock(_loginUserService.LoginInfo))
             {
                 IRegion region = this._regionManager.Regions["MainTabRegion"];
                 if (name == null)
@@ -855,6 +890,14 @@ namespace AIC.HomePage.ViewModels
             else if (viewName == "MenuHistoryDataStatistics")
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataStatisticsView>();
+            }
+            else if (viewName == "MenuHistoryEventList")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<HistoryEventListView>();
+            }
+            else if (viewName == "MenuOnlineDataTrend")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<OnlineDataTrendView>();
             }
             else if (viewName == "MenuRefreshData")
             {
@@ -1094,8 +1137,19 @@ namespace AIC.HomePage.ViewModels
         {
             AlarmAckListWin win = new AlarmAckListWin(TotalDangerList);
             win.Show();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    CustomSystemHappenEvent(new Core.Models.CustomSystemException()
+            //    {
+            //        Type = 201,
+            //        Degree = 1,
+            //        EventTime = DateTime.Now,
+            //        Remarks = "ceshi",
+            //        T_Item_Guid = Guid.NewGuid(),
+            //        T_Item_Type = 12,
+            //    });
+            //}
         }
-        #endregion
 
         private SoundPlayer player = new System.Media.SoundPlayer();
         private void OnAlarmGradeChanged(string propertyName)
@@ -1120,6 +1174,63 @@ namespace AIC.HomePage.ViewModels
                 player.Stop();
             }
         }
+        #endregion
 
+        #region 事件
+
+        private List<double> heightoffsets = new List<double>();
+        private const double constantheightoffset = 60;
+        private object threadLock = new object();
+
+        private void CustomSystemHappenEvent(CustomSystemException ex)
+        {
+            CustomSystemException.Add(ex);    
+            if (CustomSystemException.Count > 1000)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    CustomSystemException.RemoveAt(0);
+                }
+            }     
+
+            lock (threadLock)
+            {
+                if (Mute == false)//静音
+                {
+                    playsound();
+                }
+                string title = GetEnumDescription.GetDescription((CustomSystemType)ex.Type) + "事件发生";
+                string content = ex.EventTime.ToString("yyyy-MM-dd HH:mm:ss") + "   " + ex.Remarks;
+                double heightoffset = 0;
+                while (true)
+                {
+                    if (heightoffsets.Contains(heightoffset))
+                    {
+                        heightoffset += constantheightoffset;
+                    }
+                    else
+                    {
+                        heightoffsets.Add(heightoffset);
+                        break;
+                    }
+                }
+
+                TaskbarNotifier taskbarnotifier = new TaskbarNotifier(title, content, heightoffset);
+                taskbarnotifier.ThisClosed += Taskbarnotifier_ThisClosed;
+                taskbarnotifier.Show();
+            }
+        }
+
+        private void Taskbarnotifier_ThisClosed(double heightoffset)
+        {
+            heightoffsets.Remove(heightoffset);
+        }
+
+        private void playsound()
+        {
+            string soundName = System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\msg.wav";
+            PlaySound.Play(soundName);
+        }
+        #endregion
     }
 }

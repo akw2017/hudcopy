@@ -2837,21 +2837,22 @@ namespace AIC.DatabaseService
             }
         }
 
-        public async Task<T1_Role> UserLogin(string ip, string user, string pwd)
-        {
+        public async Task<Tuple<T1_Role, T1_User>> UserLogin(string ip, string user, string pwd)
+        {            
             return await Task.Run(() =>
-            {
+            {             
                 var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
 
-                var queryResult = client.Query<T_User>(null, "(Name = @0 and Password = @1)", new object[] { user, pwd });
+                var queryResult = client.Query<T_User>(null, "(Name = @0 and (Password = @1 or Password = @2))", new object[] { user, pwd, MyEncrypt.EncryptDES(pwd) });
                 //先判断是不是OK          
                 if (queryResult.IsOK && queryResult.ResponseItem.Count > 0)
                 {
                     //添加成功
-                    var roleResult = client.Query<T_Role>(null, "(Guid = @0)", new object[] { queryResult.ResponseItem[0].T_Role_Guid });
+                    var t_user = ClassCopyHelper.AutoCopy<T_User, T1_User>(queryResult.ResponseItem[0]);
+                    var roleResult = client.Query<T_Role>(null, "(Guid = @0)", new object[] { t_user.T_Role_Guid });
                     if (roleResult.IsOK && roleResult.ResponseItem.Count > 0)
                     {
-                        return ClassCopyHelper.AutoCopy<T_Role, T1_Role>(roleResult.ResponseItem[0]);
+                        return new Tuple<T1_Role, T1_User>(ClassCopyHelper.AutoCopy<T_Role, T1_Role>(roleResult.ResponseItem[0]), t_user);
                     }
                     else
                     {

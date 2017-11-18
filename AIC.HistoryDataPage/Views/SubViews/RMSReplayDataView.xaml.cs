@@ -68,6 +68,10 @@ namespace AIC.HistoryDataPage.Views
             try
             {
                 m_chart.BeginUpdate();
+
+                var axisYnone = m_chart.ViewXY.YAxes.Where(o => o.Units.Text == "none").SingleOrDefault();
+                m_chart.ViewXY.YAxes.Remove(axisYnone);
+
                 #region
                 if (token is BaseDivfreChannelToken)
                 {
@@ -106,7 +110,7 @@ namespace AIC.HistoryDataPage.Views
                         {
                             CreateAnnotation();
                         }
-                    }
+                    }               
 
                     PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
                     series.MouseInteraction = false;
@@ -199,6 +203,7 @@ namespace AIC.HistoryDataPage.Views
                                 CreateAnnotation();
                             }
                         }
+                      
                         PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
                         series.MouseInteraction = false;
                         series.Title.Text = anToken.DisplayName + "(" + unit + ")";
@@ -269,13 +274,14 @@ namespace AIC.HistoryDataPage.Views
                         axisY.SetRange(0, 10);
                         axisY.SegmentIndex = 0;
                         m_chart.ViewXY.YAxes.Add(axisY);
-                        m_chart.ViewXY.AxisLayout.Segments[0].Height = 2;
+                        m_chart.ViewXY.AxisLayout.Segments[0].Height = 1;
 
                         if (m_chart.ViewXY.Annotations.Count == 0)
                         {
                             CreateAnnotation();
                         }
                     }
+                  
                     Random rand = new Random();
                     PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
                     series.MouseInteraction = false;
@@ -365,7 +371,14 @@ namespace AIC.HistoryDataPage.Views
                     series.Clear();
                     m_chart.ViewXY.PointLineSeries.Remove(series);
                     string unit = string.Empty;
-                    if (token is BaseWaveChannelToken)
+                    if (token is BaseDivfreChannelToken)
+                    {
+                        if (((BaseDivfreChannelToken)token).DataContracts != null && ((BaseDivfreChannelToken)token).DataContracts.Count > 0)
+                        {
+                            unit = ((BaseDivfreChannelToken)token).DataContracts[0].Unit;
+                        }
+                    }
+                    else if (token is BaseWaveChannelToken)
                     {
                         if (((BaseWaveChannelToken)token).DataContracts != null && ((BaseWaveChannelToken)token).DataContracts.Count > 0)
                         {
@@ -395,7 +408,7 @@ namespace AIC.HistoryDataPage.Views
                             if (axisY != null)
                             {
                                 int segmentIndex = axisY.SegmentIndex;
-                                m_chart.ViewXY.YAxes.Remove(axisY);
+                                m_chart.ViewXY.YAxes.Remove(axisY);  
                                 if (m_chart.ViewXY.YAxes.Where(o => o.SegmentIndex == segmentIndex).Count() == 0)
                                 {
                                     m_chart.ViewXY.AxisLayout.Segments[segmentIndex].Height = 0;
@@ -410,6 +423,16 @@ namespace AIC.HistoryDataPage.Views
                                     m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
                                     cursorValueDisplay.TargetAxisValues.Y = dY;
                                 }
+                                else
+                                {
+                                    AxisY axisYnone = new AxisY(m_chart.ViewXY);
+                                    axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
+                                    axisYnone.AxisThickness = 2;
+                                    axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                                    axisYnone.Units.Text = "none";
+                                    m_chart.ViewXY.YAxes.Add(axisYnone);
+                                }
+                                
                             }
                         }
                     }
@@ -532,6 +555,13 @@ namespace AIC.HistoryDataPage.Views
             //   m_chart.ViewXY.Margins = new Thickness(3);
 
             m_chart.ViewXY.YAxes.Clear();
+            AxisY axisYnone = new AxisY(m_chart.ViewXY);
+            axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
+            axisYnone.AxisThickness = 2;
+            axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+            axisYnone.Units.Text = "none";
+            m_chart.ViewXY.YAxes.Add(axisYnone);
+
             m_chart.ViewXY.AxisLayout.Segments.Clear();
             m_chart.ViewXY.AxisLayout.Segments.Add(new YAxisSegment(m_chart.ViewXY.AxisLayout) { Height = 0 });
             m_chart.ViewXY.AxisLayout.Segments.Add(new YAxisSegment(m_chart.ViewXY.AxisLayout) { Height = 0 });
@@ -577,10 +607,9 @@ namespace AIC.HistoryDataPage.Views
 
         private void LegendBox_SeriesTitleMouseMoveOverOn(Object sender, Arction.Wpf.Charting.Views.ViewXY.SeriesTitleMouseMovedEventArgs e)
         {
-            //htzk123,可能有问题
-            if (sender is PointLineSeries)
+            if (e.Series is PointLineSeries)
             {
-                viewModel.AllCount = ((PointLineSeries)sender).PointCount;
+                viewModel.AllCount = ((PointLineSeries)e.Series).PointCount;
             }
         }
         private void CreateAnnotation()

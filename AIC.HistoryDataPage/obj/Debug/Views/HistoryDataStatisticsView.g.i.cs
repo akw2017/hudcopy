@@ -19,6 +19,7 @@ using BolapanControl.ItemsFilter.Initializer;
 using BolapanControl.ItemsFilter.Model;
 using BolapanControl.ItemsFilter.View;
 using BolapanControl.ItemsFilter.ViewModel;
+using MahApps.Metro.Controls;
 using Prism.Interactivity;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

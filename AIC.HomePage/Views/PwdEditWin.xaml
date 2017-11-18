@@ -1,0 +1,66 @@
+﻿<Controls:MetroWindow x:Class="AIC.HomePage.Views.PwdEditWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.HomePage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:c="clr-namespace:AIC.Core.Controls;assembly=AIC.Core"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"      
+        Title="修改密码" Height="265" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/GreyStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>       
+    </Window.Resources>
+    <Grid Background ="{DynamicResource DeepLinearAccentColorBrush}">
+        <Grid Margin="20" Height="175" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="请输入当前密码" />
+            <TextBlock x:Name="errold" Grid.Row="0" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Right" Text="!" Visibility="Collapsed"/>
+            <PasswordBox Grid.Row="0" Grid.Column="1" x:Name="txtPwdold" VerticalContentAlignment="Center" PasswordChanged="txtPwdold_PasswordChanged"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="请输入新密码" />
+
+            <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="txtPwdnew1" VerticalContentAlignment="Center" />
+            <Label Grid.Row="2" Grid.Column="0" Content="请再次输入新密码"/>
+            <TextBlock x:Name="errnew" Grid.Row="2" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Right" Text="!" Visibility="Collapsed"/>
+            <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="txtPwdnew2" VerticalContentAlignment="Center" PasswordChanged="txtPwdnew2_PasswordChanged"/>
+
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>           
+            <Button Grid.Row="4" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>           
+            <Button Grid.Row="4" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Controls:ProgressRing x:Name="waitring" Grid.RowSpan="5" Grid.ColumnSpan="2"
+                                       Width="40"
+                                       Height="40" Visibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

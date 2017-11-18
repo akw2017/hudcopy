@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AIC.UserPage.Views"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:convert="clr-namespace:AIC.UserPage.Converters"
+        xmlns:c="clr-namespace:AIC.Core.Controls;assembly=AIC.Core"
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
@@ -48,9 +49,10 @@
                 Text = "{Binding T_User.Alias_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
             </TextBox>
             <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource password}"/>
-            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtPassword" VerticalContentAlignment="Center"
-                Text = "{Binding T_User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
-            </TextBox>
+            <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="txtPassword" VerticalContentAlignment="Center" 
+                c:PasswordBoxHelper.Attach="True"
+                c:PasswordBoxHelper.Password="{Binding T_User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </PasswordBox>
             <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource role}"/>
             <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cboRole" ItemsSource="{Binding T_Role}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
                 <ComboBox.SelectedItem>

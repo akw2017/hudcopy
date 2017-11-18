@@ -45,6 +45,7 @@
     <s:String x:Key="menuLock">Lock</s:String>
     <s:String x:Key="menuUnLock">UnLock</s:String>
     <s:String x:Key="menuExit">Exit</s:String>
+    <s:String x:Key="menuEditPwd">EditPassword</s:String>
 
     <s:String x:Key="menuTheme">Theme</s:String>
     <s:String x:Key="menuStyle">Style</s:String>
@@ -156,10 +157,12 @@
     <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
     <s:String x:Key="menuOnlineDataStatistics">OnlineDataStatistics</s:String>
+    <s:String x:Key="menuOnlineDataTrend">OnlineDataTrend</s:String>
     <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
     <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
     <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>
-
+    <s:String x:Key="menuSystemEventList">HistoryEventList</s:String>
+    
     <s:String x:Key="deviceName">DeviceName</s:String>
     <s:String x:Key="groupByDevice">GroupByDevice</s:String>
 

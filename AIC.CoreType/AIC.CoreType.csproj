@@ -109,6 +109,8 @@
     <Compile Include="AllOrAlarmed.cs" />
     <Compile Include="AlarmGradeFilter.cs" />
     <Compile Include="ComputeHost.cs" />
+    <Compile Include="CustomSystem\CustomSystemDegree.cs" />
+    <Compile Include="CustomSystem\CustomSystemType.cs" />
     <Compile Include="DiagnoseState.cs" />
     <Compile Include="DiagnosisMethod.cs" />
     <Compile Include="FilterType.cs" />
@@ -116,6 +118,8 @@
     <Compile Include="Integration.cs" />
     <Compile Include="MotorType.cs" />
     <Compile Include="NaturalFreMode.cs" />
+    <Compile Include="Unit\UnitType.cs" />
+    <Compile Include="UserManager\OperateType.cs" />
     <Compile Include="ThresholdMode.cs" />
     <Compile Include="RunningState.cs" />
     <Compile Include="SampleType.cs" />
@@ -165,6 +169,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

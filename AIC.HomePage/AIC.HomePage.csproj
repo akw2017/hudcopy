@@ -203,13 +203,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ImageButton.cs" />
-    <Compile Include="Controls\PasswordBoxHelper.cs" />
     <Compile Include="Controls\TextButton.cs" />
     <Compile Include="Converters\IntBoolConverter.cs" />
     <Compile Include="HomePageModule.cs" />
     <Compile Include="Menus\AccentColorMenuData.cs" />
+    <Compile Include="Models\PwdEditManage.cs" />
     <Compile Include="Models\LockManage.cs" />
     <Compile Include="Models\LoginManage.cs" />
+    <Compile Include="Models\PlaySound.cs" />
     <Compile Include="Models\VibrationHistory.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainRegionViewModel.cs" />
@@ -218,6 +219,9 @@
     <Compile Include="ViewModels\ShowAlarmWinViewModel.cs" />
     <Compile Include="Views\AlarmAckListWin.xaml.cs">
       <DependentUpon>AlarmAckListWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PwdEditWin.xaml.cs">
+      <DependentUpon>PwdEditWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestWin.xaml.cs">
       <DependentUpon>TestWin.xaml</DependentUpon>
@@ -294,6 +298,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AlarmAckListWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PwdEditWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -378,6 +386,10 @@
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
       <Name>AIC.HistoryDataPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.HistoryEventPage\AIC.HistoryEventPage.csproj">
+      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
+      <Name>AIC.HistoryEventPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.LocalResource\AIC.LocalConfiguration.csproj">
       <Project>{9d1d2644-a75b-437c-981b-dfd643cd1180}</Project>

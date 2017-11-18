@@ -5,8 +5,10 @@ using AIC.Core.Helpers;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.Core.UserManageModels;
+using AIC.CoreType;
 using AIC.DatabaseService.Models;
 using AIC.M9600.Common.MasterDB.Generated;
+using AIC.Resources.Views;
 using AIC.ServiceInterface;
 using Prism.Events;
 using System;
@@ -35,6 +37,7 @@ namespace AIC.DatabaseService
         public LoginInfo LoginInfo { get; set; }  
         public MenuManageList MenuManageList { get; set; }
         public ObservableCollection<ExceptionModel> ExceptionModel { get; private set; }
+        public ObservableCollection<CustomSystemException> CustomSystemException { get; private set; }
         public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator)
         {
             _localConfiguration = localConfiguration;
@@ -48,8 +51,10 @@ namespace AIC.DatabaseService
 
             MenuManageList = new MenuManageList();
             ExceptionModel = new ObservableCollection<ExceptionModel>();
+            CustomSystemException = new ObservableCollection<Core.Models.CustomSystemException>();
 
-            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException);       
+            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException);
+           
         }
 
         public void Initialize()
@@ -231,6 +236,7 @@ namespace AIC.DatabaseService
         }
         #endregion
 
+        #region 操作记录
         public void AddOperateRecord(OperateType operateType)
         {         
             T1_OperateRecord LM_OperateRecord = new T1_OperateRecord()
@@ -249,23 +255,25 @@ namespace AIC.DatabaseService
             List<T_OperateRecord> list = new List<T_OperateRecord>();
             if (name.Trim() == "" && operateType == OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "(OperateTime >= @0 or OperateTime <= @1)", new object[] { start, end, });
+                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "(OperateTime >= @0 and OperateTime <= @1)", new object[] { start, end, });
              }
             else if (name.Trim() != "" && operateType == OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 or OperateTime <= @1) and T_User_Name like '%'+ @2+ '%')", new object[] { start, end, name });
+                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%')", new object[] { start, end, name });
             }
             else if (name.Trim() == "" && operateType != OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 or OperateTime <= @1) and OperateType = @2)", new object[] { start, end, ((short)operateType) });
+                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and OperateType = @2)", new object[] { start, end, ((short)operateType) });
             }
             else
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 or OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and OperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
+                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and OperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
             }
             return list.Select(p => ClassCopyHelper.AutoCopy<T_OperateRecord, T1_OperateRecord>(p)).ToList();
         }
-               
+        #endregion
+
+        #region 异常
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private void ManageException(Tuple<string, Exception> tuple)
         {
@@ -326,5 +334,8 @@ namespace AIC.DatabaseService
             }
 
         }
+        #endregion
+
+
     }
 }

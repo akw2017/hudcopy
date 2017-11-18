@@ -94,7 +94,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if(itemPl.AlarmGrade == AlarmGrade.UnConnect && IsUnConnectSignal == true)
+                    if(itemPl.AlarmGrade == AlarmGrade.DisConnect && IsUnConnectSignal == true)
                     {
                         return true;
                     }
@@ -493,6 +493,24 @@ namespace AIC.OnLineDataPage.ViewModels
                 OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
                 SelectedOrganization = para as OrganizationTreeItemViewModel;
                _view.Refresh();
+
+                if (SelectedOrganization.Children != null)
+                {
+                    var childs = SelectedOrganization.Children.OfType<ItemTreeItemViewModel>().Where(p => p.T_Item != null && p.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo && p.BaseAlarmSignal != null);
+                    var abnormal = childs.Where(p => p.Alarm != AlarmGrade.Invalid && p.Alarm != AlarmGrade.HighNormal && p.Alarm != AlarmGrade.LowNormal && p.Alarm != AlarmGrade.DisConnect).OrderByDescending(p => (int)p.Alarm & 0xff).ThenByDescending(p => p.BaseAlarmSignal.Result).FirstOrDefault();
+                    if (abnormal != null && abnormal.BaseAlarmSignal is BaseWaveSignal)
+                    {
+                        var sg = abnormal.BaseAlarmSignal as BaseWaveSignal;
+                        DiagnosticInfoClass.GetDiagnosticInfo(sg);
+                        DiagnosticInfo = sg.OrganizationDeviceName + "-诊断信息:" + sg.DiagnosticInfo;
+                        DiagnosticAdvice = sg.DiagnosticAdvice;
+                    }
+                    else
+                    {
+                        DiagnosticInfo = null;
+                        DiagnosticAdvice = null;
+                    }
+                }
             }
             else if (para is OrganizationTreeItemViewModel)
             {
@@ -575,7 +593,7 @@ namespace AIC.OnLineDataPage.ViewModels
                                 DangerCount++; break;
                             case AlarmGrade.Abnormal:
                                 AbnormalCount++; break;
-                            case AlarmGrade.UnConnect:
+                            case AlarmGrade.DisConnect:
                                 UnConnectCount++; break;
                         }
                     }                   

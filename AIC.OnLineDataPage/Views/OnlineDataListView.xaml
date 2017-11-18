@@ -599,7 +599,7 @@
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowDanger">
                             <Setter Property="Foreground" Value="Red" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="UnConnect">
+                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="DisConnect">
                             <Setter Property="Foreground" Value="DarkRed"/>
                         </DataTrigger>
                     </Style.Triggers>

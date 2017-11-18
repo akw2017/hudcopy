@@ -1,5 +1,6 @@
 ﻿using AIC.Core.LMModels;
 using AIC.Core.UserManageModels;
+using AIC.CoreType;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,7 +19,7 @@ namespace AIC.UserPage.Converters
         {
             if (value is short)
             {
-                if ((short)value == (short)OperateType.Login)
+                if ((short)value == 0)
                 {
                     return "登陆";
                 }

@@ -37,6 +37,8 @@ namespace AIC.HomePage.Views
         {
             if (LoginInfo.Error == "" && LoginInfo.ServerInfo.Error == "" )
             {
+                waitring.Visibility = Visibility.Visible;
+                btnClose.IsEnabled = false;
                 Parachanged(LoginInfo);
             }
             else
@@ -48,6 +50,12 @@ namespace AIC.HomePage.Views
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {           
             this.Close();         
+        }
+
+        public void WaitStop()
+        {
+            waitring.Visibility = Visibility.Collapsed;
+            btnClose.IsEnabled = true;
         }
     }
 }

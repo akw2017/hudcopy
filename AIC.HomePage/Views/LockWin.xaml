@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIC.HomePage.Views"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:c="clr-namespace:AIC.HomePage.Controls"
+        xmlns:c="clr-namespace:AIC.Core.Controls;assembly=AIC.Core"
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
@@ -58,7 +58,9 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-
+            <Controls:ProgressRing x:Name="waitring" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                                       Width="40"
+                                       Height="40" Visibility="Hidden"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

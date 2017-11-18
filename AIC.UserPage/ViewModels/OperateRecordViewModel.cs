@@ -23,6 +23,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Wpf.PageNavigationControl;
 using AIC.Core.LMModels;
+using AIC.CoreType;
 
 namespace AIC.UserPage.ViewModels
 {
@@ -52,6 +53,7 @@ namespace AIC.UserPage.ViewModels
 
         //private readonly ICollectionView _view;
         //public ICollectionView T_OperateRecordView { get { return _view; } }
+
 
         private string searchName = "";
         public string SearchName
@@ -159,17 +161,17 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private int searchOperateType = -1;
-        public int SearchOperateType
+        private OperateType operateType;
+        public OperateType OperateType
         {
             get
             {
-                return searchOperateType;
+                return operateType;
             }
             set
             {
-                searchOperateType = value;
-                OnPropertyChanged("SearchOperateType");
+                operateType = value;
+                OnPropertyChanged("OperateType");
             }
         }
 
@@ -237,7 +239,8 @@ namespace AIC.UserPage.ViewModels
                 {
                     SearchStartTime = SearchEndTime.AddDays(-1);
                 }
-                T_OperateRecord = await _loginUserService.GetOperateRecord(SearchStartTime, SearchEndTime, SearchName, (OperateType)SearchOperateType);
+
+                T_OperateRecord = await _loginUserService.GetOperateRecord(SearchStartTime, SearchEndTime, SearchName, OperateType);
                 TotalItems = T_OperateRecord.Count;
                 T_OperateRecordLast.Clear();
                 T_OperateRecordLast = T_OperateRecord.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();

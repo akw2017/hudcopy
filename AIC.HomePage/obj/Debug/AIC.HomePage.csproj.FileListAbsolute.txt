@@ -603,7 +603,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MainRegionView.g.c
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage_MarkupCompile.lref
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\DefaultSettingWin.baml
@@ -650,5 +649,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.VirtualizingWrapPane
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TestWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TestWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.HistoryEventPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.HistoryEventPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\PwdEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\PwdEditWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMatlabDLL.dll

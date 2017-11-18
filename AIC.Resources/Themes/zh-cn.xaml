@@ -45,6 +45,7 @@
     <s:String x:Key="menuLock">锁定</s:String>
     <s:String x:Key="menuUnLock">解锁</s:String>
     <s:String x:Key="menuExit">退出</s:String>
+    <s:String x:Key="menuEditPwd">修改密码</s:String>
 
     <s:String x:Key="menuTheme">主题</s:String>
     <s:String x:Key="menuStyle">样式</s:String>
@@ -156,10 +157,13 @@
     <s:String x:Key="menuOnlineDataOverview">在线数据总貌</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">在线数据诊断</s:String>
     <s:String x:Key="menuOnlineDataStatistics">在线数据统计</s:String>
+    <s:String x:Key="menuOnlineDataTrend">在线数据趋势</s:String>
     <s:String x:Key="menuHistoryDataList">历史数据列表</s:String>
     <s:String x:Key="menuHistoryDataDiagram">历史数据图表</s:String>
     <s:String x:Key="menuHistoryDataStatistics">历史数据统计</s:String>
-    <s:String x:Key="deviceName">设备名称</s:String>
+    <s:String x:Key="menuSystemEventList">系统事件列表</s:String>
+    
+    <s:String x:Key="deviceName">设备名称</s:String>    
     <s:String x:Key="groupByDevice">按设备分组</s:String>
 
     <s:String x:Key="addattachment">添加附件</s:String>

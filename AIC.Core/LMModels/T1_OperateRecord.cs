@@ -7,15 +7,6 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.LMModels
 {
-    public enum OperateType
-    {
-        None = -1,
-        Login = 0,
-        UserManage = 1,
-        RoleManage = 2,
-        MenuManage = 3,
-        OrganizationManage = 4,
-    }
     public class T1_OperateRecord : T_OperateRecord, Iid
     {
         //public int id { get; set; }//自增ID
