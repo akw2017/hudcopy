@@ -747,7 +747,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
                 trackTask = AMSTrackChanged;
 
-                amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(100)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
+                amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
 
                 historicalDataCollection.Add(amsReplayVM);
                 historicalDataCollection.Add(alarmPointTrendVM);
@@ -922,7 +922,6 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion
 
-
         private void SelectedTreeChanged(object para)
         {
             selectedTreeItem = para as OrganizationTreeItemViewModel;
@@ -938,7 +937,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
-
         private void DoubleClickAddData(object para)
         {
             if (selectedTreeItem is ItemTreeItemViewModel)
@@ -973,7 +971,7 @@ namespace AIC.HistoryDataPage.ViewModels
             string conditionAlarm;
             ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
 
-            string selectedip = _cardProcess.GetOrganizationServer(selectedTreeItem);
+            string selectedip = selectedTreeItem.ServerIP;
 
             #region 分频            
             var divfre = selectedTreeItem as DivFreTreeItemViewModel;
@@ -1126,7 +1124,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
-                        MessageBox.Show("没有数据，请重新选择条件","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
+                            MessageBox.Show("没有数据，请重新选择条件","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
 #else
                             Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
@@ -1157,7 +1155,6 @@ namespace AIC.HistoryDataPage.ViewModels
             }
             #endregion
         }
-
         private async void RefreshData(object para)
         {
             string conditionWave;
@@ -1268,7 +1265,6 @@ namespace AIC.HistoryDataPage.ViewModels
             }
             addedChannels.Clear();
         }
-
         private void RemoveData(object para)
         {
             ChannelToken token = para as ChannelToken;

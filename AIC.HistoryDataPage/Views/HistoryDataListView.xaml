@@ -198,7 +198,7 @@
             </Style>         
         </ResourceDictionary>
     </Control.Resources>
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -377,7 +377,7 @@
 
         </TreeView>
 
-        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <wrap:WrapBreakPanel Grid.Row="0" Grid.Column="2" Margin="5">
             <TextBlock Text="选择项:" VerticalAlignment="Center"/>
@@ -454,7 +454,7 @@
                             <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->                           
                             <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>                            
                             <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy/MM/dd HH:mm:ss}" IsReadOnly="True">
+                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True">
                                 <bsFilter:ColumnFilter.Initializers>
                                     <bsFilter:FilterInitializersManager>
                                         <bsFilter:DateTimeRangeFilterInitializer />
@@ -540,7 +540,7 @@
                             <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                             <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy/MM/dd HH:mm:ss}" IsReadOnly="True">
+                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True">
                                 <bsFilter:ColumnFilter.Initializers>
                                     <bsFilter:FilterInitializersManager>
                                         <bsFilter:DateTimeRangeFilterInitializer />
@@ -626,7 +626,7 @@
                             <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                             <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>                          
-                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy/MM/dd HH:mm:ss}" IsReadOnly="True">
+                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True">
                                 <bsFilter:ColumnFilter.Initializers>
                                     <bsFilter:FilterInitializersManager>
                                         <bsFilter:DateTimeRangeFilterInitializer />

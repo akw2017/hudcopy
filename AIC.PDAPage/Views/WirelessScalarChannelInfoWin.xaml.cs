@@ -40,6 +40,7 @@ namespace AIC.PDAPage.Views
             {
                 if (Channel.AlarmStrategy.Absolute != null)
                 {
+                    Channel.AlarmStrategy.Absolute.IsUploadWaveShow = false;
                     if (Channel.AlarmStrategy.Absolute.Category != null)
                     {
                         Channel.AlarmStrategy.Absolute.Category.ForEach(p => p.PropertyChanged += Channel_PropertyChanged);

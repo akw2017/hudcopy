@@ -913,5 +913,3 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMatlabDLL.dll

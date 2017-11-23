@@ -27,8 +27,6 @@ namespace AIC.HistoryDataPage.Models
         public double TeethNumber { get; set; }
         public TriggerType Trigger { get; set; }
 
-        //有效值
-        public double AMS { get; set; }
         public double RMSValue { get; set; }
         public double PeakValue { get; set; }
         public double PeakPeakValue { get; set; }

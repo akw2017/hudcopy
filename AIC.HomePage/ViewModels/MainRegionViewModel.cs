@@ -897,7 +897,7 @@ namespace AIC.HomePage.ViewModels
             }
             else if (viewName == "MenuOnlineDataTrend")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataTrendView>();
+                viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
             }
             else if (viewName == "MenuRefreshData")
             {

@@ -1,5 +1,6 @@
 ﻿using AIC.Core.Filters;
 using AIC.CoreType;
+using AIC.HistoryDataPage.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

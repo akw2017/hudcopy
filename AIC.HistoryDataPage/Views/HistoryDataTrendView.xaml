@@ -1,0 +1,418 @@
+﻿<UserControl x:Class="AIC.OnLineDataPage.Views.HistoryDataTrendView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:control="clr-namespace:AIC.Core.OrganizationModels;assembly=AIC.Core"  
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             xmlns:page="clr-namespace:Wpf.PageNavigationControl;assembly=Wpf.PageNavigationControl"
+             xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"
+             xmlns:bsFilter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"      
+             xmlns:signal="clr-namespace:AIC.Core.SignalModels;assembly=AIC.Core"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+             xmlns:view="clr-namespace:AIC.OnLineDataPage.Views"   
+             xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
+            <core:TypeOfConverter x:Key="typeOfConverter"/>
+            <core:IsDivfreConverter x:Key="isDivfreConverter"/>
+            <core:VisibilityToBoolConverter x:Key="visibilityToBoolConverter" />
+            <core:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+            <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+            <core:IndexConverter x:Key="indexConverter"/>
+            <Style x:Key="expandToggleStyle" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="{DynamicResource DarkAccentColorBrush}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0:0:0.1" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="normal" d:IsOptimized="True" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="normal" d:IsOptimized="True" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="0.3" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="normal" d:IsOptimized="True" />
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.3" To="180" Storyboard.TargetProperty="Angle" Storyboard.TargetName="symbolRotation" d:IsOptimized="True" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.3" To="90" Storyboard.TargetProperty="Angle" Storyboard.TargetName="symbolRotation" d:IsOptimized="True" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Indeterminate" />
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused" />
+                                        <VisualState x:Name="Unfocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border Grid.Row="2" Grid.ColumnSpan="3"  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                                <Path x:Name="normal" HorizontalAlignment="Center" Width="10" Stretch="Fill" Opacity="0.6" Data="M1,6 C1,6 1,11 1,11 C1,11 7.5,6.3583374 7.5,6.3583374 C7.5,6.3583374 14,11 14,11 C14,11 14,6 14,6 C14,6 7.5,1.3583374 7.5,1.3583374 C7.5,1.3583374 1,6 1,6 z" Fill="{TemplateBinding Foreground}" UseLayoutRounding="False" VerticalAlignment="Center" Height="7" RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <!--<CompositeTransform Rotation="180"/>-->
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform x:Name="symbolRotation" Angle="90" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="enumComboItemTemplate">
+                <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Name="grdWorkbench">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TreeView Grid.Row="0" Grid.RowSpan="4" Name="treeview"                        
+                        ItemsSource="{Binding OrganizationTreeItems}" 
+                        Style="{DynamicResource VirtualisedMetroTreeView}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type control:OrganizationTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
+                        <Grid Margin="2,0,2,0">
+                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                        </Grid>
+                    </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
+                            <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
+                            <Setter TargetName="IconPath" Property="Width" Value="24"/>
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                        </DataTrigger>-->
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
+                        <Grid Margin="2,0,2,0">
+                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto" />
+                        </Grid>
+                    </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                        </DataTrigger>-->
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type control:ItemTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
+                        <Grid Margin="2,0,2,0">
+                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                        </Grid>
+                        <!--<Button x:Name="AddBtn" Command="{StaticResource AddCommandReference}"  CommandParameter="{Binding}" VerticalAlignment="Center" Height="24" Width="24" BorderThickness="0">
+                            <Path Stretch="Fill" Width="18" Height="18" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "/>
+                        </Button>-->
+                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
+                        <Path x:Name="UnBindIcon" Visibility="Collapsed" Width="16" Height="16" Stretch="Fill" Fill="Gray" Data="F1 M 22.1698,36.4215L 25.3366,36.4215L 25.3367,31.6711C 25.3367,24.6745 31.0085,19.0027 38.0051,19.0027C 45.0017,19.0027 50.6735,24.6745 50.6735,31.6711L 45.9228,31.6711C 45.9228,27.2982 42.3779,23.7533 38.0051,23.7533C 33.6322,23.7533 30.0873,27.2982 30.0873,31.6711L 30.0873,36.4216L 53.8408,36.4215L 53.8409,57.008L 22.1698,57.008L 22.1698,36.4215 Z "/>
+                    </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPaired}" Value="false">
+                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="UnBindIcon" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                        </DataTrigger>-->
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type control:DivFreTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 16,36L 9.99999,36L 9.99999,30L 14,30L 32,16L 32,12L 38,12L 38,18L 34,18L 16,32L 16,36 Z M 34,14L 34,16L 36,16L 36,14L 34,14 Z M 12,32L 12,34L 14,34L 14,32L 12,32 Z " />
+                        <Grid Margin="2,0,2,0">
+                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                        </Grid>
+                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
+                    </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
+                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                        </DataTrigger>-->
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=OneTime}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=OneTime}" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DoubleClickAddDataCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+        </TreeView>
+
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+
+        <DataGrid x:Name="gridview" Grid.Row="0" Grid.Column="2" GridLinesVisibility="None" Margin="0"
+                                 ItemsSource="{Binding AddedSignals}" SelectionMode="Single"          
+                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="序号" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Margin="5,0" Style="{x:Null}" VerticalAlignment="Center" IsChecked="True">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.CheckedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.UnCheckedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Rectangle Fill="{Binding SolidColorBrush}" HorizontalAlignment="Center" Margin="5,0" Height="16" Width="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding}" Margin="5,0">
+                                    <TextBlock.DataContext>
+                                        <MultiBinding Converter="{StaticResource indexConverter}">
+                                            <Binding/>
+                                            <Binding ElementName="gridview" Path="ItemsSource"/>
+                                        </MultiBinding>
+                                    </TextBlock.DataContext>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="测点名称"  Binding="{Binding DisplayName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="描述"  Binding="{Binding BaseAlarmSignal.FullName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="下限"  Binding="{Binding LowerLimit}"/>
+                <DataGridTextColumn Header="上限"  Binding="{Binding UpperLimit}"/>
+                <!--<DataGridComboBoxColumn Header="单位"  SelectedItemBinding="{Binding Unit}" ItemsSource="{Binding DataContext.UnitCategory,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>-->
+                <DataGridComboBoxColumn Header="单位"> 
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.UnitCategory,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" />
+                            <Setter Property="SelectedValue" Value="{Binding Unit}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>                        
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.UnitCategory,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" />
+                            <Setter Property="SelectedValue" Value="{Binding Unit}" />                            
+                        </Style>                        
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                
+                <DataGridTextColumn Header="选择值"  Binding="{Binding SelectedResult, StringFormat=F3}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="选择时间"  Binding="{Binding SelectedTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="当前值"  Binding="{Binding BaseAlarmSignal.Result, StringFormat=F3}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="删除" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"  FontWeight="Bold" Width="20" Height="20">
+                                <Button.Content>
+                                    <Image Source="/AIC.Resources;component/Images/delete3.png" Stretch="Fill"/>
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource MetroDataGridCell}"
+                       TargetType="{x:Type DataGridCell}">
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                </Style>
+            </DataGrid.Style>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedDataGridChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=gridview}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+
+        <GridSplitter Grid.Row="1" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+
+        <Grid Name="gridChart" Grid.Row="2" Grid.Column ="2" Background="Black"/>
+        <CheckBox x:Name="chkZoom" Content="锁定" FontSize="12" Style="{x:Null}" IsChecked="True" Grid.Row="2" Grid.Column ="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Row="3" Grid.Column ="2" Orientation="Horizontal">
+            <page:TrendNavigation  Name="pager" TimeSizeList="{Binding TimeSizeList}" TimeSize="{Binding TimeSize, Mode=TwoWay}" CurrentTime="{Binding CurrentTime,Mode=OneWayToSource}" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CurrentTimeChanged">
+                        <command:ExInvokeCommandAction Command="{Binding CurrentTimeChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </page:TrendNavigation>        
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column ="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBox Text="{Binding ChartFileName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200"/>
+            <Button Command="{Binding SaveChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/filesave.png"  />
+                        <TextBlock Text="{DynamicResource save}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <ComboBox Width="200" ItemsSource="{Binding ChartFileCategory}" SelectedItem="{Binding ChartFile}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False" Margin="4,0,0,0"/>
+            <Button Command="{Binding LoadChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
+                        <TextBlock Text="{DynamicResource load}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

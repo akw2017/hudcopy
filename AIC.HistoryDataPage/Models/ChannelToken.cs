@@ -10,12 +10,10 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AIC.HistoryDataPage.ViewModels
+namespace AIC.HistoryDataPage.Models
 {
     public class ChannelToken
     {
-        //public IChannel Channel { get; set; }
-        //public T1_Item T_Item { get; set; }
         public string DisplayName { get; set; }
         public string IP { get; set; }
         public Guid Guid { get; set; }
@@ -64,11 +62,6 @@ namespace AIC.HistoryDataPage.ViewModels
         }
     }
 
-    public class WirelessVibrationWaveChannelToken : BaseWaveChannelToken
-    {       
-        public new List<D_WirelessVibrationSlot_Waveform> DataContracts { get; set; }      
-    }
-
     public class BaseDivfreChannelToken : BaseWaveChannelToken
     {      
         public new List<IBaseDivfreSlot> DataContracts { get; set; }  
@@ -77,17 +70,6 @@ namespace AIC.HistoryDataPage.ViewModels
     public class BaseAlarmChannelToken : ChannelToken
     {
         public List<IBaseAlarmSlot> DataContracts { get; set; }
-    }
-
-
-    public class WirelessScalarChannelToken : BaseAlarmChannelToken
-    {
-        //public List<D_WirelessScalarSlot> DataContracts { get; set; }
-    }
-
-    public class WirelessVibrationChannelToken : BaseDivfreChannelToken
-    {
-        //public List<D_WirelessVibrationSlot>  DataContracts { get; set; }
     }
 
     public class DivFreChannelToken : ChannelToken

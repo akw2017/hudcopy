@@ -110,7 +110,7 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -288,7 +288,7 @@
 
         </TreeView>
 
-        <GridSplitter Grid.Row="0" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
       
         <Grid Grid.Row="0" Grid.Column="2">
             <dd:DiagramControl DataContext="{Binding DiagramViewModel}" ItemTemplateSelector="{StaticResource valueTypeTemplateSelector}"  Margin="3" Background="Transparent" IsEnabled="{Binding IsChecked,ElementName=chk,Converter={StaticResource negateConverter}}"/>

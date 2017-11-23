@@ -102,7 +102,7 @@
     <!--<UserControl.InputBindings>
         <KeyBinding Gesture="Control+Alt+S" Command="{Binding ShowDebugCommand}" />
     </UserControl.InputBindings>-->
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -533,7 +533,7 @@
             </Grid>
         </Grid>
 
-        <GridSplitter Grid.Column="1" Grid.Row="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr" Grid.Column="1" Grid.Row="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <Grid Grid.Column="2" Grid.Row="1">
             <TreeView x:Name="serverview" 

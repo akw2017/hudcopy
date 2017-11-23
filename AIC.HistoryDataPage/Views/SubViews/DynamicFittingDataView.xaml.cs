@@ -1,5 +1,6 @@
 ﻿using AIC.Core.Events;
 using AIC.Core.SignalModels;
+using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using AIC.ServiceInterface;
 using Arction.Wpf.Charting;

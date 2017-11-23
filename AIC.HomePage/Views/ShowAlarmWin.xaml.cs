@@ -256,7 +256,7 @@ namespace AIC.HomePage.Views
                     //switch (contract.Unit)
                     //{
                     //    case 0:
-                    //        unit = "m/s2";
+                    //        unit = "m/s^2";
                     //        break;
                     //    case 1:
                     //        unit = "mm/s";
@@ -269,7 +269,7 @@ namespace AIC.HomePage.Views
                     //        break;
                     //}
                     //sb.AppendLine("有效值:" + Math.Round(contract.Value, 3) + "(" + unit + ")");
-                    //sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy/MM/dd HH:mm:ss"));
+                    //sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                     //string alarmTypeStr = JudgeAlarmType(contract.AlarmType);
                     //if (!string.IsNullOrEmpty(alarmTypeStr))
                     //{

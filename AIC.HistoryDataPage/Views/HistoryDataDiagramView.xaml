@@ -13,7 +13,7 @@
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
              xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
-             xmlns:viewModels="clr-namespace:AIC.HistoryDataPage.ViewModels"
+             xmlns:models="clr-namespace:AIC.HistoryDataPage.Models"
              xmlns:wrap="clr-namespace:Wpf.WrapBreakPanel;assembly=Wpf.WrapBreakPanel"
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d"
@@ -204,7 +204,7 @@
             </Style>             
         </ResourceDictionary>
     </Control.Resources>
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -383,7 +383,7 @@
 
         </TreeView>
 
-        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <wrap:WrapBreakPanel Grid.Row="0" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5">
             <TextBlock Text="选择项:" VerticalAlignment="Center"/>
@@ -552,7 +552,7 @@
 
             <ListBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Background="{x:Null}" ItemsSource="{Binding AddedChannels}" SelectedItem="{Binding SelectedChannel}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="{x:Null}">
                 <ListBox.Resources>
-                    <DataTemplate DataType="{x:Type viewModels:ChannelToken}">
+                    <DataTemplate DataType="{x:Type models:ChannelToken}">
                         <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                             <Grid Width="Auto" MinHeight="80" Background="{DynamicResource DeepLinearAccentColorBrush}">
                                 <TextBlock Text="{Binding DisplayName}" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -575,13 +575,5 @@
             </ListBox>
         </Grid>
 
-        <page:PageNavigation Grid.Row="2" Grid.Column="2" Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize,Mode=TwoWay}" 
-            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=OneWayToSource}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="CurrentPageChanged">
-                    <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </page:PageNavigation>
     </Grid>
 </UserControl>

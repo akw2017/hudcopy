@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lcu="http://www.arction.com/schemas/" 
              xmlns:views="clr-namespace:AIC.HistoryDataPage.Views"
-             xmlns:viewModels="clr-namespace:AIC.HistoryDataPage.ViewModels"
+             xmlns:models="clr-namespace:AIC.HistoryDataPage.Models"
              mc:Ignorable="d" 
              d:DesignHeight="307" d:DesignWidth="428">
     <Grid>
@@ -17,7 +17,7 @@
                 </Grid.RowDefinitions>
                 <TabControl x:Name="DocumentTabContro" Style="{x:Null}" ItemsSource="{Binding Path=Channels}" SelectedItem="{Binding SelectedOffCondition, Mode=TwoWay}">
                     <TabControl.Resources>
-                        <DataTemplate DataType="{x:Type viewModels:BaseWaveChannelToken}">
+                        <DataTemplate DataType="{x:Type models:BaseWaveChannelToken}">
                             <Grid Margin="-5" >
                                 <TextBlock VerticalAlignment="Center">
                                     <Run Text="{Binding Channel.Name}"/>
@@ -40,7 +40,7 @@
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModels:DivFreChannelToken}">
+                        <DataTemplate DataType="{x:Type models:DivFreChannelToken}">
                             <Grid Margin="-5" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Channel.DisPlayName}" >
                                     <TextBlock.ToolTip>

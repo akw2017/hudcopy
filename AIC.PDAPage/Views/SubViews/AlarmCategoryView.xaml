@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AIC.PDAPage.Views.SubViews"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <core:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <core:BindingProxy x:Key="proxy" Data="{Binding}"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -37,11 +42,20 @@
                                 </DataTemplate.Triggers>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <!--<DataGridTextColumn MinWidth="60" Header="单点绝对值报警槛值" Binding="{Binding Value}"></DataGridTextColumn>-->
-                    <!--<DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}"/>-->
-                    <DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}"/>
-                    <!--<DataGridTextColumn MinWidth="60" Header="报警方程" Binding="{Binding Formula}"/>-->
+                    </DataGridTemplateColumn>                  
+                    <DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}" Visibility="{Binding Data.IsUploadWaveShow,Source={StaticResource proxy},Converter={StaticResource boolToVisibilityConverter}}"/>
+                    <!--<DataGridTemplateColumn Header="上传波形">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkbox" IsChecked="{Binding IsUploadWave,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsUploadWaveShow, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" Value="true">
+                                        <Setter TargetName="chkbox" Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>                                   
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->                   
                     <DataGridTemplateColumn MinWidth="60" Header="报警方程" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -55,7 +69,7 @@
                                 </DataTemplate.Triggers>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>                   
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
                 <DataGrid.ColumnHeaderStyle>
                     <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >

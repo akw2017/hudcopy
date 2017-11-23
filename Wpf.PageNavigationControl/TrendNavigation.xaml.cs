@@ -40,7 +40,7 @@ namespace Wpf.PageNavigationControl
         public static DependencyProperty CurrentTimeProperty;
         public static DependencyProperty FirstTimeProperty;
         public static DependencyProperty SecondTimeProperty;
-        public static DependencyProperty TotalPointsProperty;
+        public static DependencyProperty TotalPointProperty;
         public static DependencyProperty CanPageUpProperty;
         public static DependencyProperty CanPageDownProperty;
         public static DependencyProperty AutoPageDownProperty;
@@ -117,15 +117,15 @@ namespace Wpf.PageNavigationControl
             }
         }
 
-        public int TotalPoints
+        public int TotalPoint
         {
             get
             {
-                return (int)GetValue(TotalPointsProperty);
+                return (int)GetValue(TotalPointProperty);
             }
             set
             {
-                SetValue(TotalPointsProperty, value);
+                SetValue(TotalPointProperty, value);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Wpf.PageNavigationControl
         public static void PageGotoExecuted(object sender, ExecutedRoutedEventArgs e)
         {           
             TrendNavigation pager = (TrendNavigation)sender;  
-            TrendNavigationEventArgs oldArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
+            TrendNavigationEventArgs oldArgs = new TrendNavigationEventArgs(pager.oldsize, pager.oldtime);
             pager.SetCurrentTime(pager.CurrentTime);
             TrendNavigationEventArgs newArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
 
@@ -218,9 +218,9 @@ namespace Wpf.PageNavigationControl
 
             CurrentTimeProperty = DependencyProperty.Register("CurrentTime", typeof(DateTime),
                 typeof(TrendNavigation),
-                new FrameworkPropertyMetadata(DateTime.Now));
+                new FrameworkPropertyMetadata(DateTime.Now.AddMinutes(0 - 60 * 0.8)));
 
-            TotalPointsProperty = DependencyProperty.Register("TotalPoints", typeof(int),
+            TotalPointProperty = DependencyProperty.Register("TotalPoint", typeof(int),
               typeof(PageNavigation),
               new FrameworkPropertyMetadata(0));
 
@@ -293,9 +293,9 @@ namespace Wpf.PageNavigationControl
             remove { RemoveHandler(CurrentTimeChangedEvent, value); }
         }
 
-        private void OnCurrentTimeChanged(TrendNavigationEventArgs pagesize, TrendNavigationEventArgs currentpage)
+        private void OnCurrentTimeChanged(TrendNavigationEventArgs timesize, TrendNavigationEventArgs currenttime)
         {
-            RoutedPropertyChangedEventArgs<TrendNavigationEventArgs> args = new RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>(pagesize, currentpage);
+            RoutedPropertyChangedEventArgs<TrendNavigationEventArgs> args = new RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>(timesize, currenttime);
             args.RoutedEvent = TrendNavigation.CurrentTimeChangedEvent;
             RaiseEvent(args);
         }
@@ -313,15 +313,16 @@ namespace Wpf.PageNavigationControl
         }
         public void SetCurrentTimeUp()
         {
-            CurrentTime = CurrentTime.AddMinutes(0 - TimeSize);
+            CurrentTime = CurrentTime.AddMinutes(0 - TimeSize / 2);
             RollPages();
         }
         public void SetCurrentTimeDown()
         {
-            CurrentTime = CurrentTime.AddMinutes(TimeSize);
+            CurrentTime = CurrentTime.AddMinutes(TimeSize / 2);
             RollPages();
         }
-
+        private DateTime oldtime = new DateTime();
+        private int oldsize;
         private void RollPages()
         {
             if (CurrentTime > DateTime.Now.AddMinutes(0 - TimeSize * 0.8))
@@ -329,11 +330,13 @@ namespace Wpf.PageNavigationControl
                 CurrentTime = DateTime.Now.AddMinutes(0 - TimeSize * 0.8);
             }
             FirstTime = CurrentTime;
-            SecondTime = CurrentTime.AddMinutes(TimeSize * 0.8);
+            SecondTime = CurrentTime.AddMinutes(TimeSize);
             if (SecondTime > DateTime.Now)
             {
                 SecondTime = DateTime.Now;
             }
+            oldtime = CurrentTime;
+            oldsize = TimeSize;
         }
     }
 }

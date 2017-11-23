@@ -237,7 +237,7 @@
                         <Image Source="/AIC.Resources;component/Images/chart_bar.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="趋势" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataTrend" >
+                <MenuItem Header="趋势曲线" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataTrend" >
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/chart_curve.png"/>
                     </MenuItem.Icon>
@@ -308,6 +308,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            
             <MenuItem Header="综合管理" Background="{DynamicResource TransparentWhiteBrush}">
                 <MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
                     <MenuItem.Icon>
@@ -506,7 +507,7 @@
                 <ToggleButton x:Name="togglebtn" IsChecked="{Binding Pause}" Template="{StaticResource PauseToggleButton}" Visibility="{Binding LoginVisibility}" />
             </ToolBar>
         </Grid>
-        <TabControl x:Name="tabControl" Grid.Row="2" prism:RegionManager.RegionName="MainTabRegion" Margin="3">
+        <TabControl x:Name="tabControl" Grid.Row="2" prism:RegionManager.RegionName="MainTabRegion">
            
         </TabControl>
         <TextBlock Grid.Row="2" FontSize="16" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Top" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="8">版权所有Copyright©2017：青岛众志测控技术有限公司</TextBlock>

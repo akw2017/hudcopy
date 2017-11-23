@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Threading;
 using Nito.AsyncEx;
+using AIC.HistoryDataPage.Models;
 
 namespace AIC.HistoryDataPage.ViewModels
 {

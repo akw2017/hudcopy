@@ -120,6 +120,8 @@
     <s:String x:Key="pdaip">PDAIP</s:String>
     <s:String x:Key="senddown">SendDown</s:String>
     <s:String x:Key="transmissionIdentifier">TransmissionCardIdentifier</s:String>
+    <s:String x:Key="save">Save</s:String>
+    <s:String x:Key="load">Load</s:String>
     
     <s:String x:Key="name">Name</s:String>
     <s:String x:Key="code">Code</s:String>
@@ -157,7 +159,7 @@
     <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
     <s:String x:Key="menuOnlineDataStatistics">OnlineDataStatistics</s:String>
-    <s:String x:Key="menuOnlineDataTrend">OnlineDataTrend</s:String>
+    <s:String x:Key="menuHistoryDataTrend">HistoryDataTrend</s:String>
     <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
     <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
     <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>

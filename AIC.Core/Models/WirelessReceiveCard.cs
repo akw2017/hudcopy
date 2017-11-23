@@ -358,7 +358,7 @@ namespace AIC.Core.Models
         {
             IsReadOnlyVelocityCalibration = true;
             IsReadOnlyDisplacementCalibration = true;
-            IsReadOnlySensitivity = true;
+            IsReadOnlySensitivity = true;         
         }
     }
 

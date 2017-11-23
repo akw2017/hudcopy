@@ -1,4 +1,5 @@
 ﻿using AIC.Core.Events;
+using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Annotations;
@@ -84,7 +85,7 @@ namespace AIC.HistoryDataPage.Views
                         axisY.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
                         axisY.AxisThickness = 2;
                         axisY.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
-                        if (unit == "m/s2")
+                        if (unit == "m/s^2")
                         {
                             axisY.Title.Text = "加速度(" + unit + ")";
                         }
@@ -258,7 +259,7 @@ namespace AIC.HistoryDataPage.Views
                         axisY.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
                         axisY.AxisThickness = 2;
                         axisY.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
-                        if (unit == "分频-m/s2")
+                        if (unit == "分频-m/s^2")
                         {
                             axisY.Title.Text = "加速度(" + unit + ")";
                         }
@@ -771,7 +772,7 @@ namespace AIC.HistoryDataPage.Views
                     // series.Title.Text = strValue;
                     iSeriesNumber++;
                 }
-                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy/MM/dd HH:mm:ss"));
+                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;

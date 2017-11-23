@@ -157,7 +157,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     .FromEventPattern<TrackChangedEventArgs>(
                         h => this.trackChanged += h,
                         h => this.trackChanged -= h)
-                    .Select(x => x.EventArgs.Tokens);
+                   .Select(x => x.EventArgs.Tokens);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
             }
         }
 

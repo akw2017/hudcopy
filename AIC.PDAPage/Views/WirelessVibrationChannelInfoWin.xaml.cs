@@ -39,8 +39,9 @@ namespace AIC.PDAPage.Views
             {
                 if (Channel.AlarmStrategy.Absolute != null)
                 {
+                    Channel.AlarmStrategy.Absolute.IsUploadWaveShow = true;
                     if (Channel.AlarmStrategy.Absolute.Category != null)
-                    {
+                    {                       
                         Channel.AlarmStrategy.Absolute.Category.ForEach(p => p.PropertyChanged += Channel_PropertyChanged);
                     }
                     if (Channel.AlarmStrategy.Absolute.Para != null)

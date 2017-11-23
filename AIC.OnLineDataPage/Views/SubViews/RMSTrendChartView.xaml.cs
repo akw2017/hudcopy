@@ -302,7 +302,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 marker.Symbol.Width = 5;
                 marker.Symbol.Height = 5;
                 //store values in label text    
-                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + m_chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy/MM/dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
+                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + m_chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy-MM-dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
                 marker.Label.HorizontalAlign = AlignmentHorizontal.Center;
                 marker.Label.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9f, System.Drawing.FontStyle.Bold);
                 marker.Label.Shadow.Style = TextShadowStyle.HighContrast;
@@ -494,10 +494,10 @@ namespace AIC.OnLineDataPage.Views.SubViews
                     SeriesPoint point = series.Points[index];
                     string[] tag = point.Tag.ToString().Split(';');
                     sb.AppendLine(string.Format("幅值:{0}", Math.Round(point.Y, 3) + "(" + point.Tag.ToString() + ")"));
-                    sb.AppendLine("时间:" + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy/MM/dd HH:mm:ss"));
+                    sb.AppendLine("时间:" + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                     cursorValueDisplay.Text = sb.ToString().Trim();
                     cursorValueDisplay.Visible = false;
-                    txtValue.Text = string.Format("幅值:{0} 时间:{1}", Math.Round(point.Y, 3) + point.Tag.ToString(), m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy/MM/dd HH:mm:ss"));
+                    txtValue.Text = string.Format("幅值:{0} 时间:{1}", Math.Round(point.Y, 3) + point.Tag.ToString(), m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                 }
 
                 //Allow chart rendering
@@ -557,10 +557,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
         private List<PointData> PointDatas = new List<PointData>();
         private void AddPointData(PointData point)
         {
-            //if (PointDatas.Count > 5000)
-            //{
-            //    PointDatas.RemoveAt(0);
-            //}
+
             PointLineSeries series = m_chart.ViewXY.PointLineSeries[0];       
            
             if (series.Points.Length > 0)

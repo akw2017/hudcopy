@@ -438,7 +438,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                     }
                     if (sb.Length > 0)
                     {
-                        sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy/MM/dd HH:mm:ss"));
+                        sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                         cursorValueDisplay.Text = sb.ToString().Trim();
                         cursorValueDisplay.Visible = true;
                     }
@@ -493,7 +493,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                     }
                     if (sb.Length > 0)
                     {
-                        sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(cursor.ValueAtXAxis, "yyyy/MM/dd HH:mm:ss"));
+                        sb.AppendLine("时间: " + m_chart.ViewXY.XAxes[0].TimeString(cursor.ValueAtXAxis, "yyyy-MM-dd HH:mm:ss"));
                         cursorValueDisplay.Text = sb.ToString().Trim();
                         cursorValueDisplay.Visible = true;
                     }

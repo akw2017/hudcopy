@@ -61,7 +61,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Border BorderThickness="1" Background="{Binding AccentColorBrush}" BorderBrush="{Binding AccentColorBrush}">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
         <Grid>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="5,0,2,0" Text="时长(min)" VerticalAlignment="Center"/>
@@ -82,13 +82,13 @@
                 <local:PathButton Margin="5,0,0,0" Command="{x:Static local:TrendNavigation.PageLastCommand}" Height="24" Width="24" Style="{DynamicResource PathBtnStyle}" PathData="M 22.1665,22.1665L 42.8718,38L 22.1665,53.8335L 22.1665,22.1665 Z M 46.5257,23.3844L 53.8335,23.3844L 53.8335,52.6155L 46.5257,52.6155L 46.5257,23.3844 Z "/>
 
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
                 <TextBlock VerticalAlignment="Center">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="显示时间{0:yyyy-MM-dd HH:mm:ss}到{1:yyyy-MM-dd HH:mm:ss},共{2}个点">
                             <Binding ElementName="trendNavigation" Path="FirstTime"/>
                             <Binding ElementName="trendNavigation" Path="SecondTime" />
-                            <Binding ElementName="trendNavigation" Path="TotalPoints"/>
+                            <Binding ElementName="trendNavigation" Path="TotalPoint"/>
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>

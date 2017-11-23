@@ -565,3 +565,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataTrendView.baml

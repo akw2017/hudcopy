@@ -241,7 +241,6 @@
     </Compile>
     <Compile Include="ViewModels\OnlineDataDiagramViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataDiagnosisViewModel.cs" />
-    <Compile Include="ViewModels\OnlineDataTrendViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataOverviewViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataStatisticsViewModel.cs" />
     <Compile Include="Models\SignalListViewModel.cs" />
@@ -299,9 +298,6 @@
     </Compile>
     <Compile Include="Views\OnlineDataDiagnosisView.xaml.cs">
       <DependentUpon>OnlineDataDiagnosisView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OnlineDataTrendView.xaml.cs">
-      <DependentUpon>OnlineDataTrendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OnlineDataListView.xaml.cs">
       <DependentUpon>OnlineDataListView.xaml</DependentUpon>
@@ -535,10 +531,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OnlineDataDiagnosisView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\OnlineDataTrendView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

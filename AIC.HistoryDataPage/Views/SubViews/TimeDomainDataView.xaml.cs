@@ -21,6 +21,7 @@ using Arction.Wpf.Charting.Axes;
 using Arction.Wpf.Charting.Annotations;
 using AIC.Core.Events;
 using AIC.MatlabMath;
+using AIC.HistoryDataPage.Models;
 
 namespace AIC.HistoryDataPage.Views
 {

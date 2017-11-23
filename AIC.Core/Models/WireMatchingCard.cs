@@ -1279,6 +1279,8 @@ namespace AIC.Core.Models
    
     public class AbsoluteAlarm: INotifyPropertyChanged
     {
+        [JsonIgnore]
+        public bool IsUploadWaveShow { get; set; }//只有有波形的才显示
         public List<AlarmCategory> Category { get; set; }//种类
         public List<AlarmPara> Para { get; set; }//参数
         public List<AlarmMode> Mode { get; set; }//绝对值报警模式

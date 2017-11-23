@@ -1,4 +1,5 @@
 ﻿
+using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Axes;

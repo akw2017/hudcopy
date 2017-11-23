@@ -144,7 +144,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -320,7 +320,7 @@
             </i:Interaction.Triggers>
 
         </TreeView>
-        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <WrapPanel Grid.Row="0" Grid.Column="3"  Orientation="Horizontal">
             <TextBlock Text="显示模式" Margin="5,0,0,0" VerticalAlignment="Center"/>

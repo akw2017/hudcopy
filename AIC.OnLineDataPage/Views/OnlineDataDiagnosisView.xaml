@@ -24,7 +24,7 @@
  
         </ResourceDictionary>
     </Control.Resources>
-    <Grid>
+    <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -129,7 +129,7 @@
 
         </TreeView>
 
-        <GridSplitter Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
         <!--<view:AlarmGradeFilterView Grid.Row="0" Grid.Column="2" Margin="0,5"/>-->
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
             
@@ -152,7 +152,7 @@
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                 <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
                 <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" MinWidth="180" IsReadOnly="True"/>              
-                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy/MM/dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>             
+                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>             
                 <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>              
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="诊断结果" Binding="{Binding DiagnosticInfo}" IsReadOnly="True"/>
