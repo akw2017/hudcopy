@@ -79,10 +79,10 @@ namespace AIC.HistoryDataPage.Views
                 {
                     count -= 15;
                 }
-                Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
+                //Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
                 PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
                 series.MouseInteraction = false;
-                series.LineStyle.Color = color;
+                series.LineStyle.Color = vToken.SolidColorBrush.Color; //color;
                 series.LineStyle.AntiAliasing = LineAntialias.None;
                 series.LineStyle.Width = 1;
                 series.Tag = vToken;
@@ -104,7 +104,7 @@ namespace AIC.HistoryDataPage.Views
                 m_chart.ViewXY.YAxes.Add(axisYPhase);
                 PointLineSeries phaseSeries = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisYPhase);
                 phaseSeries.MouseInteraction = false;
-                phaseSeries.LineStyle.Color = color;
+                phaseSeries.LineStyle.Color = vToken.SolidColorBrush.Color; //color;
                 phaseSeries.LineStyle.AntiAliasing = LineAntialias.None;
                 phaseSeries.LineStyle.Width = 1;
                 phaseSeries.Tag = vToken;
@@ -460,12 +460,45 @@ namespace AIC.HistoryDataPage.Views
 
         private void MovePrevious_Click(object sender, RoutedEventArgs e)
         {
-            m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis -= 1;
+            //m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis -= 1;
+            //20170407add by htzk123
+            if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis <= m_chart.ViewXY.XAxes[0].Minimum)
+            {
+                m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_chart.ViewXY.XAxes[0].Maximum;
+            }
+
+            double nowValue = m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis;
+            double nextValue = m_chart.ViewXY.XAxes[0].Minimum;
+            for (int i = 0; i < m_chart.ViewXY.PointLineSeries.Count; i++)
+            {
+                double? tempValue = (from g in m_chart.ViewXY.PointLineSeries[i].Points where g.X < nowValue select g.X).LastOrDefault();
+                double valid = tempValue ?? m_chart.ViewXY.XAxes[0].Minimum;
+
+                nextValue = Math.Max(nextValue, valid);
+            }
+
+            m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = nextValue;
         }
 
         private void MoveNext_Click(object sender, RoutedEventArgs e)
         {
-            m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis += 1;
+            //m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis += 1;
+            if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis >= m_chart.ViewXY.XAxes[0].Maximum)
+            {
+                m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_chart.ViewXY.XAxes[0].Minimum;
+            }
+
+            double nowValue = m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis;
+            double nextValue = m_chart.ViewXY.XAxes[0].Maximum;
+            for (int i = 0; i < m_chart.ViewXY.PointLineSeries.Count; i++)
+            {
+                double? tempValue = (from g in m_chart.ViewXY.PointLineSeries[i].Points where g.X > nowValue select g.X).FirstOrDefault();
+                double valid = tempValue ?? m_chart.ViewXY.XAxes[0].Maximum;
+
+                nextValue = Math.Min(nextValue, valid);
+            }
+
+            m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = nextValue;
         }
 
         private void ScreenshotButton_Click(object sender, RoutedEventArgs e)

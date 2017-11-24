@@ -30,6 +30,9 @@ using Arction.Wpf.Charting;
 using System.Windows.Media;
 using System.Reactive.Linq;
 using System.Threading;
+using AIC.Resources.Models;
+using AIC.HistoryDataPage.ViewModels;
+using AIC.M9600.Common.DTO.Device;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -64,6 +67,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
             InitTree();
             InitPager();
+            Initialization = InitializeAsync();
         }
         #region 属性与字段   
         private ObservableCollection<OrganizationTreeItemViewModel> _organizationTreeItems;
@@ -74,6 +78,87 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 _organizationTreeItems = value;
                 OnPropertyChanged("OrganizationTreeItems");
+            }
+        }
+
+        private ObservableCollection<HistoricalDataViewModel> historicalDataCollection = new ObservableCollection<HistoricalDataViewModel>();
+        public IEnumerable<HistoricalDataViewModel> HistoricalDatas { get { return historicalDataCollection; } }
+
+        private ViewModelStatus _status = ViewModelStatus.None;
+        public ViewModelStatus Status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged("Status");
+                }
+            }
+        }
+
+        public string waitinfo;
+        public string WaitInfo
+        {
+            get
+            {
+                return waitinfo;
+            }
+            set
+            {
+                waitinfo = value;
+                OnPropertyChanged("WaitInfo");
+            }
+        }
+
+        private double itemWidth = 500;
+        public double ItemWidth
+        {
+            get { return itemWidth; }
+            set
+            {
+                if (itemWidth != value)
+                {
+                    itemWidth = value;
+                    OnPropertyChanged("ItemWidth");
+                    amsReplayVM.ItemWidth = value;
+                    timeDomainVM.ItemWidth = value;
+                    frequencyDomainVM.ItemWidth = value;
+                    powerSpectrumVM.ItemWidth = value;
+                    powerSpectrumDensityVM.ItemWidth = value;
+                    orthoDataVM.ItemWidth = value;
+                    offDesignConditionVM.ItemWidth = value;
+                    orderAnalysisVM.ItemWidth = value;
+                    time3DSpectrumVM.ItemWidth = value;
+                    rpm3DSpectrumVM.ItemWidth = value;
+                    alarmPointTrendVM.ItemWidth = value;
+                }
+            }
+        }
+
+        private double itemHeight = 300;
+        public double ItemHeight
+        {
+            get { return itemHeight; }
+            set
+            {
+                if (itemHeight != value)
+                {
+                    itemHeight = value;
+                    OnPropertyChanged("ItemHeight");
+                    amsReplayVM.ItemHeight = value;
+                    timeDomainVM.ItemHeight = value;
+                    frequencyDomainVM.ItemHeight = value;
+                    powerSpectrumVM.ItemHeight = value;
+                    powerSpectrumDensityVM.ItemHeight = value;
+                    orthoDataVM.ItemHeight = value;
+                    offDesignConditionVM.ItemHeight = value;
+                    orderAnalysisVM.ItemHeight = value;
+                    time3DSpectrumVM.ItemHeight = value;
+                    rpm3DSpectrumVM.ItemHeight = value;
+                    alarmPointTrendVM.ItemHeight = value;
+                }
             }
         }
 
@@ -178,7 +263,7 @@ namespace AIC.OnLineDataPage.ViewModels
         public IEnumerable<ChartFileData> ChartFileCategory { get { return chartFileCategory; } }
 
         private event EventHandler<TrendTrackChangedEventArgs> trackChanged;
-        public IObservable<IEnumerable<SignalToken>> WhenTrackChanged
+        public IObservable<IEnumerable<BaseWaveSignalToken>> WhenTrackChanged
         {
             get
             {
@@ -191,6 +276,23 @@ namespace AIC.OnLineDataPage.ViewModels
         }
 
         private List<Color> ColorList = new List<Color>();
+        #endregion
+
+        #region 私有变量
+        private RMSReplayDataViewModel amsReplayVM;
+        private TimeDomainDataViewModel timeDomainVM;
+        private FrequencyDomainDataViewModel frequencyDomainVM;
+        private PowerSpectrumDataViewModel powerSpectrumVM;
+        private PowerSpectrumDensityDataViewModel powerSpectrumDensityVM;
+        private OrthoDataViewModel orthoDataVM;
+        private OffDesignConditionDataViewModel offDesignConditionVM;
+        private OrderAnalysisDataViewModel orderAnalysisVM;
+        private Time3DSpectrumDataViewModel time3DSpectrumVM;
+        private RPM3DSpectrumDataViewModel rpm3DSpectrumVM;
+        private AlarmPointTrendDataViewModel alarmPointTrendVM;
+        private SynchronizationContext uiContext = SynchronizationContext.Current;
+        private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
+        private bool isTrackRunning;
         #endregion
 
         #region 命令
@@ -300,6 +402,96 @@ namespace AIC.OnLineDataPage.ViewModels
         }
         #endregion
 
+        #region 初始化
+        public Task Initialization { get; private set; }
+        public async Task InitializeAsync()
+        {
+            try
+            {
+                amsReplayVM = new RMSReplayDataViewModel(true);
+                amsReplayVM.Title = "趋势";
+                amsReplayVM.ItemWidth = ItemWidth;
+                amsReplayVM.ItemHeight = ItemHeight;
+
+                timeDomainVM = new TimeDomainDataViewModel();
+                timeDomainVM.Title = "时域";
+                timeDomainVM.ItemWidth = ItemWidth;
+                timeDomainVM.ItemHeight = ItemHeight;
+
+                frequencyDomainVM = new FrequencyDomainDataViewModel();
+                frequencyDomainVM.Title = "频域";
+                frequencyDomainVM.ItemWidth = ItemWidth;
+                frequencyDomainVM.ItemHeight = ItemHeight;
+
+                powerSpectrumVM = new PowerSpectrumDataViewModel();
+                powerSpectrumVM.Title = "功率谱";
+                powerSpectrumVM.ItemWidth = ItemWidth;
+                powerSpectrumVM.ItemHeight = ItemHeight;
+
+                powerSpectrumDensityVM = new PowerSpectrumDensityDataViewModel();
+                powerSpectrumDensityVM.Title = "功率谱密度";
+                powerSpectrumDensityVM.ItemWidth = ItemWidth;
+                powerSpectrumDensityVM.ItemHeight = ItemHeight;
+
+                orthoDataVM = new OrthoDataViewModel();
+                orthoDataVM.Title = "轴心轨迹";
+                orthoDataVM.ItemWidth = ItemWidth;
+                orthoDataVM.ItemHeight = ItemHeight;
+
+                //offDesignConditionVM = new OffDesignConditionDataViewModel(_dataModelProvider);//htzk123
+                offDesignConditionVM = new OffDesignConditionDataViewModel();//htzk123
+                offDesignConditionVM.Title = "变工况拟合";
+                offDesignConditionVM.ItemWidth = ItemWidth;
+                offDesignConditionVM.ItemHeight = ItemHeight;
+
+                alarmPointTrendVM = new AlarmPointTrendDataViewModel();
+                alarmPointTrendVM.Title = "报警点趋势";
+                alarmPointTrendVM.ItemWidth = ItemWidth;
+                alarmPointTrendVM.ItemHeight = ItemHeight;
+
+                orderAnalysisVM = new OrderAnalysisDataViewModel();
+                orderAnalysisVM.Title = "阶次分析";
+                orderAnalysisVM.ItemWidth = ItemWidth;
+                orderAnalysisVM.ItemHeight = ItemHeight;
+
+                time3DSpectrumVM = new Time3DSpectrumDataViewModel();
+                time3DSpectrumVM.Title = "时间三维谱";
+                time3DSpectrumVM.ItemWidth = ItemWidth;
+                time3DSpectrumVM.ItemHeight = ItemHeight;
+
+                rpm3DSpectrumVM = new RPM3DSpectrumDataViewModel();
+                rpm3DSpectrumVM.Title = "转速三维谱";
+                rpm3DSpectrumVM.ItemWidth = ItemWidth;
+                rpm3DSpectrumVM.ItemHeight = ItemHeight;
+
+                //trackTask = AMSTrackChanged;
+
+                //amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
+
+                timeDomainVM.IsVisible = true;
+                frequencyDomainVM.IsVisible = true;
+
+                historicalDataCollection.Add(amsReplayVM);
+                historicalDataCollection.Add(alarmPointTrendVM);
+                historicalDataCollection.Add(timeDomainVM);
+                historicalDataCollection.Add(frequencyDomainVM);
+                historicalDataCollection.Add(powerSpectrumVM);
+                historicalDataCollection.Add(powerSpectrumDensityVM);
+                historicalDataCollection.Add(orthoDataVM);
+                historicalDataCollection.Add(offDesignConditionVM);
+                historicalDataCollection.Add(orderAnalysisVM);
+                historicalDataCollection.Add(time3DSpectrumVM);
+                historicalDataCollection.Add(rpm3DSpectrumVM);
+
+            }
+            catch (Exception e)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-初始化异常", e));
+            }
+        }
+        
+        #endregion 
+
         #region 数据
         private async void AddData(object para)
         {
@@ -323,7 +515,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         ItemType = 12,                    
                         BaseAlarmSignal = itemTree.BaseAlarmSignal,
                         UpperLimit = 10,
-                        LowerLimit = 0,                      
+                        LowerLimit = 0,   
                     };
 
                     var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
@@ -349,6 +541,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
 
                     addedSignals.Add(signaltoken);
+                    signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
                     if (SignalAdded != null)
                     {
                         SignalAdded(signaltoken, CurrentTime, TimeSize);
@@ -365,6 +558,17 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                     await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, CurrentTime.AddMinutes(0 - TimeSize * 3 / 2), CurrentTime.AddMinutes(0 - TimeSize), sql, unit);
                     await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, CurrentTime.AddMinutes(TimeSize * 2), CurrentTime.AddMinutes(TimeSize * 5 / 2), sql, unit);
+
+                    signaltoken.ChannelToken = SignalConvertToChannelToken(signaltoken);
+
+                    timeDomainVM.AddChannel(signaltoken.ChannelToken);
+                    frequencyDomainVM.AddChannel(signaltoken.ChannelToken);
+                    powerSpectrumVM.AddChannel(signaltoken.ChannelToken);
+                    powerSpectrumDensityVM.AddChannel(signaltoken.ChannelToken);
+                    alarmPointTrendVM.AddChannel(signaltoken.ChannelToken);
+                    orthoDataVM.AddChannel(signaltoken.ChannelToken);
+
+                    offDesignConditionVM.AddChannel(signaltoken.ChannelToken);
                 }
                 #endregion
                 #region WirelessScalarChannelInfo
@@ -404,6 +608,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
 
                     addedSignals.Add(signaltoken);
+                    signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
                     if (SignalAdded != null)
                     {
                         SignalAdded(signaltoken, CurrentTime, TimeSize);
@@ -712,15 +917,29 @@ namespace AIC.OnLineDataPage.ViewModels
             if (token != null)
             {
                 addedSignals.Remove(token);
+                foreach(var signal in addedSignals)
+                {
+                    signal.Index = addedSignals.IndexOf(signal) + 1;
+                }
+
                 ColorList.Remove(token.SolidColorBrush.Color);
                 if (SignalRemoved != null)
                 {
                     SignalRemoved(token);
                 }
+                amsReplayVM.RemoveChannel(token.ChannelToken);
+                alarmPointTrendVM.RemoveChannel(token.ChannelToken);
+                timeDomainVM.RemoveChannel(token.ChannelToken);
+                frequencyDomainVM.RemoveChannel(token.ChannelToken);
+                powerSpectrumVM.RemoveChannel(token.ChannelToken);
+                powerSpectrumDensityVM.RemoveChannel(token.ChannelToken);
+                orthoDataVM.RemoveChannel(token.ChannelToken);
+                time3DSpectrumVM.RemoveChannel(token.ChannelToken);
+                offDesignConditionVM.RemoveChannel(token.ChannelToken);
             }
         }
 
-        public void TrackChanged(IEnumerable<SignalToken> tokens)
+        public void TrackChanged(IEnumerable<BaseWaveSignalToken> tokens)
         {
             if (trackChanged != null)
             {
@@ -728,9 +947,138 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private void RaiseTrackChanged(IEnumerable<SignalToken> tokens)
+        private async void RaiseTrackChanged(IEnumerable<BaseWaveSignalToken> tokens)
         {
+            if (isTrackRunning)
+            {
+                return;
+            }
 
+            try
+            {
+                // we're running it now
+                isTrackRunning = true;
+                await AMSTrackChanged(tokens);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                // allow it to run again
+                isTrackRunning = false;
+            }
+        }
+
+        private async Task AMSTrackChanged(IEnumerable<BaseWaveSignalToken> tokens)
+        {
+            try
+            {
+                if (tokens == null) return;
+
+                var unValidTokens = tokens.Where(o => o.CurrentIndex == -1);
+                foreach (var token in unValidTokens)
+                {
+                    token.VData = null;
+                }
+
+                var validTokens = tokens.Where(o => o.CurrentIndex != -1).ToArray();
+
+                if (validTokens.Length == 0) return;
+
+                //var globalIndexes = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ChannelGlobalIndex).ToArray();
+                //var ids = validTokens.Select(o => o.DataContracts[o.CurrentIndex].id).ToArray();
+                //var date = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ACQDatetime).First();              
+
+                List<IWaveformData> result = new List<IWaveformData>();
+                foreach (var token in validTokens)
+                {
+                    if (token is BaseDivfreSignalToken)
+                    {
+                        var divtoken = token as BaseDivfreSignalToken;
+
+                        List<D_WirelessVibrationSlot_Waveform> data = null;
+                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        {
+                            data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
+                        }
+                        else
+                        {
+                            token.VData = null;
+                            (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                        }
+                        if (data != null && data.Count > 0)
+                        {
+                            result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
+                        }
+                        else
+                        {
+                            token.VData = null;
+                            (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                        }
+                    }
+                }
+
+                await Task.Run(() => Parallel.For(0, result.Count, i =>
+                {
+                    VibrationData vdata = new VibrationData();
+                    vdata.Waveform = Algorithm.ByteToSingle(result[i].WaveData);
+                    vdata.SampleFre = result[i].SampleFre ?? 0;
+                    vdata.SamplePoint = result[i].SamplePoint ?? 0;
+                    vdata.Unit = result[i].WaveUnit;
+
+                    var paras = Algorithm.CalculatePara(vdata.Waveform);
+                    if (paras != null)
+                    {
+                        vdata.RMSValue = paras[0];
+                        vdata.PeakValue = paras[1];
+                        vdata.PeakPeakValue = paras[2];
+                        vdata.Slope = paras[3];
+                        vdata.Kurtosis = paras[4];
+                        vdata.KurtosisValue = paras[5];
+                        vdata.WaveIndex = paras[6];
+                        vdata.PeakIndex = paras[7];
+                        vdata.ImpulsionIndex = paras[8];
+                        vdata.RootAmplitude = paras[9];
+                        vdata.ToleranceIndex = paras[10];
+                    }
+
+                    double sampleFre = vdata.SampleFre;
+                    if (vdata.Trigger == TriggerType.Angle)
+                    {
+                        if (vdata.RPM > 0 && vdata.TeethNumber > 0)
+                        {
+                            sampleFre = vdata.RPM * vdata.TeethNumber / 60;
+                        }
+                    }
+
+                    int length = (int)(vdata.SamplePoint / 2.56) + 1;
+                    if (vdata.Frequency == null || vdata.Frequency.Length != length)
+                    {
+                        vdata.Frequency = new double[length];
+                    }
+                    double frequencyInterval = sampleFre / vdata.SamplePoint;
+                    for (int j = 0; j < length; j++)
+                    {
+                        vdata.Frequency[j] = frequencyInterval * j;
+                    }
+                    var output = Algorithm.Instance.FFT2AndPhaseAction(vdata.Waveform, vdata.SamplePoint);
+                    if (output != null)
+                    {
+                        vdata.Amplitude = output[0].Take(length).ToArray();
+                        vdata.Phase = output[1].Take(length).ToArray();
+                    }
+                    validTokens[i].VData = vdata;
+                    (validTokens[i].ChannelToken as BaseDivfreChannelToken).VData = vdata;
+                }));
+
+                timeDomainVM.ChangeChannelData(tokens.Select(p => p.ChannelToken as BaseWaveChannelToken));
+                frequencyDomainVM.ChangeChannelData(tokens.Select(p => p.ChannelToken as BaseWaveChannelToken));
+            }
+            catch (Exception ex)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-TrackChanged", ex));
+            }
         }
         #endregion
 
@@ -850,6 +1198,47 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
         #endregion
+
+        private ChannelToken SignalConvertToChannelToken(SignalToken token)
+        {
+            if (token is BaseDivfreSignalToken)
+            {
+                BaseDivfreSignalToken signaltoken = token as BaseDivfreSignalToken;
+                BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
+                {
+                    DisplayName = signaltoken.DisplayName,
+                    IP = signaltoken.IP,
+                    Guid = signaltoken.Guid,
+                    DataContracts = signaltoken.DataContracts,
+                    SolidColorBrush = signaltoken.SolidColorBrush,
+                };
+                return channeltoken;
+            }
+            else if (token is BaseWaveSignalToken)
+            {
+                BaseWaveSignalToken signaltoken = token as BaseWaveSignalToken;
+                BaseWaveChannelToken channeltoken = new BaseWaveChannelToken()
+                {
+                    DisplayName = signaltoken.DisplayName,
+                    IP = signaltoken.IP,
+                    Guid = signaltoken.Guid,
+                    DataContracts = signaltoken.DataContracts,
+                    SolidColorBrush = signaltoken.SolidColorBrush,
+                };
+                return channeltoken;
+            }
+            else
+            {
+                ChannelToken channeltoken = new ChannelToken()
+                {
+                    DisplayName = token.DisplayName,
+                    IP = token.IP,
+                    Guid = token.Guid,
+                    SolidColorBrush = token.SolidColorBrush,
+                };
+                return channeltoken;
+            }
+        }
 
     }
 }

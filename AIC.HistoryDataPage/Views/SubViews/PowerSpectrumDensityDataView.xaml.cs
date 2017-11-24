@@ -79,10 +79,10 @@ namespace AIC.HistoryDataPage.Views
                 {
                     count -= 15;
                 }
-                Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
+                //Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
                 PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
                 series.MouseInteraction = false;
-                series.LineStyle.Color = color;
+                series.LineStyle.Color = vToken.SolidColorBrush.Color; //color;
                 series.LineStyle.AntiAliasing = LineAntialias.None;
                 series.LineStyle.Width = 1;
                 series.Tag = vToken;

@@ -387,10 +387,6 @@
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
       <Name>AIC.HistoryDataPage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AIC.HistoryEventPage\AIC.HistoryEventPage.csproj">
-      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
-      <Name>AIC.HistoryEventPage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AIC.LocalResource\AIC.LocalConfiguration.csproj">
       <Project>{9d1d2644-a75b-437c-981b-dfd643cd1180}</Project>
       <Name>AIC.LocalConfiguration</Name>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-171237541059
+19808257222
 
-48-866214047
+52661861565
 103-1007178098
-Themes\HistoryDataDiagramTemplate.xaml;Views\HistoryDataDiagramView.xaml;Views\HistoryDataListView.xaml;Views\HistoryDataStatisticsView.xaml;Views\HistoryDataTrendView.xaml;Views\SubViews\AlarmPointTrendDataView.xaml;Views\SubViews\RMSReplayDataView.xaml;Views\SubViews\DynamicFittingDataView.xaml;Views\SubViews\FrequencyDomainDataView.xaml;Views\SubViews\OffDesignConditionDataView.xaml;Views\SubViews\OrderAnalysisDataView.xaml;Views\SubViews\OrthoDataView.xaml;Views\SubViews\PowerSpectrumDataView.xaml;Views\SubViews\PowerSpectrumDensityDataView.xaml;Views\SubViews\RPM3DSpectrumDataView.xaml;Views\SubViews\Time3DSpectrumView.xaml;Views\SubViews\TimeDomainDataView.xaml;
+Themes\HistoryDataDiagramTemplate.xaml;Views\HistoryDataDiagramView.xaml;Views\HistoryDataListView.xaml;Views\HistoryDataStatisticsView.xaml;Views\HistoryDataTrendView.xaml;Views\HistoryEventAlarmTrendView.xaml;Views\HistoryEventListView.xaml;Views\SubViews\AlarmPointTrendDataView.xaml;Views\SubViews\RMSReplayDataView.xaml;Views\SubViews\DynamicFittingDataView.xaml;Views\SubViews\FrequencyDomainDataView.xaml;Views\SubViews\OffDesignConditionDataView.xaml;Views\SubViews\OrderAnalysisDataView.xaml;Views\SubViews\OrthoDataView.xaml;Views\SubViews\PowerSpectrumDataView.xaml;Views\SubViews\PowerSpectrumDensityDataView.xaml;Views\SubViews\RPM3DSpectrumDataView.xaml;Views\SubViews\Time3DSpectrumView.xaml;Views\SubViews\TimeDomainDataView.xaml;
 
 False
 

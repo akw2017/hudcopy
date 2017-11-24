@@ -20,6 +20,10 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.HistoryDataPage;component/Themes/HistoryDataDiagramTemplate.xaml"/>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
             <core:TypeOfConverter x:Key="typeOfConverter"/>
             <core:IsDivfreConverter x:Key="isDivfreConverter"/>
@@ -100,6 +104,63 @@
             <DataTemplate x:Key="enumComboItemTemplate">
                 <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
             </DataTemplate>
+            <Style TargetType="{x:Type ListBoxItem}" x:Key="SignalMonitorStyle" >
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <!--<Setter Property="ContentTemplate" Value="{StaticResource ReplayTemplate}" />-->
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.AMSTrend}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ReplayTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.TimeDomain}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TimeDomainTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.FrequencyDomain}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource FrequencyDomainTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.PowerSpectrum}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource PowerSpectrumTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.PowerSpectrumDensity}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource PowerSpectrumDensityTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.Ortho}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource OrthoTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.OffDesignCondition}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource OffDesignConditionTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.OrderAnalysis}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource OrderAnalysisTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.Time3DSpectrum}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource Time3DSpectrumTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.RPM3D}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource RPM3DSpectrumTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.AlarmPointTrend}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource AlarmPointTrendTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsVisible}" Value="false">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Name="grdWorkbench">
@@ -287,7 +348,7 @@
         <DataGrid x:Name="gridview" Grid.Row="0" Grid.Column="2" GridLinesVisibility="None" Margin="0"
                                  ItemsSource="{Binding AddedSignals}" SelectionMode="Single"          
                                  CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                 AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
+                                 AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="序号" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
@@ -304,14 +365,7 @@
                                     </i:Interaction.Triggers>
                                 </CheckBox>
                                 <Rectangle Fill="{Binding SolidColorBrush}" HorizontalAlignment="Center" Margin="5,0" Height="16" Width="16" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding}" Margin="5,0">
-                                    <TextBlock.DataContext>
-                                        <MultiBinding Converter="{StaticResource indexConverter}">
-                                            <Binding/>
-                                            <Binding ElementName="gridview" Path="ItemsSource"/>
-                                        </MultiBinding>
-                                    </TextBlock.DataContext>
-                                </TextBlock>
+                                <TextBlock Text="{Binding Index}" Margin="5,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -380,8 +434,32 @@
 
         <GridSplitter Grid.Row="1" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-        <Grid Name="gridChart" Grid.Row="2" Grid.Column ="2" Background="Black"/>
-        <CheckBox x:Name="chkZoom" Content="锁定" FontSize="12" Style="{x:Null}" IsChecked="True" Grid.Row="2" Grid.Column ="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid x:Name="grdSecondWorkbench" Grid.Row="2" Grid.Column ="2" Background="Black">            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+            <Grid Name="gridChart"/>
+            <CheckBox x:Name="chkZoom" Content="锁定" FontSize="12" Style="{x:Null}" IsChecked="True" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <GridSplitter x:Name="gsSecondSplitterr" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+            <ListBox Grid.Column="2" x:Name="listBox" Background="{x:Null}" BorderBrush="{x:Null}" 
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         ItemsSource="{Binding HistoricalDatas}" ItemContainerStyle="{StaticResource SignalMonitorStyle}" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
+                            <core:FluidWrapPanel.ElementEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                            </core:FluidWrapPanel.ElementEasing>
+                            <core:FluidWrapPanel.DragEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                            </core:FluidWrapPanel.DragEasing>
+                        </core:FluidWrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Grid>        
 
         <StackPanel Grid.Row="3" Grid.Column ="2" Orientation="Horizontal">
             <page:TrendNavigation  Name="pager" TimeSizeList="{Binding TimeSizeList}" TimeSize="{Binding TimeSize, Mode=TwoWay}" CurrentTime="{Binding CurrentTime,Mode=OneWayToSource}" >

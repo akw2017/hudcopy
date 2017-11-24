@@ -1,0 +1,96 @@
+﻿<Controls:MetroWindow x:Class="AIC.UserPage.Views.MenuSetWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.UserPage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:convert="clr-namespace:AIC.UserPage.Converters"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="菜单设置" Height="600" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/wrench_orange.png" Topmost="True">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <convert:IntStringConverter x:Key="intStringConverter"/>
+            <convert:IntIconConverter x:Key="intIconConverter"/>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
+    <Grid Background ="{DynamicResource AccentColorBrush2}">
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource name}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center"
+                Text = "{Binding MenuName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            </TextBox>
+            <DataGrid x:Name="datagrid" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" FrozenColumnCount="1"  CanUserAddRows="False" ColumnWidth="Auto" 
+                  ItemsSource="{Binding MenuList, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <!--<DataGridTextColumn Header="ID" Binding="{Binding T_Menu.id}" MinWidth="60" ></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding T_Menu.Name}" MinWidth="60" ></DataGridTextColumn>-->
+                    <!--<DataGridTextColumn Header="{DynamicResource code}" Binding="{Binding T_Menu.Code}" MinWidth="60" ></DataGridTextColumn>-->
+                    <!--<DataGridTextColumn Header="{DynamicResource type}" Binding="{Binding T_Menu.Type,Converter={StaticResource intStringConverter}}" IsReadOnly="True" MinWidth="80"></DataGridTextColumn>-->                  
+                    <DataGridTemplateColumn Header="{DynamicResource showText}" MinWidth="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding T_Menu.InternalNumber,Converter={StaticResource intIconConverter}}"/>
+                                    <TextBlock Text="{Binding T_Menu.ShowText}" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--<DataGridCheckBoxColumn Header="{DynamicResource isChecked}" Binding="{Binding IsChecked}" MinWidth="100" ></DataGridCheckBoxColumn>-->
+                    <DataGridTemplateColumn Header="{DynamicResource isChecked}" MinWidth="80" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <!--<DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>-->
+                    </DataGridTemplateColumn>                   
+                </DataGrid.Columns>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Style>
+                    <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                        <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                    </Style>
+                </DataGrid.Style>
+            </DataGrid>
+            <Button Grid.Row="2" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

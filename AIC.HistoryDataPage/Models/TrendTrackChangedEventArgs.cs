@@ -8,12 +8,12 @@ namespace AIC.HistoryDataPage.Models
 {
     class TrendTrackChangedEventArgs : EventArgs
     {
-        private IEnumerable<SignalToken> _tokens;
+        private IEnumerable<BaseWaveSignalToken> _tokens;
 
-        public TrendTrackChangedEventArgs(IEnumerable<SignalToken> tokens)
+        public TrendTrackChangedEventArgs(IEnumerable<BaseWaveSignalToken> tokens)
         {
             _tokens = tokens;
         }
-        public IEnumerable<SignalToken> Tokens { get { return _tokens; } }
+        public IEnumerable<BaseWaveSignalToken> Tokens { get { return _tokens; } }
     }
 }

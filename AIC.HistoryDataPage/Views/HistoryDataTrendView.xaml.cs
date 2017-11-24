@@ -2,11 +2,13 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.CoreType;
 using AIC.HistoryDataPage.Models;
 using AIC.OnLineDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Annotations;
 using Arction.Wpf.Charting.Axes;
+using Arction.Wpf.Charting.EventMarkers;
 using Arction.Wpf.Charting.SeriesXY;
 using Arction.Wpf.Charting.Views.ViewXY;
 using Prism.Events;
@@ -41,15 +43,16 @@ namespace AIC.OnLineDataPage.Views
 
             this.Closer = new CloseableHeader((string)Application.Current.Resources["menuHistoryDataTrend"], true);
 
-            viewModel = this.DataContext as HistoryDataTrendViewModel;
-            viewModel.SignalAdded += ViewModel_SignalAdded;
-            viewModel.SignalRemoved += ViewModel_SignalRemoved;
-            viewModel.SignalShowChanged += ViewModel_SignalShowChanged;
-            viewModel.SignalSelected += ViewModel_SignalSelected;
-            viewModel.SignalRefresh += ViewModel_SignalRefresh;
+            ViewModel = this.DataContext as HistoryDataTrendViewModel;
+            ViewModel.SignalAdded += ViewModel_SignalAdded;
+            ViewModel.SignalRemoved += ViewModel_SignalRemoved;
+            ViewModel.SignalShowChanged += ViewModel_SignalShowChanged;
+            ViewModel.SignalSelected += ViewModel_SignalSelected;
+            ViewModel.SignalRefresh += ViewModel_SignalRefresh;
             CreateChart();
             this.Loaded += new RoutedEventHandler(Window_Loaded);
-        }     
+            listBox.SizeChanged += listBox_SizeChanged;
+        }      
 
         private void ViewModel_SignalAdded(SignalToken token, DateTime time, int size)
         {
@@ -96,6 +99,7 @@ namespace AIC.OnLineDataPage.Views
                         {
                             points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
                             points[i].Y = vToken.DataContracts[i].Result.Value;
+                            AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                         }
                         series.Points = points;
                     }
@@ -146,6 +150,7 @@ namespace AIC.OnLineDataPage.Views
                             {
                                 points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = anToken.DataContracts[i].Result.Value;
+                                AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                         }
@@ -186,11 +191,13 @@ namespace AIC.OnLineDataPage.Views
 
         private void Token_LimitChanged(SignalToken token)
         {
-            var axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
+            var axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();            
             if (axisY != null)
             {
+                axisY.RangeChanged -= AxisY_RangeChanged;
                 axisY.Maximum = token.UpperLimit;
                 axisY.Minimum = token.LowerLimit;
+                axisY.RangeChanged += AxisY_RangeChanged;
             }
         }
 
@@ -266,6 +273,7 @@ namespace AIC.OnLineDataPage.Views
                             {
                                 points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(divToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = divToken.DataContracts[i].Result.Value;
+                                AddMarker(series, points[i], divToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             if (refresh == true)
@@ -290,6 +298,7 @@ namespace AIC.OnLineDataPage.Views
                             {
                                 points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = vToken.DataContracts[i].Result.Value;
+                                AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             if (refresh == true)
@@ -314,6 +323,7 @@ namespace AIC.OnLineDataPage.Views
                             {
                                 points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = anToken.DataContracts[i].Result.Value;
+                                AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             if (refresh == true)
@@ -381,7 +391,7 @@ namespace AIC.OnLineDataPage.Views
         public CloseableHeader Closer { get; private set; }
 
         private LightningChartUltimate m_chart;
-        HistoryDataTrendViewModel viewModel;
+        HistoryDataTrendViewModel ViewModel;
 
         private void CreateChart()
         {
@@ -473,7 +483,7 @@ namespace AIC.OnLineDataPage.Views
         {
             if (e.Series is PointLineSeries)
             {
-                viewModel.TotalPoint = ((PointLineSeries)e.Series).PointCount;
+                ViewModel.TotalPoint = ((PointLineSeries)e.Series).PointCount;
             }
         }
   
@@ -501,7 +511,7 @@ namespace AIC.OnLineDataPage.Views
             m_chart.ViewXY.Annotations.Add(cursorValueDisplay);
         }
 
-        private void cursor_PositionChanged(Object sender, PositionChangedEventArgs e)
+        private void cursor_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
         {
             e.CancelRendering = true;
             UpdateCursorResult(e.Cursor.ValueAtXAxis);
@@ -598,7 +608,7 @@ namespace AIC.OnLineDataPage.Views
 
                 if (channelList.Count > 0)
                 {
-                    viewModel.TrackChanged(channelList);
+                    ViewModel.TrackChanged(channelList);
                 }
             }
             catch (Exception ex)
@@ -645,12 +655,120 @@ namespace AIC.OnLineDataPage.Views
             }
         }
 
+        private string JudgeAlarmType(int alarmType)
+        {
+            string alarmTypeStr = string.Empty;
+            AlarmGrade consts = (AlarmGrade)(alarmType & 0x00ffff00);
+            //int dynamic = alarmType & 0X0C;
+            //int comparative = alarmType & 0X30;
+            switch (consts)
+            {
+                case AlarmGrade.LowPreAlert:
+                case AlarmGrade.HighPreAlert:
+                    alarmTypeStr += "常数报警：预警";
+                    break;
+                case AlarmGrade.LowAlert:
+                case AlarmGrade.HighAlert:
+                    alarmTypeStr += "常数报警：警告";
+                    break;
+                case AlarmGrade.LowDanger:
+                case AlarmGrade.HighDanger:
+                    alarmTypeStr += "常数报警：危险";
+                    break;
+            }
+            //switch (dynamic)
+            //{
+            //    case 8:
+            //        alarmTypeStr += "\r\n" + "曲线报警：警告";
+            //        break;
+            //    case 12:
+            //        alarmTypeStr += "\r\n" + "曲线报警：危险";
+            //        break;
+            //}
+            //switch (comparative)
+            //{
+            //    case 32:
+            //        alarmTypeStr += "\r\n" + "相对报警：警告";
+            //        break;
+            //    case 48:
+            //        alarmTypeStr += "\r\n" + "相对报警：危险";
+            //        break;
+            //}
+            return alarmTypeStr;
+        }
+
+        private void AddMarker(PointLineSeries series, SeriesPoint point, int AlarmGrade)
+        {
+            string alarmTypeStr = JudgeAlarmType(AlarmGrade);
+            if (!string.IsNullOrEmpty(alarmTypeStr))
+            {
+                SeriesEventMarker marker = new SeriesEventMarker(series);
+                marker.XValue = point.X;
+                marker.YValue = point.Y;
+                marker.HorizontalPosition = SeriesEventMarkerHorizontalPosition.AtXValue;
+                marker.Symbol.Width = 5;
+                marker.Symbol.Height = 5;
+                //store values in label text    
+                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + m_chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy-MM-dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
+                marker.Label.HorizontalAlign = AlignmentHorizontal.Center;
+                marker.Label.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9f, System.Drawing.FontStyle.Bold);
+                marker.Label.Shadow.Style = TextShadowStyle.HighContrast;
+                marker.Label.Shadow.ContrastColor = Colors.Black;
+                marker.Label.VerticalAlign = AlignmentVertical.Top;
+                marker.Label.Visible = false;
+                marker.Symbol.GradientFill = GradientFillPoint.Solid;
+                if (alarmTypeStr.Contains("危险"))
+                {
+                    marker.Symbol.Color1 = Colors.Red;
+                }
+                else if (alarmTypeStr.Contains("警告"))
+                {
+                    marker.Symbol.Color1 = Colors.DarkOrange;
+                }
+                else if (alarmTypeStr.Contains("预警"))
+                {
+                    marker.Symbol.Color1 = Colors.Yellow;
+                }
+                marker.Symbol.Shape = Arction.Wpf.Charting.Shape.Circle;
+                marker.VerticalPosition = SeriesEventMarkerVerticalPosition.AtYValue;
+                marker.MoveByMouse = false;
+                marker.MouseOverOn += new MouseEventHandler(marker_MouseOverOn);
+                marker.MouseOverOff += new MouseEventHandler(marker_MouseOverOff);
+                series.SeriesEventMarkers.Add(marker);
+            }
+        }
+
+        private void marker_MouseOverOff(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = false;
+        }
+        private void marker_MouseOverOn(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = true;
+        }
+
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
+            VerticalAlignButtonClick(null, null);
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
                 btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+            Button btnGrdSecondSplitter = gsSecondSplitterr.Template.FindName("btnExpend", gsSecondSplitterr) as Button;
+            if (btnGrdSecondSplitter != null)
+                btnGrdSecondSplitter.Click += new RoutedEventHandler(btnGrdSecondSplitter_Click);
+        }
+
+        private void listBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            VerticalAlignButtonClick(null, null);
+        }
+
+        private void VerticalAlignButtonClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ItemWidth = listBox.ActualWidth - 5;
+            ViewModel.ItemHeight = listBox.ActualHeight / ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count() - 2;
         }
 
         GridLength m_WidthCache;
@@ -671,6 +789,23 @@ namespace AIC.OnLineDataPage.Views
             }
         }
 
+        GridLength m_SecondWidthCache = new GridLength(500);
+        void btnGrdSecondSplitter_Click(object sender, RoutedEventArgs e)
+        {
+            GridLength temp = grdSecondWorkbench.ColumnDefinitions[2].Width;
+            GridLength zero = new GridLength(0);
+            if (!temp.Equals(zero))
+            {
+                //折叠
+                m_SecondWidthCache = grdSecondWorkbench.ColumnDefinitions[2].Width;
+                grdSecondWorkbench.ColumnDefinitions[2].Width = new GridLength(0);
+            }
+            else
+            {
+                //恢复
+                grdSecondWorkbench.ColumnDefinitions[2].Width = m_SecondWidthCache;
+            }
+        }
 
     }
 }

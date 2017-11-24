@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace AIC.HistoryDataPage.Models
 {
@@ -17,10 +18,11 @@ namespace AIC.HistoryDataPage.Models
         public string DisplayName { get; set; }
         public string IP { get; set; }
         public Guid Guid { get; set; }
+        public SolidColorBrush SolidColorBrush { get; set; }
     }
 
     public class BaseWaveChannelToken : ChannelToken
-    {
+    {        
         private event EventHandler disposed;
         private event EventHandler dataChanged;
         public List<IBaseWaveSlot> DataContracts { get; set; }
@@ -63,7 +65,7 @@ namespace AIC.HistoryDataPage.Models
     }
 
     public class BaseDivfreChannelToken : BaseWaveChannelToken
-    {      
+    {
         public new List<IBaseDivfreSlot> DataContracts { get; set; }  
     }
 

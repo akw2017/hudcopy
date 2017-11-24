@@ -52,8 +52,9 @@ namespace AIC.HistoryDataPage.ViewModels
         private event EventHandler<ChannelDataChangedEventArgs> channelDataChanged;
         private event EventHandler<TrackChangedEventArgs> trackChanged;
         private ObservableCollection<BaseWaveChannelToken> contractsCollection;
+        public bool AddAlarmMarker = false;
 
-        public RMSReplayDataViewModel()
+        public RMSReplayDataViewModel(bool addAlarmMarker = false)
         {
             DisplayMode = SignalDisplayType.AMSTrend;
             contractsCollection = new ObservableCollection<BaseWaveChannelToken>();
@@ -64,6 +65,8 @@ namespace AIC.HistoryDataPage.ViewModels
             selectedGraphTypes = new Dictionary<string, Object>();
             selectedGraphTypes.Add("转速三维谱", "RPM3D");
             selectedGraphTypes.Add("阶次分析", "OrderAnalysis");
+
+            AddAlarmMarker = addAlarmMarker;
         }
 
         public void AddChannel(ChannelToken token)

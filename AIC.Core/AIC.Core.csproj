@@ -143,6 +143,7 @@
     <Compile Include="Behaviors\ControlMouseDownCommandBehavior.cs" />
     <Compile Include="ControlModels\ITreeItemViewModel.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\RowToIndexConv.cs" />
     <Compile Include="Converters\IntToUnitConverter.cs" />
     <Compile Include="Converters\IndexConverter.cs" />
     <Compile Include="Converters\MathConverter.cs" />

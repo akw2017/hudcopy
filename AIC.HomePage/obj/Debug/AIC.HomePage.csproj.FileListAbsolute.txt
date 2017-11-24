@@ -649,8 +649,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.VirtualizingWrapPane
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TestWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TestWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.HistoryEventPage.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.HistoryEventPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\PwdEditWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\PwdEditWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll

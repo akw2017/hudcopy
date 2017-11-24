@@ -6,7 +6,6 @@ using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Views;
-using AIC.HistoryEventPage.Views;
 using AIC.HomePage.Menus;
 using AIC.HomePage.Models;
 using AIC.HomePage.Views;

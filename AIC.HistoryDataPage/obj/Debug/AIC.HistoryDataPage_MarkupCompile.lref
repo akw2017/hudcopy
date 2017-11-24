@@ -3,6 +3,7 @@
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Themes\HistoryDataDiagramTemplate.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\HistoryDataDiagramView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\HistoryDataTrendView.xaml;;
+FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\HistoryEventAlarmTrendView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\RMSReplayDataView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\FrequencyDomainDataView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\OffDesignConditionDataView.xaml;;

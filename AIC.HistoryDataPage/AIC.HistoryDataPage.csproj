@@ -199,8 +199,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Models\ChannelToken.cs" />
+    <Compile Include="ViewModels\HistoryEventAlarmTrendViewModel.cs" />
     <Compile Include="ViewModels\HistoryDataDiagramViewModel.cs" />
     <Compile Include="ViewModels\HistoryDataListViewModel.cs" />
+    <Compile Include="ViewModels\HistoryEventListViewModel.cs" />
     <Compile Include="ViewModels\HistroyDataStatisticsViewModel.cs" />
     <Compile Include="ViewModels\HistoryDataTrendViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\AlarmPointTrendDataViewModel.cs" />
@@ -228,6 +230,12 @@
     </Compile>
     <Compile Include="Views\HistoryDataTrendView.xaml.cs">
       <DependentUpon>HistoryDataTrendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryEventAlarmTrendView.xaml.cs">
+      <DependentUpon>HistoryEventAlarmTrendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryEventListView.xaml.cs">
+      <DependentUpon>HistoryEventListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubViews\AlarmPointTrendDataView.xaml.cs">
       <DependentUpon>AlarmPointTrendDataView.xaml</DependentUpon>
@@ -368,6 +376,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HistoryDataTrendView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HistoryEventAlarmTrendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryEventListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

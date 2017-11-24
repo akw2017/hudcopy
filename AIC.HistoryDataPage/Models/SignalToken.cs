@@ -15,6 +15,19 @@ namespace AIC.HistoryDataPage.Models
     public class SignalToken : BindableBase
     {
         public event LimitChangedHandler LimitChanged;
+        private int index;
+        public int Index
+        {
+            get { return index; }
+            set
+            {
+                if (index != value)
+                {
+                    index = value;
+                    OnPropertyChanged(() => Index);
+                }
+            }
+        }
         public string DisplayName { get; set; }
         public string IP { get; set; }
         public Guid Guid { get; set; }
@@ -84,6 +97,7 @@ namespace AIC.HistoryDataPage.Models
         }       
         public bool IsShow { get; set; }
         public SolidColorBrush SolidColorBrush { get; set;}
+        public ChannelToken ChannelToken { get; set; }
     }
 
     public class BaseWaveSignalToken : SignalToken

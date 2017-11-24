@@ -28,6 +28,8 @@ using AIC.M9600.Common.DTO.Device;
 using AIC.MatlabMath;
 using System.Reflection;
 using System.ComponentModel;
+using System.Windows.Media;
+using Arction.Wpf.Charting;
 
 namespace AIC.HistoryDataPage.ViewModels
 {
@@ -671,6 +673,7 @@ namespace AIC.HistoryDataPage.ViewModels
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
+        private List<Color> ColorList = new List<Color>();
         #endregion
 
         #region 初始化
@@ -817,25 +820,28 @@ namespace AIC.HistoryDataPage.ViewModels
                 List<IWaveformData> result = new List<IWaveformData>();
                 foreach (var token in validTokens)
                 {
-                    var divtoken = token as BaseDivfreChannelToken; 
+                    if (token is BaseDivfreChannelToken)
+                    {
+                        var divtoken = token as BaseDivfreChannelToken;
 
-                    List<D_WirelessVibrationSlot_Waveform> data = null;
-                    if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
-                    {
-                        data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit"}, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
-                    }
-                    else
-                    {
-                        token.VData = null;
-                    }
-                    if (data != null && data.Count > 0)
-                    {
-                        result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
-                    }          
-                    else
-                    {
-                        token.VData = null;
-                    }         
+                        List<D_WirelessVibrationSlot_Waveform> data = null;
+                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        {
+                            data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
+                        }
+                        else
+                        {
+                            token.VData = null;
+                        }
+                        if (data != null && data.Count > 0)
+                        {
+                            result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
+                        }
+                        else
+                        {
+                            token.VData = null;
+                        }
+                    }    
                 }
 
                 await Task.Run(() => Parallel.For(0, result.Count, i =>
@@ -964,6 +970,11 @@ namespace AIC.HistoryDataPage.ViewModels
 #else
                 Xceed.Wpf.Toolkit.MessageBox.Show("请选择要查询的测点的数据类型", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+                return;
+            }
+
+            if (addedChannels.Count >= 16)
+            {
                 return;
             }
 
@@ -1105,6 +1116,15 @@ namespace AIC.HistoryDataPage.ViewModels
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList(),
                         };
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                        {
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }
                         amsReplayVM.AddChannel(channeltoken);
                         timeDomainVM.AddChannel(channeltoken);
                         frequencyDomainVM.AddChannel(channeltoken);
@@ -1250,7 +1270,8 @@ namespace AIC.HistoryDataPage.ViewModels
             }
         }
         private void ClearData(object para)
-        {            
+        {
+            ColorList.Clear();
             foreach (var token in addedChannels)
             {                
                 amsReplayVM.RemoveChannel(token);
@@ -1270,6 +1291,8 @@ namespace AIC.HistoryDataPage.ViewModels
             ChannelToken token = para as ChannelToken;
             if (addedChannels.Contains(token))
             {
+                ColorList.Remove(token.SolidColorBrush.Color);
+
                 addedChannels.Remove(token);
                 amsReplayVM.RemoveChannel(token);
                 alarmPointTrendVM.RemoveChannel(token);

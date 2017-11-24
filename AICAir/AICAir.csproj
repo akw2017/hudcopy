@@ -310,10 +310,6 @@
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
       <Name>AIC.HistoryDataPage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AIC.HistoryEventPage\AIC.HistoryEventPage.csproj">
-      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
-      <Name>AIC.HistoryEventPage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AIC.MatlabMath\AIC.MatlabMath.csproj">
       <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
       <Name>AIC.MatlabMath</Name>

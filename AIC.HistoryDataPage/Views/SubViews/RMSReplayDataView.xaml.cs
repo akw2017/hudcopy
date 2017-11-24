@@ -1,9 +1,11 @@
 ﻿using AIC.Core.Events;
+using AIC.CoreType;
 using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Annotations;
 using Arction.Wpf.Charting.Axes;
+using Arction.Wpf.Charting.EventMarkers;
 using Arction.Wpf.Charting.SeriesXY;
 using Arction.Wpf.Charting.Views.ViewXY;
 using System;
@@ -42,6 +44,8 @@ namespace AIC.HistoryDataPage.Views
 
         private static System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
 
+        public bool AddAlarmMarker = false;
+
         public RMSReplayDataView()
         {
             InitializeComponent();
@@ -61,6 +65,7 @@ namespace AIC.HistoryDataPage.Views
                 channelAddedSubscription = viewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
                 channelRemovedSubscription = viewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
                 channelDataChangedSubscription = viewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
+                AddAlarmMarker = viewModel.AddAlarmMarker;
             }
         }
 
@@ -129,9 +134,9 @@ namespace AIC.HistoryDataPage.Views
                         {
                             count -= 15;
                         }
-                        Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
-                        series.LineStyle.Color = color;
-                        series.Title.Color = color;
+                        //Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
+                        series.LineStyle.Color = vToken.SolidColorBrush.Color; //color;
+                        series.Title.Color = vToken.SolidColorBrush.Color; //color;
                     }
                     series.LineStyle.AntiAliasing = LineAntialias.Normal;
                     series.LineStyle.Width = 1;
@@ -142,6 +147,7 @@ namespace AIC.HistoryDataPage.Views
                     {
                         points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
                         points[i].Y = vToken.DataContracts[i].Result.Value;
+                        if (AddAlarmMarker) AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                     }
                     series.Points = points;
                     m_chart.ViewXY.PointLineSeries.Add(series);
@@ -225,6 +231,7 @@ namespace AIC.HistoryDataPage.Views
                         {
                             points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                             points[i].Y = anToken.DataContracts[i].Result.Value;
+                            if (AddAlarmMarker) AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                         }
                         series.Points = points;
                         m_chart.ViewXY.PointLineSeries.Add(series);
@@ -319,6 +326,7 @@ namespace AIC.HistoryDataPage.Views
                         }
                         points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time);
                         points[i].Y = divToken.DataContracts[i].Result.Value;
+                        if (AddAlarmMarker) AddMarker(series, points[i], divToken.DataContracts[i].AlarmGrade);
                     }
                     series.Points = points;
                     m_chart.ViewXY.PointLineSeries.Add(series);
@@ -344,7 +352,6 @@ namespace AIC.HistoryDataPage.Views
                 m_chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
 
                 m_chart.EndUpdate();
-
 
                 if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
                 {
@@ -467,6 +474,7 @@ namespace AIC.HistoryDataPage.Views
                         {  
                             points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(divToken.DataContracts[i].ACQDatetime);
                             points[i].Y = divToken.DataContracts[i].Result.Value;
+                            if (AddAlarmMarker) AddMarker(series, points[i], divToken.DataContracts[i].AlarmGrade);
                         }
                         series.Points = points;
                     }
@@ -489,6 +497,7 @@ namespace AIC.HistoryDataPage.Views
                         {
                             points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                             points[i].Y = anToken.DataContracts[i].Result.Value;
+                            if (AddAlarmMarker) AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                         }
                         series.Points = points;
                     }
@@ -592,6 +601,98 @@ namespace AIC.HistoryDataPage.Views
             gridChart.Children.Add(m_chart);
         }
 
+        private string JudgeAlarmType(int alarmType)
+        {
+            string alarmTypeStr = string.Empty;
+            AlarmGrade consts = (AlarmGrade)(alarmType & 0x00ffff00);
+            //int dynamic = alarmType & 0X0C;
+            //int comparative = alarmType & 0X30;
+            switch (consts)
+            {
+                case AlarmGrade.LowPreAlert:
+                case AlarmGrade.HighPreAlert:
+                    alarmTypeStr += "常数报警：预警";
+                    break;
+                case AlarmGrade.LowAlert:
+                case AlarmGrade.HighAlert:
+                    alarmTypeStr += "常数报警：警告";
+                    break;
+                case AlarmGrade.LowDanger:
+                case AlarmGrade.HighDanger:
+                    alarmTypeStr += "常数报警：危险";
+                    break;
+            }
+            //switch (dynamic)
+            //{
+            //    case 8:
+            //        alarmTypeStr += "\r\n" + "曲线报警：警告";
+            //        break;
+            //    case 12:
+            //        alarmTypeStr += "\r\n" + "曲线报警：危险";
+            //        break;
+            //}
+            //switch (comparative)
+            //{
+            //    case 32:
+            //        alarmTypeStr += "\r\n" + "相对报警：警告";
+            //        break;
+            //    case 48:
+            //        alarmTypeStr += "\r\n" + "相对报警：危险";
+            //        break;
+            //}
+            return alarmTypeStr;
+        }
+
+        private void AddMarker(PointLineSeries series, SeriesPoint point, int AlarmGrade)
+        {
+            string alarmTypeStr = JudgeAlarmType(AlarmGrade);
+            if (!string.IsNullOrEmpty(alarmTypeStr))
+            {
+                SeriesEventMarker marker = new SeriesEventMarker(series);
+                marker.XValue = point.X;
+                marker.YValue = point.Y;
+                marker.HorizontalPosition = SeriesEventMarkerHorizontalPosition.AtXValue;
+                marker.Symbol.Width = 5;
+                marker.Symbol.Height = 5;
+                //store values in label text    
+                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + m_chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy-MM-dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
+                marker.Label.HorizontalAlign = AlignmentHorizontal.Center;
+                marker.Label.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9f, System.Drawing.FontStyle.Bold);
+                marker.Label.Shadow.Style = TextShadowStyle.HighContrast;
+                marker.Label.Shadow.ContrastColor = Colors.Black;
+                marker.Label.VerticalAlign = AlignmentVertical.Top;
+                marker.Label.Visible = false;
+                marker.Symbol.GradientFill = GradientFillPoint.Solid;
+                if (alarmTypeStr.Contains("危险"))
+                {
+                    marker.Symbol.Color1 = Colors.Red;
+                }
+                else if (alarmTypeStr.Contains("警告"))
+                {
+                    marker.Symbol.Color1 = Colors.DarkOrange;
+                }
+                else if (alarmTypeStr.Contains("预警"))
+                {
+                    marker.Symbol.Color1 = Colors.Yellow;
+                }
+                marker.Symbol.Shape = Arction.Wpf.Charting.Shape.Circle;
+                marker.VerticalPosition = SeriesEventMarkerVerticalPosition.AtYValue;
+                marker.MoveByMouse = false;
+                marker.MouseOverOn += new MouseEventHandler(marker_MouseOverOn);
+                marker.MouseOverOff += new MouseEventHandler(marker_MouseOverOff);
+                series.SeriesEventMarkers.Add(marker);
+            }
+        }
+
+        private void marker_MouseOverOff(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = false;
+        }
+        private void marker_MouseOverOn(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = true;
+        }
+
         private void ViewXY_BeforeZooming(List<RangeChangeInfo> xRanges, List<RangeChangeInfo> yRanges, bool byWheel, ref bool cancel)
         {
             m_chart.BeginUpdate();
@@ -675,7 +776,7 @@ namespace AIC.HistoryDataPage.Views
             viewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueBegin);
             viewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueEnd);
         }
-        private void cursor_PositionChanged(Object sender, PositionChangedEventArgs e)
+        private void cursor_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
         {
             e.CancelRendering = true;
             UpdateCursorResult(e.Cursor.ValueAtXAxis);

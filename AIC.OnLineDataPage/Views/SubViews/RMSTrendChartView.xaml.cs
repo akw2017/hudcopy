@@ -289,7 +289,6 @@ namespace AIC.OnLineDataPage.Views.SubViews
             //}
             return alarmTypeStr;
         }
-
         private void AddMarker(PointLineSeries series, SeriesPoint point, int AlarmGrade)
         {
             string alarmTypeStr = JudgeAlarmType(AlarmGrade);
