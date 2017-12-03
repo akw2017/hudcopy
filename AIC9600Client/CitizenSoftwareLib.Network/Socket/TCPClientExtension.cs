@@ -17,12 +17,6 @@ namespace CitizenSoftwareLib.Network.Socket
             thread.Start(new Tuple<TcpClient, string, int>(client, ip, port));
             thread.Join(timeoutSeconds * 1000);
             return client.Connected;
-
-            //Task.Factory.StartNew(() =>
-            //{
-            //    client.Connect(ip, port);
-            //}).Wait(timeoutSeconds * 1000);
-            //return client.Connected;
         }
 
         private static void BeginConnect(object obj)

@@ -399,12 +399,12 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        public ICommand selectedDataGridChangedComamnd;
-        public ICommand SelectedDataGridChangedComamnd
+        public ICommand mouseDoubleClickComamnd;
+        public ICommand MouseDoubleClickComamnd
         {
             get
             {
-                return this.selectedDataGridChangedComamnd ?? (this.selectedDataGridChangedComamnd = new DelegateCommand<object>(para => this.SelectedDataGridChanged(para)));
+                return this.mouseDoubleClickComamnd ?? (this.mouseDoubleClickComamnd = new DelegateCommand<object>(para => this.MouseDoubleClick(para)));
             }
         }
 
@@ -423,6 +423,24 @@ namespace AIC.OnLineDataPage.ViewModels
             get
             {
                 return this.cancelCommmad ?? (this.cancelCommmad = new DelegateCommand(() => this.StopDiagnosis(), () => CanStopDiagnosis()));
+            }
+        }
+
+        public ICommand groupViewCommand;
+        public ICommand GroupViewCommand
+        {
+            get
+            {
+                return this.groupViewCommand ?? (this.groupViewCommand = new DelegateCommand(() => this.GroupView()));
+            }
+        }
+
+        public ICommand unGroupViewCommand;
+        public ICommand UnGroupViewCommand
+        {
+            get
+            {
+                return this.unGroupViewCommand ?? (this.unGroupViewCommand = new DelegateCommand(() => this.UnGroupView()));
             }
         }
         #endregion
@@ -454,7 +472,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
         }
 
-        private void SelectedDataGridChanged(object para)
+        private void MouseDoubleClick(object para)
         {
             var sg = para as BaseWaveSignal;
             if (sg != null && sg.DiagnosticAdvice != null)
@@ -462,9 +480,21 @@ namespace AIC.OnLineDataPage.ViewModels
 #if XBAP
                 MessageBox.Show(sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show(sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
+                Xceed.Wpf.Toolkit.MessageBox.Show(sg.DiagnosticInfo + "\n\r" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #endif
             }
+        }
+
+        private void GroupView()
+        {
+            _view.GroupDescriptions.Clear();
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
+        }
+
+        private void UnGroupView()
+        {
+            _view.GroupDescriptions.Clear();
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("NullName"));//对视图进行分组
         }
 
         private CancellationTokenSource cts;

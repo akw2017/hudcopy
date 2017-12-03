@@ -69,7 +69,7 @@ namespace AIC.HomePage.Views
             //    str += "部署版本：" + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
             //}
             //catch { }
-            string str = LocalAddress.Version;
+            string str = LocalSetting.Version;
             return str;
         }
 

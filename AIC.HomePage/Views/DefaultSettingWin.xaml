@@ -11,9 +11,6 @@
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
         Title="修改配置文件地址" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/set.png" Topmost="True">
-    <Window.InputBindings>
-        <KeyBinding Gesture="Control+Alt+S" Command="{Binding SettingCommand}" />
-    </Window.InputBindings>
     <Grid Background ="{DynamicResource AccentColorBrush2}">
         <Grid Margin="20" Height="370" >
             <Grid.ColumnDefinitions>
@@ -55,14 +52,24 @@
             <TextBox x:Name="serverporttxt" PreviewTextInput="tb_PreviewTextInput" input:InputMethod.IsInputMethodEnabled="False" Grid.Row="7" Grid.Column="1"/>
             <TextBlock Grid.Row="8" Text="实时数据缓存时间" VerticalAlignment="Center" />
             <TextBox x:Name="timetxt" Grid.Row="8" Grid.Column="1"/>
-            <Button Grid.Row="9" Grid.Column="1" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
-                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>           
+            <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >               
+                <Button Grid.Row="9" Grid.Column="1" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                            <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="20,0,0,0"  Width="100" Click="btnClose_Click" IsCancel="True">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                            <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>     
         </Grid>
     </Grid>
 </Controls:MetroWindow>

@@ -20,8 +20,8 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Control.Resources>
-        <ResourceDictionary>          
- 
+        <ResourceDictionary>
+            <conveter:StringShowLenghtConverter x:Key="stringShowLenghtConverter"/>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
@@ -130,9 +130,8 @@
         </TreeView>
 
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-        <!--<view:AlarmGradeFilterView Grid.Row="0" Grid.Column="2" Margin="0,5"/>-->
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
-            
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">            
             <TextBlock Text="数据诊断:" VerticalAlignment="Center" Margin="2,0,2,0"/>
             <Button Command="{Binding StartDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
                 <Button.Content>
@@ -143,20 +142,51 @@
                 </Button.Content>
             </Button>         
         </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <CheckBox VerticalAlignment="Center" IsChecked="True" Content="分组显示"  Style="{StaticResource CheckBoxStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding GroupViewCommand}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unchecked">
+                        <i:InvokeCommandAction Command="{Binding UnGroupViewCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </CheckBox>
+        </StackPanel>
 
         <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
                                  ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="*" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" ScrollViewer.CanContentScroll="True">
+            <DataGrid.Resources>
+                <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </DataGrid.Resources>
             <DataGrid.Columns>               
-                <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
-                <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
-                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" MinWidth="180" IsReadOnly="True"/>              
-                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>             
-                <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>              
+                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>              
+                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>             
+                <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="诊断结果" Binding="{Binding DiagnosticInfo}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="诊断详情" Binding="{Binding DiagnosticAdvice}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="诊断结果">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding DiagnosticInfo,Converter={StaticResource stringShowLenghtConverter}}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt" ToolTip="诊断详情" VerticalAlignment="Center">
+                                    <Hyperlink Command="{Binding DataContext.MouseDoubleClickComamnd, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"> <TextBlock Text="..."/> </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding DiagnosticAdvice}" Value="{x:Null}">
+                                    <Setter TargetName="txt" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>           
             <DataGrid.GroupStyle>
                 <GroupStyle>
@@ -183,6 +213,11 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Name}" Value="">
+                                    <Setter Property="Template" Value="{StaticResource defaultGroup}" />
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                     </GroupStyle.ContainerStyle>
                     <GroupStyle.Panel>
@@ -196,12 +231,11 @@
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
                 </Style>
-            </DataGrid.ColumnHeaderStyle>          
-          
+            </DataGrid.ColumnHeaderStyle>      
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-
+                    <Setter Property="Margin" Value="0,0,100,0"/>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>
@@ -246,8 +280,8 @@
                 </Style>
             </DataGrid.Style>
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectedDataGridChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=gridview}"/>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding MouseDoubleClickComamnd}" CommandParameter="{Binding SelectedItem, ElementName=gridview}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>       

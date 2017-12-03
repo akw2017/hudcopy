@@ -28,6 +28,8 @@ using AIC.M9600.Common.DTO.Device;
 using AIC.MatlabMath;
 using System.Reflection;
 using System.ComponentModel;
+using System.Windows.Media;
+using Arction.Wpf.Charting;
 
 namespace AIC.HistoryDataPage.ViewModels
 {
@@ -150,6 +152,7 @@ namespace AIC.HistoryDataPage.ViewModels
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
+        private List<Color> ColorList = new List<Color>();
         #endregion
 
         #region 初始化
@@ -377,7 +380,7 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion 
 
-        public async void AddData(ItemTreeItemViewModel item, DateTime start, DateTime end)
+        public async Task AddData(ItemTreeItemViewModel item, DateTime start, DateTime end)
         {      
 
             string selectedip = item.ServerIP;
@@ -405,6 +408,15 @@ namespace AIC.HistoryDataPage.ViewModels
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList(),
                         };
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                        {
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }
                         amsReplayVM.AddChannel(channeltoken);
                         timeDomainVM.AddChannel(channeltoken);
                         frequencyDomainVM.AddChannel(channeltoken);
@@ -429,7 +441,18 @@ namespace AIC.HistoryDataPage.ViewModels
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList(),
                         };
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                        {
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }
                         amsReplayVM.AddChannel(channeltoken);
+                        timeDomainVM.IsVisible = false;
+                        frequencyDomainVM.IsVisible = false;
                     }
                 }
                 catch (Exception ex)

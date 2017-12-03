@@ -446,18 +446,6 @@
             <ListBox Grid.Column="2" x:Name="listBox" Background="{x:Null}" BorderBrush="{x:Null}" 
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                          ItemsSource="{Binding HistoricalDatas}" ItemContainerStyle="{StaticResource SignalMonitorStyle}" >
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
-                            <core:FluidWrapPanel.ElementEasing>
-                                <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
-                            </core:FluidWrapPanel.ElementEasing>
-                            <core:FluidWrapPanel.DragEasing>
-                                <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
-                            </core:FluidWrapPanel.DragEasing>
-                        </core:FluidWrapPanel>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
             </ListBox>
         </Grid>        
 

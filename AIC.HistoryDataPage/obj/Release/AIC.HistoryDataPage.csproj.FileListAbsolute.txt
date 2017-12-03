@@ -56,7 +56,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.CoreType.pd
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.Resources.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.ServiceInterface.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.Themes.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.M9600.Client.DataProvider.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.M9600.Common.DTO.pdb
@@ -145,3 +144,13 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\MahApps.Metro.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryEventListView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryDataTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryEventAlarmTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryEventListView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryDataTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\HistoryEventAlarmTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\AIC.ServiceInterface.pdb

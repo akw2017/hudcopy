@@ -12,8 +12,8 @@
     <AssemblyName>Kent.Boogaart.Truss</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Kent.Boogaart.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Truss.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -127,6 +127,9 @@
     <Content Include="Documentation\Examples.xml" />
     <Content Include="Documentation\Shared.xml" />
     <Content Include="Notes and Problems.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Truss.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

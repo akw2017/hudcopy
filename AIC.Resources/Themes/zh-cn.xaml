@@ -67,6 +67,9 @@
     <s:String x:Key="menuOrganizationManage">组织管理</s:String>
     <s:String x:Key="menuManageLog">管理日志</s:String>
 
+    <s:String x:Key="menuEquipmentData">设备数据</s:String>
+    <s:String x:Key="menuEquipmentRunStatus">设备运行状态</s:String>
+
     <s:String x:Key="menuSetting">设置</s:String>
     <s:String x:Key="menuServerSetting">服务器管理</s:String>
     <s:String x:Key="menuCollectorSetting">数采器管理</s:String>
@@ -100,6 +103,7 @@
     <s:String x:Key="delete">删除</s:String>
     <s:String x:Key="unbind">解绑</s:String>
     <s:String x:Key="search">搜索</s:String>
+    <s:String x:Key="query">查询</s:String>
     <s:String x:Key="add">添加</s:String>
     <s:String x:Key="edit">修改</s:String>
     <s:String x:Key="default">默认</s:String>

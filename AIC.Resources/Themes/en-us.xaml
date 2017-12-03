@@ -67,6 +67,9 @@
     <s:String x:Key="menuOrganizationManage">OrganizationManage</s:String>
     <s:String x:Key="menuManageLog">SettingLog</s:String>
 
+    <s:String x:Key="menuEquipmentData">EquipmentData</s:String>
+    <s:String x:Key="menuEquipmentRunStatus">EquipmentRunStatus</s:String>
+
     <s:String x:Key="menuSetting">System</s:String>
     <s:String x:Key="menuServerSetting">ServerSetting</s:String>
     <s:String x:Key="menuCollectorSetting">CollectorSetting</s:String>
@@ -99,7 +102,8 @@
 
     <s:String x:Key="delete">Delete</s:String>
     <s:String x:Key="unbind">Unbind</s:String>
-    <s:String x:Key="search">Search</s:String>    
+    <s:String x:Key="search">Search</s:String>
+    <s:String x:Key="query">Query</s:String>
     <s:String x:Key="add">Add</s:String>
     <s:String x:Key="edit">Edit</s:String>
     <s:String x:Key="default">Default</s:String>
@@ -164,7 +168,7 @@
     <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
     <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>
     <s:String x:Key="menuSystemEventList">HistoryEventList</s:String>
-    
+
     <s:String x:Key="deviceName">DeviceName</s:String>
     <s:String x:Key="groupByDevice">GroupByDevice</s:String>
 

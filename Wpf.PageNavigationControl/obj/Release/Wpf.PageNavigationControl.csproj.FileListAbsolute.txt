@@ -12,3 +12,7 @@ D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageN
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\Wpf.PageNavigationControl.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Release\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\bin\Release\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\TrendNavigation.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\Release\TrendNavigation.baml

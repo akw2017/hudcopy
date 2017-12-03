@@ -16,7 +16,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\MapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ServerSetWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ServerSetView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage_MarkupCompile.lref
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.dll.config
@@ -145,3 +144,13 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.pdb

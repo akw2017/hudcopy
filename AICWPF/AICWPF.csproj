@@ -29,7 +29,7 @@
     <ProductName>AIC.Desktop</ProductName>
     <PublisherName>AIC</PublisherName>
     <SuiteName>AIC</SuiteName>
-    <ApplicationRevision>51</ApplicationRevision>
+    <ApplicationRevision>52</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -231,6 +231,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="AICWPF_TemporaryKey.pfx" />
+    <None Include="MyData\Configuration\config.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -280,6 +283,10 @@
     <ProjectReference Include="..\AIC.DatabaseService\AIC.DatabaseService.csproj">
       <Project>{924eaea3-3c39-418e-816f-8383f18285ad}</Project>
       <Name>AIC.DatabaseService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.DeviceDataPage\AIC.DeviceDataPage.csproj">
+      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
+      <Name>AIC.DeviceDataPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>

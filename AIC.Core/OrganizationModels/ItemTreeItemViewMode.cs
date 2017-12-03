@@ -32,10 +32,12 @@ namespace AIC.Core.OrganizationModels
                     if (Parent != null)
                     {
                         var alarms = Parent.Children.Where(o => (o as ItemTreeItemViewModel).T_Item != null && (o as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo).OrderBy(o => (o as ItemTreeItemViewModel).IsRunning).Select(o => (o as ItemTreeItemViewModel).IsRunning).ToList();
-                        int count = alarms.Count();
-                        var alarm = alarms[count / 2];
-                        (Parent as DeviceTreeItemViewModel).IsRunning = alarm;
-
+                        if (alarms.Count > 0)
+                        {
+                            int count = alarms.Count;
+                            var alarm = alarms[count / 2];
+                            (Parent as DeviceTreeItemViewModel).IsRunning = alarm;
+                        }
                         //var isRunnings = Parent.Children.Where(o => (o as ItemTreeItemViewModel).IsRunning == true).Select(o => (o as ItemTreeItemViewModel).IsRunning);
 
                         //if (isRunnings == null || isRunnings.Count() == 0)

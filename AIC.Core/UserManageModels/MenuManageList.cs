@@ -32,7 +32,9 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuOnlineDataDiagnosis { get; set; }
         public MyMenu MenuOnlineDataStatistics { get; set; }
         public MyMenu MenuHistoryDataStatistics { get; set; }
-
+        public MyMenu MenuHistoryDataTrend { get; set; }
+        public MyMenu MenuHistoryEventList { get; set; }
+        public MyMenu MenuEquipmentRunTime { get; set; }
         public Dictionary<int, MyMenu> Dictionary { get; set; }
 
         public MenuManageList()
@@ -58,7 +60,10 @@ namespace AIC.Core.UserManageModels
             MenuHistoryDataDiagram = new MyMenu(18, (string)Application.Current.Resources["menuHistoryDataDiagram"]);
             MenuOnlineDataDiagnosis = new MyMenu(19, (string)Application.Current.Resources["menuOnlineDataDiagnosis"]);
             MenuOnlineDataStatistics = new MyMenu(20, (string)Application.Current.Resources["menuOnlineDataStatistics"]);
-            MenuHistoryDataStatistics = new UserManageModels.MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"]);
+            MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"]);
+            MenuHistoryEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"]);
+            MenuHistoryDataTrend = new MyMenu(23, (string)Application.Current.Resources["menuHistoryDataTrend"]);
+            MenuEquipmentRunTime = new MyMenu(24, (string)Application.Current.Resources["menuHistoryDataTrend"]);
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -79,9 +84,12 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(16, MenuOnlineDataOverview);
             Dictionary.Add(17, MenuHistoryDataList);
             Dictionary.Add(18, MenuHistoryDataDiagram);
-            //Dictionary.Add(19, MenuOnlineDataDiagnosis);
-            //Dictionary.Add(20, MenuOnlineDataStatistics);
-            //Dictionary.Add(21, MenuHistoryDataStatistics);
+            Dictionary.Add(19, MenuOnlineDataDiagnosis);//<!--昌邑石化-->
+            Dictionary.Add(20, MenuOnlineDataStatistics);
+            Dictionary.Add(21, MenuHistoryDataStatistics);
+            Dictionary.Add(22, MenuHistoryEventList);
+            Dictionary.Add(23, MenuHistoryDataTrend);
+            Dictionary.Add(24, MenuEquipmentRunTime);
         }
     }
 }

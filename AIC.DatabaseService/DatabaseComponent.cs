@@ -47,7 +47,7 @@ namespace AIC.DatabaseService
         {
             //if (!Clients.ContainsKey(ip))
             //{
-            //    var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            //    var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //    lock (Clients)
             //    {
             //        Clients.Add(ip, client);
@@ -192,7 +192,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_User>> LoadUserData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var userTask = Task.Run(() => client.Query<T_User>(null, "where 1 = 1", null));           
             
@@ -214,7 +214,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_Role>> LoadRoleData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var roleTask = Task.Run(() => client.Query<T_Role>(null, "where 1 = 1", null));
 
@@ -236,7 +236,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_Menu>> LoadMenuData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var menuTask = Task.Run(() => client.Query<T_Menu>(null, "where 1 = 1", null));
 
@@ -258,7 +258,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_Device>> LoadDeviceData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var deviceTask = Task.Run(() => client.Query<T_Device>(null, "where 1 = 1", null));
 
@@ -280,7 +280,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_Organization>> LoadOrganizationData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var organizationTask = Task.Run(() => client.Query<T_Organization>(null, "where 1 = 1", null));
 
@@ -302,7 +302,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_Item>> LoadItemData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var itemTask = Task.Run(() => client.Query<T_Item>(null, "where 1 = 1", null));
 
@@ -324,7 +324,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_OrganizationPrivilege>> LoadOrganizationPrivilegeData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var organizationPrivilegeTask = Task.Run(() => client.Query<T_OrganizationPrivilege>(null, "where 1 = 1", null));
 
@@ -346,7 +346,7 @@ namespace AIC.DatabaseService
 
         public async Task<List<T1_DivFreInfo>> LoadDivFreData(string ip)
         {
-            var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             //var client = Clients[ip];
             var divFreInfoTask = Task.Run(() => client.Query<T_DivFreInfo>(null, "where 1 = 1", null));
             await Task.WhenAll(divFreInfoTask);
@@ -368,7 +368,7 @@ namespace AIC.DatabaseService
         {
             try
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 await GetHardwareTables(client, T_RootCard[ip]);               
                 return T_RootCard[ip];
             }
@@ -382,7 +382,7 @@ namespace AIC.DatabaseService
         {
             try
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 return await AddHardwareTables(ip, client, rootcard); 
             }
             catch (Exception e)
@@ -395,7 +395,7 @@ namespace AIC.DatabaseService
         {
             try
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 return await DeleteHardwareTables(client, ip, rootcard);             
             }
             catch (Exception e)
@@ -408,7 +408,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse<long[]> addResult = client.Add<T>(objs);
                 //先判断是不是OK          
                 if (addResult.IsOK)
@@ -437,7 +437,7 @@ namespace AIC.DatabaseService
         {            
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse<long[]> addResult = client.Add<T>(
                     new T[] { obj });
                 //先判断是不是OK          
@@ -461,7 +461,7 @@ namespace AIC.DatabaseService
         {          
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse<List<T>> queryResult = client.Query<T>(columns, condition, args);
                 //先判断是不是OK          
                 if (queryResult.IsOK)
@@ -483,7 +483,7 @@ namespace AIC.DatabaseService
         {          
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse modifyResult = client.Modify<T>(columns, objs);
                 //先判断是不是OK          
                 if (modifyResult.IsOK)
@@ -505,7 +505,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse modifyResult = client.Modify<T>(columns, new T[] { obj });
                 //先判断是不是OK          
                 if (modifyResult.IsOK)
@@ -527,7 +527,7 @@ namespace AIC.DatabaseService
         {           
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse deleteResult = client.Delete<T>("id", ids);
                 //先判断是不是OK          
                 if (deleteResult.IsOK)
@@ -553,7 +553,7 @@ namespace AIC.DatabaseService
         {           
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse deleteResult = client.Delete<T>("id", new object[] { id });
                 //先判断是不是OK          
                 if (deleteResult.IsOK)
@@ -578,7 +578,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 var complexResult = client.Complex(addObjs, modifyObjs, deleteObjs);
                 //先判断是不是OK          
                 if (complexResult.IsOK)
@@ -629,8 +629,8 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(serverip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
-                var complexResult = client.CommunicateDevice(ip, @LocalAddress.PDAPort, json, addObjs, modifyObjs, deleteObjs);
+                var client = new DataProvider(serverip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
+                var complexResult = client.CommunicateDevice(ip, @LocalSetting.PDAPort, json, addObjs, modifyObjs, deleteObjs);
                 //先判断是不是OK          
                 if (complexResult.IsOK)
                 {
@@ -2841,7 +2841,7 @@ namespace AIC.DatabaseService
         {            
             return await Task.Run(() =>
             {             
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
 
                 var queryResult = client.Query<T_User>(null, "(Name = @0 and (Password = @1 or Password = @2))", new object[] { user, pwd, MyEncrypt.EncryptDES(pwd) });
                 //先判断是不是OK          
@@ -2874,7 +2874,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
 
                 var queryResult = client.Query<T_Role>(null, "where 1 = 1", null);
                 //先判断是不是OK          
@@ -2887,7 +2887,7 @@ namespace AIC.DatabaseService
                     string error = queryResult.ErrorMessage;
                     if (queryResult.ErrorType == "#ServerVersionUnmatch")
                     {
-                        error = "版本" + LocalAddress.Version + "与服务器版本" + error + "不匹配！#";
+                        error = "版本" + LocalSetting.Version + "与服务器版本" + error + "不匹配！#";
                     }
                     else
                     {

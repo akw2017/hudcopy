@@ -211,6 +211,7 @@
     <Compile Include="Models\LockManage.cs" />
     <Compile Include="Models\LoginManage.cs" />
     <Compile Include="Models\PlaySound.cs" />
+    <Compile Include="Models\SlideChangedEventArgs.cs" />
     <Compile Include="Models\VibrationHistory.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainRegionViewModel.cs" />
@@ -219,6 +220,9 @@
     <Compile Include="ViewModels\ShowAlarmWinViewModel.cs" />
     <Compile Include="Views\AlarmAckListWin.xaml.cs">
       <DependentUpon>AlarmAckListWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryQuickPlayWin.xaml.cs">
+      <DependentUpon>HistoryQuickPlayWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PwdEditWin.xaml.cs">
       <DependentUpon>PwdEditWin.xaml</DependentUpon>
@@ -298,6 +302,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AlarmAckListWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HistoryQuickPlayWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -382,6 +390,10 @@
     <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
       <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
       <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.DeviceDataPage\AIC.DeviceDataPage.csproj">
+      <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
+      <Name>AIC.DeviceDataPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>

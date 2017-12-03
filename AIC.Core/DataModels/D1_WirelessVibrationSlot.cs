@@ -79,7 +79,7 @@ namespace AIC.Core.DataModels
             }
         }
 
-        public new AlarmLimit[] AlarmLimit //用户登录名
+        public new AlarmLimit[] AlarmLimit //
         {
             get
             {

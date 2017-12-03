@@ -170,7 +170,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 OnPropertyChanged("WaitInfo");
             }
         }
-
         #endregion
 
         #region Command
@@ -271,9 +270,18 @@ namespace AIC.HistoryDataPage.ViewModels
                         BaseAlarmSignal sg = sglist.Where(p => p.Guid == alarm.Key).FirstOrDefault();
                         if (sg != null)
                         {
-                            sg.PreAlarmCount = alarm.Value["PreAlarmCount"];
-                            sg.AlarmCount = alarm.Value["AlarmCount"];
-                            sg.DangerCount = alarm.Value["DangerCount"];
+                            if (alarm.Value.ContainsKey("PreAlarmCount"))
+                            {
+                                sg.PreAlarmCount = alarm.Value["PreAlarmCount"];
+                            }
+                            if (alarm.Value.ContainsKey("AlarmCount"))
+                            {
+                                sg.AlarmCount = alarm.Value["AlarmCount"];
+                            }
+                            if (alarm.Value.ContainsKey("DangerCount"))
+                            {
+                                sg.DangerCount = alarm.Value["DangerCount"];
+                            }
                             var first = alarm.Value["FirstUploadTime"];
                             var last = alarm.Value["LastUploadTime"];
                             sg.FirstUploadTime = new DateTime((long)first);

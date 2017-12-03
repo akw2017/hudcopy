@@ -49,7 +49,8 @@
             <Style x:Key="ItemContainerStyle" TargetType="{x:Type localControls:ResizableItem}" >
                 <Setter Property="Margin" Value="0,2,0,0"/>
                 <Setter Property="MinHeight" Value="20"/>
-                <Setter Property="Height" Value="600"/>
+                <!--<Setter Property="Height" Value="600"/>--><!--昌邑石化-->
+                <Setter Property="Height" Value="246"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                 <Setter Property="Template">

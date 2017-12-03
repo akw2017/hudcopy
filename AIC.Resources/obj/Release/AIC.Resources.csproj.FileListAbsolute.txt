@@ -54,3 +54,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csproj.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\CheckBoxStyle.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.g.cs

@@ -373,5 +373,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.HistoryEventPage.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.HistoryEventPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\msg.wav

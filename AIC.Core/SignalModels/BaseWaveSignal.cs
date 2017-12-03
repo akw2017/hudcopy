@@ -65,7 +65,7 @@ namespace AIC.Core.SignalModels
         public float BiasVoltHigh { get; set; }//偏置高电压
         public float BiasVoltLow { get; set; }//偏置低电压  
 
-        private string diagnosticInfo;
+        private string diagnosticInfo = null;
         public string DiagnosticInfo//诊断信息        
         {
             get
@@ -79,7 +79,7 @@ namespace AIC.Core.SignalModels
             }
         }
 
-        private string diagnosticAdvice;
+        private string diagnosticAdvice = null;
         public string DiagnosticAdvice//诊断信息        
         {
             get

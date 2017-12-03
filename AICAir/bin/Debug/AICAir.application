@@ -7,14 +7,14 @@
     <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="AICAir.exe.manifest" size="73763">
+    <dependentAssembly dependencyType="install" codebase="AICAir.exe.manifest" size="73535">
       <assemblyIdentity name="AICAir.exe" version="1.0.0.37" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OWCnOvsXvcamDN3HSnTw2gjQOaBm/IeyHUqYM4c2Qno=</dsig:DigestValue>
+        <dsig:DigestValue>sUNZ8eNchGdzSwgrURugg1S32raTW7WyE5z5iyQDt5A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

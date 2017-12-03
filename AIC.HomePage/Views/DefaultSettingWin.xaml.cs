@@ -19,28 +19,28 @@ namespace AIC.HomePage.Views
         public DefaultSettingWin()
         {            
             InitializeComponent();
-            servertxt.Text = LocalAddress.ServerXmlDir;
-            maptxt.Text = LocalAddress.MapHtmlUri;           
-            devicetxt.Text = LocalAddress.LayoutPath;
-            giftxt.Text = LocalAddress.GifDir;
-            pdaporttxt.Text = LocalAddress.PDAPort.ToString();
-            serverporttxt.Text = LocalAddress.ServerPort.ToString();
-            screentxt.Text = LocalAddress.ScreenShotDir.ToString();
-            timetxt.Text = LocalAddress.UpdateTime.ToString();
+            servertxt.Text = LocalSetting.ServerXmlDir;
+            maptxt.Text = LocalSetting.MapHtmlUri;           
+            devicetxt.Text = LocalSetting.LayoutPath;
+            giftxt.Text = LocalSetting.GifDir;
+            pdaporttxt.Text = LocalSetting.PDAPort.ToString();
+            serverporttxt.Text = LocalSetting.ServerPort.ToString();
+            screentxt.Text = LocalSetting.ScreenShotDir.ToString();
+            timetxt.Text = LocalSetting.UpdateTime.ToString();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                LocalAddress.ServerXmlDir = servertxt.Text;
-                LocalAddress.MapHtmlUri = maptxt.Text;              
-                LocalAddress.LayoutPath = devicetxt.Text;
-                LocalAddress.GifDir = giftxt.Text;
-                LocalAddress.PDAPort = Convert.ToInt32(pdaporttxt.Text);
-                LocalAddress.ServerPort = Convert.ToInt32(serverporttxt.Text);
-                LocalAddress.ScreenShotDir = screentxt.Text;
-                LocalAddress.UpdateTime = Convert.ToInt32(timetxt.Text);
+                LocalSetting.ServerXmlDir = servertxt.Text;
+                LocalSetting.MapHtmlUri = maptxt.Text;              
+                LocalSetting.LayoutPath = devicetxt.Text;
+                LocalSetting.GifDir = giftxt.Text;
+                LocalSetting.PDAPort = Convert.ToInt32(pdaporttxt.Text);
+                LocalSetting.ServerPort = Convert.ToInt32(serverporttxt.Text);
+                LocalSetting.ScreenShotDir = screentxt.Text;
+                LocalSetting.UpdateTime = Convert.ToInt32(timetxt.Text);
 
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -63,6 +63,11 @@ namespace AIC.HomePage.Views
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设置错误", ex));
             }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void serverbtn_Click(object sender, RoutedEventArgs e)

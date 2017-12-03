@@ -19,7 +19,7 @@ namespace AIC.HomePage.Views
         public VersionWin()
         {
             InitializeComponent();
-            versiontxt.Text = LocalAddress.Version;
+            versiontxt.Text = LocalSetting.Version;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

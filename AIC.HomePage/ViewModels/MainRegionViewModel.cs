@@ -5,6 +5,7 @@ using AIC.Core.Models;
 using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
+using AIC.DeviceDataPage.Views;
 using AIC.HistoryDataPage.Views;
 using AIC.HomePage.Menus;
 using AIC.HomePage.Models;
@@ -87,7 +88,9 @@ namespace AIC.HomePage.ViewModels
             WhenPropertyChanged.Where(o => o.ToString() == "Alarm").Subscribe(OnAlarmGradeChanged);
 
             _eventAggregator.GetEvent<LoginEvent>().Subscribe(LoginFinishEvent);
-            _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);
+            _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);//<!--昌邑石化-->
+
+            WhenSlideChanged.Throttle(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseSlideChanged);
 
             LoginManage.LoginChanged += LoginManage_LoginChanged;
         }
@@ -427,6 +430,104 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
+        public DateTime? historyplayTime = DateTime.Now;
+        public DateTime? HistoryplayTime
+        {
+            get
+            {
+                return historyplayTime;
+            }
+            set
+            {
+                historyplayTime = value;
+                OnPropertyChanged("HistoryplayTime");
+            }
+        }
+
+        public float historyModeActualSpeedUpRatio = 1;
+        public float HistoryModeActualSpeedUpRatio
+        {
+            get
+            {
+                return historyModeActualSpeedUpRatio;
+            }
+            set
+            {
+                historyModeActualSpeedUpRatio = value;
+                OnPropertyChanged("HistoryModeActualSpeedUpRatio");
+            }
+        }
+
+        private bool speedPause = false;
+        public bool SpeedPause
+        {
+            get
+            {
+                return speedPause;
+            }
+            set
+            {
+                speedPause = value;
+                OnPropertyChanged("SpeedPause");
+            }
+        }
+
+        private float historyplayProcess = 0;
+        public float HistoryplayProcess
+        {
+            get
+            {
+                return historyplayProcess;
+            }
+            set
+            {
+                historyplayProcess = value;
+                OnPropertyChanged("HistoryplayProcess");
+            }
+        }
+
+        private bool isShowHistoryplay = false;
+        public bool IsShowHistoryplay
+        {
+            get
+            {
+                return isShowHistoryplay;
+            }
+            set
+            {
+                isShowHistoryplay = value;
+                OnPropertyChanged("IsShowHistoryplay");
+            }
+        }
+
+        private bool isHistoryRrackingMode = false;
+        public bool IsHistoryRrackingMode
+        {
+            get
+            {
+                return isHistoryRrackingMode;
+            }
+            set
+            {
+                isHistoryRrackingMode = value;
+                OnPropertyChanged("IsHistoryRrackingMode");
+            }
+        }
+
+        private string historyModeName = "历史跟踪模式";
+        public string HistoryModeName
+        {
+            get
+            {
+                return historyModeName;
+            }
+            set
+            {
+                historyModeName = value;
+                OnPropertyChanged("HistoryModeName");
+            }
+        }
+
         public IObservable<string> WhenPropertyChanged
         {
             get
@@ -585,6 +686,16 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
+        private ICommand historyQuickPlaySettingCommmad;
+        public ICommand HistoryQuickPlaySettingCommmad
+        {
+            get
+            {
+                return this.historyQuickPlaySettingCommmad ?? (this.historyQuickPlaySettingCommmad = new DelegateCommand(() => this.HistoryQuickPlaySetting()));
+            }
+        }
+        
+
         private ICommand dangerListClickCommmad;
         public ICommand DangerListClickCommmad
         {
@@ -601,7 +712,55 @@ namespace AIC.HomePage.ViewModels
                 return this.dangerListDetailCommmad ?? (this.dangerListDetailCommmad = new DelegateCommand(() => this.DangerListDetail()));
             }
         }
-        
+
+        private ICommand decreaseSpeedCommand;
+        public ICommand DecreaseSpeedCommand
+        {
+            get
+            {
+                return this.decreaseSpeedCommand ?? (this.decreaseSpeedCommand = new DelegateCommand(() => this.DecreaseSpeed()));
+            }
+        }
+
+        private ICommand increaseSpeedCommand;
+        public ICommand IncreaseSpeedCommand
+        {
+            get
+            {
+                return this.increaseSpeedCommand ?? (this.increaseSpeedCommand = new DelegateCommand(() => this.IncreaseSpeed()));
+            }
+        }
+
+        private ICommand pauseSpeedCommand;
+        public ICommand PauseSpeedCommand
+        {
+            get
+            {
+                return this.pauseSpeedCommand ?? (this.pauseSpeedCommand = new DelegateCommand(() => this.PauseSpeed()));
+            }
+        }
+
+        private ICommand histotyProcessChangedCommand;
+        public ICommand HistotyProcessChangedCommand
+        {
+            get
+            {
+                return this.histotyProcessChangedCommand ?? (this.histotyProcessChangedCommand = new DelegateCommand<object>(para => this.HistotyProcessChanged(para)));
+            }
+        }
+
+        private event EventHandler<EventArgs> trackChanged;
+        public IObservable<EventArgs> WhenSlideChanged
+        {
+            get
+            {
+                return Observable
+                    .FromEventPattern<EventArgs>(
+                        h => this.trackChanged += h,
+                        h => this.trackChanged -= h)
+                   .Select(x => x.EventArgs);
+            }
+        }
         #endregion
 
         #region 登录      
@@ -894,9 +1053,13 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryEventListView>();
             }
-            else if (viewName == "MenuOnlineDataTrend")
+            else if (viewName == "MenuHistoryDataTrend")
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
+            }
+            else if (viewName == "MenuEquipmentRunTime")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<DeviceRunStatusListView>();
             }
             else if (viewName == "MenuRefreshData")
             {
@@ -1000,7 +1163,7 @@ namespace AIC.HomePage.ViewModels
 
         private void ScreenShotFolder()
         {
-            string dir = @LocalAddress.ScreenShotDir;
+            string dir = @LocalSetting.ScreenShotDir;
             System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
         }
 
@@ -1034,6 +1197,12 @@ namespace AIC.HomePage.ViewModels
             win.ShowDialog();
         }
 
+        private void HistoryQuickPlaySetting()
+        {
+            HistoryQuickPlayWin win = new HistoryQuickPlayWin();
+            win.ShowDialog();
+        }
+
         private void AboutVersion()
         {
             VersionWin win = new VersionWin();
@@ -1045,24 +1214,79 @@ namespace AIC.HomePage.ViewModels
         private System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
 
         private bool firstshow = false;
+        private float historyplayCount = LocalSetting.HistoryModeDBCallInterval;
+        private readonly SemaphoreSlim lazyLoadinglocker = new SemaphoreSlim(1);
 
         private async void timeCycle(object sender, EventArgs e)
         {
             NowTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            IsShowHistoryplay = LocalSetting.IsHistoryMode;
+            IsHistoryRrackingMode = LocalSetting.IsHistoryRrackingMode;
 
             if (_loginUserService.LoginInfo.LoginStatus == true)
             {
-                IsConnected = await _signalProcess.GetSignalData();
-                if (IsConnected == true)
+                await lazyLoadinglocker.WaitAsync();
+                try
                 {
-                    _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
+                    if (LocalSetting.IsHistoryMode == true)
+                    {                      
+                        historyplayCount++;
+                        if (historyplayCount >= LocalSetting.HistoryModeDBCallInterval)
+                        {
+                            historyplayCount = 0;
+
+                            if (LocalSetting.IsHistoryRrackingMode == true)
+                            {
+                                HistoryModeName = "历史跟踪模式";
+                                HistoryplayTime = DateTime.Now;
+                                HistoryModeActualSpeedUpRatio = 1;
+                            }
+                            else
+                            {
+                                HistoryModeName = "历史快放模式";
+                                if (HistoryplayTime == null)
+                                {
+                                    HistoryplayTime = LocalSetting.HistoryModeStartTime;
+                                }
+                                if (SpeedPause == false)
+                                {
+                                    if (HistoryplayTime >= LocalSetting.HistoryModeEndTime)//循环播放
+                                    {
+                                        HistoryplayTime = LocalSetting.HistoryModeStartTime;
+                                    }
+
+                                    HistoryModeActualSpeedUpRatio = LocalSetting.HistoryModeSpeedUpRatio * LocalSetting.HistoryModeDBCallInterval;
+                                    HistoryplayTime = HistoryplayTime.Value.AddSeconds(HistoryModeActualSpeedUpRatio);
+                                    HistoryplayProcess = (HistoryplayTime.Value - LocalSetting.HistoryModeStartTime).Ticks * 100 / (LocalSetting.HistoryModeEndTime - LocalSetting.HistoryModeStartTime).Ticks;
+                                }
+                            }
+                            IsConnected = await _signalProcess.GetSignalData(HistoryplayTime.Value, true);
+                            if (IsConnected == true)
+                            {
+                                _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
+                            }
+                            SetStatus();
+                        }
+                    }
+                    else
+                    {
+                        HistoryplayTime = null;
+                        IsConnected = await _signalProcess.GetSignalData(DateTime.Now, false);
+                        if (IsConnected == true)
+                        {
+                            _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
+                        }
+                        SetStatus();
+                    }
                 }
-                SetStatus();
+                finally
+                {
+                    lazyLoadinglocker.Release();
+                }
             }
             else
             {
                 InitStatus();
-
             }
 
             if (firstshow == false)
@@ -1122,7 +1346,66 @@ namespace AIC.HomePage.ViewModels
                 Alarm = AlarmGrade.HighNormal;
             }
             DangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.AlarmAck == false && o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Take(5));
-            TotalDangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Take(5));
+            TotalDangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)));
+        }
+
+        private void DecreaseSpeed()
+        {            
+            HistoryplayTime = HistoryplayTime.Value.AddSeconds(0 - HistoryModeActualSpeedUpRatio);            
+            HistoryplayProcess = (HistoryplayTime.Value - LocalSetting.HistoryModeStartTime).Ticks * 100 / (LocalSetting.HistoryModeEndTime - LocalSetting.HistoryModeStartTime).Ticks;
+            if (SpeedPause == false)
+            {
+                HistoryplayTime = HistoryplayTime.Value.AddSeconds(0 - HistoryModeActualSpeedUpRatio);
+            }
+            if (trackChanged != null)
+            {
+                trackChanged(this, null);
+            }
+        }
+
+        private void IncreaseSpeed()
+        {
+            HistoryplayTime = HistoryplayTime.Value.AddSeconds(HistoryModeActualSpeedUpRatio);
+            HistoryplayProcess = (HistoryplayTime.Value - LocalSetting.HistoryModeStartTime).Ticks * 100 / (LocalSetting.HistoryModeEndTime - LocalSetting.HistoryModeStartTime).Ticks;
+            if (SpeedPause == false)
+            {
+                HistoryplayTime.Value.AddSeconds(0 - HistoryModeActualSpeedUpRatio);
+            }
+            if (trackChanged != null)
+            {
+                trackChanged(this, null);
+            }
+        }
+
+        private void PauseSpeed()
+        {
+            SpeedPause = !SpeedPause;
+        }
+
+        private void HistotyProcessChanged(object para)
+        {
+            if (para is double)
+            {
+                var value = (double)para;
+                if (SpeedPause == false)
+                {
+                    HistoryplayTime = LocalSetting.HistoryModeStartTime + new TimeSpan((long)(value * (LocalSetting.HistoryModeEndTime - LocalSetting.HistoryModeStartTime).Ticks / 100));
+                    HistoryplayTime = HistoryplayTime.Value.AddSeconds(0 - HistoryModeActualSpeedUpRatio);
+                }
+                else
+                {
+                    HistoryplayTime = LocalSetting.HistoryModeStartTime + new TimeSpan((long)(value * (LocalSetting.HistoryModeEndTime - LocalSetting.HistoryModeStartTime).Ticks / 100));
+                }
+                if (trackChanged != null)
+                {
+                    trackChanged(this, null);
+                }
+            }
+        }
+
+        private void RaiseSlideChanged(EventArgs args)
+        {           
+            historyplayCount = LocalSetting.HistoryModeDBCallInterval;
         }
 
         private void DangerListClick(object para)
@@ -1191,6 +1474,11 @@ namespace AIC.HomePage.ViewModels
                     CustomSystemException.RemoveAt(0);
                 }
             }     
+
+            if (heightoffsets.Count >= 5)//避免太多弹出窗口
+            {
+                return;
+            }
 
             lock (threadLock)
             {

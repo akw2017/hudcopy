@@ -55,12 +55,34 @@ namespace AIC.OnLineDataPage.ViewModels
             _view = new ListCollectionView(signals);
             _view.Filter = (object item) =>
             {
-                if (OrganizationNames == null || OrganizationNames.Count == 0) return true;
                 var itemPl = (BaseAlarmSignal)item;
                 if (itemPl == null) return false;
+                if (OrganizationNames == null || OrganizationNames.Count == 0)
+                {
+                    if (SliceAlarmGrade == null)
+                    {
+                        return true;
+                    }
+                    else if (itemPl.AlarmGrade == SliceAlarmGrade)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }                
+                
                 if (OrganizationNames.Contains(itemPl.OrganizationDeviceName) && itemPl.ServerIP == SelectedOrganization.ServerIP)
                 {
-                    return true;
+                    if (SliceAlarmGrade == null)
+                    {
+                        return true;
+                    }
+                    else if (itemPl.AlarmGrade == SliceAlarmGrade)
+                    {
+                        return true;
+                    }
                 }
                 return false;
             };
@@ -68,7 +90,7 @@ namespace AIC.OnLineDataPage.ViewModels
             _view.SortDescriptions.Add(new SortDescription("DangerCount",ListSortDirection.Descending));
             InitTree();
 
-            _eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(TimingRefresh);
+            //_eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(TimingRefresh);
         }
 
         #region 信号增减
@@ -202,9 +224,10 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return this.refreshCommand ?? (this.refreshCommand = new DelegateCommand(() => this.Refresh()));
             }
-        }        
+        }
         #endregion
 
+        private AlarmGrade? SliceAlarmGrade;
         private List<string> OrganizationNames;
         private OrganizationTreeItemViewModel SelectedOrganization;
         public void SelectedTreeChanged(object para)
@@ -212,7 +235,7 @@ namespace AIC.OnLineDataPage.ViewModels
             if (para is DeviceTreeItemViewModel)
             {               
                 OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
-                SelectedOrganization = para as OrganizationTreeItemViewModel;
+                SelectedOrganization = para as OrganizationTreeItemViewModel;                
                 Refresh();
             }
             else if (para is OrganizationTreeItemViewModel)
@@ -220,7 +243,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 if ((para as OrganizationTreeItemViewModel).Children != null && (para as OrganizationTreeItemViewModel).Children.Count > 0 && (para as OrganizationTreeItemViewModel).Children[0] is DeviceTreeItemViewModel)
                 {                    
                     OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
-                    SelectedOrganization = para as OrganizationTreeItemViewModel;                   
+                    SelectedOrganization = para as OrganizationTreeItemViewModel;
                     Refresh();
                 }
                 else
@@ -239,6 +262,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void Refresh()
         {
+            SliceAlarmGrade = null;
             _view.Refresh();
             List<BaseAlarmSignal> sglist = new List<BaseAlarmSignal>();
             foreach (var item in _view)
@@ -262,9 +286,11 @@ namespace AIC.OnLineDataPage.ViewModels
             _eventAggregator.GetEvent<DataStatusEvent>().Publish(new List<int> { NormalCount, PreAlertCount, AlertCount, DangerCount, AbnormalCount, UnConnectCount });
         }       
 
-        private void TimingRefresh(object para)
+
+        public void SliceClick(AlarmGrade alarmgrade)
         {
-            Refresh();
+            SliceAlarmGrade = alarmgrade;
+            _view.Refresh();
         }
     }
 }

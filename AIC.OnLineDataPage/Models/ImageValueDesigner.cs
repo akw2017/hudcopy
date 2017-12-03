@@ -37,7 +37,7 @@ namespace AIC.OnLineDataPage.Models
         private void BuildMenuOptions()
         {
             //if (Directory.Exists(@"C:\AIC\设备图"))
-            string dir = @LocalAddress.GifDir;
+            string dir = @LocalSetting.GifDir;
 
             if (Directory.Exists(dir))
             {               
@@ -133,7 +133,7 @@ namespace AIC.OnLineDataPage.Models
             string image = parameter as string;
             //string filePath = string.Format(@"C:\AIC\设备图\{0}", image);
 
-            string dir = @LocalAddress.GifDir + @"\{0}";
+            string dir = @LocalSetting.GifDir + @"\{0}";
             string filePath = string.Format(dir, image);
             if (File.Exists(filePath))
             {
@@ -168,7 +168,7 @@ namespace AIC.OnLineDataPage.Models
                         Left = value.Left;
                         ItemWidth = value.Width;
                         ItemHeight = value.Height;
-                        string dir = @LocalAddress.GifDir + @"\{0}";
+                        string dir = @LocalSetting.GifDir + @"\{0}";
                         string image = string.Format(dir, value.BackgroundImage.Split('\\').Last());
                         if (File.Exists(image))
                         {

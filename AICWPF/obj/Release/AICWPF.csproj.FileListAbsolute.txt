@@ -7,7 +7,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICWPF.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICWPF.application
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICWPF.exe
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICWPF.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.ColorThemes.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.HistoryDataPage.dll
@@ -20,7 +19,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.SignalProcess.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.Themes.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.UserPage.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Kent.Boogaart.Truss.dll
@@ -71,7 +69,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\CitizenSoftwareLib.Common.dl
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Snappy.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Crc32C.NET.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.ColorThemes.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.DatabaseService.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.HistoryDataPage.pdb
@@ -84,7 +81,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.ServiceInterface.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.SignalProcess.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.Themes.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.UserPage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AICMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\FluentValidation.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\FluentValidation.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Loya.Dameer.pdb
@@ -143,7 +139,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\ru\FluentValidation.resource
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\AICWPF.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\Styles\Brushes.baml
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\Views\Shell.baml
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\Views\ShellPage.baml
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\MainWindow.g.cs
@@ -164,3 +159,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\AICWPF.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\AICWPF.application
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\AICWPF.exe
 D:\SupportProject\AIC_HUD\AICHUD\AICWPF\obj\Release\AICWPF.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\MyData\Configuration\config.ini
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Resources\msg.wav
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.MatlabMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICWPF\bin\Release\AIC.DeviceDataPage.pdb

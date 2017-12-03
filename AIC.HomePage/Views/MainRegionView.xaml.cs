@@ -44,7 +44,7 @@ namespace AIC.HomePage.Views
 
         private void ScreenShot_Click(object sender, RoutedEventArgs e)
         {
-            string direcory = LocalAddress.ScreenShotDir;
+            string direcory = LocalSetting.ScreenShotDir;
             if (!Directory.Exists(@direcory))
             {
                 Directory.CreateDirectory(@direcory);

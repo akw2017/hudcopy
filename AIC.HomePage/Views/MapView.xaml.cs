@@ -59,13 +59,13 @@ namespace AIC.HomePage.Views
             }
             else
             {
-                if (!File.Exists(@LocalAddress.MapHtmlUri))
+                if (!File.Exists(@LocalSetting.MapHtmlUri))
                 {
                     this.webBrowser.NavigateToString(ConvertExtendedASCII("地图文件不存在，请设置地图文件路径！！！"));
                 }
                 else
                 {
-                    this.webBrowser.Navigate(new Uri(@LocalAddress.MapHtmlUri));//获取根目录的html文件  
+                    this.webBrowser.Navigate(new Uri(@LocalSetting.MapHtmlUri));//获取根目录的html文件  
                     readDataTimer.Tick += new EventHandler(timeCycle);
                     readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
                 }

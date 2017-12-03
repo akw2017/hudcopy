@@ -1,0 +1,90 @@
+﻿<Controls:MetroWindow x:Class="AIC.HomePage.Views.HistoryQuickPlayWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.HomePage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"     
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"  
+        xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="历史快放模式设置" Height="450" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/set.png" Topmost="True">
+    <Window.InputBindings>
+        <KeyBinding Gesture="Control+Alt+S" Command="{Binding SettingCommand}" />
+    </Window.InputBindings>
+    <Grid Background ="{DynamicResource AccentColorBrush2}">
+        <Grid Margin="20" Height="360" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="历史数据模式" VerticalAlignment="Center"/>
+            <CheckBox x:Name="IsHistoryMode" Grid.Row="0" Grid.Column="1"/>
+            <TextBlock Grid.Row="1" Text="历史跟踪实时模式" VerticalAlignment="Center"/>
+            <CheckBox x:Name="IsHistoryRrackingMode" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock Grid.Row="2" Text="开始时间" VerticalAlignment="Center"/>
+            <timeTool:Dameer x:Name="HistoryModeStartTime" Grid.Row="2" Grid.Column="1" Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center" >
+                <timeTool:Dameer.Style>
+                    <Style TargetType="{x:Type timeTool:Dameer}">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=IsHistoryRrackingMode}" Value="True">
+                                <Setter  Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </timeTool:Dameer.Style>
+            </timeTool:Dameer>
+            <TextBlock Grid.Row="3" Text="结束时间" VerticalAlignment="Center"/>
+            <timeTool:Dameer x:Name="HistoryModeEndTime" Grid.Row="3" Grid.Column="1" Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center" >
+                <timeTool:Dameer.Style>
+                    <Style TargetType="{x:Type timeTool:Dameer}">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=IsHistoryRrackingMode}" Value="True">
+                                <Setter  Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </timeTool:Dameer.Style>
+            </timeTool:Dameer>
+            <TextBlock Grid.Row="4" Text="加速比>=1" VerticalAlignment="Center"/>
+            <TextBox x:Name="HistoryModeSpeedUpRatio" Grid.Row="4" Grid.Column="1" PreviewTextInput="tb_PreviewTextInput" input:InputMethod.IsInputMethodEnabled="False" />
+            <TextBlock Grid.Row="5" Text="数据采集间隔>=1(s)" VerticalAlignment="Center" />
+            <TextBox x:Name="HistoryModeDataInterval" Grid.Row="5" Grid.Column="1" PreviewTextInput="tb_PreviewTextInput" input:InputMethod.IsInputMethodEnabled="False" />
+            <TextBlock Grid.Row="6" Text="数据读取间隔>=10(s)" VerticalAlignment="Center" />
+            <TextBox x:Name="HistoryModeDBCallInterval" Grid.Row="6" Grid.Column="1" PreviewTextInput="tb_PreviewTextInput" input:InputMethod.IsInputMethodEnabled="False" />
+            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="注：实际加速比=加速比*数据库访问间隔" FontSize="12" VerticalAlignment="Center" />
+            <Button Grid.Row="8" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                        <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="8" Grid.Column="1" x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                        <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

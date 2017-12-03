@@ -27,8 +27,8 @@ namespace AIC.DatabaseService
                 {
                     foreach (var ip in T_RootCard.Keys)
                     {
-                        var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
-                        WebResponse<LatestSampleData> latestResult = client.QueryLatestSampleData(LocalAddress.UpdateTime, null);
+                        var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
+                        WebResponse<LatestSampleData> latestResult = client.QueryLatestSampleData(LocalSetting.UpdateTime, null);
 
                         //先判断是不是OK
                         if (latestResult.IsOK)
@@ -56,7 +56,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 var historyResult = client.QueryHistorySampleData<T>(guid,
                 columns, startTime, endTime, condition, args);
 
@@ -78,7 +78,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {               
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 WebResponse<LatestSampleData> historyResult = client.QueryAllHistorySampleData(itemGuids, startTime, endTime);
 
                 //先判断是不是OK
@@ -100,7 +100,7 @@ namespace AIC.DatabaseService
         {
             return await Task.Run(() =>
             {
-                var client = new DataProvider(ip, LocalAddress.ServerPort, LocalAddress.MajorVersion, LocalAddress.MinorVersion);
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
                 var statisticsData = client.QueryStatisticsData(guidlist);
                 if (statisticsData.IsOK)
                 {

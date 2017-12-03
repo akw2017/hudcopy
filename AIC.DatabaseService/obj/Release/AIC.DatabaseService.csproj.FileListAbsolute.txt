@@ -1,5 +1,3 @@
-D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\AIC.DatabaseService.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\AIC.DatabaseService.pdb
@@ -78,3 +76,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\tr\FluentValida
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Release\AIC.DatabaseService.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Release\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Release\AIC.DatabaseService.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\AIC.Resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Release\Resources\AICMatlabDLL.dll

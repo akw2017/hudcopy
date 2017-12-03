@@ -22,6 +22,7 @@
         <ResourceDictionary>
             <conveter:IntToAlarmTypeStrConverter x:Key="intToAlarmTypeStrConverter"/>
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
+            <core:AlarmLimitToStringConverter x:Key="alarmLimitToStringConverter"/>
             <core:TypeOfConverter x:Key="typeOfConverter"/>
             <core:IsDivfreConverter x:Key="isDivfreConverter"/>
             <core:VisibilityToBoolConverter x:Key="visibilityToBoolConverter" />
@@ -347,7 +348,7 @@
 
         <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
                                  ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="*" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
             <DataGrid.Resources>
                 <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
@@ -397,12 +398,12 @@
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                 <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
                 <DataGridTextColumn Header="报警级别" Binding="{Binding DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" MinWidth="180" IsReadOnly="True"/>              
-                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>             
+                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>              
+                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>             
                 <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>              
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="传感器地址"  Binding="{Binding ChannelHDID}" MinWidth="260" IsReadOnly="True"/>              
-                <!--<DataGridTemplateColumn Header="报警信息" IsReadOnly="True">
+                <DataGridTextColumn Header="传感器地址"  Binding="{Binding ChannelHDID}" IsReadOnly="True"/>              
+                <DataGridTemplateColumn Header="报警信息" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>                           
                             <ListBox ItemsSource="{Binding AlarmLimit}">
@@ -414,20 +415,20 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5"></TextBlock>
-                                            <TextBlock Text=":" VerticalAlignment="Center"></TextBlock>
-                                            <TextBlock Text="{Binding Limit}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Name,Converter={StaticResource alarmLimitToStringConverter}}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text=" " VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Limit,StringFormat=F1}" VerticalAlignment="Center"></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="传感器电量">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Grid Height="20">
+                            <Grid>
                                 <ProgressBar x:Name="ProgressBar" Value="{Binding BatteryEnergy}" Foreground="Green" Height="20" Width="40" Margin="5 2" />
                                 <TextBlock Text="{Binding BatteryEnergy, StringFormat=F0}" TextAlignment="Center" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
                             </Grid>
@@ -565,7 +566,7 @@
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-
+                    <Setter Property="Margin" Value="0,0,20,0"/>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>

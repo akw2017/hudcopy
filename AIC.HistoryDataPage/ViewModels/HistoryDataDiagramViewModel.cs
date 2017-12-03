@@ -769,7 +769,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-初始化异常", e));
             }            
         }
-
         private async void RaiseTrackChanged(IEnumerable<BaseWaveChannelToken> tokens)
         {
             if (trackTask == null)
@@ -1157,6 +1156,15 @@ namespace AIC.HistoryDataPage.ViewModels
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList(),
                         };
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                        {
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }
                         if (ShowAMS)
                         {
                             amsReplayVM.AddChannel(channeltoken);

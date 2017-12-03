@@ -245,7 +245,7 @@ namespace AIC.Core.SignalModels
             {
                 Type = (int)type,
                 Degree = (int)grade,
-                EventTime = DateTime.Now,
+                EventTime = ACQDatetime.Value,
                 Remarks = alarmstring,
                 T_Item_Guid = guid,
                 T_Item_Type = itemtype,
@@ -290,8 +290,11 @@ namespace AIC.Core.SignalModels
                 if (alarmLimit != value)
                 {
                     alarmLimit = value;
-                    AlarmMax = AlarmLimit.Select(p => p.Limit).Max();
                     OnPropertyChanged("AlarmLimit");
+                    if (alarmLimit != null && alarmLimit.Length > 0)
+                    {
+                        AlarmMax = alarmLimit.Select(p => p.Limit).Max();
+                    }
                 }
             }
         }

@@ -183,5 +183,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Release\ru\FluentValidation.res
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Release\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Release\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Release\AIC.PDAPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Release\Views\DeviceEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Release\Views\DeviceEditWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Release\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Release\Resources\AICMatlabDLL.dll

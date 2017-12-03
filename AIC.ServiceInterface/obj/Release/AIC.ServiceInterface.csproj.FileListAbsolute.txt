@@ -1,5 +1,3 @@
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\AIC.ServiceInterface.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\AIC.ServiceInterface.pdb
@@ -65,3 +63,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Release\AIC.ServiceInt
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Release\AIC.ServiceInterface.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Release\AIC.ServiceInterface.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Release\Resources\AICMatlabDLL.dll

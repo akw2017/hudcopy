@@ -37,7 +37,7 @@ namespace AIC.Resources.Views
             this.EndTop = SystemParameters.WorkArea.Height - this.Height - heightoffset;
             this.Top = SystemParameters.WorkArea.Height - this.Height - heightoffset;
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += timer_Tick;
         }
 

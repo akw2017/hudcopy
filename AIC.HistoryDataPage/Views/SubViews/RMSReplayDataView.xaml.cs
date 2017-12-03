@@ -219,9 +219,9 @@ namespace AIC.HistoryDataPage.Views
                         {
                             count -= 15;
                         }
-                        Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
-                        series.LineStyle.Color = color;
-                        series.Title.Color = color;
+                        //Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
+                        series.LineStyle.Color = anToken.SolidColorBrush.Color; //color;
+                        series.Title.Color = anToken.SolidColorBrush.Color; //color;
                         series.LineStyle.AntiAliasing = LineAntialias.Normal;
                         series.LineStyle.Width = 1;
                         series.Tag = token;

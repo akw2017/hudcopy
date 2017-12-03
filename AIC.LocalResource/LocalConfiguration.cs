@@ -26,7 +26,7 @@ namespace AIC.LocalConfiguration
         {
             try
             {
-                string dir = @LocalAddress.ServerXmlDir;
+                string dir = @LocalSetting.ServerXmlDir;
                 ServerInfoList = dataService.ReadXml(dir).ToList();
             }
             catch { }
@@ -41,8 +41,18 @@ namespace AIC.LocalConfiguration
                     ServerInfoList.Add(new ServerInfo { IP = "127.0.0.1", Name = "本地服务器" });
                 }
             }
-        }
 
+            //string config = System.AppDomain.CurrentDomain.BaseDirectory + "\\MyData\\Configuration\\config.ini";
+            ////读取备份配置文件
+            //if (File.Exists(config))
+            //{
+            //    string PDAPort = IniFileHelper.GetValue("BaseSettingInfo", "PDAPort", config);
+            //    if (PDAPort != "发生错误" )
+            //    {
+
+            //    }
+            //}
+        }
         public void ReadServerInfo()
         {
             Initialize();
@@ -51,7 +61,7 @@ namespace AIC.LocalConfiguration
         public void WriteServerInfo(IList<ServerInfo> info)
         {          
             ServerInfoList = new List<ServerInfo>(info);           
-            string dir = @LocalAddress.ServerXmlDir;
+            string dir = @LocalSetting.ServerXmlDir;
             var filename = dir.Substring(dir.LastIndexOf("\\"));
             var directory = dir.Substring(0, dir.Length - filename.Length);
             if (!Directory.Exists(@directory))

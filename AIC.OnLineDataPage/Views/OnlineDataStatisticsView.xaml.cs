@@ -3,6 +3,8 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
+using AIC.CoreType;
+using AIC.OnLineDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Axes;
 using Arction.Wpf.Charting.SeriesXY;
@@ -44,9 +46,11 @@ namespace AIC.OnLineDataPage.Views
             _eventAggregator.GetEvent<DataStatusEvent>().Subscribe(UpdateChart);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
 
+            ViewModel = this.DataContext as OnlineDataStatisticsViewModel;
         }
         public CloseableHeader Closer { get; private set; }
 
+        OnlineDataStatisticsViewModel ViewModel;
         private LightningChartUltimate _chart;
 
         private void CreateChart()
@@ -99,14 +103,19 @@ namespace AIC.OnLineDataPage.Views
 
             // Add pie slice data.
             // By using TRUE as a last parameter, the slice will be automatically added to chart.ViewPie3D.Values collection
-            PieSlice slice1 = new PieSlice("正常", Color.FromArgb(150, 0x87, 0xcd, 0xee), 0, _chart.ViewPie3D, true);
-            PieSlice slice2 = new PieSlice("预警", Color.FromArgb(150, 0xff, 0xd4, 0x00), 0, _chart.ViewPie3D, true);
-            PieSlice slice3 = new PieSlice("警告", Color.FromArgb(150, 0xf4, 0x79, 0x20), 0, _chart.ViewPie3D, true);
-            PieSlice slice4 = new PieSlice("危险", Color.FromArgb(150, 0xd7, 0x13, 0x45), 0, _chart.ViewPie3D, true);
-            PieSlice slice5 = new PieSlice("无效", Color.FromArgb(150, 0xf1, 0x73, 0xac), 0, _chart.ViewPie3D, true);
-            PieSlice slice6 = new PieSlice("掉线", Color.FromArgb(150, 0x84, 0x02, 0x28), 0, _chart.ViewPie3D, true);
+            PieSlice slice1 = new PieSlice("正常", Color.FromArgb(0xff, 0x87, 0xcd, 0xee), 0, _chart.ViewPie3D, true);
+            PieSlice slice2 = new PieSlice("预警", Color.FromArgb(0xff, 0xff, 0xd4, 0x00), 0, _chart.ViewPie3D, true);
+            PieSlice slice3 = new PieSlice("警告", Color.FromArgb(0xff, 0xf4, 0x79, 0x20), 0, _chart.ViewPie3D, true);
+            PieSlice slice4 = new PieSlice("危险", Color.FromArgb(0xff, 0xd7, 0x13, 0x45), 0, _chart.ViewPie3D, true);
+            PieSlice slice5 = new PieSlice("无效", Color.FromArgb(0xff, 0xf1, 0x73, 0xac), 0, _chart.ViewPie3D, true);
+            PieSlice slice6 = new PieSlice("掉线", Color.FromArgb(0xff, 0x84, 0x02, 0x28), 0, _chart.ViewPie3D, true);
 
-            //slice1.MouseClick += Slice1_MouseClick;
+            slice1.MouseClick += Slice_MouseClick;
+            slice2.MouseClick += Slice_MouseClick;
+            slice3.MouseClick += Slice_MouseClick;
+            slice4.MouseClick += Slice_MouseClick;
+            slice5.MouseClick += Slice_MouseClick;
+            slice6.MouseClick += Slice_MouseClick;
 
             _chart.ViewPie3D.SetPieSize(180);
 
@@ -114,6 +123,20 @@ namespace AIC.OnLineDataPage.Views
             _chart.EndUpdate();
 
             gridChart.Children.Add(_chart);
+        }
+
+        private void Slice_MouseClick(object sender, MouseEventArgs e)
+        {
+            PieSlice slice = sender as PieSlice;
+            switch (slice.Title.Text)
+            {
+                case "正常": ViewModel.SliceClick(AlarmGrade.Normal);  break;
+                case "预警": ViewModel.SliceClick(AlarmGrade.PreAlarm); break;
+                case "警告": ViewModel.SliceClick(AlarmGrade.Alarm); break;
+                case "危险": ViewModel.SliceClick(AlarmGrade.Danger); break;
+                case "无效": ViewModel.SliceClick(AlarmGrade.Invalid); break;
+                case "掉线": ViewModel.SliceClick(AlarmGrade.DisConnect); break;
+            }
         }
 
         private void UpdateChart(List<int> valuelist)

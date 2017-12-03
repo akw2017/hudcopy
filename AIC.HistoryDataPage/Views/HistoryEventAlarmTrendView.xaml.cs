@@ -1,4 +1,5 @@
-﻿using AIC.HistoryDataPage.ViewModels;
+﻿using AIC.Core.OrganizationModels;
+using AIC.HistoryDataPage.ViewModels;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,18 @@ namespace AIC.HistoryDataPage.Views
             SizeChanged += HistoryEventAlarmTrendView_SizeChanged;          
         }
 
+        public HistoryEventAlarmTrendView(string name, int height) : this()
+        {
+            this.Title = name + "报警趋势";
+            this.Height = height;
+        }
+
+        public async void AddData(ItemTreeItemViewModel item, DateTime start, DateTime end)
+        {
+            await ViewModel.AddData(item, start, end);
+            VerticalAlignButtonClick(null, null);
+        }
+
         private void HistoryEventAlarmTrendView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             VerticalAlignButtonClick(null, null);
@@ -51,5 +64,7 @@ namespace AIC.HistoryDataPage.Views
             ViewModel.ItemWidth = listBox.ActualWidth - 20;
             ViewModel.ItemHeight = listBox.ActualHeight / ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count() - 5;
         }
+
+
     }
 }

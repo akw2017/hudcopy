@@ -188,3 +188,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.WrapBreakPanel.pdb

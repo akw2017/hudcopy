@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIC.M9600.Common.SlaveDB.Generated;
 
 namespace AIC.LocalConfiguration
 {
@@ -96,7 +97,6 @@ namespace AIC.LocalConfiguration
         }
 
         private BindingManager bindingManager;
-
         public void InitSignals()
         {
             SgDict.Clear();
@@ -194,10 +194,7 @@ namespace AIC.LocalConfiguration
                     }
                 }
             }
-
-
         }
-
         public void LazyInitSignals()
         {
             foreach (var item in _organizationService.ItemTreeItems.Where(p => p.IsPaired == true))
@@ -213,7 +210,6 @@ namespace AIC.LocalConfiguration
                 }
             }
         }
-
         public void BindItem(ItemTreeItemViewModel item)
         {
             if (item == null) return;
@@ -308,7 +304,6 @@ namespace AIC.LocalConfiguration
                 }
             }
         }
-
         public void AddDivfre(DivFreTreeItemViewModel divfreTM)
         {
             if (divfreTM == null) return;
@@ -335,7 +330,6 @@ namespace AIC.LocalConfiguration
                 }
             }
         }
-
         public void DeleteDivfre(DivFreTreeItemViewModel divfreTM)
         {
             if (divfreTM == null) return;
@@ -371,109 +365,23 @@ namespace AIC.LocalConfiguration
                 }
             }
         }
-
-
-        public async Task<bool> GetSignalData()
+        public async Task<bool> GetSignalData(DateTime time, bool isHistoryMode)
         {
             try
             {
-                //Dictionary<Guid, string> itemGuids = new Dictionary<Guid, string>();
+                Dictionary<string, LatestSampleData> latestdata = new Dictionary<string, LatestSampleData>();
 
-                //foreach(var sg in Signals)
-                //{
-                //    string sgtype = string.Empty;
-                //    if (sg is IEPEChannelSignal)
-                //    {
-                //        sgtype = "D_IEPESlot";
-                //    }
-                //    else if (sg is EddyCurrentDisplacementChannelSignal)
-                //    {
-                //        sgtype = "D_EddyCurrentDisplacementSlot";
-                //    }
-                //    else if (sg is EddyCurrentKeyPhaseChannelSignal)
-                //    {
-                //        sgtype = "D_EddyCurrentKeyPhaseSlot";
-                //    }
-                //    else if (sg is EddyCurrentTachometerChannelSignal)
-                //    {
-                //        sgtype = "D_EddyCurrentTachometerSlot";
-                //    }
-                //    else if (sg is DigitTachometerChannelSignal)
-                //    {
-                //        sgtype = "D_DigitTachometerSlot";
-                //    }
-                //    else if (sg is AnalogRransducerInChannelSignal)
-                //    {
-                //        sgtype = "D_AnalogRransducerInSlot";
-                //    }
-                //    else if (sg is RelayChannelSignal)
-                //    {
-                //        sgtype = "D_RelayChannelSlot";
-                //    }
-                //    else if (sg is DigitRransducerInChannelSignal)
-                //    {
-                //        sgtype = "D_DigitRransducerInSlot";
-                //    }
-                //    else if (sg is DigitRransducerOutChannelSignal)
-                //    {
-                //        sgtype = "D_DigitRransducerOutSlot";
-                //    }
-                //    else if (sg is AnalogRransducerOutChannelSignal)
-                //    {
-                //        sgtype = "D_AnalogRransducerOutSlot";
-                //    }
-                //    else if (sg is WirelessScalarChannelSignal)
-                //    {
-                //        sgtype = "D_WirelessScalarSlot";
-                //    }
-                //    else if (sg is WirelessVibrationChannelSignal)
-                //    {
-                //        sgtype = "D_WirelessVibrationSlot";
-                //    }
-                //    else
-                //    {
-                //        continue;
-                //    }
-                //    itemGuids.Add(sg.Guid, sgtype);
-                //}
-
-                //var latestdata2 = await _databaseComponent.GetHistoryData(itemGuids, DateTime.Now.AddDays(-8),DateTime.Now.AddDays(-7));
-
-                var latestdata = await _databaseComponent.GetLatestData();
-                if (latestdata == null)
+                if (isHistoryMode == true)
                 {
-                    foreach (var sg in Signals)
-                    {
-                        sg.IsConnected = false;
-                        sg.IsRunning = false;
-                        if (sg is BaseAlarmSignal)
-                        {
-                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
-                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                          
-                        }
-                    }
-                    return false;
-                }
-                else if (latestdata.Count == 0)
-                {
-                    foreach (var sg in Signals)
-                    {
-                        sg.IsConnected = false;
-                        sg.IsRunning = false;
-                        if (sg is BaseAlarmSignal)
-                        {
-                            ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
-                            ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                                                 
-                        }
-                    }
+                    latestdata = await GetLatestHistoryData(time, LocalSetting.HistoryModeDataInterval);
+                    return await CheckedSignal(latestdata);
                 }
                 else
                 {
-                    foreach (var data in latestdata.Values)
-                    {
-                        await ProcessSignal(data);
-                    }
+                    latestdata = await _databaseComponent.GetLatestData();
+                    return await CheckedSignal(latestdata);
                 }
+               
             }
             catch(Exception ex)
             {
@@ -481,119 +389,429 @@ namespace AIC.LocalConfiguration
             }
             return true;
         }
+        private async Task<bool> CheckedSignal(Dictionary<string, LatestSampleData> latestdata)
+        {
+            if (latestdata == null)
+            {
+                foreach (var sg in Signals)
+                {
+                    sg.IsConnected = false;
+                    sg.IsRunning = false;
+                    if (sg is BaseAlarmSignal)
+                    {
+                        ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
+                        ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                          
+                    }
+                }
+                return false;
+            }
+            else if (latestdata.Count == 0)
+            {
+                foreach (var sg in Signals)
+                {
+                    sg.IsConnected = false;
+                    sg.IsRunning = false;
+                    if (sg is BaseAlarmSignal)
+                    {
+                        ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
+                        ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                                                 
+                    }
+                }
+            }
+            else
+            {
+                foreach (var data in latestdata.Values)
+                {
+                    await ProcessSignal(data);
+                }
+            }
+            return true;
+        }
+        private async Task<Dictionary<string, LatestSampleData>> GetLatestHistoryData(DateTime historyplayTime, float dataInterval)
+        {
+            Dictionary<string, LatestSampleData> latestdata = new Dictionary<string, LatestSampleData>();
+            var GroupSignals = Signals.GroupBy(p => p.ServerIP);
+            foreach (var subSignals in GroupSignals)
+            {
+                Dictionary<Guid, string> itemGuids = new Dictionary<Guid, string>();
 
+                foreach (var sg in subSignals)
+                {
+                    string sgtype = string.Empty;
+                    if (sg is IEPEChannelSignal)
+                    {
+                        sgtype = "D_IEPESlot";
+                    }
+                    else if (sg is EddyCurrentDisplacementChannelSignal)
+                    {
+                        sgtype = "D_EddyCurrentDisplacementSlot";
+                    }
+                    else if (sg is EddyCurrentKeyPhaseChannelSignal)
+                    {
+                        sgtype = "D_EddyCurrentKeyPhaseSlot";
+                    }
+                    else if (sg is EddyCurrentTachometerChannelSignal)
+                    {
+                        sgtype = "D_EddyCurrentTachometerSlot";
+                    }
+                    else if (sg is DigitTachometerChannelSignal)
+                    {
+                        sgtype = "D_DigitTachometerSlot";
+                    }
+                    else if (sg is AnalogRransducerInChannelSignal)
+                    {
+                        sgtype = "D_AnalogRransducerInSlot";
+                    }
+                    else if (sg is RelayChannelSignal)
+                    {
+                        sgtype = "D_RelayChannelSlot";
+                    }
+                    else if (sg is DigitRransducerInChannelSignal)
+                    {
+                        sgtype = "D_DigitRransducerInSlot";
+                    }
+                    else if (sg is DigitRransducerOutChannelSignal)
+                    {
+                        sgtype = "D_DigitRransducerOutSlot";
+                    }
+                    else if (sg is AnalogRransducerOutChannelSignal)
+                    {
+                        sgtype = "D_AnalogRransducerOutSlot";
+                    }
+                    else if (sg is WirelessScalarChannelSignal)
+                    {
+                        sgtype = "D_WirelessScalarSlot";
+                    }
+                    else if (sg is WirelessVibrationChannelSignal)
+                    {
+                        sgtype = "D_WirelessVibrationSlot";
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    itemGuids.Add(sg.Guid, sgtype);
+                }
+
+                var data = await _databaseComponent.GetHistoryData(subSignals.Key, itemGuids, historyplayTime.AddSeconds(0 - dataInterval), historyplayTime);
+                if (data == null)
+                {
+                    continue;
+                }
+
+                LatestSampleData filterdata = new LatestSampleData();
+                if (data.IEPESlot != null)
+                {
+                    List<IEPESlotData> sublist = new List<IEPESlotData>();
+                    var subdata = data.IEPESlot.GroupBy(p => p.T_Item_Guid);
+                    foreach(var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.IEPESlot = sublist.ToArray();
+                }
+                if (data.EddyCurrentDisplacementSlot != null)
+                {
+                    List<EddyCurrentDisplacementSlotData> sublist = new List<EddyCurrentDisplacementSlotData>();
+                    var subdata = data.EddyCurrentDisplacementSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.EddyCurrentDisplacementSlot = sublist.ToArray();
+                }
+                if (data.EddyCurrentKeyPhaseSlot != null)
+                {
+                    List<EddyCurrentKeyPhaseSlotData> sublist = new List<EddyCurrentKeyPhaseSlotData>();
+                    var subdata = data.EddyCurrentKeyPhaseSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.EddyCurrentKeyPhaseSlot = sublist.ToArray();
+                }
+                if (data.EddyCurrentTachometerSlot != null)
+                {
+                    List<EddyCurrentTachometerSlotData> sublist = new List<EddyCurrentTachometerSlotData>();
+                    var subdata = data.EddyCurrentTachometerSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.EddyCurrentTachometerSlot = sublist.ToArray();
+                }
+                if (data.DigitTachometerSlot != null)
+                {
+                    List<DigitTachometerSlotData> sublist = new List<DigitTachometerSlotData>();
+                    var subdata = data.DigitTachometerSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.DigitTachometerSlot = sublist.ToArray();
+                }
+                if (data.AnalogRransducerInSlot != null)
+                {
+                    List<AnalogRransducerInSlotData> sublist = new List<AnalogRransducerInSlotData>();
+                    var subdata = data.AnalogRransducerInSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.AnalogRransducerInSlot = sublist.ToArray();
+                }
+                if (data.RelaySlot != null)
+                {
+                    List<RelaySlotData> sublist = new List<RelaySlotData>();
+                    var subdata = data.RelaySlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.RelaySlot = sublist.ToArray();
+                }
+                if (data.DigitRransducerInSlot != null)
+                {
+                    List<DigitRransducerInSlotData> sublist = new List<DigitRransducerInSlotData>();
+                    var subdata = data.DigitRransducerInSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.DigitRransducerInSlot = sublist.ToArray();
+                }
+                if (data.DigitRransducerOutSlot != null)
+                {
+                    List<DigitRransducerOutSlotData> sublist = new List<DigitRransducerOutSlotData>();
+                    var subdata = data.DigitRransducerOutSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.DigitRransducerOutSlot = sublist.ToArray();
+                }
+                if (data.AnalogRransducerOutSlot != null)
+                {
+                    List<AnalogRransducerOutSlotData> sublist = new List<AnalogRransducerOutSlotData>();
+                    var subdata = data.AnalogRransducerOutSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.AnalogRransducerOutSlot = sublist.ToArray();
+                }
+                if (data.WirelessScalarSlot != null)
+                {
+                    List<WirelessScalarSlotData> sublist = new List<WirelessScalarSlotData>();
+                    var subdata = data.WirelessScalarSlot.GroupBy(p => p.T_Item_Guid);
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();                      
+                        sublist.Add(lastsub);
+                    }
+                    filterdata.WirelessScalarSlot = sublist.ToArray();
+                }
+                if (data.WirelessVibrationSlot != null)
+                {
+                    List<WirelessVibrationSlotData> sublist = new List<WirelessVibrationSlotData>();
+                    var subdata = data.WirelessVibrationSlot.GroupBy(p => p.T_Item_Guid);
+                    Dictionary<WirelessVibrationSlotData, Task<List<D_WirelessVibrationSlot_Waveform>>> lttask = new Dictionary<WirelessVibrationSlotData, Task<List<D_WirelessVibrationSlot_Waveform>>>();
+                    foreach (var sub in subdata)
+                    {
+                        var lastsub = sub.LastOrDefault();
+                        if (lastsub.IsValidWave == true)
+                        {
+                            //var result = (await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(subSignals.Key, lastsub.T_Item_Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, lastsub.ACQDatetime.AddSeconds(-1), lastsub.ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { lastsub.RecordLab })).FirstOrDefault();
+                            //WirelessVibrationSlotData_Waveform waveform = new WirelessVibrationSlotData_Waveform();
+                            //waveform.WaveData = result.WaveData;
+                            //waveform.WaveUnit = result.WaveUnit;
+                            //waveform.SampleFre = result.SampleFre;
+                            //waveform.SamplePoint = result.SamplePoint;
+                            //lastsub.Waveform = waveform;
+                            lttask.Add(lastsub, _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(subSignals.Key, lastsub.T_Item_Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, lastsub.ACQDatetime.AddSeconds(-1), lastsub.ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { lastsub.RecordLab }));
+                        }
+                        sublist.Add(lastsub);
+                    }
+                    if (lttask.Count > 0)
+                    {
+                        await Task.WhenAll(lttask.Values.ToArray());
+                        foreach (var task in lttask)
+                        {
+                            if (task.Value != null)
+                            {
+                                var result = task.Value.Result.FirstOrDefault();
+                                WirelessVibrationSlotData_Waveform waveform = new WirelessVibrationSlotData_Waveform();
+                                waveform.WaveData = result.WaveData;
+                                waveform.WaveUnit = result.WaveUnit;
+                                waveform.SampleFre = result.SampleFre;
+                                waveform.SamplePoint = result.SamplePoint;
+                                task.Key.Waveform = waveform;
+                            }
+                        }
+                    }
+                    filterdata.WirelessVibrationSlot = sublist.ToArray();
+                }
+
+                latestdata.Add(subSignals.Key, filterdata);
+            }
+            return latestdata;
+        }
         public async Task ProcessSignal(LatestSampleData data)
         {
             List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>> keyValuePairs = new List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>>();
             //获取数据
-            foreach (var slotdata in data.IEPESlot)
+            if (data.IEPESlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.IEPESlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<IEPESlotData, D1_IEPESlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<IEPESlotData, D1_IEPESlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.EddyCurrentDisplacementSlot)
+            if (data.EddyCurrentDisplacementSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.EddyCurrentDisplacementSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentDisplacementSlotData, D1_EddyCurrentDisplacementSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentDisplacementSlotData, D1_EddyCurrentDisplacementSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.EddyCurrentKeyPhaseSlot)
+            if (data.EddyCurrentKeyPhaseSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.EddyCurrentKeyPhaseSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentKeyPhaseSlotData, D1_EddyCurrentKeyPhaseSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentKeyPhaseSlotData, D1_EddyCurrentKeyPhaseSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.EddyCurrentTachometerSlot)
+            if (data.EddyCurrentTachometerSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.EddyCurrentTachometerSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentTachometerSlotData, D1_EddyCurrentTachometerSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentTachometerSlotData, D1_EddyCurrentTachometerSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.DigitTachometerSlot)
+            if (data.DigitTachometerSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.DigitTachometerSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<DigitTachometerSlotData, D1_DigitTachometerSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<DigitTachometerSlotData, D1_DigitTachometerSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.AnalogRransducerInSlot)
+            if (data.AnalogRransducerInSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.AnalogRransducerInSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerInSlotData, D1_AnalogRransducerInSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerInSlotData, D1_AnalogRransducerInSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.RelaySlot)
+            if (data.RelaySlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.RelaySlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<RelaySlotData, D1_RelaySlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<RelaySlotData, D1_RelaySlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.DigitRransducerInSlot)
+            if (data.DigitRransducerInSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.DigitRransducerInSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerInSlotData, D1_DigitRransducerInSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerInSlotData, D1_DigitRransducerInSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.DigitRransducerOutSlot)
+            if (data.DigitRransducerOutSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.DigitRransducerOutSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerOutSlotData, D1_DigitRransducerOutSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerOutSlotData, D1_DigitRransducerOutSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.AnalogRransducerOutSlot)
+            if (data.AnalogRransducerOutSlot != null)
             {
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.AnalogRransducerOutSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerOutSlotData, D1_AnalogRransducerOutSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerOutSlotData, D1_AnalogRransducerOutSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.WirelessScalarSlot)
+            if (data.WirelessScalarSlot != null)
             {
-                //var signal = GetSignal(slotdata.T_Item_Guid);
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.WirelessScalarSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<WirelessScalarSlotData, D1_WirelessScalarSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<WirelessScalarSlotData, D1_WirelessScalarSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
-            foreach (var slotdata in data.WirelessVibrationSlot)
+            if (data.WirelessVibrationSlot != null)
             {
-                //var signal = GetSignal(slotdata.T_Item_Guid.Value);
-                var signal = GetSignal(slotdata.T_Item_Guid);
-                if (signal != null)
+                foreach (var slotdata in data.WirelessVibrationSlot)
                 {
-                    var islotdata = ClassCopyHelper.AutoCopy<WirelessVibrationSlotData, D1_WirelessVibrationSlot>(slotdata);
-                    keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    if (signal != null)
+                    {
+                        var islotdata = ClassCopyHelper.AutoCopy<WirelessVibrationSlotData, D1_WirelessVibrationSlot>(slotdata);
+                        keyValuePairs.Add(new KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>(signal, islotdata));
+                    }
                 }
             }
 
@@ -768,8 +986,6 @@ namespace AIC.LocalConfiguration
                 });
             }
         }
-
-
         private void ProcessWave(BaseWaveSignal vSg)
         {
             //包络
@@ -844,8 +1060,6 @@ namespace AIC.LocalConfiguration
             }
             SubProcessWave(vSg, vSg.Waveform, "Cepstrum", CepstrumList);
         }
-
-
         private void SubProcessWave(BaseWaveSignal vSg, double[] waveform, string processName, List<string> processList)
         {
             if (processList.Contains("EnvelopeVData"))//包络

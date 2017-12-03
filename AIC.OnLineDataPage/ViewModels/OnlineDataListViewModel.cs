@@ -535,7 +535,7 @@ namespace AIC.OnLineDataPage.ViewModels
             if (sg != null)
             {
                 DiagnosticInfoClass.GetDiagnosticInfo(sg);
-                DiagnosticInfo = sg.OrganizationDeviceName + "-诊断信息:" + sg.DiagnosticInfo;
+                DiagnosticInfo = sg.ItemName + "-诊断信息:" + sg.DiagnosticInfo;
                 DiagnosticAdvice = sg.DiagnosticAdvice;
             }
             else

@@ -541,13 +541,13 @@ namespace AIC.OnLineDataPage.ViewModels
                 _signalProcess.SignalsRemoved += _signalProcess_SignalRemoved;
 
                 List<ChartViewModelBase> list = new List<ChartViewModelBase>();
-               // timeDomainOnLineVM = new TimeDomainChartViewModel(SelectedSignal, true);
+                timeDomainOnLineVM = new TimeDomainChartViewModel(SelectedSignal, true);
                 //list.Add(timeDomainOnLineVM);
-                //IsTimeDomainChecked = false;
+                //IsTimeDomainChecked = true;
 
-                //frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(SelectedSignal, true);
+                frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(SelectedSignal, true);
                 //list.Add(frequencyDomainOnLineVM);
-                //IsFrequencyDomainChecked = false;
+                //IsFrequencyDomainChecked = true;
 
                 amsTrendOnLineVM = new RMSTrendChartViewModel(SelectedSignal, true);
                 list.Add(amsTrendOnLineVM);
@@ -555,8 +555,6 @@ namespace AIC.OnLineDataPage.ViewModels
 
                 graphFunctionCollection.AddItems(list);
 
-                timeDomainOnLineVM = new TimeDomainChartViewModel(null, true);
-                frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(null, true);
                 bodeOnLineVM = new BodeChartViewModel(null, true);
                 multiDivFreOnLineVM = new MultiDivFreChartViewModel(null, true);
                 nyquistOnLineVM = new NyquistChartViewModel(null, true);
@@ -1261,7 +1259,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             try
             {
-                string layoutPath = LocalAddress.LayoutPath;
+                string layoutPath = LocalSetting.LayoutPath;
                 //string layoutPath = @"C:\AIC\布局\DeviceDocument.xml";// System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\DeviceDocument.xml";
                 if (File.Exists(@layoutPath))
                 {
@@ -1308,7 +1306,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             try
             {
-                string layoutPath = LocalAddress.LayoutPath;
+                string layoutPath = LocalSetting.LayoutPath;
                 var filename = layoutPath.Substring(layoutPath.LastIndexOf("\\"));
                 var direcory = layoutPath.Substring(0, layoutPath.Length - filename.Length);
                 //string direcory = @"C:\AIC\布局";

@@ -30,7 +30,7 @@ namespace AIC.OnLineDataPage.Models
                 return;
             }
 
-            if (vSg.AlarmGrade == AlarmGrade.Invalid || vSg.AlarmGrade == AlarmGrade.Normal)
+            if (vSg.AlarmGrade == AlarmGrade.Invalid || vSg.AlarmGrade == AlarmGrade.Normal || vSg.AlarmGrade == AlarmGrade.DisConnect)
             {
                 vSg.DiagnosticInfo = "没有发现故障";
                 vSg.DiagnosticAdvice = null;
@@ -291,27 +291,27 @@ namespace AIC.OnLineDataPage.Models
 
         public static bool GetEnergy(double[] Frequency, double[] Amplitude, double frequency, double frequencyInterval, int number, out double energy, out double m)
         {
+            //List<int> keys = new List<int>();
+            //for (int i = 0; i < Frequency.Length; i++)
+            //{
+            //    if (Frequency[i] <= (frequency * number + frequencyInterval)  && Frequency[i] >= (frequency * number - frequencyInterval) )
+            //    {
+            //        keys.Add(i);
+            //    }
+            //}
 
-            //var fre1 = Frequency.Where(p => p <= (frequency + frequencyInterval) * number  && p >= (frequency - frequencyInterval) * number).Select((s, i) => new { Key = i, Value = s }).ToList();
-            List<int> keys = new List<int>();
-            for (int i = 0; i < Frequency.Length; i++)
-            {
-                if (Frequency[i] <= (frequency + frequencyInterval) * number && Frequency[i] >= (frequency - frequencyInterval) * number)
-                {
-                    keys.Add(i);
-                }
-            }
-
+            var keys = Frequency.Select((s, index) => new { Index = index, Value = s }).Where(p => p.Value <= (frequency * number + frequencyInterval)  && p.Value >= (frequency * number - frequencyInterval) ).ToList();
+            
             double eng1 = 0;
             foreach (var key in keys)
             {
-                eng1 += Math.Pow(Amplitude[key], 2);
+                eng1 += Math.Pow(Amplitude[key.Index], 2);
             }
             energy = Math.Sqrt(eng1 / 2);
             List<double> m1list = new List<double>();
             foreach (var key in keys)
             {
-                m1list.Add(Amplitude[key]);
+                m1list.Add(Amplitude[key.Index]);
             }
             if (m1list.Count > 0)
             {

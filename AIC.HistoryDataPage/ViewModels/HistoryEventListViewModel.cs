@@ -199,14 +199,22 @@ namespace AIC.HistoryDataPage.ViewModels
             CustomSystemException ex = para as CustomSystemException;
             if (ex != null && ex.Type == (int)CustomSystemType.Alarm)
             {
-                HistoryEventAlarmTrendView win = new HistoryEventAlarmTrendView();
+               
                 var itemTree =  _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == ex.T_Item_Guid).FirstOrDefault();
                 //var itemTree = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == new Guid("a0659d1e-2b1e-41ba-abe1-3d42caf678d9")).FirstOrDefault();
                 if (itemTree != null)
                 {
-                    win.Show();
+                    int height;
+                    switch ((ChannelType)ex.T_Item_Type)
+                    {
+                        case ChannelType.WirelessScalarChannelInfo: height = 260; break;
+                        case ChannelType.WirelessVibrationChannelInfo: height = 660; break;
+                        default: height = 260; break;
+                    }
+                    HistoryEventAlarmTrendView win = new HistoryEventAlarmTrendView(itemTree.Name, height);
                     //win.ViewModel.AddData(itemTree, DateTime.Parse("10/20/2017 12:15:12"), DateTime.Parse("10/20/2017 13:15:12"));
-                    win.ViewModel.AddData(itemTree, ex.EventTime.AddHours(-1), ex.EventTime.AddHours(1));
+                    win.AddData(itemTree, ex.EventTime.AddHours(-1), ex.EventTime.AddHours(1));
+                    win.Show();
                 }
             }
         }

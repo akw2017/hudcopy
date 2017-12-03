@@ -52,7 +52,7 @@ namespace AIC.OnLineDataPage.Views
             CreateChart();
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             listBox.SizeChanged += listBox_SizeChanged;
-        }      
+        }    
 
         private void ViewModel_SignalAdded(SignalToken token, DateTime time, int size)
         {
@@ -259,6 +259,7 @@ namespace AIC.OnLineDataPage.Views
             try
             {
                 m_chart.BeginUpdate();
+                m_chart.ViewXY.PointLineSeries.ForEach(p => p.SeriesEventMarkers.Clear());
                 foreach (var token in tokens)
                 {
                     PointLineSeries series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
@@ -268,6 +269,7 @@ namespace AIC.OnLineDataPage.Views
                         var divToken = token as BaseDivfreSignalToken;
                         if (divToken.DataContracts != null && divToken.DataContracts.Count > 0)//加入数据
                         {
+                            
                             SeriesPoint[] points = new SeriesPoint[divToken.DataContracts.Count];
                             for (int i = 0; i < points.Length; i++)
                             {
@@ -342,13 +344,16 @@ namespace AIC.OnLineDataPage.Views
                 m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddMinutes(size)));
                 m_chart.EndUpdate();
 
-                if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                if (tokens != null && tokens.Count() > 0)
                 {
-                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
-                }
-                else
-                {
-                    UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                    if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                    {
+                        m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                    }
+                    else
+                    {
+                        UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                    }
                 }
             }
             catch (Exception ex)

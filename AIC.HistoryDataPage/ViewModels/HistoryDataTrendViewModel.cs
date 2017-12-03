@@ -33,6 +33,7 @@ using System.Threading;
 using AIC.Resources.Models;
 using AIC.HistoryDataPage.ViewModels;
 using AIC.M9600.Common.DTO.Device;
+using Newtonsoft.Json;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -518,10 +519,28 @@ namespace AIC.OnLineDataPage.ViewModels
                         LowerLimit = 0,   
                     };
 
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
+                    var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM", "AlarmLimitJSON", "ExtraInfoJSON" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
 
                     if (result != null && result.Count > 0)
                     {
+                        //double runTime = 0;
+                        //foreach (var data in result)
+                        //{
+                        //    var extraInfoJson = result[0].ExtraInfoJSON;
+                        //    if (!string.IsNullOrWhiteSpace(extraInfoJson))
+                        //    {
+                        //        M9600.Common.DTO.Device.ExtraInfo extraInfo = JsonConvert.DeserializeObject<M9600.Common.DTO.Device.ExtraInfo>(extraInfoJson.Substring(1, extraInfoJson.Length - 2));
+                        //        runTime += extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength;
+                        //    }
+                        //}
+
+                        List<D_WirelessVibrationSlot> databyTwohour = new List<D_WirelessVibrationSlot>();
+                        var group = result.Where(p => p.ACQDatetime.Hour % 2 == 0).GroupBy(p => new { Year = p.ACQDatetime.Year ,Month = p.ACQDatetime.Month, Day = p.ACQDatetime.Day, Hour = p.ACQDatetime.Hour });
+                        foreach(var sublist in group)
+                        {
+                            databyTwohour.Add(sublist.LastOrDefault());
+                        }
+
                         double maxValue =  Math.Round(result.Select(p => p.Result.Value).Max(), 1);
                         double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);                      
                         signaltoken.UpperLimit = maxValue + 5;
@@ -585,7 +604,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         LowerLimit = 0,
                     };
 
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade"}, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
+                    var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "AlarmLimitJSON", "ExtraInfoJSON" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
 
                     if (result != null && result.Count > 0)
                     {

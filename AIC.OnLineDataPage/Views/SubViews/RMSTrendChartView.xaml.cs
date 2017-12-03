@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
 using AIC.ServiceInterface;
 using AIC.M9600.Common.SlaveDB.Generated;
+using System.Threading.Tasks;
 
 namespace AIC.OnLineDataPage.Views.SubViews
 {
@@ -50,7 +51,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
             }
         }
 
-        protected override void ViewModel_SignalChanged()
+        protected override async void ViewModel_SignalChanged()
         {
             try
             {
@@ -59,14 +60,15 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.BeginUpdate();
                 m_chart.ViewXY.PointLineSeries[0].SeriesEventMarkers.Clear();
                 m_chart.ViewXY.PointLineSeries[0].Clear();
-                double dMinX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(DateTime.Now.AddHours(-24)) - 10;
-                double dMaxX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(DateTime.Now) + 5000;
-                m_chart.ViewXY.XAxes[0].SetRange(dMinX, dMaxX);
-                if (ViewModel != null && (ViewModel.Signal is BaseAlarmSignal) && (ViewModel.Signal as BaseAlarmSignal).Result != null)
+              
+                if (ViewModel != null && (ViewModel.Signal is BaseAlarmSignal) && (ViewModel.Signal as BaseAlarmSignal).Result != null && (ViewModel.Signal as BaseAlarmSignal).ACQDatetime != null)
                 {
+                    double dMinX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue((ViewModel.Signal as BaseAlarmSignal).ACQDatetime.Value.AddHours(-24)) - 10;
+                    double dMaxX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue((ViewModel.Signal as BaseAlarmSignal).ACQDatetime.Value) + 5000;
+                    m_chart.ViewXY.XAxes[0].SetRange(dMinX, dMaxX);
                     m_chart.ViewXY.YAxes[0].SetRange(((BaseAlarmSignal)ViewModel.Signal).Result.Value * 0.5, ((BaseAlarmSignal)ViewModel.Signal).Result.Value * 1.5);
                 }
-                InitDataChart();               
+                await InitDataChart();               
             }
             catch (Exception ex)
             {
@@ -81,12 +83,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
 
         private IDatabaseComponent _databaseComponent;
 
-        protected async void InitDataChart()
+        protected async Task InitDataChart()
         {
             try
             {
                 //有效值趋势
-                if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal))
+                if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal) || ViewModel.Signal.ACQDatetime == null)
                 {
                     return;
                 }
@@ -98,7 +100,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
                 if (sg is WirelessScalarChannelSignal)
                 {
-                    var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, DateTime.Now.AddHours(-24), DateTime.Now, null, null);
+                    var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
                     if (results == null || results.Count == 0)
                     {
                         return;
@@ -116,7 +118,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 }
                 else  if (sg is WirelessVibrationChannelSignal)
                 {
-                    var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, DateTime.Now.AddHours(-24), DateTime.Now, null, null);
+                    var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
                     if (results == null || results.Count == 0)
                     {
                         return;

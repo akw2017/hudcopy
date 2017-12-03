@@ -23,7 +23,7 @@ namespace AIC.ServiceInterface
         void Suspend(bool suspend);
         BaseAlarmSignal GetSignal(Guid guid);
 
-        Task<bool> GetSignalData();
+        Task<bool> GetSignalData(DateTime time, bool isHistoryMode);
 
         event SignalChangedEvent SignalsAdded;
         event SignalChangedEvent SignalsRemoved;
