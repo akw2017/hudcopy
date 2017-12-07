@@ -400,7 +400,7 @@ namespace AIC.LocalConfiguration
                     if (sg is BaseAlarmSignal)
                     {
                         ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
-                        ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                          
+                        //((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                          
                     }
                 }
                 return false;
@@ -414,7 +414,7 @@ namespace AIC.LocalConfiguration
                     if (sg is BaseAlarmSignal)
                     {
                         ((BaseAlarmSignal)sg).AlarmGrade = AlarmGrade.DisConnect;
-                        ((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                                                 
+                        //((BaseAlarmSignal)sg).DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                                                 
                     }
                 }
             }
@@ -491,7 +491,7 @@ namespace AIC.LocalConfiguration
                         continue;
                     }
                     itemGuids.Add(sg.Guid, sgtype);
-                }
+                }               
 
                 var data = await _databaseComponent.GetHistoryData(subSignals.Key, itemGuids, historyplayTime.AddSeconds(0 - dataInterval), historyplayTime);
                 if (data == null)
@@ -823,14 +823,14 @@ namespace AIC.LocalConfiguration
                     sg.IsConnected = false;
                     sg.IsRunning = false;
                     sg.AlarmGrade = AlarmGrade.DisConnect;
-                    sg.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时
+                    //sg.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时
                     if (sg is BaseDivfreSignal && (sg as BaseDivfreSignal).DivFres.Count() > 0)
                     {
                         foreach(var divfre in (sg as BaseDivfreSignal).DivFres)
                         {
                             divfre.IsConnected = false;
                             divfre.AlarmGrade = AlarmGrade.DisConnect;
-                            divfre.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                           
+                            //divfre.DelayAlarmGrade = AlarmGrade.DisConnect;//断线不延时                           
                         }
                     }
                 }
@@ -1075,7 +1075,7 @@ namespace AIC.LocalConfiguration
 
                 vSg.WaveformList[processName] = Algorithm.Instance.Envelope(waveform, vSg.SamplePoint);
             }
-            else if (processList.Contains("TFFVData"))//包络
+            else if (processList.Contains("TFFVData"))//TFF
             {
                 if (vSg.WaveformList == null)
                 {
@@ -1088,7 +1088,7 @@ namespace AIC.LocalConfiguration
 
                 vSg.Waveform = Algorithm.Instance.TFF(waveform, vSg.SamplePoint, vSg.SampleFre);
             }
-            else if (processList.Contains("CepstrumVData"))//包络
+            else if (processList.Contains("CepstrumVData"))//倒频谱
             {
                 if (vSg.WaveformList == null)
                 {
@@ -1304,8 +1304,23 @@ namespace AIC.LocalConfiguration
             sg.BiasVoltHigh = (float)idata.BiasVoltHigh.Value;
             sg.BiasVoltLow = (float)idata.BiasVoltLow.Value;          
         }
-        private void setalarm(BaseAlarmSignal sg,IBaseAlarmSlot idata)
+        private void setalarm(BaseAlarmSignal sg, IBaseAlarmSlot idata)
         {
+            if (sg.ACQDatetime != null && sg.Result != null && sg.Result != idata.Result)//缓存数据
+            {
+                TrendPointData tp = new TrendPointData(sg.ACQDatetime.Value, sg.Result.Value, sg.Unit, (int)sg.AlarmGrade);
+                if (sg is IBaseWaveSlot)
+                {
+                    tp.RecordLab = sg.RecordLab.Value;
+                    tp.IsValidWave = (sg as IBaseWaveSlot).IsValidWave.Value;
+                }
+                sg.BufferData.Add(tp);
+                if (sg.ACQDatetime >= sg.BufferData[0].ACQDateTime.AddSeconds(10))//弹出一个数据
+                {
+                    sg.BufferData.RemoveAt(0);
+                }
+            }
+
             sg.ACQDatetime = idata.ACQDatetime;
             sg.ACQ_Unit_Type = idata.ACQ_Unit_Type;
             sg.AsySyn = idata.AsySyn;
@@ -1320,9 +1335,10 @@ namespace AIC.LocalConfiguration
             sg.Result = idata.Result;
             sg.IsValidCH = idata.IsValidCH;
             sg.Unit = idata.Unit;
-            //sg.ChannelHDID = idata.ChannelHDID;
+            //sg.ChannelHDID = idata.ChannelHDID;//数据不完整，抛弃
 
             sg.AlarmGrade = (AlarmGrade)(idata.AlarmGrade & 0x00ffff00);
+            sg.Low8Alarm = idata.AlarmGrade & 0xff;
             sg.AlarmLimit = idata.AlarmLimit;            
         }
     }

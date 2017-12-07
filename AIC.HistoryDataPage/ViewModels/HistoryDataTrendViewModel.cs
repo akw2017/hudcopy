@@ -37,11 +37,12 @@ using Newtonsoft.Json;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
-    public delegate void SignalAddHandler(SignalToken token, DateTime time, int size);
+    public delegate void SignalAddHandler(SignalToken token, DateTime time, double size);
     public delegate void SignalRemovedHandler(SignalToken token);
-    public delegate void SignalRefreshHandler(IEnumerable<SignalToken> tokens, DateTime time, int size, bool refresh = false);
+    public delegate void SignalRefreshHandler(IEnumerable<SignalToken> tokens, DateTime time, double size, bool refresh = false);
     public delegate void SignalShowChangedHandler(SignalToken token);
     public delegate void SignalSelectedHandler(SignalToken token);
+    public delegate void SignalAddedPointHandler(IEnumerable<SignalToken> tokens);
 
     class HistoryDataTrendViewModel : BindableBase
     {
@@ -56,6 +57,7 @@ namespace AIC.OnLineDataPage.ViewModels
         public event SignalRefreshHandler SignalRefresh;
         public event SignalShowChangedHandler SignalShowChanged;
         public event SignalSelectedHandler SignalSelected;
+        public event SignalAddedPointHandler SignalAddedPoint;
 
         public HistoryDataTrendViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
         {           
@@ -65,10 +67,13 @@ namespace AIC.OnLineDataPage.ViewModels
             _cardProcess = cardProcess;
             _databaseComponent = databaseComponent;
             WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseTrackChanged);
+            WhenPageChanged.Sample(TimeSpan.FromMilliseconds(10)).ObserveOn(SynchronizationContext.Current).Subscribe(RaisePageChanged);
 
             InitTree();
             InitPager();
             Initialization = InitializeAsync();
+
+            _eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(RealTimeDataRefresh);
         }
         #region 属性与字段   
         private ObservableCollection<OrganizationTreeItemViewModel> _organizationTreeItems;
@@ -99,7 +104,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        public string waitinfo;
+        public string waitinfo = "数据加载中";
         public string WaitInfo
         {
             get
@@ -176,8 +181,8 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private int timeSize;
-        public int TimeSize
+        private double timeSize;
+        public double TimeSize
         {
             get
             {
@@ -190,8 +195,8 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private List<int> timeSizeList;
-        public List<int> TimeSizeList
+        private List<double> timeSizeList;
+        public List<double> TimeSizeList
         {
             get
             {
@@ -272,7 +277,20 @@ namespace AIC.OnLineDataPage.ViewModels
                     .FromEventPattern<TrendTrackChangedEventArgs>(
                         h => this.trackChanged += h,
                         h => this.trackChanged -= h)
-                   .Select(x => x.EventArgs.Tokens);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
+                   .Select(x => x.EventArgs.Tokens);
+            }
+        }
+
+        private event EventHandler<RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>> pageChanged;
+        public IObservable<RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>> WhenPageChanged
+        {
+            get
+            {
+                return Observable
+                    .FromEventPattern<RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>>(
+                        h => this.pageChanged += h,
+                        h => this.pageChanged -= h)
+                   .Select(x => x.EventArgs);
             }
         }
 
@@ -365,7 +383,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             get
             {
-                return this.saveChartFileCommand ?? (this.saveChartFileCommand = new DelegateCommand<object>(para => this.SaveChartFile(para)));
+                return this.saveChartFileCommand ?? (this.saveChartFileCommand = new DelegateCommand(() => this.SaveChartFile()));
             }
         }
 
@@ -374,7 +392,16 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             get
             {
-                return this.loadChartFileCommand ?? (this.loadChartFileCommand = new DelegateCommand<object>(para => this.LoadChartFile(para)));
+                return this.loadChartFileCommand ?? (this.loadChartFileCommand = new DelegateCommand(() => this.LoadChartFile()));
+            }
+        }
+
+        private ICommand deleteChartFileCommand;
+        public ICommand DeleteChartFileCommand
+        {
+            get
+            {
+                return this.deleteChartFileCommand ?? (this.deleteChartFileCommand = new DelegateCommand(() => this.DeleteChartFile()));
             }
         }
         #endregion
@@ -500,152 +527,148 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return;
             }
-            ItemTreeItemViewModel itemTree = para as ItemTreeItemViewModel;
-            if (itemTree != null && itemTree.T_Item != null)
+            await lazyLoadinglocker.WaitAsync();
+            try
             {
-                if (addedSignals.Select(o => o.Guid).Contains(itemTree.T_Item.Guid)) return;
-                string selectedip = itemTree.ServerIP;
-                #region WirelessVibrationChannelInfo
-                if (itemTree.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+                Status = ViewModelStatus.Querying;
+                ItemTreeItemViewModel itemTree = para as ItemTreeItemViewModel;
+                if (itemTree != null && itemTree.T_Item != null)
                 {
-                    BaseDivfreSignalToken signaltoken = new BaseDivfreSignalToken()
+                    if (addedSignals.Select(o => o.Guid).Contains(itemTree.T_Item.Guid)) return;
+                    string selectedip = itemTree.ServerIP;
+                    #region WirelessVibrationChannelInfo
+                    if (itemTree.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                     {
-                        DisplayName = itemTree.BaseAlarmSignal.DeviceItemName,
-                        IP = selectedip,
-                        Guid = itemTree.T_Item.Guid,   
-                        ItemType = 12,                    
-                        BaseAlarmSignal = itemTree.BaseAlarmSignal,
-                        UpperLimit = 10,
-                        LowerLimit = 0,   
-                    };
-
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM", "AlarmLimitJSON", "ExtraInfoJSON" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
-
-                    if (result != null && result.Count > 0)
-                    {
-                        //double runTime = 0;
-                        //foreach (var data in result)
-                        //{
-                        //    var extraInfoJson = result[0].ExtraInfoJSON;
-                        //    if (!string.IsNullOrWhiteSpace(extraInfoJson))
-                        //    {
-                        //        M9600.Common.DTO.Device.ExtraInfo extraInfo = JsonConvert.DeserializeObject<M9600.Common.DTO.Device.ExtraInfo>(extraInfoJson.Substring(1, extraInfoJson.Length - 2));
-                        //        runTime += extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength;
-                        //    }
-                        //}
-
-                        List<D_WirelessVibrationSlot> databyTwohour = new List<D_WirelessVibrationSlot>();
-                        var group = result.Where(p => p.ACQDatetime.Hour % 2 == 0).GroupBy(p => new { Year = p.ACQDatetime.Year ,Month = p.ACQDatetime.Month, Day = p.ACQDatetime.Day, Hour = p.ACQDatetime.Hour });
-                        foreach(var sublist in group)
+                        BaseDivfreSignalToken signaltoken = new BaseDivfreSignalToken()
                         {
-                            databyTwohour.Add(sublist.LastOrDefault());
+                            DisplayName = itemTree.BaseAlarmSignal.DeviceItemName,
+                            IP = selectedip,
+                            Guid = itemTree.T_Item.Guid,
+                            ItemType = 12,
+                            BaseAlarmSignal = itemTree.BaseAlarmSignal,
+                            UpperLimit = 10,
+                            LowerLimit = 0,
+                        };
+
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, CurrentTime.AddHours(0 - TimeSize), CurrentTime.AddHours(TimeSize * 2), null, null);
+
+                        if (result != null && result.Count > 0)
+                        {
+                            result = result.OrderBy(p => p.ACQDatetime).ToList();
+                            double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
+                            double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
+                            signaltoken.UpperLimit = maxValue + 5;
+                            signaltoken.LowerLimit = minValue - 5;
+                            WirelessVibrationDataPartition(result, signaltoken, CurrentTime, TimeSize);
+                            signaltoken.Unit = result[0].Unit;
                         }
 
-                        double maxValue =  Math.Round(result.Select(p => p.Result.Value).Max(), 1);
-                        double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);                      
-                        signaltoken.UpperLimit = maxValue + 5;
-                        signaltoken.LowerLimit = minValue - 5;
-                        WirelessVibrationDataPartition(result, signaltoken, CurrentTime, TimeSize);
-                        signaltoken.Unit = result[0].Unit;
-                    }
-                   
-                    foreach (var color in  DefaultColors.SeriesForBlackBackgroundWpf)
-                    {
-                        if (!ColorList.Contains(color))
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
                         {
-                            ColorList.Add(color);
-                            signaltoken.SolidColorBrush = new SolidColorBrush(color);
-                            break;
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                signaltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }                        
+
+                        addedSignals.Add(signaltoken);
+                        signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
+                        if (SignalAdded != null)
+                        {
+                            SignalAdded(signaltoken, CurrentTime, TimeSize);
                         }
-                    }
 
-                    addedSignals.Add(signaltoken);
-                    signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
-                    if (SignalAdded != null)
+                        signaltoken.PreviousDatas = new List<IBaseDivfreSlot>();
+                        signaltoken.NextDatas = new List<IBaseDivfreSlot>();
+                        string sql = null;
+                        object[] unit = null;
+                        if (signaltoken.Unit != null)
+                        {
+                            sql = "Unit = @0";
+                            unit = new object[] { signaltoken.Unit };
+                        }
+                        await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, CurrentTime.AddHours(0 - TimeSize * 3 / 2), CurrentTime.AddHours(0 - TimeSize), sql, unit);
+                        await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, CurrentTime.AddHours(TimeSize * 2), CurrentTime.AddHours(TimeSize * 5 / 2), sql, unit);
+
+                        signaltoken.ChannelToken = SignalConvertToChannelToken(signaltoken);
+
+                        timeDomainVM.AddChannel(signaltoken.ChannelToken);
+                        frequencyDomainVM.AddChannel(signaltoken.ChannelToken);
+                        powerSpectrumVM.AddChannel(signaltoken.ChannelToken);
+                        powerSpectrumDensityVM.AddChannel(signaltoken.ChannelToken);
+                        alarmPointTrendVM.AddChannel(signaltoken.ChannelToken);
+                        orthoDataVM.AddChannel(signaltoken.ChannelToken);
+
+                        offDesignConditionVM.AddChannel(signaltoken.ChannelToken);
+                    }
+                    #endregion
+                    #region WirelessScalarChannelInfo
+                    else if (itemTree.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                     {
-                        SignalAdded(signaltoken, CurrentTime, TimeSize);
+                        BaseAlarmSignalToken signaltoken = new BaseAlarmSignalToken()
+                        {
+                            DisplayName = itemTree.BaseAlarmSignal.DeviceItemName,
+                            IP = selectedip,
+                            Guid = itemTree.T_Item.Guid,
+                            ItemType = 11,
+                            BaseAlarmSignal = itemTree.BaseAlarmSignal,
+                            UpperLimit = 10,
+                            LowerLimit = 0,
+                        };
+
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "AlarmLimitJSON", "ExtraInfoJSON" }, CurrentTime.AddHours(0 - TimeSize), CurrentTime.AddHours(TimeSize * 2), null, null);
+
+                        if (result != null && result.Count > 0)
+                        {
+                            result = result.OrderBy(p => p.ACQDatetime).ToList();
+                            double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
+                            double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
+                            signaltoken.UpperLimit = maxValue + 5;
+                            signaltoken.LowerLimit = minValue - 5;
+                            WirelessScalarDataPartition(result, signaltoken, CurrentTime, TimeSize);
+                            signaltoken.Unit = result[0].Unit;
+                        }
+
+                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                        {
+                            if (!ColorList.Contains(color))
+                            {
+                                ColorList.Add(color);
+                                signaltoken.SolidColorBrush = new SolidColorBrush(color);
+                                break;
+                            }
+                        }
+
+                        addedSignals.Add(signaltoken);
+                        signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
+                        if (SignalAdded != null)
+                        {
+                            SignalAdded(signaltoken, CurrentTime, TimeSize);
+                        }
+
+                        signaltoken.PreviousDatas = new List<IBaseAlarmSlot>();
+                        signaltoken.NextDatas = new List<IBaseAlarmSlot>();
+                        string sql = null;
+                        object[] unit = null;
+                        if (signaltoken.Unit != null)
+                        {
+                            sql = "Unit = @0";
+                            unit = new object[] { signaltoken.Unit };
+                        }
+                        await LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, CurrentTime.AddHours(0 - TimeSize * 3 / 2), CurrentTime.AddHours(0 - TimeSize), sql, unit);
+                        await LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, CurrentTime.AddHours(TimeSize * 2), CurrentTime.AddHours(TimeSize * 5 / 2), sql, unit);
+
+                        
                     }
-
-                    signaltoken.PreviousDatas = new List<IBaseDivfreSlot>();
-                    signaltoken.NextDatas = new List<IBaseDivfreSlot>();
-                    string sql = null;
-                    object[] unit = null;
-                    if (signaltoken.Unit != null)
-                    {
-                        sql = "Unit = @0";
-                        unit = new object[] { signaltoken.Unit };
-                    }
-                    await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, CurrentTime.AddMinutes(0 - TimeSize * 3 / 2), CurrentTime.AddMinutes(0 - TimeSize), sql, unit);
-                    await LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, CurrentTime.AddMinutes(TimeSize * 2), CurrentTime.AddMinutes(TimeSize * 5 / 2), sql, unit);
-
-                    signaltoken.ChannelToken = SignalConvertToChannelToken(signaltoken);
-
-                    timeDomainVM.AddChannel(signaltoken.ChannelToken);
-                    frequencyDomainVM.AddChannel(signaltoken.ChannelToken);
-                    powerSpectrumVM.AddChannel(signaltoken.ChannelToken);
-                    powerSpectrumDensityVM.AddChannel(signaltoken.ChannelToken);
-                    alarmPointTrendVM.AddChannel(signaltoken.ChannelToken);
-                    orthoDataVM.AddChannel(signaltoken.ChannelToken);
-
-                    offDesignConditionVM.AddChannel(signaltoken.ChannelToken);
+                    #endregion
                 }
-                #endregion
-                #region WirelessScalarChannelInfo
-                else if (itemTree.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
-                {
-                    BaseAlarmSignalToken signaltoken = new BaseAlarmSignalToken()
-                    {
-                        DisplayName = itemTree.BaseAlarmSignal.DeviceItemName,
-                        IP = selectedip,
-                        Guid = itemTree.T_Item.Guid,
-                        ItemType = 11,
-                        BaseAlarmSignal = itemTree.BaseAlarmSignal,
-                        UpperLimit = 10,
-                        LowerLimit = 0,
-                    };
-
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "AlarmLimitJSON", "ExtraInfoJSON" }, CurrentTime.AddMinutes(0 - TimeSize), CurrentTime.AddMinutes(TimeSize * 2), null, null);
-
-                    if (result != null && result.Count > 0)
-                    {
-                        double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
-                        double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
-                        signaltoken.UpperLimit = maxValue + 5;
-                        signaltoken.LowerLimit = minValue - 5;
-                        WirelessScalarDataPartition(result, signaltoken, CurrentTime, TimeSize);
-                        signaltoken.Unit = result[0].Unit;
-                    }
-
-                    foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
-                    {
-                        if (!ColorList.Contains(color))
-                        {
-                            ColorList.Add(color);
-                            signaltoken.SolidColorBrush = new SolidColorBrush(color);
-                            break;
-                        }
-                    }
-
-                    addedSignals.Add(signaltoken);
-                    signaltoken.Index = addedSignals.IndexOf(signaltoken) + 1;
-                    if (SignalAdded != null)
-                    {
-                        SignalAdded(signaltoken, CurrentTime, TimeSize);
-                    }
-
-                    signaltoken.PreviousDatas = new List<IBaseAlarmSlot>();
-                    signaltoken.NextDatas = new List<IBaseAlarmSlot>();
-                    string sql = null;
-                    object[] unit = null;
-                    if (signaltoken.Unit != null)
-                    {
-                        sql = "Unit = @0";
-                        unit = new object[] { signaltoken.Unit };
-                    }
-                    await LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, CurrentTime.AddMinutes(0 - TimeSize * 3 / 2), CurrentTime.AddMinutes(0 - TimeSize), sql, unit);
-                    await LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, CurrentTime.AddMinutes(TimeSize * 2), CurrentTime.AddMinutes(TimeSize * 5 / 2), sql, unit);
-                }
-                #endregion
+            }
+            finally
+            {
+                lazyLoadinglocker.Release();
+                Status = ViewModelStatus.None;
             }
         }
 
@@ -661,30 +684,36 @@ namespace AIC.OnLineDataPage.ViewModels
                 var oldtime = args.OldValue.CurrectTime;
                 var oldsize = args.OldValue.TimeSize;
 
-                if (newsize == oldsize && newtime == oldtime)
+                if (oldsize == -1)
                 {
-                    await PageRefreshData(newtime, newsize); //return;
+                    return;
                 }
-                else if (newsize == oldsize && newtime == oldtime.AddMinutes(newsize / 2))
+                else if (newsize == oldsize && newtime > oldtime.AddHours(0 - newsize / 2) && newtime < oldtime.AddHours(newsize / 2))
+                {
+                    await PageRefreshData(newtime, newsize, false);
+                }
+                else if (newsize == oldsize && newtime == oldtime.AddHours(newsize / 2))
                 {
                     await PageDownData(newtime, newsize);
                 }
-                else if (newsize == oldsize && newtime == oldtime.AddMinutes(0 - newsize / 2))
+                else if (newsize == oldsize && newtime == oldtime.AddHours(0 - newsize / 2))
                 {
                     await PageUpData(newtime, newsize);
                 }
                 else
                 {
-                    await PageRefreshData(newtime, newsize);
+                    Status = ViewModelStatus.Querying;                   
+                    await PageRefreshData(newtime, newsize, true);
                 }
             }
             finally
             {
                 lazyLoadinglocker.Release();
+                Status = ViewModelStatus.None;
             }
         }
 
-        private async Task PageDownData(DateTime time, int size)
+        private async Task PageDownData(DateTime time, double size)
         {
             //向后翻页
             List<Task> lttask = new List<Task>();
@@ -708,7 +737,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddMinutes(size * 2), time.AddMinutes(size * 5 / 2), sql, unit));
+                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddHours(size * 2), time.AddHours(size * 5 / 2), sql, unit));
                 }
                 else if (signal is BaseAlarmSignalToken)
                 {
@@ -728,7 +757,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddMinutes(size * 2), time.AddMinutes(size * 5 / 2), sql, unit));
+                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddHours(size * 2), time.AddHours(size * 5 / 2), sql, unit));
                 }
             }
             if (SignalRefresh != null)
@@ -738,7 +767,7 @@ namespace AIC.OnLineDataPage.ViewModels
             await Task.WhenAll(lttask.ToArray());
         }
 
-        private async Task PageUpData(DateTime time, int size)
+        private async Task PageUpData(DateTime time, double size)
         {
             //向前翻页
             List<Task> lttask = new List<Task>();
@@ -762,7 +791,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddMinutes(0 - size * 3 / 2), time.AddMinutes(0 - size), sql, unit));
+                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddHours(0 - size * 3 / 2), time.AddHours(0 - size), sql, unit));
                 }
                 else if (signal is BaseAlarmSignalToken)
                 {
@@ -782,7 +811,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddMinutes(0 - size * 3 / 2), time.AddMinutes(0 - size),sql, unit));
+                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddHours(0 - size * 3 / 2), time.AddHours(0 - size),sql, unit));
                 }
             }
             if (SignalRefresh != null)
@@ -792,7 +821,7 @@ namespace AIC.OnLineDataPage.ViewModels
             await Task.WhenAll(lttask.ToArray());
         }
 
-        private async Task PageRefreshData(DateTime time, int size)
+        private async Task PageRefreshData(DateTime time, double size, bool refresh)
         {           
             List<Task> lttask = new List<Task>();
             foreach (var signal in addedSignals)
@@ -815,21 +844,25 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(signaltoken.IP, signaltoken.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, time.AddMinutes(0 - size / 2), time.AddMinutes(size * 3 / 2), sql, unit);
+                    var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(signaltoken.IP, signaltoken.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, time.AddHours(0 - size / 2), time.AddHours(size * 3 / 2), sql, unit);
 
                     if (result != null && result.Count > 0)
                     {
-                        double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
-                        double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);                      
-                        signaltoken.UpperLimit = maxValue + 5;
-                        signaltoken.LowerLimit = minValue - 5;
+                        result = result.OrderBy(p => p.ACQDatetime).ToList();
+                        if (refresh == true)
+                        {
+                            double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
+                            double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
+                            signaltoken.UpperLimit = maxValue + 5;
+                            signaltoken.LowerLimit = minValue - 5;
+                        }
                         WirelessVibrationDataPartition(result, signaltoken, time, size);
                     }
 
                     signaltoken.PreviousDatas = new List<IBaseDivfreSlot>();
                     signaltoken.NextDatas = new List<IBaseDivfreSlot>();
-                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddMinutes(0 - size), time.AddMinutes(0 - size / 2), sql, unit));
-                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddMinutes(size * 3 / 2), time.AddMinutes(size * 2), sql, unit));
+                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddHours(0 - size), time.AddHours(0 - size / 2), sql, unit));
+                    lttask.Add(LoadWirelessVibrationData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddHours(size * 3 / 2), time.AddHours(size * 2), sql, unit));
                 }
                 if (signal is BaseAlarmSignalToken)
                 {
@@ -849,48 +882,52 @@ namespace AIC.OnLineDataPage.ViewModels
                         sql = "Unit = @0";
                         unit = new object[] { signaltoken.Unit };
                     }
-                    var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(signaltoken.IP, signaltoken.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, time.AddMinutes(0 - size / 2), time.AddMinutes(size * 3 / 2), sql, unit);
+                    var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(signaltoken.IP, signaltoken.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, time.AddHours(0 - size / 2), time.AddHours(size * 3 / 2), sql, unit);
 
                     if (result != null && result.Count > 0)
                     {
-                        double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
-                        double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
-                        signaltoken.UpperLimit = maxValue + 5;
-                        signaltoken.LowerLimit = minValue - 5;
+                        result = result.OrderBy(p => p.ACQDatetime).ToList();
+                        if (refresh == true)
+                        {
+                            double maxValue = Math.Round(result.Select(p => p.Result.Value).Max(), 1);
+                            double minValue = Math.Round(result.Select(p => p.Result.Value).Min(), 1);
+                            signaltoken.UpperLimit = maxValue + 5;
+                            signaltoken.LowerLimit = minValue - 5;
+                        }
                         WirelessScalarDataPartition(result, signaltoken, time, size);
                     }
 
                     signaltoken.PreviousDatas = new List<IBaseAlarmSlot>();
                     signaltoken.NextDatas = new List<IBaseAlarmSlot>();
-                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddMinutes(0 - size), time.AddMinutes(0 - size / 2), sql, unit));
-                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddMinutes(size * 3 / 2), time.AddMinutes(size * 2), sql, unit));
+                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.PreviousDatas, time.AddHours(0 - size), time.AddHours(0 - size / 2), sql, unit));
+                    lttask.Add(LoadWirelessScalarData(signaltoken.ItemType, signaltoken.Guid, signaltoken.IP, signaltoken.NextDatas, time.AddHours(size * 3 / 2), time.AddHours(size * 2), sql, unit));
                 }
             }
             if (SignalRefresh != null)
             {
-                SignalRefresh(addedSignals, time, size, true);
+                SignalRefresh(addedSignals, time, size);
             }
             await Task.WhenAll(lttask.ToArray());
         }
 
-        private void WirelessVibrationDataPartition(List<D_WirelessVibrationSlot> result, BaseDivfreSignalToken token, DateTime time, int size)
+        private void WirelessVibrationDataPartition(List<D_WirelessVibrationSlot> result, BaseDivfreSignalToken token, DateTime time, double size)
         {
-            token.FirstDatas = result.Where(p => p.ACQDatetime <= time.AddMinutes(0 - size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-            token.SecondDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(0 - size / 2) && p.ACQDatetime <= time).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-            token.ThirdDatas = result.Where(p => p.ACQDatetime > time && p.ACQDatetime <= time.AddMinutes(size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-            token.FourthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size / 2) && p.ACQDatetime <= time.AddMinutes(size)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-            token.FifthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size) && p.ACQDatetime <= time.AddMinutes(size * 3 / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-            token.SixthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size * 3 / 2) && p.ACQDatetime <= time.AddMinutes(size * 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.FirstDatas = result.Where(p => p.ACQDatetime <= time.AddHours(0 - size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.SecondDatas = result.Where(p => p.ACQDatetime > time.AddHours(0 - size / 2) && p.ACQDatetime <= time).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.ThirdDatas = result.Where(p => p.ACQDatetime > time && p.ACQDatetime <= time.AddHours(size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.FourthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size / 2) && p.ACQDatetime <= time.AddHours(size)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.FifthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size) && p.ACQDatetime <= time.AddHours(size * 3 / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+            token.SixthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size * 3 / 2) && p.ACQDatetime <= time.AddHours(size * 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
         }
 
-        private void WirelessScalarDataPartition(List<D_WirelessScalarSlot> result, BaseAlarmSignalToken token, DateTime time, int size)
+        private void WirelessScalarDataPartition(List<D_WirelessScalarSlot> result, BaseAlarmSignalToken token, DateTime time, double size)
         {
-            token.FirstDatas = result.Where(p => p.ACQDatetime <= time.AddMinutes(0 - size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-            token.SecondDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(0 - size / 2) && p.ACQDatetime <= time).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-            token.ThirdDatas = result.Where(p => p.ACQDatetime > time && p.ACQDatetime <= time.AddMinutes(size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-            token.FourthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size / 2) && p.ACQDatetime <= time.AddMinutes(size)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-            token.FifthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size) && p.ACQDatetime <= time.AddMinutes(size * 3 / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-            token.SixthDatas = result.Where(p => p.ACQDatetime > time.AddMinutes(size * 3 / 2) && p.ACQDatetime <= time.AddMinutes(size * 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.FirstDatas = result.Where(p => p.ACQDatetime <= time.AddHours(0 - size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.SecondDatas = result.Where(p => p.ACQDatetime > time.AddHours(0 - size / 2) && p.ACQDatetime <= time).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.ThirdDatas = result.Where(p => p.ACQDatetime > time && p.ACQDatetime <= time.AddHours(size / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.FourthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size / 2) && p.ACQDatetime <= time.AddHours(size)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.FifthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size) && p.ACQDatetime <= time.AddHours(size * 3 / 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+            token.SixthDatas = result.Where(p => p.ACQDatetime > time.AddHours(size * 3 / 2) && p.ACQDatetime <= time.AddHours(size * 2)).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
         }
 
         private async Task LoadWirelessVibrationData(int itemtype, Guid guid, string ip, List<IBaseDivfreSlot> datas, DateTime start, DateTime end, string sql = null, object[] unit = null)
@@ -898,9 +935,9 @@ namespace AIC.OnLineDataPage.ViewModels
             if (itemtype == 12)
             {
                 var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(ip, guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, start, end, sql, unit);
-                if (result != null)
+                if (result != null && result.Count > 0)
                 {
-                    datas.AddRange(result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList());
+                    datas.AddRange(result.OrderBy(p => p.ACQDatetime).Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList());
                 }
             }
         }
@@ -910,7 +947,10 @@ namespace AIC.OnLineDataPage.ViewModels
             if (itemtype == 11)
             {
                 var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(ip, guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, start, end, sql, unit);
-                datas = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+                if (result != null && result.Count > 0)
+                {
+                    datas.AddRange(result.OrderBy(p => p.ACQDatetime).Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList());
+                }
             }
         }
 
@@ -991,8 +1031,13 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private async Task AMSTrackChanged(IEnumerable<BaseWaveSignalToken> tokens)
         {
-            try
+            if (lazyLoadinglocker.CurrentCount == 0)
             {
+                return;
+            }
+            await lazyLoadinglocker.WaitAsync();
+            try
+            {                
                 if (tokens == null) return;
 
                 var unValidTokens = tokens.Where(o => o.CurrentIndex == -1);
@@ -1010,6 +1055,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 //var date = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ACQDatetime).First();              
 
                 List<IWaveformData> result = new List<IWaveformData>();
+                List<BaseWaveSignal> realresult = new List<BaseWaveSignal>();
                 foreach (var token in validTokens)
                 {
                     if (token is BaseDivfreSignalToken)
@@ -1017,27 +1063,108 @@ namespace AIC.OnLineDataPage.ViewModels
                         var divtoken = token as BaseDivfreSignalToken;
 
                         List<D_WirelessVibrationSlot_Waveform> data = null;
-                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime == divtoken.BaseAlarmSignal.ACQDatetime)//实时数据
                         {
-                            data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
+                            if ((divtoken.BaseAlarmSignal as BaseWaveSignal).Waveform != null)
+                            {
+                                realresult.Add(divtoken.BaseAlarmSignal as BaseWaveSignal);
+                            }
+                            else
+                            {
+                                token.VData = null;
+                                if (divtoken.ChannelToken != null)
+                                {
+                                    (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                                }
+                            }
                         }
                         else
                         {
-                            token.VData = null;
-                            (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
-                        }
-                        if (data != null && data.Count > 0)
-                        {
-                            result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
-                        }
-                        else
-                        {
-                            token.VData = null;
-                            (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                            if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                            {
+                                data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
+                            }
+                            else
+                            {
+                                token.VData = null;
+                                if (divtoken.ChannelToken != null)
+                                {
+                                    (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                                }
+                            }
+                            if (data != null && data.Count > 0)
+                            {
+                                result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
+                            }
+                            else
+                            {
+                                token.VData = null;
+                                if (divtoken.ChannelToken != null)
+                                {
+                                    (divtoken.ChannelToken as BaseDivfreChannelToken).VData = null;
+                                }
+                            }
                         }
                     }
                 }
 
+                //实时数据
+                await Task.Run(() => Parallel.For(0, realresult.Count, i =>
+                {
+                    VibrationData vdata = new VibrationData();
+                    vdata.Waveform = realresult[i].Waveform;
+                    vdata.SampleFre = realresult[i].SampleFre;
+                    vdata.SamplePoint = realresult[i].SamplePoint;
+                    vdata.Unit = realresult[i].WaveUnit;
+
+                    var paras = Algorithm.CalculatePara(vdata.Waveform);
+                    if (paras != null)
+                    {
+                        vdata.RMSValue = paras[0];
+                        vdata.PeakValue = paras[1];
+                        vdata.PeakPeakValue = paras[2];
+                        vdata.Slope = paras[3];
+                        vdata.Kurtosis = paras[4];
+                        vdata.KurtosisValue = paras[5];
+                        vdata.WaveIndex = paras[6];
+                        vdata.PeakIndex = paras[7];
+                        vdata.ImpulsionIndex = paras[8];
+                        vdata.RootAmplitude = paras[9];
+                        vdata.ToleranceIndex = paras[10];
+                    }
+
+                    double sampleFre = vdata.SampleFre;
+                    if (vdata.Trigger == TriggerType.Angle)
+                    {
+                        if (vdata.RPM > 0 && vdata.TeethNumber > 0)
+                        {
+                            sampleFre = vdata.RPM * vdata.TeethNumber / 60;
+                        }
+                    }
+
+                    int length = (int)(vdata.SamplePoint / 2.56) + 1;
+                    if (vdata.Frequency == null || vdata.Frequency.Length != length)
+                    {
+                        vdata.Frequency = new double[length];
+                    }
+                    double frequencyInterval = sampleFre / vdata.SamplePoint;
+                    for (int j = 0; j < length; j++)
+                    {
+                        vdata.Frequency[j] = frequencyInterval * j;
+                    }
+                    var output = Algorithm.Instance.FFT2AndPhaseAction(vdata.Waveform, vdata.SamplePoint);
+                    if (output != null)
+                    {
+                        vdata.Amplitude = output[0].Take(length).ToArray();
+                        vdata.Phase = output[1].Take(length).ToArray();
+                    }
+                    validTokens[i].VData = vdata;
+                    if (validTokens[i].ChannelToken != null)
+                    {
+                        (validTokens[i].ChannelToken as BaseDivfreChannelToken).VData = vdata;
+                    }
+                }));
+                //历史数据
                 await Task.Run(() => Parallel.For(0, result.Count, i =>
                 {
                     VibrationData vdata = new VibrationData();
@@ -1088,7 +1215,10 @@ namespace AIC.OnLineDataPage.ViewModels
                         vdata.Phase = output[1].Take(length).ToArray();
                     }
                     validTokens[i].VData = vdata;
-                    (validTokens[i].ChannelToken as BaseDivfreChannelToken).VData = vdata;
+                    if (validTokens[i].ChannelToken != null)
+                    {
+                        (validTokens[i].ChannelToken as BaseDivfreChannelToken).VData = vdata;
+                    }
                 }));
 
                 timeDomainVM.ChangeChannelData(tokens.Select(p => p.ChannelToken as BaseWaveChannelToken));
@@ -1098,6 +1228,419 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-TrackChanged", ex));
             }
+            finally
+            {
+                lazyLoadinglocker.Release();
+            }
+        }
+        #endregion
+
+        #region 实时数据
+        private void RealTimeDataRefresh(object obj)
+        {
+            if (lazyLoadinglocker.CurrentCount == 0)
+            {
+                return;
+            }
+            lazyLoadinglocker.WaitAsync();
+            bool refresh = false;
+            DateTime lasttime = new DateTime();
+            try
+            {                
+                foreach (var signal in addedSignals)
+                {
+                    if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(0 - TimeSize * 3 / 2) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(0 - TimeSize))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            AddRealTimeWirelessVibrationData(signaltoken, 0);
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            AddRealTimeWirelessScalarData(signaltoken, 0);
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(0 - TimeSize) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(0 - TimeSize / 2))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 1) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if (AddRealTimeWirelessScalarData(signaltoken, 1) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(0 - TimeSize / 2) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime)
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 2) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if( AddRealTimeWirelessScalarData(signaltoken, 2) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(TimeSize / 2))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 3) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if (AddRealTimeWirelessScalarData(signaltoken, 3) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(TimeSize / 2) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(TimeSize))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 4) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if (AddRealTimeWirelessScalarData(signaltoken, 4) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(TimeSize) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(TimeSize * 3 / 2))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 5) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if (AddRealTimeWirelessScalarData(signaltoken, 5) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(TimeSize * 3 / 2) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(TimeSize * 2))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            if (AddRealTimeWirelessVibrationData(signaltoken, 6) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            if (AddRealTimeWirelessScalarData(signaltoken, 6) == true)
+                            {
+                                refresh = true;
+                                lasttime = signal.BaseAlarmSignal.ACQDatetime.Value;
+                            }
+                        }
+                    }
+                    else if (signal.BaseAlarmSignal.ACQDatetime > CurrentTime.AddHours(TimeSize * 2) && signal.BaseAlarmSignal.ACQDatetime <= CurrentTime.AddHours(TimeSize * 5 / 2))
+                    {
+                        if (signal is BaseDivfreSignalToken)
+                        {
+                            var signaltoken = signal as BaseDivfreSignalToken;
+                            AddRealTimeWirelessVibrationData(signaltoken, 7);
+                        }
+                        else if (signal is BaseAlarmSignalToken)
+                        {
+                            var signaltoken = signal as BaseAlarmSignalToken;
+                            AddRealTimeWirelessScalarData(signaltoken, 7);
+                        }
+                    }
+                }
+
+                if (refresh == true)
+                {
+                    if (SignalAddedPoint != null)
+                    {
+                        SignalAddedPoint(addedSignals);
+                    }
+                    if (lasttime >= CurrentTime.AddHours(TimeSize))//翻页
+                    {
+                        CurrentTime = CurrentTime.AddHours(TimeSize / 2);
+                    }
+                }
+            }
+            finally
+            {
+                lazyLoadinglocker.Release();               
+            }           
+        }
+
+        private bool AddRealTimeWirelessVibrationData(BaseDivfreSignalToken signaltoken, int location)
+        {
+            List<IBaseDivfreSlot> datas = new List<IBaseDivfreSlot>();
+            switch (location)
+            {
+                case 0:
+                    {
+                        if (signaltoken.PreviousDatas == null)
+                        {
+                            signaltoken.PreviousDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.PreviousDatas;
+                        break;
+                    }
+                case 1:
+                    {
+                        if (signaltoken.FirstDatas == null)
+                        {
+                            signaltoken.FirstDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.FirstDatas;
+                        break;
+                    }
+                case 2:
+                    {
+                        if (signaltoken.SecondDatas == null)
+                        {
+                            signaltoken.SecondDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.SecondDatas;
+                        break;
+                    }
+                case 3:
+                    {
+                        if (signaltoken.ThirdDatas == null)
+                        {
+                            signaltoken.ThirdDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.ThirdDatas;
+                        break;
+                    }
+                case 4:
+                    {
+                        if (signaltoken.FourthDatas == null)
+                        {
+                            signaltoken.FourthDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.FourthDatas;
+                        break;
+                    }
+                case 5:
+                    {
+                        if (signaltoken.FifthDatas == null)
+                        {
+                            signaltoken.FifthDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.FifthDatas;
+                        break;
+                    }
+                case 6:
+                    {
+                        if (signaltoken.SixthDatas == null)
+                        {
+                            signaltoken.SixthDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.SixthDatas;
+                        break;
+                    }
+                case 7:
+                    {
+                        if (signaltoken.NextDatas == null)
+                        {
+                            signaltoken.NextDatas = new List<IBaseDivfreSlot>();
+                        }
+                        datas = signaltoken.NextDatas;
+                        break;
+                    }
+            }
+
+            DateTime lasttime = new DateTime();
+            if (datas.Count > 0)
+            {
+                lasttime = datas.Select(p => p.ACQDatetime).Max();
+            }
+            foreach(var d in signaltoken.BaseAlarmSignal.BufferData.Where(p => p.ACQDateTime > lasttime))
+            {
+                datas.Add(new D1_WirelessVibrationSlot()
+                {
+                    ACQDatetime = signaltoken.BaseAlarmSignal.ACQDatetime.Value,
+                    AlarmGrade = (int)signaltoken.BaseAlarmSignal.AlarmGrade,
+                    Result = signaltoken.BaseAlarmSignal.Result,
+                    Unit = signaltoken.BaseAlarmSignal.Unit,
+                    RecordLab = signaltoken.BaseAlarmSignal.RecordLab,
+                    IsValidWave = (signaltoken.BaseAlarmSignal as WirelessVibrationChannelSignal).IsValidWave,
+                });
+            }         
+
+            if (signaltoken.BaseAlarmSignal.ACQDatetime > lasttime)
+            {
+                datas.Add(new D1_WirelessVibrationSlot()
+                {
+                    ACQDatetime = signaltoken.BaseAlarmSignal.ACQDatetime.Value,
+                    AlarmGrade = (int)signaltoken.BaseAlarmSignal.AlarmGrade,
+                    Result = signaltoken.BaseAlarmSignal.Result,
+                    Unit = signaltoken.BaseAlarmSignal.Unit,
+                    RecordLab = signaltoken.BaseAlarmSignal.RecordLab,
+                    IsValidWave = (signaltoken.BaseAlarmSignal as WirelessVibrationChannelSignal).IsValidWave,
+                });
+                return true;
+            }
+            return false;
+        }
+
+        private bool AddRealTimeWirelessScalarData(BaseAlarmSignalToken signaltoken, int location)
+        {
+            List<IBaseAlarmSlot> datas = new List<IBaseAlarmSlot>();
+            switch (location)
+            {
+                case 0:
+                    {
+                        if (signaltoken.PreviousDatas == null)
+                        {
+                            signaltoken.PreviousDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.PreviousDatas;
+                        break;
+                    }
+                case 1:
+                    {
+                        if (signaltoken.FirstDatas == null)
+                        {
+                            signaltoken.FirstDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.FirstDatas;
+                        break;
+                    }
+                case 2:
+                    {
+                        if (signaltoken.SecondDatas == null)
+                        {
+                            signaltoken.SecondDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.SecondDatas;
+                        break;
+                    }
+                case 3:
+                    {
+                        if (signaltoken.ThirdDatas == null)
+                        {
+                            signaltoken.ThirdDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.ThirdDatas;
+                        break;
+                    }
+                case 4:
+                    {
+                        if (signaltoken.FourthDatas == null)
+                        {
+                            signaltoken.FourthDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.FourthDatas;
+                        break;
+                    }
+                case 5:
+                    {
+                        if (signaltoken.FifthDatas == null)
+                        {
+                            signaltoken.FifthDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.FifthDatas;
+                        break;
+                    }
+                case 6:
+                    {
+                        if (signaltoken.SixthDatas == null)
+                        {
+                            signaltoken.SixthDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.SixthDatas;
+                        break;
+                    }
+                case 7:
+                    {
+                        if (signaltoken.NextDatas == null)
+                        {
+                            signaltoken.NextDatas = new List<IBaseAlarmSlot>();
+                        }
+                        datas = signaltoken.NextDatas;
+                        break;
+                    }
+            }
+
+            DateTime lasttime = new DateTime();
+            if (datas.Count > 0)
+            {
+                lasttime = datas.Select(p => p.ACQDatetime).Max();
+            }
+            foreach (var d in signaltoken.BaseAlarmSignal.BufferData.Where(p => p.ACQDateTime > lasttime))
+            {
+                datas.Add(new D1_WirelessScalarSlot()
+                {
+                    ACQDatetime = signaltoken.BaseAlarmSignal.ACQDatetime.Value,
+                    AlarmGrade = (int)signaltoken.BaseAlarmSignal.AlarmGrade,
+                    Result = signaltoken.BaseAlarmSignal.Result,
+                    Unit = signaltoken.BaseAlarmSignal.Unit,
+                });
+            }
+
+            if (signaltoken.BaseAlarmSignal.ACQDatetime > lasttime)
+            {
+                datas.Add(new D1_WirelessScalarSlot()
+                {
+                    ACQDatetime = signaltoken.BaseAlarmSignal.ACQDatetime.Value,
+                    AlarmGrade = (int)signaltoken.BaseAlarmSignal.AlarmGrade,
+                    Result = signaltoken.BaseAlarmSignal.Result,
+                    Unit = signaltoken.BaseAlarmSignal.Unit,
+                });
+                return true;
+            }
+            return false;
         }
         #endregion
 
@@ -1129,17 +1672,17 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void InitPager()
         {
-            TimeSizeList = new List<int>();
-            TimeSizeList.Add(10);
-            TimeSizeList.Add(20);
-            TimeSizeList.Add(30);
-            TimeSizeList.Add(60);
-            TimeSizeList.Add(120);
-            TimeSizeList.Add(240);
-            TimeSizeList.Add(360);
-            TimeSizeList.Add(720);
-            TimeSizeList.Add(1440);
-            TimeSize = TimeSizeList[2];
+            TimeSizeList = new List<double>();
+            TimeSizeList.Add(0.1);
+            TimeSizeList.Add(1);
+            TimeSizeList.Add(2);
+            TimeSizeList.Add(4);
+            TimeSizeList.Add(6);
+            TimeSizeList.Add(12);
+            TimeSizeList.Add(24);
+            TimeSizeList.Add(36);
+            TimeSize = TimeSizeList[0];
+            CurrentTime = DateTime.Now.AddHours(0 - TimeSize / 2);
         }
 
         private void CurrentTimeChanged(object value)
@@ -1147,14 +1690,22 @@ namespace AIC.OnLineDataPage.ViewModels
             RoutedPropertyChangedEventArgs<TrendNavigationEventArgs> args = ((ExCommandParameter)value).EventArgs as RoutedPropertyChangedEventArgs<TrendNavigationEventArgs>;
             if (args != null)
             {
-                PageData(args);
+                if (pageChanged != null)
+                {
+                    pageChanged(this, args);
+                }                
             }
+        }
+
+        private void RaisePageChanged(RoutedPropertyChangedEventArgs<TrendNavigationEventArgs> args)
+        {
+            PageData(args);
         }
 
         #endregion
 
         #region 保存chart文件
-        private void SaveChartFile(object para)
+        private void SaveChartFile()
         {
             if (ChartFileName == null || ChartFileName == "")
             {
@@ -1193,7 +1744,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
 
         }
-        private void LoadChartFile(object para)
+        private void LoadChartFile()
         {           
             if (ChartFile != null && ChartFile.ListGuid != null)
             {
@@ -1215,6 +1766,11 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                 }
             }
+        }
+
+        private void DeleteChartFile()
+        {
+            chartFileCategory.Remove(ChartFile);
         }
         #endregion
 

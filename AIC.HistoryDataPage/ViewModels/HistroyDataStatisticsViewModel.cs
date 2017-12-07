@@ -34,6 +34,8 @@ namespace AIC.HistoryDataPage.ViewModels
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
+        public delegate void UpdateBarSeries(List<BaseAlarmSignal> sglist);
+        public event UpdateBarSeries UpdateChart;
 
         public HistoryDataStatisticsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
         {           
@@ -63,8 +65,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
                 return false;
             };
-            //_view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
-            _view.SortDescriptions.Add(new SortDescription("DangerCount",ListSortDirection.Descending));
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
+            //_view.SortDescriptions.Add(new SortDescription("DangerCount",ListSortDirection.Descending));
             InitTree();
         }
 
@@ -290,7 +292,10 @@ namespace AIC.HistoryDataPage.ViewModels
                     }                   
                 }
 
-                _eventAggregator.GetEvent<DataStatisticsEvent>().Publish(sglist.OrderByDescending(p => p.DangerCount).ToList());
+                if (UpdateChart != null)
+                {
+                    UpdateChart(sglist);
+                }
             }
             catch(Exception ex)
             {

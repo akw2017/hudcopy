@@ -673,7 +673,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });                        
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
@@ -683,6 +683,7 @@ namespace AIC.HistoryDataPage.ViewModels
 #endif
                             return;
                         }
+                        result = result.OrderBy(p => p.ACQDatetime).ToList();
                         for (int i = 0; i < result.Count; i++)
                         {
                             AMSObject amsObj = new AMSObject();
@@ -706,16 +707,17 @@ namespace AIC.HistoryDataPage.ViewModels
                     else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });                       
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
-                        MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
                             Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
                             return;
                         }
+                        result = result.OrderBy(p => p.ACQDatetime).ToList();
                         for (int i = 0; i < result.Count; i++)
                         {
                             AMSObject amsObj = new AMSObject();
@@ -765,11 +767,12 @@ namespace AIC.HistoryDataPage.ViewModels
 
                         if (subitem.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                         {
-                            var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);
+                            var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);                           
                             if (result == null || result.Count == 0)
                             {
                                 return;
                             }
+                            result = result.OrderBy(p => p.ACQDatetime).ToList();
                             for (int i = 0; i < result.Count; i++)
                             {
                                 AMSObject amsObj = new AMSObject();
@@ -792,11 +795,12 @@ namespace AIC.HistoryDataPage.ViewModels
                         }
                         else if (subitem.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                         {
-                            var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);
+                            var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);                           
                             if (result == null || result.Count == 0)
                             {
                                 return;
                             }
+                            result = result.OrderBy(p => p.ACQDatetime).ToList();
                             for (int i = 0; i < result.Count; i++)
                             {
                                 AMSObject amsObj = new AMSObject();

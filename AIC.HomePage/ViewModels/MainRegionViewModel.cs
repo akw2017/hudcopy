@@ -1049,11 +1049,11 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataStatisticsView>();
             }
-            else if (viewName == "MenuHistoryEventList")
+            else if (viewName == "MenuSystemEventList")
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryEventListView>();
             }
-            else if (viewName == "MenuHistoryDataTrend")
+            else if (viewName == "MenuDataTrendChart")
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
             }
@@ -1328,7 +1328,8 @@ namespace AIC.HomePage.ViewModels
             AlertCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighAlert || o.DelayAlarmGrade == AlarmGrade.LowAlert)).Count();
             DangerCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
             AbnormalCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
-            UnConnectCount = signals.Where(o => o.IsConnected == false).Count();
+            UnConnectCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
+            UnConnectCount += signals.Where(o => o.IsConnected == false).Count();
             if (DangerCount > 0)
             {
                 Alarm = AlarmGrade.HighDanger;
@@ -1475,37 +1476,37 @@ namespace AIC.HomePage.ViewModels
                 }
             }     
 
-            if (heightoffsets.Count >= 5)//避免太多弹出窗口
-            {
-                return;
-            }
+            //if (heightoffsets.Count >= 5)//避免太多弹出窗口
+            //{
+            //    return;
+            //}
 
-            lock (threadLock)
-            {
-                if (Mute == false)//静音
-                {
-                    playsound();
-                }
-                string title = GetEnumDescription.GetDescription((CustomSystemType)ex.Type) + "事件发生";
-                string content = ex.EventTime.ToString("yyyy-MM-dd HH:mm:ss") + "   " + ex.Remarks;
-                double heightoffset = 0;
-                while (true)
-                {
-                    if (heightoffsets.Contains(heightoffset))
-                    {
-                        heightoffset += constantheightoffset;
-                    }
-                    else
-                    {
-                        heightoffsets.Add(heightoffset);
-                        break;
-                    }
-                }
+            //lock (threadLock)
+            //{
+            //    if (Mute == false)//静音
+            //    {
+            //        playsound();
+            //    }
+            //    string title = GetEnumDescription.GetDescription((CustomSystemType)ex.Type) + "事件发生";
+            //    string content = ex.EventTime.ToString("yyyy-MM-dd HH:mm:ss") + "   " + ex.Remarks;
+            //    double heightoffset = 0;
+            //    while (true)
+            //    {
+            //        if (heightoffsets.Contains(heightoffset))
+            //        {
+            //            heightoffset += constantheightoffset;
+            //        }
+            //        else
+            //        {
+            //            heightoffsets.Add(heightoffset);
+            //            break;
+            //        }
+            //    }
 
-                TaskbarNotifier taskbarnotifier = new TaskbarNotifier(title, content, heightoffset);
-                taskbarnotifier.ThisClosed += Taskbarnotifier_ThisClosed;
-                taskbarnotifier.Show();
-            }
+            //    TaskbarNotifier taskbarnotifier = new TaskbarNotifier(title, content, heightoffset);
+            //    taskbarnotifier.ThisClosed += Taskbarnotifier_ThisClosed;
+            //    taskbarnotifier.Show();
+            //}
         }
 
         private void Taskbarnotifier_ThisClosed(double heightoffset)

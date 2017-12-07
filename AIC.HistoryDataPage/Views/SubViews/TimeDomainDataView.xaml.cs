@@ -361,7 +361,11 @@ namespace AIC.HistoryDataPage.Views
             AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
             for (int k = 0; k < tokens.Length; k++)
             {
-                var series = m_chart.ViewXY.SampleDataSeries.Where(o => o.Tag == tokens[k]).Single();
+                var series = m_chart.ViewXY.SampleDataSeries.Where(o => o.Tag == tokens[k]).SingleOrDefault();
+                if (series == null)
+                {
+                    continue;
+                }
                 string[] branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (tokens[k].VData != null)

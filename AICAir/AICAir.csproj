@@ -400,6 +400,8 @@
     <Content Include="C:\Users\AIC\Desktop\AIC.html">
       <Link>AIC.html</Link>
     </Content>
+    <Resource Include="MyData\Configuration\Servers.xml" />
+    <Resource Include="MyData\Configuration\ChartFiles.xml" />
     <Content Include="Resources\AICMath.dll" />
     <Content Include="Resources\AICMatlabDLL.dll" />
     <Content Include="Resources\Danger.wav">

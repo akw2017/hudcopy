@@ -1097,8 +1097,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });
-                        result = result.Where(p => p.IsValidWave == true).ToList();
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });                       
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
@@ -1108,6 +1107,7 @@ namespace AIC.HistoryDataPage.ViewModels
 #endif
                             return;
                         }
+                        result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
                         BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
                         {
                             DisplayName = item.BaseAlarmSignal.DeviceItemName,
@@ -1139,7 +1139,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });
+                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });                        
                         if (result == null || result.Count == 0)
                         {
 #if XBAP
@@ -1149,6 +1149,7 @@ namespace AIC.HistoryDataPage.ViewModels
 #endif
                             return;
                         }
+                        result = result.OrderBy(p => p.ACQDatetime).ToList();
                         BaseAlarmChannelToken channeltoken = new BaseAlarmChannelToken()
                         {
                             DisplayName = item.BaseAlarmSignal.DeviceItemName,
@@ -1201,8 +1202,11 @@ namespace AIC.HistoryDataPage.ViewModels
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
                         var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(item.IP, item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });
-                        result = result.Where(p => p.IsValidWave == true).ToList();
-                        item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+                        if (result != null && result.Count > 0)
+                        {
+                            result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
+                            item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
+                        }
                     }
                 }
                 var alarmChannels = addedChannels.OfType<BaseAlarmChannelToken>().ToArray();
@@ -1212,7 +1216,11 @@ namespace AIC.HistoryDataPage.ViewModels
                     {
                         string unit = (Unit == "Unit") ? "" : Unit;
                         var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(item.IP, item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });
-                        item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+                        if (result != null && result.Count > 0)
+                        {
+                            result = result.OrderBy(p => p.ACQDatetime).ToList();
+                            item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
+                        }
                     }
                 }
                 var divfreChannels = addedChannels.OfType<DivFreChannelToken>().ToArray();
@@ -1269,8 +1277,7 @@ namespace AIC.HistoryDataPage.ViewModels
             }
             catch (Exception ex)
             {
-                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-通道数据跟新失败", ex));
-                //InteractionRequestService.Instance.InteractionRequest.Raise(new Confirmation() { Content = ex.Message, Title = "通道数据跟新失败" }, confirm => { });
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-通道数据跟新失败", ex));               
             }
             finally
             {

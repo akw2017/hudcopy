@@ -163,7 +163,7 @@
     <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
     <s:String x:Key="menuOnlineDataStatistics">OnlineDataStatistics</s:String>
-    <s:String x:Key="menuHistoryDataTrend">HistoryDataTrend</s:String>
+    <s:String x:Key="menuDataTrendChart">DataTrendChart</s:String>
     <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
     <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
     <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>

@@ -10,6 +10,7 @@
              xmlns:control="clr-namespace:AIC.Core.OrganizationModels;assembly=AIC.Core"   
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
@@ -24,15 +25,16 @@
     <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TreeView Grid.Row="0" Grid.RowSpan="3" Name="treeview"                        
+        <TreeView Grid.Row="0" Grid.RowSpan="4" Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
             <TreeView.Resources>
@@ -71,7 +73,7 @@
                         </DataTrigger>-->
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}">
                     <StackPanel Orientation="Horizontal">
                         <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
                         <Grid Margin="2,0,2,0">
@@ -79,84 +81,6 @@
                         </Grid>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:ItemTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                        <!--<Button x:Name="AddBtn" Command="{StaticResource AddCommandReference}"  CommandParameter="{Binding}" VerticalAlignment="Center"  Width="24" BorderThickness="0">
-                            <Path Stretch="Fill" Width="18" Height="18" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "/>
-                        </Button>-->
-                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
-                        <Path x:Name="UnBindIcon" Visibility="Collapsed" Width="16" Height="16" Stretch="Fill" Fill="Gray" Data="F1 M 22.1698,36.4215L 25.3366,36.4215L 25.3367,31.6711C 25.3367,24.6745 31.0085,19.0027 38.0051,19.0027C 45.0017,19.0027 50.6735,24.6745 50.6735,31.6711L 45.9228,31.6711C 45.9228,27.2982 42.3779,23.7533 38.0051,23.7533C 33.6322,23.7533 30.0873,27.2982 30.0873,31.6711L 30.0873,36.4216L 53.8408,36.4215L 53.8409,57.008L 22.1698,57.008L 22.1698,36.4215 Z "/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsPaired}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="UnBindIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:DivFreTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 16,36L 9.99999,36L 9.99999,30L 14,30L 32,16L 32,12L 38,12L 38,18L 34,18L 16,32L 16,36 Z M 34,14L 34,16L 36,16L 36,14L 34,14 Z M 12,32L 12,34L 14,34L 14,32L 12,32 Z " />
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
                         <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
@@ -200,7 +124,7 @@
 
         </TreeView>
 
-        <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+        <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <WrapPanel Grid.Row="0" Grid.Column="2" Margin="5">
             <TextBlock Text="查询时间" Margin="4,0,0,0" VerticalAlignment="Center"/>
@@ -301,39 +225,7 @@
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource MetroDataGridRow}"
-                       TargetType="{x:Type DataGridRow}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
-                            <Setter  Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>-->
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
-                            <Setter Property="Foreground" Value="Yellow"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlert">
-                            <Setter Property="Foreground" Value="Yellow"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
-                            <Setter Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
-                            <Setter Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">
-                            <Setter Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowDanger">
-                            <Setter Property="Foreground" Value="Red" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="DisConnect">
-                            <Setter Property="Foreground" Value="DarkRed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
+                       TargetType="{x:Type DataGridRow}">                   
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Style>
@@ -349,6 +241,9 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>
+        
+        <GridSplitter Grid.Row="2" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
+        <Grid Name="gridChart" Grid.Row="3" Grid.Column ="2"/>
     </Grid>
 </UserControl>

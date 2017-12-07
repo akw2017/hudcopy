@@ -64,7 +64,7 @@
     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
         <Grid>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="5,0,2,0" Text="时长(min)" VerticalAlignment="Center"/>
+                <TextBlock Margin="5,0,2,0" Text="时长(h)" VerticalAlignment="Center"/>
                 <ComboBox Margin="0,0,5,0" ItemsSource="{Binding ElementName=trendNavigation,Path=TimeSizeList}" SelectedValue="{Binding ElementName=trendNavigation,Path=TimeSize}">
 
                 </ComboBox>

@@ -58,14 +58,14 @@
                 </StackPanel.Style>
             </StackPanel>
         </StackPanel>
-        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*"
+        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto"
                   ItemsSource="{Binding CustomSystemExceptionView}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id}" MinWidth="60"></DataGridTextColumn>
-                <DataGridTextColumn Header="类型" Binding="{Binding Type,Converter={StaticResource enumDescriptionConverter}}" MinWidth="60"></DataGridTextColumn>
-                <DataGridTextColumn Header="程度" Binding="{Binding Degree,Converter={StaticResource enumDescriptionConverter}}" MinWidth="60"></DataGridTextColumn>
-                <DataGridTextColumn Header="发生时间" Binding="{Binding EventTime}" MinWidth="60"></DataGridTextColumn>
-                <DataGridTextColumn Header="详情" Binding="{Binding Remarks}" MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="类型" Binding="{Binding CustomSystemType, Converter={StaticResource enumDescriptionConverter}}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="程度" Binding="{Binding CustomSystemDegree, Converter={StaticResource enumDescriptionConverter}}"></DataGridTextColumn>
+                <DataGridTextColumn Header="发生时间" Binding="{Binding EventTime}"></DataGridTextColumn>
+                <DataGridTextColumn Header="详情" Binding="{Binding Remarks}"></DataGridTextColumn>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
@@ -75,7 +75,7 @@
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-
+                    <Setter Property="Margin" Value="0,0,100,0"/>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>

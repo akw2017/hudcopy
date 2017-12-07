@@ -136,17 +136,17 @@
                         <Image Source="/AIC.Resources;component/Images/picture_save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="历史报警统计" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataStatistics" Visibility="{Binding MenuManageList.MenuHistoryDataStatistics.Visibility}">
+                <MenuItem Header="{DynamicResource menuHistoryDataStatistics}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataStatistics" Visibility="{Binding MenuManageList.MenuHistoryDataStatistics.Visibility}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/chart_bar.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="数据趋势曲线" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataTrend" Visibility="{Binding MenuManageList.MenuHistoryDataTrend.Visibility}">
+                <MenuItem Header="{DynamicResource menuDataTrendChart}" Command="{Binding NavigateCommand}" CommandParameter="MenuDataTrendChart" Visibility="{Binding MenuManageList.MenuDataTrendChart.Visibility}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/chart_curve.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="系统事件列表" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryEventList" Visibility="{Binding MenuManageList.MenuHistoryEventList.Visibility}">
+                <MenuItem Header="{DynamicResource menuSystemEventList}" Command="{Binding NavigateCommand}" CommandParameter="MenuSystemEventList" Visibility="{Binding MenuManageList.MenuSystemEventList.Visibility}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/monitor_lightning.png"/>
                     </MenuItem.Icon>

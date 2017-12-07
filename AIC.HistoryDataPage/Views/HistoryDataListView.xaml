@@ -444,7 +444,7 @@
         <TabControl Grid.Row="1" Grid.Column="2" Margin="3">
             <TabItem Header="振动数据" Style="{x:Null}" IsSelected="{Binding VInfoSelected}">
                 <Grid>
-                    <bsFilter:FilterDataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
+                    <DataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
                         <DataGrid.RowHeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center" Margin="2"/>
@@ -454,22 +454,8 @@
                             <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->                           
                             <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>                            
                             <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True">
-                                <bsFilter:ColumnFilter.Initializers>
-                                    <bsFilter:FilterInitializersManager>
-                                        <bsFilter:DateTimeRangeFilterInitializer />
-                                    </bsFilter:FilterInitializersManager>
-                                </bsFilter:ColumnFilter.Initializers>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True">
-                                <bsFilter:ColumnFilter.Initializers>
-                                    <bsFilter:FilterInitializersManager>
-                                        <bsFilter:LessOrEqualFilterInitializer />
-                                        <bsFilter:GreaterOrEqualFilterInitializer />
-                                        <bsFilter:RangeFilterInitializer />
-                                    </bsFilter:FilterInitializersManager>
-                                </bsFilter:ColumnFilter.Initializers>
-                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                         <DataGrid.GroupStyle>
@@ -525,12 +511,12 @@
                             Value="{DynamicResource GrayBrush10}" />-->
                             </Style>
                         </DataGrid.Style>
-                    </bsFilter:FilterDataGrid>                   
+                    </DataGrid>                   
                 </Grid>
             </TabItem>
             <TabItem Header="温度数据" Style="{x:Null}" IsSelected="{Binding AnInfoSelected}">
                 <Grid>
-                    <bsFilter:FilterDataGrid Background="{x:Null}" ItemsSource="{Binding AnInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
+                    <DataGrid Background="{x:Null}" ItemsSource="{Binding AnInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
                         <DataGrid.RowHeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center" Margin="2"/>
@@ -540,22 +526,8 @@
                             <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                             <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True">
-                                <bsFilter:ColumnFilter.Initializers>
-                                    <bsFilter:FilterInitializersManager>
-                                        <bsFilter:DateTimeRangeFilterInitializer />
-                                    </bsFilter:FilterInitializersManager>
-                                </bsFilter:ColumnFilter.Initializers>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True">
-                                <bsFilter:ColumnFilter.Initializers>
-                                    <bsFilter:FilterInitializersManager>
-                                        <bsFilter:LessOrEqualFilterInitializer />
-                                        <bsFilter:GreaterOrEqualFilterInitializer />
-                                        <bsFilter:RangeFilterInitializer />
-                                    </bsFilter:FilterInitializersManager>
-                                </bsFilter:ColumnFilter.Initializers>
-                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                         <DataGrid.GroupStyle>
@@ -611,7 +583,7 @@
                             Value="{DynamicResource GrayBrush10}" />-->
                             </Style>
                         </DataGrid.Style>
-                    </bsFilter:FilterDataGrid>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="分频数据" Style="{x:Null}" Visibility="Collapsed">

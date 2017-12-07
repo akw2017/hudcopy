@@ -574,8 +574,12 @@ namespace AIC.HistoryDataPage.Views
             m_chart.BeginUpdate();
             foreach (var token in tokens)
             {
-                var series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).First();
-                var phaseSeries = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).Last();
+                var series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).FirstOrDefault();
+                var phaseSeries = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).LastOrDefault();
+                if (series == null || phaseSeries == null)
+                {
+                    continue;
+                }
                 int index = m_chart.ViewXY.PointLineSeries.IndexOf(series);
 
                 AnnotationXY annotation = m_chart.ViewXY.Annotations[1];

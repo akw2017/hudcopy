@@ -16,6 +16,7 @@
              xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
              xmlns:view="clr-namespace:AIC.OnLineDataPage.Views"   
              xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
@@ -441,7 +442,10 @@
                 <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
             <Grid Name="gridChart"/>
-            <CheckBox x:Name="chkZoom" Content="锁定" FontSize="12" Style="{x:Null}" IsChecked="True" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <CheckBox x:Name="chkTrace" Content="跟踪" FontSize="12"  Style="{x:Null}" IsChecked="True"/>
+                <CheckBox x:Name="chkZoom" Content="锁定" FontSize="12" Style="{x:Null}" IsChecked="True"/>                
+            </StackPanel>
             <GridSplitter x:Name="gsSecondSplitterr" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
             <ListBox Grid.Column="2" x:Name="listBox" Background="{x:Null}" BorderBrush="{x:Null}" 
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -450,7 +454,7 @@
         </Grid>        
 
         <StackPanel Grid.Row="3" Grid.Column ="2" Orientation="Horizontal">
-            <page:TrendNavigation  Name="pager" TimeSizeList="{Binding TimeSizeList}" TimeSize="{Binding TimeSize, Mode=TwoWay}" CurrentTime="{Binding CurrentTime,Mode=OneWayToSource}" >
+            <page:TrendNavigation  Name="pager" TimeSizeList="{Binding TimeSizeList}" TimeSize="{Binding TimeSize, Mode=TwoWay}" CurrentTime="{Binding CurrentTime,Mode=TwoWay}" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CurrentTimeChanged">
                         <command:ExInvokeCommandAction Command="{Binding CurrentTimeChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
@@ -475,6 +479,14 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
                         <TextBlock Text="{DynamicResource load}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding DeleteChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                        <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>

@@ -17,9 +17,9 @@ namespace Wpf.PageNavigationControl
 {
     public class TrendNavigationEventArgs
     {
-        public int TimeSize { get; set; }
+        public double TimeSize { get; set; }
         public DateTime CurrectTime { get; set; }
-        public TrendNavigationEventArgs(int size, DateTime time)
+        public TrendNavigationEventArgs(double size, DateTime time)
         {
             TimeSize = size;
             CurrectTime = time;
@@ -45,11 +45,11 @@ namespace Wpf.PageNavigationControl
         public static DependencyProperty CanPageDownProperty;
         public static DependencyProperty AutoPageDownProperty;
 
-        public List<int> TimeSizeList
+        public List<double> TimeSizeList
         {
             get
             {
-                return (List<int>)GetValue(TimeSizeListProperty);
+                return (List<double>)GetValue(TimeSizeListProperty);
             }
             set
             {
@@ -69,11 +69,11 @@ namespace Wpf.PageNavigationControl
             }
         }
 
-        public int TimeSize
+        public double TimeSize
         {
             get
             {
-                return (int)GetValue(TimeSizeProperty);
+                return (double)GetValue(TimeSizeProperty);
             }
             set
             {
@@ -163,7 +163,7 @@ namespace Wpf.PageNavigationControl
         public static void PageGotoExecuted(object sender, ExecutedRoutedEventArgs e)
         {           
             TrendNavigation pager = (TrendNavigation)sender;  
-            TrendNavigationEventArgs oldArgs = new TrendNavigationEventArgs(pager.oldsize, pager.oldtime);
+            TrendNavigationEventArgs oldArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
             pager.SetCurrentTime(pager.CurrentTime);
             TrendNavigationEventArgs newArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
 
@@ -175,7 +175,10 @@ namespace Wpf.PageNavigationControl
             TrendNavigation pager = (TrendNavigation)sender;            
 
             TrendNavigationEventArgs oldArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
-            pager.SetCurrentTimeDown();
+            if (pager.SetCurrentTimeDown() == false)
+            {
+                oldArgs.TimeSize = -1;
+            }
             TrendNavigationEventArgs newArgs = new TrendNavigationEventArgs(pager.TimeSize, pager.CurrentTime);
 
             pager.OnCurrentTimeChanged(oldArgs, newArgs);
@@ -209,16 +212,16 @@ namespace Wpf.PageNavigationControl
 
         static TrendNavigation()
         {
-            TimeSizeListProperty = DependencyProperty.Register("TimeSizeList", typeof(List<int>),
+            TimeSizeListProperty = DependencyProperty.Register("TimeSizeList", typeof(List<double>),
                 typeof(TrendNavigation));
 
-            TimeSizeProperty = DependencyProperty.Register("TimeSize", typeof(int),
+            TimeSizeProperty = DependencyProperty.Register("TimeSize", typeof(double),
                 typeof(TrendNavigation),
-                new FrameworkPropertyMetadata(60, new PropertyChangedCallback(OnTimeSizeChanged)));
+                new FrameworkPropertyMetadata(1.0, new PropertyChangedCallback(OnTimeSizeChanged)));
 
             CurrentTimeProperty = DependencyProperty.Register("CurrentTime", typeof(DateTime),
                 typeof(TrendNavigation),
-                new FrameworkPropertyMetadata(DateTime.Now.AddMinutes(0 - 60 * 0.8)));
+                new FrameworkPropertyMetadata(DateTime.Now.AddHours(0 - 1 / 2), new PropertyChangedCallback(OnCurrentTimeChanged)));
 
             TotalPointProperty = DependencyProperty.Register("TotalPoint", typeof(int),
               typeof(PageNavigation),
@@ -273,14 +276,28 @@ namespace Wpf.PageNavigationControl
         private static void OnTimeSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             TrendNavigation pager = (TrendNavigation)sender;
-            int oldTimeSize = (int)e.OldValue;
-            int newTimeSize = (int)e.NewValue;
+            double oldTimeSize = (double)e.OldValue;
+            double newTimeSize = (double)e.NewValue;
 
             pager.SetTimeSize(newTimeSize);
             var oldArgs = new TrendNavigationEventArgs(oldTimeSize, pager.CurrentTime);
             var newArgs = new TrendNavigationEventArgs(newTimeSize, pager.CurrentTime);
             pager.OnCurrentTimeChanged(oldArgs, newArgs);
+        }
 
+        private static void OnCurrentTimeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            TrendNavigation pager = (TrendNavigation)sender;
+            DateTime oldCurrentTime = (DateTime)e.OldValue;
+            DateTime newCurrentTime = (DateTime)e.NewValue;
+
+            pager.SetCurrentTime(newCurrentTime);
+            if (oldCurrentTime.AddHours(pager.TimeSize / 2) == pager.CurrentTime)
+            {
+                var oldArgs = new TrendNavigationEventArgs(pager.TimeSize, oldCurrentTime);
+                var newArgs = new TrendNavigationEventArgs(pager.TimeSize, newCurrentTime);
+                pager.OnCurrentTimeChanged(oldArgs, newArgs);
+            }
         }
 
         public static readonly RoutedEvent CurrentTimeChangedEvent =
@@ -300,11 +317,12 @@ namespace Wpf.PageNavigationControl
             RaiseEvent(args);
         }
 
-        public void SetTimeSize(int size)
+        public void SetTimeSize(double size)
         {
             TimeSize = size;
             RollPages();
         }
+
 
         public void SetCurrentTime(DateTime time)
         {
@@ -313,30 +331,32 @@ namespace Wpf.PageNavigationControl
         }
         public void SetCurrentTimeUp()
         {
-            CurrentTime = CurrentTime.AddMinutes(0 - TimeSize / 2);
+            CurrentTime = CurrentTime.AddHours(0 - TimeSize / 2);
             RollPages();
         }
-        public void SetCurrentTimeDown()
+        public bool SetCurrentTimeDown()
         {
-            CurrentTime = CurrentTime.AddMinutes(TimeSize / 2);
+            if (CurrentTime.AddHours(TimeSize) > DateTime.Now)
+            {
+                return false;
+            }
+            CurrentTime = CurrentTime.AddHours(TimeSize / 2);
             RollPages();
+            return true;
         }
-        private DateTime oldtime = new DateTime();
-        private int oldsize;
+
         private void RollPages()
         {
-            if (CurrentTime > DateTime.Now.AddMinutes(0 - TimeSize * 0.8))
+            if (CurrentTime > DateTime.Now.AddHours(0 - TimeSize  / 2))
             {
-                CurrentTime = DateTime.Now.AddMinutes(0 - TimeSize * 0.8);
+                CurrentTime = DateTime.Now.AddHours(0 - TimeSize / 2);
             }
             FirstTime = CurrentTime;
-            SecondTime = CurrentTime.AddMinutes(TimeSize);
+            SecondTime = CurrentTime.AddHours(TimeSize);
             if (SecondTime > DateTime.Now)
             {
                 SecondTime = DateTime.Now;
             }
-            oldtime = CurrentTime;
-            oldsize = TimeSize;
         }
     }
 }

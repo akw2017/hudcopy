@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.SignalModels;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Models;
 using AIC.OnLineDataPage.ViewModels;
@@ -41,7 +42,7 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuHistoryDataTrend"], true);
+            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuDataTrendChart"], true);
 
             ViewModel = this.DataContext as HistoryDataTrendViewModel;
             ViewModel.SignalAdded += ViewModel_SignalAdded;
@@ -49,12 +50,13 @@ namespace AIC.OnLineDataPage.Views
             ViewModel.SignalShowChanged += ViewModel_SignalShowChanged;
             ViewModel.SignalSelected += ViewModel_SignalSelected;
             ViewModel.SignalRefresh += ViewModel_SignalRefresh;
+            ViewModel.SignalAddedPoint += ViewModel_SignalAddedPoint;
             CreateChart();
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             listBox.SizeChanged += listBox_SizeChanged;
-        }    
+        }       
 
-        private void ViewModel_SignalAdded(SignalToken token, DateTime time, int size)
+        private void ViewModel_SignalAdded(SignalToken token, DateTime time, double size)
         {
             try
             {
@@ -169,7 +171,7 @@ namespace AIC.OnLineDataPage.Views
                 m_chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
 
                 m_chart.EndUpdate();
-                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddMinutes(size)));
+                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
                 token.LimitChanged += Token_LimitChanged;
                 axisY.RangeChanged += AxisY_RangeChanged;
 
@@ -254,7 +256,7 @@ namespace AIC.OnLineDataPage.Views
             }
         }
 
-        private void ViewModel_SignalRefresh(IEnumerable<SignalToken> tokens, DateTime time, int size, bool refresh)
+        private void ViewModel_SignalRefresh(IEnumerable<SignalToken> tokens, DateTime time, double size, bool refresh)
         {
             try
             {
@@ -278,9 +280,9 @@ namespace AIC.OnLineDataPage.Views
                                 AddMarker(series, points[i], divToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
+                            axisY.Title.Text = divToken.DisplayName + "(" + divToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {
-                                axisY.Title.Text = divToken.DisplayName + "(" + divToken.DataContracts[0].Unit + ")";
+                            {                               
                                 axisY.Maximum = divToken.UpperLimit;
                                 axisY.Minimum = divToken.LowerLimit;
                             }
@@ -303,9 +305,9 @@ namespace AIC.OnLineDataPage.Views
                                 AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
+                            axisY.Title.Text = vToken.DisplayName + "(" + vToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {
-                                axisY.Title.Text = vToken.DisplayName + "(" + vToken.DataContracts[0].Unit + ")";
+                            {                               
                                 axisY.Maximum = vToken.UpperLimit;
                                 axisY.Minimum = vToken.LowerLimit;
                             }
@@ -328,9 +330,9 @@ namespace AIC.OnLineDataPage.Views
                                 AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
+                            axisY.Title.Text = anToken.DisplayName + "(" + anToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {
-                                axisY.Title.Text = anToken.DisplayName + "(" + anToken.DataContracts[0].Unit + ")";
+                            {                               
                                 axisY.Maximum = anToken.UpperLimit;
                                 axisY.Minimum = anToken.LowerLimit;
                             }
@@ -341,7 +343,7 @@ namespace AIC.OnLineDataPage.Views
                         }
                     }
                 }
-                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddMinutes(size)));
+                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
                 m_chart.EndUpdate();
 
                 if (tokens != null && tokens.Count() > 0)
@@ -359,6 +361,82 @@ namespace AIC.OnLineDataPage.Views
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势-数据翻页", ex));
+                m_chart.EndUpdate();
+            }
+        }
+
+        private double m_dLatestX;
+        private void ViewModel_SignalAddedPoint(IEnumerable<SignalToken> tokens)
+        {
+            try
+            {
+                m_chart.BeginUpdate();
+                foreach (var token in tokens)
+                {
+                    PointLineSeries series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                    AxisY axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
+
+                    if (series.PointCount == 0 && token.BaseAlarmSignal.Result != null)
+                    {
+                        if (token.BaseAlarmSignal.Result > 0)
+                        {
+                            axisY.SetRange(token.BaseAlarmSignal.Result.Value * 0.5, token.BaseAlarmSignal.Result.Value * 1.5);
+                        }
+                        else
+                        {
+                            axisY.Maximum = token.BaseAlarmSignal.Result.Value * 0.5;
+                            axisY.Minimum = token.BaseAlarmSignal.Result.Value * 1.5;
+                        }
+                    }
+
+                    List<TrendPointData> datas = new List<TrendPointData>();
+                    DateTime lasttime = new DateTime();
+                    if (series.Points != null && series.Points.Count() > 0)
+                    {
+                        lasttime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(series.Points.Select(p => p.X).Max());
+                    }
+                    datas.AddRange(token.BaseAlarmSignal.BufferData.Where(p => p.ACQDateTime > lasttime));
+                    if (token.BaseAlarmSignal.ACQDatetime > lasttime)
+                    {
+                        datas.Add(new TrendPointData(token.BaseAlarmSignal.ACQDatetime.Value, token.BaseAlarmSignal.Result.Value, token.BaseAlarmSignal.Unit, (int)token.BaseAlarmSignal.AlarmGrade));
+                    }
+
+                    if (datas.Count == 0)//无数据直接返回
+                    {
+                        continue;
+                    }
+                   
+                    SeriesPoint[] points = new SeriesPoint[1];
+
+                    string unit = token.BaseAlarmSignal.Unit;
+
+                    for (int i = 0; i < datas.Count; i++)
+                    {
+                        m_dLatestX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(datas[i].ACQDateTime);
+                        points[0].X = m_dLatestX;
+                        points[0].Y = datas[i].Result;
+                        points[0].Tag = datas[i].Unit;
+
+                        AddMarker(series, points[0], datas[i].AlarmGrade);
+
+                        series.AddPoints(points, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {               
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势画面-实时刷新", ex));
+            }
+            finally
+            {
+                if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                {
+                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                }
+                else if (chkTrace.IsChecked == true)
+                {
+                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_dLatestX;
+                }
                 m_chart.EndUpdate();
             }
         }
@@ -480,8 +558,8 @@ namespace AIC.OnLineDataPage.Views
         private void chkZoom_Unchecked(object sender, RoutedEventArgs e)
         {
             m_chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.HorizontalAndVertical;
-            m_chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.Pan;
-            m_chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.Pan;
+            m_chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.Zoom;
+            m_chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.Zoom;
         }
 
         private void LegendBox_SeriesTitleMouseMoveOverOn(Object sender, Arction.Wpf.Charting.Views.ViewXY.SeriesTitleMouseMovedEventArgs e)

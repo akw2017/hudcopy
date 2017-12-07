@@ -311,7 +311,7 @@
     <Compile Include="SignalModels\DigitRransducerOutChannelSignal.cs" />
     <Compile Include="SignalModels\AnalogRransducerOutChannelSignal.cs" />
     <Compile Include="SignalModels\DivFreSignal.cs" />
-    <Compile Include="SignalModels\PointData.cs" />
+    <Compile Include="SignalModels\TrendPointData.cs" />
     <Compile Include="SignalModels\WirelessVibrationChannelSignal.cs" />
     <Compile Include="SignalModels\WirelessScalarChannelSignal.cs" />
     <Compile Include="SignalModels\RelayChannelSignal.cs" />

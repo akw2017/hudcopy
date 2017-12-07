@@ -26,8 +26,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0"/>
+            
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -180,6 +181,8 @@
             
         </DataGrid>
 
-        <Grid Name="gridChart"  Grid.Row="2" Grid.Column ="2" SizeChanged="gridChart_SizeChanged"/>
+        <GridSplitter Grid.Row="2" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+
+        <Grid Name="gridChart" Grid.Row="3" Grid.Column ="2"/>
     </Grid>
 </UserControl>

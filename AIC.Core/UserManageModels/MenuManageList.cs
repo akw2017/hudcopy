@@ -32,8 +32,8 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuOnlineDataDiagnosis { get; set; }
         public MyMenu MenuOnlineDataStatistics { get; set; }
         public MyMenu MenuHistoryDataStatistics { get; set; }
-        public MyMenu MenuHistoryDataTrend { get; set; }
-        public MyMenu MenuHistoryEventList { get; set; }
+        public MyMenu MenuDataTrendChart { get; set; }
+        public MyMenu MenuSystemEventList { get; set; }
         public MyMenu MenuEquipmentRunTime { get; set; }
         public Dictionary<int, MyMenu> Dictionary { get; set; }
 
@@ -61,9 +61,9 @@ namespace AIC.Core.UserManageModels
             MenuOnlineDataDiagnosis = new MyMenu(19, (string)Application.Current.Resources["menuOnlineDataDiagnosis"]);
             MenuOnlineDataStatistics = new MyMenu(20, (string)Application.Current.Resources["menuOnlineDataStatistics"]);
             MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"]);
-            MenuHistoryEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"]);
-            MenuHistoryDataTrend = new MyMenu(23, (string)Application.Current.Resources["menuHistoryDataTrend"]);
-            MenuEquipmentRunTime = new MyMenu(24, (string)Application.Current.Resources["menuHistoryDataTrend"]);
+            MenuSystemEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"]);
+            MenuDataTrendChart = new MyMenu(23, (string)Application.Current.Resources["menuDataTrendChart"]);
+            MenuEquipmentRunTime = new MyMenu(24, (string)Application.Current.Resources["menuDataTrendChart"]);
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -87,8 +87,8 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(19, MenuOnlineDataDiagnosis);//<!--昌邑石化-->
             Dictionary.Add(20, MenuOnlineDataStatistics);
             Dictionary.Add(21, MenuHistoryDataStatistics);
-            Dictionary.Add(22, MenuHistoryEventList);
-            Dictionary.Add(23, MenuHistoryDataTrend);
+            Dictionary.Add(22, MenuSystemEventList);
+            Dictionary.Add(23, MenuDataTrendChart);
             Dictionary.Add(24, MenuEquipmentRunTime);
         }
     }

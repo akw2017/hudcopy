@@ -3,6 +3,7 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
+using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Axes;
 using Arction.Wpf.Charting.SeriesXY;
@@ -32,18 +33,23 @@ namespace AIC.HistoryDataPage.Views
     /// </summary>
     public partial class HistoryDataStatisticsView : UserControl, ICloseable
     {
-        private readonly IEventAggregator _eventAggregator;
-        public HistoryDataStatisticsView(IEventAggregator eventAggregator)
+        public HistoryDataStatisticsView()
         {
             InitializeComponent();
 
             this.Closer = new CloseableHeader((string)Application.Current.Resources["menuHistoryDataStatistics"], true);
-            _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<DataStatisticsEvent>().Subscribe(UpdateChart);
+          
+            HistoryDataStatisticsViewModel vm = this.DataContext as HistoryDataStatisticsViewModel;
+            if (vm != null)
+            {
+                vm.UpdateChart += UpdateChart;
+            }
 
             CreateChart();
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
-        }
+        }     
+
         public CloseableHeader Closer { get; private set; }
 
         private LightningChartUltimate _chart;
@@ -115,9 +121,10 @@ namespace AIC.HistoryDataPage.Views
             _chart.ViewXY.BarSeries.Clear();
             _chart.ViewXY.XAxes[0].CustomTicks.Clear();
 
-            int pointsCount = sglist.Count;
-            double max = sglist.Max(p => p.AlarmCount + p.PreAlarmCount + p.DangerCount);
-            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 50);
+            var devicelist = sglist.GroupBy(p => p.OrganizationDeviceName).ToList(); 
+            int pointsCount = devicelist.Count;
+            var max = devicelist.Select(p => p.Select(c => c.PreAlarmCount + c.AlarmCount + c.DangerCount).Sum()).Max();// sglist.Max(p => p.AlarmCount + p.PreAlarmCount + p.DangerCount);
+            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 10);
             _chart.ViewXY.YAxes[0].SetRange(0, max);
             _chart.ViewXY.XAxes[0].SetRange(0.0, (double)(pointsCount + 1));
             // Add a bar series for each point, with a different color.
@@ -125,40 +132,31 @@ namespace AIC.HistoryDataPage.Views
             {               
                 BarSeriesValue[] data = new BarSeriesValue[pointsCount];              
                 for (int j = 0; j < pointsCount; j++)
-                {
-                    double submax = Math.Max(Math.Max(sglist[j].PreAlarmCount, sglist[j].AlarmCount), sglist[j].DangerCount);
+                {                  
                     if (i == 0)
                     {
-                        data[j].Value = sglist[j].PreAlarmCount;
+                        data[j].Value = devicelist[j].Select(p => p.PreAlarmCount).Sum();
                         data[j].Location = j + 1;
                         //Set label text
-                        if (sglist[j].PreAlarmCount > max / 10 || submax == sglist[j].PreAlarmCount)
-                        {
-                            data[j].Text = sglist[j].PreAlarmCount.ToString("0");
-                        }
-                        data[j].Tag = sglist[j].PreAlarmCount.ToString("0");
+                      
+                        data[j].Text = data[j].Value.ToString("0");                       
+                        data[j].Tag = data[j].Value.ToString("0");
                     }
                     else if (i == 1)
                     {
-                        data[j].Value = sglist[j].AlarmCount;
+                        data[j].Value = devicelist[j].Select(p => p.AlarmCount).Sum();
                         data[j].Location = j + 1;
-                        //Set label text
-                        if (sglist[j].AlarmCount > max / 10 || submax == sglist[j].AlarmCount)
-                        {
-                            data[j].Text = sglist[j].AlarmCount.ToString("0");
-                        }
-                        data[j].Tag = sglist[j].AlarmCount.ToString("0");
+                        //Set label text                       
+                        data[j].Text = data[j].Value.ToString("0"); 
+                        data[j].Tag = data[j].Value.ToString("0");
                     }
                     else if (i == 2)
                     {
-                        data[j].Value = sglist[j].DangerCount;
+                        data[j].Value = devicelist[j].Select(p => p.DangerCount).Sum();
                         data[j].Location = j + 1;
-                        //Set label text
-                        if (sglist[j].DangerCount > max / 10 || submax == sglist[j].DangerCount)
-                        {
-                            data[j].Text = sglist[j].DangerCount.ToString("0");
-                        }
-                        data[j].Tag = sglist[j].DangerCount.ToString("0");
+                        //Set label text                      
+                        data[j].Text = data[j].Value.ToString("0");
+                        data[j].Tag = data[j].Value.ToString("0");
                     }
 
                     if (i == 0)
@@ -166,7 +164,7 @@ namespace AIC.HistoryDataPage.Views
                         // Let's use custom axis ticks to display days of the month.
                         CustomAxisTick tick = new CustomAxisTick(_chart.ViewXY.XAxes[0]);
                         tick.AxisValue = (double)(j + 1);
-                        tick.LabelText = sglist[j].DeviceItemName;
+                        tick.LabelText = devicelist[j].Select(p => p.DeviceName).FirstOrDefault();
                         tick.Length = 0;
                         _chart.ViewXY.XAxes[0].CustomTicks.Add(tick);
                     }
@@ -217,17 +215,17 @@ namespace AIC.HistoryDataPage.Views
 
                 //Set label text style
                 bs.LabelStyle.Angle = 0;
-                bs.LabelStyle.VerticalAlign = BarsTitleVerticalAlign.BarTop;
+                bs.LabelStyle.VerticalAlign = BarsTitleVerticalAlign.BarCenter;
 
                 //Assign the value
                 bs.Values = data;
                 bs.BarThickness = with;
 
                 _chart.ViewXY.BarSeries.Add(bs);
-                
-
             }
             _chart.EndUpdate();
+
+            gridChart.SizeChanged += gridChart_SizeChanged;
         }
 
         private void gridChart_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -238,7 +236,7 @@ namespace AIC.HistoryDataPage.Views
             }
             _chart.BeginUpdate();
             int pointsCount = _chart.ViewXY.BarSeries[0].Values.Count();          
-            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 50);
+            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 10);
             _chart.ViewXY.BarSeries.ForEach(p => p.BarThickness = with);
             _chart.EndUpdate();
         }
