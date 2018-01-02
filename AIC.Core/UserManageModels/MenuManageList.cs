@@ -34,7 +34,9 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuHistoryDataStatistics { get; set; }
         public MyMenu MenuDataTrendChart { get; set; }
         public MyMenu MenuSystemEventList { get; set; }
-        public MyMenu MenuEquipmentRunTime { get; set; }
+        public MyMenu MenuEquipmentRunStatus { get; set; }
+        public MyMenu MenuDeviceRunAnalyze { get; set; }
+        public MyMenu MenuDeviceHourlyData { get; set; }
         public Dictionary<int, MyMenu> Dictionary { get; set; }
 
         public MenuManageList()
@@ -63,7 +65,9 @@ namespace AIC.Core.UserManageModels
             MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"]);
             MenuSystemEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"]);
             MenuDataTrendChart = new MyMenu(23, (string)Application.Current.Resources["menuDataTrendChart"]);
-            MenuEquipmentRunTime = new MyMenu(24, (string)Application.Current.Resources["menuDataTrendChart"]);
+            MenuEquipmentRunStatus = new MyMenu(24, (string)Application.Current.Resources["menuDeviceRunStatus"]);
+            MenuDeviceRunAnalyze = new MyMenu(25, (string)Application.Current.Resources["menuDeviceRunAnalyze"]);
+            MenuDeviceHourlyData = new MyMenu(26, (string)Application.Current.Resources["menuDeviceHourlyData"]);
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -89,7 +93,9 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(21, MenuHistoryDataStatistics);
             Dictionary.Add(22, MenuSystemEventList);
             Dictionary.Add(23, MenuDataTrendChart);
-            Dictionary.Add(24, MenuEquipmentRunTime);
+            Dictionary.Add(24, MenuEquipmentRunStatus);
+            Dictionary.Add(25, MenuDeviceRunAnalyze);
+            Dictionary.Add(26, MenuDeviceHourlyData);
         }
     }
 }

@@ -152,10 +152,21 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource menuEquipmentData}" Background="{DynamicResource TransparentWhiteBrush}"><!--昌邑石化-->
-                <MenuItem Header="{DynamicResource menuEquipmentRunStatus}" Command="{Binding NavigateCommand}" CommandParameter="MenuEquipmentRunTime" Visibility="{Binding MenuManageList.MenuEquipmentRunTime.Visibility}">
+            <MenuItem Header="{DynamicResource menuDeviceData}" Background="{DynamicResource TransparentWhiteBrush}">
+                <!--昌邑石化-->
+                <MenuItem Header="{DynamicResource menuDeviceRunStatus}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunStatusList" Visibility="{Binding MenuManageList.MenuEquipmentRunStatus.Visibility}">
                     <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/database_error.png"/>
+                        <Image Source="/AIC.Resources;component/Images/cog_go.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuDeviceRunAnalyze}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunAnalyze" Visibility="{Binding MenuManageList.MenuDeviceRunAnalyze.Visibility}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/cog_error.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuDeviceHourlyData}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceHourlyData" Visibility="{Binding MenuManageList.MenuDeviceHourlyData.Visibility}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -168,11 +179,6 @@
                 <MenuItem Header="{DynamicResource menuRunningMonitor}" Command="{Binding NavigateCommand}" CommandParameter="MenuRunningMonitor" Visibility="{Binding MenuManageList.MenuRunningMonitor.Visibility}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/database_go.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuRunningAnalyze}" Command="{Binding NavigateCommand}" CommandParameter="MenuRunningAnalyze" Visibility="{Binding MenuManageList.MenuRunningAnalyze.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/database_lightning.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

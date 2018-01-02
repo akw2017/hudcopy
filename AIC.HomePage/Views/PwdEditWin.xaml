@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIC.HomePage.Views"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:c="clr-namespace:AIC.Core.Controls;assembly=AIC.Core"
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"      

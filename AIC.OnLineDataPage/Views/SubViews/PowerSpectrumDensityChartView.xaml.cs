@@ -34,12 +34,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridChart.Children.Clear();
-            if (m_chart != null)
-            {
-                m_chart.Dispose();
-                m_chart = null;
-            }
+            //gridChart.Children.Clear();
+            //if (m_chart != null)
+            //{
+            //    m_chart.Dispose();
+            //    m_chart = null;
+            //}
         }
 
         protected override void ViewModel_SignalChanged()
@@ -47,7 +47,8 @@ namespace AIC.OnLineDataPage.Views.SubViews
             try
             {
                 m_chart.BeginUpdate();
-                m_chart.ViewXY.PointLineSeries[0].Clear();                
+                m_chart.ViewXY.PointLineSeries[0].Clear();
+                txtValue.Text = string.Empty;
             }
             catch (Exception ex)
             {
@@ -67,46 +68,181 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 {
                     return;
                 }
-                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
-                if (signal.FFTLength == 0 || signal.Frequency == null || signal.PowerSpectrumDensity == null)
-                {                   
-                    return;
-                }
 
-                m_chart.BeginUpdate();
-
-                var series = m_chart.ViewXY.PointLineSeries[0];
-                if (series.Points == null || series.Points.Length != signal.FFTLength)
+                string processName = null;
+                switch (ViewModel.SignalPreProccessType)
                 {
-                    series.Points = new SeriesPoint[signal.FFTLength];
+                    case SignalPreProccessType.None:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                                if (signal.FFTLength == 0 || signal.Frequency == null || signal.PowerSpectrumDensity == null)
+                                {
+                                    return;
+                                }
+
+                                m_chart.BeginUpdate();
+
+                                var series = m_chart.ViewXY.PointLineSeries[0];
+                                if (series.Points == null || series.Points.Length != signal.FFTLength)
+                                {
+                                    series.Points = new SeriesPoint[signal.FFTLength];
+                                }
+                                for (int i = 0; i < signal.FFTLength; i++)
+                                {
+                                    series.Points[i].X = signal.Frequency[i];
+                                    series.Points[i].Y = signal.PowerSpectrumDensity[i];
+                                }
+
+                                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                                StringBuilder spectrumSB = new StringBuilder();
+                                spectrumSB.AppendLine("频率" + "  " + "幅值");
+                                txtValue.Text = "频率/幅值:";
+
+                                var fftValuesDict = signal.PowerSpectrumDensity.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                                foreach (var item in fftValuesDict)
+                                {
+                                    spectrumSB.AppendLine(signal.Frequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                                    txtValue.Text += signal.Frequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                                }
+                                txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
+                                spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+
+                                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            else
+                            {
+                                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                                if (signal.FilterFFTLength == 0 || signal.FilterFrequency == null || signal.FilterPowerSpectrumDensity == null)
+                                {
+                                    return;
+                                }
+
+                                m_chart.BeginUpdate();
+
+                                var series = m_chart.ViewXY.PointLineSeries[0];
+                                if (series.Points == null || series.Points.Length != signal.FilterFFTLength)
+                                {
+                                    series.Points = new SeriesPoint[signal.FilterFFTLength];
+                                }
+                                for (int i = 0; i < signal.FilterFFTLength; i++)
+                                {
+                                    series.Points[i].X = signal.FilterFrequency[i];
+                                    series.Points[i].Y = signal.FilterPowerSpectrumDensity[i];
+                                }
+
+                                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                                StringBuilder spectrumSB = new StringBuilder();
+                                spectrumSB.AppendLine("频率" + "  " + "幅值");
+                                txtValue.Text = "频率/幅值:";
+
+                                var fftValuesDict = signal.FilterPowerSpectrumDensity.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                                foreach (var item in fftValuesDict)
+                                {
+                                    spectrumSB.AppendLine(signal.FilterFrequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                                    txtValue.Text += signal.FilterFrequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                                }
+                                txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
+                                spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+
+                                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            return;
+                        }
+                    case SignalPreProccessType.Envelope:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Envelope";
+                            }
+                            else
+                            {
+                                processName = "FilterEnvelope";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.TFF:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "TFF";
+                            }
+                            else
+                            {
+                                processName = "FilterTFF";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.Cepstrum:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Cepstrum";
+                            }
+                            else
+                            {
+                                processName = "FilterCepstrum";
+                            }
+                            break;
+                        }
                 }
-                for (int i = 0; i < signal.FFTLength; i++)
+                if (processName != null)
                 {
-                    series.Points[i].X = signal.Frequency[i];
-                    series.Points[i].Y = signal.PowerSpectrumDensity[i];
+                    BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                    if (signal.ProcessingFFTLength(processName) == 0 || signal.FrequencyList == null || signal.PowerSpectrumDensityList == null 
+                        || !signal.FrequencyList.ContainsKey(processName) || !signal.PowerSpectrumDensityList.ContainsKey(processName))
+                    {
+                        return;
+                    }
+
+                    m_chart.BeginUpdate();
+
+                    var series = m_chart.ViewXY.PointLineSeries[0];
+                    if (series.Points == null || series.Points.Length != signal.ProcessingFFTLength(processName))
+                    {
+                        series.Points = new SeriesPoint[signal.ProcessingFFTLength(processName)];
+                    }
+                    for (int i = 0; i < signal.ProcessingFFTLength(processName); i++)
+                    {
+                        series.Points[i].X = signal.FrequencyList[processName][i];
+                        series.Points[i].Y = signal.PowerSpectrumDensityList[processName][i];
+                    }
+
+                    AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                    StringBuilder spectrumSB = new StringBuilder();
+                    spectrumSB.AppendLine("频率" + "  " + "幅值");
+                    txtValue.Text = "频率/幅值:";
+
+                    var fftValuesDict = signal.PowerSpectrumDensityList[processName].Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                    foreach (var item in fftValuesDict)
+                    {
+                        spectrumSB.AppendLine(signal.FrequencyList[processName][item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                        txtValue.Text += signal.FrequencyList[processName][item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                    }
+                    txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
+                    spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+
+                    m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+
+                    if (fitViewCheckBox.IsChecked == true)
+                    {
+                        m_chart.ViewXY.ZoomToFit();
+                    }
+                    m_chart.EndUpdate();
                 }
-
-                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
-                StringBuilder spectrumSB = new StringBuilder();
-                spectrumSB.AppendLine("频率" + "  " + "幅值");
-                txtValue.Text = "频率/幅值:";
-
-                var fftValuesDict = signal.PowerSpectrumDensity.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
-                foreach (var item in fftValuesDict)
-                {
-                    spectrumSB.AppendLine(signal.Frequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
-                    txtValue.Text += signal.Frequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
-                }
-                txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
-                spectrumAnnotation.Text = spectrumSB.ToString().Trim();
-
-                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
-
-                if (fitViewCheckBox.IsChecked == true)
-                {
-                    m_chart.ViewXY.ZoomToFit();
-                }
-                m_chart.EndUpdate();
             }
             catch (Exception ex)
             {
@@ -115,7 +251,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
             }
             finally
             {
-                
+
             }
         }
         private void CreateChart()

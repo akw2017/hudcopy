@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace AIC.OnLineDataPage.Converters
+namespace AIC.Core
 {
     public class StringShowLenghtConverter : IValueConverter
     {

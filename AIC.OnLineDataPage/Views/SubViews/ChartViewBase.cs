@@ -17,7 +17,8 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public ChartViewBase()
         {
             Loaded += ChartViewBase_Loaded;
-            Unloaded += ChartViewBase_Unloaded;           
+            Unloaded += ChartViewBase_Unloaded;                       
+           
             IsVisibleChanged += ChartViewBase_IsVisibleChanged;
         }
 
@@ -35,6 +36,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 ViewModel = DataContext as ChartViewModelBase;
                 ViewModel.SignalChanged += ViewModel_SignalChanged;
                 ViewModel.Closed += ViewModel_Closed;
+
                 if (!initialized)
                 {
                     ViewModel_SignalChanged();
@@ -48,7 +50,8 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             if (ViewModel != null)
             {
-                ViewModel.Unsubscribe();
+                //ViewModel.Unsubscribe();
+                ViewModel.Close();
                 ViewModel.Closed -= ViewModel_Closed;
                 ViewModel.SignalChanged -= ViewModel_SignalChanged;
                 ViewModel = null;

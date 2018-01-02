@@ -73,6 +73,7 @@ namespace AIC.LocalConfiguration
             isSuspend = suspend;
         }
 
+        #region 信号初始化与增减
         private void NotifySignalsAdded(BaseAlarmSignal signals)
         {
             SignalChangedEvent handler = SignalsAdded;
@@ -365,6 +366,9 @@ namespace AIC.LocalConfiguration
                 }
             }
         }
+        #endregion
+
+        #region 获取信号
         public async Task<bool> GetSignalData(DateTime time, bool isHistoryMode)
         {
             try
@@ -666,6 +670,9 @@ namespace AIC.LocalConfiguration
             }
             return latestdata;
         }
+        #endregion
+
+        #region 处理信号
         public async Task ProcessSignal(LatestSampleData data)
         {
             List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>> keyValuePairs = new List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>>();
@@ -880,8 +887,11 @@ namespace AIC.LocalConfiguration
                                 {
                                     try
                                     {
-                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.VData))
+                                        
+
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.VData))//由于诊断需要，移到外部
                                         {
+                                            #region
                                             //if (keyValuePair.Value is D1_WirelessVibrationSlot)
                                             //{
                                             //    var waveslot = keyValuePair.Value as D1_WirelessVibrationSlot;
@@ -899,28 +909,34 @@ namespace AIC.LocalConfiguration
                                             //        return;
                                             //    }
                                             //}
+                                            #endregion
                                         }
-                                        else
-                                        {
-                                            return;
-                                        }
-                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Filter))//滤波
+
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumVData))//滤波
                                         {
                                             vSg.Filter();
                                         }
-                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Envelope))//包络
-                                        {
-                                            vSg.Waveform = Algorithm.Instance.Envelope(vSg.Waveform, vSg.SamplePoint);
-                                        }
-                                        else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.TFF))//TFF
-                                        {
-                                            vSg.Waveform = Algorithm.Instance.TFF(vSg.Waveform, vSg.SamplePoint, vSg.SampleFre);
-                                        }
-                                        else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))//倒频谱
-                                        {
-                                            vSg.Waveform = Algorithm.Instance.Cepstrum(vSg.Waveform, vSg.SamplePoint);
-                                        }
 
+                                        #region 避免破坏原始波形，分离出来，放入ProcessWave
+                                        //if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Envelope))//包络
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.Envelope(vSg.Waveform, vSg.SamplePoint);
+                                        //}
+                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.TFF))//TFF
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.TFF(vSg.Waveform, vSg.SamplePoint, vSg.SampleFre);
+                                        //}
+                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))//倒频谱
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.Cepstrum(vSg.Waveform, vSg.SamplePoint);
+                                        //}     
+                                        //预处理波形
+                                        ProcessWave(vSg);
+                                        ProcessFilterWave(vSg);
+                                        #endregion
+
+
+                                        #region 原始波形处理
                                         if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Time))
                                         {
                                             var paras = Algorithm.CalculatePara(vSg.Waveform);
@@ -974,11 +990,73 @@ namespace AIC.LocalConfiguration
                                             var output = Algorithm.Instance.PowerSpectrumDensityAction(vSg.Waveform, vSg.SampleFre, vSg.SamplePoint, vSg.IsPowerSpectrumDensityDB);
                                             vSg.PowerSpectrumDensity = output.Take(length).ToArray();
                                         }
+                                        #endregion
+
+                                        #region 过滤波形处理
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTime))
+                                        {
+                                            var paras = Algorithm.CalculatePara(vSg.FilterWaveform);
+                                            if (paras != null)
+                                            {
+                                                vSg.FilterRmsValue = paras[0];
+                                                vSg.FilterPeakValue = paras[1];
+                                                vSg.FilterPeakPeakValue = paras[2];
+                                                vSg.FilterSlope = paras[3];
+                                                vSg.FilterKurtosis = paras[4];
+                                                vSg.FilterKurtosisValue = paras[5];
+                                                vSg.FilterWaveIndex = paras[6];
+                                                vSg.FilterPeakIndex = paras[7];
+                                                vSg.FilterImpulsionIndex = paras[8];
+                                                vSg.FilterRootAmplitude = paras[9];
+                                                vSg.FilterToleranceIndex = paras[10];
+                                            }
+                                        }
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterFrequency) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterPowerSpectrum) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterPowerSpectrumDensity))
+                                        {
+                                            double frequencyInterval = vSg.SampleFre / vSg.SamplePoint;
+                                            int length = (int)(vSg.SamplePoint / 2.56) + 1;
+                                            if (vSg.FilterFrequency == null || vSg.FilterFrequency.Length != length)
+                                            {
+                                                vSg.FilterFrequency = new double[length];
+                                            }
+                                            for (int i = 0; i < length; i++)
+                                            {
+                                                vSg.FilterFrequency[i] = frequencyInterval * i;
+                                            }
+                                        }
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterFrequency))
+                                        {
+                                            int length = (int)(vSg.SamplePoint / 2.56) + 1;
+                                            var output = Algorithm.Instance.FFT2AndPhaseAction(vSg.FilterWaveform, vSg.SamplePoint);
+                                            if (output != null)
+                                            {
+                                                vSg.FilterAmplitude = output[0].Take(length).ToArray();
+                                                vSg.FilterPhase = output[1].Take(length).ToArray();
+                                            }
+                                        }
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterPowerSpectrum))
+                                        {
+                                            int length = (int)(vSg.SamplePoint / 2.56) + 1;
+                                            var output = Algorithm.Instance.PowerSpectrumAction(vSg.FilterWaveform, vSg.SampleFre, vSg.SamplePoint, vSg.IsPowerSpectrumDB);
+                                            vSg.FilterPowerSpectrum = output.Take(length).ToArray();
+                                        }
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterPowerSpectrumDensity))
+                                        {
+                                            int length = (int)(vSg.SamplePoint / 2.56) + 1;
+                                            var output = Algorithm.Instance.PowerSpectrumDensityAction(vSg.FilterWaveform, vSg.SampleFre, vSg.SamplePoint, vSg.IsPowerSpectrumDensityDB);
+                                            vSg.FilterPowerSpectrumDensity = output.Take(length).ToArray();
+                                        }
+                                        #endregion
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据处理", ex));
                                     }
+                                }
+                                if (NeedClear(vSg))
+                                {
+                                    ClearWave(vSg);
+                                    ClearFilterWave(vSg);
                                 }
                             }
                         }
@@ -986,6 +1064,149 @@ namespace AIC.LocalConfiguration
                 });
             }
         }
+        private void SetDivfreSignal(BaseDivfreSignal sg, IBaseAlarmSlot idata)
+        {
+            sg.IBaseAlarmSlot = idata;
+
+            sg.IsResetFlag = true;
+
+            if (idata is D1_WirelessVibrationSlot)
+            {
+                var data = idata as D1_WirelessVibrationSlot;
+                sg.BatteryEnergy = (float)data.BatteryEnergy.Value;
+
+                setwave(sg, data);
+
+                var divfres = data.DivFreInfo;
+
+                //分频信号
+                foreach (var item in sg.DivFres)
+                {
+                    var divFreContract = divfres.Where(p => p.Guid == item.Guid).SingleOrDefault();
+                    if (divFreContract != null)
+                    {
+                        item.RecordLab = divFreContract.RecordLab.Value;
+                        item.ACQDatetime = divFreContract.ACQDatetime;
+                        item.DescriptionFre = divFreContract.DescriptionFre;
+                        item.AlarmType = divFreContract.AlarmGrade;
+                        item.DivFreType = (DivFreType)Enum.Parse(typeof(DivFreType), divFreContract.DivFreCode.ToString());
+                        item.Name = divFreContract.Name;
+
+                        if (divFreContract.AlarmLimit != null)
+                        {
+                            item.LowDanger = divFreContract.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
+                            item.LowAlert = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+                            item.LowNormal = divFreContract.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
+                            item.HighNormal = divFreContract.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
+                            item.HighAlert = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+                            item.HighDanger = divFreContract.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
+                            item.AlarmGrade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), divFreContract.AlarmGrade.ToString());
+                            item.Phase = divFreContract.Phase.Value;
+                            item.Result = divFreContract.Result.Value;
+                        }
+                        item.IsConnected = true;
+                        item.IsRead = true;
+                    }
+                    else
+                    {
+                        item.IsConnected = false;
+                        item.IsRead = false;
+                    }
+                }
+            }
+
+            //if (idata.AlarmLimit != null)
+            //{
+            //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
+            //}           
+
+            setalarm(sg, idata);
+
+            sg.IsConnected = true;
+            sg.IsRunning = (sg.DelayAlarmGrade == AlarmGrade.Abnormal) ? false : true;
+        }
+        private void SetAlarmSignal(BaseAlarmSignal sg, IBaseAlarmSlot idata)
+        {
+            sg.IBaseAlarmSlot = idata;
+
+            sg.IsResetFlag = true;
+
+            if (idata is D1_WirelessScalarSlot)
+            {
+                sg.BatteryEnergy = (float)(idata as D1_WirelessScalarSlot).BatteryEnergy.Value;
+            }
+
+            //if (idata.AlarmLimit != null)
+            //{
+            //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
+            //}    
+
+            setalarm(sg, idata);
+            sg.IsConnected = true;
+            sg.IsRunning = false;
+        }
+        private void setwave(BaseDivfreSignal sg, D1_WirelessVibrationSlot idata)
+        {
+            sg.MountDegree = idata.MountDegree.Value;
+            sg.TPDirCode = (int)idata.TPDirCode.Value;
+            sg.IsValidWave = idata.IsValidWave.Value;
+            sg.WaveUnit = idata.WaveUnit;
+            sg.RPM = (float)idata.RPM.Value;
+            sg.IsMultiplication = idata.IsMultiplication.Value;
+            sg.MultiplicationCor = (float)idata.MultiplicationCor.Value;
+            sg.BiasVoltHigh = (float)idata.BiasVoltHigh.Value;
+            sg.BiasVoltLow = (float)idata.BiasVoltLow.Value;
+        }
+        private void setalarm(BaseAlarmSignal sg, IBaseAlarmSlot idata)
+        {
+            if (sg.ACQDatetime != null && sg.Result != null && sg.Result != idata.Result)//缓存数据
+            {
+                TrendPointData tp = new TrendPointData(sg.ACQDatetime.Value, sg.Result.Value, sg.Unit, (int)sg.AlarmGrade);
+                if (sg is IBaseWaveSlot)
+                {
+                    tp.RecordLab = sg.RecordLab.Value;
+                    tp.IsValidWave = (sg as IBaseWaveSlot).IsValidWave.Value;
+                }
+                sg.BufferData.Add(tp);
+                if (sg.ACQDatetime >= sg.BufferData[0].ACQDateTime.AddSeconds(10))//弹出一个数据
+                {
+                    sg.BufferData.RemoveAt(0);
+                }
+            }
+
+            sg.ACQDatetime = idata.ACQDatetime;
+            sg.ACQ_Unit_Type = idata.ACQ_Unit_Type;
+            sg.AsySyn = idata.AsySyn;
+            sg.MainCardCode = idata.MainCardCode;
+            sg.SynWaveCode = idata.SynWaveCode;
+            sg.IsHdBypass = idata.IsHdBypass;
+            sg.IsHdMultiplication = idata.IsHdMultiplication;
+            sg.RecordLab = idata.RecordLab;
+            sg.SaveLab = idata.SaveLab;
+            sg.ContinueLab = idata.ContinueLab;
+            sg.ExtraInfo = idata.ExtraInfo;
+            sg.Result = idata.Result;
+            sg.IsValidCH = idata.IsValidCH;
+            sg.Unit = idata.Unit;
+            //sg.ChannelHDID = idata.ChannelHDID;//数据不完整，抛弃
+
+            sg.AlarmGrade = (AlarmGrade)(idata.AlarmGrade & 0x00ffff00);
+            sg.Low8Alarm = idata.AlarmGrade & 0xff;
+            sg.AlarmLimit = idata.AlarmLimit;
+        }
+        #endregion
+
+        #region 处理波形
         private void ProcessWave(BaseWaveSignal vSg)
         {
             //包络
@@ -1036,11 +1257,11 @@ namespace AIC.LocalConfiguration
             }
             SubProcessWave(vSg, vSg.Waveform, "TFF", TFFList);
 
-            //TFF
+            //Cepstrum
             List<string> CepstrumList = new List<string>();
             if (vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumVData))
             {
-                CepstrumList.Add("TFFVData");
+                CepstrumList.Add("CepstrumVData");
             }
             if (vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumTime))
             {
@@ -1060,8 +1281,87 @@ namespace AIC.LocalConfiguration
             }
             SubProcessWave(vSg, vSg.Waveform, "Cepstrum", CepstrumList);
         }
+        private void ProcessFilterWave(BaseWaveSignal vSg)//过滤后处理
+        {
+            //包络
+            List<string> EnvelopeList = new List<string>();
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeVData))
+            {
+                EnvelopeList.Add("EnvelopeVData");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeTime))
+            {
+                EnvelopeList.Add("Time");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeFrequency))
+            {
+                EnvelopeList.Add("Frequency");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopePowerSpectrum))
+            {
+                EnvelopeList.Add("PowerSpectrum");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopePowerSpectrumDensity))
+            {
+                EnvelopeList.Add("PowerSpectrumDensity");
+            }
+            SubProcessWave(vSg, vSg.FilterWaveform, "FilterEnvelope", EnvelopeList);
+
+            //TFF
+            List<string> TFFList = new List<string>();
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFVData))
+            {
+                TFFList.Add("TFFVData");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFTime))
+            {
+                TFFList.Add("Time");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFFrequency))
+            {
+                TFFList.Add("Frequency");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFPowerSpectrum))
+            {
+                TFFList.Add("PowerSpectrum");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFPowerSpectrumDensity))
+            {
+                TFFList.Add("PowerSpectrumDensity");
+            }
+            SubProcessWave(vSg, vSg.FilterWaveform, "FilterTFF", TFFList);
+
+            //Cepstrum
+            List<string> CepstrumList = new List<string>();
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumVData))
+            {
+                CepstrumList.Add("CepstrumVData");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumTime))
+            {
+                CepstrumList.Add("Time");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumFrequency))
+            {
+                CepstrumList.Add("Frequency");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumPowerSpectrum))
+            {
+                CepstrumList.Add("PowerSpectrum");
+            }
+            if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumPowerSpectrumDensity))
+            {
+                CepstrumList.Add("PowerSpectrumDensity");
+            }
+            SubProcessWave(vSg, vSg.FilterWaveform, "FilterCepstrum", CepstrumList);
+        }
         private void SubProcessWave(BaseWaveSignal vSg, double[] waveform, string processName, List<string> processList)
         {
+            if (processList.Count == 0)
+            {
+                return;
+            }
+
             if (processList.Contains("EnvelopeVData"))//包络
             {
                 if (vSg.WaveformList == null)
@@ -1073,7 +1373,7 @@ namespace AIC.LocalConfiguration
                     vSg.WaveformList.Add(processName, null);
                 }
 
-                vSg.WaveformList[processName] = Algorithm.Instance.Envelope(waveform, vSg.SamplePoint);
+                vSg.WaveformList[processName] = Algorithm.Instance.Envelope(waveform, vSg.SamplePoint);              
             }
             else if (processList.Contains("TFFVData"))//TFF
             {
@@ -1086,7 +1386,7 @@ namespace AIC.LocalConfiguration
                     vSg.WaveformList.Add(processName, null);
                 }
 
-                vSg.Waveform = Algorithm.Instance.TFF(waveform, vSg.SamplePoint, vSg.SampleFre);
+                vSg.WaveformList[processName] = Algorithm.Instance.TFF(waveform, vSg.SamplePoint, vSg.SampleFre);
             }
             else if (processList.Contains("CepstrumVData"))//倒频谱
             {
@@ -1099,7 +1399,7 @@ namespace AIC.LocalConfiguration
                     vSg.WaveformList.Add(processName, null);
                 }
 
-                vSg.Waveform = Algorithm.Instance.Cepstrum(waveform, vSg.SamplePoint);
+                vSg.WaveformList[processName] = Algorithm.Instance.Cepstrum(waveform, vSg.SamplePoint);
             }
             else
             {
@@ -1109,19 +1409,96 @@ namespace AIC.LocalConfiguration
             if (processList.Contains("Time"))
             {
                 var paras = Algorithm.CalculatePara(vSg.WaveformList[processName]);
-                if (paras != null)
+                if (paras != null)//避免与原始波形冲突，需要的时候再计算。
                 {
-                    vSg.RmsValue = paras[0];
-                    vSg.PeakValue = paras[1];
-                    vSg.PeakPeakValue = paras[2];
-                    vSg.Slope = paras[3];
-                    vSg.Kurtosis = paras[4];
-                    vSg.KurtosisValue = paras[5];
-                    vSg.WaveIndex = paras[6];
-                    vSg.PeakIndex = paras[7];
-                    vSg.ImpulsionIndex = paras[8];
-                    vSg.RootAmplitude = paras[9];
-                    vSg.ToleranceIndex = paras[10];
+                    if (vSg.RmsValueList == null)
+                    {
+                        vSg.RmsValueList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.RmsValueList.Keys.Contains(processName))
+                    {
+                        vSg.RmsValueList.Add(processName, paras[0]);
+                    }
+                    if (vSg.PeakValueList == null)
+                    {
+                        vSg.PeakValueList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.PeakValueList.Keys.Contains(processName))
+                    {
+                        vSg.PeakValueList.Add(processName, paras[1]);
+                    }
+                    if (vSg.PeakPeakValueList == null)
+                    {
+                        vSg.PeakPeakValueList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.PeakPeakValueList.Keys.Contains(processName))
+                    {
+                        vSg.PeakPeakValueList.Add(processName, paras[2]);
+                    }
+                    if (vSg.SlopeList == null)
+                    {
+                        vSg.SlopeList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.SlopeList.Keys.Contains(processName))
+                    {
+                        vSg.SlopeList.Add(processName, paras[3]);
+                    }
+                    if (vSg.KurtosisList == null)
+                    {
+                        vSg.KurtosisList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.KurtosisList.Keys.Contains(processName))
+                    {
+                        vSg.KurtosisList.Add(processName, paras[4]);
+                    }
+                    if (vSg.KurtosisValueList == null)
+                    {
+                        vSg.KurtosisValueList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.KurtosisValueList.Keys.Contains(processName))
+                    {
+                        vSg.KurtosisValueList.Add(processName, paras[5]);
+                    }
+                    if (vSg.WaveIndexList == null)
+                    {
+                        vSg.WaveIndexList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.WaveIndexList.Keys.Contains(processName))
+                    {
+                        vSg.WaveIndexList.Add(processName, paras[6]);
+                    }
+                    if (vSg.PeakIndexList == null)
+                    {
+                        vSg.PeakIndexList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.PeakIndexList.Keys.Contains(processName))
+                    {
+                        vSg.PeakIndexList.Add(processName, paras[7]);
+                    }
+                    if (vSg.ImpulsionIndexList == null)
+                    {
+                        vSg.ImpulsionIndexList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.ImpulsionIndexList.Keys.Contains(processName))
+                    {
+                        vSg.ImpulsionIndexList.Add(processName, paras[8]);
+                    }
+                    if (vSg.RootAmplitudeList == null)
+                    {
+                        vSg.RootAmplitudeList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.RootAmplitudeList.Keys.Contains(processName))
+                    {
+                        vSg.RootAmplitudeList.Add(processName, paras[9]);
+                    }
+                    if (vSg.ToleranceIndexList == null)
+                    {
+                        vSg.ToleranceIndexList = new Dictionary<string, double>();
+                    }
+                    if (!vSg.ToleranceIndexList.Keys.Contains(processName))
+                    {
+                        vSg.ToleranceIndexList.Add(processName, paras[10]);
+                    }
                 }
             }
             if (processList.Contains("Frequency") || processList.Contains("PowerSpectrum") || processList.Contains("PowerSpectrumDensity"))
@@ -1201,145 +1578,286 @@ namespace AIC.LocalConfiguration
                 vSg.PowerSpectrumDensityList[processName] = output.Take(length).ToArray();
             }
         }
-        private void SetDivfreSignal(BaseDivfreSignal sg, IBaseAlarmSlot idata)
+
+
+        private bool NeedClear(BaseWaveSignal vSg)
         {
-            sg.IBaseAlarmSlot = idata;
-
-            sg.IsResetFlag = true;
-
-            if (idata is D1_WirelessVibrationSlot)
+            if (vSg.WaveformList != null && vSg.WaveformList.Count > 0)
             {
-                var data = idata as D1_WirelessVibrationSlot;
-                sg.BatteryEnergy = (float)data.BatteryEnergy.Value;
+                return true;
+            }
+            if (vSg.RmsValueList != null && vSg.RmsValueList.Count > 0)
+            {
+                return true;
+            }
+            if (vSg.FrequencyList != null && vSg.FrequencyList.Count > 0)
+            {
+                return true;
+            }
+            if (vSg.AmplitudeList != null && vSg.AmplitudeList.Count > 0)
+            {
+                return true;
+            }
+            if (vSg.PhaseList != null && vSg.PhaseList.Count > 0)
+            {
+                return true;
+            }
+            if (vSg.PowerSpectrumList != null && vSg.PowerSpectrumList.Count > 0)
+            {
+                return true;
+            }
+            if (vSg.PowerSpectrumDensityList != null && vSg.PowerSpectrumDensityList.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        private void ClearWave(BaseWaveSignal vSg)
+        {
+            //包络
+            List<string> EnvelopeList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.EnvelopeVData))
+            {
+                EnvelopeList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.EnvelopeTime))
+            {
+                EnvelopeList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.EnvelopeFrequency))
+            {
+                EnvelopeList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.EnvelopePowerSpectrum))
+            {
+                EnvelopeList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.EnvelopePowerSpectrumDensity))
+            {
+                EnvelopeList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "Envelope", EnvelopeList);
+            //TFF
+            List<string> TFFList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.TFFVData))
+            {
+                TFFList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.TFFTime))
+            {
+                TFFList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.TFFFrequency))
+            {
+                TFFList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.TFFPowerSpectrum))
+            {
+                TFFList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.TFFPowerSpectrumDensity))
+            {
+                TFFList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "TFF", TFFList);
+            //Cepstrum
+            List<string> CepstrumList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumVData))
+            {
+                CepstrumList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumTime))
+            {
+                CepstrumList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumFrequency))
+            {
+                CepstrumList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumPowerSpectrum))
+            {
+                CepstrumList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.CepstrumPowerSpectrumDensity))
+            {
+                CepstrumList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "Cepstrum", CepstrumList);
+        }
 
-                setwave(sg, data);
+        private void ClearFilterWave(BaseWaveSignal vSg)
+        {
+            //包络
+            List<string> EnvelopeList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeVData))
+            {
+                EnvelopeList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeTime))
+            {
+                EnvelopeList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeFrequency))
+            {
+                EnvelopeList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopePowerSpectrum))
+            {
+                EnvelopeList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopePowerSpectrumDensity))
+            {
+                EnvelopeList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "FilterEnvelope", EnvelopeList);
+            //TFF
+            List<string> TFFList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFVData))
+            {
+                TFFList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFTime))
+            {
+                TFFList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFFrequency))
+            {
+                TFFList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFPowerSpectrum))
+            {
+                TFFList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFPowerSpectrumDensity))
+            {
+                TFFList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "FilterTFF", TFFList);
+            //Cepstrum
+            List<string> CepstrumList = new List<string>();
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumVData))
+            {
+                CepstrumList.Add("VData");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumTime))
+            {
+                CepstrumList.Add("Time");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumFrequency))
+            {
+                CepstrumList.Add("Frequency");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumPowerSpectrum))
+            {
+                CepstrumList.Add("PowerSpectrum");
+            }
+            if (!vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumPowerSpectrumDensity))
+            {
+                CepstrumList.Add("PowerSpectrumDensity");
+            }
+            SubClearWave(vSg, "FilterCepstrum", CepstrumList);
+        }
 
-                var divfres = data.DivFreInfo;
+        private void SubClearWave(BaseWaveSignal vSg, string processName, List<string> processList)
+        {
+            if (processList.Count == 0)
+            {
+                return;
+            }
 
-                //分频信号
-                foreach (var item in sg.DivFres)
+            if (processList.Contains("VData"))
+            {
+                if (vSg.WaveformList != null && vSg.WaveformList.Keys.Contains(processName))
                 {
-                    var divFreContract = divfres.Where(p => p.Guid == item.Guid).SingleOrDefault();
-                    if (divFreContract != null)
-                    {
-                        item.RecordLab = divFreContract.RecordLab.Value;
-                        item.ACQDatetime = divFreContract.ACQDatetime;
-                        item.DescriptionFre = divFreContract.DescriptionFre;
-                        item.AlarmType = divFreContract.AlarmGrade;
-                        item.DivFreType = (DivFreType)Enum.Parse(typeof(DivFreType), divFreContract.DivFreCode.ToString());
-                        item.Name = divFreContract.Name;
-
-                        if (divFreContract.AlarmLimit != null)
-                        {
-                            item.LowDanger = divFreContract.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-                            item.LowAlert = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
-                            item.LowNormal = divFreContract.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
-                            item.HighNormal = divFreContract.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-                            item.HighAlert = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
-                            item.HighDanger = divFreContract.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
-                            item.AlarmGrade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), divFreContract.AlarmGrade.ToString());
-                            item.Phase = divFreContract.Phase.Value;
-                            item.Result = divFreContract.Result.Value;
-                        }
-                        item.IsConnected = true;
-                        item.IsRead = true;
-                    }
-                    else
-                    {
-                        item.IsConnected = false;
-                        item.IsRead = false;
-                    }
+                    vSg.WaveformList.Remove(processName);
                 }
             }
 
-            //if (idata.AlarmLimit != null)
-            //{
-            //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
-            //}           
-
-            setalarm(sg, idata);            
-
-            sg.IsConnected = true;
-            sg.IsRunning = (sg.DelayAlarmGrade == AlarmGrade.Abnormal) ? false : true;
-        }
-        private void SetAlarmSignal(BaseAlarmSignal sg, IBaseAlarmSlot idata)
-        {
-            sg.IBaseAlarmSlot = idata;          
-         
-            sg.IsResetFlag = true;
-
-            if (idata is D1_WirelessScalarSlot)
+            if (processList.Contains("Time"))
             {
-                sg.BatteryEnergy = (float)(idata as D1_WirelessScalarSlot).BatteryEnergy.Value;                
-            }
-
-            //if (idata.AlarmLimit != null)
-            //{
-            //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
-            //}    
-            
-            setalarm(sg, idata);
-            sg.IsConnected = true;
-            sg.IsRunning = false;           
-        }
-        private void setwave(BaseDivfreSignal sg, D1_WirelessVibrationSlot idata)
-        {
-            sg.MountDegree = idata.MountDegree.Value;
-            sg.TPDirCode = (int)idata.TPDirCode.Value;
-            sg.IsValidWave = idata.IsValidWave.Value;
-            sg.WaveUnit = idata.WaveUnit;
-            sg.RPM = (float)idata.RPM.Value;
-            sg.IsMultiplication = idata.IsMultiplication.Value;
-            sg.MultiplicationCor = (float)idata.MultiplicationCor.Value;
-            sg.BiasVoltHigh = (float)idata.BiasVoltHigh.Value;
-            sg.BiasVoltLow = (float)idata.BiasVoltLow.Value;          
-        }
-        private void setalarm(BaseAlarmSignal sg, IBaseAlarmSlot idata)
-        {
-            if (sg.ACQDatetime != null && sg.Result != null && sg.Result != idata.Result)//缓存数据
-            {
-                TrendPointData tp = new TrendPointData(sg.ACQDatetime.Value, sg.Result.Value, sg.Unit, (int)sg.AlarmGrade);
-                if (sg is IBaseWaveSlot)
+                if (vSg.RmsValueList != null && vSg.RmsValueList.Keys.Contains(processName))
                 {
-                    tp.RecordLab = sg.RecordLab.Value;
-                    tp.IsValidWave = (sg as IBaseWaveSlot).IsValidWave.Value;
+                    vSg.RmsValueList.Remove(processName);
                 }
-                sg.BufferData.Add(tp);
-                if (sg.ACQDatetime >= sg.BufferData[0].ACQDateTime.AddSeconds(10))//弹出一个数据
+                if (vSg.PeakValueList != null && vSg.PeakValueList.Keys.Contains(processName))
                 {
-                    sg.BufferData.RemoveAt(0);
+                    vSg.PeakValueList.Remove(processName);
+                }
+                if (vSg.PeakPeakValueList != null && vSg.PeakPeakValueList.Keys.Contains(processName))
+                {
+                    vSg.PeakPeakValueList.Remove(processName);
+                }
+                if (vSg.SlopeList != null && vSg.SlopeList.Keys.Contains(processName))
+                {
+                    vSg.SlopeList.Remove(processName);
+                }
+                if (vSg.KurtosisList != null && vSg.KurtosisList.Keys.Contains(processName))
+                {
+                    vSg.KurtosisList.Remove(processName);
+                }
+                if (vSg.KurtosisValueList != null && vSg.KurtosisValueList.Keys.Contains(processName))
+                {
+                    vSg.KurtosisValueList.Remove(processName);
+                }
+                if (vSg.WaveIndexList != null && vSg.WaveIndexList.Keys.Contains(processName))
+                {
+                    vSg.WaveIndexList.Remove(processName);
+                }
+                if (vSg.PeakIndexList != null && vSg.PeakIndexList.Keys.Contains(processName))
+                {
+                    vSg.PeakIndexList.Remove(processName);
+                }
+                if (vSg.ImpulsionIndexList != null && vSg.ImpulsionIndexList.Keys.Contains(processName))
+                {
+                    vSg.ImpulsionIndexList.Remove(processName);
+                }
+                if (vSg.RootAmplitudeList != null && vSg.RootAmplitudeList.Keys.Contains(processName))
+                {
+                    vSg.RootAmplitudeList.Remove(processName);
+                }
+                if (vSg.ToleranceIndexList != null && vSg.ToleranceIndexList.Keys.Contains(processName))
+                {
+                    vSg.ToleranceIndexList.Remove(processName);
                 }
             }
 
-            sg.ACQDatetime = idata.ACQDatetime;
-            sg.ACQ_Unit_Type = idata.ACQ_Unit_Type;
-            sg.AsySyn = idata.AsySyn;
-            sg.MainCardCode = idata.MainCardCode;
-            sg.SynWaveCode = idata.SynWaveCode;
-            sg.IsHdBypass = idata.IsHdBypass;
-            sg.IsHdMultiplication = idata.IsHdMultiplication;
-            sg.RecordLab = idata.RecordLab;
-            sg.SaveLab = idata.SaveLab;
-            sg.ContinueLab = idata.ContinueLab;
-            sg.ExtraInfo = idata.ExtraInfo;
-            sg.Result = idata.Result;
-            sg.IsValidCH = idata.IsValidCH;
-            sg.Unit = idata.Unit;
-            //sg.ChannelHDID = idata.ChannelHDID;//数据不完整，抛弃
+            if (processList.Contains("Frequency") && processList.Contains("PowerSpectrum") && processList.Contains("PowerSpectrumDensity"))
+            {
+                if (vSg.FrequencyList != null && vSg.FrequencyList.Keys.Contains(processName))
+                {
+                    vSg.FrequencyList.Remove(processName);
+                }
+            }
 
-            sg.AlarmGrade = (AlarmGrade)(idata.AlarmGrade & 0x00ffff00);
-            sg.Low8Alarm = idata.AlarmGrade & 0xff;
-            sg.AlarmLimit = idata.AlarmLimit;            
+            if (processList.Contains("Frequency"))
+            {
+                if (vSg.AmplitudeList != null && vSg.AmplitudeList.Keys.Contains(processName))
+                {
+                    vSg.AmplitudeList.Remove(processName);
+                }
+                if (vSg.PhaseList != null && vSg.PhaseList.Keys.Contains(processName))
+                {
+                    vSg.PhaseList.Remove(processName);
+                }
+            }
+
+            if (processList.Contains("PowerSpectrum"))
+            {
+                if (vSg.PowerSpectrumList != null && vSg.PowerSpectrumList.Keys.Contains(processName))
+                {
+                    vSg.PowerSpectrumList.Remove(processName);
+                }
+            }
+
+            if (processList.Contains("PowerSpectrumDensity"))
+            {
+                if (vSg.PowerSpectrumDensityList != null && vSg.PowerSpectrumDensityList.Keys.Contains(processName))
+                {
+                    vSg.PowerSpectrumDensityList.Remove(processName);
+                }
+            }
         }
+        #endregion
+
     }
 }

@@ -91,7 +91,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\WpfAnimatedGi
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Newtonsoft.Json.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\de\FluentValidation.resources.dll
@@ -186,3 +185,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Debug\AIC.OnLineDat
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Debug\AIC.OnLineDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.WrapBreakPanel.pdb

@@ -184,3 +184,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\XBAP Debug\AICAir.exe
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\XBAP Debug\AICAir.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Configuration\config.ini
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\msg.wav
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.DeviceDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.pdb

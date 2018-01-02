@@ -27,7 +27,7 @@ namespace AIC.LocalConfiguration
             try
             {
                 string dir = @LocalSetting.ServerXmlDir;
-                ServerInfoList = dataService.ReadXml(dir).ToList();
+                ServerInfoList = dataService.ReadServerXml(dir).ToList();
             }
             catch { }
             finally
@@ -68,7 +68,7 @@ namespace AIC.LocalConfiguration
             {
                 Directory.CreateDirectory(@directory);
             }
-            dataService.WriteXml(dir, info);
+            dataService.WriteServerXml(dir, info);
         }
     }
 }

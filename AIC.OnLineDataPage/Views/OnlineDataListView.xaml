@@ -415,8 +415,8 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name,Converter={StaticResource alarmLimitToStringConverter}}" VerticalAlignment="Center"></TextBlock>
-                                            <TextBlock Text=" " VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text=":" VerticalAlignment="Center"></TextBlock>
                                             <TextBlock Text="{Binding Limit,StringFormat=F1}" VerticalAlignment="Center"></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>

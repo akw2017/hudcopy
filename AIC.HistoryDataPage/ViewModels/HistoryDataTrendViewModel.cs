@@ -34,6 +34,8 @@ using AIC.Resources.Models;
 using AIC.HistoryDataPage.ViewModels;
 using AIC.M9600.Common.DTO.Device;
 using Newtonsoft.Json;
+using AIC.Core.Servers;
+using System.IO;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -71,6 +73,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
             InitTree();
             InitPager();
+            LoadFile();
             Initialization = InitializeAsync();
 
             _eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(RealTimeDataRefresh);
@@ -260,8 +263,12 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             set
             {
-                chartFile = value;
-                OnPropertyChanged("ChartFile");
+                if (chartFile != value)
+                {
+                    chartFile = value;
+                    OnPropertyChanged("ChartFile");
+                    ChartFileName = chartFile.Name;
+                }
             }
         }
 
@@ -378,12 +385,12 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private ICommand saveChartFileCommand;
-        public ICommand SaveChartFileCommand
+        private ICommand addChartFileCommand;
+        public ICommand AddChartFileCommand
         {
             get
             {
-                return this.saveChartFileCommand ?? (this.saveChartFileCommand = new DelegateCommand(() => this.SaveChartFile()));
+                return this.addChartFileCommand ?? (this.addChartFileCommand = new DelegateCommand(() => this.AddChartFile()));
             }
         }
 
@@ -402,6 +409,15 @@ namespace AIC.OnLineDataPage.ViewModels
             get
             {
                 return this.deleteChartFileCommand ?? (this.deleteChartFileCommand = new DelegateCommand(() => this.DeleteChartFile()));
+            }
+        }
+
+        private ICommand editChartFileCommand;
+        public ICommand EditChartFileCommand
+        {
+            get
+            {
+                return this.editChartFileCommand ?? (this.editChartFileCommand = new DelegateCommand(() => this.EditChartFile()));
             }
         }
         #endregion
@@ -527,7 +543,7 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return;
             }
-            await lazyLoadinglocker.WaitAsync();
+            await locker.WaitAsync();
             try
             {
                 Status = ViewModelStatus.Querying;
@@ -667,16 +683,16 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
-                lazyLoadinglocker.Release();
+                locker.Release();
                 Status = ViewModelStatus.None;
             }
         }
 
-        private readonly SemaphoreSlim lazyLoadinglocker = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim locker = new SemaphoreSlim(1);
 
         private async void PageData(RoutedPropertyChangedEventArgs<TrendNavigationEventArgs> args)
         {
-            await lazyLoadinglocker.WaitAsync();
+            await locker.WaitAsync();
             try
             {
                 var newtime = args.NewValue.CurrectTime;
@@ -708,7 +724,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
-                lazyLoadinglocker.Release();
+                locker.Release();
                 Status = ViewModelStatus.None;
             }
         }
@@ -1031,11 +1047,11 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private async Task AMSTrackChanged(IEnumerable<BaseWaveSignalToken> tokens)
         {
-            if (lazyLoadinglocker.CurrentCount == 0)
+            if (locker.CurrentCount == 0)
             {
                 return;
             }
-            await lazyLoadinglocker.WaitAsync();
+            await locker.WaitAsync();
             try
             {                
                 if (tokens == null) return;
@@ -1230,7 +1246,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
-                lazyLoadinglocker.Release();
+                locker.Release();
             }
         }
         #endregion
@@ -1238,11 +1254,11 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 实时数据
         private void RealTimeDataRefresh(object obj)
         {
-            if (lazyLoadinglocker.CurrentCount == 0)
+            if (locker.CurrentCount == 0)
             {
                 return;
             }
-            lazyLoadinglocker.WaitAsync();
+            locker.WaitAsync();
             bool refresh = false;
             DateTime lasttime = new DateTime();
             try
@@ -1417,7 +1433,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
-                lazyLoadinglocker.Release();               
+                locker.Release();               
             }           
         }
 
@@ -1674,6 +1690,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             TimeSizeList = new List<double>();
             TimeSizeList.Add(0.1);
+            TimeSizeList.Add(0.5);
             TimeSizeList.Add(1);
             TimeSizeList.Add(2);
             TimeSizeList.Add(4);
@@ -1681,7 +1698,7 @@ namespace AIC.OnLineDataPage.ViewModels
             TimeSizeList.Add(12);
             TimeSizeList.Add(24);
             TimeSizeList.Add(36);
-            TimeSize = TimeSizeList[0];
+            TimeSize = TimeSizeList[1];
             CurrentTime = DateTime.Now.AddHours(0 - TimeSize / 2);
         }
 
@@ -1705,7 +1722,30 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region 保存chart文件
-        private void SaveChartFile()
+        IXmlDataService dataService = new XmlDataService();
+
+        private void LoadFile()
+        {
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + "\\MyData\\Configuration\\ChartFiles.ini";
+            if (File.Exists(dir))
+            {
+                chartFileCategory = new ObservableCollection<ChartFileData>(dataService.ReadChartXml(dir));
+            }
+        }
+
+        private void SaveFile()
+        {
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + "\\MyData\\Configuration\\ChartFiles.ini";
+            var filename = dir.Substring(dir.LastIndexOf("\\"));
+            var directory = dir.Substring(0, dir.Length - filename.Length);
+            if (!Directory.Exists(@directory))
+            {
+                Directory.CreateDirectory(@directory);
+            }
+            dataService.WriteChartXml(dir, chartFileCategory);
+        }
+
+        private void AddChartFile()
         {
             if (ChartFileName == null || ChartFileName == "")
             {
@@ -1719,18 +1759,11 @@ namespace AIC.OnLineDataPage.ViewModels
             var file = chartFileCategory.Where(p => p.Name == ChartFileName).FirstOrDefault();
             if (file != null)
             {
-                if (ChartFile == file)
-                {
-                    ChartFile.ListGuid = addedSignals.Select(p => p.Guid).ToList();
-                }
-                else
-                {
 #if XBAP
                     MessageBox.Show("趋势图重名，请重新填写名称","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
 #else
-                    Xceed.Wpf.Toolkit.MessageBox.Show("趋势图重名，请重新填写名称", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Xceed.Wpf.Toolkit.MessageBox.Show("趋势图重名，请重新填写名称", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
-                }
             }
             else
             {
@@ -1740,6 +1773,8 @@ namespace AIC.OnLineDataPage.ViewModels
                     ListGuid = addedSignals.Select(p => p.Guid).ToList(),
                 };
                 chartFileCategory.Add(data);
+
+                SaveFile();
             }
 
 
@@ -1771,6 +1806,14 @@ namespace AIC.OnLineDataPage.ViewModels
         private void DeleteChartFile()
         {
             chartFileCategory.Remove(ChartFile);
+            SaveFile();
+        }
+
+        private void EditChartFile()
+        {
+            ChartFile.Name = ChartFileName;
+            ChartFile.ListGuid = addedSignals.Select(p => p.Guid).ToList();
+            SaveFile();
         }
         #endregion
 

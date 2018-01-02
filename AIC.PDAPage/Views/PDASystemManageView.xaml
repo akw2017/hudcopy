@@ -235,8 +235,8 @@
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="重命名" Command="{StaticResource RenameCommandReference}" 
                                             CommandParameter="{Binding}"/>
-                                        <!--<MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
-                                            CommandParameter="{Binding}" Visibility="Visible"/>-->
+                                        <MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
+                                            CommandParameter="{Binding}" Visibility="Visible"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
@@ -290,8 +290,8 @@
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="重命名" Command="{StaticResource RenameCommandReference}" 
                                             CommandParameter="{Binding}"/>
-                                        <!--<MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
-                                            CommandParameter="{Binding}" Visibility="Visible"/>-->
+                                        <MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
+                                            CommandParameter="{Binding}" Visibility="Visible"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
@@ -325,8 +325,8 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <!--<MenuItem Header="添加分频" Command="{StaticResource AddCommandReference}" 
-                                                      CommandParameter="{Binding}"/>-->
+                                        <MenuItem Header="添加分频" Command="{StaticResource AddCommandReference}" 
+                                                      CommandParameter="{Binding}"/>
                                         <MenuItem Header="排序" Command="{StaticResource SortCommandReference}" 
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="删除测点" Command="{StaticResource DeleteCommandReference}" 
@@ -337,8 +337,8 @@
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="重命名" Command="{StaticResource RenameCommandReference}" 
                                             CommandParameter="{Binding}"/>
-                                        <!--<MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
-                                            CommandParameter="{Binding}" Visibility="Visible"/>-->
+                                        <MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
+                                            CommandParameter="{Binding}" Visibility="Visible"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
@@ -390,8 +390,8 @@
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="重命名" Command="{StaticResource RenameCommandReference}" 
                                             CommandParameter="{Binding}"/>
-                                        <!--<MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
-                                            CommandParameter="{Binding}" Visibility="Visible"/>-->
+                                        <MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
+                                            CommandParameter="{Binding}" Visibility="Visible"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 16,36L 9.99999,36L 9.99999,30L 14,30L 32,16L 32,12L 38,12L 38,18L 34,18L 16,32L 16,36 Z M 34,14L 34,16L 36,16L 36,14L 34,14 Z M 12,32L 12,34L 14,34L 14,32L 12,32 Z " />

@@ -58,15 +58,15 @@ namespace XClientAPIDemo
             //var obj = JsonConvert.DeserializeObject<IEPESlotData>(str);
 
 
-            //9601默认端口，查看服务器端WebPort配置
+            //9601默认端口，查看服务器端WebPort配置139.129.213.240
             DataProvider client = new DataProvider("139.129.213.240", 9601, 1, 1);
 
             //#region 查询服务器版本
-            var version = client.QueryVersion();
-            if (version.IsOK)
-            {
-                var versionInfo = version.ResponseItem;
-            }
+            //var version = client.QueryVersion();
+            //if (version.IsOK)
+            //{
+            //    var versionInfo = version.ResponseItem;
+            //}
             //#endregion
 
 
@@ -198,7 +198,7 @@ namespace XClientAPIDemo
             #endregion
 
             #region 查询历史数据
-            //WebResponse<List<D_AnalogRransducerInSlot>> historyResult = client.QueryHistorySampleData<D_AnalogRransducerInSlot>(Guid.Parse("C8CACA7B-75AE-4CC6-8893-000000000001"),
+            //WebResponse<List<D_AnalogRransducerInSlot>> historyResult = client.QueryHistorySampleData<D_AnalogRransducerInSlot>(new Guid[] { Guid.Parse("C8CACA7B-75AE-4CC6-8893-000000000001"), Guid.Parse("C8CACA7B-75AE-4CC6-8893-000000000002") },
             //    //condition不需要注入ACQDatetime的过滤，startTime和endTime会自动注入，也不需要注入TestPoingId
             //    //不支持in，如果需要多选，转化为(X = @0 or X = @1 or X = @2 ...)
             //    null, DateTime.Now.AddDays(-1), DateTime.Now, "(AlarmGrade = @0 or AlarmGrade = @1)", new object[] { 3, 4 });
@@ -217,6 +217,26 @@ namespace XClientAPIDemo
             //    //ErrorMessage是错误信息
             //    Console.WriteLine(historyResult.ErrorMessage);
             //}
+
+            Dictionary<Guid, Tuple<Guid, DateTime>> recordLabs = new Dictionary<Guid, Tuple<Guid, DateTime>>();
+            recordLabs.Add(Guid.Parse("0ba0b963-ca00-4048-9bfd-3206a3a8d435"), new Tuple<Guid, DateTime>(Guid.Parse("601480db-0720-4999-bec3-c77735048e6a"), Convert.ToDateTime("2017-10-06 16:15:55" )));
+
+            WebResponse <List<D_WirelessVibrationSlot_Waveform>> historyResult = client.QueryHistoryWaveformData<D_WirelessVibrationSlot_Waveform>(recordLabs,null);
+
+            //先判断是不是OK
+            if (historyResult.IsOK)
+            {
+                //查询成功
+                foreach (var item in historyResult.ResponseItem)
+                {
+                    //业务逻辑
+                }
+            }
+            else
+            {
+                //ErrorMessage是错误信息
+                Console.WriteLine(historyResult.ErrorMessage);
+            }
 
             //Dictionary<Guid, string> itemGuids = new Dictionary<Guid, string>();
             //itemGuids.Add(Guid.Parse("C8CACA7B-75AE-4CC6-8893-000000000001"), "D_AnalogRransducerInSlot");
@@ -258,6 +278,16 @@ namespace XClientAPIDemo
             //    Console.WriteLine(statisticsData.ErrorMessage);
             //}
 
+            //var statisticsData = client.QueryStatisticsData(null);
+            //if (statisticsData.IsOK)
+            //{
+            //    //查询成功
+            //}
+            //else
+            //{
+            //    //ErrorMessage是错误信息
+            //    Console.WriteLine(statisticsData.ErrorMessage);
+            //}
 
             #endregion
 

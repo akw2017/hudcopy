@@ -34,12 +34,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridChart.Children.Clear();
-            if (m_chart != null)
-            {
-                m_chart.Dispose();
-                m_chart = null;
-            }
+            //gridChart.Children.Clear();
+            //if (m_chart != null)
+            //{
+            //    m_chart.Dispose();
+            //    m_chart = null;
+            //}
         }
 
         protected override void ViewModel_SignalChanged()
@@ -47,12 +47,16 @@ namespace AIC.OnLineDataPage.Views.SubViews
             try
             {
                 m_chart.BeginUpdate();
-                m_chart.ViewXY.SampleDataSeries[0].Clear();
-                m_chart.EndUpdate();
+                m_chart.ViewXY.SampleDataSeries[0].Clear();               
+                txtValue.Text = string.Empty;
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-时域-信号变换", ex));
+            }
+            finally
+            {
+                m_chart.EndUpdate();
             }
         }
 
@@ -60,57 +64,190 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             try
             {
+
                 if (ViewModel == null || !(ViewModel.Signal is BaseWaveSignal))
                 {
                     m_chart.BeginUpdate();
                     m_chart.ViewXY.SampleDataSeries[0].Clear();
                     m_chart.EndUpdate();
                     return;
-                }               
+                }
+                string processName = null;
 
-                BaseWaveSignal sg = (BaseWaveSignal)ViewModel.Signal;
-                if (sg.Waveform == null)
+                switch (ViewModel.SignalPreProccessType)
                 {
-                    return;
+                    case SignalPreProccessType.None:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                BaseWaveSignal sg = (BaseWaveSignal)ViewModel.Signal;
+                                if (sg.Waveform == null)
+                                {
+                                    return;
+                                }
+
+                                StringBuilder sb = new StringBuilder();
+                                sb.AppendLine(string.Format("有效值:{0}", sg.RmsValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰值:{0}", sg.PeakValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰峰值:{0}", sg.PeakPeakValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("斜度:{0}", sg.Slope.ToString("0.00")));
+                                sb.AppendLine(string.Format("峭度:{0}", sg.Kurtosis.ToString("0.00")));
+                                sb.AppendLine(string.Format("峭度指标:{0}", sg.KurtosisValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("波形指标:{0}", sg.WaveIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰值指标:{0}", sg.PeakIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("脉冲指标:{0}", sg.ImpulsionIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("裕度指标:{0}", sg.ToleranceIndex.ToString("0.00")));
+
+                                m_chart.BeginUpdate();
+                                //if (sg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))
+                                //{
+                                //    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = sg.SampleFre / 1000;
+                                //}
+                                //else
+                                {
+                                    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = 1;
+                                }
+                                m_chart.ViewXY.SampleDataSeries[0].SamplesDouble = sg.Waveform;
+                                m_chart.ViewXY.SampleDataSeries[0].InvalidateData();
+                                m_chart.ViewXY.Annotations[0].Text = sb.ToString().Trim();
+
+                                txtValue.Text = string.Format("有效值:{0},峰值:{1},峰峰值:{2}", sg.RmsValue.ToString("0.00"), sg.PeakValue.ToString("0.00"), sg.PeakPeakValue.ToString("0.00"));
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            else//过滤
+                            {
+                                BaseWaveSignal sg = (BaseWaveSignal)ViewModel.Signal;
+                                if (sg.FilterWaveform == null)
+                                {
+                                    return;
+                                }
+
+                                StringBuilder sb = new StringBuilder();
+                                sb.AppendLine(string.Format("有效值:{0}", sg.FilterRmsValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰值:{0}", sg.FilterPeakValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰峰值:{0}", sg.FilterPeakPeakValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("斜度:{0}", sg.FilterSlope.ToString("0.00")));
+                                sb.AppendLine(string.Format("峭度:{0}", sg.FilterKurtosis.ToString("0.00")));
+                                sb.AppendLine(string.Format("峭度指标:{0}", sg.FilterKurtosisValue.ToString("0.00")));
+                                sb.AppendLine(string.Format("波形指标:{0}", sg.FilterWaveIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("峰值指标:{0}", sg.FilterPeakIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("脉冲指标:{0}", sg.FilterImpulsionIndex.ToString("0.00")));
+                                sb.AppendLine(string.Format("裕度指标:{0}", sg.FilterToleranceIndex.ToString("0.00")));
+
+                                m_chart.BeginUpdate();
+                                //if (sg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))
+                                //{
+                                //    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = sg.SampleFre / 1000;
+                                //}
+                                //else
+                                {
+                                    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = 1;
+                                }
+                                m_chart.ViewXY.SampleDataSeries[0].SamplesDouble = sg.FilterWaveform;
+                                m_chart.ViewXY.SampleDataSeries[0].InvalidateData();
+                                m_chart.ViewXY.Annotations[0].Text = sb.ToString().Trim();
+
+                                txtValue.Text = string.Format("有效值:{0},峰值:{1},峰峰值:{2}", sg.FilterRmsValue.ToString("0.00"), sg.FilterPeakValue.ToString("0.00"), sg.FilterPeakPeakValue.ToString("0.00"));
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            return;
+                        }
+                    case SignalPreProccessType.Envelope:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Envelope";
+                            }
+                            else
+                            {
+                                processName = "FilterEnvelope";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.TFF:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "TFF";
+                            }
+                            else
+                            {
+                                processName = "FilterTFF";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.Cepstrum:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Cepstrum";
+                            }
+                            else
+                            {
+                                processName = "FilterCepstrum";
+                            }
+                            break;
+                        }
+                }
+                if (processName != null)
+                {
+                    BaseWaveSignal sg = (BaseWaveSignal)ViewModel.Signal;
+                    if (sg.WaveformList == null || !sg.WaveformList.Keys.Contains(processName))
+                    {
+                        return;
+                    }
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(string.Format("有效值:{0}", sg.RmsValueList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("峰值:{0}", sg.PeakValueList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("峰峰值:{0}", sg.PeakPeakValueList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("斜度:{0}", sg.SlopeList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("峭度:{0}", sg.KurtosisList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("峭度指标:{0}", sg.KurtosisValueList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("波形指标:{0}", sg.WaveIndexList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("峰值指标:{0}", sg.PeakIndexList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("脉冲指标:{0}", sg.ImpulsionIndexList[processName].ToString("0.00")));
+                    sb.AppendLine(string.Format("裕度指标:{0}", sg.ToleranceIndexList[processName].ToString("0.00")));
+
+                    m_chart.BeginUpdate();
+                    if (processName.Contains("Cepstrum"))
+                    {
+                        m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = sg.SampleFre / 1000;
+                    }
+                    else
+                    {
+                        m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = 1;
+                    }
+
+                    m_chart.ViewXY.SampleDataSeries[0].SamplesDouble = sg.WaveformList[processName];
+                    m_chart.ViewXY.SampleDataSeries[0].InvalidateData();
+                    m_chart.ViewXY.Annotations[0].Text = sb.ToString().Trim();
+
+                    txtValue.Text = string.Format("有效值:{0},峰值:{1},峰峰值:{2}", sg.RmsValueList[processName].ToString("0.00"), sg.PeakValueList[processName].ToString("0.00"), sg.PeakPeakValueList[processName].ToString("0.00"));
+
+                    if (fitViewCheckBox.IsChecked == true)
+                    {
+                        m_chart.ViewXY.ZoomToFit();
+                    }
+                    m_chart.EndUpdate();
                 }
 
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine(string.Format("有效值:{0}", sg.RmsValue.ToString("0.00")));
-                sb.AppendLine(string.Format("峰值:{0}", sg.PeakValue.ToString("0.00")));
-                sb.AppendLine(string.Format("峰峰值:{0}", sg.PeakPeakValue.ToString("0.00")));
-                sb.AppendLine(string.Format("斜度:{0}", sg.Slope.ToString("0.00")));
-                sb.AppendLine(string.Format("峭度:{0}", sg.Kurtosis.ToString("0.00")));
-                sb.AppendLine(string.Format("峭度指标:{0}", sg.KurtosisValue.ToString("0.00")));
-                sb.AppendLine(string.Format("波形指标:{0}", sg.WaveIndex.ToString("0.00")));
-                sb.AppendLine(string.Format("峰值指标:{0}", sg.PeakIndex.ToString("0.00")));
-                sb.AppendLine(string.Format("脉冲指标:{0}", sg.ImpulsionIndex.ToString("0.00")));
-                sb.AppendLine(string.Format("裕度指标:{0}", sg.ToleranceIndex.ToString("0.00")));
-
-                m_chart.BeginUpdate();
-                if (sg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))
-                {
-                    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = sg.SampleFre / 1000;
-                }
-                else
-                {
-                    m_chart.ViewXY.SampleDataSeries[0].SamplingFrequency = 1;
-                }
-                m_chart.ViewXY.SampleDataSeries[0].SamplesDouble = sg.Waveform;
-                m_chart.ViewXY.SampleDataSeries[0].InvalidateData();
-                m_chart.ViewXY.Annotations[0].Text = sb.ToString().Trim();
-
-                txtValue.Text = string.Format("有效值:{0},峰值:{1},峰峰值:{2}",sg.RmsValue.ToString("0.00"), sg.PeakValue.ToString("0.00"), sg.PeakPeakValue.ToString("0.00"));
-
-                if (fitViewCheckBox.IsChecked == true)
-                {
-                    m_chart.ViewXY.ZoomToFit();
-                }
-                m_chart.EndUpdate();
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-时域", ex));
             }
+       
         }
 
         private void CreateChart()

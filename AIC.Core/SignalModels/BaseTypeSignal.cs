@@ -121,7 +121,7 @@ namespace AIC.Core.SignalModels
             set
             {
                 names = value;
-                if (names.Length > 3)
+                if (names.Length >= 3)
                 {
                     ItemName = names[0];
                     DeviceName = names[1];

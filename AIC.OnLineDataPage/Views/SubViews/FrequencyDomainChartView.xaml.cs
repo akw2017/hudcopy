@@ -37,12 +37,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridChart.Children.Clear();
-            if (m_chart != null)
-            {
-                m_chart.Dispose();
-                m_chart = null;
-            }
+            //gridChart.Children.Clear();
+            //if (m_chart != null)
+            //{
+            //    m_chart.Dispose();
+            //    m_chart = null;
+            //}
         }
 
         protected override void ViewModel_SignalChanged()
@@ -52,6 +52,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.BeginUpdate();
 
                 m_chart.ViewXY.PointLineSeries[0].Clear();
+                txtValue.Text = string.Empty;
             }
             catch (Exception ex)
             {
@@ -71,115 +72,302 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 {
                     return;
                 }
-                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
-                if (signal.FFTLength == 0 || signal.Frequency == null || signal.Amplitude == null || signal.Phase == null)
-                {
-                    return;
-                }              
+              
 
-                m_chart.BeginUpdate();
-
-                if (signal.TriggerN == AIC.CoreType.TriggerType.Angle)
+                string processName = null;
+                switch (ViewModel.SignalPreProccessType)
                 {
-                    if (signal.RPM <= 0)
-                    {
-                        Exception exception = new Exception("等角度触发模式下转速应大于0");
-                        exception.Data.Add("RPM", signal.RPM);
-                        throw exception;
-                    }
-                    if (signal.TeethNumber <= 0)
-                    {
-                        Exception exception = new Exception("等角度触发模式下齿轮齿数应大于0");
-                        exception.Data.Add("TeethNumber", signal.TeethNumber);
-                        throw exception;
-                    }
+                    case SignalPreProccessType.None:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                                if (signal.FFTLength == 0 || signal.Frequency == null || signal.Amplitude == null || signal.Phase == null)
+                                {
+                                    return;
+                                }
+                                m_chart.BeginUpdate();
+
+                                if (signal.TriggerN == AIC.CoreType.TriggerType.Angle)
+                                {
+                                    if (signal.RPM <= 0)
+                                    {
+                                        Exception exception = new Exception("等角度触发模式下转速应大于0");
+                                        exception.Data.Add("RPM", signal.RPM);
+                                        throw exception;
+                                    }
+                                    if (signal.TeethNumber <= 0)
+                                    {
+                                        Exception exception = new Exception("等角度触发模式下齿轮齿数应大于0");
+                                        exception.Data.Add("TeethNumber", signal.TeethNumber);
+                                        throw exception;
+                                    }
+                                }
+
+                                var series = m_chart.ViewXY.PointLineSeries[0];
+                                var phaseSeries = m_chart.ViewXY.PointLineSeries[1];
+
+                                if (series.Points == null || series.Points.Length != signal.FFTLength)
+                                {
+                                    series.Points = new SeriesPoint[signal.FFTLength];
+                                }
+                                if (phaseSeries.Points == null || phaseSeries.Points.Length != signal.FFTLength)
+                                {
+                                    phaseSeries.Points = new SeriesPoint[signal.FFTLength];
+                                }
+
+                                for (int i = 0; i < signal.FFTLength; i++)
+                                {
+                                    series.Points[i].X = signal.Frequency[i];
+                                    series.Points[i].Y = signal.Amplitude[i];
+
+                                    phaseSeries.Points[i].X = signal.Frequency[i];
+                                    phaseSeries.Points[i].Y = signal.Phase[i];
+                                }
+
+                                if (m_chart.ViewXY.Annotations[1].Visible)
+                                {
+                                    LineSeriesCursor lineSeriesCursor = m_chart.ViewXY.LineSeriesCursors[0];
+                                    int index = GetNearestPointIndex(series, lineSeriesCursor.ValueAtXAxis);
+                                    if (index == -1)
+                                    {
+                                        m_chart.ViewXY.Annotations[1].Text = string.Empty;
+                                    }
+                                    else
+                                    {
+                                        SeriesPoint point = series.Points[index];
+                                        m_chart.ViewXY.Annotations[1].Text = string.Format("幅值:{0}", Math.Round(point.Y, 3)) + "\r\n" + string.Format("频率:{0}", Math.Round(point.X, 3));
+                                    }
+                                }
+
+                                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+                                m_chart.ViewXY.PointLineSeries[1].InvalidateData();
+                                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                                StringBuilder spectrumSB = new StringBuilder();
+                                spectrumSB.AppendLine("频率" + "  " + "幅值");
+                                txtValue.Text = "频率/幅值:";
+
+                                var fftValuesDict = signal.Amplitude.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                                foreach (var item in fftValuesDict)
+                                {
+                                    spectrumSB.AppendLine(signal.Frequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                                    txtValue.Text += signal.Frequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                                }
+                                txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
+                                spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            else
+                            {
+                                BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                                if (signal.FilterFFTLength == 0 || signal.FilterFrequency == null || signal.FilterAmplitude == null || signal.FilterPhase == null)
+                                {
+                                    return;
+                                }
+                                m_chart.BeginUpdate();
+
+                                if (signal.TriggerN == AIC.CoreType.TriggerType.Angle)
+                                {
+                                    if (signal.RPM <= 0)
+                                    {
+                                        Exception exception = new Exception("等角度触发模式下转速应大于0");
+                                        exception.Data.Add("RPM", signal.RPM);
+                                        throw exception;
+                                    }
+                                    if (signal.TeethNumber <= 0)
+                                    {
+                                        Exception exception = new Exception("等角度触发模式下齿轮齿数应大于0");
+                                        exception.Data.Add("TeethNumber", signal.TeethNumber);
+                                        throw exception;
+                                    }
+                                }
+
+                                var series = m_chart.ViewXY.PointLineSeries[0];
+                                var phaseSeries = m_chart.ViewXY.PointLineSeries[1];
+
+                                if (series.Points == null || series.Points.Length != signal.FilterFFTLength)
+                                {
+                                    series.Points = new SeriesPoint[signal.FilterFFTLength];
+                                }
+                                if (phaseSeries.Points == null || phaseSeries.Points.Length != signal.FilterFFTLength)
+                                {
+                                    phaseSeries.Points = new SeriesPoint[signal.FilterFFTLength];
+                                }
+
+                                for (int i = 0; i < signal.FilterFFTLength; i++)
+                                {
+                                    series.Points[i].X = signal.FilterFrequency[i];
+                                    series.Points[i].Y = signal.FilterAmplitude[i];
+
+                                    phaseSeries.Points[i].X = signal.FilterFrequency[i];
+                                    phaseSeries.Points[i].Y = signal.FilterPhase[i];
+                                }
+
+                                if (m_chart.ViewXY.Annotations[1].Visible)
+                                {
+                                    LineSeriesCursor lineSeriesCursor = m_chart.ViewXY.LineSeriesCursors[0];
+                                    int index = GetNearestPointIndex(series, lineSeriesCursor.ValueAtXAxis);
+                                    if (index == -1)
+                                    {
+                                        m_chart.ViewXY.Annotations[1].Text = string.Empty;
+                                    }
+                                    else
+                                    {
+                                        SeriesPoint point = series.Points[index];
+                                        m_chart.ViewXY.Annotations[1].Text = string.Format("幅值:{0}", Math.Round(point.Y, 3)) + "\r\n" + string.Format("频率:{0}", Math.Round(point.X, 3));
+                                    }
+                                }
+
+                                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+                                m_chart.ViewXY.PointLineSeries[1].InvalidateData();
+                                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                                StringBuilder spectrumSB = new StringBuilder();
+                                spectrumSB.AppendLine("频率" + "  " + "幅值");
+                                txtValue.Text = "频率/幅值:";
+
+                                var fftValuesDict = signal.FilterAmplitude.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                                foreach (var item in fftValuesDict)
+                                {
+                                    spectrumSB.AppendLine(signal.FilterFrequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                                    txtValue.Text += signal.FilterFrequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                                }
+                                txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
+                                spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+
+                                if (fitViewCheckBox.IsChecked == true)
+                                {
+                                    m_chart.ViewXY.ZoomToFit();
+                                }
+                                m_chart.EndUpdate();
+                            }
+                            return;
+                        }
+                    case SignalPreProccessType.Envelope:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Envelope";
+                            }
+                            else
+                            {
+                                processName = "FilterEnvelope";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.TFF:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "TFF";
+                            }
+                            else
+                            {
+                                processName = "FilterTFF";
+                            }
+                            break;
+                        }
+                    case SignalPreProccessType.Cepstrum:
+                        {
+                            if (ViewModel.IsFilter == false)
+                            {
+                                processName = "Cepstrum";
+                            }
+                            else
+                            {
+                                processName = "FilterCepstrum";
+                            }
+                            break;
+                        }
                 }
-
-                var series = m_chart.ViewXY.PointLineSeries[0];
-                var phaseSeries = m_chart.ViewXY.PointLineSeries[1];
-
-                if (series.Points == null || series.Points.Length != signal.FFTLength)
+                if (processName != null)
                 {
-                    series.Points = new SeriesPoint[signal.FFTLength];
-                }
-                if (phaseSeries.Points == null || phaseSeries.Points.Length != signal.FFTLength)
-                {
-                    phaseSeries.Points = new SeriesPoint[signal.FFTLength];
-                }
-               
-                if (testCheckBox.IsChecked == true)
-                {
-                    var test = Algorithm.D2FFT(signal.Waveform, signal.SamplePoint).Take(signal.FFTLength).ToArray();
-                    for (int i = 0; i < signal.FFTLength; i++)
+                    BaseWaveSignal signal = (BaseWaveSignal)ViewModel.Signal;
+                    if (signal.ProcessingFFTLength(processName) == 0 || signal.FrequencyList == null || signal.AmplitudeList  == null || signal.PhaseList == null 
+                        || !signal.FrequencyList.ContainsKey(processName) || !signal.AmplitudeList.ContainsKey(processName)|| !signal.PhaseList.ContainsKey(processName))
                     {
-                        series.Points[i].X = signal.Frequency[i];
-                        series.Points[i].Y = test[i];
-
-                        phaseSeries.Points[i].X = signal.Frequency[i];
-                        phaseSeries.Points[i].Y = signal.Phase[i];
+                        return;
                     }
-                }
-                else
-                {
-                    for (int i = 0; i < signal.FFTLength; i++)
+                    m_chart.BeginUpdate();
+
+                    if (signal.TriggerN == AIC.CoreType.TriggerType.Angle)
                     {
-                        series.Points[i].X = signal.Frequency[i];
-                        series.Points[i].Y = signal.Amplitude[i];
-
-                        phaseSeries.Points[i].X = signal.Frequency[i];
-                        phaseSeries.Points[i].Y = signal.Phase[i];
+                        if (signal.RPM <= 0)
+                        {
+                            Exception exception = new Exception("等角度触发模式下转速应大于0");
+                            exception.Data.Add("RPM", signal.RPM);
+                            throw exception;
+                        }
+                        if (signal.TeethNumber <= 0)
+                        {
+                            Exception exception = new Exception("等角度触发模式下齿轮齿数应大于0");
+                            exception.Data.Add("TeethNumber", signal.TeethNumber);
+                            throw exception;
+                        }
                     }
-                }
 
-                if (m_chart.ViewXY.Annotations[1].Visible)
-                {
-                    LineSeriesCursor lineSeriesCursor = m_chart.ViewXY.LineSeriesCursors[0];
-                    int index = GetNearestPointIndex(series, lineSeriesCursor.ValueAtXAxis);
-                    if (index == -1)
+                    var series = m_chart.ViewXY.PointLineSeries[0];
+                    var phaseSeries = m_chart.ViewXY.PointLineSeries[1];
+
+                    if (series.Points == null || series.Points.Length != signal.ProcessingFFTLength(processName))
                     {
-                        m_chart.ViewXY.Annotations[1].Text = string.Empty;
+                        series.Points = new SeriesPoint[signal.ProcessingFFTLength(processName)];
                     }
-                    else
+                    if (phaseSeries.Points == null || phaseSeries.Points.Length != signal.ProcessingFFTLength(processName))
                     {
-                        SeriesPoint point = series.Points[index];
-                        m_chart.ViewXY.Annotations[1].Text = string.Format("幅值:{0}", Math.Round(point.Y, 3)) + "\r\n" + string.Format("频率:{0}", Math.Round(point.X, 3));
+                        phaseSeries.Points = new SeriesPoint[signal.ProcessingFFTLength(processName)];
                     }
-                }
 
-                m_chart.ViewXY.PointLineSeries[0].InvalidateData();
-                m_chart.ViewXY.PointLineSeries[1].InvalidateData();
-                AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
-                StringBuilder spectrumSB = new StringBuilder();
-                spectrumSB.AppendLine("频率" + "  " + "幅值");
-                txtValue.Text = "频率/幅值:";
-                if (testCheckBox.IsChecked == true)
-                {
-                    var test = Algorithm.D2FFT(signal.Waveform, signal.SamplePoint).Take(signal.FFTLength).ToArray();
-                    var fftValuesDict = test.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
+                    for (int i = 0; i < signal.ProcessingFFTLength(processName); i++)
+                    {
+                        series.Points[i].X = signal.FrequencyList[processName][i];
+                        series.Points[i].Y = signal.AmplitudeList[processName][i];
+
+                        phaseSeries.Points[i].X = signal.FrequencyList[processName][i];
+                        phaseSeries.Points[i].Y = signal.PhaseList[processName][i];
+                    }
+
+                    if (m_chart.ViewXY.Annotations[1].Visible)
+                    {
+                        LineSeriesCursor lineSeriesCursor = m_chart.ViewXY.LineSeriesCursors[0];
+                        int index = GetNearestPointIndex(series, lineSeriesCursor.ValueAtXAxis);
+                        if (index == -1)
+                        {
+                            m_chart.ViewXY.Annotations[1].Text = string.Empty;
+                        }
+                        else
+                        {
+                            SeriesPoint point = series.Points[index];
+                            m_chart.ViewXY.Annotations[1].Text = string.Format("幅值:{0}", Math.Round(point.Y, 3)) + "\r\n" + string.Format("频率:{0}", Math.Round(point.X, 3));
+                        }
+                    }
+
+                    m_chart.ViewXY.PointLineSeries[0].InvalidateData();
+                    m_chart.ViewXY.PointLineSeries[1].InvalidateData();
+                    AnnotationXY spectrumAnnotation = m_chart.ViewXY.Annotations[0];
+                    StringBuilder spectrumSB = new StringBuilder();
+                    spectrumSB.AppendLine("频率" + "  " + "幅值");
+                    txtValue.Text = "频率/幅值:";
+
+                    var fftValuesDict = signal.AmplitudeList[processName].Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
                     foreach (var item in fftValuesDict)
                     {
-                        spectrumSB.AppendLine(signal.Frequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
-                        txtValue.Text += signal.Frequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                        spectrumSB.AppendLine(signal.FrequencyList[processName][item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
+                        txtValue.Text += signal.FrequencyList[processName][item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
                     }
                     txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
                     spectrumAnnotation.Text = spectrumSB.ToString().Trim();
-                }
-                else
-                {
-                    var fftValuesDict = signal.Amplitude.Select((s, i) => new { Key = i, Value = s }).OrderByDescending(o => o.Value).Take(6);
-                    foreach (var item in fftValuesDict)
+
+                    if (fitViewCheckBox.IsChecked == true)
                     {
-                        spectrumSB.AppendLine(signal.Frequency[item.Key].ToString("0.00") + "; " + item.Value.ToString("0.00"));
-                        txtValue.Text += signal.Frequency[item.Key].ToString("0.00") + "/" + item.Value.ToString("0.00") + "  ";
+                        m_chart.ViewXY.ZoomToFit();
                     }
-                    txtValue.Text = txtValue.Text.Substring(0, txtValue.Text.Length - 1);
-                    spectrumAnnotation.Text = spectrumSB.ToString().Trim();
+                    m_chart.EndUpdate();
                 }
-                if (fitViewCheckBox.IsChecked == true)
-                {
-                    m_chart.ViewXY.ZoomToFit();
-                }
-                m_chart.EndUpdate();
             }
             catch (Exception ex)
             {
@@ -188,7 +376,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
             }
             finally
             {
-                
+
             }
         }
         private void CreateChart()

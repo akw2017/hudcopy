@@ -1,51 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
-  <Server id="1">
-    <Name>CYSH</Name>
-    <IP>192.168.0.210</IP>
-    <Port>8888</Port>
-    <IsCloud>0</IsCloud>
-    <Factory>昌邑石化</Factory>
-    <Longitude>119.373313</Longitude>
-    <Latitude>36.850671</Latitude>
-    <IsLogin>1</IsLogin>
-    <LoginResult>0</LoginResult>
-    <Permission>超级管理员</Permission>
-    <UserName>superadmin</UserName>
-    <UserPwd>X6i0U5yToYm+mOiMupNdQA==</UserPwd>
-    <IsSaveUserName>1</IsSaveUserName>
-    <IsSaveUserPwd>1</IsSaveUserPwd>
-  </Server>
-  <Server id="2">
-    <Name>测试1院</Name>
-    <IP>139.129.213.240</IP>
-    <Port>0</Port>
-    <IsCloud>1</IsCloud>
-    <Factory>测试1院</Factory>
-    <Longitude>116.404</Longitude>
-    <Latitude>39.915</Latitude>
-    <IsLogin>1</IsLogin>
-    <LoginResult>1</LoginResult>
-    <Permission></Permission>
-    <UserName>superadmin</UserName>
-    <UserPwd>X6i0U5yToYm+mOiMupNdQA==</UserPwd>
-    <IsSaveUserName>1</IsSaveUserName>
-    <IsSaveUserPwd>1</IsSaveUserPwd>
-  </Server>
-  <Server id="3">
-    <Name>测试服务器2</Name>
-    <IP>192.168.0.152</IP>
-    <Port>0</Port>
-    <IsCloud>0</IsCloud>
-    <Factory>北京航天智控监测技术研究院</Factory>
-    <Longitude>116.404</Longitude>
-    <Latitude>39.915</Latitude>
-    <IsLogin>1</IsLogin>
-    <LoginResult>1</LoginResult>
-    <Permission></Permission>
-    <UserName>superadmin</UserName>
-    <UserPwd>X6i0U5yToYm+mOiMupNdQA==</UserPwd>
-    <IsSaveUserName>1</IsSaveUserName>
-    <IsSaveUserPwd>1</IsSaveUserPwd>
-  </Server>
+  <Chart name="2">
+    <Guid>0c5a26c9-a3c2-458f-8dba-7e90e9a00cd0</Guid>
+    <Guid>987e3064-0c5d-43e5-916e-72554afd9ce4</Guid>
+  </Chart>
 </Root>

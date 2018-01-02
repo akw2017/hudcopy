@@ -116,7 +116,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MainRegionVie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\AIC.HomePage_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\AIC.HomePage_MarkupCompile.lref
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\VersionWin.baml
@@ -144,3 +143,15 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AlarmAckWin.g
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AlarmAckWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AlarmAckListWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AlarmAckListWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\AIC.DeviceDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HistoryQuickPlayWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\PwdEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TestWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HistoryQuickPlayWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\PwdEditWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TestWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMatlabDLL.dll

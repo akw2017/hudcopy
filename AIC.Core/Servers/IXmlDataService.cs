@@ -9,7 +9,9 @@ namespace AIC.Core.Servers
 {
     public interface IXmlDataService
     {
-        IList<ServerInfo> ReadXml(string dir);
-        void WriteXml(string dir, IList<ServerInfo> list);
+        IList<ServerInfo> ReadServerXml(string dir);
+        void WriteServerXml(string dir, IList<ServerInfo> list);
+        IList<ChartFileData> ReadChartXml(string dir);
+        void WriteChartXml(string dir, IList<ChartFileData> list);
     }
 }

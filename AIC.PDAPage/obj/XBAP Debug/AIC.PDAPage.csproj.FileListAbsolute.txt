@@ -184,3 +184,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\AIC.PDAPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\AIC.PDAPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\DeviceEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\DeviceEditWin.baml

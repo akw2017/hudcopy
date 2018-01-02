@@ -368,8 +368,8 @@ namespace AIC.Core.OrganizationModels
             T_Item.Guid = recycle.T_Item.Guid;
             T_Item.Name = recycle.T_Item.Name;
             T_Item.Code = recycle.T_Item.Code;
-            //T_Item.T_Device_Guid = recycle.T_Item.T_Device_Guid;
-            //T_Item.T_Device_Code = recycle.T_Item.T_Device_Code;
+            T_Item.T_Device_Guid = this.T_Organization.Parent_Guid.Value;// recycle.T_Item.T_Device_Guid;
+            T_Item.T_Device_Code = this.T_Organization.Parent_Code; //recycle.T_Item.T_Device_Code;
             T_Item.Remarks = recycle.T_Item.Remarks;
             T_Item.Create_Time = recycle.T_Item.Create_Time;
             T_Item.Modify_Time = recycle.T_Item.Modify_Time;
@@ -393,9 +393,9 @@ namespace AIC.Core.OrganizationModels
             T_Item.BindTemp(channel, ip, identifier, serverip);
         }
 
-        public void BindTemp(ChannelTreeItemViewModel channel, string ip, string identifier, string serverip, string name)
+        public void BindTemp(ChannelTreeItemViewModel channel, string ip, string identifier, string serverip, T1_Organization organization)
         {
-            T_Item.BindTemp(channel, ip, identifier, serverip, name);
+            T_Item.BindTemp(channel, ip, identifier, serverip, organization);
         }
 
         public void BindItem()

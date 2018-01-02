@@ -42,12 +42,12 @@
                                 </DataTemplate.Triggers>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>                  
-                    <DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsUploadWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}" Visibility="{Binding Data.IsUploadWaveShow,Source={StaticResource proxy},Converter={StaticResource boolToVisibilityConverter}}"/>
+                    </DataGridTemplateColumn>
+                    <DataGridCheckBoxColumn MinWidth="60" Header="上传波形" Binding="{Binding IsACQWave,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsAllow}" Visibility="{Binding Data.IsUploadWaveShow,Source={StaticResource proxy},Converter={StaticResource boolToVisibilityConverter}}"/>
                     <!--<DataGridTemplateColumn Header="上传波形">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox x:Name="chkbox" IsChecked="{Binding IsUploadWave,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                <CheckBox x:Name="chkbox" IsChecked="{Binding IsACQWave,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding DataContext.IsUploadWaveShow, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" Value="true">
                                         <Setter TargetName="chkbox" Property="Visibility" Value="Visible"/>

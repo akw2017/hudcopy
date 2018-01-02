@@ -386,7 +386,6 @@ namespace AIC.OnLineDataPage.ViewModels
                 OnPropertyChanged("CanCancel");
             }
         }
-
         #endregion
 
         #region Command
@@ -521,7 +520,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     foreach (var item in _view.AsParallel())
                     {
                         var sg = item as BaseWaveSignal;
-                        DiagnosticInfoClass.GetDiagnosticInfo(sg);
+                        DiagnosticInfoClass.GetDiagnosticInfo(sg);     
                     }
                 }, token);               
             }

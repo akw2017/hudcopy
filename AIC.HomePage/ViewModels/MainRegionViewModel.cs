@@ -1057,9 +1057,17 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
             }
-            else if (viewName == "MenuEquipmentRunTime")
+            else if (viewName == "MenuDeviceRunStatusList")
             {
                 viewObj = ServiceLocator.Current.GetInstance<DeviceRunStatusListView>();
+            }
+            else if (viewName == "MenuDeviceRunAnalyze")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<DeviceRunAnalyzeListView>();
+            }
+            else if (viewName == "MenuDeviceHourlyData")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<DeviceHourlyDataView>();
             }
             else if (viewName == "MenuRefreshData")
             {
@@ -1215,7 +1223,7 @@ namespace AIC.HomePage.ViewModels
 
         private bool firstshow = false;
         private float historyplayCount = LocalSetting.HistoryModeDBCallInterval;
-        private readonly SemaphoreSlim lazyLoadinglocker = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim locker = new SemaphoreSlim(1);
 
         private async void timeCycle(object sender, EventArgs e)
         {
@@ -1225,7 +1233,7 @@ namespace AIC.HomePage.ViewModels
 
             if (_loginUserService.LoginInfo.LoginStatus == true)
             {
-                await lazyLoadinglocker.WaitAsync();
+                await locker.WaitAsync();
                 try
                 {
                     if (LocalSetting.IsHistoryMode == true)
@@ -1281,7 +1289,7 @@ namespace AIC.HomePage.ViewModels
                 }
                 finally
                 {
-                    lazyLoadinglocker.Release();
+                    locker.Release();
                 }
             }
             else

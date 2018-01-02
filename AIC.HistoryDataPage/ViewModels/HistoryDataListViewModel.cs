@@ -694,6 +694,7 @@ namespace AIC.HistoryDataPage.ViewModels
                             amsObj.ACQDatetime = result[i].ACQDatetime;
                             amsObj.Result = result[i].Result.Value;
                             amsObj.Unit = result[i].Unit;
+                            amsObj.AlarmGrade =(AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
 
                             if (vInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
                                     && p.DeviceName == amsObj.DeviceName
@@ -728,6 +729,7 @@ namespace AIC.HistoryDataPage.ViewModels
                             amsObj.ACQDatetime = result[i].ACQDatetime;
                             amsObj.Result = result[i].Result.Value;
                             amsObj.Unit = result[i].Unit;
+                            amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
 
                             if (anInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
                                     && p.DeviceName == amsObj.DeviceName
@@ -783,6 +785,7 @@ namespace AIC.HistoryDataPage.ViewModels
                                 amsObj.ACQDatetime = result[i].ACQDatetime;
                                 amsObj.Result = result[i].Result.Value;
                                 amsObj.Unit = result[i].Unit;
+                                amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
 
                                 if (vInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
                                         && p.DeviceName == amsObj.DeviceName
@@ -811,6 +814,7 @@ namespace AIC.HistoryDataPage.ViewModels
                                 amsObj.ACQDatetime = result[i].ACQDatetime;
                                 amsObj.Result = result[i].Result.Value;
                                 amsObj.Unit = result[i].Unit;
+                                amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
 
                                 if (anInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
                                         && p.DeviceName == amsObj.DeviceName
@@ -855,11 +859,12 @@ namespace AIC.HistoryDataPage.ViewModels
     {
         public string OrganizationName { get; set; }
         public string DeviceName { get; set; }
-        public string ItemName { get; set; }    
+        public string ItemName { get; set; }
         public DateTime ACQDatetime { get; set; }
-        public double Result { get; set; }       
+        public double Result { get; set; }
         public string Unit { get; set; }
         public double RPM { get; set; }
+        public AlarmGrade AlarmGrade { get; set;}
         
     }
 

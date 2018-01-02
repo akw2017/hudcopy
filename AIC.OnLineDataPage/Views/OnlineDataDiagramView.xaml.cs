@@ -54,5 +54,22 @@ namespace AIC.OnLineDataPage.Views
                 grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
             }
         }
+
+
+        GridLength m_SecondWidthCache = new GridLength(0);
+
+        private void expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (m_SecondWidthCache != new GridLength(0))
+            {
+                grdWorkbench.ColumnDefinitions[4].Width = m_SecondWidthCache;
+            }
+        }
+
+        private void expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            m_SecondWidthCache = grdWorkbench.ColumnDefinitions[4].Width;
+            grdWorkbench.ColumnDefinitions[4].Width = new GridLength(28);
+        }
     }
 }

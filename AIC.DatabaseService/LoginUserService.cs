@@ -165,10 +165,10 @@ namespace AIC.DatabaseService
             //AddOperateRecord(OperateType.Login);  
         }
 
-        private readonly SemaphoreSlim lazyLoadinglocker = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim locker = new SemaphoreSlim(1);
         public async Task LazyLoading()
         {
-            await lazyLoadinglocker.WaitAsync();
+            await locker.WaitAsync();
             try
             {
                 var servers = _localConfiguration.ServerInfoList.Where(p => p.LoginResult == true);
@@ -183,17 +183,17 @@ namespace AIC.DatabaseService
             }
             finally
             {
-                lazyLoadinglocker.Release();
+                locker.Release();
             }
         }
         public async Task AwaitLazyLoading()
         {
-            await lazyLoadinglocker.WaitAsync();
+            await locker.WaitAsync();
             try
             { }
             finally
             {
-                lazyLoadinglocker.Release();
+                locker.Release();
             }
         }
         public void SetUserLogout()

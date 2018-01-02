@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AIC.Core.Controls
+namespace AIC.Core
 {
     /// <summary>  
     /// 为PasswordBox控件的Password增加绑定功能  

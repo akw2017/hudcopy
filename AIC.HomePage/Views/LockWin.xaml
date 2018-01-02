@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIC.HomePage.Views"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:c="clr-namespace:AIC.Core.Controls;assembly=AIC.Core"
+        xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
         mc:Ignorable="d"
         ShowMinButton="false" ShowMaxRestoreButton="False" 
         BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
@@ -38,8 +38,8 @@
             </TextBox>
             <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource strPassword}"/>
             <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="txtPwd" VerticalContentAlignment="Bottom" 
-                c:PasswordBoxHelper.Attach="True"
-                c:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                core:PasswordBoxHelper.Attach="True"
+                core:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </PasswordBox>
             <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>
             <Button Grid.Row="5" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True">

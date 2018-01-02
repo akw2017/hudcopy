@@ -32,6 +32,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\XBAP Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;XBAP</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Release|AnyCPU'">
+    <OutputPath>bin\XBAP Release\</OutputPath>
+    <DefineConstants>XBAP</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Arction.Wpf.Charting.LightningChartUltimate, Version=8.1.3.4001, Culture=neutral, PublicKeyToken=6484d7bb14b95dd3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,8 +86,12 @@
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -93,7 +110,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DeviceHourlyDataDocumentRenderer.cs" />
+    <Compile Include="Models\DeviceHourlyDataInfo.cs" />
     <Compile Include="Models\DeviceRunInfo.cs" />
+    <Compile Include="Models\IDocumentRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -107,9 +127,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DeviceHourlyDataViewModel.cs" />
+    <Compile Include="ViewModels\DeviceRunAnalyzeListViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunStatusListViewModel.cs" />
+    <Compile Include="Views\DeviceHourlyDataView.xaml.cs">
+      <DependentUpon>DeviceHourlyDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceRunAnalyzeListView.xaml.cs">
+      <DependentUpon>DeviceRunAnalyzeListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeviceRunStatusListView.xaml.cs">
       <DependentUpon>DeviceRunStatusListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExportPreviewWindow.xaml.cs">
+      <DependentUpon>ExportPreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintPreviewWindow.xaml.cs">
+      <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,9 +165,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DeviceHourlyDataFlowDocument.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceHourlyDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceRunAnalyzeListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DeviceRunStatusListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ExportPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +234,14 @@
     <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
       <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
       <Name>Wpf.CloseTabControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.WrapBreakPanel\Wpf.WrapBreakPanel.csproj">
+      <Project>{534ba357-3aa8-454c-84c6-423ba82f7ee1}</Project>
+      <Name>Wpf.WrapBreakPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
+      <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
+      <Name>Xceed.Wpf.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

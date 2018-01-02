@@ -140,6 +140,77 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        //private bool isFilter;
+        //public bool IsFilter
+        //{
+        //    get { return isFilter; }
+        //    set
+        //    {
+        //        if (isFilter != value)
+        //        {
+        //            isFilter = value;
+        //            OnPropertyChanged("IsFilter");
+        //        }
+        //    }
+        //}
+
+        //private bool isEnvelope;
+        //public bool IsEnvelope
+        //{
+        //    get { return isEnvelope; }
+        //    set
+        //    {
+        //        if (isEnvelope != value)
+        //        {
+        //            isEnvelope = value;
+        //            OnPropertyChanged("IsEnvelope");
+        //        }
+        //    }
+        //}
+
+        //private bool isTFF;
+        //public bool IsTFF
+        //{
+        //    get { return isTFF; }
+        //    set
+        //    {
+        //        if (isTFF != value)
+        //        {
+        //            isTFF = value;
+        //            OnPropertyChanged("IsTFF");
+        //        }
+        //    }
+        //}
+
+        //private bool isCepstrum;
+        //public bool IsCepstrum
+        //{
+        //    get { return isCepstrum; }
+        //    set
+        //    {
+        //        if (isCepstrum != value)
+        //        {
+        //            isCepstrum = value;
+        //            OnPropertyChanged("IsCepstrum");
+        //        }
+        //    }
+        //}
+
+        private SignalPreProccessType signalPreProccessType;
+        public SignalPreProccessType SignalPreProccessType
+        {
+            get { return signalPreProccessType; }
+            set
+            {
+                if (signalPreProccessType != value)
+                {
+                    ChangeProcessor(signalPreProccessType, value);
+                    signalPreProccessType = value;
+                    OnPropertyChanged("SignalPreProccessType");
+                }
+            }
+        }
+
         private bool isFilter;
         public bool IsFilter
         {
@@ -148,55 +219,14 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 if (isFilter != value)
                 {
+                    ChangeFilter(isFilter, value);
                     isFilter = value;
                     OnPropertyChanged("IsFilter");
                 }
             }
         }
 
-        private bool isEnvelope;
-        public bool IsEnvelope
-        {
-            get { return isEnvelope; }
-            set
-            {
-                if (isEnvelope != value)
-                {
-                    isEnvelope = value;
-                    OnPropertyChanged("IsEnvelope");
-                }
-            }
-        }
-
-        private bool isTFF;
-        public bool IsTFF
-        {
-            get { return isTFF; }
-            set
-            {
-                if (isTFF != value)
-                {
-                    isTFF = value;
-                    OnPropertyChanged("IsTFF");
-                }
-            }
-        }
-
-        private bool isCepstrum;
-        public bool IsCepstrum
-        {
-            get { return isCepstrum; }
-            set
-            {
-                if (isCepstrum != value)
-                {
-                    isCepstrum = value;
-                    OnPropertyChanged("IsCepstrum");
-                }
-            }
-        }
-
-        private bool itemIsExpanded;
+        private bool itemIsExpanded = true;
         public bool ItemIsExpanded
         {
             get { return itemIsExpanded; }
@@ -208,9 +238,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     OnPropertyChanged("ItemIsExpanded");
                 }
             }
-        }
-
-        
+        }        
 
         #region IsComposing
         private bool isComposing = false;
@@ -466,23 +494,23 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private ICommand addFilterCommand;
-        public ICommand AddFilterCommand
-        {
-            get
-            {
-                return this.addFilterCommand ?? (this.addFilterCommand = new DelegateCommand<object>(para => this.AddFilter(para)));
-            }
-        }
+        //private ICommand addFilterCommand;
+        //public ICommand AddFilterCommand
+        //{
+        //    get
+        //    {
+        //        return this.addFilterCommand ?? (this.addFilterCommand = new DelegateCommand<object>(para => this.AddFilter(para)));
+        //    }
+        //}
 
-        private ICommand removeFilterCommand;
-        public ICommand RemoveFilterCommand
-        {
-            get
-            {
-                return this.removeFilterCommand ?? (this.removeFilterCommand = new DelegateCommand<object>(para => this.RemoveFilter(para)));
-            }
-        }
+        //private ICommand removeFilterCommand;
+        //public ICommand RemoveFilterCommand
+        //{
+        //    get
+        //    {
+        //        return this.removeFilterCommand ?? (this.removeFilterCommand = new DelegateCommand<object>(para => this.RemoveFilter(para)));
+        //    }
+        //}
 
         private ICommand showPropertyCommand;
         public ICommand ShowPropertyCommand
@@ -542,12 +570,12 @@ namespace AIC.OnLineDataPage.ViewModels
 
                 List<ChartViewModelBase> list = new List<ChartViewModelBase>();
                 timeDomainOnLineVM = new TimeDomainChartViewModel(SelectedSignal, true);
-                //list.Add(timeDomainOnLineVM);
-                //IsTimeDomainChecked = true;
+                list.Add(timeDomainOnLineVM); //昌邑石化
+                IsTimeDomainChecked = true;
 
                 frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(SelectedSignal, true);
-                //list.Add(frequencyDomainOnLineVM);
-                //IsFrequencyDomainChecked = true;
+                list.Add(frequencyDomainOnLineVM); //昌邑石化
+                IsFrequencyDomainChecked = true;
 
                 amsTrendOnLineVM = new RMSTrendChartViewModel(SelectedSignal, true);
                 list.Add(amsTrendOnLineVM);
@@ -642,7 +670,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
-                ItemIsExpanded = false;
+                //ItemIsExpanded = false; //昌邑石化
             }
         }
         private void BuildDevice(DeviceTreeItemViewModel device)
@@ -909,101 +937,118 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region 图表增减
-        private void AddFilter(object args)
+        //private void AddFilter(object args)
+        //{
+        //    if (SelectedSignal is BaseWaveSignal)
+        //    {
+        //        if (args.ToString() == "Filter")
+        //        {
+        //            ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Filter);
+        //        }
+        //        //else if (args.ToString() == "Envelop")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Envelope);
+        //        //}
+        //        //else if (args.ToString() == "TFF")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.TFF);
+        //        //}
+        //        //else if (args.ToString() == "Cepstrum")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Cepstrum);
+        //        //}
+        //    }
+        //}
+        //private void RemoveFilter(object args)
+        //{
+        //    if (SelectedSignal is BaseWaveSignal)
+        //    {
+        //        if (args.ToString() == "Filter")
+        //        {
+        //            ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Filter);
+        //        }
+        //        //else if (args.ToString() == "Envelop")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Envelope);
+        //        //}
+        //        //else if (args.ToString() == "TFF")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.TFF);
+        //        //}
+        //        //else if (args.ToString() == "Cepstrum")
+        //        //{
+        //        //    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Cepstrum);
+        //        //}
+        //    }
+        //}
+
+        private void ChangeFilter(bool oldisFilter, bool newisFilter)
         {
-            if (SelectedSignal is BaseWaveSignal)
-            {
-                if (args.ToString() == "Filter")
-                {
-                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Filter);                    
-                }
-                else if (args.ToString() == "Envelop")
-                {
-                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Envelope);
-                }
-                else if (args.ToString() == "TFF") 
-                {
-                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.TFF);
-                }
-                else if (args.ToString() == "Cepstrum")
-                {
-                    ((BaseWaveSignal)SelectedSignal).AddProcess(SignalProcessorType.Cepstrum);
-                }
-            }
+            timeDomainOnLineVM.IsFilter = newisFilter;
+            frequencyDomainOnLineVM.IsFilter = newisFilter;
+            powerSpectrumOnLineVM.IsFilter = newisFilter;
+            powerSpectrumDensityOnLineVM.IsFilter = newisFilter;
         }
-        private void RemoveFilter(object args)
+
+        private void ChangeProcessor(SignalPreProccessType oldsignalPreType, SignalPreProccessType newsignalPreTyp)
         {
-            if (SelectedSignal is BaseWaveSignal)
-            {
-                if (args.ToString() == "Filter")
-                {
-                    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Filter);
-                }
-                else if (args.ToString() == "Envelop")
-                {
-                    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Envelope);
-                }
-                else if (args.ToString() == "TFF")
-                {
-                    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.TFF);
-                }
-                else if (args.ToString() == "Cepstrum")
-                {
-                    ((BaseWaveSignal)SelectedSignal).RemoveProcess(SignalProcessorType.Cepstrum);
-                }
-            }
-        }     
+            timeDomainOnLineVM.SignalPreProccessType = newsignalPreTyp;           
+            frequencyDomainOnLineVM.SignalPreProccessType = newsignalPreTyp;
+            powerSpectrumOnLineVM.SignalPreProccessType = newsignalPreTyp;
+            powerSpectrumDensityOnLineVM.SignalPreProccessType = newsignalPreTyp;
+        }
+
         private void SignalValueSelected(BaseAlarmSignal sg)
         {
             try
             {
-                if (SelectedSignal is BaseWaveSignal)
-                {                  
-                    if (IsFilter)
-                    {
-                        RemoveFilterCommand.Execute("Filter");
-                    }
-                    if (IsEnvelope)
-                    {
-                        RemoveFilterCommand.Execute("Envelop");
-                    }
-                    else if (IsTFF)
-                    {
-                        RemoveFilterCommand.Execute("TFF");
-                    }
-                    else if (IsCepstrum)
-                    {
-                        RemoveFilterCommand.Execute("Cepstrum");
-                    }
-                }
+                //if (SelectedSignal is BaseWaveSignal)
+                //{                  
+                //    if (IsFilter)
+                //    {
+                //        RemoveFilterCommand.Execute("Filter");
+                //    }
+                //    if (IsEnvelope)
+                //    {
+                //        RemoveFilterCommand.Execute("Envelop");
+                //    }
+                //    else if (IsTFF)
+                //    {
+                //        RemoveFilterCommand.Execute("TFF");
+                //    }
+                //    else if (IsCepstrum)
+                //    {
+                //        RemoveFilterCommand.Execute("Cepstrum");
+                //    }
+                //}
 
                 SelectedSignal = sg;
 
-                if (SelectedSignal is BaseWaveSignal)
-                {                  
+                //if (SelectedSignal is BaseWaveSignal)
+                //{                  
                   
-                    if (IsFilter)
-                    {
-                        AddFilterCommand.Execute("Filter");
-                    }
-                    if (IsEnvelope)
-                    {
-                        AddFilterCommand.Execute("Envelop");
-                    }
-                    else if (IsTFF)
-                    {
-                        AddFilterCommand.Execute("TFF");
-                    }
-                    else if (IsCepstrum)
-                    {
-                        AddFilterCommand.Execute("Cepstrum");
-                    }
-                }
+                //    if (IsFilter)
+                //    {
+                //        AddFilterCommand.Execute("Filter");
+                //    }
+                //    if (IsEnvelope)
+                //    {
+                //        AddFilterCommand.Execute("Envelop");
+                //    }
+                //    else if (IsTFF)
+                //    {
+                //        AddFilterCommand.Execute("TFF");
+                //    }
+                //    else if (IsCepstrum)
+                //    {
+                //        AddFilterCommand.Execute("Cepstrum");
+                //    }
+                //}
 
                 amsTrendOnLineVM.SetSignal(sg);
 
-                timeDomainOnLineVM.SetSignal(sg);
-                frequencyDomainOnLineVM.SetSignal(sg);
+                timeDomainOnLineVM.SetSignal(sg, SignalPreProccessType);
+                frequencyDomainOnLineVM.SetSignal(sg, SignalPreProccessType);
                 bodeOnLineVM.SetSignal(sg);
                 multiDivFreOnLineVM.SetSignal(sg);
                 nyquistOnLineVM.SetSignal(sg);
@@ -1011,8 +1056,8 @@ namespace AIC.OnLineDataPage.ViewModels
                 orthoOnLineVM.SetSignal(sg);
                 rpm3DSpectrumOnLineVM.SetSignal(sg);
                 time3DSpectrumOnLineVM.SetSignal(sg);
-                powerSpectrumOnLineVM.SetSignal(sg);
-                powerSpectrumDensityOnLineVM.SetSignal(sg);
+                powerSpectrumOnLineVM.SetSignal(sg, SignalPreProccessType);
+                powerSpectrumDensityOnLineVM.SetSignal(sg, SignalPreProccessType);
             }
             catch (Exception ex)
             {
@@ -1251,7 +1296,6 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             return SelectedSignal != null;
         }
-
         #endregion
 
         #region 布局保存与读取
@@ -1323,17 +1367,5 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

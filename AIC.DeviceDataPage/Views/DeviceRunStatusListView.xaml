@@ -128,7 +128,7 @@
 
         <WrapPanel Grid.Row="0" Grid.Column="2" Margin="5">
             <TextBlock Text="查询时间" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"  Margin="4,0,0,0"/>
+            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"  Margin="4,0,0,0"/>
             <TextBlock Text="查询天数" Margin="4,0,0,0" VerticalAlignment="Center" />
             <ComboBox VerticalAlignment="Center" ItemsSource="{Binding DayItems}" SelectedItem="{Binding SelectedDay}" Style="{DynamicResource VirtualisedMetroComboBox}"  Margin="4,0,0,0"/>         
 
@@ -156,11 +156,6 @@
                                  ItemsSource="{Binding DevicesView}" SelectionMode="Single"          
                                  CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
-            <DataGrid.Resources>
-                <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
-                    <ItemsPresenter />
-                </ControlTemplate>
-            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceTreeItemViewModel.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="开始时间"  Binding="{Binding StartTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
@@ -172,45 +167,6 @@
                 <DataGridTextColumn Header="报警次数"  Binding="{Binding AlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="危险次数"  Binding="{Binding DangerCount}" IsReadOnly="True"/>
             </DataGrid.Columns>
-            <DataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" BorderThickness="0,0,0,0">
-                                            <Expander.Header>
-                                                <StackPanel Orientation="Horizontal" Width="Auto" Height="24">
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                    <!--<TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock FontWeight="Bold" Text="个测点"/>-->
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <Expander.Content>
-                                                <Border BorderBrush="{DynamicResource AccentColorBrush2}" BorderThickness="2">
-                                                    <ItemsPresenter/>
-                                                </Border>
-                                            </Expander.Content>
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=Name}" Value="">
-                                    <Setter Property="Template" Value="{StaticResource defaultGroup}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                    <GroupStyle.Panel>
-                        <ItemsPanelTemplate>
-                            <DataGridRowsPresenter/>
-                        </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
             <DataGrid.ColumnHeaderStyle>
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
@@ -244,6 +200,13 @@
         
         <GridSplitter Grid.Row="2" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-        <Grid Name="gridChart" Grid.Row="3" Grid.Column ="2"/>
+        <TabControl Grid.Row="3" Grid.Column ="2">
+            <TabItem Header="总览" Style="{x:Null}">
+                <Grid Name="gridChart"/>
+            </TabItem>
+            <TabItem Header="详情" Style="{x:Null}">
+                <Grid Name="gridChartMore"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

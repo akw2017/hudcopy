@@ -10,16 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AIC.OnLineDataPage.Models
+namespace AIC.Core.Models
 {
     public class DiagnosticInfoClass
     {
         public static void GetDiagnosticInfo(BaseWaveSignal vSg)
         {
+            vSg.DiagnosticGrade = vSg.AlarmGrade;
+            vSg.DiagnosticResult = vSg.Result;
+            vSg.DiagnosticTime = vSg.ACQDatetime;
+            vSg.DiagnosticUnit = vSg.Unit;
+
             if (vSg.Waveform == null || vSg.SampleFre == 0 || vSg.SamplePoint == 0)
             {
                 vSg.DiagnosticInfo = "没有诊断波形";
-                vSg.DiagnosticAdvice = null;
+                vSg.DiagnosticAdvice = null;         
                 return;
             }
 
@@ -130,6 +135,134 @@ namespace AIC.OnLineDataPage.Models
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("诊断异常", ex));
             }
         }
+
+        public static string GetDiagnosticInfo(int AlarmGrade, Guid Guid, D_WirelessVibrationSlot_Waveform data, float rpm, out string DiagnosticInfo, out string DiagnosticAdvice)
+        {
+            if ((AlarmGrade & 0xff) == 0x00 || (AlarmGrade & 0xff) == 0x01)
+            {
+                DiagnosticInfo = "没有发现故障";
+                DiagnosticAdvice = null;
+                return null;
+            }
+            if (data != null && data.WaveData != null)
+            {
+                return GetDiagnosticInfo(data.WaveData, data.SampleFre.Value, data.SamplePoint.Value, rpm, out DiagnosticInfo, out DiagnosticAdvice);
+            }
+            else
+            {
+                DiagnosticInfo = null;
+                DiagnosticAdvice = null;
+                return null;
+            }
+        }
+
+        public static string GetDiagnosticInfo(byte[] bytes, double SampleFre, int SamplePoint, float RPM, out string DiagnosticInfo, out string DiagnosticAdvice)
+        {
+            double[] Waveform = ByteToSingle(bytes);
+            if (Waveform == null || SampleFre == 0 || SamplePoint == 0)
+            {
+                DiagnosticInfo = "没有诊断波形";
+                DiagnosticAdvice = null;
+                return DiagnosticInfo + "\r\n" + DiagnosticAdvice;
+            }
+
+            if (RPM == 0)
+            {
+                DiagnosticInfo = "没有上传转速";
+                DiagnosticAdvice = null;
+                return DiagnosticInfo + "\r\n" + DiagnosticAdvice;
+            }
+
+
+            double[] Frequency;
+            double[] Amplitude;
+
+            //频率间隔
+            double frequencyInterval = SampleFre / SamplePoint;
+            int length = (int)(SamplePoint / 2.56) + 1;
+            Frequency = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                Frequency[i] = frequencyInterval * i;
+            }
+
+            var output = D2FFT(Waveform, SamplePoint);
+            if (output != null)
+            {
+                Amplitude = output.Take(length).ToArray();
+            }
+            else
+            {
+                DiagnosticInfo = "没有频域波形";
+                DiagnosticAdvice = null;
+                return DiagnosticInfo + "\r\n" + DiagnosticAdvice;
+            }
+            //频率
+            double frequency = RPM / 60;
+
+            double e1, e2, e3, e4, e5;
+            double m1, m2, m3, m4, m5;
+            GetEnergy(Frequency, Amplitude, frequency, frequencyInterval, 1, out e1, out m1);
+            GetEnergy(Frequency, Amplitude, frequency, frequencyInterval, 2, out e2, out m2);
+            GetEnergy(Frequency, Amplitude, frequency, frequencyInterval, 3, out e3, out m3);
+            GetEnergy(Frequency, Amplitude, frequency, frequencyInterval, 4, out e4, out m4);
+            GetEnergy(Frequency, Amplitude, frequency, frequencyInterval, 5, out e5, out m5);
+
+            //求时域有效值
+            var paras = CalculatePara(Waveform);
+            var rms = paras[0];
+
+            //最大幅值
+            var mMax = Amplitude.Max();
+
+            if (m1 >= mMax && m1 >= (rms * 0.1 * Math.Sqrt(2)) && m1 > m2 && m3 <= (rms * 0.1 * Math.Sqrt(2)))
+            {
+                DiagnosticInfo =  "不平衡";
+                DiagnosticAdvice = "建议：怀疑轴系的动平衡情况，请检查转子是否存在弯曲或临时弯曲、转子零部件掉块、转子偏磨或结垢、轴承间隙大、设备底板结构松动等故障，如是皮带驱动，可能是皮带轮偏心引起。\r\n";
+                double probability = e1 * 100.0 / rms;
+                DiagnosticAdvice += "概率：" + probability.ToString("0") + "%";
+            }
+            else if (m2 >= mMax && m2 >= (rms * 0.1 * Math.Sqrt(2)) && m1 >= (rms * 0.1 * Math.Sqrt(2)) && m3 >= (rms * 0.1 * Math.Sqrt(2)))
+            {
+                DiagnosticInfo = "不对中";
+                DiagnosticAdvice = "建议：(1)请检查相关轴系的对中情况，如轴与轴的对中不良、同一轴的几个轴承安装同心或轴承间隙不等、 轴承座热膨胀不均、机壳变形或移位、 地基不均匀下沉。\r\n";
+                DiagnosticAdvice += "          (2)另外，可能以下原因也表现为不对中现象：I.由于质量偏心而引起的动平衡不良(此时转子呈弓形弯曲),也可能造成对中不良，如果此时静态条件下对中良好，可以先解决动平衡不良故障，对中不良故障将随即消除. II.由于受热、负载过大等原因导致轴弯曲;\r\n";
+                DiagnosticAdvice += "          (3).由于内环或外环安装不合适，导致轴承偏翘（翘曲）. III.轴承座松动。\r\n";
+                double probability = e2 * 100.0 / rms;
+                DiagnosticAdvice += "概率：" + probability.ToString("0") + "%";
+            }
+            else if (m1 >= (rms * 0.1 * Math.Sqrt(2)) && m2 >= (rms * 0.1 * Math.Sqrt(2)) && m3 >= (rms * 0.1 * Math.Sqrt(2)) && m4 >= (rms * 0.1 * Math.Sqrt(2)) && m5 >= (rms * 0.1 * Math.Sqrt(2)))
+            {
+                DiagnosticInfo = "轴承座松动、轴承松动、（基础）松动等\r\n";
+                DiagnosticAdvice = "建议：(1)请检查相关轴系的润滑、基础的紧固、相关轴系的轴承、轴承座安装情况.\r\n";
+                DiagnosticAdvice += "          (2)受热、负载过大等原因导致轴弯曲；\r\n";
+                DiagnosticAdvice += "          (3)内环或外环安装不合适，导致轴承偏翘（翘曲）。\r\n";
+            }
+            else if (mMax >= (rms * 0.3 * Math.Sqrt(2)))
+            {
+                double fMax = 0;
+                for (int i = 0; i < Amplitude.Length; i++)
+                {
+                    if (Amplitude[i] == mMax)
+                    {
+                        fMax = Frequency[i];
+                        break;
+                    }
+                }
+                DiagnosticInfo = "频谱上有占能量很大比率的频率" + fMax.ToString("0.000") + "没有找到合适的故障原因\r\n";
+                DiagnosticAdvice = "建议：(1)没有设备结构模型，比如齿轮齿数、设置轴承型号等，不能确定故障的部位。\r\n";
+                DiagnosticAdvice += "          (2)转速设置是否正确。\r\n";
+            }
+            else
+            {
+                DiagnosticInfo = "没有发现故障";
+                DiagnosticAdvice = null;
+            }
+            return DiagnosticInfo + "\r\n" + DiagnosticAdvice;
+        }
+
+        //以下不为我用
 
         public static string GetDiagnosticInfo(int AlarmGrade, string devicename, Guid Guid, D_WirelessVibrationSlot_Waveform[] datas, float rpm, out string DiagnosticInfo, out string DiagnosticAdvice)
         {

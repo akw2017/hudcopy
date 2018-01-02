@@ -1107,7 +1107,7 @@ namespace AIC.HistoryDataPage.ViewModels
 #endif
                             return;
                         }
-                        result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
+                        result = result.OrderBy(p => p.ACQDatetime).ToList(); //result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
                         BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
                         {
                             DisplayName = item.BaseAlarmSignal.DeviceItemName,
@@ -1204,7 +1204,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(item.IP, item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });
                         if (result != null && result.Count > 0)
                         {
-                            result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
+                            result = result.OrderBy(p => p.ACQDatetime).ToList(); //result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
                             item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
                         }
                     }

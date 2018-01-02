@@ -44,12 +44,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridChart.Children.Clear();
-            if (m_chart != null)
-            {
-                m_chart.Dispose();
-                m_chart = null;               
-            }
+            //gridChart.Children.Clear();
+            //if (m_chart != null)
+            //{
+            //    m_chart.Dispose();
+            //    m_chart = null;               
+            //}
         }
 
         protected override async void ViewModel_SignalChanged()
@@ -57,7 +57,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
             try
             {
                 initializing = true;
-                txtValue.Text = null;
+                txtValue.Text = string.Empty;
                 m_chart.BeginUpdate();
                 m_chart.ViewXY.PointLineSeries[0].SeriesEventMarkers.Clear();
                 m_chart.ViewXY.PointLineSeries[0].Clear();

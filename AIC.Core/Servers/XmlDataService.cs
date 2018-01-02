@@ -15,7 +15,7 @@ namespace AIC.Core.Servers
 {
     public class XmlDataService : IXmlDataService
     {
-        public IList<ServerInfo> ReadXml(string dir)
+        public IList<ServerInfo> ReadServerXml(string dir)
         {
             var sw = Stopwatch.StartNew();
             List<ServerInfo> list = new List<ServerInfo>();
@@ -123,7 +123,7 @@ namespace AIC.Core.Servers
             return list;            
         }
 
-        public void WriteXml(string dir, IList<ServerInfo> list)
+        public void WriteServerXml(string dir, IList<ServerInfo> list)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -156,6 +156,63 @@ namespace AIC.Core.Servers
                 throw ex;
             }
             Console.WriteLine("加密消耗时间" + sw.Elapsed.ToString());
+        }
+
+        public IList<ChartFileData> ReadChartXml(string dir)
+        {
+            List<ChartFileData> list = new List<ChartFileData>();
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(dir);
+                var xmlNodeList = xmlDoc.SelectSingleNode("Root").ChildNodes;
+                foreach (XmlNode node in xmlNodeList)
+                {
+                    ChartFileData filedata = new ChartFileData();
+                    XmlElement element = (XmlElement)node;
+                    string name = element.GetAttribute("name");
+                    filedata.Name = name;
+                    filedata.ListGuid = new List<Guid>();
+
+                    foreach (XmlNode xmlNode in element.ChildNodes)
+                    {
+                        XmlElement xmlEle = (XmlElement)xmlNode;
+                        filedata.ListGuid.Add(new Guid(xmlEle.InnerText));
+                    }
+                    list.Add(filedata);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
+
+        public void WriteChartXml(string dir, IList<ChartFileData> list)
+        {
+            try
+            {
+                List<XElement> arrayDataAsXElements = new List<XElement>();
+                foreach (var item in list)
+                {
+                    XElement element = new XElement("Chart", new XAttribute("name", item.Name));
+                    foreach(var guid in item.ListGuid)
+                    {
+                        element.Add(new XElement("Guid", guid));
+                    }
+                    arrayDataAsXElements.Add(element);
+                }
+
+                XElement peopleDoc = new XElement("Root", arrayDataAsXElements);
+                var doc = new XDocument(peopleDoc);
+                doc.Save(dir);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

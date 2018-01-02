@@ -103,7 +103,7 @@ namespace AIC.Core.LMModels
             TempData.Modify_Time = DateTime.Now;
         }
 
-        public void BindTemp(ChannelTreeItemViewModel channel, string ip, string identifier, string serverIP, string name)
+        public void BindTemp(ChannelTreeItemViewModel channel, string ip, string identifier, string serverIP, T1_Organization organization)
         {
             SaveTempData();
             if (channel.IChannel is WirelessVibrationChannelInfo || channel.IChannel is WirelessScalarChannelInfo)
@@ -169,7 +169,9 @@ namespace AIC.Core.LMModels
             TempData.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充
             TempData.Is_Disabled = false;
             TempData.Modify_Time = DateTime.Now;
-            TempData.Name = name;
+            TempData.Name = organization.Name;
+            TempData.T_Device_Guid = organization.Parent_Guid.Value;
+            TempData.T_Device_Code = organization.Parent_Code;
         }
 
         public void UnBindTemp()

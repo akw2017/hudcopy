@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/CheckBoxStyle.xaml" />
                 <ResourceDictionary Source="/AIC.OnLineDataPage;component/Themes/OnlineDataDiagramTemplate.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <command:CommandReference x:Key="AddCommandReference" Command="{Binding AddCommand}"/>
             <models:ValueTypeTemplateSelector x:Key="valueTypeTemplateSelector" 
@@ -50,7 +51,7 @@
                 <Setter Property="Margin" Value="0,2,0,0"/>
                 <Setter Property="MinHeight" Value="20"/>
                 <!--<Setter Property="Height" Value="600"/>--><!--昌邑石化-->
-                <Setter Property="Height" Value="246"/>
+                <Setter Property="Height" Value="228"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                 <Setter Property="Template">
@@ -121,7 +122,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <TreeView Grid.Row="0" x:Name="treeview"                        
@@ -308,9 +309,9 @@
             <CheckBox x:Name="chk" IsChecked="True" Content="锁定布局" Style="{StaticResource CheckBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsEnabled="{Binding CanOperated}"></CheckBox>
         </Grid>
 
-        <!--<GridSplitter Grid.Row="0" Grid.Column="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />-->
+        <GridSplitter x:Name="gsSecondSplitterr" Grid.Row="0" Grid.Column="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-        <Expander  Grid.Row="0" Grid.Column="4" ExpandDirection="Left" MaxWidth="900" IsExpanded="{Binding ItemIsExpanded}">
+        <Expander x:Name="expander" Expanded="expander_Expanded" Collapsed="expander_Collapsed"    Grid.Row="0" Grid.Column="4" ExpandDirection="Left" IsExpanded="{Binding ItemIsExpanded}">
             <Grid Grid.Row="0" Grid.Column="4" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -320,14 +321,14 @@
                     <StackPanel Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <CheckBox x:Name="filterCheckBox" Margin="5,0" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsFilter}" VerticalAlignment="Center">
-                                <i:Interaction.Triggers>
+                                <!--<i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="Filter"/>
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="Unchecked">
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="Filter"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                                </i:Interaction.Triggers>-->
                             </CheckBox>
                             <xctk:DropDownButton x:Name="dropDownButton" Background="Transparent" Content="滤波" VerticalAlignment="Center">
                                 <xctk:DropDownButton.DropDownContent>
@@ -338,7 +339,7 @@
                                             <!--<RowDefinition Height="30"/>-->
                                         </Grid.RowDefinitions>
                                         <StackPanel Orientation="Horizontal">
-                                            <RadioButton Foreground="Black" Content="不滤波" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center"/>
+                                            <!--<RadioButton Foreground="Black" Content="不滤波" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center"/>-->
                                             <RadioButton x:Name="bandPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="带通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}" VerticalAlignment="Center"/>
                                             <RadioButton x:Name="highPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="高通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}" VerticalAlignment="Center"/>
                                             <RadioButton x:Name="lowPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="低通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}" VerticalAlignment="Center"/>
@@ -457,7 +458,7 @@
                                     </Grid>
                                 </xctk:DropDownButton.DropDownContent>
                             </xctk:DropDownButton>
-                            <CheckBox x:Name="envelopeCheckBox" Content="包络" Margin="5,0" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" >
+                            <!--<CheckBox x:Name="envelopeCheckBox" Content="包络" Margin="5,0" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="Envelop"/>
@@ -486,10 +487,14 @@
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="Cepstrum"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>                              
-                            </CheckBox>
+                            </CheckBox>-->
+                            <RadioButton Content="无" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center" />
+                            <RadioButton Content="包络" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Envelope}" VerticalAlignment="Center" />
+                            <RadioButton Content="TFF" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TFF}" VerticalAlignment="Center" />
+                            <RadioButton Content="倒频谱" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Cepstrum}" VerticalAlignment="Center" />
                         </StackPanel>
                         <WrapPanel ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-                            <CheckBox Margin="5,0" Content="时域" IsChecked="False" Style="{StaticResource CheckBoxStyle}"> 
+                            <CheckBox Margin="5,0" Content="时域" IsChecked="True" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="TimeDomain"/>
@@ -499,7 +504,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="频域" IsChecked="False" Style="{StaticResource CheckBoxStyle}">
+                            <CheckBox Margin="5,0" Content="频域" IsChecked="True" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="FrequencyDomain"/>

@@ -73,7 +73,7 @@
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button x:Name="clearBufferBtn" Style="{StaticResource ButtonStyle}" Content="清除" Margin="5,0,0,0" Click="clearBufferBtn_Click"/>
             <CheckBox x:Name="scrollCheckBox" Margin="5,0,0,0" VerticalAlignment="Center" Checked="scrollCheckBox_Checked" Unchecked="scrollCheckBox_Unchecked"/>
-            <Button Style="{StaticResource ButtonStyle}" Content="趋势" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click" >
+            <Button Style="{StaticResource ButtonStyle}" Content="趋势" HorizontalAlignment="Right" Click="ScreenshotButton_Click" >
                 <Button.ToolTip>
                     <TextBlock Text="截图"/>
                 </Button.ToolTip>

@@ -11,6 +11,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/aicmath.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/aicmatlabdll.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/danger.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/msg.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/waring.wav")]
 
 

@@ -3,6 +3,7 @@ using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Axes;
+using Arction.Wpf.Charting.EventMarkers;
 using Arction.Wpf.Charting.SeriesXY;
 using System;
 using System.Collections.Generic;
@@ -33,18 +34,23 @@ namespace AIC.DeviceDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuEquipmentRunStatus"], true);
+            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuDeviceRunStatus"], true);
 
             DeviceRunStatusListViewModel vm = this.DataContext as DeviceRunStatusListViewModel;
             if (vm != null)
             {
                 vm.UpdateChart += UpdateChart;
+                vm.ShowBarSeriesChanged += ShowBarSeriesChanged;
             }
 
             CreateChart();
+            CreateChartMore();
 
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
+
+   
+
         public CloseableHeader Closer { get; private set; }
 
         private LightningChartUltimate _chart;
@@ -111,13 +117,13 @@ namespace AIC.DeviceDataPage.Views
             gridChart.SizeChanged += gridChart_SizeChanged;
         }
 
-        private void UpdateChart(List<DeviceRunInfo> deviceList)
+        private void UpdateChart(IEnumerable<DeviceRunInfo> deviceList)
         {
             _chart.BeginUpdate();
             _chart.ViewXY.BarSeries.Clear();
             _chart.ViewXY.XAxes[0].CustomTicks.Clear();
 
-            int pointsCount = deviceList.Count;
+            int pointsCount = deviceList.Count();
             double max = deviceList.Select(p => p.RunHours).Max();
             double min = 0 - deviceList.Select(p => p.StopHours).Max();
             int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 20);
@@ -127,24 +133,25 @@ namespace AIC.DeviceDataPage.Views
             for (int i = 0; i < 2; i++)
             {
                 BarSeriesValue[] data = new BarSeriesValue[pointsCount];
-                for (int j = 0; j < pointsCount; j++)
+                int j = 0;
+                foreach (var device in deviceList)
                 {
                     if (i == 0)
                     {
-                        data[j].Value = deviceList[j].RunHours;
+                        data[j].Value = device.RunHours;
                         data[j].Location = j + 1;
                         //Set label text
-                        data[j].Text = deviceList[j].RunHours.ToString("0");
-                        data[j].Tag = deviceList[j].RunHours.ToString("0");
+                        data[j].Text = device.RunHours.ToString("0");
+                        data[j].Tag = device.RunHours.ToString("0");
                     }
                     else if (i == 1)
                     {
-                        data[j].Value = 0 - deviceList[j].StopHours;
+                        data[j].Value = 0 - device.StopHours;
                         data[j].Location = j + 1;
                         //Set label text                       
-                        data[j].Text = deviceList[j].StopHours.ToString("0");
-                        data[j].Tag = deviceList[j].StopHours.ToString("0");
-                    }                  
+                        data[j].Text = device.StopHours.ToString("0");
+                        data[j].Tag = device.StopHours.ToString("0");
+                    }
 
                     if (i == 0)
                     {
@@ -152,12 +159,13 @@ namespace AIC.DeviceDataPage.Views
                         CustomAxisTick tick = new CustomAxisTick(_chart.ViewXY.XAxes[0]);
                         tick.AxisValue = (double)(j + 1);
 
-                        string name = deviceList[j].DeviceTreeItemViewModel.Name;
+                        string name = device.DeviceTreeItemViewModel.Name;
                         int HanNumlenght = GetHanNumFromString(name);
                         tick.LabelText = name.Substring(0, HanNumlenght) + "\r\n" + name.Substring(HanNumlenght);
-                        tick.Length = 0;                        
+                        tick.Length = 0;
                         _chart.ViewXY.XAxes[0].CustomTicks.Add(tick);
                     }
+                    j++;
                 }
                 BarSeries bs = new BarSeries(_chart.ViewXY, _chart.ViewXY.XAxes[0], _chart.ViewXY.YAxes[0]);
                 //Set series title 
@@ -190,6 +198,7 @@ namespace AIC.DeviceDataPage.Views
                 _chart.ViewXY.BarSeries.Add(bs);
             }
             _chart.EndUpdate();
+            UpdateChartMore(deviceList);
         }
 
         private void gridChart_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -203,6 +212,168 @@ namespace AIC.DeviceDataPage.Views
             int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 20);
             _chart.ViewXY.BarSeries.ForEach(p => p.BarThickness = with);
             _chart.EndUpdate();
+        }
+
+        private LightningChartUltimate m_chart;
+
+        private void CreateChartMore()
+        {
+            gridChartMore.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+
+            m_chart = new LightningChartUltimate();
+            m_chart.BeginUpdate();
+            m_chart.Title.Text = "";
+
+            m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
+            m_chart.ChartBackground.GradientFill = GradientFill.Solid;
+            m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
+            m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
+            m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
+
+            //m_chart.ViewXY.XAxes[0].ValueType = AxisValueType.DateTime;
+            //m_chart.ViewXY.XAxes[0].AutoFormatLabels = false;
+            //m_chart.ViewXY.XAxes[0].LabelsTimeFormat = "yy-MM-dd";
+            m_chart.ViewXY.XAxes[0].ValueType = AxisValueType.Number;
+            m_chart.ViewXY.XAxes[0].AutoFormatLabels = false;
+            m_chart.ViewXY.XAxes[0].CustomTicksEnabled = true;
+            m_chart.ViewXY.XAxes[0].Title.Visible = false;
+            m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
+            m_chart.ViewXY.XAxes[0].MajorGrid.Visible = false;
+            m_chart.ViewXY.XAxes[0].AxisThickness = 2;
+            m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+            m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+            m_chart.ViewXY.YAxes[0].SetRange(0, 28);
+            m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+
+            m_chart.ViewXY.LegendBoxes[0].Visible = true;
+            m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
+            m_chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
+            m_chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
+            m_chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
+            m_chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopRight;
+            m_chart.ViewXY.LegendBoxes[0].Offset.SetValues(-80, 5);
+            m_chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+
+            m_chart.ViewXY.ZoomToFit();
+            m_chart.EndUpdate();
+
+            gridChartMore.Children.Add(m_chart);
+        }
+
+        private void UpdateChartMore(IEnumerable<DeviceRunInfo> deviceList)
+        {
+            m_chart.BeginUpdate();
+
+            m_chart.ViewXY.AreaSeries.Clear();
+            m_chart.ViewXY.XAxes[0].CustomTicks.Clear();
+
+            int count = 0;
+            foreach (var device in deviceList)
+            {
+              
+                var axisY = m_chart.ViewXY.YAxes[0];
+
+                AreaSeries series = new AreaSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
+                series.MouseInteraction = false;
+                series.Title.Text = device.DeviceTreeItemViewModel.Name;
+              
+            
+                Color color = DefaultColors.SeriesForBlackBackgroundWpf[count];
+                series.Fill.Color = color;
+                series.LineStyle.Color = color;
+                series.Title.Color = color;               
+                series.LineStyle.AntiAliasing = LineAntialias.Normal;
+                series.LineStyle.Width = 1;
+
+                if (device.RunInfo == null || device.RunInfo.Count == 0)
+                {
+                    continue;
+                }
+                AreaSeriesPoint[] points = new AreaSeriesPoint[device.RunInfo.Count];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    points[i].X = i;//m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(device.RunInfo[i].Time);
+                    points[i].Y = device.RunInfo[i].RunHours;
+                    SeriesEventMarker marker = new SeriesEventMarker(series);
+                    marker.XValue = points[i].X;
+                    marker.YValue = points[i].Y;
+                    marker.HorizontalPosition = SeriesEventMarkerHorizontalPosition.AtXValue;
+                    marker.Symbol.Width = 5;
+                    marker.Symbol.Height = 5;
+                    //store values in label text    
+                    marker.Label.Text = "运行时间" + points[i].Y.ToString("0") + "h";
+                    marker.Label.HorizontalAlign = AlignmentHorizontal.Center;
+                    marker.Label.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9f, System.Drawing.FontStyle.Bold);
+                    marker.Label.Shadow.Style = TextShadowStyle.HighContrast;
+                    marker.Label.Shadow.ContrastColor = Colors.Black;
+                    marker.Label.VerticalAlign = AlignmentVertical.Top;
+                    marker.Label.Visible = false;
+                    marker.Symbol.GradientFill = GradientFillPoint.Solid;
+                    marker.Symbol.Color1 = color;                  
+                    marker.Symbol.Shape = Arction.Wpf.Charting.Shape.Circle;
+                    marker.VerticalPosition = SeriesEventMarkerVerticalPosition.AtYValue;
+                    marker.MoveByMouse = false;
+                    marker.MouseOverOn += new MouseEventHandler(marker_MouseOverOn);
+                    marker.MouseOverOff += new MouseEventHandler(marker_MouseOverOff);
+                    series.SeriesEventMarkers.Add(marker);
+
+                    CustomAxisTick tick = new CustomAxisTick(m_chart.ViewXY.XAxes[0]);
+                    tick.AxisValue = i;
+                    tick.LabelText = device.RunInfo[i].Time.ToShortDateString();
+
+                    m_chart.ViewXY.XAxes[0].CustomTicks.Add(tick);
+                }
+                series.Points = points;
+                series.Tag = device;
+                series.Visible = false;
+                m_chart.ViewXY.AreaSeries.Add(series);
+
+                count++;
+                if (count >= 16)
+                {
+                    count = 0;
+                }
+            }
+
+
+            if (m_chart.ViewXY.AreaSeries.Count > 0)
+            {
+                double minX = m_chart.ViewXY.AreaSeries.SelectMany(o => o.Points).Select(o => o.X).Min();
+                double maxX = m_chart.ViewXY.AreaSeries.SelectMany(o => o.Points).Select(o => o.X).Max();
+                m_chart.ViewXY.XAxes[0].SetRange(minX, maxX);
+            }
+            m_chart.EndUpdate();
+
+        }
+
+        private void ShowBarSeriesChanged(DeviceRunInfo device)
+        {
+            foreach(var series in m_chart.ViewXY.AreaSeries)
+            {
+                if (series.Tag == device)
+                {
+                    series.Visible = true;
+                }
+                else
+                {
+                    series.Visible = false;
+                }
+            }
+        }
+
+        private void marker_MouseOverOff(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = false;
+        }
+        private void marker_MouseOverOn(object sender, MouseEventArgs e)
+        {
+            ((SeriesEventMarker)sender).Label.Visible = true;
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e)

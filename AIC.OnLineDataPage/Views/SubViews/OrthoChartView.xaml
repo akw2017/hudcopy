@@ -87,7 +87,7 @@
             <CheckBox Name="divCheckBox" Content="分频" Margin="5,0,0,0" Foreground="#FF87CDEE" VerticalAlignment="Center"/>
             <xctk:DoubleUpDown Name="multiplierUpDown" Increment="0.5" Minimum="0" Value="0.5" Margin="5,0,0,0"/>
             <CheckBox x:Name="fitViewCheckBox" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="True"/>
-            <Button HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}"  Content="轴心轨迹" VerticalAlignment="Top" Click="ScreenshotButton_Click" Margin="0,0,5,0">
+            <Button HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}"  Content="轴心轨迹" Click="ScreenshotButton_Click" Margin="0,0,5,0">
                 <Button.ToolTip>
                     <TextBlock Text="截图"/>
                 </Button.ToolTip>

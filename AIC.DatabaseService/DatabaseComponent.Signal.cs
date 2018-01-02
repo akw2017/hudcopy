@@ -57,12 +57,38 @@ namespace AIC.DatabaseService
             return await Task.Run(() =>
             {
                 var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
-                var historyResult = client.QueryHistorySampleData<T>(guid,
+                var historyResult = client.QueryHistorySampleData<T>(new Guid[] { guid },
                 columns, startTime, endTime, condition, args);
 
                 //先判断是不是OK
                 if (historyResult.IsOK)
                 {                   
+                    return historyResult.ResponseItem;
+                }
+                else
+                {
+                    //ErrorMessage是错误信息
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(historyResult.ErrorMessage)));
+                    return null;
+                }
+            });
+        }
+
+        public async Task<List<T>> GetHistoryData<T>(string ip, Guid[] guids, string[] columns, DateTime startTime, DateTime endTime, string condition, object[] args, IProgress<double> process)
+        {
+            return await Task.Run(() =>
+            {
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
+                var historyResult = client.QueryHistorySampleData<T>(guids,
+                columns, startTime, endTime, condition, args);
+
+                //先判断是不是OK
+                if (historyResult.IsOK)
+                {
+                    if (process != null)
+                    {
+                        process.Report(1);
+                    }
                     return historyResult.ResponseItem;
                 }
                 else
@@ -94,6 +120,32 @@ namespace AIC.DatabaseService
                     
             });
            
+        }
+
+        public async Task<List<T>> GetHistoryWaveformData<T>(string ip, Dictionary<Guid, Tuple<Guid, DateTime>> recordLabs, IProgress<double> process)
+        {
+            return await Task.Run(() =>
+            {
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
+                var historyResult = client.QueryHistoryWaveformData<T>(recordLabs, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit", "T_Item_Guid", "AlarmGrade" });
+
+                //先判断是不是OK
+                if (historyResult.IsOK)
+                {
+                    if (process != null)
+                    {
+                        process.Report(1);
+                    }
+                    return historyResult.ResponseItem;
+                }
+                else
+                {
+                    //ErrorMessage是错误信息
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(historyResult.ErrorMessage)));
+                    return null;
+                }
+            });          
+
         }
 
         public async Task<Dictionary<Guid, Dictionary<string, double>>> GetStatisticsData(string ip, HashSet<Guid> guidlist)

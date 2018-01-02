@@ -14,7 +14,7 @@ namespace AIC.OnLineDataPage.Models
             this.signal = signal;
         }
 
-        public void SetDisplayModeAsync(SignalDisplayType mode)
+        public void SetDisplayModeAsync(SignalDisplayType mode, bool isfilter, SignalPreProccessType signalPreType)
         {
             if (DisplayMode != mode)
             {
@@ -29,7 +29,7 @@ namespace AIC.OnLineDataPage.Models
                     case SignalDisplayType.TimeDomain:
                         if (Signal is BaseWaveSignal)
                         {
-                            DataViewModel = new TimeDomainChartViewModel(Signal);
+                            DataViewModel = new TimeDomainChartViewModel(Signal, isfilter, signalPreType);
                         }
                         else
                         {
@@ -39,7 +39,7 @@ namespace AIC.OnLineDataPage.Models
                     case SignalDisplayType.FrequencyDomain:
                         if (Signal is BaseWaveSignal)
                         {
-                            DataViewModel = new FrequencyDomainChartViewModel(Signal);
+                            DataViewModel = new FrequencyDomainChartViewModel(Signal, isfilter, signalPreType);
                         }
                         else
                         {
@@ -49,7 +49,7 @@ namespace AIC.OnLineDataPage.Models
                     case SignalDisplayType.PowerSpectrum:
                         if (Signal is BaseWaveSignal)
                         {
-                            DataViewModel = new PowerSpectrumChartViewModel(Signal);
+                            DataViewModel = new PowerSpectrumChartViewModel(Signal, isfilter, signalPreType);
                         }
                         else
                         {
@@ -59,7 +59,7 @@ namespace AIC.OnLineDataPage.Models
                     case SignalDisplayType.PowerSpectrumDensity:
                         if (Signal is BaseWaveSignal)
                         {
-                            DataViewModel = new PowerSpectrumDensityChartViewModel(Signal);
+                            DataViewModel = new PowerSpectrumDensityChartViewModel(Signal, isfilter, signalPreType);
                         }
                         else
                         {

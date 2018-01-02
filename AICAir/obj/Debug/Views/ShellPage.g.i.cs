@@ -45,7 +45,7 @@ namespace AICAir.Views {
     public partial class ShellPage : System.Windows.Controls.Page, System.Windows.Markup.IComponentConnector {
         
         
-        #line 12 "..\..\..\Views\ShellPage.xaml"
+        #line 13 "..\..\..\Views\ShellPage.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.ContentControl MainRegionContent;
         

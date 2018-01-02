@@ -19,7 +19,7 @@
     <s:String x:Key="strExit">Exit</s:String>
     <s:String x:Key="strExitSystem">Exit system?</s:String>
     <s:String x:Key="strStart">Start</s:String>
-    <s:String x:Key="strStop">Stop</s:String>
+    <s:String x:Key="strStop">Stop</s:String>    
 
     <s:String x:Key="strMainControlCard">MainControlCard</s:String>
     <s:String x:Key="strWireMatchingCard">WireMatchingCard</s:String>
@@ -67,8 +67,10 @@
     <s:String x:Key="menuOrganizationManage">OrganizationManage</s:String>
     <s:String x:Key="menuManageLog">SettingLog</s:String>
 
-    <s:String x:Key="menuEquipmentData">EquipmentData</s:String>
-    <s:String x:Key="menuEquipmentRunStatus">EquipmentRunStatus</s:String>
+    <s:String x:Key="menuDeviceData">EquipmentData</s:String>
+    <s:String x:Key="menuDeviceRunStatus">EquipmentRunStatus</s:String>
+    <s:String x:Key="menuDeviceRunAnalyze">EquipmentRunAnalyze</s:String>
+    <s:String x:Key="menuDeviceHourlyData">EquipmentHourlyData</s:String>
 
     <s:String x:Key="menuSetting">System</s:String>
     <s:String x:Key="menuServerSetting">ServerSetting</s:String>
@@ -126,6 +128,8 @@
     <s:String x:Key="transmissionIdentifier">TransmissionCardIdentifier</s:String>
     <s:String x:Key="save">Save</s:String>
     <s:String x:Key="load">Load</s:String>
+    <s:String x:Key="print">Print</s:String>
+    <s:String x:Key="export">Export</s:String>
     
     <s:String x:Key="name">Name</s:String>
     <s:String x:Key="code">Code</s:String>

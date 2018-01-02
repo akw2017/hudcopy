@@ -465,20 +465,19 @@
 
         <StackPanel Grid.Row="3" Grid.Column ="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBox Text="{Binding ChartFileName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200"/>
-            <Button Command="{Binding SaveChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+            <Button Command="{Binding AddChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/filesave.png"  />
-                        <TextBlock Text="{DynamicResource save}" VerticalAlignment="Center" />
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <ComboBox Width="200" ItemsSource="{Binding ChartFileCategory}" SelectedItem="{Binding ChartFile}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False" Margin="4,0,0,0"/>
-            <Button Command="{Binding LoadChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+            <Button Command="{Binding EditChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
-                        <TextBlock Text="{DynamicResource load}" VerticalAlignment="Center" />
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
+                        <TextBlock Text="{DynamicResource edit}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
@@ -490,6 +489,15 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
+            <ComboBox Width="200" ItemsSource="{Binding ChartFileCategory}" SelectedItem="{Binding ChartFile}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False" Margin="4,0,0,0"/>
+            <Button Command="{Binding LoadChartFileCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
+                        <TextBlock Text="{DynamicResource load}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>           
         </StackPanel>
 
     </Grid>

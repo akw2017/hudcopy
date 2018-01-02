@@ -14,7 +14,7 @@ namespace AIC.Core
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AlarmGrade)
+            if (value is AlarmGrade || value is int)
             {
                 AlarmGrade grade = (AlarmGrade)value;
                 switch (grade)
@@ -39,5 +39,26 @@ namespace AIC.Core
         {
             throw new NotImplementedException();
         }
+
+        public static string Convert(AlarmGrade grade)//后台代码使用
+        {
+            switch (grade)
+            {
+                case AlarmGrade.Invalid: return "无效";
+                case AlarmGrade.HighNormal:
+                case AlarmGrade.LowNormal: return "正常";
+                case AlarmGrade.HighPreAlert:
+                case AlarmGrade.LowPreAlert: return "预警";
+                case AlarmGrade.HighAlert:
+                case AlarmGrade.LowAlert: return "警告";
+                case AlarmGrade.HighDanger:
+                case AlarmGrade.LowDanger: return "危险";
+                case AlarmGrade.DisConnect: return "断线";
+                    //default:return grade.ToString();
+            }
+            return null;
+        }
     }
+
+
 }

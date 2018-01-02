@@ -218,11 +218,9 @@
     <Compile Include="Controls\ResizableItem.cs" />
     <Compile Include="Controls\ResizableItemsControl.cs" />
     <Compile Include="Converters\AlarmGradeToImageConverter.cs" />
-    <Compile Include="Converters\StringShowLenghtConverter.cs" />
     <Compile Include="Converters\IntToAlarmTypeStrConverter.cs" />
     <Compile Include="Events\AddSignalToTileEvent.cs" />
     <Compile Include="Events\TestPointTreeModelSelectedEvent.cs" />
-    <Compile Include="Models\DiagnosticInfoClass.cs" />
     <Compile Include="Models\ImageValueDesigner.cs" />
     <Compile Include="Models\SignalValueDesigner.cs" />
     <Compile Include="Models\ValueBaseDesigner.cs" />

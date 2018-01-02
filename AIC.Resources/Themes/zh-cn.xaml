@@ -67,8 +67,10 @@
     <s:String x:Key="menuOrganizationManage">组织管理</s:String>
     <s:String x:Key="menuManageLog">管理日志</s:String>
 
-    <s:String x:Key="menuEquipmentData">设备数据</s:String>
-    <s:String x:Key="menuEquipmentRunStatus">设备运行状态</s:String>
+    <s:String x:Key="menuDeviceData">设备数据</s:String>
+    <s:String x:Key="menuDeviceRunStatus">设备运行状态</s:String>
+    <s:String x:Key="menuDeviceRunAnalyze">设备运行分析</s:String>
+    <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
 
     <s:String x:Key="menuSetting">设置</s:String>
     <s:String x:Key="menuServerSetting">服务器管理</s:String>
@@ -126,6 +128,8 @@
     <s:String x:Key="transmissionIdentifier">传输卡Identifier</s:String>
     <s:String x:Key="save">保存</s:String>
     <s:String x:Key="load">载入</s:String>
+    <s:String x:Key="print">打印</s:String>
+    <s:String x:Key="export">导出</s:String>
 
     <s:String x:Key="name">名称</s:String>
     <s:String x:Key="code">代号</s:String>

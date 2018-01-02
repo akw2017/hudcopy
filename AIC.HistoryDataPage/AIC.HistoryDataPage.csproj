@@ -182,7 +182,6 @@
     <Compile Include="HistoryDataPageModule.cs" />
     <Compile Include="Models\AsyncCommand.cs" />
     <Compile Include="Models\AsyncCommandBase.cs" />
-    <Compile Include="Models\ChartFileData.cs" />
     <Compile Include="Models\ConditionClass.cs" />
     <Compile Include="Models\IAsyncCommand.cs" />
     <Compile Include="Models\LinqWhereHelper.cs" />

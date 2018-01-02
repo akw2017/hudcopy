@@ -77,3 +77,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\XBAP Debug\AIC.Database
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\XBAP Debug\AIC.DatabaseService.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.Resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.Resources.pdb

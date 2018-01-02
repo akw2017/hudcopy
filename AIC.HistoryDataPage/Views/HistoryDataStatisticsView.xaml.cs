@@ -99,7 +99,7 @@ namespace AIC.HistoryDataPage.Views
 
             //Arrange bars side-by-side and fit to width of the chart
             _chart.ViewXY.BarViewOptions.Grouping = BarsGrouping.ByLocation;
-            _chart.ViewXY.BarViewOptions.Stacking = BarsStacking.Stack;
+            _chart.ViewXY.BarViewOptions.Stacking = BarsStacking.None;
             _chart.ViewXY.BarViewOptions.BarSpacing = 5;
             _chart.ViewXY.BarViewOptions.Orientation = BarsOrientation.Vertical;
 
@@ -124,7 +124,7 @@ namespace AIC.HistoryDataPage.Views
             var devicelist = sglist.GroupBy(p => p.OrganizationDeviceName).ToList(); 
             int pointsCount = devicelist.Count;
             var max = devicelist.Select(p => p.Select(c => c.PreAlarmCount + c.AlarmCount + c.DangerCount).Sum()).Max();// sglist.Max(p => p.AlarmCount + p.PreAlarmCount + p.DangerCount);
-            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 10);
+            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 20) / 3;
             _chart.ViewXY.YAxes[0].SetRange(0, max);
             _chart.ViewXY.XAxes[0].SetRange(0.0, (double)(pointsCount + 1));
             // Add a bar series for each point, with a different color.
@@ -236,7 +236,7 @@ namespace AIC.HistoryDataPage.Views
             }
             _chart.BeginUpdate();
             int pointsCount = _chart.ViewXY.BarSeries[0].Values.Count();          
-            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 10);
+            int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 20) / 3;
             _chart.ViewXY.BarSeries.ForEach(p => p.BarThickness = with);
             _chart.EndUpdate();
         }

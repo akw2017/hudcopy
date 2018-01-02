@@ -40,12 +40,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridChart.Children.Clear();
-            if (rpm3Dchart != null)
-            {
-                rpm3Dchart.Dispose();
-                rpm3Dchart = null;
-            }
+            //gridChart.Children.Clear();
+            //if (rpm3Dchart != null)
+            //{
+            //    rpm3Dchart.Dispose();
+            //    rpm3Dchart = null;
+            //}
         }
 
         protected override void ViewModel_SignalChanged()

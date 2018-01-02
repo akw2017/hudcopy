@@ -102,6 +102,50 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        private SignalPreProccessType signalPreProccessType;
+        public SignalPreProccessType SignalPreProccessType
+        {
+            get { return signalPreProccessType; }
+            set
+            {
+                if (signalPreProccessType != value)
+                {
+                    ChangeProcessor(signalPreProccessType, value);
+                    signalPreProccessType = value;
+                    OnPropertyChanged("SignalPreProccessType");
+                }
+            }
+        }
+
+        private bool isFilter;
+        public bool IsFilter
+        {
+            get { return isFilter; }
+            set
+            {
+                if (isFilter != value)
+                {
+                    ChangeFilter(isFilter, value);
+                    isFilter = value;
+                    OnPropertyChanged("IsFilter");
+                }
+            }
+        }
+
+        private BaseAlarmSignal selectedSignal;
+        public BaseAlarmSignal SelectedSignal
+        {
+            get { return selectedSignal; }
+            set
+            {
+                if (selectedSignal != value)
+                {
+                    selectedSignal = value;
+                    OnPropertyChanged(() => this.SelectedSignal);
+                }
+            }
+        }
+
         private SignalTileViewModel selectedSignalMonitor;
         public SignalTileViewModel SelectedSignalMonitor
         {
@@ -124,6 +168,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         selectedSignalMonitor.IsSelected = true;
                         CurrentSignalDisplayType = SelectedSignalMonitor.DisplayMode;
                     }
+                    //SelectedSignal = SelectedSignalMonitor.Signal;
                     OnPropertyChanged("SelectedSignalMonitor");
                 }
             }
@@ -334,7 +379,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     CurrentSignalDisplayType = SignalDisplayType.MultiDivFre;
 
-                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType);
+                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
                 }
                 else if (organization is ItemTreeItemViewModel)//测点
@@ -357,7 +402,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                     }
 
-                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType);
+                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
                 }
                 else if (organization is DeviceTreeItemViewModel)//设备
@@ -381,7 +426,7 @@ namespace AIC.OnLineDataPage.ViewModels
                                 continue;
                             }
                         }
-                        SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType);
+                        SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
                     }
                 }
@@ -407,7 +452,7 @@ namespace AIC.OnLineDataPage.ViewModels
                                 continue;
                             }
                         }
-                        SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType);
+                        SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
                     }
                 }
@@ -482,7 +527,7 @@ namespace AIC.OnLineDataPage.ViewModels
                             continue;
                         }
                     }
-                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, displayType);
+                    SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, displayType, IsFilter, SignalPreProccessType);
                     if (viewModel != null)
                     {
                         models.Add(viewModel);
@@ -499,12 +544,12 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private SignalTileViewModel BuildSignalTileViewModel(BaseAlarmSignal sg, SignalDisplayType signalDisplayType)
+        private SignalTileViewModel BuildSignalTileViewModel(BaseAlarmSignal sg, SignalDisplayType signalDisplayType, bool isfilter, SignalPreProccessType signalPreType)
         {
             SignalTileViewModel viewModel = new SignalTileViewModel(sg);
             viewModel.ItemWidth = itemWidth;
             viewModel.ItemHeight = itemHeight;
-            viewModel.SetDisplayModeAsync(signalDisplayType);
+            viewModel.SetDisplayModeAsync(signalDisplayType, isfilter, signalPreType);
             viewModel.CloseCommand = DeleteCommand;
             return viewModel;
         }
@@ -522,12 +567,50 @@ namespace AIC.OnLineDataPage.ViewModels
                     var sg = SelectedSignalMonitor.Signal;
                     if (sg.SupportFunView(CurrentSignalDisplayType))
                     {
-                        SelectedSignalMonitor.SetDisplayModeAsync(CurrentSignalDisplayType);
+                        SelectedSignalMonitor.SetDisplayModeAsync(CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         if (SelectedSignalMonitor.DataViewModel != null)
                         {
                             SelectedSignalMonitor.DataViewModel.IsUpdated = true;
                         }
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-拼图视图-选取信号", ex));
+            }
+        }
+
+        private void ChangeProcessor(SignalPreProccessType oldsignalPreType, SignalPreProccessType newsignalPreTyp)
+        {
+            if (adding == true)
+            {
+                return;
+            }
+            try
+            {
+                if (SelectedSignalMonitor != null && SelectedSignalMonitor.DataViewModel != null)
+                {
+                    SelectedSignalMonitor.DataViewModel.SignalPreProccessType = newsignalPreTyp;
+                }
+            }
+            catch (Exception ex)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-拼图视图-选取信号", ex));
+            }
+        }
+
+        public void ChangeFilter(bool oldisFilter, bool newisFilter)
+        {
+            if (adding == true)
+            {
+                return;
+            }
+            try
+            {
+                if (SelectedSignalMonitor != null && SelectedSignalMonitor.DataViewModel != null)
+                {
+                    SelectedSignalMonitor.DataViewModel.IsFilter = newisFilter;
                 }
             }
             catch (Exception ex)

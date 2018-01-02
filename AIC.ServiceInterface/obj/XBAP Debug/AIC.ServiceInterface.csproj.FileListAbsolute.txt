@@ -44,7 +44,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\CitizenSoft
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\System.Reactive.Interfaces.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\XBAP Debug\de\FluentValidation.resources.dll

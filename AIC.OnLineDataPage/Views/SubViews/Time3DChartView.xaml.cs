@@ -46,12 +46,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            gridTime3DChart.Children.Clear();
-            if (time3Dchart != null)
-            {
-                time3Dchart.Dispose();
-                time3Dchart = null;
-            }
+            //gridTime3DChart.Children.Clear();
+            //if (time3Dchart != null)
+            //{
+            //    time3Dchart.Dispose();
+            //    time3Dchart = null;
+            //}
         }
 
         protected override void ViewModel_SignalChanged()

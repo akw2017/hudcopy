@@ -1312,14 +1312,14 @@ namespace AIC.Core.Models
             }
         }
 
-        private bool _isUploadWave;
-        public bool IsUploadWave //是否上传波形
+        private bool _isACQWave;
+        public bool IsACQWave //是否上传波形
         {
-            get { return _isUploadWave; }
+            get { return _isACQWave; }
             set
             {
-                _isUploadWave = value;
-                OnPropertyChanged("IsUploadWave");
+                _isACQWave = value;
+                OnPropertyChanged("IsACQWave");
             }
         }
 

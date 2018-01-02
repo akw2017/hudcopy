@@ -2511,7 +2511,7 @@ namespace AIC.PDAPage.ViewModels
             }
 
             channeltree.BindTemp(recycleditemtree, organizations, itemtree.Parent as DeviceTreeItemViewModel);
-            recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, itemtree.T_Organization.Name);
+            recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, itemtree.T_Organization);
             itemtree.T_Organization.UpdateTemp(organization);
 
             Dictionary<string, Tuple<ICollection<string>, ICollection<object>>> editDic = new Dictionary<string, Tuple<ICollection<string>, ICollection<object>>>();
@@ -4295,7 +4295,7 @@ namespace AIC.PDAPage.ViewModels
                         }
 
                         channeltree.BindTemp(recycleditemtree, organizations, itemtree.Parent as DeviceTreeItemViewModel);
-                        recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, itemtree.T_Organization.Name);
+                        recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, itemtree.T_Organization);
                         itemtree.T_Organization.UpdateTemp(organization);
 
                         Dictionary<string, Tuple<ICollection<string>, ICollection<object>>> editDic = new Dictionary<string, Tuple<ICollection<string>, ICollection<object>>>();
@@ -4477,7 +4477,7 @@ namespace AIC.PDAPage.ViewModels
                                 organization.Parent_Guid = channeltree.IChannel.T_Device_Guid;
                                 organization.Parent_Level = device.T_Organization.Level;
 
-                                recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, channeltree.IChannel.T_Item_Name);
+                                recycleditemtree.BindTemp(channeltree, recycleditemtree.T_Item.IP, recycleditemtree.T_Item.Identifier, ServerIP, old_item.T_Organization);
 
                                 old_item.T_Organization.UpdateTemp(organization);
 

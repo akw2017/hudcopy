@@ -118,6 +118,7 @@
     <Compile Include="Integration.cs" />
     <Compile Include="MotorType.cs" />
     <Compile Include="NaturalFreMode.cs" />
+    <Compile Include="SignalPreProccessType.cs" />
     <Compile Include="Unit\UnitType.cs" />
     <Compile Include="UserManager\OperateType.cs" />
     <Compile Include="ThresholdMode.cs" />

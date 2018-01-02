@@ -13,12 +13,18 @@ namespace AIC.CoreType
         VData = 0,
         Time,
         Frequency,
-        Filter,
-        Envelope,
-        TFF,
-        Cepstrum,
+        //Filter,
+        //Envelope,
+        //TFF,
+        //Cepstrum,
         PowerSpectrum,
         PowerSpectrumDensity,
+
+        FilterVData = 0,
+        FilterTime,
+        FilterFrequency,
+        FilterPowerSpectrum,
+        FilterPowerSpectrumDensity,
 
         //包络
         EnvelopeVData,
@@ -40,5 +46,26 @@ namespace AIC.CoreType
         CepstrumFrequency,
         CepstrumPowerSpectrum,
         CepstrumPowerSpectrumDensity,
+
+        //过滤后包络
+        FilterEnvelopeVData,
+        FilterEnvelopeTime,
+        FilterEnvelopeFrequency,
+        FilterEnvelopePowerSpectrum,
+        FilterEnvelopePowerSpectrumDensity,
+
+        //过滤后TFF
+        FilterTFFVData,
+        FilterTFFTime,
+        FilterTFFFrequency,
+        FilterTFFPowerSpectrum,
+        FilterTFFPowerSpectrumDensity,
+
+        //过滤后倒频谱
+        FilterCepstrumVData,
+        FilterCepstrumTime,
+        FilterCepstrumFrequency,
+        FilterCepstrumPowerSpectrum,
+        FilterCepstrumPowerSpectrumDensity,
     }
 }

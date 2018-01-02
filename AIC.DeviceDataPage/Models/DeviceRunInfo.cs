@@ -1,4 +1,5 @@
 ﻿using AIC.Core.OrganizationModels;
+using AIC.CoreType;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace AIC.DeviceDataPage.Models
 {
     public class DeviceRunInfo : BindableBase
     {
-        private DateTime startTime { get; set; }
+        private DateTime startTime;
         public DateTime StartTime
         {
             get
@@ -24,7 +25,7 @@ namespace AIC.DeviceDataPage.Models
             }
         }
 
-        private DateTime endTime { get; set; }
+        private DateTime endTime;
         public DateTime EndTime
         {
             get
@@ -37,6 +38,8 @@ namespace AIC.DeviceDataPage.Models
                 OnPropertyChanged("EndTime");
             }
         }
+
+        public List<RunInfo> RunInfo { get; set; }
 
         private double runHours;
         public double RunHours
@@ -122,6 +125,121 @@ namespace AIC.DeviceDataPage.Models
             }
         }
 
+        private double maxResult;
+        public double MaxResult  //最大值      
+        {
+            get { return maxResult; }
+            set
+            {
+                if (maxResult != value)
+                {
+                    maxResult = value;
+                    OnPropertyChanged("MaxResult");
+                }
+            }
+        }
+
+        private double minResult;
+        public double MinResult  //最小值      
+        {
+            get { return minResult; }
+            set
+            {
+                if (minResult != value)
+                {
+                    minResult = value;
+                    OnPropertyChanged("MinResult");
+                }
+            }
+        }
+
+        private string diagnosticInfo;
+        public string DiagnosticInfo
+        {
+            get { return diagnosticInfo; }
+            set
+            {
+                if (diagnosticInfo != value)
+                {
+                    diagnosticInfo = value;
+                    OnPropertyChanged(() => DiagnosticInfo);
+                }
+            }
+        }
+
+        private string diagnosticAdvice;
+        public string DiagnosticAdvice
+        {
+            get { return diagnosticAdvice; }
+            set
+            {
+                if (diagnosticAdvice != value)
+                {
+                    diagnosticAdvice = value;
+                    OnPropertyChanged(() => DiagnosticAdvice);
+                }
+            }
+        }
+        private string unit;
+        public string Unit
+        {
+            get { return unit; }
+            set
+            {
+                if (unit != value)
+                {
+                    unit = value;
+                    OnPropertyChanged(() => Unit);
+                }
+            }
+        }
+
         public DeviceTreeItemViewModel DeviceTreeItemViewModel { get; set; }
-}
+
+        public Guid RecordLab { get; set; }//诊断用
+
+        public DateTime aCQDatetime;//诊断用
+        public DateTime ACQDatetime
+        {
+            get
+            {
+                return aCQDatetime;
+            }
+            set
+            {
+                aCQDatetime = value;
+                OnPropertyChanged("ACQDatetime");
+            }
+        }
+        public Guid T_Item_Guid { get; set; }//诊断用
+        public float RPM { get; set; }//诊断用
+
+        private AlarmGrade alarmGrade;
+        public AlarmGrade AlarmGrade
+        {
+            get { return alarmGrade; }
+            set
+            {
+                if (alarmGrade != value)
+                {
+                    alarmGrade = value;
+                    OnPropertyChanged(() => AlarmGrade);
+                }
+            }
+        }
+    }
+
+    public class RunInfo
+    {
+        public DateTime Time { get; set; }
+        public double RunHours { get; set; }
+        public double MaxResult { get; set; }
+        public double MinResult { get; set; }
+        public Guid RecordLab { get; set; }//诊断用
+        public DateTime ACQDatetime { get; set; }//诊断用
+        public Guid T_Item_Guid { get; set; }//诊断用
+        public float RPM { get; set; }//诊断用
+        public string Unit { get; set; }
+        public AlarmGrade AlarmGrade { get; set; }
+    }
 }

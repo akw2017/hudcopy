@@ -156,15 +156,18 @@ namespace AIC.HistoryDataPage.Views
                     int firstIndex = m_chart.ViewXY.YAxes.IndexOf(yAxis);
                     m_chart.ViewXY.YAxes.Remove(yAxis);
 
-                    AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
-                    var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    branches.RemoveAt(firstIndex + 1);
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var branch in branches)
+                    if (m_chart.ViewXY.Annotations.Count > 0)
                     {
-                        sb.AppendLine(branch);
+                        AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
+                        var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                        branches.RemoveAt(firstIndex + 1);
+                        StringBuilder sb = new StringBuilder();
+                        foreach (var branch in branches)
+                        {
+                            sb.AppendLine(branch);
+                        }
+                        annotation.Text = sb.ToString().Trim();
                     }
-                    annotation.Text = sb.ToString().Trim(); 
                 }
 
                 if (m_chart.ViewXY.YAxes.Count == 0)

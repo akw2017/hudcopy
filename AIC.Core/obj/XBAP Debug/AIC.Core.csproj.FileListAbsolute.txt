@@ -41,7 +41,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\System.Reactive.Interfa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\System.Reactive.Linq.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\de\FluentValidation.resources.dll
@@ -60,3 +59,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Debug\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Debug\Interop.Office.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Debug\AIC.Core.csproj.ResolveComReference.cache

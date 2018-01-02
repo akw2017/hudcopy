@@ -50,7 +50,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\Newtonso
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\CitizenSoftwareLib.Network.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\XClientAPIDemo\obj\Debug\XClientAPIDemo.csprojResolveAssemblyReference.cache

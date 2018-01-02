@@ -142,6 +142,7 @@
     <Compile Include="Behaviors\ChangeBehavior.cs" />
     <Compile Include="Behaviors\ControlMouseDownCommandBehavior.cs" />
     <Compile Include="ControlModels\ITreeItemViewModel.cs" />
+    <Compile Include="Controls\MyListBox.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\AlarmLimitToStringConverter.cs" />
     <Compile Include="Converters\RowToIndexConv.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Converters\NegateConverter.cs" />
     <Compile Include="Converters\GradeToStringConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringShowLenghtConverter.cs" />
     <Compile Include="Converters\ThousandWithKStuffixConverter.cs" />
     <Compile Include="Converters\IsDivfreConverter.cs" />
     <Compile Include="DataModels\D1_AnalogRransducerInSlot.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Behaviors\TreeViewInPlaceEditBoxBehavior.cs" />
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="FunctionalExtensions.cs" />
+    <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\GetEnumDescription.cs" />
     <Compile Include="LMModels\Iid.cs" />
     <Compile Include="LMModels\T1_AbstractChannelInfo.cs" />
@@ -246,6 +249,7 @@
     <Compile Include="Maybe.cs" />
     <Compile Include="ControlModels\ContextMenuViewModel.cs" />
     <Compile Include="Helpers\EqualityHelper.cs" />
+    <Compile Include="Models\DiagnosticInfoClass.cs" />
     <Compile Include="Models\ExceptionModel.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="ControlModels\MenuItemViewModel.cs" />
@@ -295,6 +299,7 @@
     <Compile Include="LocalSetting.cs" />
     <Compile Include="ServerAddress.cs" />
     <Compile Include="Helpers\MyEncrypt.cs" />
+    <Compile Include="Servers\ChartFileData.cs" />
     <Compile Include="Servers\IniFileHelper.cs" />
     <Compile Include="Servers\IXmlDataService.cs" />
     <Compile Include="Servers\XmlDataService.cs" />
@@ -372,7 +377,53 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Office">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>99</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

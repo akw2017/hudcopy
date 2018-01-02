@@ -144,3 +144,12 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\AIC.MatlabMa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryDataStatisticsView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryDataStatisticsView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\MahApps.Metro.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventListView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryDataTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventAlarmTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventListView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryDataTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventAlarmTrendView.baml

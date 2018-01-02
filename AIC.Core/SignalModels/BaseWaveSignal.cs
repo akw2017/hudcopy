@@ -92,6 +92,62 @@ namespace AIC.Core.SignalModels
                 OnPropertyChanged("DiagnosticAdvice");
             }
         }
+
+        private DateTime? diagnosticTime;
+        public DateTime? DiagnosticTime
+        {
+            get
+            {
+                return diagnosticTime;
+            }
+            set
+            {
+                diagnosticTime = value;
+                OnPropertyChanged("DiagnosticTime");
+            }
+        }
+
+        private double? diagnosticResult;
+        public double? DiagnosticResult //结果数据  
+        {
+            get { return diagnosticResult; }
+            set
+            {
+                if (diagnosticResult != value)
+                {
+                    diagnosticResult = value;
+                    OnPropertyChanged("DiagnosticResult");
+                }
+            }
+        }
+
+        private AlarmGrade diagnosticGrade;
+        public AlarmGrade DiagnosticGrade
+        {
+            get { return diagnosticGrade; }
+            set
+            {
+                if (diagnosticGrade != value)
+                {
+                    diagnosticGrade = value;
+                    OnPropertyChanged("DiagnosticGrade");
+                }
+            }
+        }
+
+        private string diagnosticUnit = null;
+        public string DiagnosticUnit        
+        {
+            get
+            {
+                return diagnosticUnit;
+            }
+            set
+            {
+                diagnosticUnit = value;
+                OnPropertyChanged("DiagnosticUnit");
+            }
+        }
         #endregion
 
         #region old
@@ -102,6 +158,29 @@ namespace AIC.Core.SignalModels
         public Dictionary<string, double[]> PhaseList { get; set; }
         public Dictionary<string, double[]> PowerSpectrumList { get; set; }
         public Dictionary<string, double[]> PowerSpectrumDensityList { get; set; }
+        //有效值
+        public Dictionary<string,double> RmsValueList { get; set; }
+        //峰值
+        public Dictionary<string, double> PeakValueList { get; set; }
+        //峰峰值
+        public Dictionary<string, double> PeakPeakValueList { get; set; }
+        //斜度
+        public Dictionary<string, double> SlopeList { get; set; }
+        //峭度
+        public Dictionary<string, double> KurtosisList { get; set; }
+        //峭度指标
+        public Dictionary<string, double> KurtosisValueList { get; set; }
+        //波形指标
+        public Dictionary<string, double> WaveIndexList { get; set; }
+        //峰值指标
+        public Dictionary<string, double> PeakIndexList { get; set; }
+        //脉冲指标
+        public Dictionary<string, double> ImpulsionIndexList { get; set; }
+        //方根幅值
+        public Dictionary<string, double> RootAmplitudeList { get; set; }
+        //裕度指标
+        public Dictionary<string, double> ToleranceIndexList { get; set; }
+
         public int ProcessingFFTLength(string name)
         {
             if (FrequencyList != null && FrequencyList.Keys.Contains(name))
@@ -113,6 +192,39 @@ namespace AIC.Core.SignalModels
                 return 0;
             }
         }
+
+        # region 过滤波形
+        public double[] FilterWaveform { get; set; }
+        public int FilterFFTLength { get { return FilterFrequency != null ? FilterFrequency.Length : 0; } }
+        public double[] FilterFrequency { get; set; }
+        public double[] FilterAmplitude { get; set; }
+        public double[] FilterPhase { get; set; }
+        public double[] FilterPowerSpectrum { get; set; }
+        public double[] FilterPowerSpectrumDensity { get; set; }
+
+        //有效值
+        public double FilterRmsValue { get; set; }
+        //峰值
+        public double FilterPeakValue { get; set; }
+        //峰峰值
+        public double FilterPeakPeakValue { get; set; }
+        //斜度
+        public double FilterSlope { get; set; }
+        //峭度
+        public double FilterKurtosis { get; set; }
+        //峭度指标
+        public double FilterKurtosisValue { get; set; }
+        //波形指标
+        public double FilterWaveIndex { get; set; }
+        //峰值指标
+        public double FilterPeakIndex { get; set; }
+        //脉冲指标
+        public double FilterImpulsionIndex { get; set; }
+        //方根幅值
+        public double FilterRootAmplitude { get; set; }
+        //裕度指标
+        public double FilterToleranceIndex { get; set; }
+        #endregion
 
         public double[] Waveform { get; set; }
         public int FFTLength { get { return Frequency != null ? Frequency.Length : 0; } }
@@ -689,15 +801,15 @@ namespace AIC.Core.SignalModels
         {
             if (FilterType == FilterType.BandPass)
             {
-                Waveform = BPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
+                FilterWaveform = BPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
             }
             else if (FilterType == FilterType.HighPass)
             {
-                Waveform = HPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
+                FilterWaveform = HPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
             }
             else if (FilterType == FilterType.LowPass)
             {
-                Waveform = LPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
+                FilterWaveform = LPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
             }
         }
         #endregion

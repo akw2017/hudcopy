@@ -29,7 +29,7 @@
     <ProductName>AIC.Desktop</ProductName>
     <PublisherName>AIC</PublisherName>
     <SuiteName>AIC</SuiteName>
-    <ApplicationRevision>52</ApplicationRevision>
+    <ApplicationRevision>53</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

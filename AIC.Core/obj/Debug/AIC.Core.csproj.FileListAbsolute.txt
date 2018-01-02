@@ -279,3 +279,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\Interop.Office.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csproj.ResolveComReference.cache

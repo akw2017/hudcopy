@@ -374,3 +374,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\msg.wav
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Configuration\config.ini
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DeviceDataPage.pdb

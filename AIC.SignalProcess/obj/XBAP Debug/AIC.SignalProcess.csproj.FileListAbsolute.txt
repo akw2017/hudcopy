@@ -58,7 +58,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\Kent.Boogaart.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\Kent.Boogaart.HelperTrinity.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\System.Reactive.Interfaces.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\CitizenSoftwareLib.Common.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\Snappy.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\XBAP Debug\de\FluentValidation.resources.dll

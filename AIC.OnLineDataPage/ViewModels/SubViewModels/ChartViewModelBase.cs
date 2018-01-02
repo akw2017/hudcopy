@@ -1,5 +1,6 @@
 ﻿using AIC.Core.Events;
 using AIC.Core.SignalModels;
+using AIC.CoreType;
 using AIC.Domain;
 using Akka.Actor;
 using Microsoft.Practices.ServiceLocation;
@@ -21,6 +22,14 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         {
             SetSignal(signal);
             _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();          
+        }
+
+        protected ChartViewModelBase(BaseAlarmSignal signal, bool isfilter, SignalPreProccessType signalPreType)
+        {
+            IsFilter = isfilter;
+            SignalPreProccessType = signalPreType;
+            SetSignal(signal);
+            _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
 
         public void Subscribe(Action<object> action)
@@ -64,6 +73,36 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             }
         }
 
+        private bool isFilter;
+        public bool IsFilter
+        {
+            get { return isFilter; }
+            set
+            {
+                if (isFilter != value)
+                {
+                    ChangeFilter(isFilter, value);
+                    isFilter = value;
+                    OnPropertyChanged("IsFilter");
+                }
+            }
+        }
+
+        private SignalPreProccessType signalPreProccessType;
+        public SignalPreProccessType SignalPreProccessType
+        {
+            get { return signalPreProccessType; }
+            set
+            {
+                if (signalPreProccessType != value)
+                {
+                    ChangeProcessor(signalPreProccessType, value);
+                    signalPreProccessType = value;
+                    OnPropertyChanged(() => SignalPreProccessType);
+                }
+            }
+        }
+
         public virtual void SetSignal(BaseAlarmSignal sg)
         {
             try
@@ -77,6 +116,12 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             {
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-设置信号", ex));
             }
+        }
+
+        public virtual void SetSignal(BaseAlarmSignal sg, SignalPreProccessType signalPreType)
+        {
+            SignalPreProccessType = signalPreType;
+            SetSignal(sg);
         }
 
         public void RaisedSiganlChanged()
@@ -94,6 +139,16 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
 
         public virtual void RemoveProcessor()
         {
+        }
+
+        public virtual void ChangeProcessor(SignalPreProccessType oldsignalPreType, SignalPreProccessType newsignalPreTyp)
+        {
+            RaisedSiganlChanged();
+        }
+
+        public virtual void ChangeFilter(bool oldisFilter, bool newisFilter)
+        {
+            RaisedSiganlChanged();
         }
 
         public void Close()
