@@ -916,6 +916,15 @@ namespace AIC.LocalConfiguration
                                         {
                                             vSg.Filter();
                                         }
+                                        else
+                                        {
+                                            vSg.FilterWaveform = null;
+                                            vSg.FilterFrequency = null;
+                                            vSg.FilterAmplitude = null;
+                                            vSg.FilterPhase = null;
+                                            vSg.FilterPowerSpectrum = null;
+                                            vSg.FilterPowerSpectrumDensity = null;
+                                        }
 
                                         #region 避免破坏原始波形，分离出来，放入ProcessWave
                                         //if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Envelope))//包络
@@ -1578,8 +1587,6 @@ namespace AIC.LocalConfiguration
                 vSg.PowerSpectrumDensityList[processName] = output.Take(length).ToArray();
             }
         }
-
-
         private bool NeedClear(BaseWaveSignal vSg)
         {
             if (vSg.WaveformList != null && vSg.WaveformList.Count > 0)
@@ -1684,7 +1691,6 @@ namespace AIC.LocalConfiguration
             }
             SubClearWave(vSg, "Cepstrum", CepstrumList);
         }
-
         private void ClearFilterWave(BaseWaveSignal vSg)
         {
             //包络
@@ -1757,7 +1763,6 @@ namespace AIC.LocalConfiguration
             }
             SubClearWave(vSg, "FilterCepstrum", CepstrumList);
         }
-
         private void SubClearWave(BaseWaveSignal vSg, string processName, List<string> processList)
         {
             if (processList.Count == 0)

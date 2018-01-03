@@ -1,5 +1,3 @@
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\AIC.LocalConfiguration.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\AIC.LocalConfiguration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\AIC.LocalConfiguration.pdb
@@ -59,3 +57,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\XBAP Debug\AIC.LocalConfi
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\XBAP Debug\AIC.LocalConfiguration.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\AIC.MatlabMath.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\XBAP Debug\Resources\AICMatlabDLL.dll

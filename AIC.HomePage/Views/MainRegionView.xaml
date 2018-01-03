@@ -170,66 +170,23 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource menuData}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
-                <MenuItem Header="{DynamicResource menuAlartmData}" Command="{Binding NavigateCommand}" CommandParameter="MenuAlarmData" Visibility="{Binding MenuManageList.MenuAlarmData.Visibility}">
+            <MenuItem Header="数据库管理" Background="{DynamicResource TransparentWhiteBrush}">
+                <MenuItem Header="数据库导出" Command="{Binding NavigateCommand}" CommandParameter="MenuExportDBData" Visibility="{Binding MenuManageList.MenuExportDBData.Visibility}">
                     <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/database_error.png"/>
+                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/export32.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuRunningMonitor}" Command="{Binding NavigateCommand}" CommandParameter="MenuRunningMonitor" Visibility="{Binding MenuManageList.MenuRunningMonitor.Visibility}">
+                <MenuItem Header="数据库导入" Command="{Binding NavigateCommand}" CommandParameter="MenuImportDBData" Visibility="{Binding MenuManageList.MenuImportDBData.Visibility}">
                     <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/database_go.png"/>
+                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/import32.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="数据库查找" Command="{Binding NavigateCommand}" CommandParameter="MenuSearchDBData" Visibility="{Binding MenuManageList.MenuSearchDBData.Visibility}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/search.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource menuTheme}" Background="{DynamicResource TransparentWhiteBrush}"                         
-                          ItemsSource="{Binding AppThemes, Mode=OneWay}"
-                          ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}" Visibility="Collapsed"/>
-            <MenuItem Header="{DynamicResource menuStyle}" Background="{DynamicResource TransparentWhiteBrush}"                         
-                          ItemsSource="{Binding AccentColors, Mode=OneWay}"
-                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" Visibility="Collapsed"/>
-            <MenuItem Header="{DynamicResource menuWindow}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuShowInTaskbar}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuTopmost}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuMaximizeFullScreen}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuHelp}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
-                <!--<MenuItem Header="{DynamicResource menuHelp}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_30.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>-->
-                <!--<MenuItem Header="{DynamicResource menuAbout}" Command="{Binding AboutCommand}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_15.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>-->
-                <!--<MenuItem Header="{DynamicResource menuFeedback}" Command="{Binding FeedbackCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/email_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>-->
-                <!--<MenuItem Header="{DynamicResource menuLanguage}" >
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/arrow_switch.png"/>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{DynamicResource menuChinese}" IsCheckable="True" IsChecked="{Binding ChineseChecked}" />
-                    <MenuItem Header="{DynamicResource menuEnglish}" IsCheckable="True" IsChecked="{Binding EnglishChecked}"/>
-                </MenuItem>-->
-                <MenuItem Header="{DynamicResource menuAbnormalList}" Command="{Binding AbnormalListCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/table_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuSystemLog}" Command="{Binding SystemLogCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/folder_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>            
             <MenuItem Header="综合管理" Background="{DynamicResource TransparentWhiteBrush}">
                 <MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
                     <MenuItem.Icon>
@@ -345,6 +302,48 @@
                 <MenuItem Header="截屏文件" Command="{Binding ScreenShotFolderCommand}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/folder_picture.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource menuWindow}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
+                <MenuItem IsCheckable="True" Header="{DynamicResource menuShowInTaskbar}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
+                <MenuItem IsCheckable="True" Header="{DynamicResource menuTopmost}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
+                <MenuItem IsCheckable="True" Header="{DynamicResource menuMaximizeFullScreen}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
+            </MenuItem>
+            <MenuItem Header="{DynamicResource menuHelp}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
+                <!--<MenuItem Header="{DynamicResource menuHelp}">
+                    <MenuItem.Icon>
+                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_30.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>-->
+                <!--<MenuItem Header="{DynamicResource menuAbout}" Command="{Binding AboutCommand}">
+                    <MenuItem.Icon>
+                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_15.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>-->
+                <!--<MenuItem Header="{DynamicResource menuFeedback}" Command="{Binding FeedbackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/email_error.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>-->
+                <!--<MenuItem Header="{DynamicResource menuLanguage}" >
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/arrow_switch.png"/>
+                    </MenuItem.Icon>
+                    <MenuItem Header="{DynamicResource menuChinese}" IsCheckable="True" IsChecked="{Binding ChineseChecked}" />
+                    <MenuItem Header="{DynamicResource menuEnglish}" IsCheckable="True" IsChecked="{Binding EnglishChecked}"/>
+                </MenuItem>-->
+                <MenuItem Header="{DynamicResource menuAbnormalList}" Command="{Binding AbnormalListCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/table_error.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuSystemLog}" Command="{Binding SystemLogCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/AIC.Resources;component/Images/folder_error.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

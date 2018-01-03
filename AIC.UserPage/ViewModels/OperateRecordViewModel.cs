@@ -32,28 +32,51 @@ namespace AIC.UserPage.ViewModels
         private readonly IUserManageService _userManageService;
         private readonly IEventAggregator _eventAggregator;
         private readonly ILoginUserService _loginUserService;
-        public OperateRecordViewModel(IUserManageService userManageService, IEventAggregator eventAggregator, ILoginUserService loginUserService)
+        private readonly IDatabaseComponent _databaseComponent;
+
+        public OperateRecordViewModel(IUserManageService userManageService, IEventAggregator eventAggregator, ILoginUserService loginUserService, IDatabaseComponent databaseComponent)
         {
             _userManageService = userManageService;
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
+            _databaseComponent = databaseComponent;
 
             SearchStartTime = DateTime.Now.AddDays(-1);
             SearchEndTime = DateTime.Now;
-            //先从数据库里取数据
-            //T_OperateRecord = _userManageService.T_OperateRecord["192.168.0.210"];//测试数据 
+
+            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIP = _databaseComponent.MainServerIp;
+
             T_OperateRecord = new List<T1_OperateRecord>();
 
-            InitPager();
-           // _view = new ListCollectionView(T_OperateRecordLast);
-            //_view.GroupDescriptions.Add(new PropertyGroupDescription("Name"));//对视图进行分组
-
-            
+            InitPager();            
         }
 
-        //private readonly ICollectionView _view;
-        //public ICollectionView T_OperateRecordView { get { return _view; } }
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    QueryCommand.RaiseCanExecuteChanged();
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
 
+        private ObservableCollection<string> _serverIPCategory;
+        public ObservableCollection<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -143,14 +166,14 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private DelegateCommand queryCommand;
-        public DelegateCommand QueryCommand
+        private DelegateCommand<object> queryCommand;
+        public DelegateCommand<object> QueryCommand
         {
             get
             {
-                return this.queryCommand ?? (this.queryCommand = new DelegateCommand(() => this.Query()));
+                return this.queryCommand ?? (this.queryCommand = new DelegateCommand<object>(value => this.Query(value), value => CanOperate(value)));
             }
-        }      
+        }
 
         private DelegateCommand<object> currentPageChangedComamnd;
         public DelegateCommand<object> CurrentPageChangedComamnd
@@ -230,7 +253,19 @@ namespace AIC.UserPage.ViewModels
             T_OperateRecordLast = new List<T1_OperateRecord>();           
         }
 
-        private async void Query()
+        private bool CanOperate(object para)
+        {
+            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private async void Query(object value)
         {
             try
             {
@@ -240,7 +275,7 @@ namespace AIC.UserPage.ViewModels
                     SearchStartTime = SearchEndTime.AddDays(-1);
                 }
 
-                T_OperateRecord = await _loginUserService.GetOperateRecord(SearchStartTime, SearchEndTime, SearchName, OperateType);
+                T_OperateRecord = await _loginUserService.GetOperateRecord(ServerIP, SearchStartTime, SearchEndTime, SearchName, OperateType);
                 TotalItems = T_OperateRecord.Count;
                 T_OperateRecordLast.Clear();
                 T_OperateRecordLast = T_OperateRecord.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();

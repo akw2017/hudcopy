@@ -223,19 +223,6 @@ namespace AIC.PDAPage.ViewModels
                 OnPropertyChanged("selectedChannel");
             }
         }
-        private ViewModelStatus _status = ViewModelStatus.None;
-        public ViewModelStatus Status
-        {
-            get { return _status; }
-            set
-            {
-                if (_status != value)
-                {
-                    _status = value;
-                    OnPropertyChanged("Status");
-                }
-            }
-        }
 
         public bool _isMultiSelected = false;
         public bool IsMultiSelected
@@ -251,6 +238,21 @@ namespace AIC.PDAPage.ViewModels
                 }
             }
         }
+
+        private ViewModelStatus _status = ViewModelStatus.None;
+        public ViewModelStatus Status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged("Status");
+                }
+            }
+        }
+
         public string waitInfo;
         public string WaitInfo
         {
@@ -284,6 +286,7 @@ namespace AIC.PDAPage.ViewModels
                     _serverIP = value;
                     InitTree();
                     InitHardware();
+                    InitPrivilege();
                     OnPropertyChanged("ServerIP");
                 }
             }
@@ -959,7 +962,7 @@ namespace AIC.PDAPage.ViewModels
                 if (debugCommand == null)
                 {
                     debugCommand = new DelegateCommand<object>(
-                        para => Debug(para)
+                        para => Debug(para), para => CanOperate(para)
                         );
                 }
                 return debugCommand;
@@ -974,7 +977,7 @@ namespace AIC.PDAPage.ViewModels
                 if (editDeviceCommand == null)
                 {
                     editDeviceCommand = new DelegateCommand<object>(
-                        para => EditDevice(para)
+                        para => EditDevice(para), para => CanOperate(para)
                         );
                 }
                 return editDeviceCommand;
@@ -987,7 +990,7 @@ namespace AIC.PDAPage.ViewModels
         private void InitTree()
         {          
             OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerIP));
-            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            RecycledTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.RecycledTreeItems.Where(p =>p.ServerIP == ServerIP));
             //TreeExpanded();
         }
         private void TreeExpanded()
@@ -1031,7 +1034,7 @@ namespace AIC.PDAPage.ViewModels
         #region 编辑树
         private bool CanOperate(object para)
         {
-            if (_loginUserService.LoginInfo.ServerInfo.Permission == "admin" || _loginUserService.LoginInfo.ServerInfo.Permission == "管理员" || _loginUserService.LoginInfo.ServerInfo.Permission == "superadmin" || _loginUserService.LoginInfo.ServerInfo.Permission == "超级管理员")
+            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
                 return true;
             }
@@ -1040,6 +1043,35 @@ namespace AIC.PDAPage.ViewModels
                 return false;
             }
         }
+
+        private void InitPrivilege()
+        {
+            AddCommand.RaiseCanExecuteChanged();
+            AddRootCommand.RaiseCanExecuteChanged();
+            SortCommand.RaiseCanExecuteChanged();
+            AddOrganizationCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+            CopyCommand.RaiseCanExecuteChanged();
+            PasteCommand.RaiseCanExecuteChanged();
+            PasteRootCommand.RaiseCanExecuteChanged();
+            RenameCommand.RaiseCanExecuteChanged();
+            BindChannelCommand.RaiseCanExecuteChanged();
+            CardEditCommand.RaiseCanExecuteChanged();
+            SlotEditCommand.RaiseCanExecuteChanged();
+            ChannelEditCommand.RaiseCanExecuteChanged();
+            DivFreEditCommand.RaiseCanExecuteChanged();
+            AddCardCommand.RaiseCanExecuteChanged();
+            DeleteCardCommand.RaiseCanExecuteChanged();
+            ForceDeleteCardCommand.RaiseCanExecuteChanged();
+            DownLoadCardCommand.RaiseCanExecuteChanged();
+            AddTransmissionCardCommand.RaiseCanExecuteChanged();
+            DeleteTransmissionCardCommand.RaiseCanExecuteChanged();
+            ClearRecycledCommand.RaiseCanExecuteChanged();
+            RecoveredItemCommand.RaiseCanExecuteChanged();
+            DebugCommand.RaiseCanExecuteChanged();
+            EditDeviceCommand.RaiseCanExecuteChanged();
+        }
+
         //添加目录
         private async void AddRoot(object para)
         {
@@ -1258,10 +1290,7 @@ namespace AIC.PDAPage.ViewModels
                 Status = ViewModelStatus.None;
             }
         }
-        private bool CanDelete(object para)
-        {
-            return true;
-        }
+
         //删除
         private async void Delete(object para)
         {

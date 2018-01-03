@@ -161,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ExportDBDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TreeNodeDebugInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -169,15 +173,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WirelessVibrationChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\WirelessVibrationChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WirelessScalarChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\WirelessScalarChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AnalogRransducerOutChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\AnalogRransducerOutChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -185,95 +189,95 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DigitRransducerOutChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\DigitRransducerOutChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitRransducerInChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\DigitRransducerInChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DivFreInfoWin.xaml">
+    <Page Include="Views\EditViews\DivFreInfoWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WirelessVibrationSlotWin.xaml">
+    <Page Include="Views\EditViews\WirelessVibrationSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TransmissionCardWin.xaml">
+    <Page Include="Views\EditViews\TransmissionCardWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RelayChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\RelayChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AnalogRransducerInChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\AnalogRransducerInChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentTachometerChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentTachometerChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentKeyPhaseChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentKeyPhaseChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentDisplacementChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentDisplacementChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitTachometerChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\DigitTachometerChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\IEPEChannelInfoWin.xaml">
+    <Page Include="Views\EditViews\IEPEChannelInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AnalogRransducerOutSlotWin.xaml">
+    <Page Include="Views\EditViews\AnalogRransducerOutSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitRransducerOutSlotWin.xaml">
+    <Page Include="Views\EditViews\DigitRransducerOutSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitRransducerInSlotWin.xaml">
+    <Page Include="Views\EditViews\DigitRransducerInSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RelaySlotWin.xaml">
+    <Page Include="Views\EditViews\RelaySlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AnalogRransducerInSlotWin.xaml">
+    <Page Include="Views\EditViews\AnalogRransducerInSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitTachometerSlotWin.xaml">
+    <Page Include="Views\EditViews\DigitTachometerSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentTachometerSlotWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentTachometerSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentKeyPhaseSlotWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentKeyPhaseSlotWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EddyCurrentDisplacementSlotWin.xaml">
+    <Page Include="Views\EditViews\EddyCurrentDisplacementSlotWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\IEPESlotWin.xaml">
+    <Page Include="Views\EditViews\IEPESlotWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainControlCardWin.xaml">
+    <Page Include="Views\EditViews\MainControlCardWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -365,11 +369,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WirelessReceiveCardWin.xaml">
+    <Page Include="Views\EditViews\WirelessReceiveCardWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WireMatchingCardWin.xaml">
+    <Page Include="Views\EditViews\WireMatchingCardWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -409,11 +413,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\CardCopyViewModel.cs" />
+    <Compile Include="ViewModels\ExportDBDataViewModel.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModelMetadata.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModel.cs" />
     <Compile Include="Models\TreeProcess.cs" />
     <Compile Include="Views\DeviceEditWin.xaml.cs">
       <DependentUpon>DeviceEditWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExportDBDataView.xaml.cs">
+      <DependentUpon>ExportDBDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeNodeDebugInfoWin.xaml.cs">
       <DependentUpon>TreeNodeDebugInfoWin.xaml</DependentUpon>
@@ -421,85 +429,85 @@
     <Compile Include="Views\TreeNodeSortWin.xaml.cs">
       <DependentUpon>TreeNodeSortWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WirelessVibrationChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\WirelessVibrationChannelInfoWin.xaml.cs">
       <DependentUpon>WirelessVibrationChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WirelessScalarChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\WirelessScalarChannelInfoWin.xaml.cs">
       <DependentUpon>WirelessScalarChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AnalogRransducerOutChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\AnalogRransducerOutChannelInfoWin.xaml.cs">
       <DependentUpon>AnalogRransducerOutChannelInfoWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CardCopyView.xaml.cs">
       <DependentUpon>CardCopyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitRransducerOutChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitRransducerOutChannelInfoWin.xaml.cs">
       <DependentUpon>DigitRransducerOutChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitRransducerInChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitRransducerInChannelInfoWin.xaml.cs">
       <DependentUpon>DigitRransducerInChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DivFreInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\DivFreInfoWin.xaml.cs">
       <DependentUpon>DivFreInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WirelessVibrationSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\WirelessVibrationSlotWin.xaml.cs">
       <DependentUpon>WirelessVibrationSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TransmissionCardWin.xaml.cs">
+    <Compile Include="Views\EditViews\TransmissionCardWin.xaml.cs">
       <DependentUpon>TransmissionCardWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RelayChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\RelayChannelInfoWin.xaml.cs">
       <DependentUpon>RelayChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AnalogRransducerInChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\AnalogRransducerInChannelInfoWin.xaml.cs">
       <DependentUpon>AnalogRransducerInChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentTachometerChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentTachometerChannelInfoWin.xaml.cs">
       <DependentUpon>EddyCurrentTachometerChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentKeyPhaseChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentKeyPhaseChannelInfoWin.xaml.cs">
       <DependentUpon>EddyCurrentKeyPhaseChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentDisplacementChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentDisplacementChannelInfoWin.xaml.cs">
       <DependentUpon>EddyCurrentDisplacementChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitTachometerChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitTachometerChannelInfoWin.xaml.cs">
       <DependentUpon>DigitTachometerChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IEPEChannelInfoWin.xaml.cs">
+    <Compile Include="Views\EditViews\IEPEChannelInfoWin.xaml.cs">
       <DependentUpon>IEPEChannelInfoWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AnalogRransducerOutSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\AnalogRransducerOutSlotWin.xaml.cs">
       <DependentUpon>AnalogRransducerOutSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitRransducerOutSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitRransducerOutSlotWin.xaml.cs">
       <DependentUpon>DigitRransducerOutSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitRransducerInSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitRransducerInSlotWin.xaml.cs">
       <DependentUpon>DigitRransducerInSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RelaySlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\RelaySlotWin.xaml.cs">
       <DependentUpon>RelaySlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AnalogRransducerInSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\AnalogRransducerInSlotWin.xaml.cs">
       <DependentUpon>AnalogRransducerInSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitTachometerSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\DigitTachometerSlotWin.xaml.cs">
       <DependentUpon>DigitTachometerSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentTachometerSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentTachometerSlotWin.xaml.cs">
       <DependentUpon>EddyCurrentTachometerSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentKeyPhaseSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentKeyPhaseSlotWin.xaml.cs">
       <DependentUpon>EddyCurrentKeyPhaseSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EddyCurrentDisplacementSlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\EddyCurrentDisplacementSlotWin.xaml.cs">
       <DependentUpon>EddyCurrentDisplacementSlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IEPESlotWin.xaml.cs">
+    <Compile Include="Views\EditViews\IEPESlotWin.xaml.cs">
       <DependentUpon>IEPESlotWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainControlCardWin.xaml.cs">
+    <Compile Include="Views\EditViews\MainControlCardWin.xaml.cs">
       <DependentUpon>MainControlCardWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDASystemManageView.xaml.cs">
@@ -568,10 +576,10 @@
     <Compile Include="Views\SubViews\VibrationSlotInfoView.xaml.cs">
       <DependentUpon>VibrationSlotInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WirelessReceiveCardWin.xaml.cs">
+    <Compile Include="Views\EditViews\WirelessReceiveCardWin.xaml.cs">
       <DependentUpon>WirelessReceiveCardWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WireMatchingCardWin.xaml.cs">
+    <Compile Include="Views\EditViews\WireMatchingCardWin.xaml.cs">
       <DependentUpon>WireMatchingCardWin.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">

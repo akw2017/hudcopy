@@ -22,13 +22,13 @@ namespace AIC.ServiceInterface
         string MainServerIp { get; set; }
         void InitDatabase(string ip);
         void ClearDatabase();
-        List<T1_User> GetUserData();
-        List<T1_Role> GetRoleData();
-        List<T1_Menu> GetMenuData();
-        List<T1_Device> GetDeviceData();
-        List<T1_Organization> GetOrganizationData();
-        List<T1_Item> GetItemData();
-        List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData();
+        List<T1_User> GetUserData(string ip);
+        List<T1_Role> GetRoleData(string ip);
+        List<T1_Menu> GetMenuData(string ip);
+        List<T1_Device> GetDeviceData(string ip);
+        List<T1_Organization> GetOrganizationData(string ip);
+        List<T1_Item> GetItemData(string ip);
+        List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip);
 
         Task<List<T1_User>> LoadUserData(string ip);
         Task<List<T1_Role>> LoadRoleData(string ip);

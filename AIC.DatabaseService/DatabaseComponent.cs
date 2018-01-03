@@ -106,11 +106,11 @@ namespace AIC.DatabaseService
             T_Menu = new Dictionary<string, List<T1_Menu>>();
             T_OrganizationPrivilege = new Dictionary<string, List<T1_OrganizationPrivilege>>();
         }
-        public List<T1_User> GetUserData()
+        public List<T1_User> GetUserData(string ip)
         {
-            if (T_User.ContainsKey(MainServerIp))
+            if (T_User.ContainsKey(ip))
             {
-                return T_User[MainServerIp];
+                return T_User[ip];
             }
             else
             {
@@ -118,11 +118,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_Role> GetRoleData()
+        public List<T1_Role> GetRoleData(string ip)
         {
-            if (T_Role.ContainsKey(MainServerIp))
+            if (T_Role.ContainsKey(ip))
             {
-                return T_Role[MainServerIp];
+                return T_Role[ip];
             }
             else
             {
@@ -130,11 +130,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_Menu> GetMenuData()
+        public List<T1_Menu> GetMenuData(string ip)
         {
-            if (T_Menu.ContainsKey(MainServerIp))
+            if (T_Menu.ContainsKey(ip))
             {
-                return T_Menu[MainServerIp];
+                return T_Menu[ip];
             }
             else
             {
@@ -142,11 +142,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_Device> GetDeviceData()
+        public List<T1_Device> GetDeviceData(string ip)
         {
-            if (T_Device.ContainsKey(MainServerIp))
+            if (T_Device.ContainsKey(ip))
             {
-                return T_Device[MainServerIp];
+                return T_Device[ip];
             }
             else
             {
@@ -154,11 +154,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_Organization> GetOrganizationData()
+        public List<T1_Organization> GetOrganizationData(string ip)
         {
-            if (T_Organization.ContainsKey(MainServerIp))
+            if (T_Organization.ContainsKey(ip))
             {
-                return T_Organization[MainServerIp];
+                return T_Organization[ip];
             }
             else
             {
@@ -166,11 +166,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_Item> GetItemData()
+        public List<T1_Item> GetItemData(string ip)
         {
-            if (T_Item.ContainsKey(MainServerIp))
+            if (T_Item.ContainsKey(ip))
             {
-                return T_Item[MainServerIp];
+                return T_Item[ip];
             }
             else
             {
@@ -178,11 +178,11 @@ namespace AIC.DatabaseService
             }
         }
 
-        public List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData()
+        public List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip)
         {
-            if (T_OrganizationPrivilege.ContainsKey(MainServerIp))
+            if (T_OrganizationPrivilege.ContainsKey(ip))
             {
-                return T_OrganizationPrivilege[MainServerIp];
+                return T_OrganizationPrivilege[ip];
             }
             else
             {
@@ -206,7 +206,7 @@ namespace AIC.DatabaseService
             }         
             else
             {
-                string error = DateTime.Now.ToString() + "登陆错误:" + userTask.Result.ErrorType + "-" + userTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " +  DateTime.Now.ToString() + "登陆错误:" + userTask.Result.ErrorType + "-" + userTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(userTask.Result.ErrorMessage)));
                 return null;
             }       
@@ -228,7 +228,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "登陆错误:" + roleTask.Result.ErrorType + "-" + roleTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "登陆错误:" + roleTask.Result.ErrorType + "-" + roleTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }          
@@ -250,7 +250,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + menuTask.Result.ErrorType + "-" + menuTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + menuTask.Result.ErrorType + "-" + menuTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }            
@@ -272,7 +272,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + deviceTask.Result.ErrorType + "-" + deviceTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + deviceTask.Result.ErrorType + "-" + deviceTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }          
@@ -294,7 +294,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + organizationTask.Result.ErrorType + "-" + organizationTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + organizationTask.Result.ErrorType + "-" + organizationTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }
@@ -316,7 +316,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + itemTask.Result.ErrorType + "-" + itemTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + itemTask.Result.ErrorType + "-" + itemTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }
@@ -338,7 +338,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + organizationPrivilegeTask.Result.ErrorType + "-" + organizationPrivilegeTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + organizationPrivilegeTask.Result.ErrorType + "-" + organizationPrivilegeTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }
@@ -358,7 +358,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + divFreInfoTask.Result.ErrorType + "-" + divFreInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + divFreInfoTask.Result.ErrorType + "-" + divFreInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 return null;
             }           
@@ -367,9 +367,8 @@ namespace AIC.DatabaseService
         public async Task<T1_RootCard> LoadHardwave(string ip)
         {
             try
-            {
-                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
-                await GetHardwareTables(client, T_RootCard[ip]);               
+            {               
+                await GetHardwareTables(ip, T_RootCard[ip]);               
                 return T_RootCard[ip];
             }
             catch (Exception e)
@@ -394,9 +393,8 @@ namespace AIC.DatabaseService
         public async Task<bool> DeleteHardwave(string ip, T1_RootCard rootcard)
         {
             try
-            {
-                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
-                return await DeleteHardwareTables(client, ip, rootcard);             
+            {                
+                return await DeleteHardwareTables(ip, rootcard);             
             }
             catch (Exception e)
             {
@@ -425,7 +423,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -449,7 +447,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -471,7 +469,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "查询错误:" + queryResult.ErrorType + "-" + queryResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "查询错误:" + queryResult.ErrorType + "-" + queryResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return null;
@@ -493,7 +491,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "修改错误:" + modifyResult.ErrorType + "-" + modifyResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "修改错误:" + modifyResult.ErrorType + "-" + modifyResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -515,7 +513,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "修改错误:" + modifyResult.ErrorType + "-" + modifyResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "修改错误:" + modifyResult.ErrorType + "-" + modifyResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -541,7 +539,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "删除错误:" + deleteResult.ErrorType + "-" + deleteResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "删除错误:" + deleteResult.ErrorType + "-" + deleteResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -564,7 +562,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "删除错误:" + deleteResult.ErrorType + "-" + deleteResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "删除错误:" + deleteResult.ErrorType + "-" + deleteResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -615,7 +613,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "复合错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
+                    string error = "服务器" + ip  + DateTime.Now.ToString() + "复合错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
@@ -657,7 +655,7 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "通信错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
+                    string error = "服务器" + ip  + DateTime.Now.ToString() + "通信错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return null;
@@ -665,8 +663,9 @@ namespace AIC.DatabaseService
             });
         }    
         
-        private async Task GetHardwareTables(DataProvider client, T1_RootCard rootCard)
+        private async Task GetHardwareTables(string ip, T1_RootCard rootCard)
         {
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             var mainControlCardTask = Task.Run(() => client.Query<T_MainControlCard>(null, "where 1 = 1", null));
             var wireMatchingCardTask = Task.Run(() => client.Query<T_WireMatchingCard>(null, "where 1 = 1", null));
             var wirelessReceiveCardTask = Task.Run(() => client.Query<T_WirelessReceiveCard>(null, "where 1 = 1", null));
@@ -758,7 +757,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + mainControlCardTask.Result.ErrorType + "-" + mainControlCardTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + mainControlCardTask.Result.ErrorType + "-" + mainControlCardTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wireMatchingCardTask.Result.IsOK)
@@ -768,7 +767,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wireMatchingCardTask.Result.ErrorType + "-" + wireMatchingCardTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wireMatchingCardTask.Result.ErrorType + "-" + wireMatchingCardTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wirelessReceiveCardTask.Result.IsOK)
@@ -778,7 +777,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wirelessReceiveCardTask.Result.ErrorType + "-" + wirelessReceiveCardTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wirelessReceiveCardTask.Result.ErrorType + "-" + wirelessReceiveCardTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (transmissionCardTask.Result.IsOK)
@@ -788,7 +787,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + transmissionCardTask.Result.ErrorType + "-" + transmissionCardTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + transmissionCardTask.Result.ErrorType + "-" + transmissionCardTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (abstractChannelInfoTask.Result.IsOK)
@@ -798,7 +797,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + abstractChannelInfoTask.Result.ErrorType + "-" + abstractChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + abstractChannelInfoTask.Result.ErrorType + "-" + abstractChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (iEPEChannelInfoTask.Result.IsOK)
@@ -808,7 +807,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + iEPEChannelInfoTask.Result.ErrorType + "-" + iEPEChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + iEPEChannelInfoTask.Result.ErrorType + "-" + iEPEChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentDisplacementChannelInfoTask.Result.IsOK)
@@ -818,7 +817,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorType + "-" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorType + "-" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentKeyPhaseChannelInfoTask.Result.IsOK)
@@ -828,7 +827,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorType + "-" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorType + "-" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentTachometerChannelInfoTask.Result.IsOK)
@@ -838,7 +837,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentTachometerChannelInfoTask.Result.ErrorType + "-" + eddyCurrentTachometerChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentTachometerChannelInfoTask.Result.ErrorType + "-" + eddyCurrentTachometerChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitTachometerChannelInfoTask.Result.IsOK)
@@ -848,7 +847,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitTachometerChannelInfoTask.Result.ErrorType + "-" + digitTachometerChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitTachometerChannelInfoTask.Result.ErrorType + "-" + digitTachometerChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (analogRransducerInChannelInfoTask.Result.IsOK)
@@ -858,7 +857,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + analogRransducerInChannelInfoTask.Result.ErrorType + "-" + analogRransducerInChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + analogRransducerInChannelInfoTask.Result.ErrorType + "-" + analogRransducerInChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (relayChannelInfoTask.Result.IsOK)
@@ -868,7 +867,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + relayChannelInfoTask.Result.ErrorType + "-" + relayChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + relayChannelInfoTask.Result.ErrorType + "-" + relayChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitRransducerInChannelInfoTask.Result.IsOK)
@@ -878,7 +877,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitRransducerInChannelInfoTask.Result.ErrorType + "-" + digitRransducerInChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitRransducerInChannelInfoTask.Result.ErrorType + "-" + digitRransducerInChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitRransducerOutChannelInfoTask.Result.IsOK)
@@ -888,7 +887,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitRransducerOutChannelInfoTask.Result.ErrorType + "-" + digitRransducerOutChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitRransducerOutChannelInfoTask.Result.ErrorType + "-" + digitRransducerOutChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (analogRransducerOutChannelInfoTask.Result.IsOK)
@@ -898,7 +897,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + analogRransducerOutChannelInfoTask.Result.ErrorType + "-" + analogRransducerOutChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + analogRransducerOutChannelInfoTask.Result.ErrorType + "-" + analogRransducerOutChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wirelessScalarChannelInfoTask.Result.IsOK)
@@ -908,7 +907,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wirelessScalarChannelInfoTask.Result.ErrorType + "-" + wirelessScalarChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wirelessScalarChannelInfoTask.Result.ErrorType + "-" + wirelessScalarChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wirelessVibrationChannelInfoTask.Result.IsOK)
@@ -918,7 +917,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wirelessVibrationChannelInfoTask.Result.ErrorType + "-" + wirelessVibrationChannelInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wirelessVibrationChannelInfoTask.Result.ErrorType + "-" + wirelessVibrationChannelInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (abstractSlotInfoTask.Result.IsOK)
@@ -928,7 +927,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + abstractSlotInfoTask.Result.ErrorType + "-" + abstractSlotInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + abstractSlotInfoTask.Result.ErrorType + "-" + abstractSlotInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (iEPESlotTask.Result.IsOK)
@@ -938,7 +937,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + iEPESlotTask.Result.ErrorType + "-" + iEPESlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + iEPESlotTask.Result.ErrorType + "-" + iEPESlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentDisplacementSlotTask.Result.IsOK)
@@ -948,7 +947,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentDisplacementSlotTask.Result.ErrorType + "-" + eddyCurrentDisplacementSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentDisplacementSlotTask.Result.ErrorType + "-" + eddyCurrentDisplacementSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentKeyPhaseSlotTask.Result.IsOK)
@@ -958,7 +957,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentKeyPhaseSlotTask.Result.ErrorType + "-" + eddyCurrentKeyPhaseSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentKeyPhaseSlotTask.Result.ErrorType + "-" + eddyCurrentKeyPhaseSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (eddyCurrentTachometerSlotTask.Result.IsOK)
@@ -968,7 +967,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + eddyCurrentTachometerSlotTask.Result.ErrorType + "-" + eddyCurrentTachometerSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + eddyCurrentTachometerSlotTask.Result.ErrorType + "-" + eddyCurrentTachometerSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitTachometerSlotTask.Result.IsOK)
@@ -978,7 +977,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitTachometerSlotTask.Result.ErrorType + "-" + digitTachometerSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitTachometerSlotTask.Result.ErrorType + "-" + digitTachometerSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (analogRransducerInSlotTask.Result.IsOK)
@@ -988,7 +987,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + analogRransducerInSlotTask.Result.ErrorType + "-" + analogRransducerInSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + analogRransducerInSlotTask.Result.ErrorType + "-" + analogRransducerInSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (relaySlotTask.Result.IsOK)
@@ -998,7 +997,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + relaySlotTask.Result.ErrorType + "-" + relaySlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + relaySlotTask.Result.ErrorType + "-" + relaySlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitRransducerInSlotTask.Result.IsOK)
@@ -1008,7 +1007,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitRransducerInSlotTask.Result.ErrorType + "-" + digitRransducerInSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitRransducerInSlotTask.Result.ErrorType + "-" + digitRransducerInSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (digitRransducerOutSlotTask.Result.IsOK)
@@ -1018,7 +1017,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + digitRransducerOutSlotTask.Result.ErrorType + "-" + digitRransducerOutSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + digitRransducerOutSlotTask.Result.ErrorType + "-" + digitRransducerOutSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (analogRransducerOutSlotTask.Result.IsOK)
@@ -1028,7 +1027,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + analogRransducerOutSlotTask.Result.ErrorType + "-" + analogRransducerOutSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + analogRransducerOutSlotTask.Result.ErrorType + "-" + analogRransducerOutSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wirelessScalarSlotTask.Result.IsOK)
@@ -1038,7 +1037,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wirelessScalarSlotTask.Result.ErrorType + "-" + wirelessScalarSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wirelessScalarSlotTask.Result.ErrorType + "-" + wirelessScalarSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (wirelessVibrationSlotTask.Result.IsOK)
@@ -1048,7 +1047,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + wirelessVibrationSlotTask.Result.ErrorType + "-" + wirelessVibrationSlotTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + wirelessVibrationSlotTask.Result.ErrorType + "-" + wirelessVibrationSlotTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             if (divFreInfoTask.Result.IsOK)
@@ -1058,7 +1057,7 @@ namespace AIC.DatabaseService
             }
             else
             {
-                string error = DateTime.Now.ToString() + "查询错误:" + divFreInfoTask.Result.ErrorType + "-" + divFreInfoTask.Result.ErrorMessage;
+                string error = "服务器" + ip + " " + DateTime.Now.ToString() + "查询错误:" + divFreInfoTask.Result.ErrorType + "-" + divFreInfoTask.Result.ErrorMessage;
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
         }
@@ -1356,471 +1355,474 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "复合错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + DateTime.Now.ToString() + "添加错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
                 }
-            });       
+            });
 
-        /*
-        var mainControlCardTask = Task.Run(() => client.Add<T_MainControlCard>(rootCard.T_MainControlCard.Select(p => p as T_MainControlCard).ToList()));
-            var wireMatchingCardTask = Task.Run(() => client.Add<T_WireMatchingCard>(rootCard.T_WireMatchingCard.Select(p => p as T_WireMatchingCard).ToList()));
-            var wirelessReceiveCardTask = Task.Run(() => client.Add<T_WirelessReceiveCard>(rootCard.T_WirelessReceiveCard.Select(p => p as T_WirelessReceiveCard).ToList()));
-            var transmissionCardTask = Task.Run(() => client.Add<T_TransmissionCard>(rootCard.T_TransmissionCard.Select(p => p as T_TransmissionCard).ToList()));
-            var abstractChannelInfoTask = Task.Run(() => client.Add<T_AbstractChannelInfo>(rootCard.T_AbstractChannelInfo.Select(p => p as T_AbstractChannelInfo).ToList()));
-            var iEPEChannelInfoTask = Task.Run(() => client.Add<T_IEPEChannelInfo>(rootCard.T_IEPEChannelInfo.Select(p => p as T_IEPEChannelInfo).ToList()));
-            var eddyCurrentDisplacementChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentDisplacementChannelInfo>(rootCard.T_EddyCurrentDisplacementChannelInfo.Select(p => p as T_EddyCurrentDisplacementChannelInfo).ToList()));
-            var eddyCurrentKeyPhaseChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentKeyPhaseChannelInfo>(rootCard.T_EddyCurrentKeyPhaseChannelInfo.Select(p => p as T_EddyCurrentKeyPhaseChannelInfo).ToList()));
-            var eddyCurrentTachometerChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentTachometerChannelInfo>(rootCard.T_EddyCurrentTachometerChannelInfo.Select(p => p as T_EddyCurrentTachometerChannelInfo).ToList()));
-            var digitTachometerChannelInfoTask = Task.Run(() => client.Add<T_DigitTachometerChannelInfo>(rootCard.T_DigitTachometerChannelInfo.Select(p => p as T_DigitTachometerChannelInfo).ToList()));
-            var analogRransducerInChannelInfoTask = Task.Run(() => client.Add<T_AnalogRransducerInChannelInfo>(rootCard.T_AnalogRransducerInChannelInfo.Select(p => p as T_AnalogRransducerInChannelInfo).ToList()));
-            var relayChannelInfoTask = Task.Run(() => client.Add<T_RelayChannelInfo>(rootCard.T_RelayChannelInfo.Select(p => p as T_RelayChannelInfo).ToList()));
-            var digitRransducerInChannelInfoTask = Task.Run(() => client.Add<T_DigitRransducerInChannelInfo>(rootCard.T_DigitRransducerInChannelInfo.Select(p => p as T_DigitRransducerInChannelInfo).ToList()));
-            var digitRransducerOutChannelInfoTask = Task.Run(() => client.Add<T_DigitRransducerOutChannelInfo>(rootCard.T_DigitRransducerOutChannelInfo.Select(p => p as T_DigitRransducerOutChannelInfo).ToList()));
-            var analogRransducerOutChannelInfoTask = Task.Run(() => client.Add<T_AnalogRransducerOutChannelInfo>(rootCard.T_AnalogRransducerOutChannelInfo.Select(p => p as T_AnalogRransducerOutChannelInfo).ToList()));
-            var wirelessScalarChannelInfoTask = Task.Run(() => client.Add<T_WirelessScalarChannelInfo>(rootCard.T_WirelessScalarChannelInfo.Select(p => p as T_WirelessScalarChannelInfo).ToList()));
-            var wirelessVibrationChannelInfoTask = Task.Run(() => client.Add<T_WirelessVibrationChannelInfo>(rootCard.T_WirelessVibrationChannelInfo.Select(p => p as T_WirelessVibrationChannelInfo).ToList()));
-            var abstractSlotInfoTask = Task.Run(() => client.Add<T_AbstractSlotInfo>(rootCard.T_AbstractSlotInfo.Select(p => p as T_AbstractSlotInfo).ToList()));
-            var iEPESlotTask = Task.Run(() => client.Add<T_IEPESlot>(rootCard.T_IEPESlot.Select(p => p as T_IEPESlot).ToList()));
-            var eddyCurrentDisplacementSlotTask = Task.Run(() => client.Add<T_EddyCurrentDisplacementSlot>(rootCard.T_EddyCurrentDisplacementSlot.Select(p => p as T_EddyCurrentDisplacementSlot).ToList()));
-            var eddyCurrentKeyPhaseSlotTask = Task.Run(() => client.Add<T_EddyCurrentKeyPhaseSlot>(rootCard.T_EddyCurrentKeyPhaseSlot.Select(p => p as T_EddyCurrentKeyPhaseSlot).ToList()));
-            var eddyCurrentTachometerSlotTask = Task.Run(() => client.Add<T_EddyCurrentTachometerSlot>(rootCard.T_EddyCurrentTachometerSlot.Select(p => p as T_EddyCurrentTachometerSlot).ToList()));
-            var digitTachometerSlotTask = Task.Run(() => client.Add<T_DigitTachometerSlot>(rootCard.T_DigitTachometerSlot.Select(p => p as T_DigitTachometerSlot).ToList()));
-            var analogRransducerInSlotTask = Task.Run(() => client.Add<T_AnalogRransducerInSlot>(rootCard.T_AnalogRransducerInSlot.Select(p => p as T_AnalogRransducerInSlot).ToList()));
-            var relaySlotTask = Task.Run(() => client.Add<T_RelaySlot>(rootCard.T_RelaySlot.Select(p => p as T_RelaySlot).ToList()));
-            var digitRransducerInSlotTask = Task.Run(() => client.Add<T_DigitRransducerInSlot>(rootCard.T_DigitRransducerInSlot.Select(p => p as T_DigitRransducerInSlot).ToList()));
-            var digitRransducerOutSlotTask = Task.Run(() => client.Add<T_DigitRransducerOutSlot>(rootCard.T_DigitRransducerOutSlot.Select(p => p as T_DigitRransducerOutSlot).ToList()));
-            var analogRransducerOutSlotTask = Task.Run(() => client.Add<T_AnalogRransducerOutSlot>(rootCard.T_AnalogRransducerOutSlot.Select(p => p as T_AnalogRransducerOutSlot).ToList()));
-            var wirelessScalarSlotTask = Task.Run(() => client.Add<T_WirelessScalarSlot>(rootCard.T_WirelessScalarSlot.Select(p => p as T_WirelessScalarSlot).ToList()));
-            var wirelessVibrationSlotTask = Task.Run(() => client.Add<T_WirelessVibrationSlot>(rootCard.T_WirelessVibrationSlot.Select(p => p as T_WirelessVibrationSlot).ToList()));
-            var divFreInfoTask = Task.Run(() => client.Add<T_DivFreInfo>(rootCard.T_DivFreInfo.Select(p => p as T_DivFreInfo).ToList()));
+            #region
+            /*
+            var mainControlCardTask = Task.Run(() => client.Add<T_MainControlCard>(rootCard.T_MainControlCard.Select(p => p as T_MainControlCard).ToList()));
+                var wireMatchingCardTask = Task.Run(() => client.Add<T_WireMatchingCard>(rootCard.T_WireMatchingCard.Select(p => p as T_WireMatchingCard).ToList()));
+                var wirelessReceiveCardTask = Task.Run(() => client.Add<T_WirelessReceiveCard>(rootCard.T_WirelessReceiveCard.Select(p => p as T_WirelessReceiveCard).ToList()));
+                var transmissionCardTask = Task.Run(() => client.Add<T_TransmissionCard>(rootCard.T_TransmissionCard.Select(p => p as T_TransmissionCard).ToList()));
+                var abstractChannelInfoTask = Task.Run(() => client.Add<T_AbstractChannelInfo>(rootCard.T_AbstractChannelInfo.Select(p => p as T_AbstractChannelInfo).ToList()));
+                var iEPEChannelInfoTask = Task.Run(() => client.Add<T_IEPEChannelInfo>(rootCard.T_IEPEChannelInfo.Select(p => p as T_IEPEChannelInfo).ToList()));
+                var eddyCurrentDisplacementChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentDisplacementChannelInfo>(rootCard.T_EddyCurrentDisplacementChannelInfo.Select(p => p as T_EddyCurrentDisplacementChannelInfo).ToList()));
+                var eddyCurrentKeyPhaseChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentKeyPhaseChannelInfo>(rootCard.T_EddyCurrentKeyPhaseChannelInfo.Select(p => p as T_EddyCurrentKeyPhaseChannelInfo).ToList()));
+                var eddyCurrentTachometerChannelInfoTask = Task.Run(() => client.Add<T_EddyCurrentTachometerChannelInfo>(rootCard.T_EddyCurrentTachometerChannelInfo.Select(p => p as T_EddyCurrentTachometerChannelInfo).ToList()));
+                var digitTachometerChannelInfoTask = Task.Run(() => client.Add<T_DigitTachometerChannelInfo>(rootCard.T_DigitTachometerChannelInfo.Select(p => p as T_DigitTachometerChannelInfo).ToList()));
+                var analogRransducerInChannelInfoTask = Task.Run(() => client.Add<T_AnalogRransducerInChannelInfo>(rootCard.T_AnalogRransducerInChannelInfo.Select(p => p as T_AnalogRransducerInChannelInfo).ToList()));
+                var relayChannelInfoTask = Task.Run(() => client.Add<T_RelayChannelInfo>(rootCard.T_RelayChannelInfo.Select(p => p as T_RelayChannelInfo).ToList()));
+                var digitRransducerInChannelInfoTask = Task.Run(() => client.Add<T_DigitRransducerInChannelInfo>(rootCard.T_DigitRransducerInChannelInfo.Select(p => p as T_DigitRransducerInChannelInfo).ToList()));
+                var digitRransducerOutChannelInfoTask = Task.Run(() => client.Add<T_DigitRransducerOutChannelInfo>(rootCard.T_DigitRransducerOutChannelInfo.Select(p => p as T_DigitRransducerOutChannelInfo).ToList()));
+                var analogRransducerOutChannelInfoTask = Task.Run(() => client.Add<T_AnalogRransducerOutChannelInfo>(rootCard.T_AnalogRransducerOutChannelInfo.Select(p => p as T_AnalogRransducerOutChannelInfo).ToList()));
+                var wirelessScalarChannelInfoTask = Task.Run(() => client.Add<T_WirelessScalarChannelInfo>(rootCard.T_WirelessScalarChannelInfo.Select(p => p as T_WirelessScalarChannelInfo).ToList()));
+                var wirelessVibrationChannelInfoTask = Task.Run(() => client.Add<T_WirelessVibrationChannelInfo>(rootCard.T_WirelessVibrationChannelInfo.Select(p => p as T_WirelessVibrationChannelInfo).ToList()));
+                var abstractSlotInfoTask = Task.Run(() => client.Add<T_AbstractSlotInfo>(rootCard.T_AbstractSlotInfo.Select(p => p as T_AbstractSlotInfo).ToList()));
+                var iEPESlotTask = Task.Run(() => client.Add<T_IEPESlot>(rootCard.T_IEPESlot.Select(p => p as T_IEPESlot).ToList()));
+                var eddyCurrentDisplacementSlotTask = Task.Run(() => client.Add<T_EddyCurrentDisplacementSlot>(rootCard.T_EddyCurrentDisplacementSlot.Select(p => p as T_EddyCurrentDisplacementSlot).ToList()));
+                var eddyCurrentKeyPhaseSlotTask = Task.Run(() => client.Add<T_EddyCurrentKeyPhaseSlot>(rootCard.T_EddyCurrentKeyPhaseSlot.Select(p => p as T_EddyCurrentKeyPhaseSlot).ToList()));
+                var eddyCurrentTachometerSlotTask = Task.Run(() => client.Add<T_EddyCurrentTachometerSlot>(rootCard.T_EddyCurrentTachometerSlot.Select(p => p as T_EddyCurrentTachometerSlot).ToList()));
+                var digitTachometerSlotTask = Task.Run(() => client.Add<T_DigitTachometerSlot>(rootCard.T_DigitTachometerSlot.Select(p => p as T_DigitTachometerSlot).ToList()));
+                var analogRransducerInSlotTask = Task.Run(() => client.Add<T_AnalogRransducerInSlot>(rootCard.T_AnalogRransducerInSlot.Select(p => p as T_AnalogRransducerInSlot).ToList()));
+                var relaySlotTask = Task.Run(() => client.Add<T_RelaySlot>(rootCard.T_RelaySlot.Select(p => p as T_RelaySlot).ToList()));
+                var digitRransducerInSlotTask = Task.Run(() => client.Add<T_DigitRransducerInSlot>(rootCard.T_DigitRransducerInSlot.Select(p => p as T_DigitRransducerInSlot).ToList()));
+                var digitRransducerOutSlotTask = Task.Run(() => client.Add<T_DigitRransducerOutSlot>(rootCard.T_DigitRransducerOutSlot.Select(p => p as T_DigitRransducerOutSlot).ToList()));
+                var analogRransducerOutSlotTask = Task.Run(() => client.Add<T_AnalogRransducerOutSlot>(rootCard.T_AnalogRransducerOutSlot.Select(p => p as T_AnalogRransducerOutSlot).ToList()));
+                var wirelessScalarSlotTask = Task.Run(() => client.Add<T_WirelessScalarSlot>(rootCard.T_WirelessScalarSlot.Select(p => p as T_WirelessScalarSlot).ToList()));
+                var wirelessVibrationSlotTask = Task.Run(() => client.Add<T_WirelessVibrationSlot>(rootCard.T_WirelessVibrationSlot.Select(p => p as T_WirelessVibrationSlot).ToList()));
+                var divFreInfoTask = Task.Run(() => client.Add<T_DivFreInfo>(rootCard.T_DivFreInfo.Select(p => p as T_DivFreInfo).ToList()));
 
-            await Task.WhenAll(mainControlCardTask, wireMatchingCardTask,
-                wirelessReceiveCardTask, transmissionCardTask,
-                abstractChannelInfoTask, iEPEChannelInfoTask,
-                eddyCurrentDisplacementChannelInfoTask, eddyCurrentKeyPhaseChannelInfoTask,
-                eddyCurrentTachometerChannelInfoTask, digitTachometerChannelInfoTask,
-                analogRransducerInChannelInfoTask, relayChannelInfoTask,
-                digitRransducerInChannelInfoTask, digitRransducerOutChannelInfoTask,
-                analogRransducerOutChannelInfoTask, wirelessScalarChannelInfoTask,
-                wirelessVibrationChannelInfoTask, abstractSlotInfoTask,
-                iEPESlotTask, eddyCurrentDisplacementSlotTask,
-                eddyCurrentKeyPhaseSlotTask, eddyCurrentTachometerSlotTask,
-                digitTachometerSlotTask, analogRransducerInSlotTask,
-                relaySlotTask, digitRransducerInSlotTask,
-                digitRransducerOutSlotTask, analogRransducerOutSlotTask,
-                wirelessScalarSlotTask, wirelessVibrationSlotTask,
-                divFreInfoTask);
+                await Task.WhenAll(mainControlCardTask, wireMatchingCardTask,
+                    wirelessReceiveCardTask, transmissionCardTask,
+                    abstractChannelInfoTask, iEPEChannelInfoTask,
+                    eddyCurrentDisplacementChannelInfoTask, eddyCurrentKeyPhaseChannelInfoTask,
+                    eddyCurrentTachometerChannelInfoTask, digitTachometerChannelInfoTask,
+                    analogRransducerInChannelInfoTask, relayChannelInfoTask,
+                    digitRransducerInChannelInfoTask, digitRransducerOutChannelInfoTask,
+                    analogRransducerOutChannelInfoTask, wirelessScalarChannelInfoTask,
+                    wirelessVibrationChannelInfoTask, abstractSlotInfoTask,
+                    iEPESlotTask, eddyCurrentDisplacementSlotTask,
+                    eddyCurrentKeyPhaseSlotTask, eddyCurrentTachometerSlotTask,
+                    digitTachometerSlotTask, analogRransducerInSlotTask,
+                    relaySlotTask, digitRransducerInSlotTask,
+                    digitRransducerOutSlotTask, analogRransducerOutSlotTask,
+                    wirelessScalarSlotTask, wirelessVibrationSlotTask,
+                    divFreInfoTask);
 
-            if (mainControlCardTask.Result.IsOK)
-            {
-                for (int i = 0; i < mainControlCardTask.Result.ResponseItem.Count(); i++)
+                if (mainControlCardTask.Result.IsOK)
                 {
-                    rootCard.T_MainControlCard[i].id = mainControlCardTask.Result.ResponseItem[i];
+                    for (int i = 0; i < mainControlCardTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_MainControlCard[i].id = mainControlCardTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_MainControlCard.AddRange(rootCard.T_MainControlCard);                
                 }
-                T_RootCard[ip].T_MainControlCard.AddRange(rootCard.T_MainControlCard);                
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + mainControlCardTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wireMatchingCardTask.Result.IsOK)
-            {
-                for (int i = 0; i < wireMatchingCardTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_WireMatchingCard[i].id = wireMatchingCardTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + mainControlCardTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_WireMatchingCard.AddRange(rootCard.T_WireMatchingCard);             
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wireMatchingCardTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wirelessReceiveCardTask.Result.IsOK)
-            {
-                for (int i = 0; i < wirelessReceiveCardTask.Result.ResponseItem.Count(); i++)
+                if (wireMatchingCardTask.Result.IsOK)
                 {
-                    rootCard.T_WirelessReceiveCard[i].id = wirelessReceiveCardTask.Result.ResponseItem[i];
+                    for (int i = 0; i < wireMatchingCardTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WireMatchingCard[i].id = wireMatchingCardTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WireMatchingCard.AddRange(rootCard.T_WireMatchingCard);             
                 }
-                T_RootCard[ip].T_WirelessReceiveCard.AddRange(rootCard.T_WirelessReceiveCard);             
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wirelessReceiveCardTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (transmissionCardTask.Result.IsOK)
-            {
-                for (int i = 0; i < transmissionCardTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_TransmissionCard[i].id = transmissionCardTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + wireMatchingCardTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_TransmissionCard.AddRange(rootCard.T_TransmissionCard);           
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + transmissionCardTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (abstractChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < abstractChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (wirelessReceiveCardTask.Result.IsOK)
                 {
-                    rootCard.T_AbstractChannelInfo[i].id = abstractChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < wirelessReceiveCardTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WirelessReceiveCard[i].id = wirelessReceiveCardTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WirelessReceiveCard.AddRange(rootCard.T_WirelessReceiveCard);             
                 }
-                T_RootCard[ip].T_AbstractChannelInfo.AddRange(rootCard.T_AbstractChannelInfo);              
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + abstractChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (iEPEChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < iEPEChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_IEPEChannelInfo[i].id = iEPEChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + wirelessReceiveCardTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_IEPEChannelInfo.AddRange(rootCard.T_IEPEChannelInfo);               
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + iEPEChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentDisplacementChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentDisplacementChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (transmissionCardTask.Result.IsOK)
                 {
-                    rootCard.T_EddyCurrentDisplacementChannelInfo[i].id = eddyCurrentDisplacementChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < transmissionCardTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_TransmissionCard[i].id = transmissionCardTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_TransmissionCard.AddRange(rootCard.T_TransmissionCard);           
                 }
-                T_RootCard[ip].T_EddyCurrentDisplacementChannelInfo.AddRange(rootCard.T_EddyCurrentDisplacementChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentKeyPhaseChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentKeyPhaseChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_EddyCurrentKeyPhaseChannelInfo[i].id = eddyCurrentKeyPhaseChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + transmissionCardTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_EddyCurrentKeyPhaseChannelInfo.AddRange(rootCard.T_EddyCurrentKeyPhaseChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentTachometerChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentTachometerChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (abstractChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_EddyCurrentTachometerChannelInfo[i].id = eddyCurrentTachometerChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < abstractChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AbstractChannelInfo[i].id = abstractChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AbstractChannelInfo.AddRange(rootCard.T_AbstractChannelInfo);              
                 }
-                T_RootCard[ip].T_EddyCurrentTachometerChannelInfo.AddRange(rootCard.T_EddyCurrentTachometerChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentTachometerChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitTachometerChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitTachometerChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_DigitTachometerChannelInfo[i].id = digitTachometerChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + abstractChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_DigitTachometerChannelInfo.AddRange(rootCard.T_DigitTachometerChannelInfo);             
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitTachometerChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (analogRransducerInChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < analogRransducerInChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (iEPEChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_AnalogRransducerInChannelInfo[i].id = analogRransducerInChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < iEPEChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_IEPEChannelInfo[i].id = iEPEChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_IEPEChannelInfo.AddRange(rootCard.T_IEPEChannelInfo);               
                 }
-                T_RootCard[ip].T_AnalogRransducerInChannelInfo.AddRange(rootCard.T_AnalogRransducerInChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerInChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (relayChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < relayChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_RelayChannelInfo[i].id = relayChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + iEPEChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_RelayChannelInfo.AddRange(rootCard.T_RelayChannelInfo);      
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + relayChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitRransducerInChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitRransducerInChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (eddyCurrentDisplacementChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_DigitRransducerInChannelInfo[i].id = digitRransducerInChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < eddyCurrentDisplacementChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentDisplacementChannelInfo[i].id = eddyCurrentDisplacementChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentDisplacementChannelInfo.AddRange(rootCard.T_EddyCurrentDisplacementChannelInfo);
                 }
-                T_RootCard[ip].T_DigitRransducerInChannelInfo.AddRange(rootCard.T_DigitRransducerInChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerInChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitRransducerOutChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitRransducerOutChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_DigitRransducerOutChannelInfo[i].id = digitRransducerOutChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentDisplacementChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_DigitRransducerOutChannelInfo.AddRange(rootCard.T_DigitRransducerOutChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerOutChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (analogRransducerOutChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < analogRransducerOutChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (eddyCurrentKeyPhaseChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_AnalogRransducerOutChannelInfo[i].id = analogRransducerOutChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < eddyCurrentKeyPhaseChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentKeyPhaseChannelInfo[i].id = eddyCurrentKeyPhaseChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentKeyPhaseChannelInfo.AddRange(rootCard.T_EddyCurrentKeyPhaseChannelInfo);
                 }
-                T_RootCard[ip].T_AnalogRransducerOutChannelInfo.AddRange(rootCard.T_AnalogRransducerOutChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerOutChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wirelessScalarChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < wirelessScalarChannelInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_WirelessScalarChannelInfo[i].id = wirelessScalarChannelInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentKeyPhaseChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_WirelessScalarChannelInfo.AddRange(rootCard.T_WirelessScalarChannelInfo);                
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wirelessScalarChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wirelessVibrationChannelInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < wirelessVibrationChannelInfoTask.Result.ResponseItem.Count(); i++)
+                if (eddyCurrentTachometerChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_WirelessVibrationChannelInfo[i].id = wirelessVibrationChannelInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < eddyCurrentTachometerChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentTachometerChannelInfo[i].id = eddyCurrentTachometerChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentTachometerChannelInfo.AddRange(rootCard.T_EddyCurrentTachometerChannelInfo);
                 }
-                T_RootCard[ip].T_WirelessVibrationChannelInfo.AddRange(rootCard.T_WirelessVibrationChannelInfo);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wirelessVibrationChannelInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (abstractSlotInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < abstractSlotInfoTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_AbstractSlotInfo[i].id = abstractSlotInfoTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentTachometerChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_AbstractSlotInfo.AddRange(rootCard.T_AbstractSlotInfo);            
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + abstractSlotInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (iEPESlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < iEPESlotTask.Result.ResponseItem.Count(); i++)
+                if (digitTachometerChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_IEPESlot[i].id = iEPESlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < digitTachometerChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitTachometerChannelInfo[i].id = digitTachometerChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitTachometerChannelInfo.AddRange(rootCard.T_DigitTachometerChannelInfo);             
                 }
-                T_RootCard[ip].T_IEPESlot.AddRange(rootCard.T_IEPESlot);               
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + iEPESlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentDisplacementSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentDisplacementSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_EddyCurrentDisplacementSlot[i].id = eddyCurrentDisplacementSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitTachometerChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_EddyCurrentDisplacementSlot.AddRange(rootCard.T_EddyCurrentDisplacementSlot);
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentDisplacementSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentKeyPhaseSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentKeyPhaseSlotTask.Result.ResponseItem.Count(); i++)
+                if (analogRransducerInChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_EddyCurrentKeyPhaseSlot[i].id = eddyCurrentKeyPhaseSlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < analogRransducerInChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AnalogRransducerInChannelInfo[i].id = analogRransducerInChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AnalogRransducerInChannelInfo.AddRange(rootCard.T_AnalogRransducerInChannelInfo);
                 }
-                T_RootCard[ip].T_EddyCurrentKeyPhaseSlot.AddRange(rootCard.T_EddyCurrentKeyPhaseSlot);              
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentKeyPhaseSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (eddyCurrentTachometerSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < eddyCurrentTachometerSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_EddyCurrentTachometerSlot[i].id = eddyCurrentTachometerSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerInChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_EddyCurrentTachometerSlot.AddRange(rootCard.T_EddyCurrentTachometerSlot);             
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentTachometerSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitTachometerSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitTachometerSlotTask.Result.ResponseItem.Count(); i++)
+                if (relayChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_DigitTachometerSlot[i].id = digitTachometerSlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < relayChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_RelayChannelInfo[i].id = relayChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_RelayChannelInfo.AddRange(rootCard.T_RelayChannelInfo);      
                 }
-                T_RootCard[ip].T_DigitTachometerSlot.AddRange(rootCard.T_DigitTachometerSlot);               
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitTachometerSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (analogRransducerInSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < analogRransducerInSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_AnalogRransducerInSlot[i].id = analogRransducerInSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + relayChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_AnalogRransducerInSlot.AddRange(rootCard.T_AnalogRransducerInSlot);             
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerInSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (relaySlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < relaySlotTask.Result.ResponseItem.Count(); i++)
+                if (digitRransducerInChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_RelaySlot[i].id = relaySlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < digitRransducerInChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitRransducerInChannelInfo[i].id = digitRransducerInChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitRransducerInChannelInfo.AddRange(rootCard.T_DigitRransducerInChannelInfo);
                 }
-                T_RootCard[ip].T_RelaySlot.AddRange(rootCard.T_RelaySlot);            
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + relaySlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitRransducerInSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitRransducerInSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_DigitRransducerInSlot[i].id = digitRransducerInSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerInChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_DigitRransducerInSlot.AddRange(rootCard.T_DigitRransducerInSlot);               
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerInSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (digitRransducerOutSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < digitRransducerOutSlotTask.Result.ResponseItem.Count(); i++)
+                if (digitRransducerOutChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_DigitRransducerOutSlot[i].id = digitRransducerOutSlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < digitRransducerOutChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitRransducerOutChannelInfo[i].id = digitRransducerOutChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitRransducerOutChannelInfo.AddRange(rootCard.T_DigitRransducerOutChannelInfo);
                 }
-                T_RootCard[ip].T_DigitRransducerOutSlot.AddRange(rootCard.T_DigitRransducerOutSlot);            
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerOutSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (analogRransducerOutSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < analogRransducerOutSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_AnalogRransducerOutSlot[i].id = analogRransducerOutSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerOutChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_AnalogRransducerOutSlot.AddRange(rootCard.T_AnalogRransducerOutSlot);    
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerOutSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wirelessScalarSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < wirelessScalarSlotTask.Result.ResponseItem.Count(); i++)
+                if (analogRransducerOutChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_WirelessScalarSlot[i].id = wirelessScalarSlotTask.Result.ResponseItem[i];
+                    for (int i = 0; i < analogRransducerOutChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AnalogRransducerOutChannelInfo[i].id = analogRransducerOutChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AnalogRransducerOutChannelInfo.AddRange(rootCard.T_AnalogRransducerOutChannelInfo);
                 }
-                T_RootCard[ip].T_WirelessScalarSlot.AddRange(rootCard.T_WirelessScalarSlot);               
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wirelessScalarSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (wirelessVibrationSlotTask.Result.IsOK)
-            {
-                for (int i = 0; i < wirelessVibrationSlotTask.Result.ResponseItem.Count(); i++)
+                else
                 {
-                    rootCard.T_WirelessVibrationSlot[i].id = wirelessVibrationSlotTask.Result.ResponseItem[i];
+                    string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerOutChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                 }
-                T_RootCard[ip].T_WirelessVibrationSlot.AddRange(rootCard.T_WirelessVibrationSlot);            
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + wirelessVibrationSlotTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            if (divFreInfoTask.Result.IsOK)
-            {
-                for (int i = 0; i < divFreInfoTask.Result.ResponseItem.Count(); i++)
+                if (wirelessScalarChannelInfoTask.Result.IsOK)
                 {
-                    rootCard.T_DivFreInfo[i].id = divFreInfoTask.Result.ResponseItem[i];
+                    for (int i = 0; i < wirelessScalarChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WirelessScalarChannelInfo[i].id = wirelessScalarChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WirelessScalarChannelInfo.AddRange(rootCard.T_WirelessScalarChannelInfo);                
                 }
-                T_RootCard[ip].T_DivFreInfo.AddRange(rootCard.T_DivFreInfo);            
-            }
-            else
-            {
-                string error = DateTime.Now.ToString() + "添加错误:" + divFreInfoTask.Result.ErrorMessage;
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-            }
-            */
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + wirelessScalarChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (wirelessVibrationChannelInfoTask.Result.IsOK)
+                {
+                    for (int i = 0; i < wirelessVibrationChannelInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WirelessVibrationChannelInfo[i].id = wirelessVibrationChannelInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WirelessVibrationChannelInfo.AddRange(rootCard.T_WirelessVibrationChannelInfo);
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + wirelessVibrationChannelInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (abstractSlotInfoTask.Result.IsOK)
+                {
+                    for (int i = 0; i < abstractSlotInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AbstractSlotInfo[i].id = abstractSlotInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AbstractSlotInfo.AddRange(rootCard.T_AbstractSlotInfo);            
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + abstractSlotInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (iEPESlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < iEPESlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_IEPESlot[i].id = iEPESlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_IEPESlot.AddRange(rootCard.T_IEPESlot);               
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + iEPESlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (eddyCurrentDisplacementSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < eddyCurrentDisplacementSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentDisplacementSlot[i].id = eddyCurrentDisplacementSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentDisplacementSlot.AddRange(rootCard.T_EddyCurrentDisplacementSlot);
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentDisplacementSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (eddyCurrentKeyPhaseSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < eddyCurrentKeyPhaseSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentKeyPhaseSlot[i].id = eddyCurrentKeyPhaseSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentKeyPhaseSlot.AddRange(rootCard.T_EddyCurrentKeyPhaseSlot);              
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentKeyPhaseSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (eddyCurrentTachometerSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < eddyCurrentTachometerSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_EddyCurrentTachometerSlot[i].id = eddyCurrentTachometerSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_EddyCurrentTachometerSlot.AddRange(rootCard.T_EddyCurrentTachometerSlot);             
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + eddyCurrentTachometerSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (digitTachometerSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < digitTachometerSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitTachometerSlot[i].id = digitTachometerSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitTachometerSlot.AddRange(rootCard.T_DigitTachometerSlot);               
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitTachometerSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (analogRransducerInSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < analogRransducerInSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AnalogRransducerInSlot[i].id = analogRransducerInSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AnalogRransducerInSlot.AddRange(rootCard.T_AnalogRransducerInSlot);             
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerInSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (relaySlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < relaySlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_RelaySlot[i].id = relaySlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_RelaySlot.AddRange(rootCard.T_RelaySlot);            
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + relaySlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (digitRransducerInSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < digitRransducerInSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitRransducerInSlot[i].id = digitRransducerInSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitRransducerInSlot.AddRange(rootCard.T_DigitRransducerInSlot);               
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerInSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (digitRransducerOutSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < digitRransducerOutSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DigitRransducerOutSlot[i].id = digitRransducerOutSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DigitRransducerOutSlot.AddRange(rootCard.T_DigitRransducerOutSlot);            
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + digitRransducerOutSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (analogRransducerOutSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < analogRransducerOutSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_AnalogRransducerOutSlot[i].id = analogRransducerOutSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_AnalogRransducerOutSlot.AddRange(rootCard.T_AnalogRransducerOutSlot);    
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + analogRransducerOutSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (wirelessScalarSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < wirelessScalarSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WirelessScalarSlot[i].id = wirelessScalarSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WirelessScalarSlot.AddRange(rootCard.T_WirelessScalarSlot);               
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + wirelessScalarSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (wirelessVibrationSlotTask.Result.IsOK)
+                {
+                    for (int i = 0; i < wirelessVibrationSlotTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_WirelessVibrationSlot[i].id = wirelessVibrationSlotTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_WirelessVibrationSlot.AddRange(rootCard.T_WirelessVibrationSlot);            
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + wirelessVibrationSlotTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                if (divFreInfoTask.Result.IsOK)
+                {
+                    for (int i = 0; i < divFreInfoTask.Result.ResponseItem.Count(); i++)
+                    {
+                        rootCard.T_DivFreInfo[i].id = divFreInfoTask.Result.ResponseItem[i];
+                    }
+                    T_RootCard[ip].T_DivFreInfo.AddRange(rootCard.T_DivFreInfo);            
+                }
+                else
+                {
+                    string error = DateTime.Now.ToString() + "添加错误:" + divFreInfoTask.Result.ErrorMessage;
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                }
+                */
+            #endregion
         }
 
-        private async Task<bool> DeleteHardwareTables(DataProvider client, string ip, T1_RootCard rootCard)
+        private async Task<bool> DeleteHardwareTables(string ip, T1_RootCard rootCard)
         {
+            var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
             Dictionary<string, Tuple<string, ICollection<object>>> deleteDic = new Dictionary<string, Tuple<string, ICollection<object>>>();
             deleteDic.Add("T_MainControlCard", new Tuple<string, ICollection<object>>("id", rootCard.T_MainControlCard.Select(p => p.id as object).ToList()));
             deleteDic.Add("T_WireMatchingCard", new Tuple<string, ICollection<object>>("id", rootCard.T_WireMatchingCard.Select(p => p.id as object).ToList()));
@@ -1988,13 +1990,14 @@ namespace AIC.DatabaseService
                 }
                 else
                 {
-                    string error = DateTime.Now.ToString() + "删除错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
+                    string error = "服务器" + ip + " " + DateTime.Now.ToString() + "删除错误:" + complexResult.ErrorType + "-" + complexResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
                     return false;
                 }
             });
 
+            #region
             /*//恢复id  
             var mainControlCardTask = Task.Run(() => client.Delete<T_MainControlCard>("id", rootCard.T_MainControlCard.Select(p => ((p as T_MainControlCard).id) as object).ToList()));
             var wireMatchingCardTask = Task.Run(() => client.Delete<T_WireMatchingCard>("id", rootCard.T_WireMatchingCard.Select(p => ((p as T_WireMatchingCard).id) as object).ToList()));
@@ -2325,6 +2328,7 @@ namespace AIC.DatabaseService
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
             }
             */
+            #endregion
         }
 
         private void add(string ip, object obj, long id)
@@ -2856,14 +2860,14 @@ namespace AIC.DatabaseService
                     }
                     else
                     {
-                        EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("用户登录", new Exception(roleResult.ErrorMessage)));
+                        EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("服务器" + ip + " " + "用户登录", new Exception(roleResult.ErrorMessage)));
                         return null;
                     }
                 }
                 else
                 {                 
                     //ErrorMessage是错误信息
-                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("用户登录", new Exception(queryResult.ErrorMessage)));
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("服务器" + ip + " " + "用户登录", new Exception(queryResult.ErrorMessage)));
                     return null;
                 }
             });
@@ -2894,7 +2898,7 @@ namespace AIC.DatabaseService
                         error = "请确定服务器正常#" + error;
                     }
                     //ErrorMessage是错误信息
-                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("服务器" + "数据库访问", new Exception(error)));
                     return error.Substring(0, error.IndexOf("#")) + "...";
                 }
             });

@@ -14,14 +14,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid x:Name="grid" >
-        <Grid.RowDefinitions>           
-            <RowDefinition Height="40"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>             
         <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
             <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding SearchName, Mode=OneWayToSource}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center"/>
             <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -31,7 +33,7 @@
                 </Button.Content>
             </Button>
             <TextBlock Text="{DynamicResource menuOrganizationManage}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-            <TextBox DataContext="{Binding ElementName=datagrid, Path=SelectedItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" IsReadOnly="True"/>
+            <TextBox DataContext="{Binding ElementName=datagrid, Path=SelectedItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>
             <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedItem, ElementName=datagrid}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">

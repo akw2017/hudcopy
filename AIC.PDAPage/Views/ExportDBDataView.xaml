@@ -1,0 +1,198 @@
+﻿<UserControl x:Class="AIC.PDAPage.Views.ExportDBDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:control="clr-namespace:AIC.Core.OrganizationModels;assembly=AIC.Core"
+             xmlns:model="clr-namespace:AIC.PDAPage.Models"
+             xmlns:local="clr-namespace:AIC.PDAPage.Views"
+             xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+             xmlns:prism="http://prismlibrary.com/"      
+             xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"              
+             prism:ViewModelLocator.AutoWireViewModel="True"              
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <convert:BoolVisibilityConverter x:Key="boolVisibilityConverter"/>
+                    <convert:IntAdd1Converter x:Key="intAdd1Converter"/>
+                    <command:CommandReference x:Key="AddCommandReference" Command="{Binding AddCommand}"/>
+                    <command:CommandReference x:Key="AddRootCommandReference" Command="{Binding AddRootCommand}"/>
+                    <command:CommandReference x:Key="SortCommandReference" Command="{Binding SortCommand}"/>
+                    <command:CommandReference x:Key="AddOrganizationReference" Command="{Binding AddOrganizationCommand}"/>
+                    <command:CommandReference x:Key="DeleteCommandReference" Command="{Binding DeleteCommand}"/>
+                    <command:CommandReference x:Key="CopyCommandReference" Command="{Binding CopyCommand}"/>
+                    <command:CommandReference x:Key="PasteCommandReference" Command="{Binding PasteCommand}"/>
+                    <command:CommandReference x:Key="PasteRootCommandReference" Command="{Binding PasteRootCommand}"/>
+                    <command:CommandReference x:Key="RenameCommandReference" Command="{Binding RenameCommand}"/>
+                    <command:CommandReference x:Key="DeleteCardCommandReference" Command="{Binding DeleteCardCommand}"/>
+                    <command:CommandReference x:Key="ForceDeleteCardCommandReference" Command="{Binding ForceDeleteCardCommand}"/>
+                    <command:CommandReference x:Key="ClearRecycledCommandReference" Command="{Binding ClearRecycledCommand}"/>
+                    <command:CommandReference x:Key="RecoveredItemCommandReference" Command="{Binding RecoveredItemCommand}"/>
+                    <command:CommandReference x:Key="DebugCommandReference" Command="{Binding DebugCommand}"/>
+                    <command:CommandReference x:Key="EditDeviceCommandReference" Command="{Binding EditDeviceCommand}"/>
+                    <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+                        <!--<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>-->
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type RadioButton}">
+                                    <ControlTemplate.Resources>
+                                        <Storyboard x:Key="OnLoaded1">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="grid">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </ControlTemplate.Resources>
+                                    <!-- BulletDecorator is used to provide baseline alignment between the checkmark and the Content -->
+                                    <BulletDecorator Background="Transparent">
+                                        <BulletDecorator.Bullet>
+                                            <Grid x:Name="grid" Width="24" Height="24" RenderTransformOrigin="0.5,0.5">
+                                                <Grid.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Grid.RenderTransform>
+                                                <Ellipse x:Name="Ellipse_Border" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="3"/>
+                                                <Ellipse Margin="5" x:Name="CheckMark" Fill="{DynamicResource AccentColorBrush}"/>
+                                            </Grid>
+                                        </BulletDecorator.Bullet>
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+                                    </BulletDecorator>
+
+                                    <ControlTemplate.Triggers>
+                                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                            <BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
+                                        </EventTrigger>
+                                        <Trigger Property="IsChecked" Value="false">
+                                            <Setter Property="Visibility" Value="Collapsed" TargetName="CheckMark"/>
+                                        </Trigger>
+
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Fill" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Ellipse_Border"/>
+                                            <Setter Property="Stroke" Value="#40000000" TargetName="Ellipse_Border"/>
+                                            <Setter Property="Foreground" Value="#80000000"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary Source="/AIC.PDAPage;component/Themes/PDASystemManageTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--<UserControl.InputBindings>
+        <KeyBinding Gesture="Control+Alt+S" Command="{Binding ShowDebugCommand}" />
+    </UserControl.InputBindings>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+            <TextBlock Text="导出数据类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <CheckBox Content="组织" IsChecked="{Binding OrganizationChecked}" Margin="4,0,0,0"/>
+            <CheckBox Content="测点" IsChecked="{Binding ItemChecked}" Margin="4,0,0,0"/>
+            <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
+                        <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
+                        <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <TabControl Grid.Row="1" Margin="3">
+            <TabItem Header="组织" Style="{x:Null}">
+                <DataGrid ItemsSource="{Binding OrganizationView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Guid"  Binding="{Binding Guid}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Level"  Binding="{Binding Level}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Sort_No"  Binding="{Binding Sort_No}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Unit"  Binding="{Binding Unit}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Structure"  Binding="{Binding Structure}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="NodeType"  Binding="{Binding NodeType}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Remarks"  Binding="{Binding Remarks}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                            <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="测点" Style="{x:Null}">
+                <DataGrid ItemsSource="{Binding ItemView}" AutoGenerateColumns="True" CanUserAddRows="False" CanUserSortColumns="False">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                            <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

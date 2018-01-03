@@ -58,7 +58,8 @@ namespace AIC.HistoryDataPage.ViewModels
         private void InitTree()
         { 
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
-            selectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
+            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
             TreeExpanded();
         }
 
@@ -88,6 +89,17 @@ namespace AIC.HistoryDataPage.ViewModels
             {
                 _organizationTreeItems = value;
                 OnPropertyChanged("OrganizationTreeItems");
+            }
+        }
+
+        private ObservableCollection<OrganizationTreeItemViewModel> _recycledTreeItems;
+        public ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems
+        {
+            get { return _recycledTreeItems; }
+            set
+            {
+                _recycledTreeItems = value;
+                OnPropertyChanged("RecycledTreeItems");
             }
         }
 
@@ -275,7 +287,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     selectedChannel = value;
                     this.OnPropertyChanged(() => this.SelectedChannel);
-                    //DiagnoseCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -603,6 +614,20 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+
+        private OrganizationTreeItemViewModel selectedTreeItem;
+        public OrganizationTreeItemViewModel SelectedTreeItem
+        {
+            get { return selectedTreeItem; }
+            set
+            {
+                if (selectedTreeItem != value)
+                {
+                    selectedTreeItem = value;
+                    OnPropertyChanged("SelectedTreeItem");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -669,7 +694,6 @@ namespace AIC.HistoryDataPage.ViewModels
         private Time3DSpectrumDataViewModel time3DSpectrumVM;
         private RPM3DSpectrumDataViewModel rpm3DSpectrumVM;
         private AlarmPointTrendDataViewModel alarmPointTrendVM;
-        private OrganizationTreeItemViewModel selectedTreeItem;
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
@@ -929,10 +953,10 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private void SelectedTreeChanged(object para)
         {
-            selectedTreeItem = para as OrganizationTreeItemViewModel;
-            if (selectedTreeItem is ItemTreeItemViewModel)
+            SelectedTreeItem = para as OrganizationTreeItemViewModel;
+            if (SelectedTreeItem is ItemTreeItemViewModel)
             {
-                var itemTree = selectedTreeItem as ItemTreeItemViewModel;
+                var itemTree = SelectedTreeItem as ItemTreeItemViewModel;
                 if (itemTree.BaseAlarmSignal != null)
                 {
                     if (itemTree.BaseAlarmSignal.Unit != null)
@@ -944,14 +968,15 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         private void DoubleClickAddData(object para)
         {
-            if (selectedTreeItem is ItemTreeItemViewModel)
+            SelectedTreeItem = para as ItemTreeItemViewModel;
+            if (SelectedTreeItem is ItemTreeItemViewModel)
             {
                 AddData(para);
             }
         }
         private async void AddData(object para)
         {
-            var item = selectedTreeItem as ItemTreeItemViewModel;
+            var item = SelectedTreeItem as ItemTreeItemViewModel;
             if (item == null)
             {
 #if XBAP
@@ -981,10 +1006,10 @@ namespace AIC.HistoryDataPage.ViewModels
             string conditionAlarm;
             ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
 
-            string selectedip = selectedTreeItem.ServerIP;
+            string selectedip = SelectedTreeItem.ServerIP;
 
             #region 分频            
-            var divfre = selectedTreeItem as DivFreTreeItemViewModel;
+            var divfre = SelectedTreeItem as DivFreTreeItemViewModel;
             if (divfre != null)
             {
                 try
@@ -1087,7 +1112,7 @@ namespace AIC.HistoryDataPage.ViewModels
             #endregion
 
             #region 测点
-            if (item != null)
+            if (item != null && item.T_Item != null && item.T_Item.ItemType != 0)
             {
                 if (addedChannels.Select(o => o.Guid).Contains(item.T_Item.Guid)) return;
                 try
@@ -1109,8 +1134,8 @@ namespace AIC.HistoryDataPage.ViewModels
                         }
                         result = result.OrderBy(p => p.ACQDatetime).ToList(); //result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
                         BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
-                        {
-                            DisplayName = item.BaseAlarmSignal.DeviceItemName,
+                        {                            
+                            DisplayName = (item.BaseAlarmSignal != null)? item.BaseAlarmSignal.DeviceItemName : item.FullName,
                             IP = selectedip,
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList(),
@@ -1152,7 +1177,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         result = result.OrderBy(p => p.ACQDatetime).ToList();
                         BaseAlarmChannelToken channeltoken = new BaseAlarmChannelToken()
                         {
-                            DisplayName = item.BaseAlarmSignal.DeviceItemName,
+                            DisplayName = (item.BaseAlarmSignal != null) ? item.BaseAlarmSignal.DeviceItemName : item.FullName,
                             IP = selectedip,
                             Guid = item.T_Item.Guid,
                             DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList(),
@@ -1181,6 +1206,15 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     Status = ViewModelStatus.None;
                 }
+            }
+            else
+            {
+#if XBAP
+                MessageBox.Show("该测点没绑定或无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
             }
             #endregion
         }

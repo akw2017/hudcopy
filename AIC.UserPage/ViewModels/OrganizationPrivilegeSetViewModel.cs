@@ -43,30 +43,43 @@ namespace AIC.UserPage.ViewModels
             _organizationService = organizationService;
             _loginUserService = loginUserService;
 
-            //先从数据库里取数据
+            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIP = _databaseComponent.MainServerIp;
 
-            T_OrganizationPrivilege = databaseComponent.GetOrganizationPrivilegeData();
-            T_Organization = databaseComponent.GetOrganizationData();
-            //_organizationService.T_Organization.ForEach(p=> T_Organization.Add(p.ShallowClone()));
+            InitPager(ServerIP);
 
-            MyOrganizationPrivilege = new List<MyOrganizationPrivilege>();
-            var grouporganization = (from p in T_OrganizationPrivilege group p by p.Name into s select s).ToList();
-            foreach(var organization in grouporganization)
-            {
-                MyOrganizationPrivilege myorganization = new MyOrganizationPrivilege();
-                myorganization.Name = organization.FirstOrDefault().Name;
-                myorganization.OrganizationTreeItems = new List<OrganizationTreeItemViewModel>();
-                OrganizationProcess.GetOrganizationWithIsChecked(myorganization.OrganizationTreeItems, organization.ToList(), T_Organization);
-                MyOrganizationPrivilege.Add(myorganization);
-            }
-
-            InitPager();
             _view = new ListCollectionView(MyOrganizationPrivilegeLast);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("Name"));//对视图进行分组           
         }
 
         private readonly ICollectionView _view;
         public ICollectionView MyOrganizationPrivilegeView { get { return _view; } }
+
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    InitPager(_serverIP);
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
+
+        private ObservableCollection<string> _serverIPCategory;
+        public ObservableCollection<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -164,12 +177,12 @@ namespace AIC.UserPage.ViewModels
 
         public string WaitInfo { get { return "数据处理中"; } set { } }
 
-        private DelegateCommand queryCommand;
-        public DelegateCommand QueryCommand
+        private DelegateCommand<object> queryCommand;
+        public DelegateCommand<object> QueryCommand
         {
             get
             {
-                return this.queryCommand ?? (this.queryCommand = new DelegateCommand(() => this.Query()));
+                return this.queryCommand ?? (this.queryCommand = new DelegateCommand<object>(value => this.Query(value), value => CanOperate(value)));
             }
         }
 
@@ -178,7 +191,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value)));
+                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value), value => CanOperate(value)));
             }
         }
 
@@ -187,7 +200,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value)));
+                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value), value => CanOperate(value)));
             }
         }
 
@@ -196,7 +209,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value)));
+                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value), value => CanOperate(value)));
             }
         }
         private DelegateCommand<object> currentPageChangedComamnd;
@@ -208,26 +221,77 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private void InitPager()
+        private bool CanOperate(object para)
         {
-            PageSizeList = new List<int>();
-            PageSizeList.Add(20);
-            PageSizeList.Add(50);
-            PageSizeList.Add(100);
-            PageSize = PageSizeList[0];
-            MyOrganizationPrivilegeMid = (from p in MyOrganizationPrivilege where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
-            TotalItems = MyOrganizationPrivilegeMid.Count;
-            MyOrganizationPrivilegeLast = new List<MyOrganizationPrivilege>();
-            for (int i = 0; i < MyOrganizationPrivilegeMid.Count; i++)
+            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
-                if (i >= 0 && i < PageSize)
-                {
-                    MyOrganizationPrivilegeLast.AddRange(MyOrganizationPrivilegeMid[i]);
-                }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        private void Query()
+        private void InitPager(string ip)
+        {
+            T_OrganizationPrivilege = _databaseComponent.GetOrganizationPrivilegeData(ip);
+            T_Organization = _databaseComponent.GetOrganizationData(ip);
+
+            MyOrganizationPrivilege = new List<MyOrganizationPrivilege>();
+            var grouporganization = (from p in T_OrganizationPrivilege group p by p.Name into s select s).ToList();
+            foreach (var organization in grouporganization)
+            {
+                MyOrganizationPrivilege myorganization = new MyOrganizationPrivilege();
+                myorganization.Name = organization.FirstOrDefault().Name;
+                myorganization.OrganizationTreeItems = new List<OrganizationTreeItemViewModel>();
+                OrganizationProcess.GetOrganizationWithIsChecked(myorganization.OrganizationTreeItems, organization.ToList(), T_Organization);
+                MyOrganizationPrivilege.Add(myorganization);
+            }
+
+            if (PageSizeList == null)
+            {
+                PageSizeList = new List<int>();
+                PageSizeList.Add(20);
+                PageSizeList.Add(50);
+                PageSizeList.Add(100);
+                PageSize = PageSizeList[0];
+            }
+
+            MyOrganizationPrivilegeMid = (from p in MyOrganizationPrivilege where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
+            TotalItems = MyOrganizationPrivilegeMid.Count;
+            if (MyOrganizationPrivilegeLast == null)
+            {
+                MyOrganizationPrivilegeLast = new List<MyOrganizationPrivilege>();
+            }
+            else
+            {
+                MyOrganizationPrivilegeLast.Clear();
+            }
+
+            if (CanOperate(null) == true)
+            {
+                for (int i = 0; i < MyOrganizationPrivilegeMid.Count; i++)
+                {
+                    if (i >= 0 && i < PageSize)
+                    {
+                        MyOrganizationPrivilegeLast.AddRange(MyOrganizationPrivilegeMid[i]);
+                    }
+                }
+            }
+
+            if (_view != null)
+            {
+                _view.Refresh();
+            }
+
+            QueryCommand.RaiseCanExecuteChanged();
+            AddCommand.RaiseCanExecuteChanged();
+            EditCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+        }
+
+        private void Query(object value)
         {
             MyOrganizationPrivilegeMid = (from p in MyOrganizationPrivilege where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
             TotalItems = MyOrganizationPrivilegeMid.Count;
@@ -331,7 +395,7 @@ namespace AIC.UserPage.ViewModels
                                     //organization.id = ++max;                                
                                     tempadd.Add(organization);
                                 }                               
-                                if (await _databaseComponent.Add<T_OrganizationPrivilege>(_databaseComponent.MainServerIp, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
+                                if (await _databaseComponent.Add<T_OrganizationPrivilege>(ServerIP, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
                                 {
                                     //T_OrganizationPrivilege.AddRange(tempadd);//在DatabaseComponent添加
                                     MyOrganizationPrivilege myorganization = new MyOrganizationPrivilege();
@@ -402,7 +466,7 @@ namespace AIC.UserPage.ViewModels
                             editDic.Add("T_OrganizationPrivilege", new Tuple<ICollection<string>, ICollection<object>>(null, tempedit.Select(p => p as object).ToList()));
                             Dictionary<string, Tuple<string, ICollection<object>>> deleteDic = new Dictionary<string, Tuple<string, ICollection<object>>>();
                             deleteDic.Add("T_OrganizationPrivilege", new Tuple<string, ICollection<object>>("id", tempdelete.Select(p => p.id as object).ToList()));
-                            if (await _databaseComponent.Complex(_databaseComponent.MainServerIp, addDic, editDic, deleteDic))
+                            if (await _databaseComponent.Complex(ServerIP, addDic, editDic, deleteDic))
                             {
                                 //T_OrganizationPrivilege.AddRange(tempadd);//在DatabaseComponent添加
                                 //tempdelete.ForEach(p => T_OrganizationPrivilege.Remove(p));//在DatabaseComponent删除
@@ -425,11 +489,11 @@ namespace AIC.UserPage.ViewModels
 #endif
                             }
 
-                            //if (await _databaseComponent.Add<T_OrganizationPrivilege>(_databaseComponent.MainServerIp, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
+                            //if (await _databaseComponent.Add<T_OrganizationPrivilege>(ServerIP, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
                             //{
                             //    T_OrganizationPrivilege.AddRange(tempadd);
                             //}
-                            //if (await _databaseComponent.Modify<T_OrganizationPrivilege>(_databaseComponent.MainServerIp, new string[] { "Name" }, tempedit.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
+                            //if (await _databaseComponent.Modify<T_OrganizationPrivilege>(ServerIP, new string[] { "Name" }, tempedit.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
                             //{
                             //    //tempedit.ForEach(p => p.Name = organizationPrivilege[0].Name);
                             //}
@@ -437,7 +501,7 @@ namespace AIC.UserPage.ViewModels
                             //{
                             //    tempedit.ForEach(p => p.Name = oldname);//失败回滚
                             //}
-                            //if (await _databaseComponent.Delete<T_OrganizationPrivilege>(_databaseComponent.MainServerIp, tempdelete.Select(p => p.id as object).ToList()) == true)
+                            //if (await _databaseComponent.Delete<T_OrganizationPrivilege>(ServerIP, tempdelete.Select(p => p.id as object).ToList()) == true)
                             //{
                             //    tempdelete.ForEach(p => T_OrganizationPrivilege.Remove(p));
                             //}                          
@@ -455,7 +519,7 @@ namespace AIC.UserPage.ViewModels
                                 }
                             }
                            
-                            if (await _databaseComponent.Delete<T_OrganizationPrivilege>(_databaseComponent.MainServerIp, tempdelete.Select(p => p.id as object).ToList()) == true)
+                            if (await _databaseComponent.Delete<T_OrganizationPrivilege>(ServerIP, tempdelete.Select(p => p.id as object).ToList()) == true)
                             {
                                 //tempdelete.ForEach(p => T_OrganizationPrivilege.Remove(p));//在DatabaseComponent删除
                                 MyOrganizationPrivilege myorganization = (from p in MyOrganizationPrivilege where p.Name == oldname select p).FirstOrDefault();

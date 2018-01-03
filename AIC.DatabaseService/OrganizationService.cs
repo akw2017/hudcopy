@@ -49,9 +49,9 @@ namespace AIC.HardwareService
             //从数据库取出，去重复
             OrganizationTreeItems.Clear();           
             RecycledTreeItems.Clear();
-            OrganizationTreeItemViewModel recyclednode = new OrganizationTreeItemViewModel("回收站", 0, "192.168.0.1");
-            recyclednode.IsExpanded = true;
-            RecycledTreeItems.Add(recyclednode);
+            //OrganizationTreeItemViewModel recyclednode = new OrganizationTreeItemViewModel("回收站", 0, "127.0.0.1");
+            //recyclednode.IsExpanded = true;
+            //RecycledTreeItems.Add(recyclednode);
 
             //测点数据
             ItemTreeItems.Clear();
@@ -155,12 +155,17 @@ namespace AIC.HardwareService
                 }                
             }
 
-            //回收站,有问题,htzk123
+            //新建回收站
+            OrganizationTreeItemViewModel recyclednode = new OrganizationTreeItemViewModel("回收站", 0, ip);
+            recyclednode.IsExpanded = true;
+            RecycledTreeItems.Add(recyclednode);
+
+            //回收站,有问题,htzk123，忘记是否修复了没有
             var recycles = from p in T_Item[ip] where p.Is_Disabled == true orderby p.Modify_Time select p;
             foreach (var recycle in recycles.Distinct())//去重复
             {
-                ItemTreeItemViewModel organization = new ItemTreeItemViewModel(recycle);               
-                RecycledTreeItems[0].AddChild(organization);
+                ItemTreeItemViewModel organization = new ItemTreeItemViewModel(recycle);
+                recyclednode.AddChild(organization);
 
                 ItemTreeItems.Add(organization);
             }

@@ -1062,9 +1062,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
                                 <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1165,9 +1170,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1320,9 +1330,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1480,9 +1495,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1653,9 +1673,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1788,9 +1813,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1896,9 +1926,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -1981,9 +2016,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -2074,9 +2114,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -2159,9 +2204,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -2269,9 +2319,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -2387,9 +2442,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Code,Converter={StaticResource codeColorConverter}}">
-                               <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
+                            <Grid x:Name="grid" Background="{Binding Code,Converter={StaticResource codeColorConverter}}" Visibility="Visible">
+                                <TextBlock Text="{Binding Value,StringFormat={}{0:N1}}" TextAlignment="Center" MinWidth="32"/>
                             </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAllow}" Value="false">
+                                    <Setter TargetName="grid" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>

@@ -117,7 +117,7 @@ namespace AIC.DatabaseService
                 MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Visible);
                 _organizationService.InitOrganizations(true);
             }
-            else
+            else//菜单权限=主服务器权限
             { 
                 var user = (from p in _userManageService.T_User[serverip] where p.Name == LoginInfo.UserName select p).FirstOrDefault();
                 if (user != null)
@@ -250,24 +250,24 @@ namespace AIC.DatabaseService
             _databaseComponent.Add<T_OperateRecord>(LoginInfo.ServerInfo.IP, LM_OperateRecord);
         }
 
-        public async Task<List<T1_OperateRecord>> GetOperateRecord(DateTime start, DateTime end, string name, OperateType operateType)
+        public async Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType)
         {
             List<T_OperateRecord> list = new List<T_OperateRecord>();
             if (name.Trim() == "" && operateType == OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "(OperateTime >= @0 and OperateTime <= @1)", new object[] { start, end, });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "(OperateTime >= @0 and OperateTime <= @1)", new object[] { start, end, });
              }
             else if (name.Trim() != "" && operateType == OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%')", new object[] { start, end, name });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%')", new object[] { start, end, name });
             }
             else if (name.Trim() == "" && operateType != OperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and OperateType = @2)", new object[] { start, end, ((short)operateType) });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and OperateType = @2)", new object[] { start, end, ((short)operateType) });
             }
             else
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(LoginInfo.ServerInfo.IP, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and OperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and OperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
             }
             return list.Select(p => ClassCopyHelper.AutoCopy<T_OperateRecord, T1_OperateRecord>(p)).ToList();
         }

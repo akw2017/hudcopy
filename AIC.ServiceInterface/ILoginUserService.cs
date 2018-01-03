@@ -29,6 +29,6 @@ namespace AIC.ServiceInterface
         Task LazyLoading();
         Task AwaitLazyLoading();
         void AddOperateRecord(OperateType operateType);
-        Task<List<T1_OperateRecord>> GetOperateRecord(DateTime start, DateTime end, string name, OperateType operateType);
+        Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType);
     }
 }

@@ -40,26 +40,42 @@ namespace AIC.UserPage.ViewModels
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
 
-            //先从数据库里取数据
+            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIP = _databaseComponent.MainServerIp;           
 
-            T_User = _databaseComponent.GetUserData();
-            T_Role = _databaseComponent.GetRoleData();
-            T_Menu = _databaseComponent.GetMenuData();
-            T_OrganizationPrivilege = _databaseComponent.GetOrganizationPrivilegeData();
-            T_User.ForEach(p => 
-            {
-                p.T_Role_Name = (from role in T_Role where role.Guid == p.T_Role_Guid select role.Name).FirstOrDefault();
-                p.T_Menu_Name = (from menu in T_Menu where menu.Guid == p.T_Menu_Guid select menu.Name).FirstOrDefault();
-                p.T_OrganizationPrivilege_Name = (from organizationPrivilege in T_OrganizationPrivilege where organizationPrivilege.Guid == p.T_OrganizationPrivilege_Guid select organizationPrivilege.Name).FirstOrDefault();
-            });
-
-            InitPager();
+            InitPager(ServerIP);
             _view = new ListCollectionView(T_UserLast);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("Name"));//对视图进行分组
         }
 
         private readonly ICollectionView _view;
         public ICollectionView T_UserView { get { return _view; } }
+
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    InitPager(_serverIP);
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
+
+        private ObservableCollection<string> _serverIPCategory;
+        public ObservableCollection<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -159,12 +175,12 @@ namespace AIC.UserPage.ViewModels
 
         public string WaitInfo { get { return "数据处理中"; } set { } }
 
-        private DelegateCommand queryCommand;
-        public DelegateCommand QueryCommand
+        private DelegateCommand<object> queryCommand;
+        public DelegateCommand<object> QueryCommand
         {
             get
             {
-                return this.queryCommand ?? (this.queryCommand = new DelegateCommand(() => this.Query()));
+                return this.queryCommand ?? (this.queryCommand = new DelegateCommand<object>(value => this.Query(value), value => CanOperate(value)));
             }
         }
 
@@ -173,7 +189,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value)));
+                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value), value => CanOperate(value)));
             }
         }
 
@@ -182,7 +198,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value)));
+                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value), value => CanOperate(value)));
             }
         }
 
@@ -191,7 +207,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value)));
+                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value), value => CanOperate(value)));
             }
         }       
 
@@ -204,26 +220,74 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private void InitPager()
+        private bool CanOperate(object para)
         {
-            PageSizeList = new List<int>();
-            PageSizeList.Add(20);
-            PageSizeList.Add(50);
-            PageSizeList.Add(100);
-            PageSize = PageSizeList[0];
-            T_UserMid = (from p in T_User where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
-            TotalItems = T_UserMid.Count;
-            T_UserLast = new List<T1_User>();
-            for (int i = 0; i < T_UserMid.Count; i++)
+            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
-                if (i >= 0 && i < PageSize)
-                {
-                    T_UserLast.Add(T_UserMid[i]);
-                }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        private void Query()
+        private void InitPager(string ip)
+        {
+            T_User = _databaseComponent.GetUserData(ip);
+            T_Role = _databaseComponent.GetRoleData(ip);
+            T_Menu = _databaseComponent.GetMenuData(ip);
+            T_OrganizationPrivilege = _databaseComponent.GetOrganizationPrivilegeData(ip);
+            T_User.ForEach(p =>
+            {
+                p.T_Role_Name = (from role in T_Role where role.Guid == p.T_Role_Guid select role.Name).FirstOrDefault();
+                p.T_Menu_Name = (from menu in T_Menu where menu.Guid == p.T_Menu_Guid select menu.Name).FirstOrDefault();
+                p.T_OrganizationPrivilege_Name = (from organizationPrivilege in T_OrganizationPrivilege where organizationPrivilege.Guid == p.T_OrganizationPrivilege_Guid select organizationPrivilege.Name).FirstOrDefault();
+            });
+
+            if (PageSizeList == null)
+            {
+                PageSizeList = new List<int>();
+                PageSizeList.Add(20);
+                PageSizeList.Add(50);
+                PageSizeList.Add(100);
+                PageSize = PageSizeList[0];
+            }
+
+            T_UserMid = (from p in T_User where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
+            TotalItems = T_UserMid.Count;
+            if (T_UserLast == null)
+            {
+                T_UserLast = new List<T1_User>();
+            }
+            else
+            {
+                T_UserLast.Clear();
+            }
+
+            if (CanOperate(null) == true)
+            {
+                for (int i = 0; i < T_UserMid.Count; i++)
+                {
+                    if (i >= 0 && i < PageSize)
+                    {
+                        T_UserLast.Add(T_UserMid[i]);
+                    }
+                }
+            }
+
+            if (_view != null)
+            {
+                _view.Refresh();
+            }
+
+            QueryCommand.RaiseCanExecuteChanged();
+            AddCommand.RaiseCanExecuteChanged();
+            EditCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+        }
+
+        private void Query(object value)
         {
             T_UserMid = (from p in T_User where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
             TotalItems = T_UserMid.Count;
@@ -314,7 +378,7 @@ namespace AIC.UserPage.ViewModels
                                 user.T_Menu_Name = (from menu in T_Menu where menu.Guid == user.T_Menu_Guid select menu.Name).FirstOrDefault();
                                 user.T_OrganizationPrivilege_Name = (from organization in T_OrganizationPrivilege where organization.Guid == user.T_OrganizationPrivilege_Guid select organization.Name).FirstOrDefault();
                                 user.Password = MyEncrypt.EncryptDES(user.Password);
-                                if (await _databaseComponent.Add<T_User>(_databaseComponent.MainServerIp, user) == true)
+                                if (await _databaseComponent.Add<T_User>(ServerIP, user) == true)
                                 {
                                     //T_User.Add(user);//在DatabaseComponent添加
                                 }
@@ -356,7 +420,7 @@ namespace AIC.UserPage.ViewModels
                                         user.Password = MyEncrypt.EncryptDES(user.Password);
                                     }
 
-                                    if (await _databaseComponent.Modify<T_User>(_databaseComponent.MainServerIp, null, user) == true)
+                                    if (await _databaseComponent.Modify<T_User>(ServerIP, null, user) == true)
                                     {
                                         T_User[i] = user;
                                     }
@@ -382,7 +446,7 @@ namespace AIC.UserPage.ViewModels
                                     user.T_Role_Name = (from role in T_Role where role.Guid == user.T_Role_Guid select role.Name).FirstOrDefault();
                                     user.T_Menu_Name = (from menu in T_Menu where menu.Guid == user.T_Menu_Guid select menu.Name).FirstOrDefault();
                                     user.T_OrganizationPrivilege_Name = (from organization in T_OrganizationPrivilege where organization.Guid == user.T_OrganizationPrivilege_Guid select organization.Name).FirstOrDefault();
-                                    if (await _databaseComponent.Delete<T_User>(_databaseComponent.MainServerIp, user.id) == true)
+                                    if (await _databaseComponent.Delete<T_User>(ServerIP, user.id) == true)
                                     {
                                         //T_User.RemoveAt(i);//在DatabaseComponent删除
                                     }

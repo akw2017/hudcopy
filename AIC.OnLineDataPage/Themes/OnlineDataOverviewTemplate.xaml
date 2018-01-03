@@ -205,7 +205,7 @@
                                 <StackPanel Orientation="Horizontal" Background="Transparent">
                                     <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
                                     <ProgressBar x:Name="ProgressBar" Style="{x:Null}" Value="{Binding BaseAlarmSignal.Result}" Maximum="{Binding BaseAlarmSignal.AlarmMax}" Foreground="Green" Width="60" Margin="5,0,0,0"/>
-                                    <TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />
+                                    <!--<TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />-->
                                 </StackPanel>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">

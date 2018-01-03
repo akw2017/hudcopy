@@ -1069,6 +1069,10 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<DeviceHourlyDataView>();
             }
+            else if (viewName == "MenuExportDBData")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<ExportDBDataView>();
+            }
             else if (viewName == "MenuRefreshData")
             {
                 Status = ViewModelStatus.Querying;

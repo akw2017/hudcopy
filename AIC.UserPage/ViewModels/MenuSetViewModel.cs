@@ -38,11 +38,12 @@ namespace AIC.UserPage.ViewModels
             _databaseComponent = databaseComponent;
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
-            //先从数据库里取数据
 
-            T_Menu = _databaseComponent.GetMenuData();           
+            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIP = _databaseComponent.MainServerIp;
+           
+            InitPager(ServerIP);
 
-            InitPager();
             _view = new ListCollectionView(T_MenuLast);
             _view.Filter = (object item) =>
             {
@@ -62,6 +63,32 @@ namespace AIC.UserPage.ViewModels
 
         private readonly ICollectionView _view;
         public ICollectionView T_MenuView { get { return _view; } }
+
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    InitPager(_serverIP);
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
+
+        private ObservableCollection<string> _serverIPCategory;
+        public ObservableCollection<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -155,12 +182,12 @@ namespace AIC.UserPage.ViewModels
 
         public string WaitInfo { get { return "数据处理中"; } set { } }
 
-        private DelegateCommand queryCommand;
-        public DelegateCommand QueryCommand
+        private DelegateCommand<object> queryCommand;
+        public DelegateCommand<object> QueryCommand
         {
             get
             {
-                return this.queryCommand ?? (this.queryCommand = new DelegateCommand(() => this.Query()));
+                return this.queryCommand ?? (this.queryCommand = new DelegateCommand<object>(value => this.Query(value), value => CanOperate(value)));
             }
         }
 
@@ -169,7 +196,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value)));
+                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value), value => CanOperate(value)));
             }
         }
 
@@ -178,7 +205,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value)));
+                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value), value => CanOperate(value)));
             }
         }
 
@@ -187,7 +214,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value)));
+                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value), value => CanOperate(value)));
             }
         }
 
@@ -196,30 +223,69 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.currentPageChangedComamnd ?? (this.currentPageChangedComamnd = new DelegateCommand<object>(value => this.CurrentPageChanged(value)));
+                return this.currentPageChangedComamnd ?? (this.currentPageChangedComamnd = new DelegateCommand<object>(value => this.CurrentPageChanged(value), value => CanOperate(value)));
+            }
+        }
+       
+        private bool CanOperate(object para)
+        {
+            if( _loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        private void InitPager()
-        {            
-            PageSizeList = new List<int>();
-            PageSizeList.Add(20);
-            PageSizeList.Add(50);
-            PageSizeList.Add(100);
-            PageSize = PageSizeList[0];
+        private void InitPager(string ip)
+        {
+            T_Menu = _databaseComponent.GetMenuData(ip);
+
+            if (PageSizeList == null)
+            {
+                PageSizeList = new List<int>();
+                PageSizeList.Add(20);
+                PageSizeList.Add(50);
+                PageSizeList.Add(100);
+                PageSize = PageSizeList[0];
+            }
+
             T_MenuMid = (from p in T_Menu where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
             TotalItems = T_MenuMid.Count;
-            T_MenuLast = new List<T1_Menu>();
-            for(int i = 0; i < T_MenuMid.Count; i++)
+            if (T_MenuLast == null)
             {
-                if (i >= 0 && i < PageSize)
-                {
-                    T_MenuLast.AddRange(T_MenuMid[i]);
-                }
+                T_MenuLast = new List<T1_Menu>();
             }
+            else
+            {
+                T_MenuLast.Clear();
+            }
+
+            if (CanOperate(null) == true)
+            {
+                for (int i = 0; i < T_MenuMid.Count; i++)
+                {
+                    if (i >= 0 && i < PageSize)
+                    {
+                        T_MenuLast.AddRange(T_MenuMid[i]);
+                    }
+                }               
+            }
+
+            if (_view != null)
+            {
+                _view.Refresh();
+            }
+
+            QueryCommand.RaiseCanExecuteChanged();
+            AddCommand.RaiseCanExecuteChanged();
+            EditCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
         }      
 
-        private void Query()
+        private void Query(object value)
         {
             T_MenuMid = (from p in T_Menu where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
             TotalItems = T_MenuMid.Count;
@@ -328,7 +394,7 @@ namespace AIC.UserPage.ViewModels
                                     }
                                 }
 
-                                if (await _databaseComponent.Add<T_Menu>(_databaseComponent.MainServerIp, tempadd.Select(p => p as T_Menu).ToList()) == true)
+                                if (await _databaseComponent.Add<T_Menu>(ServerIP, tempadd.Select(p => p as T_Menu).ToList()) == true)
                                 {
                                     //T_Menu.AddRange(tempadd);//在DatabaseComponent添加
                                 }
@@ -402,7 +468,7 @@ namespace AIC.UserPage.ViewModels
                             editDic.Add("T_Menu", new Tuple<ICollection<string>, ICollection<object>>(null, tempedit.Select(p => p as object).ToList()));
                             Dictionary<string, Tuple<string, ICollection<object>>> deleteDic = new Dictionary<string, Tuple<string, ICollection<object>>>();
                             deleteDic.Add("T_Menu", new Tuple<string, ICollection<object>>("id", tempdelete.Select(p => p.id as object).ToList()));
-                            if (await _databaseComponent.Complex(_databaseComponent.MainServerIp, addDic, editDic, deleteDic))
+                            if (await _databaseComponent.Complex(ServerIP, addDic, editDic, deleteDic))
                             {
                                 //T_Menu.AddRange(tempadd);//在DatabaseComponent添加
                                 //tempdelete.ForEach(p => T_Menu.Remove(p));//在DatabaseComponent删除
@@ -416,18 +482,18 @@ namespace AIC.UserPage.ViewModels
                                 Xceed.Wpf.Toolkit.MessageBox.Show("服务器错误！", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
                             }
-                            //if (await _databaseComponent.Add<T_Menu>(_databaseComponent.MainServerIp, tempadd.Select(p => p as T_Menu).ToList()) == true)
+                            //if (await _databaseComponent.Add<T_Menu>(ServerIP, tempadd.Select(p => p as T_Menu).ToList()) == true)
                             //{
                             //    T_Menu.AddRange(tempadd);
                             //}
-                            //if (await _databaseComponent.Modify<T_Menu>(_databaseComponent.MainServerIp, new string[] { "Name" }, tempedit.Select(p => p as T_Menu).ToList()) == true)
+                            //if (await _databaseComponent.Modify<T_Menu>(ServerIP, new string[] { "Name" }, tempedit.Select(p => p as T_Menu).ToList()) == true)
                             //{
                             //}
                             //else
                             //{
                             //    tempedit.ForEach(p => p.Name = oldname);//失败回滚
                             //}
-                            //if (await _databaseComponent.Delete<T_Menu>(_databaseComponent.MainServerIp, tempdelete.Select(p => p.id as object).ToList()) == true)
+                            //if (await _databaseComponent.Delete<T_Menu>(ServerIP, tempdelete.Select(p => p.id as object).ToList()) == true)
                             //{
                             //    tempdelete.ForEach(p => T_Menu.Remove(p));
                             //}                       
@@ -445,7 +511,7 @@ namespace AIC.UserPage.ViewModels
                                 }
                             }
 
-                            if (await _databaseComponent.Delete<T_Menu>(_databaseComponent.MainServerIp, tempdelete.Select(p => p.id as object).ToList()) == true)
+                            if (await _databaseComponent.Delete<T_Menu>(ServerIP, tempdelete.Select(p => p.id as object).ToList()) == true)
                             {
                                 //tempdelete.ForEach(p => T_Menu.Remove(p));//在DatabaseComponent删除
                             }

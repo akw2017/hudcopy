@@ -183,21 +183,13 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <!--<StackPanel Visibility="{Binding IsShowDebug,Converter={StaticResource boolVisibilityConverter}}" Orientation="Horizontal">
-                <TextBlock Text="组织机构Guid（调试使用）" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <TextBox DataContext="{Binding ElementName=treeview, Path=SelectedItem}" Text="{Binding Path=T_Organization.Guid}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>
-                <TextBlock Text="组织机构父Guid（调试使用）" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <TextBox DataContext="{Binding ElementName=treeview, Path=SelectedItem}" Text="{Binding Path=T_Organization.Parent_Guid}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>
-                <TextBlock Text="回收站组织机构Guid（调试使用）" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <TextBox DataContext="{Binding ElementName=treeview2, Path=SelectedItem}" Text="{Binding Path=T_Organization.Guid}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>
-            </StackPanel>-->
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.ColumnSpan="7" Orientation="Horizontal" HorizontalAlignment="Right">
             <RadioButton Margin="5,0" Content="单槽显示" IsChecked="True" Style="{StaticResource RadioButtonStyle}"/>
             <RadioButton Content="多槽显示" IsChecked="{Binding IsMultiSelected}"  Style="{StaticResource RadioButtonStyle}"/>
         </StackPanel>
-        
+
         <Grid x:Name="grid1" Grid.Column="0" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -222,7 +214,7 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="添加机构" Command="{StaticResource AddOrganizationReference}" 
-                                            CommandParameter="{Binding}"/>                                       
+                                            CommandParameter="{Binding}"/>
                                         <MenuItem Header="添加设备" Command="{StaticResource AddCommandReference}" 
                                             CommandParameter="{Binding}"/>
                                         <MenuItem Header="排序" Command="{StaticResource SortCommandReference}" 
@@ -269,7 +261,7 @@
                                 <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
                                     <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
                                     <Setter TargetName="IconPath" Property="Width" Value="24"/>
-                                </DataTrigger>                             
+                                </DataTrigger>
                             </HierarchicalDataTemplate.Triggers>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
@@ -420,11 +412,11 @@
                                     </TextBox>
                                 </Grid>
                             </StackPanel>
-                        </HierarchicalDataTemplate> 
+                        </HierarchicalDataTemplate>
                     </TreeView.Resources>
-                   
+
                     <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
                             <!--<Style.Triggers>
@@ -441,7 +433,7 @@
                             </Style.Triggers>-->
 
                         </Style>
-                        
+
                     </TreeView.ItemContainerStyle>
 
                     <i:Interaction.Triggers>
@@ -498,8 +490,8 @@
                                     <ContextMenu>
                                         <MenuItem Header="恢复到所选测点" Command="{StaticResource RecoveredItemCommandReference}" 
                                                       CommandParameter="{Binding}"/>
-                                        <!--<MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
-                                            CommandParameter="{Binding}" Visibility="Visible"/>-->
+                                        <MenuItem Header="调试信息" Command="{StaticResource DebugCommandReference}" 
+                                            CommandParameter="{Binding}" Visibility="Visible"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
@@ -513,7 +505,7 @@
                     </TreeView.Resources>
 
                     <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
                         </Style>
@@ -528,7 +520,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                        
-                    
+
                 </TreeView>
             </Grid>
         </Grid>
@@ -613,12 +605,12 @@
                                 <Setter TargetName="StatusPath" Property="Fill" Value="Red" />
                             </DataTrigger>
                         </HierarchicalDataTemplate.Triggers>
-                    </HierarchicalDataTemplate> 
-                 
+                    </HierarchicalDataTemplate>
+
                 </TreeView.Resources>
 
                 <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
                         <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
                     </Style>
@@ -634,7 +626,7 @@
                 </i:Interaction.Triggers>
 
                  
-             
+
 
             </TreeView>
         </Grid>
@@ -644,7 +636,7 @@
         <Grid Grid.Column="4" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="158"/>
-                <RowDefinition Height="*"/>                
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="332"/>

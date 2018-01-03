@@ -1,5 +1,3 @@
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\XBAP Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\XBAP Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\XBAP Debug\AIC.UserPage.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\XBAP Debug\AIC.UserPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\XBAP Debug\AIC.UserPage.pdb

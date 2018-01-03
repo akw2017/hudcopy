@@ -38,7 +38,7 @@
                 Text = "{Binding ServerInfo.IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
             </TextBox>
             <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource strSecondaryserver}" />
-            <CheckBox x:Name="chkSecondaryServer" IsChecked="{Binding HasSecondaryServer}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsEnabled="False"/>
+            <CheckBox x:Name="chkSecondaryServer" IsChecked="{Binding HasSecondaryServer}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/><!--昌邑石化-->
             <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource strUser}"/>
             <TextBox x:Name="txtUser" Grid.Row="2" Grid.Column="1" Style="{DynamicResource MetroTextBox}"
                 Text = "{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>

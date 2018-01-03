@@ -72,6 +72,11 @@
     <s:String x:Key="menuDeviceRunAnalyze">EquipmentRunAnalyze</s:String>
     <s:String x:Key="menuDeviceHourlyData">EquipmentHourlyData</s:String>
 
+    <s:String x:Key="menuDBManage">DBManage</s:String>
+    <s:String x:Key="menuExportDBData">ExportDBData</s:String>
+    <s:String x:Key="menuImportDBData">ImportDBData</s:String>
+    <s:String x:Key="menuSearchDBData">SearchDBData</s:String>
+
     <s:String x:Key="menuSetting">System</s:String>
     <s:String x:Key="menuServerSetting">ServerSetting</s:String>
     <s:String x:Key="menuCollectorSetting">CollectorSetting</s:String>

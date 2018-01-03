@@ -39,17 +39,46 @@ namespace AIC.UserPage.ViewModels
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
 
-            //先从数据库里取数据
-
-            T_Role = _databaseComponent.GetRoleData();
-
-            InitPager();
-            _view = new ListCollectionView(T_RoleLast);          
+            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIP = _databaseComponent.MainServerIp;
+           
+            InitPager(ServerIP);
+            _view = new ListCollectionView(T_RoleLast);
+            //_view.Filter = (object item) =>
+            //{
+            //    return true;
+            //};
             _view.GroupDescriptions.Add(new PropertyGroupDescription("Name"));//对视图进行分组
         }
 
         private readonly ICollectionView _view;
         public ICollectionView T_RoleView { get { return _view; } }
+
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    InitPager(_serverIP);
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
+
+        private ObservableCollection<string> _serverIPCategory;
+        public ObservableCollection<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -143,12 +172,12 @@ namespace AIC.UserPage.ViewModels
 
         public string WaitInfo { get { return "数据处理中"; } set { } }
 
-        private DelegateCommand queryCommand;
-        public DelegateCommand QueryCommand
+        private DelegateCommand<object> queryCommand;
+        public DelegateCommand<object> QueryCommand
         {
             get
             {
-                return this.queryCommand ?? (this.queryCommand = new DelegateCommand(() => this.Query()));
+                return this.queryCommand ?? (this.queryCommand = new DelegateCommand<object>(value => this.Query(value), value => CanOperate(value)));
             }
         }
 
@@ -157,7 +186,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value)));
+                return this.addCommand ?? (this.addCommand = new DelegateCommand<object>(value => this.Add(value), value => CanOperate(value)));
             }
         }
 
@@ -166,7 +195,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value)));
+                return this.editCommand ?? (this.editCommand = new DelegateCommand<object>(value => this.Edit(value), value => CanOperate(value)));
             }
         }
 
@@ -175,7 +204,7 @@ namespace AIC.UserPage.ViewModels
         {
             get
             {
-                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value)));
+                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand<object>(value => this.Delete(value), value => CanOperate(value)));
             }
         }       
 
@@ -188,26 +217,65 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private void InitPager()
+        private bool CanOperate(object para)
         {
-            PageSizeList = new List<int>();
-            PageSizeList.Add(20);
-            PageSizeList.Add(50);
-            PageSizeList.Add(100);
-            PageSize = PageSizeList[0];
-            T_RoleMid = (from p in T_Role where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
-            TotalItems = T_RoleMid.Count;
-            T_RoleLast = new List<T1_Role>();
-            for (int i = 0; i < T_RoleMid.Count; i++)
+            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
-                if (i >= 0 && i < PageSize)
-                {
-                    T_RoleLast.AddRange(T_RoleMid[i]);
-                }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        private void Query()
+        private void InitPager(string ip)
+        {
+            T_Role = _databaseComponent.GetRoleData(ip);
+
+            if (PageSizeList == null)
+            {
+                PageSizeList = new List<int>();
+                PageSizeList.Add(20);
+                PageSizeList.Add(50);
+                PageSizeList.Add(100);
+                PageSize = PageSizeList[0];
+            }
+
+            T_RoleMid = (from p in T_Role where p.Name.Contains(SearchName) || SearchName == "" orderby p.Sort_No group p by p.Name into s select s).ToList();
+            TotalItems = T_RoleMid.Count;
+            if (T_RoleLast == null)
+            {
+                T_RoleLast = new List<T1_Role>();
+            }
+            else
+            {
+                T_RoleLast.Clear();
+            }
+
+            if (CanOperate(null) == true)
+            {
+                for (int i = 0; i < T_RoleMid.Count; i++)
+                {
+                    if (i >= 0 && i < PageSize)
+                    {
+                        T_RoleLast.AddRange(T_RoleMid[i]);
+                    }
+                }
+            }
+
+            if (_view != null)
+            {
+                _view.Refresh();
+            }
+
+            QueryCommand.RaiseCanExecuteChanged();
+            AddCommand.RaiseCanExecuteChanged();
+            EditCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+        }
+
+        private void Query(object value)
         {
             T_RoleMid = (from p in T_Role where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
             TotalItems = T_RoleMid.Count;
@@ -293,7 +361,7 @@ namespace AIC.UserPage.ViewModels
                             else
                             {
                                 //role.id = max + 1;                                
-                                if (await _databaseComponent.Add<T_Role>(_databaseComponent.MainServerIp, role) == true)
+                                if (await _databaseComponent.Add<T_Role>(ServerIP, role) == true)
                                 {
                                     //T_Role.Add(role);//在DatabaseComponent添加
                                 }
@@ -326,7 +394,7 @@ namespace AIC.UserPage.ViewModels
                             {
                                 if (T_Role[i].id == role.id)//找到修改项
                                 {                                   
-                                    if (await _databaseComponent.Modify<T_Role>(_databaseComponent.MainServerIp, null, role) == true)
+                                    if (await _databaseComponent.Modify<T_Role>(ServerIP, null, role) == true)
                                     {
                                         T_Role[i] = role;
                                     }
@@ -349,7 +417,7 @@ namespace AIC.UserPage.ViewModels
                             {
                                 if (T_Role[i].id == role.id)//找到修改项
                                 {                                   
-                                    if (await _databaseComponent.Delete<T_Role>(_databaseComponent.MainServerIp, role.id) == true)
+                                    if (await _databaseComponent.Delete<T_Role>(ServerIP, role.id) == true)
                                     {
                                         //T_Role.RemoveAt(i);//在DatabaseComponent删除
                                     }

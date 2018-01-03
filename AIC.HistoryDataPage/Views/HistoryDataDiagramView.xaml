@@ -216,179 +216,142 @@
             <ColumnDefinition Width="Auto"/>     
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TreeView Grid.Row="0" Grid.RowSpan="3" Name="treeview"                        
+
+        <Grid Grid.Row="0" Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TreeView Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}">
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type control:OrganizationTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
-                            <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
-                            <Setter TargetName="IconPath" Property="Width" Value="24"/>
-                        </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto" />
-                        </Grid>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:ItemTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                        <!--<Button x:Name="AddBtn" Command="{StaticResource AddCommandReference}"  CommandParameter="{Binding}" VerticalAlignment="Center" Height="24" Width="24" BorderThickness="0">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type control:OrganizationTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
+                            <Grid Margin="2,0,2,0">
+                                <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                            </Grid>
+                        </StackPanel>
+                        <HierarchicalDataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
+                                <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
+                                <Setter TargetName="IconPath" Property="Width" Value="24"/>
+                            </DataTrigger>
+                        </HierarchicalDataTemplate.Triggers>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
+                            <Grid Margin="2,0,2,0">
+                                <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto" />
+                            </Grid>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type control:ItemTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
+                            <Grid Margin="2,0,2,0">
+                                <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                            </Grid>
+                            <!--<Button x:Name="AddBtn" Command="{StaticResource AddCommandReference}"  CommandParameter="{Binding}" VerticalAlignment="Center" Height="24" Width="24" BorderThickness="0">
                             <Path Stretch="Fill" Width="18" Height="18" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "/>
                         </Button>-->
-                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
-                        <Path x:Name="UnBindIcon" Visibility="Collapsed" Width="16" Height="16" Stretch="Fill" Fill="Gray" Data="F1 M 22.1698,36.4215L 25.3366,36.4215L 25.3367,31.6711C 25.3367,24.6745 31.0085,19.0027 38.0051,19.0027C 45.0017,19.0027 50.6735,24.6745 50.6735,31.6711L 45.9228,31.6711C 45.9228,27.2982 42.3779,23.7533 38.0051,23.7533C 33.6322,23.7533 30.0873,27.2982 30.0873,31.6711L 30.0873,36.4216L 53.8408,36.4215L 53.8409,57.008L 22.1698,57.008L 22.1698,36.4215 Z "/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsPaired}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="UnBindIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:DivFreTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 16,36L 9.99999,36L 9.99999,30L 14,30L 32,16L 32,12L 38,12L 38,18L 34,18L 16,32L 16,36 Z M 34,14L 34,16L 36,16L 36,14L 34,14 Z M 12,32L 12,34L 14,34L 14,32L 12,32 Z " />
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                        <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
-                            <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>-->
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-            </TreeView.Resources>
+                            <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
+                            <Path x:Name="UnBindIcon" Visibility="Collapsed" Width="16" Height="16" Stretch="Fill" Fill="Gray" Data="F1 M 22.1698,36.4215L 25.3366,36.4215L 25.3367,31.6711C 25.3367,24.6745 31.0085,19.0027 38.0051,19.0027C 45.0017,19.0027 50.6735,24.6745 50.6735,31.6711L 45.9228,31.6711C 45.9228,27.2982 42.3779,23.7533 38.0051,23.7533C 33.6322,23.7533 30.0873,27.2982 30.0873,31.6711L 30.0873,36.4216L 53.8408,36.4215L 53.8409,57.008L 22.1698,57.008L 22.1698,36.4215 Z "/>
+                        </StackPanel>
+                        <HierarchicalDataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                                <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsPaired}" Value="false">
+                                <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="UnBindIcon" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </HierarchicalDataTemplate.Triggers>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type control:DivFreTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 16,36L 9.99999,36L 9.99999,30L 14,30L 32,16L 32,12L 38,12L 38,18L 34,18L 16,32L 16,36 Z M 34,14L 34,16L 36,16L 36,14L 34,14 Z M 12,32L 12,34L 14,34L 14,32L 12,32 Z " />
+                            <Grid Margin="2,0,2,0">
+                                <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
+                            </Grid>
+                            <Path x:Name="DisconnectIcon" Visibility="Collapsed" Width="18" Height="18" Stretch="Fill" Fill="Gray" Data="F1 M 25.7639,28.0031L 20.0866,22.3258C 19.4683,21.7075 19.4683,20.705 20.0866,20.0866C 20.705,19.4683 21.7075,19.4683 22.3258,20.0867L 28.0031,25.7639C 32.3443,22.5092 38.5302,22.856 42.4783,26.8042L 26.8041,42.4784C 22.856,38.5302 22.5092,32.3443 25.7639,28.0031 Z M 49.1958,33.5217C 53.144,37.4699 53.4908,43.6557 50.2361,47.9969L 55.9133,53.6742C 56.5317,54.2925 56.5317,55.295 55.9133,55.9134C 55.295,56.5317 54.2925,56.5317 53.6742,55.9134L 47.9969,50.2361C 43.6557,53.4908 37.4698,53.1441 33.5216,49.1959L 36.8804,45.8371L 34.0814,43.0381C 33.1539,42.1107 33.1539,40.6069 34.0814,39.6794C 35.0089,38.7519 36.5127,38.7519 37.4402,39.6794L 40.2392,42.4784L 42.4783,40.2392L 39.6794,37.4402C 38.7519,36.5127 38.7519,35.009 39.6794,34.0815C 40.6069,33.154 42.1106,33.154 43.0381,34.0815L 45.8371,36.8804L 49.1958,33.5217 Z "/>
+                        </StackPanel>
+                        <HierarchicalDataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                                <Setter TargetName="DisconnectIcon" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </HierarchicalDataTemplate.Triggers>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
 
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=OneTime}" />
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=OneTime}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=OneTime}" />
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=OneTime}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectedItemChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding DoubleClickAddDataCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding DoubleClickAddDataCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
-        </TreeView>
+            </TreeView>
+            <GridSplitter Grid.Row="1" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+            <TreeView Name="treeview2" Grid.Row="2"                        
+                        ItemsSource="{Binding RecycledTreeItems}" 
+                        Style="{DynamicResource VirtualisedMetroTreeView}">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type control:OrganizationTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 25.3333,23.75L 50.6667,23.75C 51.5411,23.75 51.8541,27.3125 51.8541,27.3125L 24.1458,27.3125C 24.1458,27.3125 24.4589,23.75 25.3333,23.75 Z M 35.625,19.7917L 40.375,19.7917C 40.8122,19.7917 41.9583,20.9378 41.9583,21.375C 41.9583,21.8122 40.8122,22.9584 40.375,22.9584L 35.625,22.9584C 35.1878,22.9584 34.0416,21.8122 34.0416,21.375C 34.0416,20.9378 35.1878,19.7917 35.625,19.7917 Z M 27.7083,28.5L 48.2916,28.5C 49.1661,28.5 49.875,29.2089 49.875,30.0834L 48.2916,53.8334C 48.2916,54.7078 47.5828,55.4167 46.7083,55.4167L 29.2917,55.4167C 28.4172,55.4167 27.7083,54.7078 27.7083,53.8334L 26.125,30.0834C 26.125,29.2089 26.8339,28.5 27.7083,28.5 Z M 30.0833,31.6667L 30.4792,52.25L 33.25,52.25L 32.8542,31.6667L 30.0833,31.6667 Z M 36.4167,31.6667L 36.4167,52.25L 39.5833,52.25L 39.5833,31.6667L 36.4167,31.6667 Z M 43.1458,31.6667L 42.75,52.25L 45.5208,52.25L 45.9167,31.6667L 43.1458,31.6667 Z "/>
+                            <StackPanel Orientation="Horizontal" Margin="2,0,2,0">
+                                <TextBlock Text="{Binding Name, Mode=TwoWay}"  Width="Auto"/>
+                                <TextBlock Text=":" Width="Auto"/>
+                                <TextBlock Text="{Binding ServerIP, Mode=TwoWay}"  Width="Auto"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type control:ItemTreeItemViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 11,12L 13,12L 13,34L 37,34L 37,36L 11,36L 11,12 Z M 14,33L 14,30L 20,23L 29,27L 37,13L 37,17L 30,30L 20,26L 14,33 Z " />
+                            <Grid Margin="2,0,2,0">
+                                <TextBlock Text="{Binding Name, Mode=TwoWay}"  Width="Auto"/>
+                            </Grid>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
 
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=OneTime}" />
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=OneTime}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview2}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding DoubleClickAddDataCommand}"  CommandParameter="{Binding SelectedItem, ElementName=treeview2}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>    
+
+            </TreeView>
+        </Grid>
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <wrap:WrapBreakPanel Grid.Row="0" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5">
             <TextBlock Text="选择项:" VerticalAlignment="Center"/>
-            <TextBox DataContext="{Binding ElementName=treeview, Path=SelectedItem}" Text="{Binding Path=Name}" Margin="2,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" IsReadOnly="True"/>
+            <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
             <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
             <TextBlock Text="数据上限:" VerticalAlignment="Center" />
             <TextBox Text="{Binding ChannelRecordLength}" Width="100" Style="{DynamicResource MetroTextBox}" IsEnabled="False" Margin="2,0,0,0"/>

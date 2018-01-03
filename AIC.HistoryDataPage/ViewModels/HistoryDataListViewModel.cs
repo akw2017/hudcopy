@@ -70,7 +70,8 @@ namespace AIC.HistoryDataPage.ViewModels
         private void InitTree()
         { 
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
-            selectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
+            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
             TreeExpanded();
         }
         private void TreeExpanded()
@@ -99,6 +100,17 @@ namespace AIC.HistoryDataPage.ViewModels
             {
                 _organizationTreeItems = value;
                 OnPropertyChanged("OrganizationTreeItems");
+            }
+        }
+
+        private ObservableCollection<OrganizationTreeItemViewModel> _recycledTreeItems;
+        public ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems
+        {
+            get { return _recycledTreeItems; }
+            set
+            {
+                _recycledTreeItems = value;
+                OnPropertyChanged("RecycledTreeItems");
             }
         }
 
@@ -424,6 +436,20 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+
+        private OrganizationTreeItemViewModel selectedTreeItem;
+        public OrganizationTreeItemViewModel SelectedTreeItem
+        {
+            get { return selectedTreeItem; }
+            set
+            {
+                if (selectedTreeItem != value)
+                {
+                    selectedTreeItem = value;
+                    OnPropertyChanged("SelectedTreeItem");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -469,13 +495,12 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion
 
-        private OrganizationTreeItemViewModel selectedTreeItem;
         private void SelectedTreeChanged(object para)
         {
-            selectedTreeItem = para as ItemTreeItemViewModel;
-            if (selectedTreeItem != null)
+            SelectedTreeItem = para as ItemTreeItemViewModel;
+            if (SelectedTreeItem != null)
             {
-                var itemTree = selectedTreeItem as ItemTreeItemViewModel;
+                var itemTree = SelectedTreeItem as ItemTreeItemViewModel;
                 if (itemTree.BaseAlarmSignal != null)
                 {
                     if (itemTree.BaseAlarmSignal.Unit != null)
@@ -488,7 +513,8 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private void DoubleClickAddData(object para)
         {
-            if (selectedTreeItem is ItemTreeItemViewModel)
+            SelectedTreeItem = para as ItemTreeItemViewModel;
+            if (SelectedTreeItem is ItemTreeItemViewModel)
             {
                 AddData(para);
             }
@@ -496,7 +522,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private async void AddData(object para)
         {
-            if (selectedTreeItem == null)
+            if (SelectedTreeItem == null)
             {
 #if XBAP
                 MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -516,13 +542,13 @@ namespace AIC.HistoryDataPage.ViewModels
                 return;
             }
 
-            if (selectedTreeItem is ItemTreeItemViewModel)
+            if (SelectedTreeItem is ItemTreeItemViewModel)
             {
-                if ((selectedTreeItem as ItemTreeItemViewModel).T_Item != null && (selectedTreeItem as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
+                if ((SelectedTreeItem as ItemTreeItemViewModel).T_Item != null && (SelectedTreeItem as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                 {                   
                     AnInfoSelected = true;
                 }
-                if ((selectedTreeItem as ItemTreeItemViewModel).T_Item != null && (selectedTreeItem as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+                if ((SelectedTreeItem as ItemTreeItemViewModel).T_Item != null && (SelectedTreeItem as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                 {
                     VInfoSelected = true;
                 }
@@ -532,10 +558,10 @@ namespace AIC.HistoryDataPage.ViewModels
             string conditionAlarm;
             ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
 
-            string selectedip = _cardProcess.GetOrganizationServer(selectedTreeItem);
+            string selectedip = _cardProcess.GetOrganizationServer(SelectedTreeItem);
 
             #region 分频
-            var divfre = selectedTreeItem as DivFreTreeItemViewModel;
+            var divfre = SelectedTreeItem as DivFreTreeItemViewModel;
             if (divfre != null)
             {
                 try
@@ -654,17 +680,9 @@ namespace AIC.HistoryDataPage.ViewModels
             #endregion
 
             #region 测点
-            var item = selectedTreeItem as ItemTreeItemViewModel;
-            if (item != null )
+            var item = SelectedTreeItem as ItemTreeItemViewModel;
+            if (item != null && item.T_Item != null && item.T_Item.ItemType != 0)
             {
-                if (item.IsPaired == false)
-                {
-#if XBAP
-                    MessageBox.Show("请确定该测点已经绑定！！！", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#else
-                    Xceed.Wpf.Toolkit.MessageBox.Show("请确定该测点已经绑定！！！", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#endif
-                }
                 try
                 {
                     WaitInfo = "获取数据中";
@@ -687,9 +705,18 @@ namespace AIC.HistoryDataPage.ViewModels
                         for (int i = 0; i < result.Count; i++)
                         {
                             AMSObject amsObj = new AMSObject();
-                            amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
-                            amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
-                            amsObj.ItemName = item.BaseAlarmSignal.ItemName;
+                            if (item.BaseAlarmSignal != null)
+                            {
+                                amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
+                                amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
+                                amsObj.ItemName = item.BaseAlarmSignal.ItemName;
+                            }
+                            else if (item.Parent is OrganizationTreeItemViewModel)//回收站
+                            {
+                                amsObj.OrganizationName = "回收站";
+                                amsObj.DeviceName = item.ServerIP;
+                                amsObj.ItemName = item.Name;
+                            }
 
                             amsObj.ACQDatetime = result[i].ACQDatetime;
                             amsObj.Result = result[i].Result.Value;
@@ -722,9 +749,18 @@ namespace AIC.HistoryDataPage.ViewModels
                         for (int i = 0; i < result.Count; i++)
                         {
                             AMSObject amsObj = new AMSObject();
-                            amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
-                            amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
-                            amsObj.ItemName = item.BaseAlarmSignal.ItemName;
+                            if (item.BaseAlarmSignal != null)
+                            {
+                                amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
+                                amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
+                                amsObj.ItemName = item.BaseAlarmSignal.ItemName;
+                            }
+                            else if (item.Parent is OrganizationTreeItemViewModel)//回收站
+                            {
+                                amsObj.OrganizationName = "回收站";
+                                amsObj.DeviceName = item.ServerIP;
+                                amsObj.ItemName = item.Name;
+                            }
 
                             amsObj.ACQDatetime = result[i].ACQDatetime;
                             amsObj.Result = result[i].Result.Value;
@@ -752,11 +788,20 @@ namespace AIC.HistoryDataPage.ViewModels
 
                 return;
             }
+            else
+            {
+#if XBAP
+                MessageBox.Show("该测点没绑定或无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
 
             #endregion
 
             #region 组织机构           
-            if (selectedTreeItem != null)
+            if (SelectedTreeItem != null)
             {
                 try
                 {

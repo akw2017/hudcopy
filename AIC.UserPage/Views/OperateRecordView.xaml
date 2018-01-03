@@ -28,11 +28,13 @@
     </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>           
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>             
         <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
             <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" />
             <TextBlock Text="{DynamicResource operateType}" Margin="4,0,0,0" VerticalAlignment="Center"/>          

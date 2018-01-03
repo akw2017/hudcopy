@@ -72,6 +72,11 @@
     <s:String x:Key="menuDeviceRunAnalyze">设备运行分析</s:String>
     <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
 
+    <s:String x:Key="menuDBManage">数据库管理</s:String>
+    <s:String x:Key="menuExportDBData">数据库导出</s:String>
+    <s:String x:Key="menuImportDBData">数据库导入</s:String>
+    <s:String x:Key="menuSearchDBData">数据库查找</s:String>
+
     <s:String x:Key="menuSetting">设置</s:String>
     <s:String x:Key="menuServerSetting">服务器管理</s:String>
     <s:String x:Key="menuCollectorSetting">数采器管理</s:String>
@@ -144,7 +149,7 @@
     <s:String x:Key="email">Email</s:String>
     <s:String x:Key="contact">联系地址</s:String>
 
-    <s:String x:Key="sortNo">序号</s:String>
+    <s:String x:Key="sortNo">排序号</s:String>
     <s:String x:Key="isAdmin">管理员</s:String>
     <s:String x:Key="isSuperAdmin">超级管理员</s:String>
 
