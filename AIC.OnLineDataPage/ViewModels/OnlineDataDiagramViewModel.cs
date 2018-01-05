@@ -140,62 +140,6 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        //private bool isFilter;
-        //public bool IsFilter
-        //{
-        //    get { return isFilter; }
-        //    set
-        //    {
-        //        if (isFilter != value)
-        //        {
-        //            isFilter = value;
-        //            OnPropertyChanged("IsFilter");
-        //        }
-        //    }
-        //}
-
-        //private bool isEnvelope;
-        //public bool IsEnvelope
-        //{
-        //    get { return isEnvelope; }
-        //    set
-        //    {
-        //        if (isEnvelope != value)
-        //        {
-        //            isEnvelope = value;
-        //            OnPropertyChanged("IsEnvelope");
-        //        }
-        //    }
-        //}
-
-        //private bool isTFF;
-        //public bool IsTFF
-        //{
-        //    get { return isTFF; }
-        //    set
-        //    {
-        //        if (isTFF != value)
-        //        {
-        //            isTFF = value;
-        //            OnPropertyChanged("IsTFF");
-        //        }
-        //    }
-        //}
-
-        //private bool isCepstrum;
-        //public bool IsCepstrum
-        //{
-        //    get { return isCepstrum; }
-        //    set
-        //    {
-        //        if (isCepstrum != value)
-        //        {
-        //            isCepstrum = value;
-        //            OnPropertyChanged("IsCepstrum");
-        //        }
-        //    }
-        //}
-
         private SignalPreProccessType signalPreProccessType;
         public SignalPreProccessType SignalPreProccessType
         {
@@ -304,21 +248,49 @@ namespace AIC.OnLineDataPage.ViewModels
         }
         #endregion
 
-        #region IsAMSTrendChecked
-        private bool isAMSTrendChecked;
-        public bool IsAMSTrendChecked
+        #region IsRMSTrendChecked
+        private bool isRMSTrendChecked;
+        public bool IsRMSTrendChecked
         {
-            get { return isAMSTrendChecked; }
+            get { return isRMSTrendChecked; }
             set
             {
-                if (isAMSTrendChecked != value)
+                if (isRMSTrendChecked != value)
                 {
-                    isAMSTrendChecked = value;
-                    OnPropertyChanged("IsAMSTrendChecked");
+                    isRMSTrendChecked = value;
+                    OnPropertyChanged("IsRMSTrendChecked");
                 }
             }
         }
         #endregion
+
+        private bool isPowerSpectrumChecked;
+        public bool IsPowerSpectrumChecked
+        {
+            get { return isPowerSpectrumChecked; }
+            set
+            {
+                if (isPowerSpectrumChecked != value)
+                {
+                    isPowerSpectrumChecked = value;
+                    OnPropertyChanged("IsPowerSpectrumChecked");
+                }
+            }
+        }
+
+        private bool isPowerSpectrumDensityChecked;
+        public bool IsPowerSpectrumDensityChecked
+        {
+            get { return isPowerSpectrumDensityChecked; }
+            set
+            {
+                if (isPowerSpectrumDensityChecked != value)
+                {
+                    isPowerSpectrumDensityChecked = value;
+                    OnPropertyChanged("IsPowerSpectrumDensityChecked");
+                }
+            }
+        }
 
         #region IsMultiDivFreChecked
         private bool isMultiDivFreChecked;
@@ -579,16 +551,16 @@ namespace AIC.OnLineDataPage.ViewModels
 
                 amsTrendOnLineVM = new RMSTrendChartViewModel(SelectedSignal, true);
                 list.Add(amsTrendOnLineVM);
-                IsAMSTrendChecked = true;
+                IsRMSTrendChecked = true;
 
                 graphFunctionCollection.AddItems(list);
 
-                bodeOnLineVM = new BodeChartViewModel(null, true);
-                multiDivFreOnLineVM = new MultiDivFreChartViewModel(null, true);
-                nyquistOnLineVM = new NyquistChartViewModel(null, true);
-                orderAnalysisOnLineVM = new OrderAnalysisChartViewModel(null, true);
-                orthoOnLineVM = new OrthoChartViewModel(null, true);
-                rpm3DSpectrumOnLineVM = new RPM3DChartViewModel(null, true);
+                //bodeOnLineVM = new BodeChartViewModel(null, true);
+                //multiDivFreOnLineVM = new MultiDivFreChartViewModel(null, true);
+                //nyquistOnLineVM = new NyquistChartViewModel(null, true);
+                //orderAnalysisOnLineVM = new OrderAnalysisChartViewModel(null, true);
+                //orthoOnLineVM = new OrthoChartViewModel(null, true);
+                //rpm3DSpectrumOnLineVM = new RPM3DChartViewModel(null, true);
                 time3DSpectrumOnLineVM = new Time3DChartViewModel(null, true);
                 powerSpectrumOnLineVM = new PowerSpectrumChartViewModel(null, true);
                 powerSpectrumDensityOnLineVM = new PowerSpectrumDensityChartViewModel(null, true);
@@ -875,7 +847,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             catch (Exception ex)
             {
-                //InteractionRequestService.Instance.InteractionRequest.Raise(new Confirmation() { Content = ex.ToString(), Title = "DiagramViewModel_ItemsChanged" }, confirm => { });
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-设备切换", ex));
             }
         }
 
@@ -1026,7 +998,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                 //if (SelectedSignal is BaseWaveSignal)
                 //{                  
-                  
+
                 //    if (IsFilter)
                 //    {
                 //        AddFilterCommand.Execute("Filter");
@@ -1045,19 +1017,37 @@ namespace AIC.OnLineDataPage.ViewModels
                 //    }
                 //}
 
-                amsTrendOnLineVM.SetSignal(sg);
 
-                timeDomainOnLineVM.SetSignal(sg, SignalPreProccessType);
-                frequencyDomainOnLineVM.SetSignal(sg, SignalPreProccessType);
-                bodeOnLineVM.SetSignal(sg);
-                multiDivFreOnLineVM.SetSignal(sg);
-                nyquistOnLineVM.SetSignal(sg);
-                orderAnalysisOnLineVM.SetSignal(sg);
-                orthoOnLineVM.SetSignal(sg);
-                rpm3DSpectrumOnLineVM.SetSignal(sg);
-                time3DSpectrumOnLineVM.SetSignal(sg);
-                powerSpectrumOnLineVM.SetSignal(sg, SignalPreProccessType);
-                powerSpectrumDensityOnLineVM.SetSignal(sg, SignalPreProccessType);
+                if (IsRMSTrendChecked)
+                {
+                    amsTrendOnLineVM.SetSignal(sg);
+                }
+                if (IsTimeDomainChecked == true)
+                {
+                    timeDomainOnLineVM.SetSignal(sg, SignalPreProccessType, IsFilter);
+                }
+                if (IsFrequencyDomainChecked == true)
+                {
+                    frequencyDomainOnLineVM.SetSignal(sg, SignalPreProccessType, IsFilter);
+                }
+                //bodeOnLineVM.SetSignal(sg);
+                //multiDivFreOnLineVM.SetSignal(sg);
+                //nyquistOnLineVM.SetSignal(sg);
+                //orderAnalysisOnLineVM.SetSignal(sg);
+                //orthoOnLineVM.SetSignal(sg);
+                //rpm3DSpectrumOnLineVM.SetSignal(sg);
+                if (IsTime3DChecked == true)
+                {
+                    time3DSpectrumOnLineVM.SetSignal(sg);
+                }
+                if (IsPowerSpectrumChecked == true)
+                {
+                    powerSpectrumOnLineVM.SetSignal(sg, SignalPreProccessType, IsFilter);
+                }
+                if (IsPowerSpectrumDensityChecked == true)
+                {
+                    powerSpectrumDensityOnLineVM.SetSignal(sg, SignalPreProccessType, IsFilter);
+                }
             }
             catch (Exception ex)
             {
@@ -1087,83 +1077,84 @@ namespace AIC.OnLineDataPage.ViewModels
                         if (!graphFunctionCollection.Contains(timeDomainOnLineVM))
                         {
                             graphFunctionCollection.Add(timeDomainOnLineVM);
-                            IsTimeDomainChecked = true;
+                            timeDomainOnLineVM.SetSignal(SelectedSignal, SignalPreProccessType, IsFilter);
                         }
                         break;
                     case "FrequencyDomain":
                         if (!graphFunctionCollection.Contains(frequencyDomainOnLineVM))
                         {
                             graphFunctionCollection.Add(frequencyDomainOnLineVM);
-                            IsFrequencyDomainChecked = true;
+                            frequencyDomainOnLineVM.SetSignal(SelectedSignal, SignalPreProccessType, IsFilter);
                         }
                         break;
                     case "AMSTrend":
                         if (!graphFunctionCollection.Contains(amsTrendOnLineVM))
                         {
                             graphFunctionCollection.Add(amsTrendOnLineVM);
-                            IsAMSTrendChecked = true;
+                            amsTrendOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "MultiDivFre":
                         if (!graphFunctionCollection.Contains(multiDivFreOnLineVM))
                         {
                             graphFunctionCollection.Add(multiDivFreOnLineVM);
-                            IsMultiDivFreChecked = true;
+                            multiDivFreOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "Ortho":
                         if (!graphFunctionCollection.Contains(orthoOnLineVM))
                         {
                             graphFunctionCollection.Add(orthoOnLineVM);
-                            IsOrthoChecked = true;
+                            orthoOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "Bode":
                         if (!graphFunctionCollection.Contains(bodeOnLineVM))
                         {
                             graphFunctionCollection.Add(bodeOnLineVM);
-                            IsBodeChecked = true;
+                            bodeOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "Nyquist":
                         if (!graphFunctionCollection.Contains(nyquistOnLineVM))
                         {
                             graphFunctionCollection.Add(nyquistOnLineVM);
-                            IsNyquistChecked = true;
+                            nyquistOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "Order":
                         if (!graphFunctionCollection.Contains(orderAnalysisOnLineVM))
                         {
                             graphFunctionCollection.Add(orderAnalysisOnLineVM);
-                            IsOrderChecked = true;
+                            orderAnalysisOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "Time3D":
                         if (!graphFunctionCollection.Contains(time3DSpectrumOnLineVM))
                         {
                             graphFunctionCollection.Add(time3DSpectrumOnLineVM);
-                            IsTime3DChecked = true;
+                            time3DSpectrumOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "RPM3D":
                         if (!graphFunctionCollection.Contains(rpm3DSpectrumOnLineVM))
                         {
                             graphFunctionCollection.Add(rpm3DSpectrumOnLineVM);
-                            IsRPM3DChecked = true;
+                            rpm3DSpectrumOnLineVM.SetSignal(SelectedSignal);
                         }
                         break;
                     case "PowerSpectrum":
                         if (!graphFunctionCollection.Contains(powerSpectrumOnLineVM))
                         {
                             graphFunctionCollection.Add(powerSpectrumOnLineVM);
-                            
+                            powerSpectrumOnLineVM.SetSignal(SelectedSignal, SignalPreProccessType, IsFilter);
                         }
                         break;
                     case "PowerSpectrumDensity":
                         if (!graphFunctionCollection.Contains(powerSpectrumDensityOnLineVM))
                         {
                             graphFunctionCollection.Add(powerSpectrumDensityOnLineVM);
+                            powerSpectrumDensityOnLineVM.SetSignal(SelectedSignal, SignalPreProccessType, IsFilter);
                         }
                         break;
                 }
@@ -1182,94 +1173,85 @@ namespace AIC.OnLineDataPage.ViewModels
                     case "TimeDomain":
                         if (graphFunctionCollection.Contains(timeDomainOnLineVM))
                         {
-                            timeDomainOnLineVM.Close();
+                            timeDomainOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(timeDomainOnLineVM);
-                            IsTimeDomainChecked = false;
+                            
                         }
                         break;
                     case "FrequencyDomain":
                         if (graphFunctionCollection.Contains(frequencyDomainOnLineVM))
                         {
-                            frequencyDomainOnLineVM.Close();
-                            graphFunctionCollection.Remove(frequencyDomainOnLineVM);
-                            IsFrequencyDomainChecked = false;
+                            frequencyDomainOnLineVM.SetSignal(null);
+                            graphFunctionCollection.Remove(frequencyDomainOnLineVM);                           
                         }
                         break;
                     case "AMSTrend":
                         if (graphFunctionCollection.Contains(amsTrendOnLineVM))
                         {
-                            amsTrendOnLineVM.Close();
+                            amsTrendOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(amsTrendOnLineVM);
-                            IsAMSTrendChecked = false;
                         }
                         break;
                     case "MultiDivFre":
                         if (graphFunctionCollection.Contains(multiDivFreOnLineVM))
                         {
-                            multiDivFreOnLineVM.Close();
+                            multiDivFreOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(multiDivFreOnLineVM);
-                            IsMultiDivFreChecked = false;
                         }
                         break;
                     case "Ortho":
                         if (graphFunctionCollection.Contains(orthoOnLineVM))
                         {
-                            orthoOnLineVM.Close();
+                            orthoOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(orthoOnLineVM);
-                            IsOrthoChecked = false;
                         }
                         break;
                     case "Bode":
                         if (graphFunctionCollection.Contains(bodeOnLineVM))
                         {
-                            bodeOnLineVM.Close();
+                            bodeOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(bodeOnLineVM);
-                            IsBodeChecked = false;
                         }
                         break;
                     case "Nyquist":
                         if (graphFunctionCollection.Contains(nyquistOnLineVM))
                         {
-                            nyquistOnLineVM.Close();
+                            nyquistOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(nyquistOnLineVM);
-                            IsNyquistChecked = false;
                         }
                         break;
                     case "Order":
                         if (graphFunctionCollection.Contains(orderAnalysisOnLineVM))
                         {
-                            orderAnalysisOnLineVM.Close();
+                            orderAnalysisOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(orderAnalysisOnLineVM);
-                            IsOrthoChecked = false; 
                         }
                         break;
                     case "Time3D":
                         if (graphFunctionCollection.Contains(time3DSpectrumOnLineVM))
                         {
-                            time3DSpectrumOnLineVM.Close();
+                            time3DSpectrumOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(time3DSpectrumOnLineVM);
-                            IsTime3DChecked = false;
                         }
                         break;
                     case "RPM3D":
                         if (graphFunctionCollection.Contains(rpm3DSpectrumOnLineVM))
                         {
-                            rpm3DSpectrumOnLineVM.Close();
+                            rpm3DSpectrumOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(rpm3DSpectrumOnLineVM);
-                            IsRPM3DChecked = false;
                         }
                         break;
                     case "PowerSpectrum":
                         if (graphFunctionCollection.Contains(powerSpectrumOnLineVM))
                         {
-                            powerSpectrumOnLineVM.Close();
+                            powerSpectrumOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(powerSpectrumOnLineVM);
                         }
                         break;
                     case "PowerSpectrumDensity":
                         if (graphFunctionCollection.Contains(powerSpectrumDensityOnLineVM))
                         {
-                            powerSpectrumDensityOnLineVM.Close();
+                            powerSpectrumDensityOnLineVM.SetSignal(null);
                             graphFunctionCollection.Remove(powerSpectrumDensityOnLineVM);
                         }
                         break;
@@ -1299,11 +1281,13 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region 布局保存与读取
+        private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Layout\\DeviceDocument.xml";
         private void LoadGroupDocument()
         {
             try
             {
-                string layoutPath = LocalSetting.LayoutPath;
+                //string layoutPath = LocalSetting.LayoutPath;//昌邑石化
+                string layoutPath = dir;
                 //string layoutPath = @"C:\AIC\布局\DeviceDocument.xml";// System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\DeviceDocument.xml";
                 if (File.Exists(@layoutPath))
                 {
@@ -1350,7 +1334,8 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             try
             {
-                string layoutPath = LocalSetting.LayoutPath;
+                string layoutPath = dir;
+                //string layoutPath = LocalSetting.LayoutPath;
                 var filename = layoutPath.Substring(layoutPath.LastIndexOf("\\"));
                 var direcory = layoutPath.Substring(0, layoutPath.Length - filename.Length);
                 //string direcory = @"C:\AIC\布局";

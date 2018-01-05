@@ -154,7 +154,10 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 if (value == null)
                 {
-                    return;
+                    if (SignalMonitors.Count != 0)
+                    {
+                        return;
+                    }
                 }
                 if (selectedSignalMonitor != value)
                 {
@@ -474,7 +477,7 @@ namespace AIC.OnLineDataPage.ViewModels
             SignalTileViewModel viewModel = para as SignalTileViewModel;
             if (viewModel != null && SignalMonitors.Contains(viewModel))
             {
-                viewModel.Close();
+                //viewModel.Close();
                 SignalMonitors.Remove(viewModel);
             }
         }

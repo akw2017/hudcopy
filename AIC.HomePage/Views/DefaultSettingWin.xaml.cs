@@ -19,13 +19,13 @@ namespace AIC.HomePage.Views
         public DefaultSettingWin()
         {            
             InitializeComponent();
-            servertxt.Text = LocalSetting.ServerXmlDir;
-            maptxt.Text = LocalSetting.MapHtmlUri;           
-            devicetxt.Text = LocalSetting.LayoutPath;
-            giftxt.Text = LocalSetting.GifDir;
+            //servertxt.Text = LocalSetting.ServerXmlDir;//昌邑石化
+            //maptxt.Text = LocalSetting.MapHtmlUri;//昌邑石化           
+            //devicetxt.Text = LocalSetting.LayoutPath;
+            //giftxt.Text = LocalSetting.GifDir;
             pdaporttxt.Text = LocalSetting.PDAPort.ToString();
             serverporttxt.Text = LocalSetting.ServerPort.ToString();
-            screentxt.Text = LocalSetting.ScreenShotDir.ToString();
+            //screentxt.Text = LocalSetting.ScreenShotDir.ToString();
             timetxt.Text = LocalSetting.UpdateTime.ToString();
         }
 
@@ -33,13 +33,13 @@ namespace AIC.HomePage.Views
         {
             try
             {
-                LocalSetting.ServerXmlDir = servertxt.Text;
-                LocalSetting.MapHtmlUri = maptxt.Text;              
-                LocalSetting.LayoutPath = devicetxt.Text;
-                LocalSetting.GifDir = giftxt.Text;
+                //LocalSetting.ServerXmlDir = servertxt.Text;//昌邑石化
+                //LocalSetting.MapHtmlUri = maptxt.Text; //昌邑石化             
+                //LocalSetting.LayoutPath = devicetxt.Text;
+                //LocalSetting.GifDir = giftxt.Text;
                 LocalSetting.PDAPort = Convert.ToInt32(pdaporttxt.Text);
                 LocalSetting.ServerPort = Convert.ToInt32(serverporttxt.Text);
-                LocalSetting.ScreenShotDir = screentxt.Text;
+                //LocalSetting.ScreenShotDir = screentxt.Text;
                 LocalSetting.UpdateTime = Convert.ToInt32(timetxt.Text);
 
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

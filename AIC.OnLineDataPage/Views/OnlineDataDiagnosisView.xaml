@@ -245,12 +245,6 @@
                         <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="Invalid">
                             <Setter  Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="HighNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="LowNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="HighPreAlert">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>

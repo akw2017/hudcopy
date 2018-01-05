@@ -5,7 +5,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\System.Windows.Intera
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\XamlAnimatedGif.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Resources\Icons.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Resources\IconsNonShared.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Styles\BlueAddition.baml
@@ -32,12 +31,15 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Styles\YellowAddition
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Styles\TealAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Styles\AmberAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Styles\BaseGray.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\CheckBoxStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ColorStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\en-us.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\Generic.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\GreyStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ScrollBar.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\zh-cn.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\WaitingDlg.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources_MarkupCompile.cache
@@ -53,6 +55,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.Propert
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\CheckBoxStyle.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.g.cs

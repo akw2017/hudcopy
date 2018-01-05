@@ -38,7 +38,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:RMSReplayDataView/>
             </Grid>
         </Grid>
@@ -49,7 +49,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:TimeDomainDataView/>
             </Grid>
         </Grid>
@@ -60,7 +60,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:FrequencyDomainDataView Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"/>
             </Grid>
         </Grid>
@@ -71,7 +71,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:PowerSpectrumDataView/>
             </Grid>
         </Grid>
@@ -82,7 +82,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:PowerSpectrumDensityDataView/>
             </Grid>
         </Grid>
@@ -93,7 +93,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OrthoDataView/>
             </Grid>
         </Grid>
@@ -104,7 +104,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OffDesignConditionDataView/>
             </Grid>
         </Grid>
@@ -115,7 +115,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OrderAnalysisDataView/>
             </Grid>
         </Grid>
@@ -126,7 +126,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:Time3DSpectrumView/>
             </Grid>
         </Grid>
@@ -137,7 +137,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:RPM3DSpectrumDataView/>
             </Grid>
         </Grid>
@@ -148,7 +148,7 @@
             <i:Interaction.Behaviors>
                 <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:AlarmPointTrendDataView />
             </Grid>
         </Grid>

@@ -494,7 +494,7 @@
                             <RadioButton Content="倒频谱" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Cepstrum}" VerticalAlignment="Center" />
                         </StackPanel>
                         <WrapPanel ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-                            <CheckBox Margin="5,0" Content="时域" IsChecked="True" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
+                            <CheckBox Margin="5,0" Content="时域" IsChecked="{Binding IsTimeDomainChecked}" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="TimeDomain"/>
@@ -504,7 +504,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="频域" IsChecked="True" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
+                            <CheckBox Margin="5,0" Content="频域" IsChecked="{Binding IsFrequencyDomainChecked}" Style="{StaticResource CheckBoxStyle}"> <!--昌邑石化-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="FrequencyDomain"/>
@@ -514,7 +514,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="趋势图" IsChecked="True" Style="{StaticResource CheckBoxStyle}">
+                            <CheckBox Margin="5,0" Content="趋势图" IsChecked="{Binding IsRMSTrendChecked}" Style="{StaticResource CheckBoxStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="AMSTrend"/>
@@ -524,7 +524,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="功率谱" IsChecked="False" Style="{StaticResource CheckBoxStyle}">
+                            <CheckBox Margin="5,0" Content="功率谱" IsChecked="{Binding IsPowerSpectrumChecked}" Style="{StaticResource CheckBoxStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="PowerSpectrum"/>
@@ -534,7 +534,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="功率谱密度" IsChecked="False" Style="{StaticResource CheckBoxStyle}">
+                            <CheckBox Margin="5,0" Content="功率谱密度" IsChecked="{Binding IsPowerSpectrumDensityChecked}" Style="{StaticResource CheckBoxStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="PowerSpectrumDensity"/>
@@ -544,7 +544,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="时间三维" IsChecked="False" Style="{StaticResource CheckBoxStyle}">
+                            <CheckBox Margin="5,0" Content="时间三维" IsChecked="{Binding IsTime3DChecked}" Style="{StaticResource CheckBoxStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="Time3D"/>
@@ -554,7 +554,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="分频" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False"  Visibility="Collapsed">
+                            <CheckBox Margin="5,0" Content="分频" IsChecked="{Binding IsMultiDivFreChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False"  Visibility="Collapsed">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="MultiDivFre"/>
@@ -564,7 +564,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="轴心轨迹" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
+                            <CheckBox Margin="5,0" Content="轴心轨迹" IsChecked="{Binding IsOrthoChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="Ortho"/>
@@ -574,7 +574,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="伯德" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
+                            <CheckBox Margin="5,0" Content="伯德" IsChecked="{Binding IsBodeChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="Bode" />
@@ -584,7 +584,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="阶次分析" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
+                            <CheckBox Margin="5,0" Content="阶次分析" IsChecked="{Binding IsOrderChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="Order"/>
@@ -594,7 +594,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <CheckBox Margin="5,0" Content="奈奎斯特" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
+                            <CheckBox Margin="5,0" Content="奈奎斯特" IsChecked="{Binding IsNyquistChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="Nyquist"/>
@@ -604,8 +604,8 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                           
-                            <CheckBox Margin="5,0" Content="转速三维" IsChecked="False" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
+
+                            <CheckBox Margin="5,0" Content="转速三维" IsChecked="{Binding IsRPM3DChecked}" Style="{StaticResource CheckBoxStyle}" IsEnabled="False">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="RPM3D"/>

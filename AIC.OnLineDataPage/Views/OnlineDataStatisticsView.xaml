@@ -219,12 +219,6 @@
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                             <Setter  Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>

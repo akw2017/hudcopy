@@ -376,8 +376,8 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Microsoft.Practices.ServiceLocation.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.DTO.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.PetaPoco.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.Domain.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\System.Reactive.Core.xml
@@ -393,8 +393,8 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Microsoft.Practices.ServiceLocation.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Microsoft.Practices.ServiceLocation.xml
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.DTO.pdb
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.MasterDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.SlaveDB.pdb
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.MasterDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\de\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\es\FluentValidation.resources.dll

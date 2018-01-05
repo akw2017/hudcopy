@@ -16,6 +16,7 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             IsUpdated = isupdate;
         }
 
+
         protected override bool Filter(object message)
         {
             return true;

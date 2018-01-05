@@ -9,6 +9,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
     public class ChartViewBase : UserControl
     {
         private bool initialized = false;
+        private bool closed = false;
         static ChartViewBase()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(ChartViewBase), new FrameworkPropertyMetadata(typeof(ChartViewBase)));
@@ -36,8 +37,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 ViewModel = DataContext as ChartViewModelBase;
                 ViewModel.SignalChanged += ViewModel_SignalChanged;
                 ViewModel.Closed += ViewModel_Closed;
-
-                if (!initialized)
+                if (closed == true)
+                {
+                    ViewModel.Open();
+                    closed = false;
+                }
+                //if (!initialized)
                 {
                     ViewModel_SignalChanged();
                     initialized = true;
@@ -50,6 +55,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             if (ViewModel != null)
             {
+                closed = true;
                 //ViewModel.Unsubscribe();
                 ViewModel.Close();
                 ViewModel.Closed -= ViewModel_Closed;

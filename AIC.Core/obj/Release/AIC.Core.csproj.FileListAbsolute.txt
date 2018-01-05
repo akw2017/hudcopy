@@ -58,5 +58,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Release\ru\FluentValidation.resour
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Release\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Release\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Release\AIC.Core.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Release\Interop.Office.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Release\AIC.Core.csproj.ResolveComReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Release\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Release\AIC.Core.pdb

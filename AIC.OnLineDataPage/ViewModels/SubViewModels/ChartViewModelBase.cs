@@ -118,9 +118,10 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             }
         }
 
-        public virtual void SetSignal(BaseAlarmSignal sg, SignalPreProccessType signalPreType)
+        public virtual void SetSignal(BaseAlarmSignal sg, SignalPreProccessType signalPreType, bool isfilter)
         {
-            SignalPreProccessType = signalPreType;
+            signalPreProccessType = signalPreType;//注意大小写，用小写，避免执行ChangeProcessor
+            isFilter = isfilter;
             SetSignal(sg);
         }
 
@@ -160,6 +161,11 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             {
                 handler(this, EventArgs.Empty);
             }
+        }
+
+        public void Open()
+        {
+            AddProcessor();
         }
     }
 }

@@ -246,6 +246,7 @@
     <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="LicenseKeyStrings.cs" />
     <Compile Include="LMModels\T1_WX_Forwarding_Rule.cs" />
+    <Compile Include="LMModels\T2_Organization.cs" />
     <Compile Include="Maybe.cs" />
     <Compile Include="ControlModels\ContextMenuViewModel.cs" />
     <Compile Include="Helpers\EqualityHelper.cs" />

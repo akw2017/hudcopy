@@ -65,6 +65,11 @@ namespace AIC.HomePage.ViewModels
             _signalProcess = signalProcess;
 
             ThemeManager.AddAppTheme("BaseGray", new Uri("pack://application:,,,/AIC.Resources;component/Styles/BaseGray.xaml"));
+            ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/AIC.Resources;component/Styles/Gray.xaml"));
+
+            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Blue");
+            AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseGray");
+            ThemeManager.ChangeAppStyle(Application.Current, expectedAccent, expectedTheme);
 
             // create accent color menu items for the demo
             this.AccentColors = ThemeManager.Accents
@@ -76,6 +81,8 @@ namespace AIC.HomePage.ViewModels
             this.AppThemes = ThemeManager.AppThemes
                                            .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
                                            .ToList();
+
+
 
             MenuManageList = _loginUserService.MenuManageList;
             ExceptionModel = _loginUserService.ExceptionModel;
@@ -832,17 +839,25 @@ namespace AIC.HomePage.ViewModels
 
         private void Logout()
         {
-            _regionManager.RequestNavigate(RegionNames.HomeViewMainRegion, loginView);
+#if XBAP
+            MessageBoxResult result = MessageBox.Show((string)Application.Current.Resources["strLogoutSystem"], (string)Application.Current.Resources["strLogout"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
+#else
+            MessageBoxResult result = Xceed.Wpf.Toolkit.MessageBox.Show((string)Application.Current.Resources["strLogoutSystem"], (string)Application.Current.Resources["strLogout"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
+#endif
+            if (result == MessageBoxResult.OK)
+            {
+                _regionManager.RequestNavigate(RegionNames.HomeViewMainRegion, loginView);
 
-            _loginUserService.SetUserLogout();
+                _loginUserService.SetUserLogout();
 
-            LoginUser = null;
+                LoginUser = null;
 
-            CloseTabs();
+                CloseTabs();
 
-            LoginVisibility = Visibility.Collapsed;
-            Login1Visibility = Visibility.Collapsed;
-            Login2Visibility = Visibility.Collapsed;
+                LoginVisibility = Visibility.Collapsed;
+                Login1Visibility = Visibility.Collapsed;
+                Login2Visibility = Visibility.Collapsed;
+            }
         }
 
         private void CloseTabs()
@@ -1169,13 +1184,14 @@ namespace AIC.HomePage.ViewModels
         {
             //string dir = System.Environment.CurrentDirectory + "\\Log";
             // string dir = System.Windows.Forms.Application.StartupPath + "\\Log";
-            string dir = System.AppDomain.CurrentDomain.BaseDirectory + "\\Log";
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + "Log";
             System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
         }
 
         private void ScreenShotFolder()
         {
-            string dir = @LocalSetting.ScreenShotDir;
+            //string dir = @LocalSetting.ScreenShotDir;
+            string dir = System.AppDomain.CurrentDomain.BaseDirectory + "ScreenShot";
             System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
         }
 

@@ -186,3 +186,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\IEPE
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\MainControlCardWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\WirelessReceiveCardWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\WireMatchingCardWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\Resources\AICMatlabDLL.dll

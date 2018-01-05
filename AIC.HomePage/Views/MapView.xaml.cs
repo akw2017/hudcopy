@@ -37,6 +37,8 @@ namespace AIC.HomePage.Views
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
         private readonly ILoginUserService _loginUserService;
+        private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Htmls\\BMapOffline.html";
+
         public MapView(IEventAggregator eventAggregator, IRegionManager regionManager, ILoginUserService loginUserService)
         {
             InitializeComponent();
@@ -59,13 +61,15 @@ namespace AIC.HomePage.Views
             }
             else
             {
-                if (!File.Exists(@LocalSetting.MapHtmlUri))
+                //if (!File.Exists(@LocalSetting.MapHtmlUri))//昌邑石化
+                if (!File.Exists(dir))
                 {
                     this.webBrowser.NavigateToString(ConvertExtendedASCII("地图文件不存在，请设置地图文件路径！！！"));
                 }
                 else
                 {
-                    this.webBrowser.Navigate(new Uri(@LocalSetting.MapHtmlUri));//获取根目录的html文件  
+                    //this.webBrowser.Navigate(new Uri(@LocalSetting.MapHtmlUri));//获取根目录的html文件  //昌邑石化
+                    this.webBrowser.Navigate(new Uri(@dir));//获取根目录的html文件 
                     readDataTimer.Tick += new EventHandler(timeCycle);
                     readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
                 }
@@ -112,11 +116,11 @@ namespace AIC.HomePage.Views
             }
             catch (WebException e)
             {
-                //Console.WriteLine("\r\nWebException Raised. The following error occured : {0}", e.Status);                
+                Console.WriteLine("\r\nWebException Raised. The following error occured : {0}", e.Status);                
             }
             catch (Exception e)
             {
-                //Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
+                Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
             }
             
             return ok;

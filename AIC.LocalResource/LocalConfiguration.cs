@@ -22,11 +22,12 @@ namespace AIC.LocalConfiguration
             ServerInfoList = new List<ServerInfo>();            
         }
 
+        //string dir = @LocalSetting.ServerXmlDir;//昌邑石化
+        private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Configuration\\Servers.xml";
         public void Initialize()
         {
             try
-            {
-                string dir = @LocalSetting.ServerXmlDir;
+            {               
                 ServerInfoList = dataService.ReadServerXml(dir).ToList();
             }
             catch { }
@@ -60,8 +61,8 @@ namespace AIC.LocalConfiguration
 
         public void WriteServerInfo(IList<ServerInfo> info)
         {          
-            ServerInfoList = new List<ServerInfo>(info);           
-            string dir = @LocalSetting.ServerXmlDir;
+            ServerInfoList = new List<ServerInfo>(info);          
+            
             var filename = dir.Substring(dir.LastIndexOf("\\"));
             var directory = dir.Substring(0, dir.Length - filename.Length);
             if (!Directory.Exists(@directory))

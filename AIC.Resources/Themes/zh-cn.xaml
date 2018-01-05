@@ -18,6 +18,8 @@
     <s:String x:Key="strPermissionError">操作权限不够</s:String>
     <s:String x:Key="strExit">退出</s:String>
     <s:String x:Key="strExitSystem">确定要退出系统?</s:String>
+    <s:String x:Key="strLogout">注销</s:String>
+    <s:String x:Key="strLogoutSystem">确定要注销用户?</s:String>
     <s:String x:Key="strStart">开始</s:String>
     <s:String x:Key="strStop">停止</s:String>
     

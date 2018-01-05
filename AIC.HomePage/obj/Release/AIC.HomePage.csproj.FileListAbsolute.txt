@@ -1,6 +1,11 @@
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Themes\Generic.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\VersionWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\DefaultSettingWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAlarmWin.g.cs
@@ -23,6 +28,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.CoreType.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.LocalConfiguration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.M9600.Common.MasterDB.dll
@@ -50,6 +56,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\System.Reactive.Linq.d
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.PageNavigationControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Xceed.Wpf.Toolkit.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.M9600.Common.DTO.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Newtonsoft.Json.dll
@@ -71,6 +78,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Arction.DirectXInit.dl
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.CoreType.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.Core.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HistoryDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.LocalConfiguration.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.OnLineDataPage.pdb
@@ -84,6 +92,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.M9600.Common.Slave
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Loya.Dameer.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.CloseTabControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.PageNavigationControl.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\log4net.xml
@@ -123,6 +132,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\pt\FluentValidation.re
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\tr\FluentValidation.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\VersionWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\DefaultSettingWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAlarmWin.baml
@@ -142,15 +154,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.Propertie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\AlarmAckListWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\HistoryQuickPlayWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.DeviceDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMatlabDLL.dll

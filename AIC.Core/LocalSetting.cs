@@ -6,11 +6,11 @@ namespace AIC.Core
 {
     public class LocalSetting
     {
-        public static string ServerXmlDir = Convert.ToString(ConfigurationManager.AppSettings["ServerXmlDir"]);
-        public static string MapHtmlUri = Convert.ToString(ConfigurationManager.AppSettings["MapHtmlUri"]);
-        public static string LayoutPath = Convert.ToString(ConfigurationManager.AppSettings["LayoutPath"]);
-        public static string GifDir = Convert.ToString(ConfigurationManager.AppSettings["GifDir"]);
-        public static string ScreenShotDir = Convert.ToString(ConfigurationManager.AppSettings["ScreenShotDir"]); 
+        //public static string ServerXmlDir = Convert.ToString(ConfigurationManager.AppSettings["ServerXmlDir"]);
+        //public static string MapHtmlUri = Convert.ToString(ConfigurationManager.AppSettings["MapHtmlUri"]);
+        //public static string LayoutPath = Convert.ToString(ConfigurationManager.AppSettings["LayoutPath"]);
+        //public static string GifDir = Convert.ToString(ConfigurationManager.AppSettings["GifDir"]);
+        //public static string ScreenShotDir = Convert.ToString(ConfigurationManager.AppSettings["ScreenShotDir"]); 
 
         public static int PDAPort = Convert.ToInt32(ConfigurationManager.AppSettings["PDAPort"]);
         public static int ServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);

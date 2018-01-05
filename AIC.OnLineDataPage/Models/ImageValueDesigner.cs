@@ -34,10 +34,11 @@ namespace AIC.OnLineDataPage.Models
             connectorsChangedSubscription = WhenConnectorsChanged.Subscribe(OnConnectorsChanged);  
         }
 
+        private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Gif";
         private void BuildMenuOptions()
         {
             //if (Directory.Exists(@"C:\AIC\设备图"))
-            string dir = @LocalSetting.GifDir;
+            //string dir = @LocalSetting.GifDir;//昌邑石化
 
             if (Directory.Exists(dir))
             {               
@@ -133,8 +134,9 @@ namespace AIC.OnLineDataPage.Models
             string image = parameter as string;
             //string filePath = string.Format(@"C:\AIC\设备图\{0}", image);
 
-            string dir = @LocalSetting.GifDir + @"\{0}";
-            string filePath = string.Format(dir, image);
+            //string dir = @LocalSetting.GifDir + @"\{0}"; //昌邑石化
+            string path = dir + @"\{0}";
+            string filePath = string.Format(path, image);
             if (File.Exists(filePath))
             {
                 SelectedImage = filePath;
@@ -168,8 +170,9 @@ namespace AIC.OnLineDataPage.Models
                         Left = value.Left;
                         ItemWidth = value.Width;
                         ItemHeight = value.Height;
-                        string dir = @LocalSetting.GifDir + @"\{0}";
-                        string image = string.Format(dir, value.BackgroundImage.Split('\\').Last());
+                        //string path = @LocalSetting.GifDir + @"\{0}";//昌邑石化
+                        string path = dir + @"\{0}";
+                        string image = string.Format(path, value.BackgroundImage.Split('\\').Last());
                         if (File.Exists(image))
                         {
                             SelectedImage = image;

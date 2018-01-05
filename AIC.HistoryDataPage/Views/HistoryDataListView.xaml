@@ -469,12 +469,6 @@
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="Invalid">
                                         <Setter  Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <!--<DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighNormal">
-                                        <Setter Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowNormal">
-                                        <Setter Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>-->
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlert">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
@@ -572,12 +566,6 @@
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="Invalid">
                                         <Setter  Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <!--<DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighNormal">
-                                        <Setter Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>
-                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowNormal">
-                                        <Setter Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>-->
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlert">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>

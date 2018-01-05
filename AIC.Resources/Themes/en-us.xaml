@@ -18,6 +18,8 @@
     <s:String x:Key="strPermissionError">Permission denied</s:String>
     <s:String x:Key="strExit">Exit</s:String>
     <s:String x:Key="strExitSystem">Exit system?</s:String>
+    <s:String x:Key="strLogout">Logout</s:String>
+    <s:String x:Key="strLogoutSystem">Logout User?</s:String>
     <s:String x:Key="strStart">Start</s:String>
     <s:String x:Key="strStop">Stop</s:String>    
 

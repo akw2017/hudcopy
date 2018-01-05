@@ -42,9 +42,12 @@ namespace AIC.HomePage.Views
             _eventAggregator.GetEvent<HideHtmlEvent>().Publish(1);
         }
 
+        private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "ScreenShot";
+
         private void ScreenShot_Click(object sender, RoutedEventArgs e)
         {
-            string direcory = LocalSetting.ScreenShotDir;
+            //string direcory = LocalSetting.ScreenShotDir;
+            string direcory = dir;//昌邑石化
             if (!Directory.Exists(@direcory))
             {
                 Directory.CreateDirectory(@direcory);

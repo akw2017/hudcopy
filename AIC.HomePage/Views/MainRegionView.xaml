@@ -203,11 +203,6 @@
                         <Image Source="/AIC.Resources;component/Images/export.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="修改密码" Command="{Binding EditPwdCommand}" Visibility="{Binding LoginVisibility}">
-                    <MenuItem.Icon>
-                        <Image Width="16" Source="/AIC.Resources;component/Images/user_key.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
                 <MenuItem Header="{DynamicResource menuLock}" Command="{Binding LockCommand}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/lock.png"/>
@@ -260,7 +255,7 @@
                 </MenuItem>-->
             </MenuItem>
             <MenuItem Header="显示管理" Background="{DynamicResource TransparentWhiteBrush}">
-                <!--<MenuItem Header="{DynamicResource menuTheme}" Background="{DynamicResource TransparentWhiteBrush}"                         
+                <MenuItem Header="{DynamicResource menuTheme}" Background="{DynamicResource TransparentWhiteBrush}"                         
                           ItemsSource="{Binding AppThemes, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}">
                     <MenuItem.Icon>
@@ -273,7 +268,7 @@
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/wrench_orange.png"/>
                     </MenuItem.Icon>
-                </MenuItem>-->
+                </MenuItem>
                 <MenuItem Header="本地设置" Command="{Binding SettingCommmad}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/wrench_orange.png"/>
@@ -348,7 +343,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <TextBlock Text="{Binding LoginUser}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" HorizontalAlignment="Right"> <Hyperlink Command="{Binding EditPwdCommand}"> <TextBlock Text="修改密码  "/> </Hyperlink><Hyperlink Command="{Binding LogoutCommand}"> <TextBlock Text="注销  "/> </Hyperlink><TextBlock Text="{Binding LoginUser}"/></TextBlock>
         <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
             <ToolBar Visibility="Collapsed">
                 <Button Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">

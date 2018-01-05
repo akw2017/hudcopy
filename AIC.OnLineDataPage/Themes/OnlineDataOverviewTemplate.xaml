@@ -72,12 +72,6 @@
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
                                         <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <!--<DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighNormal">
-                                        <Setter TargetName="AMSText" Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="LowNormal">
-                                        <Setter TargetName="AMSText" Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>-->
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighPreAlert">
                                         <Setter TargetName="AMSText" Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
@@ -124,12 +118,6 @@
             <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
                 <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
             </DataTrigger>
-            <!--<DataTrigger Binding="{Binding Device.Alarm}" Value="HighNormal">
-                <Setter TargetName="txtName" Property="Foreground" Value="#FF85CBEB" />
-            </DataTrigger>
-            <DataTrigger  Binding="{Binding Device.Alarm}" Value="LowNormal">
-                <Setter TargetName="txtName" Property="Foreground" Value="#FF85CBEB" />
-            </DataTrigger>-->
             <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlert">
                 <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
             </DataTrigger>
@@ -211,12 +199,6 @@
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
                                         <Setter TargetName="ProgressBar" Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <!--<DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighNormal">
-                                        <Setter TargetName="AMSText" Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="LowNormal">
-                                        <Setter TargetName="AMSText" Property="Foreground" Value="#FF85CBEB" />
-                                    </DataTrigger>-->
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighPreAlert">
                                         <Setter TargetName="ProgressBar" Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
@@ -263,12 +245,6 @@
             <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
                 <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
             </DataTrigger>
-            <!--<DataTrigger Binding="{Binding Device.Alarm}" Value="HighNormal">
-                            <Setter TargetName="txtName" Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>
-                        <DataTrigger  Binding="{Binding Device.Alarm}" Value="LowNormal">
-                            <Setter TargetName="txtName" Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>-->
             <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlert">
                 <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
             </DataTrigger>

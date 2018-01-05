@@ -110,12 +110,6 @@
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                                             <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                                            <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                                            <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
-                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
                                             <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
                                         </DataTrigger>
@@ -356,45 +350,6 @@
                 </ControlTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <!--<DataGridTemplateColumn Header="报警级别" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Ellipse x:Name="ellipse" Fill="#FF85CBEB" HorizontalAlignment="Center" Height="16" Margin="0" Width="16" VerticalAlignment="Center"/>
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
-                                </DataTrigger>
-                                --><!--<DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
-                                </DataTrigger>--><!--
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="Yellow"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlert">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="Yellow"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowDanger">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="Red" />
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                 <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
                 <DataGridTextColumn Header="报警级别" Binding="{Binding DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" IsReadOnly="True"/>
@@ -402,11 +357,11 @@
                 <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>             
                 <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>              
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="传感器地址"  Binding="{Binding ChannelHDID}" IsReadOnly="True"/>              
+                <DataGridTextColumn Header="传感器地址"  Binding="{Binding ChannelHDID}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="报警信息" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>                           
-                            <ListBox ItemsSource="{Binding AlarmLimit}">
+                        <DataTemplate>
+                            <ListBox x:Name="txtName" ItemsSource="{Binding AlarmLimit}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal"/>
@@ -415,9 +370,14 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"></TextBlock>
-                                            <TextBlock Text=":" VerticalAlignment="Center"></TextBlock>
-                                            <TextBlock Text="{Binding Limit,StringFormat=F1}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock x:Name="txtName" VerticalAlignment="Center">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}:{1:F1}">
+                                                        <Binding Path="Name"/>
+                                                        <Binding Path="Limit"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -448,12 +408,6 @@
                                             <DataTemplate.Triggers>
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                                                    <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                                                    <Setter TargetName="ellipse" Property="Fill" Value="#FF85CBEB" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
@@ -576,12 +530,6 @@
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                             <Setter  Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowNormal">
-                            <Setter Property="Foreground" Value="#FF85CBEB" />
-                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>
