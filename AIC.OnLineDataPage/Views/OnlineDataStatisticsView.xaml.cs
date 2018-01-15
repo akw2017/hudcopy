@@ -17,6 +17,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,18 +36,20 @@ namespace AIC.OnLineDataPage.Views
     /// </summary>
     public partial class OnlineDataStatisticsView : UserControl, ICloseable
     {
-        private readonly IEventAggregator _eventAggregator;
-        public OnlineDataStatisticsView(IEventAggregator eventAggregator)
+        public OnlineDataStatisticsView()
         {
-            InitializeComponent();
-            CreateChart();
+            InitializeComponent();          
 
             this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataStatistics"], true);
-            _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<DataStatusEvent>().Subscribe(UpdateChart);
-            this.Loaded += new RoutedEventHandler(Window_Loaded);
 
             ViewModel = this.DataContext as OnlineDataStatisticsViewModel;
+            if (ViewModel != null)
+            {
+                ViewModel.UpdateChart += UpdateChart;
+            }
+            CreateChart();
+           
+            this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }
 
@@ -123,6 +126,8 @@ namespace AIC.OnLineDataPage.Views
             _chart.EndUpdate();
 
             gridChart.Children.Add(_chart);
+
+            ViewModel.RefreshCommand.Execute();
         }
 
         private void Slice_MouseClick(object sender, MouseEventArgs e)
@@ -130,16 +135,16 @@ namespace AIC.OnLineDataPage.Views
             PieSlice slice = sender as PieSlice;
             switch (slice.Title.Text)
             {
-                case "正常": ViewModel.SliceClick(AlarmGrade.Normal);  break;
-                case "预警": ViewModel.SliceClick(AlarmGrade.PreAlarm); break;
-                case "警告": ViewModel.SliceClick(AlarmGrade.Alarm); break;
-                case "危险": ViewModel.SliceClick(AlarmGrade.Danger); break;
+                case "正常": ViewModel.SliceClick(AlarmGrade.Normal | AlarmGrade.LowNormal);  break;
+                case "预警": ViewModel.SliceClick(AlarmGrade.PreAlarm | AlarmGrade.LowPreAlarm); break;
+                case "警告": ViewModel.SliceClick(AlarmGrade.Alarm | AlarmGrade.LowAlarm); break;
+                case "危险": ViewModel.SliceClick(AlarmGrade.Danger | AlarmGrade.LowDanger); break;
                 case "无效": ViewModel.SliceClick(AlarmGrade.Invalid); break;
                 case "掉线": ViewModel.SliceClick(AlarmGrade.DisConnect); break;
             }
         }
 
-        private void UpdateChart(List<int> valuelist)
+        private void UpdateChart(IList<int> valuelist)
         {
             if (valuelist == null || valuelist.Count < 6)
             {
@@ -216,6 +221,33 @@ namespace AIC.OnLineDataPage.Views
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
                 btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+
+            Timer timer = new Timer()
+            {
+                Interval = 100,
+            };
+            timer.Elapsed += Timer_Elapsed;
+            timer.Enabled = true;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (this.scrollvw.IsMouseOver != true)
+            {
+                this.scrollvw.Dispatcher.BeginInvoke(new changedelegate(ChangedOffset));
+            }           
+        }
+        public delegate void changedelegate();
+        public void ChangedOffset()
+        {
+            if (scrollvw.VerticalOffset + scrollvw.ViewportHeight == scrollvw.ExtentHeight)
+            {
+                scrollvw.ScrollToTop();
+            }
+            else
+            {
+                this.scrollvw.ScrollToVerticalOffset(scrollvw.VerticalOffset + 1);
+            }
         }
 
         GridLength m_WidthCache;
@@ -233,6 +265,15 @@ namespace AIC.OnLineDataPage.Views
             {
                 //恢复
                 grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
+            }
+        }
+
+        private void table_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MouseWheelEventArgs h = e;
+            if (h != null)
+            {
+                h.Handled = true;
             }
         }
     }

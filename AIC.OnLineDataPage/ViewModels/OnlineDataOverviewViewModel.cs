@@ -43,16 +43,15 @@ namespace AIC.OnLineDataPage.ViewModels
 
             InitTree();
             InitItem(OrganizationTreeItems);
+            selecteddevices = _cardProcess.GetDevices(OrganizationTreeItems);
 
             _view = new ListCollectionView(SignalMonitors);
             _view.Filter = (object item) =>
             {
-                if (OrganizationNames == null) return true;
                 var itemPl = (SignalListViewModel)item;
-                if (OrganizationNames.Contains(itemPl.Device.FullName) && itemPl.Device.ServerIP == SelectedOrganization.ServerIP)
+                if (selecteddevices.Contains(itemPl.Device))
                 {
-                    if (IsInvalidSignal == false && IsHighNormalSignal == false && IsHighPreAlertSignal == false && IsHighAlertSignal == false && IsHighDangerSignal == false
-                    && IsLowDangerSignal == false && IsLowAlertSignal == false && IsLowPreAlertSignal == false && IsLowNormalSignal == false)
+                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlertSignal == false && IsAlertSignal == false && IsDangerSignal == false)
                     {
                         return true;
                     }
@@ -60,35 +59,35 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighNormal && IsHighNormalSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighNormal && IsNormalSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighPreAlert && IsHighPreAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighPreAlarm && IsPreAlertSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighAlert && IsHighAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighAlarm && IsAlertSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighDanger && IsHighDangerSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighDanger && IsDangerSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowDanger && IsHighDangerSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowDanger && IsDangerSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowAlert && IsHighAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowAlarm && IsAlertSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowPreAlert && IsHighPreAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowPreAlarm && IsPreAlertSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowNormal && IsHighNormalSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowNormal && IsNormalSignal == true)
                     {
                         return true;
                     }
@@ -301,125 +300,66 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private bool isHighNormalSignal;
-        public bool IsHighNormalSignal
+        private bool isNormalSignal;
+        public bool IsNormalSignal
         {
-            get { return isHighNormalSignal; }
+            get { return isNormalSignal; }
             set
             {
-                if (isHighNormalSignal != value)
+                if (isNormalSignal != value)
                 {
-                    isHighNormalSignal = value;
-                    OnPropertyChanged(() => IsHighNormalSignal);
+                    isNormalSignal = value;
+                    OnPropertyChanged(() => IsNormalSignal);
                     _view.Refresh();
                 }
             }
         }
 
-        private bool isHighPreAlertSignal;
-        public bool IsHighPreAlertSignal
+        private bool isPreAlertSignal;
+        public bool IsPreAlertSignal
         {
-            get { return isHighPreAlertSignal; }
+            get { return isPreAlertSignal; }
             set
             {
-                if (isHighPreAlertSignal != value)
+                if (isPreAlertSignal != value)
                 {
-                    isHighPreAlertSignal = value;
-                    OnPropertyChanged(() => IsHighPreAlertSignal);
+                    isPreAlertSignal = value;
+                    OnPropertyChanged(() => IsPreAlertSignal);
                     _view.Refresh();
                 }
             }
         }
 
-        private bool isHighAlertSignal;
-        public bool IsHighAlertSignal
+        private bool isAlertSignal;
+        public bool IsAlertSignal
         {
-            get { return isHighAlertSignal; }
+            get { return isAlertSignal; }
             set
             {
-                if (isHighAlertSignal != value)
+                if (isAlertSignal != value)
                 {
-                    isHighAlertSignal = value;
-                    OnPropertyChanged(() => IsHighAlertSignal);
+                    isAlertSignal = value;
+                    OnPropertyChanged(() => IsAlertSignal);
                     _view.Refresh();
                 }
             }
         }
 
-        private bool isHighDangerSignal;
-        public bool IsHighDangerSignal
+        private bool isDangerSignal;
+        public bool IsDangerSignal
         {
-            get { return isHighDangerSignal; }
+            get { return isDangerSignal; }
             set
             {
-                if (isHighDangerSignal != value)
+                if (isDangerSignal != value)
                 {
-                    isHighDangerSignal = value;
-                    OnPropertyChanged(() => IsHighDangerSignal);
+                    isDangerSignal = value;
+                    OnPropertyChanged(() => IsDangerSignal);
                     _view.Refresh();
                 }
             }
         }
-
-        private bool isLowDangerSignal;
-        public bool IsLowDangerSignal
-        {
-            get { return isLowDangerSignal; }
-            set
-            {
-                if (isLowDangerSignal != value)
-                {
-                    isLowDangerSignal = value;
-                    OnPropertyChanged(() => IsLowDangerSignal);
-                    _view.Refresh();
-                }
-            }
-        }
-
-        private bool isLowAlertSignal;
-        public bool IsLowAlertSignal
-        {
-            get { return isLowAlertSignal; }
-            set
-            {
-                if (isLowAlertSignal != value)
-                {
-                    isLowAlertSignal = value;
-                    OnPropertyChanged(() => IsLowAlertSignal);
-                    _view.Refresh();
-                }
-            }
-        }
-
-        private bool isLowPreAlertSignal;
-        public bool IsLowPreAlertSignal
-        {
-            get { return isLowPreAlertSignal; }
-            set
-            {
-                if (isLowPreAlertSignal != value)
-                {
-                    isLowPreAlertSignal = value;
-                    OnPropertyChanged(() => IsLowPreAlertSignal);
-                    _view.Refresh();
-                }
-            }
-        }
-
-        private bool isLowNormalSignal;
-        public bool IsLowNormalSignal
-        {
-            get { return isLowNormalSignal; }
-            set
-            {
-                if (isLowNormalSignal != value)
-                {
-                    isLowNormalSignal = value;
-                    OnPropertyChanged(() => IsLowNormalSignal);
-                    _view.Refresh();
-                }
-            }
-        }
+     
         #endregion
 
         #region Command   
@@ -494,14 +434,13 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region       
-        private List<string> OrganizationNames;
+        private List<DeviceTreeItemViewModel> selecteddevices;
         private OrganizationTreeItemViewModel SelectedOrganization;
         public void SelectedTreeChanged(object para)
         {
             if (para is OrganizationTreeItemViewModel)
-            {               
-                OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
-                SelectedOrganization = para as OrganizationTreeItemViewModel;
+            {
+                selecteddevices = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel);
                 _view.Refresh();
             }
         }

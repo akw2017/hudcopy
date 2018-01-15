@@ -39,7 +39,7 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuDeviceHourlyData { get; set; }
         public MyMenu MenuExportDBData { get; set; }
         public MyMenu MenuImportDBData { get; set; }
-        public MyMenu MenuSearchDBData { get; set; }
+        public MyMenu MenuFilterDBData { get; set; }
         public Dictionary<int, MyMenu> Dictionary { get; set; }
 
         public MenuManageList()
@@ -73,7 +73,7 @@ namespace AIC.Core.UserManageModels
             MenuDeviceHourlyData = new MyMenu(26, (string)Application.Current.Resources["menuDeviceHourlyData"]);
             MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"]);
             MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"]);
-            MenuSearchDBData = new MyMenu(29, (string)Application.Current.Resources["menuSearchDBData"]);
+            MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"]);
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -104,7 +104,7 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(26, MenuDeviceHourlyData);
             Dictionary.Add(27, MenuExportDBData);
             Dictionary.Add(28, MenuImportDBData);
-            Dictionary.Add(29, MenuSearchDBData);
+            Dictionary.Add(29, MenuFilterDBData);
         }
     }
 }

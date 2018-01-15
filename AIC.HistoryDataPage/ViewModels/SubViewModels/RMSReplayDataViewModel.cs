@@ -51,6 +51,7 @@ namespace AIC.HistoryDataPage.ViewModels
         private event EventHandler<ChannelChangedEventArgs> channelRemoved;
         private event EventHandler<ChannelDataChangedEventArgs> channelDataChanged;
         private event EventHandler<TrackChangedEventArgs> trackChanged;
+        private event EventHandler<TrackChangedEventArgs> track2Changed;
         private ObservableCollection<BaseWaveChannelToken> contractsCollection;
         public bool AddAlarmMarker = false;
 
@@ -118,6 +119,13 @@ namespace AIC.HistoryDataPage.ViewModels
                 trackChanged(this, new TrackChangedEventArgs(tokens));
             }
         }
+        public void RaiseTrack2Changed(IEnumerable<BaseWaveChannelToken> tokens)
+        {
+            if (track2Changed != null)
+            {
+                track2Changed(this, new TrackChangedEventArgs(tokens));
+            }
+        }
 
         public IObservable<ChannelToken> WhenChannelAdded
         {
@@ -160,6 +168,18 @@ namespace AIC.HistoryDataPage.ViewModels
                     .FromEventPattern<TrackChangedEventArgs>(
                         h => this.trackChanged += h,
                         h => this.trackChanged -= h)
+                   .Select(x => x.EventArgs.Tokens);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
+            }
+        }
+
+        public IObservable<IEnumerable<BaseWaveChannelToken>> WhenTrack2Changed
+        {
+            get
+            {
+                return Observable
+                    .FromEventPattern<TrackChangedEventArgs>(
+                        h => this.track2Changed += h,
+                        h => this.track2Changed -= h)
                    .Select(x => x.EventArgs.Tokens);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
             }
         }

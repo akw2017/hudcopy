@@ -191,6 +191,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\CheckBoxStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\TaskbarNotifier.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\TaskbarNotifier.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\GrayAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\Gray.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache

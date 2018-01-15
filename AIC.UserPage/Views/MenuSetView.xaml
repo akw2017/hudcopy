@@ -15,6 +15,9 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <convert:IntStringConverter x:Key="intStringConverter"/>
             <convert:IntIconConverter x:Key="intIconConverter"/>
         </ResourceDictionary>

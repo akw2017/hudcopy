@@ -19,6 +19,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Control.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
             <DataTemplate x:Key="enumComboItemTemplate">
                 <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
@@ -408,7 +411,7 @@
         <TabControl Grid.Row="1" Grid.Column="2" Margin="3">
             <TabItem Header="振动数据" Style="{x:Null}" IsSelected="{Binding VInfoSelected}">
                 <Grid>
-                    <DataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
+                    <DataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow">
                         <DataGrid.RowHeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center" Margin="2"/>
@@ -432,10 +435,9 @@
                                                     <Expander IsExpanded="True" BorderThickness="0,0,0,0">
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal" Width="Auto">
-                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                                <!--<TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock FontWeight="Bold" Text="个测点"/>-->
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,5,0"/>
+                                                                <TextBlock FontWeight="Bold" Text=":"/>
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>                                                           
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <Expander.Content>
@@ -459,7 +461,7 @@
                         <DataGrid.CellStyle>
                             <Style BasedOn="{StaticResource MetroDataGridCell}"
                                 TargetType="{x:Type DataGridCell}">
-
+                                <Setter Property="Margin" Value="0,0,20,0"/>
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.RowStyle>
@@ -469,16 +471,16 @@
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="Invalid">
                                         <Setter  Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlarm">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlarm">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlarm">
                                         <Setter Property="Foreground" Value="DarkOrange"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlarm">
                                         <Setter Property="Foreground" Value="DarkOrange" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighDanger">
@@ -505,7 +507,7 @@
             </TabItem>
             <TabItem Header="温度数据" Style="{x:Null}" IsSelected="{Binding AnInfoSelected}">
                 <Grid>
-                    <DataGrid Background="{x:Null}" ItemsSource="{Binding AnInfoObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
+                    <DataGrid Background="{x:Null}" ItemsSource="{Binding AnInfoObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" >
                         <DataGrid.RowHeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center" Margin="2"/>
@@ -530,9 +532,8 @@
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal" Width="Auto">
                                                                 <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                                <!--<TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock FontWeight="Bold" Text="个测点"/>-->
+                                                                <TextBlock FontWeight="Bold" Text=":"/>
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>                                                          
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <Expander.Content>
@@ -556,7 +557,7 @@
                         <DataGrid.CellStyle>
                             <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-
+                                <Setter Property="Margin" Value="0,0,20,0"/>
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.RowStyle>
@@ -566,16 +567,16 @@
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="Invalid">
                                         <Setter  Property="Foreground" Value="Pink"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlarm">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlarm">
                                         <Setter Property="Foreground" Value="Yellow"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlarm">
                                         <Setter Property="Foreground" Value="DarkOrange"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlert">
+                                    <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlarm">
                                         <Setter Property="Foreground" Value="DarkOrange" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighDanger">
@@ -602,7 +603,7 @@
             </TabItem>
             <TabItem Header="分频数据" Style="{x:Null}" Visibility="Collapsed">
                 <Grid>
-                    <bsFilter:FilterDataGrid Background="{x:Null}"  ItemsSource="{Binding DivFreObjectsView}" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" ColumnWidth="*">
+                    <bsFilter:FilterDataGrid Background="{x:Null}"  ItemsSource="{Binding DivFreObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow">
                         <DataGrid.RowHeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center" Margin="2"/>
@@ -659,9 +660,8 @@
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal" Width="Auto">
                                                                 <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                                <!--<TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock FontWeight="Bold" Text="个测点"/>-->
+                                                                <TextBlock FontWeight="Bold" Text=":"/>
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>                
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <Expander.Content>
@@ -690,7 +690,7 @@
                         <DataGrid.CellStyle>
                             <Style BasedOn="{StaticResource MetroDataGridCell}"
                                 TargetType="{x:Type DataGridCell}">
-
+                                <Setter Property="Margin" Value="0,0,20,0"/>
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.RowStyle>

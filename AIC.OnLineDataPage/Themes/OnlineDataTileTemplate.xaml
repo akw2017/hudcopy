@@ -59,11 +59,11 @@
 
                     <!--<Grid Visibility="{Binding Path=IsShowAlarm, Converter={StaticResource booleanToVisibilityConverter}}">                       
                         <TextBlock Text="{Binding Signal.HighDanger,  StringFormat=F2}" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" />
-                        <TextBlock Text="{Binding Signal.HighAlert,  StringFormat=F2}" Foreground="DarkOrange" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                        <TextBlock Text="{Binding Signal.HighAlarm,  StringFormat=F2}" Foreground="DarkOrange" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
                         <TextBlock Text="{Binding Signal.HighNormal, StringFormat=F2}" Foreground="Green" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" />
 
                         <TextBlock Text="{Binding Signal.LowNormal, StringFormat=F2}" Foreground="Green" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" />
-                        <TextBlock Text="{Binding Signal.LowAlert,  StringFormat=F2}" Foreground="DarkOrange" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" />
+                        <TextBlock Text="{Binding Signal.LowAlarm,  StringFormat=F2}" Foreground="DarkOrange" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" />
                         <TextBlock Text="{Binding Signal.LowDanger,  StringFormat=F2}" Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="0" />
 
                        
@@ -99,16 +99,16 @@
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="Invalid">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighPreAlert">
+            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighPreAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Yellow"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="LowPreAlert">
+            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="LowPreAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Yellow" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighAlert">
+            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="DarkOrange"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="LowAlert">
+            <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="LowAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="DarkOrange" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighDanger">

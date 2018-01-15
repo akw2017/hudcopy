@@ -19,7 +19,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Control.Resources>
         <ResourceDictionary>
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
@@ -102,7 +104,7 @@
 
         <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
                                  ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="*" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 CanUserAddRows="False" ColumnWidth="*" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->

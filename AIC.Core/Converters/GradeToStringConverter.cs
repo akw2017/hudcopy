@@ -22,10 +22,10 @@ namespace AIC.Core
                     case AlarmGrade.Invalid: return "无效";
                     case AlarmGrade.HighNormal: 
                     case AlarmGrade.LowNormal: return "正常";
-                    case AlarmGrade.HighPreAlert: 
-                    case AlarmGrade.LowPreAlert: return "预警";
-                    case AlarmGrade.HighAlert: 
-                    case AlarmGrade.LowAlert: return "警告";
+                    case AlarmGrade.HighPreAlarm: 
+                    case AlarmGrade.LowPreAlarm: return "预警";
+                    case AlarmGrade.HighAlarm: 
+                    case AlarmGrade.LowAlarm: return "警告";
                     case AlarmGrade.HighDanger: 
                     case AlarmGrade.LowDanger: return "危险";
                     case AlarmGrade.DisConnect:return "断线";
@@ -47,10 +47,10 @@ namespace AIC.Core
                 case AlarmGrade.Invalid: return "无效";
                 case AlarmGrade.HighNormal:
                 case AlarmGrade.LowNormal: return "正常";
-                case AlarmGrade.HighPreAlert:
-                case AlarmGrade.LowPreAlert: return "预警";
-                case AlarmGrade.HighAlert:
-                case AlarmGrade.LowAlert: return "警告";
+                case AlarmGrade.HighPreAlarm:
+                case AlarmGrade.LowPreAlarm: return "预警";
+                case AlarmGrade.HighAlarm:
+                case AlarmGrade.LowAlarm: return "警告";
                 case AlarmGrade.HighDanger:
                 case AlarmGrade.LowDanger: return "危险";
                 case AlarmGrade.DisConnect: return "断线";

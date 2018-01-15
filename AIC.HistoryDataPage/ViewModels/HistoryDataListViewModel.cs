@@ -48,6 +48,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 return true;
             };
             _vInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationName"));//对视图进行分组
+            //_vInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("DeviceName"));//对视图进行分组
+            //_vInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("ItemName"));//对视图进行分组
 
             _anInfoObjectsView = new ListCollectionView(anInfoCollection);
             _anInfoObjectsView.Filter = (object item) =>
@@ -55,6 +57,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 return true;
             };
             _anInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationName"));//对视图进行分组
+            //_anInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("DeviceName"));//对视图进行分组
+            //_anInfoObjectsView.GroupDescriptions.Add(new PropertyGroupDescription("ItemName"));//对视图进行分组
 
             _divFreObjectsView = new ListCollectionView(divFreCollection);
             _divFreObjectsView.Filter = (object item) =>

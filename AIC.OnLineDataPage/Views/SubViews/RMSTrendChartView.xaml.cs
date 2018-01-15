@@ -254,12 +254,12 @@ namespace AIC.OnLineDataPage.Views.SubViews
             //int comparative = alarmType & 0X30;
             switch (consts)
             {
-                case AlarmGrade.LowPreAlert:
-                case AlarmGrade.HighPreAlert:
+                case AlarmGrade.LowPreAlarm:
+                case AlarmGrade.HighPreAlarm:
                     alarmTypeStr += "常数报警：预警";
                     break;
-                case AlarmGrade.LowAlert:
-                case AlarmGrade.HighAlert:
+                case AlarmGrade.LowAlarm:
+                case AlarmGrade.HighAlarm:
                     alarmTypeStr += "常数报警：警告";
                     break;
                 case AlarmGrade.LowDanger:

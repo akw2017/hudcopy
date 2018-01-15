@@ -465,9 +465,9 @@ namespace AIC.Core.SignalModels
         #endregion
 
         //低警
-        #region LowAlert
+        #region LowAlarm
         private double lowAlert;
-        public double LowAlert
+        public double LowAlarm
         {
             get { return lowAlert; }
             set
@@ -475,7 +475,7 @@ namespace AIC.Core.SignalModels
                 if (lowAlert != value)
                 {
                     lowAlert = value;
-                    OnPropertyChanged("LowAlert");
+                    OnPropertyChanged("LowAlarm");
                 }
             }
         }
@@ -516,9 +516,9 @@ namespace AIC.Core.SignalModels
         #endregion
 
         //高警
-        #region HighAlert
+        #region HighAlarm
         private double highAlert;
-        public double HighAlert
+        public double HighAlarm
         {
             get { return highAlert; }
             set
@@ -526,7 +526,7 @@ namespace AIC.Core.SignalModels
                 if (highAlert != value)
                 {
                     highAlert = value;
-                    OnPropertyChanged("HighAlert");
+                    OnPropertyChanged("HighAlarm");
                 }
             }
         }

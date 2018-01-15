@@ -41,16 +41,16 @@
                             <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                                 <Setter  Property="Foreground" Value="Pink"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
+                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlarm">
                                 <Setter Property="Foreground" Value="Yellow"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlert">
+                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlarm">
                                 <Setter Property="Foreground" Value="Yellow"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
+                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                                 <Setter Property="Foreground" Value="DarkOrange"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
+                            <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlarm">
                                 <Setter Property="Foreground" Value="DarkOrange" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">

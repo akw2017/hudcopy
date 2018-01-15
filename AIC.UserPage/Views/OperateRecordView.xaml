@@ -19,6 +19,9 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <convert:IntOperateStringConverter x:Key="intOperateStringConverter"/>
             <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
             <DataTemplate x:Key="enumComboItemTemplate">

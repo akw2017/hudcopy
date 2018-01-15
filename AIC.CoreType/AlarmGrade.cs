@@ -11,23 +11,23 @@ namespace AIC.CoreType
     public enum AlarmGrade
     {
         [EnumDescription(EnumValue = AlarmGrade.DisConnect)]
-        DisConnect = -1,
+        DisConnect = 0x80,
         [EnumDescription(EnumValue = AlarmGrade.LowDanger)]
         LowDanger = 0x10000,//65536 + 4
-        [EnumDescription(EnumValue = AlarmGrade.LowAlert)]
-        LowAlert = 0x8000,//32768 + 3
-        [EnumDescription(EnumValue = AlarmGrade.LowPreAlert)]
-        LowPreAlert = 0x4000,//16384 + 2
+        [EnumDescription(EnumValue = AlarmGrade.LowAlarm)]
+        LowAlarm = 0x8000,//32768 + 3
+        [EnumDescription(EnumValue = AlarmGrade.LowPreAlarm)]
+        LowPreAlarm = 0x4000,//16384 + 2
         [EnumDescription(EnumValue = AlarmGrade.LowNormal)]
         LowNormal = 0x2000,//8192 + 1
         [EnumDescription(EnumValue = AlarmGrade.Invalid)]
         Invalid= 0x100,//256
         [EnumDescription(EnumValue = AlarmGrade.HighNormal)]
         HighNormal= 0x200,//512 + 1
-        [EnumDescription(EnumValue = AlarmGrade.HighPreAlert)]
-        HighPreAlert = 0x400,//1024 + 2
-        [EnumDescription(EnumValue = AlarmGrade.HighAlert)]
-        HighAlert = 0x800,//2048 + 3
+        [EnumDescription(EnumValue = AlarmGrade.HighPreAlarm)]
+        HighPreAlarm = 0x400,//1024 + 2
+        [EnumDescription(EnumValue = AlarmGrade.HighAlarm)]
+        HighAlarm = 0x800,//2048 + 3
         [EnumDescription(EnumValue = AlarmGrade.HighDanger)]
         HighDanger = 0x1000,//4096 + 4
         [EnumDescription(EnumValue = AlarmGrade.Abnormal)]

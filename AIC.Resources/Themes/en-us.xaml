@@ -77,7 +77,7 @@
     <s:String x:Key="menuDBManage">DBManage</s:String>
     <s:String x:Key="menuExportDBData">ExportDBData</s:String>
     <s:String x:Key="menuImportDBData">ImportDBData</s:String>
-    <s:String x:Key="menuSearchDBData">SearchDBData</s:String>
+    <s:String x:Key="menuFilterDBData">SearchDBData</s:String>
 
     <s:String x:Key="menuSetting">System</s:String>
     <s:String x:Key="menuServerSetting">ServerSetting</s:String>
@@ -137,6 +137,8 @@
     <s:String x:Key="load">Load</s:String>
     <s:String x:Key="print">Print</s:String>
     <s:String x:Key="export">Export</s:String>
+    <s:String x:Key="import">Import</s:String>
+    <s:String x:Key="built">Built</s:String>
     
     <s:String x:Key="name">Name</s:String>
     <s:String x:Key="code">Code</s:String>
@@ -173,7 +175,7 @@
     <s:String x:Key="menuOnlineDataDiagram">OnlineDataDiagram</s:String>
     <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
-    <s:String x:Key="menuOnlineDataStatistics">OnlineDataStatistics</s:String>
+    <s:String x:Key="menuOnlineDataStatistics">OnlineAlarmStatistics</s:String>
     <s:String x:Key="menuDataTrendChart">DataTrendChart</s:String>
     <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
     <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>

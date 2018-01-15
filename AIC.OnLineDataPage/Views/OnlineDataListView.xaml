@@ -20,7 +20,11 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Control.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <conveter:IntToAlarmTypeStrConverter x:Key="intToAlarmTypeStrConverter"/>
+            <conveter:EqualBindingConverter x:Key="equalBindingConverter"/>
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
             <core:AlarmLimitToStringConverter x:Key="alarmLimitToStringConverter"/>
             <core:TypeOfConverter x:Key="typeOfConverter"/>
@@ -110,10 +114,10 @@
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                                             <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
+                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                                             <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
+                                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlarm">
                                             <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">
@@ -134,10 +138,10 @@
                         <DataGridTextColumn Header="幅值"  Binding="{Binding FreMV,StringFormat=F3}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="相位"  Binding="{Binding Phase,StringFormat=F1}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="高危"  Binding="{Binding HighDanger,StringFormat=F3}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="高警"  Binding="{Binding HighAlert,StringFormat=F3}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="高警"  Binding="{Binding HighAlarm,StringFormat=F3}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="正常(高)"  Binding="{Binding HighNormal,StringFormat=F3}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="正常(低)"  Binding="{Binding LowNormal,StringFormat=F3}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="低警"  Binding="{Binding LowAlert,StringFormat=F3}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="低警"  Binding="{Binding LowAlarm,StringFormat=F3}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="低危"  Binding="{Binding LowDanger,StringFormat=F3}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="转速"  Binding="{Binding RPM,StringFormat=F1}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="默认转速"  Binding="{Binding DefaultR}" IsReadOnly="True"/>
@@ -189,16 +193,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -226,16 +230,16 @@
                             <Setter TargetName="txtRun" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="txtStop" Property="Visibility" Value="Visible"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -278,25 +282,25 @@
                 <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="正常" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="预警" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="警告" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="危险" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
@@ -340,11 +344,9 @@
             </CheckBox>
         </StackPanel>
 
-        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
-                                 ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                 AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
-            <DataGrid.Resources>
+        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}"        
+                                   VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Resources>
                 <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
                     <ItemsPresenter />
                 </ControlTemplate>
@@ -409,10 +411,10 @@
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
+                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
+                                                <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlarm">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">
@@ -433,10 +435,10 @@
                                 <DataGridTextColumn Header="幅值"  Binding="{Binding FreMV,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="相位"  Binding="{Binding Phase,StringFormat=F1}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="高危"  Binding="{Binding HighDanger,StringFormat=F3}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="高警"  Binding="{Binding HighAlert,StringFormat=F3}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="高警"  Binding="{Binding HighAlarm,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="正常(高)"  Binding="{Binding HighNormal,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="正常(低)"  Binding="{Binding LowNormal,StringFormat=F3}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="低警"  Binding="{Binding LowAlert,StringFormat=F3}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="低警"  Binding="{Binding LowAlarm,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="低危"  Binding="{Binding LowDanger,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="转速"  Binding="{Binding RPM,StringFormat=F1}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="默认转速"  Binding="{Binding DefaultR}" IsReadOnly="True"/>
@@ -479,13 +481,12 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" BorderThickness="0,0,0,0">
+                                        <Expander BorderThickness="0,0,0,0">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal" Width="Auto" Height="24">
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                    <!--<TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock FontWeight="Bold" Text="个测点"/>-->
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,5,0"/>
+                                                    <TextBlock FontWeight="Bold" Text=":"/>
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>                                                   
                                                 </StackPanel>
                                             </Expander.Header>
                                             <Expander.Content>
@@ -493,6 +494,23 @@
                                                     <ItemsPresenter/>
                                                 </Border>
                                             </Expander.Content>
+                                            <Expander.Style>
+                                                <Style TargetType="{x:Type Expander}">
+                                                    <Setter Property="IsExpanded" Value="False"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Value="True">
+                                                            <DataTrigger.Binding>
+                                                                <MultiBinding Converter="{StaticResource equalBindingConverter}">
+                                                                    <Binding Path="Name"/>
+                                                                    <Binding Path="DataContext.FirstName" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}" />
+                                                                </MultiBinding>
+                                                            </DataTrigger.Binding>
+                                                            <Setter Property="IsExpanded" Value="True"/>
+                                                        </DataTrigger>
+                                                     
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Expander.Style>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -530,16 +548,16 @@
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
                             <Setter  Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlarm">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowPreAlarm">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                             <Setter Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="LowAlarm">
                             <Setter Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighDanger">

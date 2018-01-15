@@ -96,6 +96,7 @@
                     </Style>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/AIC.PDAPage;component/Themes/PDASystemManageTemplate.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

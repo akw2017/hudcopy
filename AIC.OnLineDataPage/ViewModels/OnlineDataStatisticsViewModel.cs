@@ -30,67 +30,59 @@ namespace AIC.OnLineDataPage.ViewModels
 {
     class OnlineDataStatisticsViewModel : BindableBase
     {
-        private readonly IEventAggregator _eventAggregator;       
+        private readonly IEventAggregator _eventAggregator;
         private readonly IOrganizationService _organizationService;
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
+        private readonly ILoginUserService _loginUserService;
+        public delegate void UpdatePie3D(IList<int> countlist);
+        public event UpdatePie3D UpdateChart;
 
-        public OnlineDataStatisticsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
-        {           
+        public OnlineDataStatisticsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, ILoginUserService loginUserService)
+        {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
             _signalProcess = signalProcess;
             _cardProcess = cardProcess;
             _databaseComponent = databaseComponent;
+            _loginUserService = loginUserService;
 
             _signalProcess.SignalsAdded += _signalCache_SignalAdded;
             _signalProcess.SignalsRemoved += _signalCache_SignalRemoved;
 
-            foreach (var sg in _signalProcess.Signals.OfType<BaseWaveSignal>().ToArray())
+            foreach (var sg in _signalProcess.Signals.OfType<BaseAlarmSignal>().ToArray())
             {
                 signals.Add(sg);
-            }            
+            }
+
+            selectedsignals = signals;
+            CustomSystemException = _loginUserService.CustomSystemException;
+            if (CustomSystemException.Count > 0)
+            {
+                AlarmEventTitle = "报警事件(" + CustomSystemException.FirstOrDefault().EventTime.ToString("yyyy-MM-dd") + "),最新" + CustomSystemException.Count() + "条";
+            }
 
             _view = new ListCollectionView(signals);
             _view.Filter = (object item) =>
             {
                 var itemPl = (BaseAlarmSignal)item;
                 if (itemPl == null) return false;
-                if (OrganizationNames == null || OrganizationNames.Count == 0)
+                if (selectedsignals.Contains(itemPl))
                 {
-                    if (SliceAlarmGrade == null)
-                    {
-                        return true;
-                    }
-                    else if (itemPl.AlarmGrade == SliceAlarmGrade)
-                    {
-                        return true;
-                    }
-                    else
+                    if(itemPl.DelayAlarmGrade == AlarmGrade.HighNormal || itemPl.DelayAlarmGrade == AlarmGrade.LowNormal)
                     {
                         return false;
                     }
-                }                
-                
-                if (OrganizationNames.Contains(itemPl.OrganizationDeviceName) && itemPl.ServerIP == SelectedOrganization.ServerIP)
-                {
-                    if (SliceAlarmGrade == null)
-                    {
-                        return true;
-                    }
-                    else if (itemPl.AlarmGrade == SliceAlarmGrade)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
                 return false;
             };
-            //_view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
-            _view.SortDescriptions.Add(new SortDescription("DangerCount",ListSortDirection.Descending));
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("DelayAlarmGrade"));//对视图进行分组
+            _view.SortDescriptions.Add(new SortDescription("DelayAlarmGrade", ListSortDirection.Descending));
             InitTree();
 
-            //_eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(TimingRefresh);
+            _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);//<!--昌邑石化-->
         }
 
         #region 信号增减
@@ -113,7 +105,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
         #region 管理树
         private void InitTree()
-        { 
+        {
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
@@ -136,6 +128,16 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region 属性与字段
+        private ObservableCollection<CustomSystemException> customSystemException;
+        public ObservableCollection<CustomSystemException> CustomSystemException
+        {
+            get { return customSystemException; }
+            set
+            {
+                customSystemException = value;
+                OnPropertyChanged("CustomSystemException");
+            }
+        }
 
         private readonly ICollectionView _view;
         public ICollectionView SignalsView { get { return _view; } }
@@ -149,7 +151,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 _organizationTreeItems = value;
                 OnPropertyChanged("OrganizationTreeItems");
             }
-        }    
+        }
 
         private ObservableCollection<BaseAlarmSignal> signals = new ObservableCollection<BaseAlarmSignal>();
         public IEnumerable<BaseAlarmSignal> Signals { get { return signals; } }
@@ -196,6 +198,33 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        public string alarmEventTitle = "报警事件";
+        public string AlarmEventTitle
+        {
+            get
+            {
+                return alarmEventTitle;
+            }
+            set
+            {
+                alarmEventTitle = value;
+                OnPropertyChanged("AlarmEventTitle");
+            }
+        }
+
+        private AlarmGrade firstAlarmGrade;
+        public AlarmGrade FirstAlarmGrade
+        {
+            get { return firstAlarmGrade; }
+            set
+            {
+                if (firstAlarmGrade != value)
+                {
+                    firstAlarmGrade = value;
+                    OnPropertyChanged(() => FirstAlarmGrade);
+                }
+            }
+        }
         #endregion
 
         #region Command
@@ -228,69 +257,62 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         private AlarmGrade? SliceAlarmGrade;
-        private List<string> OrganizationNames;
-        private OrganizationTreeItemViewModel SelectedOrganization;
+        private IEnumerable<BaseAlarmSignal> selectedsignals;
         public void SelectedTreeChanged(object para)
         {
-            if (para is DeviceTreeItemViewModel)
-            {               
-                OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
-                SelectedOrganization = para as OrganizationTreeItemViewModel;                
+            if (para is OrganizationTreeItemViewModel)
+            {
+                selectedsignals = _cardProcess.GetItems(para as OrganizationTreeItemViewModel).Select(p => p.BaseAlarmSignal);
                 Refresh();
             }
-            else if (para is OrganizationTreeItemViewModel)
-            {
-                if ((para as OrganizationTreeItemViewModel).Children != null && (para as OrganizationTreeItemViewModel).Children.Count > 0 && (para as OrganizationTreeItemViewModel).Children[0] is DeviceTreeItemViewModel)
-                {                    
-                    OrganizationNames = _cardProcess.GetDevices(para as OrganizationTreeItemViewModel).Select(p => p.FullName).ToList();
-                    SelectedOrganization = para as OrganizationTreeItemViewModel;
-                    Refresh();
-                }
-                else
-                {
-                    OrganizationNames = new List<string>();
-                    Refresh();
-                }
-            }          
-          
         }
 
         private void SelectedDataGridChanged(object para)
         {
-            ;      
+            ;
+        }
+
+        private void CustomSystemHappenEvent(CustomSystemException ex)
+        {
+            AlarmEventTitle = "报警事件(" + ex.EventTime.ToString("yyyy-MM-dd")+ "),最新" + CustomSystemException.Count() + "条";
+            Refresh();
         }
 
         private void Refresh()
         {
-            SliceAlarmGrade = null;
-            _view.Refresh();
-            List<BaseAlarmSignal> sglist = new List<BaseAlarmSignal>();
-            foreach (var item in _view)
-            {
-                var sg = item as BaseWaveSignal;
-                if (sg != null)
-                {
-                    sglist.Add(sg);                   
-                }
-            }
-            if (sglist.Count == 0)
+            if (selectedsignals == null)
             {
                 return;
             }
-            int NormalCount = sglist.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
-            int PreAlertCount = sglist.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighPreAlert || o.DelayAlarmGrade == AlarmGrade.LowPreAlert)).Count();
-            int AlertCount = sglist.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighAlert || o.DelayAlarmGrade == AlarmGrade.LowAlert)).Count();
-            int DangerCount = sglist.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
-            int AbnormalCount = sglist.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
-            int UnConnectCount = sglist.Where(o => o.IsConnected == false).Count();
-            _eventAggregator.GetEvent<DataStatusEvent>().Publish(new List<int> { NormalCount, PreAlertCount, AlertCount, DangerCount, AbnormalCount, UnConnectCount });
-        }       
-
+            
+            _view.Refresh();           
+            int NormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
+            int PreAlertCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
+            int AlertCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
+            int DangerCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
+            int AbnormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
+            int UnConnectCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
+            if (UpdateChart != null)
+            {
+                UpdateChart(new List<int> { NormalCount, PreAlertCount, AlertCount, DangerCount, AbnormalCount, UnConnectCount });
+            }
+        }
 
         public void SliceClick(AlarmGrade alarmgrade)
         {
-            SliceAlarmGrade = alarmgrade;
-            _view.Refresh();
+            List<AlarmGrade> grades = new List<AlarmGrade>();
+            foreach (AlarmGrade grade in Enum.GetValues(typeof(AlarmGrade)))
+            {
+                if ((alarmgrade & grade) == grade)
+                {
+                    if (!grades.Contains(grade))
+                    {
+                        grades.Add(grade);
+                    }
+                }
+            }
+            FirstAlarmGrade = selectedsignals.Where(p => grades.Contains(p.DelayAlarmGrade)).FirstOrDefault().DelayAlarmGrade;
+            //_view.Refresh();
         }
     }
 }

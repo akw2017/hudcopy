@@ -161,6 +161,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ImportDBDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilterDBDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ExportDBDataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -396,7 +404,9 @@
     <Compile Include="Models\AddChannelClass.cs" />
     <Compile Include="Models\CardCopyHelper.cs" />
     <Compile Include="Models\CardParaCopyModel.cs" />
+    <Compile Include="Models\ExportDBHelper.cs" />
     <Compile Include="Models\ForceDeleteChannelClass.cs" />
+    <Compile Include="Models\ImportOperate.cs" />
     <Compile Include="Models\OrganizationSort.cs" />
     <Compile Include="PDAPageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -413,12 +423,20 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\CardCopyViewModel.cs" />
+    <Compile Include="ViewModels\ImportDBDataViewModel.cs" />
+    <Compile Include="ViewModels\FilterDBDataViewModel.cs" />
     <Compile Include="ViewModels\ExportDBDataViewModel.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModelMetadata.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModel.cs" />
     <Compile Include="Models\TreeProcess.cs" />
     <Compile Include="Views\DeviceEditWin.xaml.cs">
       <DependentUpon>DeviceEditWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportDBDataView.xaml.cs">
+      <DependentUpon>ImportDBDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterDBDataView.xaml.cs">
+      <DependentUpon>FilterDBDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExportDBDataView.xaml.cs">
       <DependentUpon>ExportDBDataView.xaml</DependentUpon>
@@ -614,6 +632,10 @@
     <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.MasterDB\AIC.M9600.Common.MasterDB.csproj">
       <Project>{63726288-9e7e-46b3-bad7-da329e3222a8}</Project>
       <Name>AIC.M9600.Common.MasterDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemsFilter\ItemsFilter.csproj">
+      <Project>{aab57bb1-a448-457c-ad53-16b32a1c1f1d}</Project>
+      <Name>ItemsFilter</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
       <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>

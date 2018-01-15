@@ -80,10 +80,10 @@
                                                             <DataTrigger Binding="{Binding Path=.}" Value="Invalid">
                                                                 <Setter TargetName="ellipse" Property="Fill" Value="Gray"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Path=.}" Value="HighAlert">
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="HighAlarm">
                                                                 <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Path=.}" Value="LowAlert">
+                                                            <DataTrigger Binding="{Binding Path=.}" Value="LowAlarm">
                                                                 <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Path=.}" Value="HighDanger">

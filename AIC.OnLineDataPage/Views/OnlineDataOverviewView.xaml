@@ -18,7 +18,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
-                <ResourceDictionary Source="/AIC.OnLineDataPage;component/Themes/OnlineDataOverviewTemplate.xaml" />                
+                <ResourceDictionary Source="/AIC.OnLineDataPage;component/Themes/OnlineDataOverviewTemplate.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="SignalMonitorStyle" TargetType="{x:Type ListViewItem}" >
                 <Setter Property="Margin" Value="5" />
@@ -81,16 +82,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -112,16 +113,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -160,22 +161,22 @@
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="正常" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="预警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="警告" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="危险" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsHighDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>
             <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>

@@ -47,7 +47,17 @@ namespace AIC.Core.OrganizationModels
         private string[] names;
         public string[] Names
         {
-            get { return names; }
+            get
+            {
+                if (names == null)
+                {
+                    return new string[] { Name };
+                }
+                else
+                {
+                    return names;
+                }
+            }
             set
             {
                 names = value;
@@ -96,9 +106,9 @@ namespace AIC.Core.OrganizationModels
                         {
                             alarm = AlarmGrade.HighDanger;
                         }
-                        else if (alarms.Contains(AlarmGrade.HighAlert) || alarms.Contains(AlarmGrade.LowAlert))
+                        else if (alarms.Contains(AlarmGrade.HighAlarm) || alarms.Contains(AlarmGrade.LowAlarm))
                         {
-                            alarm = AlarmGrade.HighAlert;
+                            alarm = AlarmGrade.HighAlarm;
                         }
                         else
                         {

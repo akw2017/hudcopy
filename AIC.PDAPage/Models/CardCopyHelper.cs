@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AIC.PDAPage.Models
 {
-    public class CardCopyHelper
+    class CardCopyHelper
     {
         #region 主板参数
         public static List<CardParaCopyModel> MainControlCardCopy(MainControlCard old, MainControlCard copy)

@@ -351,6 +351,9 @@ namespace AIC.HistoryDataPage.Views
                 m_chart.ViewXY.Annotations[0].AssignYAxisIndex = -1;
                 m_chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
 
+                m_chart.ViewXY.Annotations[1].AssignYAxisIndex = -1;
+                m_chart.ViewXY.Annotations[1].AssignYAxisIndex = 0;
+
                 m_chart.EndUpdate();
 
                 if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
@@ -360,6 +363,15 @@ namespace AIC.HistoryDataPage.Views
                 else
                 {
                     UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                }
+
+                if (m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                {
+                    m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                }
+                else
+                {
+                    UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis);
                 }
             }
             catch (Exception ex)
@@ -428,6 +440,13 @@ namespace AIC.HistoryDataPage.Views
                                     AnnotationXY cursorValueDisplay = m_chart.ViewXY.Annotations[0];
                                     float fTargetYCoord = m_chart.ViewXY.GetMarginsRect().Bottom;
                                     double dY;
+                                    m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
+                                    cursorValueDisplay.TargetAxisValues.Y = dY;
+
+                                    m_chart.ViewXY.Annotations[1].AssignYAxisIndex = -1;
+                                    m_chart.ViewXY.Annotations[1].AssignYAxisIndex = 0;  
+                                    cursorValueDisplay = m_chart.ViewXY.Annotations[1];
+                                    fTargetYCoord = m_chart.ViewXY.GetMarginsRect().Bottom;                
                                     m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
                                     cursorValueDisplay.TargetAxisValues.Y = dY;
                                 }
@@ -509,11 +528,20 @@ namespace AIC.HistoryDataPage.Views
 
                 if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
                 {
-                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum)  / 2.0;
                 }
                 else
                 {
                     UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                }
+
+                if (m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                {
+                    m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                }
+                else
+                {
+                    UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[1].ValueAtXAxis);
                 }
             }
             catch (Exception ex)
@@ -595,6 +623,15 @@ namespace AIC.HistoryDataPage.Views
             cursor.SnapToPoints = true;
             cursor.TrackPoint.Color1 = Colors.White;
 
+            //Add cursor
+            LineSeriesCursor cursor2 = new LineSeriesCursor(m_chart.ViewXY, m_chart.ViewXY.XAxes[0]);
+            m_chart.ViewXY.LineSeriesCursors.Add(cursor2);
+            cursor2.PositionChanged += cursor2_PositionChanged;
+            cursor2.LineStyle.Color = System.Windows.Media.Color.FromArgb(150, 255, 0, 0);
+            cursor2.LineStyle.Width = 2;
+            cursor2.SnapToPoints = true;
+            cursor2.TrackPoint.Color1 = Colors.White;
+
             m_chart.ViewXY.ZoomToFit();
             m_chart.EndUpdate();
           
@@ -609,12 +646,12 @@ namespace AIC.HistoryDataPage.Views
             //int comparative = alarmType & 0X30;
             switch (consts)
             {
-                case AlarmGrade.LowPreAlert:
-                case AlarmGrade.HighPreAlert:
+                case AlarmGrade.LowPreAlarm:
+                case AlarmGrade.HighPreAlarm:
                     alarmTypeStr += "常数报警：预警";
                     break;
-                case AlarmGrade.LowAlert:
-                case AlarmGrade.HighAlert:
+                case AlarmGrade.LowAlarm:
+                case AlarmGrade.HighAlarm:
                     alarmTypeStr += "常数报警：警告";
                     break;
                 case AlarmGrade.LowDanger:
@@ -736,6 +773,27 @@ namespace AIC.HistoryDataPage.Views
             cursorValueDisplay.Text = "";
             cursorValueDisplay.ClipInsideGraph = false;
             m_chart.ViewXY.Annotations.Add(cursorValueDisplay);
+
+            AnnotationXY cursorValueDisplay2 = new AnnotationXY(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], m_chart.ViewXY.YAxes[0]);
+            cursorValueDisplay2.Style = AnnotationStyle.Callout;
+            cursorValueDisplay2.LocationCoordinateSystem = CoordinateSystem.RelativeCoordinatesToTarget;
+            cursorValueDisplay2.LocationRelativeOffset = new PointFloatXY(80, -50);
+            cursorValueDisplay2.Sizing = AnnotationXYSizing.Automatic;
+            cursorValueDisplay2.TextStyle.Font = new WpfFont(System.Drawing.FontFamily.GenericMonospace, 9.5, System.Drawing.FontStyle.Regular);
+            cursorValueDisplay2.TextStyle.Color = Colors.White;
+            cursorValueDisplay2.Fill.Color = Color.FromArgb(128, 0, 0, 0);
+            cursorValueDisplay2.BorderLineStyle.Color = Color.FromArgb(64, 255, 255, 255);
+            cursorValueDisplay2.BorderLineStyle.Width = 1;
+            cursorValueDisplay2.Fill.GradientFill = GradientFill.Solid;
+            cursorValueDisplay2.TargetMoveByMouse = false;
+            cursorValueDisplay2.AnchorAdjustByMouse = false;
+            cursorValueDisplay2.ResizeByMouse = false;
+            cursorValueDisplay2.RotateByMouse = false;
+            cursorValueDisplay2.Shadow.Visible = false;
+            cursorValueDisplay2.AutoSizePadding = 5;
+            cursorValueDisplay2.Text = "";
+            cursorValueDisplay2.ClipInsideGraph = false;
+            m_chart.ViewXY.Annotations.Add(cursorValueDisplay2);
         }
         private void CreateBand()
         {
@@ -801,6 +859,7 @@ namespace AIC.HistoryDataPage.Views
                 string strChannelStringFormat = "{0}: {1}({2})";
                 string strValue = "";
                 bool bLabelVisible = false;
+                bool hasWave = false;
 
                 foreach (PointLineSeries series in m_chart.ViewXY.PointLineSeries)
                 {
@@ -817,6 +876,7 @@ namespace AIC.HistoryDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
+                            hasWave = contract.IsValidWave ?? false;
                         }
                         else
                         {
@@ -873,7 +933,7 @@ namespace AIC.HistoryDataPage.Views
                     // series.Title.Text = strValue;
                     iSeriesNumber++;
                 }
-                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
+                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss") + (hasWave ? " ~" : string.Empty));
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;
@@ -883,6 +943,124 @@ namespace AIC.HistoryDataPage.Views
                 if (channelList.Count > 0)
                 {
                     viewModel.RaiseTrackChanged(channelList);
+                }
+            }
+            catch (Exception ex)
+            {
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-趋势趋势-Track", ex));
+                m_chart.EndUpdate();
+            }
+        }
+
+        private void cursor2_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
+        {
+            e.CancelRendering = true;
+            UpdateCursor2Result(e.Cursor.ValueAtXAxis);
+        }
+
+        private void UpdateCursor2Result(double xValue)
+        {
+            try
+            {
+                m_chart.BeginUpdate();
+                List<BaseWaveChannelToken> channelList = new List<BaseWaveChannelToken>();
+                AnnotationXY cursorValueDisplay = m_chart.ViewXY.Annotations[1];
+                float fTargetYCoord = m_chart.ViewXY.GetMarginsRect().Bottom;
+                double dY;
+                m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
+                cursorValueDisplay.TargetAxisValues.X = xValue;
+                cursorValueDisplay.TargetAxisValues.Y = dY;
+
+                StringBuilder sb = new StringBuilder();
+                int iSeriesNumber = 1;
+
+                string strChannelStringFormat = "{0}: {1}({2})";
+                string strValue = "";
+                bool bLabelVisible = false;
+                bool hasWave = false;
+
+                foreach (PointLineSeries series in m_chart.ViewXY.PointLineSeries)
+                {
+                    strValue = "";
+                    int index = GetNearestIndex(series, xValue);
+                    bLabelVisible = true;
+                    if (series.Tag is BaseDivfreChannelToken)
+                    {
+                        BaseDivfreChannelToken token = series.Tag as BaseDivfreChannelToken;
+                        token.CurrentIndex = index;
+                        channelList.Add(token);
+                        if (index != -1)
+                        {
+                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            string unit = contract.Unit;
+                            strValue = string.Format("{0}: {1}({2})|{3}|{4}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3), contract.IsValidWave);
+                            hasWave = contract.IsValidWave ?? false;
+                        }
+                        else
+                        {
+                            strValue = string.Format(strChannelStringFormat, token.DisplayName, "---", "Unit");
+                        }
+                    }
+                    else if (series.Tag is BaseWaveChannelToken)
+                    {
+                        BaseWaveChannelToken token = series.Tag as BaseWaveChannelToken;
+                        token.CurrentIndex = index;
+                        channelList.Add(token);
+                        if (index != -1)
+                        {
+                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            string unit = contract.Unit;
+                            strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
+                        }
+                        else
+                        {
+                            strValue = string.Format(strChannelStringFormat, token.DisplayName, "---", "Unit");
+                        }
+                    }
+                    else if (series.Tag is BaseAlarmChannelToken)
+                    {
+                        BaseAlarmChannelToken token = series.Tag as BaseAlarmChannelToken;
+                        if (index != -1)
+                        {
+                            var contract = token.DataContracts[index]; //series.Points[index].Tag as AnInfoTableAMSContract;
+                            string unit = contract.Unit;
+                            strValue = string.Format(strChannelStringFormat, token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
+                        }
+                        else
+                        {
+                            strValue = string.Format(strChannelStringFormat, token.DisplayName, "---", "Unit");
+                        }
+                    }
+                    else if (series.Tag is DivFreChannelToken)
+                    {
+                        DivFreChannelToken token = series.Tag as DivFreChannelToken;
+                        if (index != -1)
+                        {
+                            var contract = token.DataContracts[index];
+                            string unit = (from p in token.SlotDataContracts where p.RecordLab == contract.RecordLab select p.Unit).FirstOrDefault();
+
+                            strValue = string.Format(strChannelStringFormat, token.DataContracts[index].DescriptionFre, Math.Round(contract.Result ?? 0.0, 3), unit);
+                        }
+                        else
+                        {
+                            strValue = string.Format(strChannelStringFormat, token.DataContracts[index].DescriptionFre, "---", "Unit");
+                        }
+                    }
+
+                    sb.AppendLine(strValue);
+                    // series.Title.Text = strValue;
+                    iSeriesNumber++;
+                }
+                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss") + (hasWave ? " ~" : string.Empty));
+                ////Set text
+                cursorValueDisplay.Text = sb.ToString().Trim();
+                cursorValueDisplay.Visible = bLabelVisible;
+                //Allow chart rendering
+                m_chart.EndUpdate();
+
+                if (channelList.Count > 0)
+                {
+                    viewModel.RaiseTrack2Changed(channelList);
                 }
             }
             catch (Exception ex)

@@ -44,7 +44,7 @@ namespace AIC.UserPage.ViewModels
             SearchStartTime = DateTime.Now.AddDays(-1);
             SearchEndTime = DateTime.Now;
 
-            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
 
             T_OperateRecord = new List<T1_OperateRecord>();
@@ -67,8 +67,8 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private ObservableCollection<string> _serverIPCategory;
-        public ObservableCollection<string> ServerIPCategory
+        private List<string> _serverIPCategory;
+        public List<string> ServerIPCategory
         {
             get { return _serverIPCategory; }
             set

@@ -40,7 +40,7 @@ namespace AIC.UserPage.ViewModels
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
 
-            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;           
 
             InitPager(ServerIP);
@@ -66,8 +66,8 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private ObservableCollection<string> _serverIPCategory;
-        public ObservableCollection<string> ServerIPCategory
+        private List<string> _serverIPCategory;
+        public List<string> ServerIPCategory
         {
             get { return _serverIPCategory; }
             set

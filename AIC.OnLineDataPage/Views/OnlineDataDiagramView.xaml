@@ -144,16 +144,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -178,16 +178,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -218,16 +218,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -253,16 +253,16 @@
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">

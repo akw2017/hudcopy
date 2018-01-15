@@ -114,11 +114,12 @@
     <Compile Include="DiagnoseState.cs" />
     <Compile Include="DiagnosisMethod.cs" />
     <Compile Include="FilterType.cs" />
+    <Compile Include="Execl\ImportOperate.cs" />
     <Compile Include="InSignalCategory.cs" />
     <Compile Include="Integration.cs" />
     <Compile Include="MotorType.cs" />
     <Compile Include="NaturalFreMode.cs" />
-    <Compile Include="SignalPreProccessType.cs" />
+    <Compile Include="Signal\SignalPreProccessType.cs" />
     <Compile Include="Unit\UnitType.cs" />
     <Compile Include="UserManager\OperateType.cs" />
     <Compile Include="ThresholdMode.cs" />
@@ -126,10 +127,10 @@
     <Compile Include="SampleType.cs" />
     <Compile Include="DivFreType.cs" />
     <Compile Include="TrdDisplayMode.cs" />
-    <Compile Include="SignalProcessorType.cs" />
+    <Compile Include="Signal\SignalProcessorType.cs" />
     <Compile Include="VibrationProcessType.cs" />
     <Compile Include="ViewDisplayMode.cs" />
-    <Compile Include="SignalDisplayType.cs" />
+    <Compile Include="Signal\SignalDisplayType.cs" />
     <Compile Include="NodeType.cs" />
     <Compile Include="UserLevels.cs" />
     <Compile Include="QueryCompressType.cs" />

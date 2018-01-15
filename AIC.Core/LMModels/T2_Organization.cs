@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.PDAPage.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,55 +10,29 @@ namespace AIC.Core.LMModels
 {
     public class T2_Organization : T1_Organization
     {
-        private string structure;
-        public string Structure//结构
+        public string[] Names { get; set; }
+        public string ParentNamesString
         {
             get
             {
-                return structure;
-            }
-            set
-            {
-                structure = value;
-                NotifyPropertyChange("Structure");
+                if (Names != null && Names.Length > 1)
+                {
+                    string structure = string.Empty;
+                    foreach (var name in  Names.Take(Names.Length - 1))
+                    {
+                        structure = " -> " + name + structure;
+                    }
+                    return structure.Substring(4);
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
+        public string Structure { get; set; }//结构   
+        public ImportOperate Operate { get; set; }//操作，增，删，改
+        public string Hint { get; set; }//提示       
 
-        private string operate;
-        public string Operate//操作，增，删，改
-        {
-            get
-            {
-                return operate;
-            }
-            set
-            {
-                operate = value;
-                NotifyPropertyChange("Operate");
-            }
-        }
-
-        private string hint;
-        public string Hint//提示
-        {
-            get
-            {
-                return hint;
-            }
-            set
-            {
-                hint = value;
-                NotifyPropertyChange("Hint");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChange(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

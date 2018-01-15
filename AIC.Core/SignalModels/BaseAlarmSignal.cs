@@ -77,12 +77,12 @@ namespace AIC.Core.SignalModels
                         case AlarmGrade.HighNormal:
                             str = DeviceItemName + "." +  "断线事件恢复";
                             break;
-                        case AlarmGrade.LowPreAlert:
-                        case AlarmGrade.HighPreAlert:
+                        case AlarmGrade.LowPreAlarm:
+                        case AlarmGrade.HighPreAlarm:
                             str = DeviceItemName + "." +  "断线->预警事件发生";
                             break;
-                        case AlarmGrade.LowAlert:
-                        case AlarmGrade.HighAlert:
+                        case AlarmGrade.LowAlarm:
+                        case AlarmGrade.HighAlarm:
                             str = DeviceItemName + "." +  "断线->警告事件发生";
                             break;
                         case AlarmGrade.LowDanger:
@@ -99,12 +99,12 @@ namespace AIC.Core.SignalModels
                         case AlarmGrade.DisConnect:
                             str = DeviceItemName + "." +  "断线事件发生";
                             break;
-                        case AlarmGrade.LowPreAlert:
-                        case AlarmGrade.HighPreAlert:
+                        case AlarmGrade.LowPreAlarm:
+                        case AlarmGrade.HighPreAlarm:
                             str = DeviceItemName + "." +  "预警事件发生";
                             break;
-                        case AlarmGrade.LowAlert:
-                        case AlarmGrade.HighAlert:
+                        case AlarmGrade.LowAlarm:
+                        case AlarmGrade.HighAlarm:
                             str = DeviceItemName + "." +  "警告事件发生";
                             break;
                         case AlarmGrade.LowDanger:
@@ -113,8 +113,8 @@ namespace AIC.Core.SignalModels
                             break;
                     }
                     break;
-                case AlarmGrade.LowPreAlert:
-                case AlarmGrade.HighPreAlert:
+                case AlarmGrade.LowPreAlarm:
+                case AlarmGrade.HighPreAlarm:
                     switch (AlarmGrade)
                     {
                         case AlarmGrade.DisConnect:
@@ -125,8 +125,8 @@ namespace AIC.Core.SignalModels
                         case AlarmGrade.HighNormal:
                             str = DeviceItemName + "." +  "预警事件消失";
                             break;
-                        case AlarmGrade.LowAlert:
-                        case AlarmGrade.HighAlert:
+                        case AlarmGrade.LowAlarm:
+                        case AlarmGrade.HighAlarm:
                             str = DeviceItemName + "." +  "预警->警告事件发生";
                             break;
                         case AlarmGrade.LowDanger:
@@ -135,8 +135,8 @@ namespace AIC.Core.SignalModels
                             break;
                     }
                     break;
-                case AlarmGrade.LowAlert:
-                case AlarmGrade.HighAlert:
+                case AlarmGrade.LowAlarm:
+                case AlarmGrade.HighAlarm:
                     switch (AlarmGrade)
                     {
                         case AlarmGrade.DisConnect:
@@ -147,8 +147,8 @@ namespace AIC.Core.SignalModels
                         case AlarmGrade.HighNormal:
                             str = DeviceItemName + "." +  "警告事件消失";
                             break;
-                        case AlarmGrade.LowPreAlert:
-                        case AlarmGrade.HighPreAlert:
+                        case AlarmGrade.LowPreAlarm:
+                        case AlarmGrade.HighPreAlarm:
                             str = DeviceItemName + "." +  "警告->预警事件发生";
                             break;
                         case AlarmGrade.LowDanger:
@@ -169,12 +169,12 @@ namespace AIC.Core.SignalModels
                         case AlarmGrade.HighNormal:
                             str = DeviceItemName + "." +  "危险事件消失";
                             break;
-                        case AlarmGrade.LowPreAlert:
-                        case AlarmGrade.HighPreAlert:
+                        case AlarmGrade.LowPreAlarm:
+                        case AlarmGrade.HighPreAlarm:
                             str = DeviceItemName + "." +  "危险->预警事件发生";
                             break;
-                        case AlarmGrade.LowAlert:
-                        case AlarmGrade.HighAlert:
+                        case AlarmGrade.LowAlarm:
+                        case AlarmGrade.HighAlarm:
                             str = DeviceItemName + "." +  "危险->警告事件发生";
                             break;
                     }
@@ -574,9 +574,9 @@ namespace AIC.Core.SignalModels
         #endregion
 
         //低警
-        #region LowAlert
+        #region LowAlarm
         private double lowAlert;
-        public double LowAlert
+        public double LowAlarm
         {
             get { return lowAlert; }
             set
@@ -584,7 +584,7 @@ namespace AIC.Core.SignalModels
                 if (lowAlert != value)
                 {
                     lowAlert = value;
-                    OnPropertyChanged("LowAlert");
+                    OnPropertyChanged("LowAlarm");
                 }
             }
         }
@@ -625,9 +625,9 @@ namespace AIC.Core.SignalModels
         #endregion
 
         //高警
-        #region HighAlert
+        #region HighAlarm
         private double highAlert;
-        public double HighAlert
+        public double HighAlarm
         {
             get { return highAlert; }
             set
@@ -635,7 +635,7 @@ namespace AIC.Core.SignalModels
                 if (highAlert != value)
                 {
                     highAlert = value;
-                    OnPropertyChanged("HighAlert");
+                    OnPropertyChanged("HighAlarm");
                 }
             }
         }

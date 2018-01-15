@@ -24,7 +24,7 @@ namespace AIC.DatabaseService
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ICardProcess _cardProcess;
         public ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }
-        public Dictionary<string, T1_RootCard> T_RootCard { get; set; }
+        //public Dictionary<string, T1_RootCard> T_RootCard { get; set; }
         public HardwareService(ILocalConfiguration localConfiguration, IConvertToDataBaseFormat convertToDataBaseFormat, IConvertFromDataBaseFormat convertFromDataBaseFormat, IDatabaseComponent databaseComponent, ICardProcess cardProcess)
         {
             _localConfiguration = localConfiguration;
@@ -34,7 +34,7 @@ namespace AIC.DatabaseService
             _cardProcess = cardProcess;
 
             ServerTreeItems = new ObservableCollection<ServerTreeItemViewModel>();
-            T_RootCard = new Dictionary<string, T1_RootCard>();
+            //T_RootCard = new Dictionary<string, T1_RootCard>();
         }
 
         public void Initialize()
@@ -86,7 +86,7 @@ namespace AIC.DatabaseService
                     rootcard.MainControlCard = (maincard as MainCardTreeItemViewModel).MainControlCard;
                     rootcard.WirelessReceiveCard = (maincard as MainCardTreeItemViewModel).WirelessReceiveCard;
                     rootcard.WireMatchingCard = (maincard as MainCardTreeItemViewModel).WireMatchingCard;
-                    T1_RootCard t_rootcard = CardTreeGenerate.FindRootCard(rootcard, _databaseComponent.T_RootCard[serverIP], maincardIP);
+                    T1_RootCard t_rootcard = CardTreeGenerate.FindRootCard(rootcard, _databaseComponent.GetRootCard(serverIP), maincardIP);
                     //找到所有的通道
                     var channels = _cardProcess.GetChannels(maincard.Children);
                     var deleteDic = RootToDictionary(t_rootcard);
@@ -114,7 +114,7 @@ namespace AIC.DatabaseService
                     rootcard.MainControlCard = (maincard as MainCardTreeItemViewModel).MainControlCard;
                     rootcard.WirelessReceiveCard = (maincard as MainCardTreeItemViewModel).WirelessReceiveCard;
                     rootcard.WireMatchingCard = (maincard as MainCardTreeItemViewModel).WireMatchingCard;
-                    T1_RootCard t_rootcard = CardTreeGenerate.FindRootCard(rootcard, _databaseComponent.T_RootCard[serverIP], maincardIP);
+                    T1_RootCard t_rootcard = CardTreeGenerate.FindRootCard(rootcard, _databaseComponent.GetRootCard(serverIP), maincardIP);
                     //找到所有的通道
                     var channels = _cardProcess.GetChannels(maincard.Children);
                     var deleteDic = RootToDictionary(t_rootcard);
@@ -260,288 +260,6 @@ namespace AIC.DatabaseService
             return deleteDic;
         }
 
-        public void SaveCardToDatabase()
-        {
-            T_RootCard.Clear();
-            foreach (var server in ServerTreeItems)
-            {
-                //服务器IP地址
-                var serverip = server.ServerIP;
-                T1_RootCard t_rootCard = new T1_RootCard();
-                #region
-                foreach (var maincardtree in server.Children)
-                {
-                    var maincard_node = maincardtree as MainCardTreeItemViewModel;
-                    var t_maincard = _convertToDataBaseFormat.MainControlCardConvert(maincard_node.MainControlCard, maincard_node.MainControlCardIP);
-                    t_rootCard.T_MainControlCard.Add(t_maincard);
-                    string ip = maincard_node.MainControlCardIP;
-
-                    #region 有线板卡
-                    if (maincard_node.WireMatchingCard != null)
-                    {
-                        foreach (var card in maincard_node.WireMatchingCard)
-                        {
-                            var t_card = _convertToDataBaseFormat.WireMatchingCardConvert(card, ip);
-                            t_rootCard.T_WireMatchingCard.Add(t_card);
-                            int cardnum = card.CardNum;
-
-                            if (card.IEPESlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.IEPESlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.IEPESlot, ip, cardnum);
-                                t_rootCard.T_IEPESlot.Add(t_slot as T1_IEPESlot);
-                                int slotnum = card.IEPESlot.SlotNum;
-
-                                foreach (var channel in card.IEPESlot.IEPEChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_IEPEChannelInfo.Add(t_channel as T1_IEPEChannelInfo);
-                                    int chnum = channel.CHNum;
-                                    if (channel.DivFreInfo != null)
-                                    {
-                                        foreach (var divfreinfo in channel.DivFreInfo)
-                                        {
-                                            //if (divfreinfo.DivFreCode == -1)
-                                            //{
-                                            //    continue;
-                                            //}
-                                            var t_divfreinfo = _convertToDataBaseFormat.DivFreInfoConvert(divfreinfo, ip, cardnum, slotnum, chnum);
-                                            t_rootCard.T_DivFreInfo.Add(t_divfreinfo);
-                                        }
-                                    }
-                                }
-                            }
-                            if (card.EddyCurrentDisplacementSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.EddyCurrentDisplacementSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.EddyCurrentDisplacementSlot, ip, cardnum);
-                                t_rootCard.T_EddyCurrentDisplacementSlot.Add(t_slot as T1_EddyCurrentDisplacementSlot);
-                                int slotnum = card.EddyCurrentDisplacementSlot.SlotNum;
-
-                                foreach (var channel in card.EddyCurrentDisplacementSlot.EddyCurrentDisplacementChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_EddyCurrentDisplacementChannelInfo.Add(t_channel as T1_EddyCurrentDisplacementChannelInfo);
-                                    int chnum = channel.CHNum;
-                                    if (channel.DivFreInfo != null)
-                                    {
-                                        foreach (var divfreinfo in channel.DivFreInfo)
-                                        {
-                                            //if (divfreinfo.DivFreCode == -1)
-                                            //{
-                                            //    continue;
-                                            //}
-                                            var t_divfreinfo = _convertToDataBaseFormat.DivFreInfoConvert(divfreinfo, ip, cardnum, slotnum, chnum);
-                                            t_rootCard.T_DivFreInfo.Add(t_divfreinfo);
-                                        }
-                                    }
-                                }
-                            }
-                            if (card.EddyCurrentKeyPhaseSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.EddyCurrentKeyPhaseSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.EddyCurrentKeyPhaseSlot, ip, cardnum);
-                                t_rootCard.T_EddyCurrentKeyPhaseSlot.Add(t_slot as T1_EddyCurrentKeyPhaseSlot);
-                                int slotnum = card.EddyCurrentKeyPhaseSlot.SlotNum;
-
-                                foreach (var channel in card.EddyCurrentKeyPhaseSlot.EddyCurrentKeyPhaseChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_EddyCurrentKeyPhaseChannelInfo.Add(t_channel as T1_EddyCurrentKeyPhaseChannelInfo);
-                                }
-                            }
-                            if (card.EddyCurrentTachometerSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.EddyCurrentTachometerSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.EddyCurrentTachometerSlot, ip, cardnum);
-                                t_rootCard.T_EddyCurrentTachometerSlot.Add(t_slot as T1_EddyCurrentTachometerSlot);
-                                int slotnum = card.EddyCurrentTachometerSlot.SlotNum;
-
-                                foreach (var channel in card.EddyCurrentTachometerSlot.EddyCurrentTachometerChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_EddyCurrentTachometerChannelInfo.Add(t_channel as T1_EddyCurrentTachometerChannelInfo);
-                                }
-                            }
-                            if (card.DigitTachometerSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.DigitTachometerSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.DigitTachometerSlot, ip, cardnum);
-                                t_rootCard.T_DigitTachometerSlot.Add(t_slot as T1_DigitTachometerSlot);
-                                int slotnum = card.DigitTachometerSlot.SlotNum;
-
-                                foreach (var channel in card.DigitTachometerSlot.DigitTachometerChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_DigitTachometerChannelInfo.Add(t_channel as T1_DigitTachometerChannelInfo);
-                                }
-                            }
-                            if (card.AnalogRransducerInSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.AnalogRransducerInSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.AnalogRransducerInSlot, ip, cardnum);
-                                t_rootCard.T_AnalogRransducerInSlot.Add(t_slot as T1_AnalogRransducerInSlot);
-                                int slotnum = card.AnalogRransducerInSlot.SlotNum;
-
-                                foreach (var channel in card.AnalogRransducerInSlot.AnalogRransducerInChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AnalogRransducerInChannelInfo.Add(t_channel as T1_AnalogRransducerInChannelInfo);
-                                }
-                            }
-                            if (card.RelaySlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.RelaySlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.RelaySlot, ip, cardnum);
-                                t_rootCard.T_RelaySlot.Add(t_slot as T1_RelaySlot);
-                                int slotnum = card.RelaySlot.SlotNum;
-
-                                foreach (var channel in card.RelaySlot.RelayChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_RelayChannelInfo.Add(t_channel as T1_RelayChannelInfo);
-                                }
-                            }
-                            if (card.DigitRransducerInSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.DigitRransducerInSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.DigitRransducerInSlot, ip, cardnum);
-                                t_rootCard.T_DigitRransducerInSlot.Add(t_slot as T1_DigitRransducerInSlot);
-                                int slotnum = card.DigitRransducerInSlot.SlotNum;
-
-                                foreach (var channel in card.DigitRransducerInSlot.DigitRransducerInChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_DigitRransducerInChannelInfo.Add(t_channel as T1_DigitRransducerInChannelInfo);
-                                }
-                            }
-                            if (card.DigitRransducerOutSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.DigitRransducerOutSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.DigitRransducerOutSlot, ip, cardnum);
-                                t_rootCard.T_DigitRransducerOutSlot.Add(t_slot as T1_DigitRransducerOutSlot);
-                                int slotnum = card.DigitRransducerOutSlot.SlotNum;
-
-                                foreach (var channel in card.DigitRransducerOutSlot.DigitRransducerOutChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_DigitRransducerOutChannelInfo.Add(t_channel as T1_DigitRransducerOutChannelInfo);
-                                }
-                            }
-                            if (card.AnalogRransducerOutSlot != null)
-                            {
-                                var t_abstractslot = _convertToDataBaseFormat.AbstractSlotInfoConvert(card.AnalogRransducerOutSlot, ip, cardnum);
-                                t_rootCard.T_AbstractSlotInfo.Add(t_abstractslot);
-                                I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.AnalogRransducerOutSlot, ip, cardnum);
-                                t_rootCard.T_AnalogRransducerOutSlot.Add(t_slot as T1_AnalogRransducerOutSlot);
-                                int slotnum = card.AnalogRransducerOutSlot.SlotNum;
-
-                                foreach (var channel in card.AnalogRransducerOutSlot.AnalogRransducerOutChannelInfo)
-                                {
-                                    var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                    I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, cardnum, slotnum);
-                                    t_rootCard.T_AnalogRransducerOutChannelInfo.Add(t_channel as T1_AnalogRransducerOutChannelInfo);
-                                }
-                            }
-                        }
-                    }
-                    #endregion
-                    #region 无线接收卡
-                    if (maincard_node.WirelessReceiveCard != null)
-                    {
-                        var t_wirelessReceiveCard = _convertToDataBaseFormat.WirelessReceiveCardConvert(maincard_node.WirelessReceiveCard, maincard_node.MainControlCardIP);
-                        t_rootCard.T_WirelessReceiveCard.Add(t_wirelessReceiveCard);
-                        string masterId = t_wirelessReceiveCard.MasterIdentifier;
-
-                        if (maincard_node.WirelessReceiveCard.TransmissionCard != null)
-                        {
-                            foreach (var card in maincard_node.WirelessReceiveCard.TransmissionCard)
-                            {
-                                var t_card = _convertToDataBaseFormat.TransmissionCardConvert(card, ip, masterId);
-                                t_rootCard.T_TransmissionCard.Add(t_card);
-                                string slaveId = card.SlaveIdentifier;
-
-                                if (card.WirelessScalarSlot != null)
-                                {
-                                    I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.WirelessScalarSlot, ip, slaveId);
-                                    t_rootCard.T_WirelessScalarSlot.Add(t_slot as T1_WirelessScalarSlot);
-                                    int slotnum = card.WirelessScalarSlot.SlotNum;
-
-                                    foreach (var channel in card.WirelessScalarSlot.WirelessScalarChannelInfo)
-                                    {
-                                        var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, slaveId, slotnum);
-                                        t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                        I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, slaveId, slotnum);
-                                        t_rootCard.T_WirelessScalarChannelInfo.Add(t_channel as T1_WirelessScalarChannelInfo);
-                                    }
-                                }
-
-                                if (card.WirelessVibrationSlot != null)
-                                {
-                                    I_BaseSlot t_slot = _convertToDataBaseFormat.BaseSlotConvert(card.WirelessVibrationSlot, ip, slaveId);
-                                    t_rootCard.T_WirelessVibrationSlot.Add(t_slot as T1_WirelessVibrationSlot);
-                                    int slotnum = card.WirelessVibrationSlot.SlotNum;
-
-                                    foreach (var channel in card.WirelessVibrationSlot.WirelessVibrationChannelInfo)
-                                    {
-                                        var t_abstractchannnel = _convertToDataBaseFormat.AbstractChannelInfoConvert(channel, ip, slaveId, slotnum);
-                                        t_rootCard.T_AbstractChannelInfo.Add(t_abstractchannnel);
-                                        I_BaseChannelInfo t_channel = _convertToDataBaseFormat.BaseChannelConvert(channel, ip, slaveId, slotnum);
-                                        t_rootCard.T_WirelessVibrationChannelInfo.Add(t_channel as T1_WirelessVibrationChannelInfo);
-                                        int chnum = channel.CHNum;
-                                        if (channel.DivFreInfo != null)
-                                        {
-                                            foreach (var divfreinfo in channel.DivFreInfo)
-                                            {
-                                                //if (divfreinfo.DivFreCode == -1)
-                                                //{
-                                                //    continue;
-                                                //}
-                                                var t_divfreinfo = _convertToDataBaseFormat.DivFreInfoConvert(divfreinfo, ip, slaveId, slotnum, chnum);
-                                                t_rootCard.T_DivFreInfo.Add(t_divfreinfo);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-                T_RootCard.Add(serverip, t_rootCard);
-            }
-
-        }
-
         public void GetCardFromDatabase()
         {
             //从数据库取出，去重复
@@ -549,11 +267,11 @@ namespace AIC.DatabaseService
             foreach (var server_node in ServerTreeItems)
             {
                 server_node.ClearChild();
-                if (!T_RootCard.ContainsKey(server_node.ServerIP))
+                if (!_databaseComponent.GetServerIPCategory().Contains(server_node.ServerIP))
                 {
                     continue;
                 }
-                var rootcard = T_RootCard[server_node.ServerIP];//(from p in T_RootCard.Values where p.T_MainControlCard[0].ServerIP == server_node.ServerIP select p).FirstOrDefault();
+                var rootcard = _databaseComponent.GetRootCard(server_node.ServerIP);//(from p in T_RootCard.Values where p.T_MainControlCard[0].ServerIP == server_node.ServerIP select p).FirstOrDefault();
 
                 foreach (var mainCard in rootcard.T_MainControlCard.OrderBy(p => p.IP))//按主板IP顺序
                 {

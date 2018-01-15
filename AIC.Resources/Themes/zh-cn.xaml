@@ -77,7 +77,7 @@
     <s:String x:Key="menuDBManage">数据库管理</s:String>
     <s:String x:Key="menuExportDBData">数据库导出</s:String>
     <s:String x:Key="menuImportDBData">数据库导入</s:String>
-    <s:String x:Key="menuSearchDBData">数据库查找</s:String>
+    <s:String x:Key="menuFilterDBData">数据库筛选</s:String>
 
     <s:String x:Key="menuSetting">设置</s:String>
     <s:String x:Key="menuServerSetting">服务器管理</s:String>
@@ -137,7 +137,9 @@
     <s:String x:Key="load">载入</s:String>
     <s:String x:Key="print">打印</s:String>
     <s:String x:Key="export">导出</s:String>
-
+    <s:String x:Key="import">导入</s:String>
+    <s:String x:Key="built">生成</s:String>
+    
     <s:String x:Key="name">名称</s:String>
     <s:String x:Key="code">代号</s:String>
     <s:String x:Key="aliasName">别名</s:String>
@@ -173,7 +175,7 @@
     <s:String x:Key="menuOnlineDataDiagram">在线数据图表</s:String>
     <s:String x:Key="menuOnlineDataOverview">在线数据总貌</s:String>
     <s:String x:Key="menuOnlineDataDiagnosis">在线数据诊断</s:String>
-    <s:String x:Key="menuOnlineDataStatistics">在线数据统计</s:String>
+    <s:String x:Key="menuOnlineDataStatistics">在线报警统计</s:String>
     <s:String x:Key="menuDataTrendChart">数据趋势曲线</s:String>
     <s:String x:Key="menuHistoryDataList">历史数据列表</s:String>
     <s:String x:Key="menuHistoryDataDiagram">历史数据图表</s:String>

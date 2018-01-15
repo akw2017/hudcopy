@@ -16,6 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AIC.HistoryDataPage;component/Themes/HistoryDataDiagramTemplate.xaml"/>
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type ListBoxItem}" x:Key="SignalMonitorStyle" >
                 <Setter Property="Template">

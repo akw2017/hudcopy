@@ -26,10 +26,10 @@ namespace AIC.OnLineDataPage.Converters
                     case AlarmGrade.LowNormal:
                         imageName = "Normal.png";
                         break;
-                    case AlarmGrade.HighAlert:
+                    case AlarmGrade.HighAlarm:
                         imageName ="Warning.png";
                         break;
-                    case AlarmGrade.LowAlert:
+                    case AlarmGrade.LowAlarm:
                         imageName = "Warning.png";
                         break;
                     case AlarmGrade.HighDanger:

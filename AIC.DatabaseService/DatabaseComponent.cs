@@ -106,6 +106,12 @@ namespace AIC.DatabaseService
             T_Menu = new Dictionary<string, List<T1_Menu>>();
             T_OrganizationPrivilege = new Dictionary<string, List<T1_OrganizationPrivilege>>();
         }
+
+        public List<string> GetServerIPCategory()
+        {
+            return new List<string>(T_RootCard.Keys.ToList());
+        }
+
         public List<T1_User> GetUserData(string ip)
         {
             if (T_User.ContainsKey(ip))
@@ -189,6 +195,18 @@ namespace AIC.DatabaseService
                 return null;
             }
         }       
+
+        public T1_RootCard GetRootCard(string ip)
+        {
+            if (T_RootCard.ContainsKey(ip))
+            {
+                return T_RootCard[ip];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public async Task<List<T1_User>> LoadUserData(string ip)
         {

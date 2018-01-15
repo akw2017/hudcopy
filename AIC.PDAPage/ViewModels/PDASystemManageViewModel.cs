@@ -54,7 +54,7 @@ namespace AIC.PDAPage.ViewModels
             _signalProcess = signalProcess;
             _databaseComponent = databaseComponent;
 
-            ServerIPCategory = new ObservableCollection<string>(_databaseComponent.T_RootCard.Keys.ToList());
+            ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
 
             InitTree();
@@ -292,8 +292,8 @@ namespace AIC.PDAPage.ViewModels
             }
         }
 
-        private ObservableCollection<string> _serverIPCategory;
-        public ObservableCollection<string> ServerIPCategory
+        private List<string> _serverIPCategory;
+        public List<string> ServerIPCategory
         {
             get { return _serverIPCategory; }
             set
@@ -924,36 +924,6 @@ namespace AIC.PDAPage.ViewModels
             }
         }
 
-        public DelegateCommand<object> uploadDateBaseCommand;
-        public DelegateCommand<object> UploadDateBaseCommand
-        {
-            get
-            {
-                if (uploadDateBaseCommand == null)
-                {
-                    uploadDateBaseCommand = new DelegateCommand<object>(
-                        para => UploadDateBase(para), para => CanOperate(para)
-                        );
-                }
-                return uploadDateBaseCommand;
-            }
-        }
-
-        public DelegateCommand<object> refreshDateBaseCommand;
-        public DelegateCommand<object> RefreshDateBaseCommand
-        {
-            get
-            {
-                if (refreshDateBaseCommand == null)
-                {
-                    refreshDateBaseCommand = new DelegateCommand<object>(
-                        para => RefreshDateBase(para), para => CanOperate(para)
-                        );
-                }
-                return refreshDateBaseCommand;
-            }
-        }
-
         public DelegateCommand<object> debugCommand;
         public DelegateCommand<object> DebugCommand
         {
@@ -1346,7 +1316,7 @@ namespace AIC.PDAPage.ViewModels
 
                                     if (divfreinfo[i].Guid == divfretree.T_Organization.Guid.ToString())
                                     {
-                                        var t_divfre = _databaseComponent.T_RootCard[ServerIP].T_DivFreInfo.Where(p => p.Guid == divfretree.T_Organization.Guid).FirstOrDefault();
+                                        var t_divfre = _databaseComponent.GetRootCard(ServerIP).T_DivFreInfo.Where(p => p.Guid == divfretree.T_Organization.Guid).FirstOrDefault();
 
                                         Dictionary<string, Tuple<string, ICollection<object>>> deleteDic = new Dictionary<string, Tuple<string, ICollection<object>>>();
                                         deleteDic.Add("T_DivFreInfo", new Tuple<string, ICollection<object>>("id", new List<object> { t_divfre.id }));
@@ -3070,17 +3040,17 @@ namespace AIC.PDAPage.ViewModels
             if (i_channel != null)
             {
                 //更新延时报警
-                if (i_channel.T_AbstractChannelInfo.T_Item_Guid != null)
-                {
-                    var sg = _signalProcess.GetSignal(i_channel.T_AbstractChannelInfo.T_Item_Guid.Value);
-                    if (sg != null)
-                    {
-                        sg.DelayAlarmTime = i_channel.DelayAlarmTime;
-                        sg.SubscribeAlarmGrade(sg.DelayAlarmTime);
-                        sg.NotOKDelayAlarmTime = i_channel.NotOKDelayAlarmTime;
-                        sg.SubscribeIsNotOK(sg.NotOKDelayAlarmTime);
-                    }
-                }
+                //if (i_channel.T_AbstractChannelInfo.T_Item_Guid != null)
+                //{
+                //    var sg = _signalProcess.GetSignal(i_channel.T_AbstractChannelInfo.T_Item_Guid.Value);
+                //    if (sg != null)
+                //    {
+                //        sg.DelayAlarmTime = i_channel.DelayAlarmTime;
+                //        sg.SubscribeAlarmGrade(sg.DelayAlarmTime);
+                //        sg.NotOKDelayAlarmTime = i_channel.NotOKDelayAlarmTime;
+                //        sg.SubscribeIsNotOK(sg.NotOKDelayAlarmTime);
+                //    }
+                //}
             }
         }
         #endregion
@@ -4363,23 +4333,6 @@ namespace AIC.PDAPage.ViewModels
             {
                 Status = ViewModelStatus.None;
             }
-        }
-        #endregion
-
-        #region 上传和更新数据库
-        private void UploadDateBase(object para)//测试代码
-        {
-            //上传组织机构
-            _organizationService.SaveOrganizationToDatabase(ServerIP);
-            //上传主板
-            _hardwareService.SaveCardToDatabase();
-        }
-
-        private void RefreshDateBase(object para)//测试代码
-        {
-            _organizationService.GetOrganizationFromDatabase(ServerIP, false);
-            _hardwareService.GetCardFromDatabase();
-            InitHardware();//强制刷新
         }
         #endregion
 

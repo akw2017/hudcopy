@@ -12,6 +12,13 @@
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

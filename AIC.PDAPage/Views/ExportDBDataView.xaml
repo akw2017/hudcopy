@@ -17,91 +17,10 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary>
-                    <convert:BoolVisibilityConverter x:Key="boolVisibilityConverter"/>
-                    <convert:IntAdd1Converter x:Key="intAdd1Converter"/>
-                    <command:CommandReference x:Key="AddCommandReference" Command="{Binding AddCommand}"/>
-                    <command:CommandReference x:Key="AddRootCommandReference" Command="{Binding AddRootCommand}"/>
-                    <command:CommandReference x:Key="SortCommandReference" Command="{Binding SortCommand}"/>
-                    <command:CommandReference x:Key="AddOrganizationReference" Command="{Binding AddOrganizationCommand}"/>
-                    <command:CommandReference x:Key="DeleteCommandReference" Command="{Binding DeleteCommand}"/>
-                    <command:CommandReference x:Key="CopyCommandReference" Command="{Binding CopyCommand}"/>
-                    <command:CommandReference x:Key="PasteCommandReference" Command="{Binding PasteCommand}"/>
-                    <command:CommandReference x:Key="PasteRootCommandReference" Command="{Binding PasteRootCommand}"/>
-                    <command:CommandReference x:Key="RenameCommandReference" Command="{Binding RenameCommand}"/>
-                    <command:CommandReference x:Key="DeleteCardCommandReference" Command="{Binding DeleteCardCommand}"/>
-                    <command:CommandReference x:Key="ForceDeleteCardCommandReference" Command="{Binding ForceDeleteCardCommand}"/>
-                    <command:CommandReference x:Key="ClearRecycledCommandReference" Command="{Binding ClearRecycledCommand}"/>
-                    <command:CommandReference x:Key="RecoveredItemCommandReference" Command="{Binding RecoveredItemCommand}"/>
-                    <command:CommandReference x:Key="DebugCommandReference" Command="{Binding DebugCommand}"/>
-                    <command:CommandReference x:Key="EditDeviceCommandReference" Command="{Binding EditDeviceCommand}"/>
-                    <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
-                        <!--<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>-->
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                    <ControlTemplate.Resources>
-                                        <Storyboard x:Key="OnLoaded1">
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="grid">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </ControlTemplate.Resources>
-                                    <!-- BulletDecorator is used to provide baseline alignment between the checkmark and the Content -->
-                                    <BulletDecorator Background="Transparent">
-                                        <BulletDecorator.Bullet>
-                                            <Grid x:Name="grid" Width="24" Height="24" RenderTransformOrigin="0.5,0.5">
-                                                <Grid.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform/>
-                                                        <SkewTransform/>
-                                                        <RotateTransform/>
-                                                        <TranslateTransform/>
-                                                    </TransformGroup>
-                                                </Grid.RenderTransform>
-                                                <Ellipse x:Name="Ellipse_Border" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="3"/>
-                                                <Ellipse Margin="5" x:Name="CheckMark" Fill="{DynamicResource AccentColorBrush}"/>
-                                            </Grid>
-                                        </BulletDecorator.Bullet>
-                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
-                                    </BulletDecorator>
-
-                                    <ControlTemplate.Triggers>
-                                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                            <BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
-                                        </EventTrigger>
-                                        <Trigger Property="IsChecked" Value="false">
-                                            <Setter Property="Visibility" Value="Collapsed" TargetName="CheckMark"/>
-                                        </Trigger>
-
-                                        <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Fill" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Ellipse_Border"/>
-                                            <Setter Property="Stroke" Value="#40000000" TargetName="Ellipse_Border"/>
-                                            <Setter Property="Foreground" Value="#80000000"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ResourceDictionary>
-                <ResourceDictionary Source="/AIC.PDAPage;component/Themes/PDASystemManageTemplate.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <!--<UserControl.InputBindings>
-        <KeyBinding Gesture="Control+Alt+S" Command="{Binding ShowDebugCommand}" />
-    </UserControl.InputBindings>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -113,32 +32,31 @@
             <TextBlock Text="导出数据类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Content="组织" IsChecked="{Binding OrganizationChecked}" Margin="4,0,0,0"/>
             <CheckBox Content="测点" IsChecked="{Binding ItemChecked}" Margin="4,0,0,0"/>
+            <CheckBox Content="通道" IsChecked="{Binding ChannelChecked}" Margin="4,0,0,0"/>
             <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/ruby_put.png"  />
                         <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+            <Button Command="{Binding RefreshCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/export.png"  />
-                        <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
+                        <Image Stretch="None" Source="/AIC.Resources;component/Images/page_refresh.png"  />
+                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
         </StackPanel>
-        <TabControl Grid.Row="1" Margin="3">
+        <TabControl Grid.Row="1">          
             <TabItem Header="组织" Style="{x:Null}">
-                <DataGrid ItemsSource="{Binding OrganizationView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
+                <DataGrid ItemsSource="{Binding OrganizationView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Guid"  Binding="{Binding Guid}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Level"  Binding="{Binding Level}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Sort_No"  Binding="{Binding Sort_No}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Unit"  Binding="{Binding Unit}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Structure"  Binding="{Binding Structure}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="NodeType"  Binding="{Binding NodeType}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Remarks"  Binding="{Binding Remarks}" IsReadOnly="True"/>
@@ -168,7 +86,136 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="测点" Style="{x:Null}">
-                <DataGrid ItemsSource="{Binding ItemView}" AutoGenerateColumns="True" CanUserAddRows="False" CanUserSortColumns="False">
+                <DataGrid ItemsSource="{Binding ItemView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" AutoGenerateColumns="False" EnableRowVirtualization="True"  CanUserAddRows="False" CanUserSortColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>   
+                        <DataGridTextColumn Header="Structure"  Binding="{Binding Structure}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="IP"  Binding="{Binding IP}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlaveIdentifier"  Binding="{Binding SlaveIdentifier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="CardNum"  Binding="{Binding CardNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlotNum"  Binding="{Binding SlotNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="CHNum"  Binding="{Binding CHNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="ItemType"  Binding="{Binding ItemType}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Remarks"  Binding="{Binding Remarks}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                            <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="无线标量通道" Style="{x:Null}">
+                <DataGrid ItemsSource="{Binding WirelessScalarChannelInfoView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="T_Item_Name"  Binding="{Binding T_Item_Name}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="MainControlCardIP"  Binding="{Binding MainControlCardIP}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlaveIdentifier" Binding="{Binding SlaveIdentifier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlotNum" Binding="{Binding SlotNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="CHNum" Binding="{Binding CHNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SubCHNum" Binding="{Binding SubCHNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="IsBypass" Binding="{Binding IsBypass}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DelayAlarmTime" Binding="{Binding DelayAlarmTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="NotOKDelayAlarmTime" Binding="{Binding NotOKDelayAlarmTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DangerValue"  Binding="{Binding DangerValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="DangerIsAllow" Binding="{Binding DangerIsAllow}" IsReadOnly="True"/>                       
+                        <DataGridTextColumn Header="AlarmValue" Binding="{Binding AlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="AlarmIsAllow" Binding="{Binding AlarmIsAllow}" IsReadOnly="True"/>                     
+                        <DataGridTextColumn Header="PreAlarmValue" Binding="{Binding PreAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="PreAlarmIsAllow" Binding="{Binding PreAlarmIsAllow}" IsReadOnly="True"/>                      
+                        <DataGridTextColumn Header="NormalValue" Binding="{Binding NormalValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="NormalIsAllow" Binding="{Binding NormalIsAllow}" IsReadOnly="True"/>                       
+                        <DataGridTextColumn Header="LowNormalValue" Binding="{Binding LowNormalValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowNormalIsAllow" Binding="{Binding LowNormalIsAllow}" IsReadOnly="True"/>                       
+                        <DataGridTextColumn Header="LowPreAlarmValue" Binding="{Binding LowPreAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowPreAlarmIsAllow" Binding="{Binding LowPreAlarmIsAllow}" IsReadOnly="True"/>                       
+                        <DataGridTextColumn Header="LowAlarmValue" Binding="{Binding LowAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowAlarmIsAllow" Binding="{Binding LowAlarmIsAllow}" IsReadOnly="True"/>                       
+                        <DataGridTextColumn Header="LowDangerValue" Binding="{Binding LowDangerValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowDangerIsAllow" Binding="{Binding LowDangerIsAllow}" IsReadOnly="True"/>                      
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                            <!--<Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />-->
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="无线振动通道" Style="{x:Null}">
+                <DataGrid ItemsSource="{Binding WirelessVibrationChannelInfoView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="T_Item_Name"  Binding="{Binding T_Item_Name}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="MainControlCardIP" Binding="{Binding MainControlCardIP}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlaveIdentifier" Binding="{Binding SlaveIdentifier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SlotNum" Binding="{Binding SlotNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="CHNum" Binding="{Binding CHNum}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="SubCHNum" Binding="{Binding SubCHNum}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="IsBypass" Binding="{Binding IsBypass}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DelayAlarmTime" Binding="{Binding DelayAlarmTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="NotOKDelayAlarmTime" Binding="{Binding NotOKDelayAlarmTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DefaultRPM" Binding="{Binding DefaultRPM}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="VelocityCalibration" Binding="{Binding VelocityCalibration}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DisplacementCalibration" Binding="{Binding DisplacementCalibration}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="DangerValue"  Binding="{Binding DangerValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="DangerIsAllow" Binding="{Binding DangerIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="DangerIsACQWave" Binding="{Binding DangerIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="AlarmValue" Binding="{Binding AlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="AlarmIsAllow" Binding="{Binding AlarmIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="AlarmIsACQWave" Binding="{Binding AlarmIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PreAlarmValue" Binding="{Binding PreAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="PreAlarmIsAllow" Binding="{Binding PreAlarmIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="PreAlarmIsACQWave" Binding="{Binding PreAlarmIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="NormalValue" Binding="{Binding NormalValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="NormalIsAllow" Binding="{Binding NormalIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="NormalIsACQWave" Binding="{Binding NormalIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="LowNormalValue" Binding="{Binding LowNormalValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowNormalIsAllow" Binding="{Binding LowNormalIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowNormalIsACQWave" Binding="{Binding LowNormalIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="LowPreAlarmValue" Binding="{Binding LowPreAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowPreAlarmIsAllow" Binding="{Binding LowPreAlarmIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowPreAlarmIsACQWave" Binding="{Binding LowPreAlarmIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="LowAlarmValue" Binding="{Binding LowAlarmValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowAlarmIsAllow" Binding="{Binding LowAlarmIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowAlarmIsACQWave" Binding="{Binding LowAlarmIsACQWave}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="LowDangerValue" Binding="{Binding LowDangerValue}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowDangerIsAllow" Binding="{Binding LowDangerIsAllow}" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Header="LowDangerIsACQWave" Binding="{Binding LowDangerIsACQWave}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
                     <DataGrid.ColumnHeaderStyle>
                         <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>

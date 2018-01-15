@@ -1104,10 +1104,10 @@ namespace AIC.LocalConfiguration
                         if (divFreContract.AlarmLimit != null)
                         {
                             item.LowDanger = divFreContract.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-                            item.LowAlert = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+                            item.LowAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
                             item.LowNormal = divFreContract.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
                             item.HighNormal = divFreContract.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-                            item.HighAlert = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+                            item.HighAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
                             item.HighDanger = divFreContract.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
                             item.AlarmGrade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), divFreContract.AlarmGrade.ToString());
                             item.Phase = divFreContract.Phase.Value;
@@ -1127,17 +1127,17 @@ namespace AIC.LocalConfiguration
             //if (idata.AlarmLimit != null)
             //{
             //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowAlarm = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
             //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
             //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighAlarm = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
             //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
             //}           
 
             setalarm(sg, idata);
 
             sg.IsConnected = true;
-            sg.IsRunning = (sg.DelayAlarmGrade == AlarmGrade.Abnormal) ? false : true;
+            sg.IsRunning = (sg.DelayAlarmGrade == AlarmGrade.DisConnect || sg.DelayAlarmGrade == AlarmGrade.Invalid) ? false : true;
         }
         private void SetAlarmSignal(BaseAlarmSignal sg, IBaseAlarmSlot idata)
         {
@@ -1153,10 +1153,10 @@ namespace AIC.LocalConfiguration
             //if (idata.AlarmLimit != null)
             //{
             //    sg.LowDanger = idata.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-            //    sg.LowAlert = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.LowAlarm = idata.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
             //    sg.LowNormal = idata.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
             //    sg.HighNormal = idata.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-            //    sg.HighAlert = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+            //    sg.HighAlarm = idata.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
             //    sg.HighDanger = idata.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
             //}    
 

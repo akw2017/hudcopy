@@ -318,8 +318,75 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+        private bool isMulticursor;
+        public bool IsMulticursor//多关标模式
+        {
+            get { return isMulticursor; }
+            set
+            {
+                if (isMulticursor != value)
+                {
+                    isMulticursor = value;
+                    OnPropertyChanged(() => this.IsMulticursor);
+                    if (ShowTimeDomain)//多光标新增
+                    {
+                        timeDomainVM2.IsVisible = value;                      
+                    }
+                    else
+                    {
+                        timeDomainVM2.IsVisible = false;
+                    }
+                    if (ShowFrequencyDomain)//多光标新增
+                    {
+                        frequencyDomainVM2.IsVisible = value;
+                    }
+                    else
+                    {
+                        frequencyDomainVM2.IsVisible = false;
+                    }
+                    if (ShowPowerSpectrum)//多光标新增
+                    {
+                        powerSpectrumVM2.IsVisible = value;
+                    }
+                    else
+                    {
+                        powerSpectrumVM2.IsVisible = false;
+                    }
+                    if (ShowPowerSpectrumDensity)//多光标新增
+                    {
+                        powerSpectrumDensityVM2.IsVisible = value;
+                    }
+                    else
+                    {
+                        powerSpectrumDensityVM2.IsVisible = false;
+                    }
+                    if (isMulticursor)
+                    {
+                        timeDomainVM.ItemWidth = ItemWidth / 2 - 8;
+                        frequencyDomainVM.ItemWidth = ItemWidth / 2 - 8;
+                        powerSpectrumVM.ItemWidth = ItemWidth / 2 - 8;
+                        powerSpectrumDensityVM.ItemWidth = ItemWidth / 2 - 8;
+                        timeDomainVM2.ItemWidth = ItemWidth / 2 - 8;//多光标新增
+                        frequencyDomainVM2.ItemWidth = ItemWidth / 2 - 8;//多光标新增
+                        powerSpectrumVM2.ItemWidth = ItemWidth / 2 - 8;//多光标新增
+                        powerSpectrumDensityVM2.ItemWidth = ItemWidth / 2 - 8;//多光标新增                      
+                    }
+                    else
+                    {
+                        timeDomainVM.ItemWidth = ItemWidth;
+                        frequencyDomainVM.ItemWidth = ItemWidth;
+                        powerSpectrumVM.ItemWidth = ItemWidth;
+                        powerSpectrumDensityVM.ItemWidth = ItemWidth;
+                        timeDomainVM2.ItemWidth = ItemWidth;//多光标新增
+                        frequencyDomainVM2.ItemWidth = ItemWidth;//多光标新增
+                        powerSpectrumVM2.ItemWidth = ItemWidth;//多光标新增
+                        powerSpectrumDensityVM2.ItemWidth = ItemWidth;//多光标新增                       
+                    }
+                }
+            }
+        }
 
-        private double itemWidth = 500;
+        private double itemWidth = 450;
         public double ItemWidth
         {
             get { return itemWidth; }
@@ -330,10 +397,28 @@ namespace AIC.HistoryDataPage.ViewModels
                     itemWidth = value;
                     OnPropertyChanged("ItemWidth");
                     amsReplayVM.ItemWidth = value;
-                    timeDomainVM.ItemWidth = value;
-                    frequencyDomainVM.ItemWidth = value;
-                    powerSpectrumVM.ItemWidth = value;
-                    powerSpectrumDensityVM.ItemWidth = value;
+                    if (isMulticursor)
+                    {
+                        timeDomainVM.ItemWidth = value / 2 - 8;
+                        frequencyDomainVM.ItemWidth = value / 2 - 8;
+                        powerSpectrumVM.ItemWidth = value / 2 - 8;
+                        powerSpectrumDensityVM.ItemWidth = value / 2 - 8;
+                        timeDomainVM2.ItemWidth = value / 2 - 8;//多光标新增
+                        frequencyDomainVM2.ItemWidth = value / 2 - 8;//多光标新增
+                        powerSpectrumVM2.ItemWidth = value / 2 - 8;//多光标新增
+                        powerSpectrumDensityVM2.ItemWidth = value / 2 - 8;//多光标新增                      
+                    }
+                    else
+                    {
+                        timeDomainVM.ItemWidth = value;
+                        frequencyDomainVM.ItemWidth = value;
+                        powerSpectrumVM.ItemWidth = value;
+                        powerSpectrumDensityVM.ItemWidth = value;
+                        timeDomainVM2.ItemWidth = value;//多光标新增
+                        frequencyDomainVM2.ItemWidth = value;//多光标新增
+                        powerSpectrumVM2.ItemWidth = value;//多光标新增
+                        powerSpectrumDensityVM2.ItemWidth = value;//多光标新增                       
+                    }
                     orthoDataVM.ItemWidth = value;
                     offDesignConditionVM.ItemWidth = value;
                     orderAnalysisVM.ItemWidth = value;
@@ -359,6 +444,10 @@ namespace AIC.HistoryDataPage.ViewModels
                     frequencyDomainVM.ItemHeight = value;
                     powerSpectrumVM.ItemHeight = value;
                     powerSpectrumDensityVM.ItemHeight = value;
+                    timeDomainVM2.ItemHeight = value;//多光标新增
+                    frequencyDomainVM2.ItemHeight = value;//多光标新增
+                    powerSpectrumVM2.ItemHeight = value;//多光标新增
+                    powerSpectrumDensityVM2.ItemHeight = value;//多光标新增
                     orthoDataVM.ItemHeight = value;
                     offDesignConditionVM.ItemHeight = value;
                     orderAnalysisVM.ItemHeight = value;
@@ -409,6 +498,18 @@ namespace AIC.HistoryDataPage.ViewModels
                     showTimeDomain = value;
                     OnPropertyChanged("ShowTimeDomain");
                     timeDomainVM.IsVisible = value;
+                    if (IsMulticursor)
+                    {
+                        timeDomainVM2.IsVisible = value;
+                        timeDomainVM.ItemWidth = ItemWidth / 2 - 8;
+                        timeDomainVM2.ItemWidth = ItemWidth / 2 - 8;
+                    }
+                    else
+                    {
+                        timeDomainVM2.IsVisible = false;
+                        timeDomainVM.ItemWidth = ItemWidth;
+                        timeDomainVM2.ItemWidth = ItemWidth;
+                    }
                 }
             }
         }
@@ -424,6 +525,18 @@ namespace AIC.HistoryDataPage.ViewModels
                     showFrequencyDomain = value;
                     OnPropertyChanged("ShowFrequencyDomain");
                     frequencyDomainVM.IsVisible = value;
+                    if (IsMulticursor)
+                    {
+                        frequencyDomainVM2.IsVisible = value;
+                        frequencyDomainVM.ItemWidth = ItemWidth / 2 - 8;
+                        frequencyDomainVM2.ItemWidth = ItemWidth / 2 - 8;
+                    }
+                    else
+                    {
+                        frequencyDomainVM2.IsVisible = false;
+                        frequencyDomainVM.ItemWidth = ItemWidth;
+                        frequencyDomainVM2.ItemWidth = ItemWidth;
+                    }
                 }
             }
         }
@@ -439,6 +552,18 @@ namespace AIC.HistoryDataPage.ViewModels
                     showPowerSpectrum = value;
                     OnPropertyChanged("ShowPowerSpectrum");
                     powerSpectrumVM.IsVisible = value;
+                    if (IsMulticursor)
+                    {
+                        powerSpectrumVM2.IsVisible = value;
+                        powerSpectrumVM.ItemWidth = ItemWidth / 2 - 8;
+                        powerSpectrumVM2.ItemWidth = ItemWidth / 2 - 8;
+                    }
+                    else
+                    {
+                        powerSpectrumVM2.IsVisible = false;
+                        powerSpectrumVM.ItemWidth = ItemWidth;
+                        powerSpectrumVM2.ItemWidth = ItemWidth;
+                    }
                 }
             }
         }
@@ -454,6 +579,18 @@ namespace AIC.HistoryDataPage.ViewModels
                     showPowerSpectrumDensity = value;
                     OnPropertyChanged("ShowPowerSpectrumDensity");
                     powerSpectrumDensityVM.IsVisible = value;
+                    if (IsMulticursor)
+                    {
+                        powerSpectrumDensityVM2.IsVisible = value;
+                        powerSpectrumDensityVM.ItemWidth = ItemWidth / 2 - 8;
+                        powerSpectrumDensityVM2.ItemWidth = ItemWidth / 2 - 8;
+                    }
+                    else
+                    {
+                        powerSpectrumDensityVM2.IsVisible = false;
+                        powerSpectrumDensityVM.ItemWidth = ItemWidth;
+                        powerSpectrumDensityVM2.ItemWidth = ItemWidth;
+                    }
                 }
             }
         }
@@ -688,6 +825,10 @@ namespace AIC.HistoryDataPage.ViewModels
         private FrequencyDomainDataViewModel frequencyDomainVM;
         private PowerSpectrumDataViewModel powerSpectrumVM;
         private PowerSpectrumDensityDataViewModel powerSpectrumDensityVM;
+        private TimeDomainDataViewModel timeDomainVM2;//多光标新增
+        private FrequencyDomainDataViewModel frequencyDomainVM2;//多光标新增
+        private PowerSpectrumDataViewModel powerSpectrumVM2;//多光标新增
+        private PowerSpectrumDensityDataViewModel powerSpectrumDensityVM2;//多光标新增
         private OrthoDataViewModel orthoDataVM;
         private OffDesignConditionDataViewModel offDesignConditionVM;
         private OrderAnalysisDataViewModel orderAnalysisVM;
@@ -697,6 +838,8 @@ namespace AIC.HistoryDataPage.ViewModels
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
+        private Func<IEnumerable<BaseWaveChannelToken>, Task> track2Task { get; set; }//多光标新增
+        private bool isTrack2Running;//多光标新增
         private List<Color> ColorList = new List<Color>();
         #endregion
 
@@ -730,6 +873,26 @@ namespace AIC.HistoryDataPage.ViewModels
                 powerSpectrumDensityVM.Title = "功率谱密度";
                 powerSpectrumDensityVM.ItemWidth = ItemWidth;
                 powerSpectrumDensityVM.ItemHeight = ItemHeight;
+
+                timeDomainVM2 = new TimeDomainDataViewModel();
+                timeDomainVM2.Title = "时域";
+                timeDomainVM2.ItemWidth = ItemWidth;
+                timeDomainVM2.ItemHeight = ItemHeight;
+
+                frequencyDomainVM2 = new FrequencyDomainDataViewModel();
+                frequencyDomainVM2.Title = "频域";
+                frequencyDomainVM2.ItemWidth = ItemWidth;
+                frequencyDomainVM2.ItemHeight = ItemHeight;
+
+                powerSpectrumVM2 = new PowerSpectrumDataViewModel();
+                powerSpectrumVM2.Title = "功率谱";
+                powerSpectrumVM2.ItemWidth = ItemWidth;
+                powerSpectrumVM2.ItemHeight = ItemHeight;
+
+                powerSpectrumDensityVM2 = new PowerSpectrumDensityDataViewModel();
+                powerSpectrumDensityVM2.Title = "功率谱密度";
+                powerSpectrumDensityVM2.ItemWidth = ItemWidth;
+                powerSpectrumDensityVM2.ItemHeight = ItemHeight;
 
                 orthoDataVM = new OrthoDataViewModel();
                 orthoDataVM.Title = "轴心轨迹";
@@ -773,15 +936,21 @@ namespace AIC.HistoryDataPage.ViewModels
                 ShowRPM3DSpectrum = false;
 
                 trackTask = AMSTrackChanged;
+                track2Task = AMSTrack2Changed;
 
                 amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
+                amsReplayVM.WhenTrack2Changed.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrack2Changed);
 
                 historicalDataCollection.Add(amsReplayVM);
-                historicalDataCollection.Add(alarmPointTrendVM);
+                //historicalDataCollection.Add(alarmPointTrendVM);
                 historicalDataCollection.Add(timeDomainVM);
+                historicalDataCollection.Add(timeDomainVM2);//多光标新增
                 historicalDataCollection.Add(frequencyDomainVM);
+                historicalDataCollection.Add(frequencyDomainVM2);//多光标新增
                 historicalDataCollection.Add(powerSpectrumVM);
-                historicalDataCollection.Add(powerSpectrumDensityVM);
+                historicalDataCollection.Add(powerSpectrumVM2);//多光标新增
+                historicalDataCollection.Add(powerSpectrumDensityVM);                    
+                historicalDataCollection.Add(powerSpectrumDensityVM2);//多光标新增
                 historicalDataCollection.Add(orthoDataVM);
                 historicalDataCollection.Add(offDesignConditionVM);
                 historicalDataCollection.Add(orderAnalysisVM);
@@ -943,6 +1112,163 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     await orthoDataVM.ChangeOrthoData(tokens);
                 }              
+            }
+            catch (Exception ex)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-TrackChanged", ex));
+            }
+        }
+
+        private async void RaiseTrack2Changed(IEnumerable<BaseWaveChannelToken> tokens)
+        {
+            if (track2Task == null)
+            {
+                return;
+            }
+
+            if (isTrack2Running)
+            {
+                return;
+            }
+
+            try
+            {
+                // we're running it now
+                isTrack2Running = true;
+                await track2Task.Invoke(tokens);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                // allow it to run again
+                isTrack2Running = false;
+            }
+        }
+        private async Task AMSTrack2Changed(IEnumerable<BaseWaveChannelToken> tokens)
+        {
+            try
+            {
+                if (tokens == null) return;
+
+                var unValidTokens = tokens.Where(o => o.CurrentIndex == -1);
+                foreach (var token in unValidTokens)
+                {
+                    token.VData = null;
+                }
+
+                var validTokens = tokens.Where(o => o.CurrentIndex != -1).ToArray();
+
+                if (validTokens.Length == 0) return;
+
+                //var globalIndexes = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ChannelGlobalIndex).ToArray();
+                //var ids = validTokens.Select(o => o.DataContracts[o.CurrentIndex].id).ToArray();
+                //var date = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ACQDatetime).First();              
+
+                List<IWaveformData> result = new List<IWaveformData>();
+                foreach (var token in validTokens)
+                {
+                    if (token is BaseDivfreChannelToken)
+                    {
+                        var divtoken = token as BaseDivfreChannelToken;
+
+                        List<D_WirelessVibrationSlot_Waveform> data = null;
+                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        {
+                            data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
+                        }
+                        else
+                        {
+                            token.VData = null;
+                        }
+                        if (data != null && data.Count > 0)
+                        {
+                            result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
+                        }
+                        else
+                        {
+                            token.VData = null;
+                        }
+                    }
+                }
+
+                await Task.Run(() => Parallel.For(0, result.Count, i =>
+                {
+                    VibrationData vdata = new VibrationData();
+                    vdata.Waveform = Algorithm.ByteToSingle(result[i].WaveData);
+                    vdata.SampleFre = result[i].SampleFre ?? 0;
+                    vdata.SamplePoint = result[i].SamplePoint ?? 0;
+                    vdata.Unit = result[i].WaveUnit;
+
+                    var paras = Algorithm.CalculatePara(vdata.Waveform);
+                    if (paras != null)
+                    {
+                        vdata.RMSValue = paras[0];
+                        vdata.PeakValue = paras[1];
+                        vdata.PeakPeakValue = paras[2];
+                        vdata.Slope = paras[3];
+                        vdata.Kurtosis = paras[4];
+                        vdata.KurtosisValue = paras[5];
+                        vdata.WaveIndex = paras[6];
+                        vdata.PeakIndex = paras[7];
+                        vdata.ImpulsionIndex = paras[8];
+                        vdata.RootAmplitude = paras[9];
+                        vdata.ToleranceIndex = paras[10];
+                    }
+
+                    double sampleFre = vdata.SampleFre;
+                    if (vdata.Trigger == TriggerType.Angle)
+                    {
+                        if (vdata.RPM > 0 && vdata.TeethNumber > 0)
+                        {
+                            sampleFre = vdata.RPM * vdata.TeethNumber / 60;
+                        }
+                    }
+
+                    int length = (int)(vdata.SamplePoint / 2.56) + 1;
+                    if (vdata.Frequency == null || vdata.Frequency.Length != length)
+                    {
+                        vdata.Frequency = new double[length];
+                    }
+                    double frequencyInterval = sampleFre / vdata.SamplePoint;
+                    for (int j = 0; j < length; j++)
+                    {
+                        vdata.Frequency[j] = frequencyInterval * j;
+                    }
+                    var output = Algorithm.Instance.FFT2AndPhaseAction(vdata.Waveform, vdata.SamplePoint);
+                    if (output != null)
+                    {
+                        vdata.Amplitude = output[0].Take(length).ToArray();
+                        vdata.Phase = output[1].Take(length).ToArray();
+                    }
+                    validTokens[i].VData = vdata;
+                }));
+
+                if (ShowTimeDomain)
+                {
+                    timeDomainVM2.ChangeChannelData(tokens);
+                }
+                if (ShowFrequencyDomain)
+                {
+                    frequencyDomainVM2.ChangeChannelData(tokens);
+                }
+                if (ShowPowerSpectrum)
+                {
+                    powerSpectrumVM2.ChangeChannelData(tokens);
+                }
+                if (ShowPowerSpectrumDensity)
+                {
+                    powerSpectrumDensityVM2.ChangeChannelData(tokens);
+                }
+                if (ShowAlarmPointTrend)
+                {
+                    //await alarmPointTrendVM.ChangeSnapshotData(tokens);
+                }
+                if (ShowOrtho)
+                {
+                    //await orthoDataVM.ChangeOrthoData(tokens);
+                }
             }
             catch (Exception ex)
             {
@@ -1154,7 +1480,11 @@ namespace AIC.HistoryDataPage.ViewModels
                         frequencyDomainVM.AddChannel(channeltoken);
                         powerSpectrumVM.AddChannel(channeltoken);
                         powerSpectrumDensityVM.AddChannel(channeltoken);
-                        alarmPointTrendVM.AddChannel(channeltoken);
+                        timeDomainVM2.AddChannel(channeltoken);//多光标新增
+                        frequencyDomainVM2.AddChannel(channeltoken);//多光标新增
+                        powerSpectrumVM2.AddChannel(channeltoken);//多光标新增
+                        powerSpectrumDensityVM2.AddChannel(channeltoken);//多光标新增
+                        //alarmPointTrendVM.AddChannel(channeltoken);
                         orthoDataVM.AddChannel(channeltoken);
 
                         offDesignConditionVM.AddChannel(channeltoken);
@@ -1324,11 +1654,15 @@ namespace AIC.HistoryDataPage.ViewModels
             foreach (var token in addedChannels)
             {                
                 amsReplayVM.RemoveChannel(token);
-                alarmPointTrendVM.RemoveChannel(token);
+                //alarmPointTrendVM.RemoveChannel(token);
                 timeDomainVM.RemoveChannel(token);
                 frequencyDomainVM.RemoveChannel(token);
                 powerSpectrumVM.RemoveChannel(token);
                 powerSpectrumDensityVM.RemoveChannel(token);
+                timeDomainVM2.RemoveChannel(token);//多光标新增
+                frequencyDomainVM2.RemoveChannel(token);//多光标新增
+                powerSpectrumVM2.RemoveChannel(token);//多光标新增
+                powerSpectrumDensityVM2.RemoveChannel(token);//多光标新增
                 orthoDataVM.RemoveChannel(token);
                 time3DSpectrumVM.RemoveChannel(token);
                 offDesignConditionVM.RemoveChannel(token);
@@ -1344,11 +1678,15 @@ namespace AIC.HistoryDataPage.ViewModels
 
                 addedChannels.Remove(token);
                 amsReplayVM.RemoveChannel(token);
-                alarmPointTrendVM.RemoveChannel(token);
+                //alarmPointTrendVM.RemoveChannel(token);
                 timeDomainVM.RemoveChannel(token);
                 frequencyDomainVM.RemoveChannel(token);
                 powerSpectrumVM.RemoveChannel(token);
                 powerSpectrumDensityVM.RemoveChannel(token);
+                timeDomainVM2.RemoveChannel(token);//多光标新增
+                frequencyDomainVM2.RemoveChannel(token);//多光标新增
+                powerSpectrumVM2.RemoveChannel(token);//多光标新增
+                powerSpectrumDensityVM2.RemoveChannel(token);//多光标新增
                 orthoDataVM.RemoveChannel(token);
                 time3DSpectrumVM.RemoveChannel(token);
                 offDesignConditionVM.RemoveChannel(token);

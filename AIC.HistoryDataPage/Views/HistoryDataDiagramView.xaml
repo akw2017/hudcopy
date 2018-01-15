@@ -440,7 +440,8 @@
                     <!--<CheckBox Margin="5,0" Content="阶次" IsChecked="{Binding ShowOrderAnalysis}" Style="{StaticResource CheckBoxStyle}"/>
                     <CheckBox Margin="5,0" Content="时间三维谱" IsChecked="{Binding ShowTime3DSpectrum}" Style="{StaticResource CheckBoxStyle}"/>
                     <CheckBox Margin="5,0" Content="转速三维谱" IsChecked="{Binding ShowRPM3DSpectrum}" Style="{StaticResource CheckBoxStyle}"/>-->
-                    <CheckBox x:Name="chkbox" Margin="5,0,0,0" IsChecked="{Binding IsHideControl}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="隐藏控制条" />
+                    <CheckBox Margin="5,0" IsChecked="{Binding IsMulticursor}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="双光标模式" />
+                    <CheckBox x:Name="chkbox" Margin="5,0" IsChecked="{Binding IsHideControl}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="隐藏控制条" />
                 </WrapPanel>              
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
                     <StackPanel.RenderTransform>
@@ -477,7 +478,7 @@
                     <ListBox x:Name="ReplayListBox" Background="{x:Null}" BorderBrush="{x:Null}" 
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                          ItemsSource="{Binding HistoricalDatas}" ItemContainerStyle="{StaticResource SignalMonitorStyle}" >
-                        <ListBox.ItemsPanel>
+                        <!--<ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
                                     <core:FluidWrapPanel.ElementEasing>
@@ -488,6 +489,11 @@
                                     </core:FluidWrapPanel.DragEasing>
                                 </core:FluidWrapPanel>
                             </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>-->
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                            </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
                 </ScrollViewer>
@@ -497,7 +503,7 @@
                             <TranslateTransform X="10" Y="-8"/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <CheckBox IsChecked="{Binding IsComposing, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,1,0" />
+                    <!--<CheckBox IsChecked="{Binding IsComposing, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,1,0" />-->
                     <Slider Grid.Row="1" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,30,0" />
                     <Slider Grid.Row="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Vertical" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,1,0" />
                     <Grid.Resources>

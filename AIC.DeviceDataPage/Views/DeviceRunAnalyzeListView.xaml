@@ -16,6 +16,9 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
             <core:StringShowLenghtConverter x:Key="stringShowLenghtConverter"/>
@@ -55,16 +58,16 @@
                         <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -86,16 +89,16 @@
                         <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
@@ -145,7 +148,7 @@
         </WrapPanel>
         <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
                                  ItemsSource="{Binding DevicesView}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 CanUserAddRows="False" ColumnWidth="Auto" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
             <DataGrid.Resources>
                 <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
@@ -241,16 +244,16 @@
                         <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="Invalid">
                             <Setter  Property="Foreground" Value="Pink"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlert">
+                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighPreAlarm">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlert">
+                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowPreAlarm">
                             <Setter Property="Foreground" Value="Yellow"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlert">
+                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighAlarm">
                             <Setter Property="Foreground" Value="DarkOrange"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlert">
+                        <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="LowAlarm">
                             <Setter Property="Foreground" Value="DarkOrange" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Path=AlarmGrade}" Value="HighDanger">

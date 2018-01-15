@@ -76,13 +76,10 @@ namespace AIC.HomePage.ViewModels
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
                                             .ToList();
 
-
             // create metro theme color menu items for the demo
             this.AppThemes = ThemeManager.AppThemes
                                            .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
                                            .ToList();
-
-
 
             MenuManageList = _loginUserService.MenuManageList;
             ExceptionModel = _loginUserService.ExceptionModel;
@@ -100,8 +97,7 @@ namespace AIC.HomePage.ViewModels
             WhenSlideChanged.Throttle(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseSlideChanged);
 
             LoginManage.LoginChanged += LoginManage_LoginChanged;
-        }
-     
+        }     
 
         #region 字段和属性
         private ObservableCollection<ExceptionModel> ExceptionModel;
@@ -1088,6 +1084,14 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<ExportDBDataView>();
             }
+            else if (viewName == "MenuImportDBData")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<ImportDBDataView>();
+            }
+            else if (viewName == "MenuFilterDBData")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<FilterDBDataView>();
+            }
             else if (viewName == "MenuRefreshData")
             {
                 Status = ViewModelStatus.Querying;
@@ -1351,24 +1355,23 @@ namespace AIC.HomePage.ViewModels
         {
             var signals = _signalProcess.Signals.OfType<BaseAlarmSignal>();
             Count = signals.Count();
-            NormalCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
-            PreAlertCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighPreAlert || o.DelayAlarmGrade == AlarmGrade.LowPreAlert)).Count();
-            AlertCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighAlert || o.DelayAlarmGrade == AlarmGrade.LowAlert)).Count();
-            DangerCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
-            AbnormalCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
-            UnConnectCount = signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
-            UnConnectCount += signals.Where(o => o.IsConnected == false).Count();
+            NormalCount = signals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
+            PreAlertCount = signals.Where(o =>  (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
+            AlertCount = signals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
+            DangerCount = signals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
+            AbnormalCount = signals.Where(o =>  (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
+            UnConnectCount = signals.Where(o =>  (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
             if (DangerCount > 0)
             {
                 Alarm = AlarmGrade.HighDanger;
             }
             else if (AlertCount > 0)
             {
-                Alarm = AlarmGrade.HighAlert;
+                Alarm = AlarmGrade.HighAlarm;
             }
             else if (PreAlertCount > 0)
             {
-                Alarm = AlarmGrade.HighPreAlert;
+                Alarm = AlarmGrade.HighPreAlarm;
             }
             else
             {
@@ -1475,7 +1478,7 @@ namespace AIC.HomePage.ViewModels
                 player.SoundLocation = System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\Danger.wav";
                 player.PlayLooping();
             }
-            else if (Alarm == AlarmGrade.HighAlert || Alarm == AlarmGrade.LowAlert)
+            else if (Alarm == AlarmGrade.HighAlarm || Alarm == AlarmGrade.LowAlarm)
             {
                 player.SoundLocation = System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\Waring.wav";
                 player.PlayLooping();
@@ -1495,14 +1498,23 @@ namespace AIC.HomePage.ViewModels
 
         private void CustomSystemHappenEvent(CustomSystemException ex)
         {
-            CustomSystemException.Add(ex);    
-            if (CustomSystemException.Count > 1000)
+            ex.id = (CustomSystemException.LastOrDefault() ?? new CustomSystemException()).id + 1;
+            CustomSystemException.Add(ex);
+
+            //保留当天100条数据
+            if (CustomSystemException.Count > 100)
             {
-                for (int i = 0; i < 100; i++)
+                CustomSystemException.RemoveAt(0);
+            }
+
+            var olds = CustomSystemException.Where(p => p.EventTime.Date != ex.EventTime.Date).ToList();
+            if (olds != null)
+            {
+               for(int i =0; i < olds.Count; i++ )
                 {
-                    CustomSystemException.RemoveAt(0);
+                    CustomSystemException.Remove(olds[i]);
                 }
-            }     
+            }
 
             //if (heightoffsets.Count >= 5)//避免太多弹出窗口
             //{

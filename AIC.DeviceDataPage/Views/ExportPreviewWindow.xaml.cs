@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AIC.DeviceDataPage.Views
 {
@@ -49,6 +49,8 @@ namespace AIC.DeviceDataPage.Views
 #else
                 Xceed.Wpf.Toolkit.MessageBox.Show(message ?? "保存成功", "保存", MessageBoxButton.OK, MessageBoxImage.Information);
 #endif
+                string dir = saveFileDialog.FileName;
+                System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
             }
         }
     }

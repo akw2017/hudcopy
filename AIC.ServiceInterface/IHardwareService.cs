@@ -13,13 +13,11 @@ namespace AIC.ServiceInterface
     public interface IHardwareService
     {
         ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }
-        Dictionary<string, T1_RootCard> T_RootCard { get; set; }
         void Initialize();
         void InitServers();
         Task<List<ChannelTreeItemViewModel>> AddCard(string serverIP, string maincardIP, string json);
         Task<List<ChannelTreeItemViewModel>> DeleteCard(string serverIP, string maincardIP, string json);
         Task<List<ChannelTreeItemViewModel>> ForceDeleteCard(string serverIP, string maincardIP);
-        void SaveCardToDatabase();
         void GetCardFromDatabase();
         Task<List<ChannelTreeItemViewModel>> AddTransmissionCard(string serverIP, string maincardIP, string identifier, string json);
         Task<List<ChannelTreeItemViewModel>> DeleteTransmissionCard(string serverIP, string maincardIP, string identifier, string json);

@@ -11,7 +11,7 @@ namespace AIC.ServiceInterface
 {
     public interface IDatabaseComponent
     {
-        Dictionary<string, T1_RootCard> T_RootCard { get; }
+        //Dictionary<string, T1_RootCard> T_RootCard { get; }
         Dictionary<string, List<T1_Organization>> T_Organization { get;  }
         Dictionary<string, List<T1_Device>> T_Device { get;  }
         Dictionary<string, List<T1_Item>> T_Item { get;  }
@@ -22,6 +22,7 @@ namespace AIC.ServiceInterface
         string MainServerIp { get; set; }
         void InitDatabase(string ip);
         void ClearDatabase();
+        List<string> GetServerIPCategory();
         List<T1_User> GetUserData(string ip);
         List<T1_Role> GetRoleData(string ip);
         List<T1_Menu> GetMenuData(string ip);
@@ -29,6 +30,7 @@ namespace AIC.ServiceInterface
         List<T1_Organization> GetOrganizationData(string ip);
         List<T1_Item> GetItemData(string ip);
         List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip);
+        T1_RootCard GetRootCard(string ip);
 
         Task<List<T1_User>> LoadUserData(string ip);
         Task<List<T1_Role>> LoadRoleData(string ip);

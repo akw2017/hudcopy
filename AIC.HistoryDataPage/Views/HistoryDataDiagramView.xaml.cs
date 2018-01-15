@@ -57,19 +57,38 @@ namespace AIC.HistoryDataPage.Views
 
         private void HorizontalAlignButtonClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.ItemWidth = verticalScrollViewer.ActualWidth / ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count() - 10;
-            ViewModel.ItemHeight = verticalScrollViewer.ActualHeight - 10;
+            int count = ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count();
+            int subcount = (ViewModel.ShowTimeDomain ? 1 : 0) + (ViewModel.ShowFrequencyDomain ? 1 : 0) + (ViewModel.ShowPowerSpectrum ? 1 : 0) + (ViewModel.ShowPowerSpectrumDensity ? 1 : 0);
+            if (ViewModel.IsMulticursor == true)
+            {
+                count = count - subcount;
+            }
+           
+            ViewModel.ItemWidth = verticalScrollViewer.ActualWidth / count - 20;
+            ViewModel.ItemHeight = verticalScrollViewer.ActualHeight - 5;
         }
 
         private void VerticalAlignButtonClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.ItemWidth = verticalScrollViewer.ActualWidth - 20;
-            ViewModel.ItemHeight = verticalScrollViewer.ActualHeight / ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count() - 5;
+            int count = ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count();
+            int subcount = (ViewModel.ShowTimeDomain ? 1 : 0) + (ViewModel.ShowFrequencyDomain ? 1 : 0) + (ViewModel.ShowPowerSpectrum ? 1 : 0) + (ViewModel.ShowPowerSpectrumDensity ? 1 : 0);
+            if (ViewModel.IsMulticursor == true)
+            {
+                count = count - subcount;
+            }
+
+            ViewModel.ItemWidth = verticalScrollViewer.ActualWidth - 60;
+            ViewModel.ItemHeight = verticalScrollViewer.ActualHeight / count - 5;
         }
 
         private void AllAlignButtonClick(object sender, RoutedEventArgs e)
         {
             int count = ViewModel.HistoricalDatas.Where(o => o.IsVisible == true).Count();
+            int subcount = (ViewModel.ShowTimeDomain ? 1 : 0) + (ViewModel.ShowFrequencyDomain ? 1 : 0) + (ViewModel.ShowPowerSpectrum ? 1 : 0) + (ViewModel.ShowPowerSpectrumDensity ? 1 : 0);
+            if (ViewModel.IsMulticursor == true)
+            {
+                count = count - subcount;               
+            }
             if (count == 1 || count == 2)
             {
                 ViewModel.ItemWidth = verticalScrollViewer.ActualWidth - 60;

@@ -42,10 +42,10 @@
                                 <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="Invalid">
                                     <Setter  Property="Foreground" Value="Gray"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighAlert">
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighAlarm">
                                     <Setter Property="Foreground" Value="DarkOrange"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="LowAlert">
+                                <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="LowAlarm">
                                     <Setter Property="Foreground" Value="DarkOrange" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding DelayAlarmGrade}" Value="HighDanger">
