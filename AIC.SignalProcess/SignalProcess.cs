@@ -101,7 +101,7 @@ namespace AIC.LocalConfiguration
         public void InitSignals()
         {
             SgDict.Clear();
-            foreach (var item in _organizationService.ItemTreeItems.Where(p => p.IsPaired == true))
+            foreach (var item in _organizationService.GetItems().Where(p => p.IsPaired == true))
             {
                 item.InitSignal();
                 item.BaseAlarmSignal.HasBattery = false;
@@ -198,10 +198,10 @@ namespace AIC.LocalConfiguration
         }
         public void LazyInitSignals()
         {
-            foreach (var item in _organizationService.ItemTreeItems.Where(p => p.IsPaired == true))
+            foreach (var item in _organizationService.GetItems().Where(p => p.IsPaired == true))
             {
                 //延时报警
-                var channel = _cardProcess.GetChannel(_hardwareService.ServerTreeItems, item.T_Item);
+                var channel = _cardProcess.GetChannel(_hardwareService.GetServers(), item.T_Item);
                 if (channel != null)
                 {
                     item.BaseAlarmSignal.DelayAlarmTime = channel.IChannel.DelayAlarmTime;
@@ -241,7 +241,7 @@ namespace AIC.LocalConfiguration
                     item.BaseAlarmSignal.ServerIP = item.ServerIP;
 
                     //延时报警
-                    var channel = _cardProcess.GetChannel(_hardwareService.ServerTreeItems, item.T_Item);
+                    var channel = _cardProcess.GetChannel(_hardwareService.GetServers(), item.T_Item);
                     if (channel != null)
                     {
                         item.BaseAlarmSignal.DelayAlarmTime = channel.IChannel.DelayAlarmTime;

@@ -23,7 +23,7 @@ namespace AIC.DatabaseService
         private readonly IConvertFromDataBaseFormat _convertFromDataBaseFormat;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ICardProcess _cardProcess;
-        public ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }
+        private ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; set; }
         //public Dictionary<string, T1_RootCard> T_RootCard { get; set; }
         public HardwareService(ILocalConfiguration localConfiguration, IConvertToDataBaseFormat convertToDataBaseFormat, IConvertFromDataBaseFormat convertFromDataBaseFormat, IDatabaseComponent databaseComponent, ICardProcess cardProcess)
         {
@@ -40,6 +40,11 @@ namespace AIC.DatabaseService
         public void Initialize()
         {
 
+        }
+
+        public ObservableCollection<ServerTreeItemViewModel> GetServers()
+        {
+            return ServerTreeItems;
         }
 
         public void InitServers()

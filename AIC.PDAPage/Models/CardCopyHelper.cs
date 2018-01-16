@@ -1,5 +1,7 @@
 ﻿using AIC.Core.Helpers;
 using AIC.Core.Models;
+using AIC.ServiceInterface;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -768,6 +770,9 @@ namespace AIC.PDAPage.Models
             {
                 return;
             }
+            IDatabaseComponent _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
+            right.UnitCategory = _databaseComponent.GetUnitCategory();
+
             right.Organization = left.Organization;
             right.T_Device_Name = left.T_Device_Name;
             right.T_Device_Code = left.T_Device_Code;

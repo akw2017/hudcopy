@@ -52,6 +52,7 @@ namespace AIC.HistoryDataPage.ViewModels
         private event EventHandler<ChannelDataChangedEventArgs> channelDataChanged;
         private event EventHandler<TrackChangedEventArgs> trackChanged;
         private event EventHandler<TrackChangedEventArgs> track2Changed;
+        private event EventHandler<bool> multicursorlChannged;
         private ObservableCollection<BaseWaveChannelToken> contractsCollection;
         public bool AddAlarmMarker = false;
 
@@ -126,6 +127,14 @@ namespace AIC.HistoryDataPage.ViewModels
                 track2Changed(this, new TrackChangedEventArgs(tokens));
             }
         }
+        public void CursorlChannged(bool ismulticursor)
+        {
+            if (multicursorlChannged != null)
+            {
+                multicursorlChannged(this, ismulticursor);
+            }
+        }
+
 
         public IObservable<ChannelToken> WhenChannelAdded
         {
@@ -181,6 +190,18 @@ namespace AIC.HistoryDataPage.ViewModels
                         h => this.track2Changed += h,
                         h => this.track2Changed -= h)
                    .Select(x => x.EventArgs.Tokens);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
+            }
+        }
+
+        public IObservable<bool> WhenCursorlChannged
+        {
+            get
+            {
+                return Observable
+                    .FromEventPattern<bool>(
+                        h => this.multicursorlChannged += h,
+                        h => this.multicursorlChannged -= h)
+                        .Select(x => x.EventArgs);// .Select(x => x.EventArgs.Tokens).Throttle(TimeSpan.FromMilliseconds(500));
             }
         }
 

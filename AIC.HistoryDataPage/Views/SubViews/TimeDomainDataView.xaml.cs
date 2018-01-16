@@ -58,6 +58,12 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
+                var sameseries = m_chart.ViewXY.SampleDataSeries.Where(o => o.Tag == token).SingleOrDefault();
+                if (sameseries != null)
+                {
+                    return;
+                }
+
                 if (viewModel == null || !(token is BaseWaveChannelToken)) return;
                 m_chart.BeginUpdate();
 
@@ -108,7 +114,7 @@ namespace AIC.HistoryDataPage.Views
                     sb.AppendLine(branches[i]);
                 }
                 string text = string.Format("{0}:", m_chart.ViewXY.YAxes.Count);
-                if (vToken.VData != null)
+                if (vToken.VData != null && vToken.VData.Waveform != null)
                 {
                     series.SamplesDouble = vToken.VData.Waveform;
                     axisY.Title.Text += "\r\n" + "  (" + vToken.VData.Unit + ")";
@@ -194,6 +200,10 @@ namespace AIC.HistoryDataPage.Views
             try
             {
                 if (viewModel == null) return;
+                foreach (var token in tokens2)//修复隐藏时候没有添加成功
+                {
+                    OnChannelAdded(token);
+                }
                 if (m_chart.ViewXY.SampleDataSeries.Count == 0)
                 {
                     return;

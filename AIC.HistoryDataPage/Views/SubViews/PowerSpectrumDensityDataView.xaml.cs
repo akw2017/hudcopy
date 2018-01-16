@@ -59,6 +59,12 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
+                var sameseries = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                if (sameseries != null)
+                {
+                    return;
+                }
+
                 if (viewModel == null || !(token is BaseWaveChannelToken)) return;
                 m_chart.BeginUpdate();
 
@@ -112,7 +118,7 @@ namespace AIC.HistoryDataPage.Views
                 }
                 string freText = "F";
                 string ampText = "A";
-                if (vToken.VData != null)
+                if (vToken.VData != null && vToken.VData.FFTLength != 0 && vToken.VData.Frequency != null && vToken.VData.PowerSpectrumDensity != null && vToken.VData.Phase != null)
                 {
                     int length = vToken.VData.FFTLength;
                     SeriesPoint[] points = new SeriesPoint[length];
@@ -203,6 +209,10 @@ namespace AIC.HistoryDataPage.Views
             try
             {
                 if (viewModel == null) return;
+                foreach (var token in tokens2)//修复隐藏时候没有添加成功
+                {
+                    OnChannelAdded(token);
+                }
                 if (m_chart.ViewXY.PointLineSeries.Count == 0)
                 {
                     return;

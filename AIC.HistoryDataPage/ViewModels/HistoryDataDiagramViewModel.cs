@@ -57,8 +57,8 @@ namespace AIC.HistoryDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
-            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            OrganizationTreeItems = _organizationService.GetOrganizations();
+            RecycledTreeItems = _organizationService.GetRecycleds(); ;
             SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
             TreeExpanded();
         }
@@ -382,6 +382,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         powerSpectrumVM2.ItemWidth = ItemWidth;//多光标新增
                         powerSpectrumDensityVM2.ItemWidth = ItemWidth;//多光标新增                       
                     }
+                    amsReplayVM.CursorlChannged(isMulticursor);
                 }
             }
         }
@@ -731,10 +732,7 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             get
             {
-                return new List<string>()
-                {
-                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
-                };
+                return _databaseComponent.GetUnitCategory();
             }
         }
 
@@ -1350,7 +1348,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         return;
                     }
 
-                    var channel = _cardProcess.GetChannel(_hardwareService.ServerTreeItems, item_parent.T_Item);
+                    var channel = _cardProcess.GetChannel(_hardwareService.GetServers(), item_parent.T_Item);
                     if (channel == null || channel.IChannel == null)
                     {
                         return;
@@ -1485,9 +1483,8 @@ namespace AIC.HistoryDataPage.ViewModels
                         powerSpectrumVM2.AddChannel(channeltoken);//多光标新增
                         powerSpectrumDensityVM2.AddChannel(channeltoken);//多光标新增
                         //alarmPointTrendVM.AddChannel(channeltoken);
-                        orthoDataVM.AddChannel(channeltoken);
-
-                        offDesignConditionVM.AddChannel(channeltoken);
+                        //orthoDataVM.AddChannel(channeltoken);
+                        //offDesignConditionVM.AddChannel(channeltoken);
 
                         addedChannels.Add(channeltoken);
                     }

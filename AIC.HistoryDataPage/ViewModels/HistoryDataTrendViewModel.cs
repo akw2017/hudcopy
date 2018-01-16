@@ -177,10 +177,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             get
             {
-                return new List<string>()
-                {
-                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
-                };
+                return _databaseComponent.GetUnitCategory();
             }
         }
 
@@ -425,7 +422,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
+            OrganizationTreeItems = _organizationService.GetOrganizations();
             //TreeExpanded();
         }
 
@@ -1794,7 +1791,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
                 foreach (var guid in ChartFile.ListGuid)
                 {
-                    var itemTree = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == guid).FirstOrDefault();
+                    var itemTree = _organizationService.GetItems().Where(p => p.T_Item.Guid == guid).FirstOrDefault();
                     if (itemTree != null)
                     {
                         AddData(itemTree);

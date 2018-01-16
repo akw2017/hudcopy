@@ -11,15 +11,7 @@ namespace AIC.ServiceInterface
 {
     public interface IDatabaseComponent
     {
-        //Dictionary<string, T1_RootCard> T_RootCard { get; }
-        Dictionary<string, List<T1_Organization>> T_Organization { get;  }
-        Dictionary<string, List<T1_Device>> T_Device { get;  }
-        Dictionary<string, List<T1_Item>> T_Item { get;  }
-        Dictionary<string, List<T1_User>> T_User { get;  }
-        Dictionary<string, List<T1_Role>> T_Role { get;  }
-        Dictionary<string, List<T1_Menu>> T_Menu { get;  }
-        Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; }
-        string MainServerIp { get; set; }
+       
         void InitDatabase(string ip);
         void ClearDatabase();
         List<string> GetServerIPCategory();
@@ -31,6 +23,10 @@ namespace AIC.ServiceInterface
         List<T1_Item> GetItemData(string ip);
         List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip);
         T1_RootCard GetRootCard(string ip);
+        List<string> GetUnitCategory();
+        Dictionary<string, List<T1_OrganizationPrivilege>> GetOrganizationPrivilegeDictionary();
+        void SetMainServerIp(string ip);
+        string GetMainServerIp();
 
         Task<List<T1_User>> LoadUserData(string ip);
         Task<List<T1_Role>> LoadRoleData(string ip);
@@ -70,5 +66,7 @@ namespace AIC.ServiceInterface
         Task<LatestSampleData> GetHistoryData(string ip, Dictionary<Guid, string> itemGuids, DateTime startTime, DateTime endTime);
         Task<List<T>> GetHistoryWaveformData<T>(string ip, Dictionary<Guid, Tuple<Guid, DateTime>> recordLabs, IProgress<double> process = null);
         Task<Dictionary<Guid, Dictionary<string, double>>> GetStatisticsData(string ip, HashSet<Guid> guidlist);
+
+
     }
 }

@@ -41,6 +41,7 @@ namespace AIC.HistoryDataPage.Views
         private IDisposable channelDataChangedSubscription;
         private IDisposable channelAddedSubscription;
         private IDisposable channelRemovedSubscription;
+        private IDisposable multicursorlChanngedSubscription;
 
         private static System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
 
@@ -65,6 +66,7 @@ namespace AIC.HistoryDataPage.Views
                 channelAddedSubscription = viewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
                 channelRemovedSubscription = viewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
                 channelDataChangedSubscription = viewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
+                multicursorlChanngedSubscription = viewModel.WhenCursorlChannged.Subscribe(OnCursorlChannged);
                 AddAlarmMarker = viewModel.AddAlarmMarker;
             }
         }
@@ -73,6 +75,12 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
+                var sameseries = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                if (sameseries != null)
+                {
+                    return;
+                }
+
                 m_chart.BeginUpdate();
 
                 var axisYnone = m_chart.ViewXY.YAxes.Where(o => o.Units.Text == "none").SingleOrDefault();
@@ -478,6 +486,10 @@ namespace AIC.HistoryDataPage.Views
             {
                 return;
             }
+            foreach (var token in tokens)//修复隐藏时候没有添加成功
+            {
+                OnChannelAdded(token);
+            }
             try
             {
                 m_chart.BeginUpdate();
@@ -548,6 +560,13 @@ namespace AIC.HistoryDataPage.Views
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-趋势趋势-数据更新", ex));
                 m_chart.EndUpdate();
+            }
+        }
+        private void OnCursorlChannged(bool ismulticursor)
+        {
+            if (m_chart.ViewXY.LineSeriesCursors.Count > 1)
+            {
+                m_chart.ViewXY.LineSeriesCursors[1].Visible = ismulticursor;
             }
         }
         private void CreateChart()
@@ -631,6 +650,7 @@ namespace AIC.HistoryDataPage.Views
             cursor2.LineStyle.Width = 2;
             cursor2.SnapToPoints = true;
             cursor2.TrackPoint.Color1 = Colors.White;
+            cursor2.Visible = false;
 
             m_chart.ViewXY.ZoomToFit();
             m_chart.EndUpdate();

@@ -502,7 +502,7 @@ namespace AIC.HistoryDataPage.Views
                     var _organizationService = ServiceLocator.Current.GetInstance<IOrganizationService>();
                     if (_organizationService != null)
                     {
-                        var vInfo = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == vChannelToken.Guid).Select(p => p.BaseAlarmSignal as BaseAlarmSignal).SingleOrDefault();
+                        var vInfo = _organizationService.GetItems().Where(p => p.T_Item.Guid == vChannelToken.Guid).Select(p => p.BaseAlarmSignal as BaseAlarmSignal).SingleOrDefault();
                         if (vInfo != null)
                         {
                             // "高危", "高警", "正常(高)", "正常(低)", "低警", "低危"
@@ -547,7 +547,7 @@ namespace AIC.HistoryDataPage.Views
                     var _organizationService = ServiceLocator.Current.GetInstance<IOrganizationService>();
                     if (_organizationService != null)
                     {
-                        var divFre = _organizationService.DivFreTreeItems.Where(p => p.T_DivFreInfo.Guid == divChannelToken.DivFreChannel.Guid).Select(p => p.DivFreSignal).SingleOrDefault();
+                        var divFre = _organizationService.GetDivFres().Where(p => p.T_DivFreInfo.Guid == divChannelToken.DivFreChannel.Guid).Select(p => p.DivFreSignal).SingleOrDefault();
 
                         if (divFre != null)
                         {

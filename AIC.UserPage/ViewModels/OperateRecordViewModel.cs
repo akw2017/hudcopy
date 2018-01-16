@@ -45,7 +45,7 @@ namespace AIC.UserPage.ViewModels
             SearchEndTime = DateTime.Now;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
-            ServerIP = _databaseComponent.MainServerIp;
+            ServerIP = _databaseComponent.GetMainServerIp();
 
             T_OperateRecord = new List<T1_OperateRecord>();
 

@@ -200,7 +200,7 @@ namespace AIC.HistoryDataPage.ViewModels
             if (ex != null && ex.Type == (int)CustomSystemType.Alarm)
             {
                
-                var itemTree =  _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == ex.T_Item_Guid).FirstOrDefault();
+                var itemTree =  _organizationService.GetItems().Where(p => p.T_Item.Guid == ex.T_Item_Guid).FirstOrDefault();
                 //var itemTree = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == new Guid("a0659d1e-2b1e-41ba-abe1-3d42caf678d9")).FirstOrDefault();
                 if (itemTree != null)
                 {

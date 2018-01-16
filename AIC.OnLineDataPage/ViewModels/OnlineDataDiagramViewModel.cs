@@ -71,7 +71,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 管理树
         private void InitTree()
         {
-            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
+            OrganizationTreeItems = _organizationService.GetOrganizations();
             var selectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
             SelectedTreeChanged(selectedTreeItem);
             //TreeExpanded();

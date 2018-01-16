@@ -73,8 +73,8 @@ namespace AIC.HistoryDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
-            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            OrganizationTreeItems = _organizationService.GetOrganizations();
+            RecycledTreeItems = _organizationService.GetRecycleds();
             SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
             TreeExpanded();
         }
@@ -392,10 +392,7 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             get
             {
-                return new List<string>()
-                {
-                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
-                };
+                return _databaseComponent.GetUnitCategory();
             }
         }
 

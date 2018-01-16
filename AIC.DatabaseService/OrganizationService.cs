@@ -14,28 +14,28 @@ namespace AIC.HardwareService
 {
     public class OrganizationService : IOrganizationService
     {
-        private readonly ICardProcess _cardProcess;    
-       
-        public ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get; set; }      
-        public ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; set; }
-        public List<ItemTreeItemViewModel> ItemTreeItems { get; set; }
-        public List<DivFreTreeItemViewModel> DivFreTreeItems { get; set; }
-        public Dictionary<string, List<T1_Organization>> T_Organization { get; set; }
-        public Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
-        public Dictionary<string, List<T1_Item>> T_Item { get; set; }
-        public Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get; set; }        
+        private readonly ICardProcess _cardProcess;
+        private readonly IDatabaseComponent _databaseComponent;
 
-        public OrganizationService(ICardProcess cardProcess)
+        private ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get; set; }      
+        private ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; set; }
+        private List<ItemTreeItemViewModel> ItemTreeItems { get; set; }
+        private List<DivFreTreeItemViewModel> DivFreTreeItems { get; set; }
+        private Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
+        private Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get; set; }        
+
+        public OrganizationService(ICardProcess cardProcess, IDatabaseComponent databaseComponent)
         {
             _cardProcess = cardProcess;
+            _databaseComponent = databaseComponent;
 
             OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>();           
             RecycledTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>();
             ItemTreeItems = new List<ItemTreeItemViewModel>();
             DivFreTreeItems = new List<DivFreTreeItemViewModel>();
-            T_Organization = new Dictionary<string, List<T1_Organization>>();
+            //T_Organization = new Dictionary<string, List<T1_Organization>>();
             T_OrganizationPrivilege = new Dictionary<string, List<T1_OrganizationPrivilege>>();
-            T_Item = new Dictionary<string, List<T1_Item>>();
+            //T_Item = new Dictionary<string, List<T1_Item>>();
             T_DivFreInfo = new Dictionary<string, List<T1_DivFreInfo>>();
         }
 
@@ -44,19 +44,25 @@ namespace AIC.HardwareService
             
         }
 
+        public void SetUserOrganizationPrivilege(Guid? guid)
+        {
+            T_OrganizationPrivilege.Clear();
+            foreach (var organizationPrivilege in _databaseComponent.GetOrganizationPrivilegeDictionary())
+            {
+                var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == guid select p).ToList();
+                T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
+            }
+        }
+
         public void InitOrganizations(bool isadmin)
         {
             //从数据库取出，去重复
             OrganizationTreeItems.Clear();           
             RecycledTreeItems.Clear();
-            //OrganizationTreeItemViewModel recyclednode = new OrganizationTreeItemViewModel("回收站", 0, "127.0.0.1");
-            //recyclednode.IsExpanded = true;
-            //RecycledTreeItems.Add(recyclednode);
-
             //测点数据
             ItemTreeItems.Clear();
 
-            foreach (var item in T_Organization.Keys)
+            foreach (var item in _databaseComponent.GetServerIPCategory())
             {
                 GetOrganizationFromDatabase(item, isadmin);                             
             }
@@ -84,7 +90,18 @@ namespace AIC.HardwareService
                 ItemTreeItems.Remove(item);
             }
         }
-
+        public List<ItemTreeItemViewModel> GetItems()
+        {
+            return ItemTreeItems;
+        }
+        public ObservableCollection<OrganizationTreeItemViewModel> GetRecycleds()
+        {
+            return RecycledTreeItems;
+        }
+        public ObservableCollection<OrganizationTreeItemViewModel> GetOrganizations()
+        {
+            return OrganizationTreeItems;
+        }
         public void AddDivFre(DivFreTreeItemViewModel divfre)
         {
             if (divfre == null)
@@ -109,34 +126,50 @@ namespace AIC.HardwareService
             }
         }
 
+        public List<DivFreTreeItemViewModel> GetDivFres()
+        {
+            return DivFreTreeItems;
+        }
+
+      
+
+        public void SetDivFres()
+        {
+            T_DivFreInfo.Clear();
+            foreach (var serverip in _databaseComponent.GetServerIPCategory())
+            {
+                T_DivFreInfo.Add(serverip, _databaseComponent.GetRootCard(serverip).T_DivFreInfo);
+            }
+        }
+
         public void SaveOrganizationToDatabase(string ip)//测试，废弃
         {
-            T_Organization[ip].Clear();
-            T_Item[ip].Clear();           
+            //T_Organization[ip].Clear();
+            //T_Item[ip].Clear();           
 
-            var organizationlist = _cardProcess.GetOrganizations(OrganizationTreeItems);
-            foreach(var organization in organizationlist)
-            {
-                T_Organization[ip].Add(organization.T_Organization);
-                if (organization is ItemTreeItemViewModel)
-                {
-                    var item = organization as ItemTreeItemViewModel;
-                    if (item.IsPaired == true)
-                    {
-                        T_Item[ip].Add(item.T_Item);
-                    }
-                }
-            }
-            //回收站
-            foreach(var organization in RecycledTreeItems[0].Children)
-            {
-                T_Organization[ip].Add(organization.T_Organization);
-            }
+            //var organizationlist = _cardProcess.GetOrganizations(OrganizationTreeItems);
+            //foreach(var organization in organizationlist)
+            //{
+            //    T_Organization[ip].Add(organization.T_Organization);
+            //    if (organization is ItemTreeItemViewModel)
+            //    {
+            //        var item = organization as ItemTreeItemViewModel;
+            //        if (item.IsPaired == true)
+            //        {
+            //            T_Item[ip].Add(item.T_Item);
+            //        }
+            //    }
+            //}
+            ////回收站
+            //foreach(var organization in RecycledTreeItems[0].Children)
+            //{
+            //    T_Organization[ip].Add(organization.T_Organization);
+            //}
         }
 
         public void GetOrganizationFromDatabase(string ip, bool isadmin)
         {
-            var roots = from p in T_Organization[ip] where p.Level == 0 && p.Is_Disabled == false orderby p.Sort_No select p;
+            var roots = from p in _databaseComponent.GetOrganizationData(ip) where p.Level == 0 && p.Is_Disabled == false orderby p.Sort_No select p;
             foreach(var root in roots.Distinct())//去重复
             {
                 if (root.NodeType == 0 && root.Is_Disabled == false)
@@ -161,7 +194,7 @@ namespace AIC.HardwareService
             RecycledTreeItems.Add(recyclednode);
 
             //回收站,有问题,htzk123，忘记是否修复了没有
-            var recycles = from p in T_Item[ip] where p.Is_Disabled == true orderby p.Modify_Time select p;
+            var recycles = from p in _databaseComponent.GetItemData(ip) where p.Is_Disabled == true orderby p.Modify_Time select p;
             foreach (var recycle in recycles.Distinct())//去重复
             {
                 ItemTreeItemViewModel organization = new ItemTreeItemViewModel(recycle);
@@ -177,7 +210,7 @@ namespace AIC.HardwareService
             {
                 return;
             }
-            var childs = from p in T_Organization[ip] where p.Parent_Guid == parent_organization.T_Organization.Guid && p.Is_Disabled == false orderby p.Sort_No select p;
+            var childs = from p in _databaseComponent.GetOrganizationData(ip) where p.Parent_Guid == parent_organization.T_Organization.Guid && p.Is_Disabled == false orderby p.Sort_No select p;
             foreach (var child in childs)
             {
                 if (child.NodeType == 0 && child.Is_Disabled == false)
@@ -215,7 +248,7 @@ namespace AIC.HardwareService
                     ItemTreeItemViewModel organization = new ItemTreeItemViewModel(child, parent_organization as DeviceTreeItemViewModel);
                     parent_organization.AddChild(organization);
                     //测点数据
-                    var t_item = T_Item[ip].Where(p => p.Is_Disabled == false && p.Guid == organization.T_Organization.Guid).FirstOrDefault();
+                    var t_item = _databaseComponent.GetItemData(ip).Where(p => p.Is_Disabled == false && p.Guid == organization.T_Organization.Guid).FirstOrDefault();
                     if (t_item != null)
                     {
                         organization.RecoverBind(t_item);                       
@@ -245,12 +278,12 @@ namespace AIC.HardwareService
 
         public void SaveItemToDatabase(string ip)////测试，废弃
         {
-            T_Item[ip].Clear();
-            var itemlist = from p in _cardProcess.GetItems(OrganizationTreeItems) where p.IsPaired == true select p;
-            foreach (var item in itemlist)
-            {
-                T_Item[ip].Add(item.T_Item);
-            }
+            //T_Item[ip].Clear();
+            //var itemlist = from p in _cardProcess.GetItems(OrganizationTreeItems) where p.IsPaired == true select p;
+            //foreach (var item in itemlist)
+            //{
+            //    T_Item[ip].Add(item.T_Item);
+            //}
         }
 
         public void GetItemFromDatabase(string ip)////测试，废弃
@@ -259,7 +292,7 @@ namespace AIC.HardwareService
             var treeitems = _cardProcess.GetItems(OrganizationTreeItems);
             if (treeitems != null)
             {
-                foreach (var t_item in T_Item[ip].Where(p=> p.Is_Disabled == false))
+                foreach (var t_item in _databaseComponent.GetItemData(ip).Where(p=> p.Is_Disabled == false))
                 {
                     var item = (from p in treeitems where p.T_Organization.Guid == t_item.Guid select p).FirstOrDefault();
                     if (item != null)

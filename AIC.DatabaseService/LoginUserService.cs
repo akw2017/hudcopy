@@ -89,24 +89,15 @@ namespace AIC.DatabaseService
             }
           
             string mainserverip = LoginInfo.ServerInfo.IP;
-            _databaseComponent.MainServerIp = mainserverip;
+            _databaseComponent.SetMainServerIp(mainserverip);
 
-            _organizationService.T_Organization = _databaseComponent.T_Organization;
-            //_organizationService.T_OrganizationPrivilege = _databaseComponent.T_OrganizationPrivilege;
-            _organizationService.T_Item = _databaseComponent.T_Item;
-            _organizationService.T_DivFreInfo.Clear();
-            //foreach (var rootcard in _databaseComponent.T_RootCard)
+            //_organizationService.T_Item = _databaseComponent.T_Item;
+            //_organizationService.T_DivFreInfo.Clear();
+            //foreach (var serverip in _databaseComponent.GetServerIPCategory())
             //{
-            //    _organizationService.T_DivFreInfo.Add(rootcard.Key, rootcard.Value.T_DivFreInfo);
+            //    _organizationService.T_DivFreInfo.Add(serverip, _databaseComponent.GetRootCard(serverip).T_DivFreInfo);
             //}
-            foreach (var serverip in _databaseComponent.GetServerIPCategory())
-            {
-                _organizationService.T_DivFreInfo.Add(serverip, _databaseComponent.GetRootCard(serverip).T_DivFreInfo);
-            }
-            _userManageService.T_Menu = _databaseComponent.T_Menu;
-            _userManageService.T_User = _databaseComponent.T_User;
-            _userManageService.T_Role = _databaseComponent.T_Role;
-            _userManageService.T_OrganizationPrivilege = _databaseComponent.T_OrganizationPrivilege; 
+            _organizationService.SetDivFres();
 
             LoginInfo.LoginStatus = true;
             if (LoginInfo.UserName == "superadmin" && LoginInfo.Password == "superadmin")
@@ -121,58 +112,26 @@ namespace AIC.DatabaseService
             }
             else//菜单权限=主服务器权限
             { 
-                var user = (from p in _userManageService.T_User[mainserverip] where p.Name == LoginInfo.UserName select p).FirstOrDefault();
+                var user = (from p in _databaseComponent.GetUserData(mainserverip) where p.Name == LoginInfo.UserName select p).FirstOrDefault();
                 if (user != null)
                 {
                     LoginInfo.UserCode = user.Code;
 
-                    var menu = (from p in _userManageService.T_Menu[mainserverip] where p.Guid == user.T_Menu_Guid select p).ToList();
+                    var menu = (from p in _databaseComponent.GetMenuData(mainserverip) where p.Guid == user.T_Menu_Guid select p).ToList();
                     foreach (var submenu in menu)
                     {
                         if (MenuManageList.Dictionary.Keys.Contains(submenu.InternalNumber))
                         {
                             MenuManageList.Dictionary[submenu.InternalNumber].Visibility = Visibility.Visible;
-                        }
-                        //switch (submenu.InternalNumber)
-                        //{
-                        //    case 0: MenuManageList.MenuUserManage.Visibility = Visibility.Visible; break;
-                        //    case 1: MenuManageList.MenuRoleManage.Visibility = Visibility.Visible; break;
-                        //    case 2: MenuManageList.MenuMenuManage.Visibility = Visibility.Visible; break;
-                        //    case 3: MenuManageList.MenuOrganizationManage.Visibility = Visibility.Visible; break;
-                        //    case 4: MenuManageList.MenuManageLog.Visibility = Visibility.Visible; break;
-                        //    case 5: MenuManageList.MenuServerSetting.Visibility = Visibility.Visible; break;
-                        //    case 6: MenuManageList.MenuCollectorSetting.Visibility = Visibility.Visible; break;
-                        //    case 7: MenuManageList.MenuEquipmentSetting.Visibility = Visibility.Visible; break;
-                        //    case 8: MenuManageList.MenuOnlineData.Visibility = Visibility.Visible; break;
-                        //    case 9: MenuManageList.MenuHistoricalData.Visibility = Visibility.Visible; break;
-                        //    case 10: MenuManageList.MenuAlarmData.Visibility = Visibility.Visible; break;
-                        //    case 11: MenuManageList.MenuRunningMonitor.Visibility = Visibility.Visible; break;
-                        //    case 12: MenuManageList.MenuRunningAnalyze.Visibility = Visibility.Visible; break;
-                        //    case 13: MenuManageList.MenuOnlineDataList.Visibility = Visibility.Visible; break;
-                        //    case 14: MenuManageList.MenuOnlineDataTile.Visibility = Visibility.Visible; break;
-                        //    case 15: MenuManageList.MenuOnlineDataDiagram.Visibility = Visibility.Visible; break;
-                        //    case 16: MenuManageList.MenuOnlineDataOverview.Visibility = Visibility.Visible; break;
-                        //    case 17: MenuManageList.MenuHistoryDataList.Visibility = Visibility.Visible; break;
-                        //    case 18: MenuManageList.MenuHistoryDataDiagram.Visibility = Visibility.Visible; break;
-                        //    case 19: MenuManageList.MenuOnlineDataDiagnosis.Visibility = Visibility.Visible; break;
-                        //    case 20: MenuManageList.MenuOnlineDataStatistics.Visibility = Visibility.Visible; break;
-                        //    case 21: MenuManageList.MenuHistoryDataStatistics.Visibility = Visibility.Visible; break;
-                        //    case 22: MenuManageList.MenuSystemEventList.Visibility = Visibility.Visible; break;
-                        //    case 23: MenuManageList.MenuDataTrendChart.Visibility = Visibility.Visible; break;
-                        //    case 24: MenuManageList.MenuEquipmentRunStatus.Visibility = Visibility.Visible; break;
-                        //    case 25: MenuManageList.MenuDeviceRunAnalyze.Visibility = Visibility.Visible; break;
-                        //    case 26: MenuManageList.MenuDeviceHourlyData.Visibility = Visibility.Visible; break;
-                        //    case 27: MenuManageList.MenuExportDBData.Visibility = Visibility.Visible; break;
-                        //    case 28: MenuManageList.MenuImportDBData.Visibility = Visibility.Visible; break;
-                        //    case 29: MenuManageList.MenuFilterDBData.Visibility = Visibility.Visible; break;
-                        //}
+                        }                       
                     }
-                    _organizationService.T_OrganizationPrivilege.Clear();
-                    foreach (var organizationPrivilege in _databaseComponent.T_OrganizationPrivilege)
-                    {
-                        var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == user.T_OrganizationPrivilege_Guid select p).ToList();
-                        _organizationService.T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
-                    }
+                    //_organizationService.T_OrganizationPrivilege.Clear();
+                    //foreach (var organizationPrivilege in _databaseComponent.T_OrganizationPrivilege)
+                    //{
+                    //    var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == user.T_OrganizationPrivilege_Guid select p).ToList();
+                    //    _organizationService.T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
+                    //}
+                    _organizationService.SetUserOrganizationPrivilege(user.T_OrganizationPrivilege_Guid);
                     _organizationService.InitOrganizations(false);
                 }
             }

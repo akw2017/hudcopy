@@ -11,21 +11,19 @@ namespace AIC.ServiceInterface
 {
     public interface IOrganizationService
     {
-        ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get; set; }      
-        ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; set; }
-        List<ItemTreeItemViewModel> ItemTreeItems { get; set; }
-        List<DivFreTreeItemViewModel> DivFreTreeItems { get; set; }
-        Dictionary<string, List<T1_Organization>> T_Organization { get; set; }
-        Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
-        Dictionary<string, List<T1_Item>> T_Item { get; set; }
-        Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get; set; }
         void Initialize();
+        void SetUserOrganizationPrivilege(Guid? guid);
         void InitOrganizations(bool isadmin);
         void AddItem(ItemTreeItemViewModel item);
         void DeleteItem(ItemTreeItemViewModel item);
         void AddDivFre(DivFreTreeItemViewModel divfre);
         void DeleteDivFre(DivFreTreeItemViewModel divfre);
         void SaveOrganizationToDatabase(string ip);
-        void GetOrganizationFromDatabase(string ip, bool isadmin);              
+        void GetOrganizationFromDatabase(string ip, bool isadmin);
+        List<DivFreTreeItemViewModel> GetDivFres();
+        void SetDivFres();
+        List<ItemTreeItemViewModel> GetItems();
+        ObservableCollection<OrganizationTreeItemViewModel> GetRecycleds();
+        ObservableCollection<OrganizationTreeItemViewModel> GetOrganizations();
     }
 }

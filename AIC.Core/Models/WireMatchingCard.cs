@@ -1072,13 +1072,14 @@ namespace AIC.Core.Models
         [JsonIgnore]
         public List<string> UnitCategory
         {
-            get
-            {
-                return new List<string>()
-                {
-                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
-                };
-            }
+            //get
+            //{
+            //    return new List<string>()
+            //    {
+            //        "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
+            //    };
+            //}//从数据库获取
+            get;  set;
         }
 
         private bool isShowUnit = true;
