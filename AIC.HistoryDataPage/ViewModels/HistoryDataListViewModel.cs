@@ -73,9 +73,9 @@ namespace AIC.HistoryDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.GetOrganizations();
-            RecycledTreeItems = _organizationService.GetRecycleds();
-            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
+            RecycledTreeItems = _organizationService.RecycledTreeItems;
+            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);//可能无效了
             TreeExpanded();
         }
         private void TreeExpanded()
@@ -392,7 +392,7 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             get
             {
-                return _databaseComponent.GetUnitCategory();
+                return _databaseComponent.UnitCategory;
             }
         }
 

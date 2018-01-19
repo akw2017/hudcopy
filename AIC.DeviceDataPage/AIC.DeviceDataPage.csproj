@@ -128,10 +128,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\DeviceHourlyDataViewModel.cs" />
+    <Compile Include="ViewModels\DeviceRunTestListViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunAnalyzeListViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunStatusListViewModel.cs" />
     <Compile Include="Views\DeviceHourlyDataView.xaml.cs">
       <DependentUpon>DeviceHourlyDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceRunTestListView.xaml.cs">
+      <DependentUpon>DeviceRunTestListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeviceRunAnalyzeListView.xaml.cs">
       <DependentUpon>DeviceRunAnalyzeListView.xaml</DependentUpon>
@@ -170,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeviceHourlyDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceRunTestListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

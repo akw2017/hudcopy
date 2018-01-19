@@ -104,6 +104,37 @@
                     <DataTrigger Binding="{Binding IsVisible}" Value="false">
                         <Setter Property="Visibility" Value="Collapsed"/>
                     </DataTrigger>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                        <Setter Property="IsSelected" Value="true" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="FluidListBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
+                                <core:FluidWrapPanel.ElementEasing>
+                                    <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                                </core:FluidWrapPanel.ElementEasing>
+                                <core:FluidWrapPanel.DragEasing>
+                                    <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                                </core:FluidWrapPanel.DragEasing>
+                            </core:FluidWrapPanel>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=IsMulticursor}" Value="true">
+                        <Setter Property="ItemsPanel">
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <!--<VirtualizingStackPanel />-->
+                                    <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
                 </Style.Triggers>
             </Style>
             <Style x:Key="ToggleExpandButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
@@ -202,7 +233,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>             
+            </Style>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
@@ -213,7 +244,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>     
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -349,75 +380,77 @@
         </Grid>
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <wrap:WrapBreakPanel Grid.Row="0" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5">
-            <TextBlock Text="选择项:" VerticalAlignment="Center"/>
-            <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
-            <TextBlock Text="数据上限:" VerticalAlignment="Center" />
-            <TextBox Text="{Binding ChannelRecordLength}" Width="100" Style="{DynamicResource MetroTextBox}" IsEnabled="False" Margin="2,0,0,0"/>
-            <TextBlock Text="数据类型:" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <!--<ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:Unit}" SelectedItem="{Binding UnitFilter}" Style="{DynamicResource VirtualisedMetroComboBox}" Margin="2,0,0,0"/>-->
-            <ComboBox Width="120" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False"/>
-            <TextBlock Text="触发条件:" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:TriggerType}" SelectedItem="{Binding TriggerFilter}" Style="{DynamicResource VirtualisedMetroComboBox}" Margin="2,0,0,0"/>
+        <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <wrap:WrapBreakPanel>
+                <TextBlock Text="选择项:" VerticalAlignment="Center"/>
+                <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <TextBlock Text="数据上限:" VerticalAlignment="Center" />
+                <TextBox Text="{Binding ChannelRecordLength}" Width="100" Style="{DynamicResource MetroTextBox}" IsEnabled="False" Margin="2,0,0,0"/>
+                <TextBlock Text="数据类型:" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <!--<ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:Unit}" SelectedItem="{Binding UnitFilter}" Style="{DynamicResource VirtualisedMetroComboBox}" Margin="2,0,0,0"/>-->
+                <ComboBox Width="120" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False"/>
+                <TextBlock Text="触发条件:" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:TriggerType}" SelectedItem="{Binding TriggerFilter}" Style="{DynamicResource VirtualisedMetroComboBox}" Margin="2,0,0,0"/>
 
-            <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0" Visibility="Collapsed"/>
+                <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0" Visibility="Collapsed"/>
 
-            <CheckBox Content="转速" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowRPMFilter}" VerticalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock Text="起始转速:" VerticalAlignment="Center" Margin="2,0,0,0" Visibility="Collapsed"/>
-            <TextBox Text="{Binding DownRPMFilter}" Width="100" Style="{DynamicResource MetroTextBox}" Margin="2,0,0,0" Visibility="Collapsed"/>
-            <TextBlock Text="终止转速:" VerticalAlignment="Center" Margin="2,0,0,0" Visibility="Collapsed"/>
-            <TextBox Width="100" Text="{Binding UpRPMFilter}" Style="{DynamicResource MetroTextBox}" Margin="2,0,0,0" Visibility="Collapsed"/>
+                <CheckBox Content="转速" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowRPMFilter}" VerticalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock Text="起始转速:" VerticalAlignment="Center" Margin="2,0,0,0" Visibility="Collapsed"/>
+                <TextBox Text="{Binding DownRPMFilter}" Width="100" Style="{DynamicResource MetroTextBox}" Margin="2,0,0,0" Visibility="Collapsed"/>
+                <TextBlock Text="终止转速:" VerticalAlignment="Center" Margin="2,0,0,0" Visibility="Collapsed"/>
+                <TextBox Width="100" Text="{Binding UpRPMFilter}" Style="{DynamicResource MetroTextBox}" Margin="2,0,0,0" Visibility="Collapsed"/>
 
-            <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 
-            <CheckBox Content="正常值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowNormal}"  VerticalAlignment="Center"/>
-            <CheckBox Content="预警值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowPreWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="警告值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="危险值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowDanger}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="无效值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowInvalid}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="正常值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowNormal}"  VerticalAlignment="Center"/>
+                <CheckBox Content="预警值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowPreWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="警告值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="危险值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowDanger}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="无效值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowInvalid}" VerticalAlignment="Center" Margin="2,0,0,0"/>
 
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 
-            <TextBlock Text="查询时间" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center" />
-            <TextBlock Text="{DynamicResource end}" Margin="2,0,0,0" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+                <TextBlock Text="查询时间" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center" />
+                <TextBlock Text="{DynamicResource end}" Margin="2,0,0,0" VerticalAlignment="Center"/>
+                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
 
-            <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 
-            <Button Command="{Binding AddDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
-                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding RefreshDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
-                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding ClearDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
-                        <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </wrap:WrapBreakPanel>
+                <Button Command="{Binding AddDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                            <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding RefreshDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
+                            <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding ClearDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                            <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </wrap:WrapBreakPanel>
+        </Border>
 
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Grid.Row="1" Grid.Column="2" Margin="0,1,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>                
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>               
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="100"/>
@@ -441,69 +474,71 @@
                     <CheckBox Margin="5,0" Content="时间三维谱" IsChecked="{Binding ShowTime3DSpectrum}" Style="{StaticResource CheckBoxStyle}"/>
                     <CheckBox Margin="5,0" Content="转速三维谱" IsChecked="{Binding ShowRPM3DSpectrum}" Style="{StaticResource CheckBoxStyle}"/>-->
                     <CheckBox Margin="5,0" IsChecked="{Binding IsMulticursor}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="双光标模式" />
-                    <CheckBox x:Name="chkbox" Margin="5,0" IsChecked="{Binding IsHideControl}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="隐藏控制条" />
-                </WrapPanel>              
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
-                    <StackPanel.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform Y="-5"/>
-                        </TransformGroup>
-                    </StackPanel.RenderTransform>
-                    <Button Click="HorizontalAlignButtonClick" Margin="0,0,5,0">
-                        <Image Source="/AIC.Resources;component/Images/HorizontalAlign.png">
+                    <!--<CheckBox x:Name="chkbox" Margin="5,0" IsChecked="{Binding IsHideControl}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="隐藏控制条" />-->
+                    <Button Width="24" Height="24" Click="HorizontalAlignButtonClick" Margin="0,0,5,0">
+                        <Image Stretch="Fill" Source="/AIC.Resources;component/Images/HorizontalAlign.png">
                             <Image.ToolTip>
                                 <ToolTip Content="水平对齐" />
                             </Image.ToolTip>
                         </Image>
                     </Button>
-                    <Button Click="VerticalAlignButtonClick" Margin="0,0,5,0">
-                        <Image Source="/AIC.Resources;component/Images/VerticalAlign.png">
+                    <Button Width="24" Height="24" Click="VerticalAlignButtonClick" Margin="0,0,5,0">
+                        <Image Stretch="Fill" Source="/AIC.Resources;component/Images/VerticalAlign.png">
                             <Image.ToolTip>
                                 <ToolTip Content="垂直对齐" />
                             </Image.ToolTip>
                         </Image>
                     </Button>
-                    <Button Click="AllAlignButtonClick" Margin="0,0,5,0">
-                        <Image Source="/AIC.Resources;component/Images/Align.png">
+                    <Button Width="24" Height="24" Click="AllAlignButtonClick" Margin="0,0,5,0">
+                        <Image Stretch="Fill" Source="/AIC.Resources;component/Images/Align.png">
                             <Image.ToolTip>
                                 <ToolTip Content="平均对齐" />
                             </Image.ToolTip>
                         </Image>
                     </Button>
-                </StackPanel>
+                </WrapPanel>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,10,0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="verticalScrollViewer">
-                    <ListBox x:Name="ReplayListBox" Background="{x:Null}" BorderBrush="{x:Null}" 
+            <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="ReplayListBox" Grid.Row="1" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" 
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                         ItemsSource="{Binding HistoricalDatas}" ItemContainerStyle="{StaticResource SignalMonitorStyle}" >
-                        <!--<ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
-                                    <core:FluidWrapPanel.ElementEasing>
-                                        <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
-                                    </core:FluidWrapPanel.ElementEasing>
-                                    <core:FluidWrapPanel.DragEasing>
-                                        <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
-                                    </core:FluidWrapPanel.DragEasing>
-                                </core:FluidWrapPanel>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>-->
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                    </ListBox>
-                </ScrollViewer>
-                <Grid>
+                                         ItemsSource="{Binding HistoricalDatas}" SelectedItem="{Binding SelectedHistoricalData}"  ItemContainerStyle="{StaticResource SignalMonitorStyle}" Style="{StaticResource FluidListBoxStyle}">
+                    <!--<ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
+                                <core:FluidWrapPanel.ElementEasing>
+                                    <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                                </core:FluidWrapPanel.ElementEasing>
+                                <core:FluidWrapPanel.DragEasing>
+                                    <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                                </core:FluidWrapPanel.DragEasing>
+                            </core:FluidWrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>-->
+                    <!--<ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>-->                   
+                </ListBox>
+                <Slider Grid.Row="0" Grid.Column="0" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal"  />
+                <Slider Grid.Row="1" Grid.Column="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="600" Orientation="Vertical"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}"/>
+                <!--<Grid>
                     <Grid.RenderTransform>
                         <TransformGroup>
-                            <TranslateTransform X="10" Y="-8"/>
+                            <TranslateTransform X="0" Y="-8"/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <!--<CheckBox IsChecked="{Binding IsComposing, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,1,0" />-->
+                    --><!--<CheckBox IsChecked="{Binding IsComposing, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,1,0" />--><!--
                     <Slider Grid.Row="1" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,30,0" />
                     <Slider Grid.Row="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Vertical" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,1,0" />
                     <Grid.Resources>
@@ -515,12 +550,13 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Resources>
-                </Grid>
+                </Grid>-->
             </Grid>
 
             <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-            <ListBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Background="{x:Null}" ItemsSource="{Binding AddedChannels}" SelectedItem="{Binding SelectedChannel}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="{x:Null}">
+            <ListBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     ItemsSource="{Binding AddedChannels}" SelectedItem="{Binding SelectedChannel}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                 <ListBox.Resources>
                     <DataTemplate DataType="{x:Type models:ChannelToken}">
                         <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
@@ -541,7 +577,7 @@
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Vertical"/>
                     </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>                
+                </ListBox.ItemsPanel>
             </ListBox>
         </Grid>
 

@@ -104,7 +104,7 @@ namespace AIC.Core.Models
                 }
                 else if (m1 >= (rms * 0.1 * Math.Sqrt(2)) && m2 >= (rms * 0.1 * Math.Sqrt(2)) && m3 >= (rms * 0.1 * Math.Sqrt(2)) && m4 >= (rms * 0.1 * Math.Sqrt(2)) && m5 >= (rms * 0.1 * Math.Sqrt(2)))
                 {
-                    vSg.DiagnosticInfo = "轴承座松动、轴承松动、（基础）松动等\r\n";
+                    vSg.DiagnosticInfo = "轴承座松动、轴承松动、（基础）松动等";
                     vSg.DiagnosticAdvice = "建议：(1)请检查相关轴系的润滑、基础的紧固、相关轴系的轴承、轴承座安装情况.\r\n";
                     vSg.DiagnosticAdvice += "          (2)受热、负载过大等原因导致轴弯曲；\r\n";
                     vSg.DiagnosticAdvice += "          (3)内环或外环安装不合适，导致轴承偏翘（翘曲）。\r\n";
@@ -120,7 +120,7 @@ namespace AIC.Core.Models
                             break;
                         }
                     }
-                    vSg.DiagnosticInfo = "频谱上有占能量很大比率的频率" + fMax.ToString("0.000") + "没有找到合适的故障原因\r\n";
+                    vSg.DiagnosticInfo = "频谱上有占能量很大比率的频率" + fMax.ToString("0.000") + "没有找到合适的故障原因";
                     vSg.DiagnosticAdvice = "建议：(1)没有设备结构模型，比如齿轮齿数、设置轴承型号等，不能确定故障的部位。\r\n";
                     vSg.DiagnosticAdvice += "          (2)转速设置是否正确。\r\n";
                 }

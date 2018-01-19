@@ -55,7 +55,7 @@ namespace AIC.PDAPage.ViewModels
             _databaseComponent = databaseComponent;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
-            ServerIP = _databaseComponent.GetMainServerIp();
+            ServerIP = _databaseComponent.MainServerIp;
 
             InitTree();
             InitHardware();
@@ -959,8 +959,8 @@ namespace AIC.PDAPage.ViewModels
         #region 管理树
         private void InitTree()
         {          
-            OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.GetOrganizations().Where(p => p.ServerIP == ServerIP));
-            RecycledTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.GetRecycleds().Where(p =>p.ServerIP == ServerIP));
+            OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerIP));
+            RecycledTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.RecycledTreeItems.Where(p =>p.ServerIP == ServerIP));
             //TreeExpanded();
         }
         private void TreeExpanded()
@@ -2373,7 +2373,7 @@ namespace AIC.PDAPage.ViewModels
                 if (channeltree != null && channeltree.IsPaired == true)//如果已经绑定
                 {
                     //TreeProcess.AutoServerTreeSelected(OrganizationTreeItems, channeltree); //自动选中节点 
-                    TreeProcess.AutoServerTreeSelected(_organizationService.GetItems().Where(p => p.IsPaired == true).ToList(), channeltree);
+                    TreeProcess.AutoServerTreeSelected(_organizationService.ItemTreeItems.Where(p => p.IsPaired == true).ToList(), channeltree);
                 }
                 ItemTreeItemViewModel itemtree = SelectedOrganizationTree as ItemTreeItemViewModel;
                 if (channeltree != null && itemtree != null)
@@ -2657,7 +2657,7 @@ namespace AIC.PDAPage.ViewModels
                 if (selectedServer.IsPaired == true)//如果已经绑定
                 {
                     //TreeProcess.AutoServerTreeSelected(OrganizationTreeItems, selectedServer); //自动选中节点 
-                    TreeProcess.AutoServerTreeSelected(_organizationService.GetItems().Where(p => p.IsPaired == true).ToList(), selectedServer);
+                    TreeProcess.AutoServerTreeSelected(_organizationService.ItemTreeItems.Where(p => p.IsPaired == true).ToList(), selectedServer);
                 }
             }
             GetServerNode(para);//得到服务器根节点
@@ -2789,7 +2789,7 @@ namespace AIC.PDAPage.ViewModels
             Status = ViewModelStatus.Querying;
             WaitInfo = "数据获取中";
             await _loginUserService.AwaitLazyLoading();
-            ServerTreeItems = new ObservableCollection<ServerTreeItemViewModel>(_hardwareService.GetServers().Where(p => p.ServerIP == ServerIP));//服务器
+            ServerTreeItems = new ObservableCollection<ServerTreeItemViewModel>(_hardwareService.ServerTreeItems.Where(p => p.ServerIP == ServerIP));//服务器
             if (ServerTreeItems.Count > 0)
             {
                 SelectedServerTree = ServerTreeItems[0];
@@ -4351,7 +4351,7 @@ namespace AIC.PDAPage.ViewModels
                     //删除测点信息
                     if (channeltree.IsPaired == true)
                     {
-                        var itemtree = _organizationService.GetItems().Where(p => p.IsPaired == true && p.T_Item.Guid.ToString() == channeltree.IChannel.T_Item_Guid).FirstOrDefault();
+                        var itemtree = _organizationService.ItemTreeItems.Where(p => p.IsPaired == true && p.T_Item.Guid.ToString() == channeltree.IChannel.T_Item_Guid).FirstOrDefault();
                         if (itemtree != null)
                         {
                             ids.Add(itemtree.T_Item.id);

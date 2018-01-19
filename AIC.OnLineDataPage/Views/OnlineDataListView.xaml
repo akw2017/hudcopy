@@ -167,14 +167,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>     
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TreeView Grid.Row="0" Grid.RowSpan="4" x:Name="treeview"                        
+        <TreeView Grid.Row="0" Grid.RowSpan="3" x:Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
             <TreeView.Resources>
@@ -267,48 +266,50 @@
 
         </TreeView>
 
-        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-        <!--<view:AlarmGradeFilterView Grid.Row="0" Grid.Column="2" Margin="0,5"/>-->
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
-            
-            <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="无效" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="正常" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="预警" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="警告" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="危险" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="断线" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsUnConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+      
+        <Border Grid.Row="0" Grid.Column="2" Padding="5" Background="{DynamicResource AccentColorBrush2}">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+
+                    <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="无效" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="正常" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="预警" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="警告" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="危险" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                        <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
+                        <TextBlock Text="断线" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsUnConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    </StackPanel>
+                    <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="低危" VerticalAlignment="Center" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
@@ -328,25 +329,27 @@
                 <TextBlock Text="低正常" VerticalAlignment="Center" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>-->
-           
-        </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <CheckBox VerticalAlignment="Center" IsChecked="True" Content="分组显示"  Style="{StaticResource CheckBoxStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding GroupViewCommand}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Unchecked">
-                        <i:InvokeCommandAction Command="{Binding UnGroupViewCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </CheckBox>
-        </StackPanel>
+                </StackPanel>
 
-        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}"        
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <CheckBox VerticalAlignment="Center" IsChecked="True" Content="分组显示"  Style="{StaticResource CheckBoxStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding GroupViewCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding UnGroupViewCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </StackPanel>
+            </Grid>
+        </Border>
+      
+        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" Margin="0,1,0,0"      
                                    VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False">
-                <DataGrid.Resources>
+            <DataGrid.Resources>
                 <ControlTemplate TargetType="{x:Type GroupItem}" x:Key="defaultGroup">
                     <ItemsPresenter />
                 </ControlTemplate>
@@ -355,12 +358,13 @@
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                 <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
                 <DataGridTextColumn Header="报警级别" Binding="{Binding DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>              
-                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>             
-                <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>              
+                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="传感器地址"  Binding="{Binding ChannelHDID}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="报警信息" IsReadOnly="True">
+                <DataGridTextColumn Header="报警信息"  Binding="{Binding AlarmLimitString}" IsReadOnly="True"/>
+                <!--<DataGridTemplateColumn Header="报警信息" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ListBox x:Name="txtName" ItemsSource="{Binding AlarmLimit}">
@@ -386,7 +390,7 @@
                             </ListBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
                 <DataGridTemplateColumn Header="传感器电量">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -428,8 +432,10 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="分频名称" Binding="{Binding DisPlayName}" IsReadOnly="True"/>
-                                --><!--<DataGridTextColumn Header="分频类型"  Binding="{Binding DivFreType, Converter={StaticResource ResourceKey=enumDescriptionConverter}}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="报警类型"  Binding="{Binding AlarmType, Converter={StaticResource intToAlarmTypeStrConverter}}" IsReadOnly="True"/>--><!--
+                                -->
+            <!--<DataGridTextColumn Header="分频类型"  Binding="{Binding DivFreType, Converter={StaticResource ResourceKey=enumDescriptionConverter}}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="报警类型"  Binding="{Binding AlarmType, Converter={StaticResource intToAlarmTypeStrConverter}}" IsReadOnly="True"/>-->
+            <!--
                                 <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="200" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="频率"  Binding="{Binding FreV,StringFormat=F3}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="幅值"  Binding="{Binding FreMV,StringFormat=F3}" IsReadOnly="True"/>
@@ -486,7 +492,7 @@
                                                 <StackPanel Orientation="Horizontal" Width="Auto" Height="24">
                                                     <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,5,0"/>
                                                     <TextBlock FontWeight="Bold" Text=":"/>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>                                                   
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Margin="5,0,5,0"/>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <Expander.Content>
@@ -507,7 +513,7 @@
                                                             </DataTrigger.Binding>
                                                             <Setter Property="IsExpanded" Value="True"/>
                                                         </DataTrigger>
-                                                     
+
                                                     </Style.Triggers>
                                                 </Style>
                                             </Expander.Style>
@@ -533,8 +539,8 @@
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
                 </Style>
-            </DataGrid.ColumnHeaderStyle>          
-          
+            </DataGrid.ColumnHeaderStyle>
+
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
@@ -575,8 +581,8 @@
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                    <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                 </Style>
             </DataGrid.Style>
             <i:Interaction.Triggers>
@@ -586,18 +592,8 @@
             </i:Interaction.Triggers>
         </DataGrid>
 
-        <GridSplitter Grid.Row="2" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-        
-        <Grid Grid.Row="3" Grid.Column="2">
+        <Grid Grid.Row="2" Grid.Column="2">
             <Expander Header="{Binding DiagnosticInfo}" Content="{Binding DiagnosticAdvice}"></Expander>
         </Grid>       
-        <!--<page:PageNavigation Grid.Row="2" Grid.Column="2" Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize,Mode=TwoWay}" 
-            TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=OneWayToSource}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="CurrentPageChanged">
-                    <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </page:PageNavigation>-->
     </Grid>
 </UserControl>

@@ -114,8 +114,8 @@
     </UserControl.Resources>
     <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>           
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -125,7 +125,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView Grid.Row="0" x:Name="treeview"                        
+        <TreeView Grid.Row="0" Grid.RowSpan="2" x:Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
             <TreeView.Resources>
@@ -290,28 +290,35 @@
 
         </TreeView>
 
-        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-      
-        <Grid Grid.Row="0" Grid.Column="2">
-            <dd:DiagramControl DataContext="{Binding DiagramViewModel}" ItemTemplateSelector="{StaticResource valueTypeTemplateSelector}"  Margin="3" Background="Transparent" IsEnabled="{Binding IsChecked,ElementName=chk,Converter={StaticResource negateConverter}}"/>
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-            <TextBlock Foreground="#FF87CDEE" Text="{Binding DeviceName}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+        <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="设备名称" VerticalAlignment="Center" Margin="5,0"/>
+                    <TextBox Text="{Binding DeviceName}" VerticalAlignment="Center" Margin="5,0" IsReadOnly="True" Width="200"/>
+                    <CheckBox x:Name="chk" IsChecked="True" Content="锁定布局" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" IsEnabled="{Binding CanOperated}" Margin="5,0"></CheckBox>
+                    <Button Command="{Binding SaveLayoutCommand}" Style="{DynamicResource AccentedSquareButtonStyle}"  VerticalAlignment="Center" Margin="5,0">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/page_save.png"/>  
+                                <TextBlock Text="保存布局" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>               
+            </Grid>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush2}">
+            <Grid >
+                <dd:DiagramControl DataContext="{Binding DiagramViewModel}" ItemTemplateSelector="{StaticResource valueTypeTemplateSelector}"  Margin="3" Background="Transparent" IsEnabled="{Binding IsChecked,ElementName=chk,Converter={StaticResource negateConverter}}"/>
+            </Grid>
+        </Border>
 
-            <Button Width="150" Command="{Binding SaveLayoutCommand}" Style="{DynamicResource AccentedSquareButtonStyle}"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/page_save.png"  />
-                        <TextBlock Text="保存布局" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+        <GridSplitter x:Name="gsSecondSplitterr" Grid.Row="1" Grid.Column="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-            <CheckBox x:Name="chk" IsChecked="True" Content="锁定布局" Style="{StaticResource CheckBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsEnabled="{Binding CanOperated}"></CheckBox>
-        </Grid>
-
-        <GridSplitter x:Name="gsSecondSplitterr" Grid.Row="0" Grid.Column="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-
-        <Expander x:Name="expander" Expanded="expander_Expanded" Collapsed="expander_Collapsed"    Grid.Row="0" Grid.Column="4" ExpandDirection="Left" IsExpanded="{Binding ItemIsExpanded}">
+        <Expander x:Name="expander" Grid.Row="1" Grid.Column="4" ExpandDirection="Left" IsExpanded="{Binding ItemIsExpanded}" Expanded="expander_Expanded" Collapsed="expander_Collapsed">
             <Grid Grid.Row="0" Grid.Column="4" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />

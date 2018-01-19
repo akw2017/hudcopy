@@ -1,4 +1,5 @@
-﻿using AIC.Core.Models;
+﻿using AIC.Core.LMModels;
+using AIC.Core.Models;
 using AIC.Core.SignalModels;
 using Prism.Events;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.Events
 {
-    public class CustomSystemEvent : PubSubEvent<CustomSystemException>
+    public class CustomSystemEvent : PubSubEvent<T1_SystemEvent>
     {
     }
 }

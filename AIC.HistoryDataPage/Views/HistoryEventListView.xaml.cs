@@ -24,7 +24,7 @@ namespace AIC.HistoryDataPage.Views
         public HistoryEventListView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuSystemEventList"], true);
+            this.Closer = new CloseableHeader("menuSystemEventList", (string)Application.Current.Resources["menuSystemEventList"], true);
         }
         public CloseableHeader Closer { get; private set; }
     }

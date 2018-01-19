@@ -40,7 +40,7 @@ namespace AIC.UserPage.ViewModels
             _loginUserService = loginUserService;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
-            ServerIP = _databaseComponent.GetMainServerIp();
+            ServerIP = _databaseComponent.MainServerIp;
            
             InitPager(ServerIP);
 

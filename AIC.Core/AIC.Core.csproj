@@ -257,7 +257,7 @@
     <Compile Include="Models\ExceptionModel.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="ControlModels\MenuItemViewModel.cs" />
-    <Compile Include="Models\CustomSystemException.cs" />
+    <Compile Include="LMModels\T1_SystemEvent.cs" />
     <Compile Include="Models\WireMatchingCardMetadata.cs" />
     <Compile Include="Models\WirelessReceiveCardMetadata.cs" />
     <Compile Include="Models\MainControlCardMetadata.cs" />

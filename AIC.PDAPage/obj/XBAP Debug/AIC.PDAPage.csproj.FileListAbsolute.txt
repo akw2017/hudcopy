@@ -188,3 +188,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\Wire
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\EditViews\WireMatchingCardWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\XBAP Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\ImportDBDataView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\FilterDBDataView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\ImportDBDataView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\XBAP Debug\Views\FilterDBDataView.baml

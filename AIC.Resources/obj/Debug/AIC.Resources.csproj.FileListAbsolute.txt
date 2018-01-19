@@ -193,4 +193,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\TaskbarNotifier.b
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\TaskbarNotifier.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\GrayAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\Gray.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGrayAddition.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGray.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache

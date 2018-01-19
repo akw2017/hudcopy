@@ -91,7 +91,7 @@ namespace AIC.HistoryDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.GetOrganizations();
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
 

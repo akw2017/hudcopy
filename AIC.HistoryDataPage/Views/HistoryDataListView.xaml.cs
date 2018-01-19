@@ -32,7 +32,7 @@ namespace AIC.HistoryDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuHistoryDataList"], true);
+            this.Closer = new CloseableHeader("menuHistoryDataList", (string)Application.Current.Resources["menuHistoryDataList"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

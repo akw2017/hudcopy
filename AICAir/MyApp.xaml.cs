@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Windows;
 using System.Windows.Navigation;
 using System.Data;
@@ -54,9 +54,28 @@ namespace AICAir
             log.Fatal(e.ExceptionObject);
         }
 
+        [DllImport("user32", CharSet = CharSet.Unicode)]
+        static extern IntPtr FindWindow(string cls, string win);
+        [DllImport("user32")]
+        static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32")]
+        static extern bool IsIconic(IntPtr hWnd);
+        [DllImport("user32")]
+        static extern bool OpenIcon(IntPtr hWnd);
+        System.Threading.Mutex mutex;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            bool ret;
+            mutex = new System.Threading.Mutex(true, "ElectronicNeedleTherapySystem", out ret);
+
+            if (!ret)
+            {
+                ActivateOtherWindow();
+                Environment.Exit(0);
+            }
 
 #if XBAP//XBAP.2
             Application.Current.StartupUri = new Uri("Views/ShellPage.xaml", UriKind.Relative);//
@@ -64,6 +83,18 @@ namespace AICAir
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Run();
 #endif
+        }
+
+        private static void ActivateOtherWindow()
+        {
+            //里面的文本改成自己程序窗口的标题
+            var other = FindWindow(null, AIC.Core.LocalSetting.Title);
+            if (other != IntPtr.Zero)
+            {
+                SetForegroundWindow(other);
+                if (IsIconic(other))
+                    OpenIcon(other);
+            }
         }
 
         protected override void OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs e)

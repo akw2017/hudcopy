@@ -25,7 +25,7 @@
 // 
 //     Connection String Name: `MasterDB`
 //     Provider:               `System.Data.SqlClient`
-//     Connection String:      `Data Source=localhost;User ID=sa;password=**zapped**;Initial Catalog=AIC9600Master`
+//     Connection String:      `Data Source=192.168.1.210;User ID=sa;password=**zapped**;Initial Catalog=AIC9600Master`
 //     Schema:                 ``
 //     Include Views:          `False`
 
@@ -133,6 +133,712 @@ namespace AIC.M9600.Common.MasterDB.Generated
 	
 
 
+
+    
+
+	[TableName("dbo.ChannelDistribution")]
+
+
+
+	[PrimaryKey("ChannelGlobalIndex")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class ChannelDistribution : MasterORM.Record<ChannelDistribution>  
+    {
+
+
+
+		[Column] public int ChannelGlobalIndex { get; set; }
+
+
+
+
+
+		[Column] public string ChannelGlobalID { get; set; }
+
+
+
+
+
+		[Column] public int? StorageSlaveID { get; set; }
+
+
+
+
+
+		[Column] public Guid ChannelID { get; set; }
+
+
+
+
+
+		[Column] public string GroupCOName { get; set; }
+
+
+
+
+
+		[Column] public string CorporationName { get; set; }
+
+
+
+
+
+		[Column] public string WorkShopName { get; set; }
+
+
+
+
+
+		[Column] public string DevName { get; set; }
+
+
+
+
+
+		[Column] public string DevSN { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public string MSSN { get; set; }
+
+
+
+
+
+		[Column] public int? SignalType { get; set; }
+
+
+
+
+
+		[Column] public string DeviceType { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.DivFreDistribution")]
+
+
+
+	[PrimaryKey("DivFreGlobalIndex")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class DivFreDistribution : MasterORM.Record<DivFreDistribution>  
+    {
+
+
+
+		[Column] public int DivFreGlobalIndex { get; set; }
+
+
+
+
+
+		[Column] public string DivFreGlobalID { get; set; }
+
+
+
+
+
+		[Column] public string ChannelGlobalID { get; set; }
+
+
+
+
+
+		[Column] public Guid ChannelID { get; set; }
+
+
+
+
+
+		[Column] public int ChannelGlobalIndex { get; set; }
+
+
+
+
+
+		[Column] public int DivFreType { get; set; }
+
+
+
+
+
+		[Column] public string FreDescription { get; set; }
+
+
+
+
+
+		[Column] public double? Base1Fre { get; set; }
+
+
+
+
+
+		[Column] public double? Base1FrePercent { get; set; }
+
+
+
+
+
+		[Column] public double? Base2Fre { get; set; }
+
+
+
+
+
+		[Column] public double? MultiFre { get; set; }
+
+
+
+
+
+		[Column] public int? DivFreStrategt { get; set; }
+
+
+
+
+
+		[Column] public int? MaxFreNum { get; set; }
+
+
+
+
+
+		[Column] public double? RPM { get; set; }
+
+
+
+
+
+		[Column] public int AlarmGrade { get; set; }
+
+
+
+
+
+		[Column] public int AlarmType { get; set; }
+
+
+
+
+
+		[Column] public double HighNormal { get; set; }
+
+
+
+
+
+		[Column] public double HighAlert { get; set; }
+
+
+
+
+
+		[Column] public double HighDanger { get; set; }
+
+
+
+
+
+		[Column] public double LowNormal { get; set; }
+
+
+
+
+
+		[Column] public double LowAlert { get; set; }
+
+
+
+
+
+		[Column] public double LowDanger { get; set; }
+
+
+
+
+
+		[Column] public bool AllowLowLimit { get; set; }
+
+
+
+
+
+		[Column] public string FormulaHighDanger { get; set; }
+
+
+
+
+
+		[Column] public string FormulaHighAlert { get; set; }
+
+
+
+
+
+		[Column] public string FormulaHighNormal { get; set; }
+
+
+
+
+
+		[Column] public string FormulaLowNormal { get; set; }
+
+
+
+
+
+		[Column] public string FormulaLowAlert { get; set; }
+
+
+
+
+
+		[Column] public string FormulaLowDanger { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.GlobalSetting")]
+
+
+
+	[PrimaryKey("ID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class GlobalSetting : MasterORM.Record<GlobalSetting>  
+    {
+
+
+
+		[Column] public string ID { get; set; }
+
+
+
+
+
+		[Column] public string Value { get; set; }
+
+
+
+
+
+		[Column] public string Type { get; set; }
+
+
+
+
+
+		[Column] public string Description { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.MonitorSetting")]
+
+
+
+	[PrimaryKey("SystemMonitorSettingID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class MonitorSetting : MasterORM.Record<MonitorSetting>  
+    {
+
+
+
+		[Column] public int SystemMonitorSettingID { get; set; }
+
+
+
+
+
+		[Column] public string CategoryName { get; set; }
+
+
+
+
+
+		[Column] public string InstanceName { get; set; }
+
+
+
+
+
+		[Column] public string CounterName { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.MSreplication_objects")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class MSreplication_object : MasterORM.Record<MSreplication_object>  
+    {
+
+
+
+		[Column] public string publisher { get; set; }
+
+
+
+
+
+		[Column] public string publisher_db { get; set; }
+
+
+
+
+
+		[Column] public string publication { get; set; }
+
+
+
+
+
+		[Column] public string object_name { get; set; }
+
+
+
+
+
+		[Column] public string object_type { get; set; }
+
+
+
+
+
+		[Column] public string article { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.MSreplication_subscriptions")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class MSreplication_subscription : MasterORM.Record<MSreplication_subscription>  
+    {
+
+
+
+		[Column] public string publisher { get; set; }
+
+
+
+
+
+		[Column] public string publisher_db { get; set; }
+
+
+
+
+
+		[Column] public string publication { get; set; }
+
+
+
+
+
+		[Column] public bool independent_agent { get; set; }
+
+
+
+
+
+		[Column] public int subscription_type { get; set; }
+
+
+
+
+
+		[Column] public string distribution_agent { get; set; }
+
+
+
+
+
+		[Column] public DateTime time { get; set; }
+
+
+
+
+
+		[Column] public string description { get; set; }
+
+
+
+
+
+		[Column] public byte[] transaction_timestamp { get; set; }
+
+
+
+
+
+		[Column] public byte update_mode { get; set; }
+
+
+
+
+
+		[Column] public byte[] agent_id { get; set; }
+
+
+
+
+
+		[Column] public byte[] subscription_guid { get; set; }
+
+
+
+
+
+		[Column] public byte[] subid { get; set; }
+
+
+
+
+
+		[Column] public bool immediate_sync { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.MSsubscription_agents")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class MSsubscription_agent : MasterORM.Record<MSsubscription_agent>  
+    {
+
+
+
+		[Column] public int id { get; set; }
+
+
+
+
+
+		[Column] public string publisher { get; set; }
+
+
+
+
+
+		[Column] public string publisher_db { get; set; }
+
+
+
+
+
+		[Column] public string publication { get; set; }
+
+
+
+
+
+		[Column] public int subscription_type { get; set; }
+
+
+
+
+
+		[Column] public string queue_id { get; set; }
+
+
+
+
+
+		[Column] public byte update_mode { get; set; }
+
+
+
+
+
+		[Column] public bool failover_mode { get; set; }
+
+
+
+
+
+		[Column] public int spid { get; set; }
+
+
+
+
+
+		[Column] public DateTime login_time { get; set; }
+
+
+
+
+
+		[Column] public bool allow_subscription_copy { get; set; }
+
+
+
+
+
+		[Column] public int attach_state { get; set; }
+
+
+
+
+
+		[Column] public byte[] attach_version { get; set; }
+
+
+
+
+
+		[Column] public int? last_sync_status { get; set; }
+
+
+
+
+
+		[Column] public string last_sync_summary { get; set; }
+
+
+
+
+
+		[Column] public DateTime? last_sync_time { get; set; }
+
+
+
+
+
+		[Column] public string queue_server { get; set; }
+
+
+
+	}
 
     
 
@@ -259,6 +965,192 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public string MutiPartition { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.sysdiagrams")]
+
+
+
+	[PrimaryKey("diagram_id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class sysdiagram : MasterORM.Record<sysdiagram>  
+    {
+
+
+
+		[Column] public string name { get; set; }
+
+
+
+
+
+		[Column] public int principal_id { get; set; }
+
+
+
+
+
+		[Column] public int diagram_id { get; set; }
+
+
+
+
+
+		[Column] public int? version { get; set; }
+
+
+
+
+
+		[Column] public byte[] definition { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.SystemLog")]
+
+
+
+	[PrimaryKey("SystemLogID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class SystemLog : MasterORM.Record<SystemLog>  
+    {
+
+
+
+		[Column] public int SystemLogID { get; set; }
+
+
+
+
+
+		[Column] public int? SystemLogType { get; set; }
+
+
+
+
+
+		[Column] public string Information { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CreateTime { get; set; }
+
+
+
+
+
+		[Column] public DateTime? UpdateTime { get; set; }
+
+
+
+
+
+		[Column] public int? Status { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.SystemServer")]
+
+
+
+	[PrimaryKey("SystemServerID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class SystemServer : MasterORM.Record<SystemServer>  
+    {
+
+
+
+		[Column] public int SystemServerID { get; set; }
+
+
+
+
+
+		[Column] public string SystemServerName { get; set; }
+
+
+
+
+
+		[Column] public string SystemServerRole { get; set; }
+
+
+
+
+
+		[Column] public string ConnectionString { get; set; }
+
+
+
+
+
+		[Column] public string IPAddress { get; set; }
+
+
+
+
+
+		[Column] public string AccountID { get; set; }
+
+
+
+
+
+		[Column] public string AccountPassword { get; set; }
+
+
+
+
+
+		[Column] public bool? EnableMonitor { get; set; }
 
 
 
@@ -2374,6 +3266,42 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
     
 
+	[TableName("dbo.T_MeasureUnit")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_MeasureUnit : MasterORM.Record<T_MeasureUnit>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public string Code { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.T_Menu")]
 
 
@@ -2793,6 +3721,66 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public string Remark { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.T_SystemEvent")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_SystemEvent : MasterORM.Record<T_SystemEvent>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public int Type { get; set; }
+
+
+
+
+
+		[Column] public int Degree { get; set; }
+
+
+
+
+
+		[Column] public DateTime EventTime { get; set; }
+
+
+
+
+
+		[Column] public string Remarks { get; set; }
+
+
+
+
+
+		[Column] public Guid? T_Item_Guid { get; set; }
+
+
+
+
+
+		[Column] public short? T_Item_Type { get; set; }
 
 
 

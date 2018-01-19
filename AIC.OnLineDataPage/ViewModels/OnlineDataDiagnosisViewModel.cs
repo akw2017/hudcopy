@@ -87,7 +87,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 管理树
         private void InitTree()
         {
-            OrganizationTreeItems = _organizationService.GetOrganizations();
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
 
@@ -299,7 +299,7 @@ namespace AIC.OnLineDataPage.ViewModels
             if (sg != null && sg.DiagnosticAdvice != null)
             {
 #if XBAP
-                MessageBox.Show(sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sg.DiagnosticInfo + "\n\r" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #else
                 Xceed.Wpf.Toolkit.MessageBox.Show(sg.DiagnosticInfo + "\n\r" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #endif

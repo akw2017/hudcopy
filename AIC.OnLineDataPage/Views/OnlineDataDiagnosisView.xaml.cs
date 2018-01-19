@@ -32,7 +32,7 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataDiagnosis"], true);
+            this.Closer = new CloseableHeader("menuOnlineDataDiagnosis", (string)Application.Current.Resources["menuOnlineDataDiagnosis"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

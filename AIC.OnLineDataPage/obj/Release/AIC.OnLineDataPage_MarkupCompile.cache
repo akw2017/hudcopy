@@ -12,7 +12,7 @@ TRACE
 
 38378215108
 
-72-967439658
+73-829024993
 116-1480397618
 Themes\ConnectorDecoratorTemplate.xaml;Themes\Generic.xaml;Themes\OnlineDataOverviewTemplate.xaml;Themes\OnlineDataTileTemplate.xaml;Themes\OnlineDataDiagramTemplate.xaml;Themes\ResizeDecoratorTemplate.xaml;Views\InfoViews\AnalogRransducerInInfoWin.xaml;Views\InfoViews\EddyCurrentKeyPhaseInfoWin.xaml;Views\InfoViews\EddyCurrentDisplacementInfoWin.xaml;Views\InfoViews\EddyCurrentTachometerInfoWin.xaml;Views\InfoViews\DigitTachometerInfoWin.xaml;Views\InfoViews\DigitRransducerInInfoWin.xaml;Views\InfoViews\DigitRransducerOutInfoWin.xaml;Views\InfoViews\AnalogRransducerOutInfoWin.xaml;Views\InfoViews\RelayInfoWin.xaml;Views\InfoViews\MoreInformation.xaml;Views\AlarmGradeFilterView.xaml;Views\OnlineDataDiagnosisView.xaml;Views\OnlineDataListView.xaml;Views\OnlineDataDiagramView.xaml;Views\OnlineDataOverviewView.xaml;Views\OnlineDataStatisticsView.xaml;Views\OnlineDataTileView.xaml;Views\InfoViews\IEPEInfoWin.xaml;Views\InfoViews\WirelessScalarInfoWin.xaml;Views\InfoViews\WirelessVibrationInfoWin.xaml;Views\SubViews\OrderAnalysisChartView.xaml;Views\SubViews\NyquistChartView.xaml;Views\SubViews\BodeChartView.xaml;Views\SubViews\RPM3DChartView.xaml;Views\SubViews\Time3DChartView.xaml;Views\SubViews\OrthoChartView.xaml;Views\SubViews\MultiDivFreChartView.xaml;Views\SubViews\PowerSpectrumDensityChartView.xaml;Views\SubViews\RMSTrendChartView.xaml;Views\SubViews\FrequencyDomainChartView.xaml;Views\SubViews\PowerSpectrumChartView.xaml;Views\SubViews\TimeDomainChartView.xaml;
 

@@ -37,7 +37,7 @@ namespace AIC.PDAPage.ViewModels
             _hardwareService = hardwareService;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
-            ServerIP = _databaseComponent.GetMainServerIp();
+            ServerIP = _databaseComponent.MainServerIp;
 
             InitTree();
 
@@ -253,9 +253,9 @@ namespace AIC.PDAPage.ViewModels
         {
             if (CanOperate() == true)
             {
-                OrganizationTreeItems = new List<OrganizationTreeItemViewModel>(_organizationService.GetOrganizations().Where(p => p.ServerIP == ServerIP));
-                ItemTreeItems = new List<ItemTreeItemViewModel>(_organizationService.GetItems().Where(p => p.ServerIP == ServerIP));
-                ServerTreeItems = new List<ServerTreeItemViewModel>(_hardwareService.GetServers().Where(p => p.ServerIP == ServerIP));
+                OrganizationTreeItems = new List<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerIP));
+                ItemTreeItems = new List<ItemTreeItemViewModel>(_organizationService.ItemTreeItems.Where(p => p.ServerIP == ServerIP));
+                ServerTreeItems = new List<ServerTreeItemViewModel>(_hardwareService.ServerTreeItems.Where(p => p.ServerIP == ServerIP));
             }
         }
         #endregion

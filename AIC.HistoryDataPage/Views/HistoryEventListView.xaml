@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+            <core:NegateConverter x:Key="negateConverter"/>
             <DataTemplate x:Key="enumComboItemTemplate">
                 <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
             </DataTemplate>
@@ -29,77 +30,126 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <RadioButton x:Name="chkreal" Content="实时模式" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding IsRealTime,Mode=TwoWay}"/>
-            <RadioButton Content="查询模式" Style="{StaticResource RadioButtonStyle}" />
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="100" VerticalAlignment="Center" />
-                <TextBlock Text="事件类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:CustomSystemType}" SelectedItem="{Binding CustomSystemType}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center"/>
-                <TextBlock Text="{DynamicResource operateDateTime}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" VerticalAlignment="Center" />
-                <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchEndTime}" VerticalAlignment="Center"/>
-                <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
-                            <TextBlock Text="{DynamicResource search}" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <StackPanel.Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsChecked,ElementName=chkreal}" Value="false">
-                                <Setter  Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
+        
+        <Border Grid.Row="0" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Orientation="Horizontal" Background="{DynamicResource AccentColorBrush2}">
+                <RadioButton x:Name="chkreal" Content="实时模式" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding IsRealTime,Mode=TwoWay}"/>
+                <RadioButton Content="历史模式" Style="{StaticResource RadioButtonStyle}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+                    <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" />
+                    <TextBlock Text="事件类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <ComboBox IsEditable="False" Width="200" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:CustomSystemType}" SelectedItem="{Binding CustomSystemType}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource operateDateTime}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchEndTime}" VerticalAlignment="Center"/>
+                    <Button  Command="{Binding QueryCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
+                                <TextBlock Text="{DynamicResource query}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked,ElementName=chkreal}" Value="false">
+                                    <Setter  Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto"
-                  ItemsSource="{Binding CustomSystemExceptionView}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
-                <DataGridTextColumn Header="类型" Binding="{Binding CustomSystemType, Converter={StaticResource enumDescriptionConverter}}" ></DataGridTextColumn>
-                <DataGridTextColumn Header="程度" Binding="{Binding CustomSystemDegree, Converter={StaticResource enumDescriptionConverter}}"></DataGridTextColumn>
-                <DataGridTextColumn Header="发生时间" Binding="{Binding EventTime}"></DataGridTextColumn>
-                <DataGridTextColumn Header="详情" Binding="{Binding Remarks}"></DataGridTextColumn>
-            </DataGrid.Columns>
-            <DataGrid.ColumnHeaderStyle>
-                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
-                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.CellStyle>
-                <Style BasedOn="{StaticResource MetroDataGridCell}"
+        </Border>
+        <TabControl Grid.Row="1" Grid.Column="2" Margin="0,1,0,0">
+            <TabItem Header="实时事件" Style="{x:Null}" IsSelected="{Binding IsRealTime,Mode=OneWay}">
+                <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto" Margin="0,1,0,0"
+                  ItemsSource="{Binding CustomSystemException}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="类型" Binding="{Binding CustomSystemType, Converter={StaticResource enumDescriptionConverter}}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="程度" Binding="{Binding CustomSystemDegree, Converter={StaticResource enumDescriptionConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="发生时间" Binding="{Binding EventTime}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="详情" Binding="{Binding Remarks}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Margin" Value="0,0,100,0"/>
-                </Style>
-            </DataGrid.CellStyle>
-            <DataGrid.RowStyle>
-                <Style BasedOn="{StaticResource MetroDataGridRow}"
+                            <Setter Property="Margin" Value="0,0,100,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
                        TargetType="{x:Type DataGridRow}">
 
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Style>
-                <Style BasedOn="{StaticResource MetroDataGrid}"
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                    <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
-                </Style>
-            </DataGrid.Style>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding MouseDoubleClickCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </DataGrid>
-     
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding MouseDoubleClickCommand}" CommandParameter="{Binding SelectedItem, ElementName=table}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="历史事件" Style="{x:Null}" IsSelected="{Binding IsRealTime, Mode=OneWay, Converter={StaticResource negateConverter }}">
+                <DataGrid x:Name="table2" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto" Margin="0,1,0,0"
+                  ItemsSource="{Binding HistoryCustomSystemException}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="类型" Binding="{Binding CustomSystemType, Converter={StaticResource enumDescriptionConverter}}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="程度" Binding="{Binding CustomSystemDegree, Converter={StaticResource enumDescriptionConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="发生时间" Binding="{Binding EventTime}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="详情" Binding="{Binding Remarks}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridCell}"
+                       TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="0,0,100,0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding MouseDoubleClickCommand}" CommandParameter="{Binding SelectedItem, ElementName=table2}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

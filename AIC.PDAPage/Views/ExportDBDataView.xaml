@@ -26,31 +26,35 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" >
-            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
-            <TextBlock Text="导出数据类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <CheckBox Content="组织" IsChecked="{Binding OrganizationChecked}" Margin="4,0,0,0"/>
-            <CheckBox Content="测点" IsChecked="{Binding ItemChecked}" Margin="4,0,0,0"/>
-            <CheckBox Content="通道" IsChecked="{Binding ChannelChecked}" Margin="4,0,0,0"/>
-            <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/ruby_put.png"  />
-                        <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding RefreshCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/page_refresh.png"  />
-                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        <TabControl Grid.Row="1">          
+
+        <Border Grid.Row="0" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+                <TextBlock Text="导出数据类型" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <CheckBox Content="组织" IsChecked="{Binding OrganizationChecked}" Margin="4,0,0,0"/>
+                <CheckBox Content="测点" IsChecked="{Binding ItemChecked}" Margin="4,0,0,0"/>
+                <CheckBox Content="通道" IsChecked="{Binding ChannelChecked}" Margin="4,0,0,0"/>
+                <Button Command="{Binding ExportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/ruby_put.png"  />
+                            <TextBlock Text="{DynamicResource export}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding RefreshCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/page_refresh.png"  />
+                            <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="0">          
             <TabItem Header="组织" Style="{x:Null}">
                 <DataGrid ItemsSource="{Binding OrganizationView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
@@ -79,8 +83,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -116,8 +120,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -170,8 +174,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -234,8 +238,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>

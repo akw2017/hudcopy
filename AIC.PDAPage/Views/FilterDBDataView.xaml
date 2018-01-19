@@ -27,11 +27,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" >
-            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
-        </StackPanel>
-        <TabControl Grid.Row="1" Margin="3">
+
+        <Border Grid.Row="0" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="0">
             <TabItem Header="组织" Style="{x:Null}">
                 <bsFilter:FilterDataGrid ItemsSource="{Binding OrganizationView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
@@ -52,6 +56,12 @@
                        TargetType="{x:Type DataGridRow}">
                         </Style>
                     </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
                 </bsFilter:FilterDataGrid>
             </TabItem>
             <TabItem Header="测点" Style="{x:Null}">
@@ -77,6 +87,12 @@
                        TargetType="{x:Type DataGridRow}">
                         </Style>
                     </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
                 </bsFilter:FilterDataGrid>
             </TabItem>
             <TabItem Header="无线标量通道" Style="{x:Null}">
@@ -119,6 +135,12 @@
                        TargetType="{x:Type DataGridRow}">
                         </Style>
                     </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
                 </bsFilter:FilterDataGrid>
             </TabItem>
             <TabItem Header="无线振动通道" Style="{x:Null}">
@@ -171,6 +193,12 @@
                        TargetType="{x:Type DataGridRow}">
                         </Style>
                     </DataGrid.RowStyle>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
+                        </Style>
+                    </DataGrid.Style>
                 </bsFilter:FilterDataGrid>
             </TabItem>
         </TabControl>

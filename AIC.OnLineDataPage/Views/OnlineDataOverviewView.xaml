@@ -63,6 +63,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <TreeView Grid.Row="0" Grid.RowSpan="3" x:Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
@@ -149,36 +150,39 @@
             </i:Interaction.Triggers>
 
         </TreeView>
+        
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+       
+        <Border Grid.Row="0" Grid.Column="3" Padding="5" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Orientation="Horizontal">
 
-            <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="无效" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="正常" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="预警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="警告" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="危险" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="无效" VerticalAlignment="Center" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="正常" VerticalAlignment="Center" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="预警" VerticalAlignment="Center" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="警告" VerticalAlignment="Center" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="危险" VerticalAlignment="Center" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
+                <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                 <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
                 <TextBlock Text="低危" VerticalAlignment="Center" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
@@ -198,12 +202,14 @@
                 <TextBlock Text="低正常" VerticalAlignment="Center" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             </StackPanel>-->
-            <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
-            <TextBlock Text="显示模式:" VerticalAlignment="Center" Margin="2,0,2,0"/>
-            <RadioButton x:Name="radioValue" Content="数值" IsChecked="True" Style="{StaticResource RadioButtonStyle}" />
-            <RadioButton x:Name="radioBar" Content="柱状图" Style="{StaticResource RadioButtonStyle}"/>
-        </StackPanel>
-        <ListView Grid.Row="1" Grid.Column="3" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" Background="{x:Null}" BorderBrush="{x:Null}"
+                <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <TextBlock Text="显示模式:" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                <RadioButton x:Name="radioValue" Content="数值" IsChecked="True" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton x:Name="radioBar" Content="柱状图" Style="{StaticResource RadioButtonStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <ListView Grid.Row="1" Grid.Column="3" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,1,0,0"  Background="{x:Null}" BorderBrush="{x:Null}"
                      ItemsSource="{Binding SignalList}" SelectedItem="{Binding SelectedSignalMonitor}"  
                      ItemContainerStyle="{StaticResource SignalMonitorStyle}" 
                      ScrollViewer.HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility, Mode=TwoWay}" 
@@ -256,6 +262,7 @@
                 </GroupStyle>
             </ListView.GroupStyle>-->                
         </ListView>
+    
         <Grid x:Name="grid" Grid.Row="1" Grid.Column="3">
             <Slider Grid.Row="1" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Horizontal" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,65,0" />
             <Slider Grid.Row="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Vertical" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,5,0" />

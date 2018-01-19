@@ -32,7 +32,7 @@ namespace AIC.PDAPage.Views
             InitializeComponent();
             _eventAggregator = eventAggregator;
             
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuCollectorSetting"], true);
+            this.Closer = new CloseableHeader("menuCollectorSetting", (string)Application.Current.Resources["menuCollectorSetting"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

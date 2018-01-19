@@ -18,6 +18,9 @@ namespace AIC.Core
         public static int UpdateTime = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateTime"]);
         public static string Version = Convert.ToString(ConfigurationManager.AppSettings["Version"]);
 
+        public static bool IsEnglishLanguage = Convert.ToBoolean(ConfigurationManager.AppSettings["IsEnglishLanguage"]);
+        public static string Title = Convert.ToString(ConfigurationManager.AppSettings["Title"]);
+
         public static string[] sArray = Version.Split('.');
 
         public readonly static ushort MajorVersion = (ushort)Convert.ToInt32(sArray[0]);

@@ -24,7 +24,7 @@ namespace AIC.UserPage.Views
         public OrganizationPrivilegeSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOrganizationManage"], true);
+            this.Closer = new CloseableHeader("menuOrganizationManage", (string)Application.Current.Resources["menuOrganizationManage"], true);
         }
         public CloseableHeader Closer { get; private set; }
 

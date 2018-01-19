@@ -16,5 +16,5 @@ TRACE;DEBUG;XBAP
 87729137859
 Themes\Generic.xaml;Views\MenuSetView.xaml;Views\OrganizationPrivilegeSetWin.xaml;Views\OrganizationPrivilegeSetView.xaml;Views\RoleSetView.xaml;Views\MenuSetWin.xaml;Views\RoleSetWin.xaml;Views\OperateRecordView.xaml;Views\UserSetWin.xaml;Views\UserSetView.xaml;
 
-False
+True
 

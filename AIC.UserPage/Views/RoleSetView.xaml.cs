@@ -24,7 +24,7 @@ namespace AIC.UserPage.Views
         public RoleSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuRoleManage"], true);
+            this.Closer = new CloseableHeader("menuRoleManage", (string)Application.Current.Resources["menuRoleManage"], true);
         }
         public CloseableHeader Closer { get; private set; }
     }

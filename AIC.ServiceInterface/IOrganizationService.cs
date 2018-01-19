@@ -11,6 +11,11 @@ namespace AIC.ServiceInterface
 {
     public interface IOrganizationService
     {
+        ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get;  }
+        ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; }
+        List<ItemTreeItemViewModel> ItemTreeItems { get;  }
+        List<DivFreTreeItemViewModel> DivFreTreeItems { get;  }
+        Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get;  }
         void Initialize();
         void SetUserOrganizationPrivilege(Guid? guid);
         void InitOrganizations(bool isadmin);
@@ -20,10 +25,6 @@ namespace AIC.ServiceInterface
         void DeleteDivFre(DivFreTreeItemViewModel divfre);
         void SaveOrganizationToDatabase(string ip);
         void GetOrganizationFromDatabase(string ip, bool isadmin);
-        List<DivFreTreeItemViewModel> GetDivFres();
         void SetDivFres();
-        List<ItemTreeItemViewModel> GetItems();
-        ObservableCollection<OrganizationTreeItemViewModel> GetRecycleds();
-        ObservableCollection<OrganizationTreeItemViewModel> GetOrganizations();
     }
 }

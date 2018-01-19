@@ -30,54 +30,63 @@ namespace AIC.HistoryDataPage.ViewModels
     {        
         private readonly ILoginUserService _loginUserService;
         private readonly IOrganizationService _organizationService;
-        public HistoryEventListViewModel(ILoginUserService loginUserService, IOrganizationService organizationService)
+        private readonly IDatabaseComponent _databaseComponent;
+        public HistoryEventListViewModel(IDatabaseComponent databaseComponent, ILoginUserService loginUserService, IOrganizationService organizationService)
         {
             _loginUserService = loginUserService;
             _organizationService = organizationService;
+            _databaseComponent = databaseComponent;
 
             customSystemException = _loginUserService.CustomSystemException;
 
+            ServerIPCategory = _databaseComponent.GetServerIPCategory();
+            ServerIP = _databaseComponent.MainServerIp;
+
             SearchStartTime = DateTime.Now.AddDays(-1);
             SearchEndTime = DateTime.Now;
-
-            _view = new ListCollectionView(customSystemException);
-            _view.Filter = (object item) =>
-            {
-                var p = customSystemException;
-                if (IsRealTime == true) return true;
-                var itemPl = (CustomSystemException)item;
-                if (itemPl == null) return false;
-                if (SearchName == null || SearchName == "")
-                {                   
-                    if (itemPl.Type == (int)CustomSystemType && itemPl.EventTime < SearchEndTime && itemPl.EventTime > SearchStartTime)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (itemPl.Remarks.Contains(SearchName) && itemPl.Type == (int)CustomSystemType && itemPl.EventTime < SearchEndTime && itemPl.EventTime > SearchStartTime)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            };
         }
 
         #region 字段与属性
-        private readonly ICollectionView _view;
-        public ICollectionView CustomSystemExceptionView { get { return _view; } }
+        private string _serverIP;
+        public string ServerIP
+        {
+            get { return _serverIP; }
+            set
+            {
+                if (_serverIP != value)
+                {
+                    _serverIP = value;
+                    OnPropertyChanged("ServerIP");
+                }
+            }
+        }
 
-        private ObservableCollection<CustomSystemException> customSystemException;
-        public IEnumerable<CustomSystemException> CustomSystemException { get { return customSystemException; } }
+        private List<string> _serverIPCategory;
+        public List<string> ServerIPCategory
+        {
+            get { return _serverIPCategory; }
+            set
+            {
+                _serverIPCategory = value;
+                OnPropertyChanged("ServerIPCategory");
+            }
+        }
+        private ObservableCollection<T1_SystemEvent> customSystemException;
+        public IEnumerable<T1_SystemEvent> CustomSystemException { get { return customSystemException; } }
+
+        private ObservableCollection<T1_SystemEvent> historyCustomSystemException;
+        public ObservableCollection<T1_SystemEvent> HistoryCustomSystemException
+        {
+            get
+            {
+                return historyCustomSystemException;
+            }
+            set
+            {
+                historyCustomSystemException = value;
+                OnPropertyChanged("HistoryCustomSystemException");
+            }
+        }
 
         private string searchName = "";
         public string SearchName
@@ -106,7 +115,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 {                   
                     isRealTime = value;
                     OnPropertyChanged("IsRealTime");
-                    _view.Refresh();
                 }
             }
         }
@@ -189,18 +197,19 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion
 
-        private void Query()
+        private async void Query()
         {
-            _view.Refresh();
+            var result =  await _loginUserService.GetSystemEvent(ServerIP, SearchStartTime, SearchEndTime, SearchName, CustomSystemType);
+            HistoryCustomSystemException = new ObservableCollection<T1_SystemEvent>(result);
         }
 
         private void MouseDoubleClick(object para)
         {
-            CustomSystemException ex = para as CustomSystemException;
+            T1_SystemEvent ex = para as T1_SystemEvent;
             if (ex != null && ex.Type == (int)CustomSystemType.Alarm)
             {
                
-                var itemTree =  _organizationService.GetItems().Where(p => p.T_Item.Guid == ex.T_Item_Guid).FirstOrDefault();
+                var itemTree =  _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == ex.T_Item_Guid).FirstOrDefault();
                 //var itemTree = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == new Guid("a0659d1e-2b1e-41ba-abe1-3d42caf678d9")).FirstOrDefault();
                 if (itemTree != null)
                 {

@@ -43,8 +43,8 @@
     <LinearGradientBrush x:Key="ChartAccentColorBrush" StartPoint="0,0" EndPoint="0,1" SpreadMethod="Reflect">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
-                <GradientStop Color="Black" Offset="0.0"/>
-                <GradientStop Color="Black" Offset="1.0"/>
+                <GradientStop Color="{DynamicResource GrayHover}" Offset="0.0"/>
+                <GradientStop Color="{DynamicResource BlackColor}" Offset="1.0"/>
             </GradientStopCollection>
         </GradientBrush.GradientStops>
     </LinearGradientBrush>

@@ -40,7 +40,7 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();          
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataStatistics"], true);
+            this.Closer = new CloseableHeader("menuOnlineDataStatistics", (string)Application.Current.Resources["menuOnlineDataStatistics"], true);
 
             ViewModel = this.DataContext as OnlineDataStatisticsViewModel;
             if (ViewModel != null)

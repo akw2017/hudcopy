@@ -118,80 +118,84 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="7" Orientation="Horizontal" >
-            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <!--<TextBox Text="{Binding ServerIP}" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>-->
-            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
-            <Button Command="{Binding UploadDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/database_go.png"  />
-                        <TextBlock Text="{DynamicResource upload}" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding RefreshDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
-                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <TextBlock Text="{DynamicResource pdaip}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtMainCardIP" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center"
+        <Border Grid.Row="0" Grid.ColumnSpan="7" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <Grid>
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <!--<TextBox Text="{Binding ServerIP}" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>-->
+                    <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+                    <Button Command="{Binding UploadDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/database_go.png"  />
+                                <TextBlock Text="{DynamicResource upload}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding RefreshDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
+                                <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <TextBlock Text="{DynamicResource pdaip}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtMainCardIP" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center"
                 Text="{Binding MainControlCardIPEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
-            </TextBox>
-            <Button Command="{Binding AddCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
-                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding DeleteCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
-                        <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding DownLoadCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/tick.png"  />
-                        <TextBlock Text="{DynamicResource senddown}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <TextBlock Text="{DynamicResource transmissionIdentifier}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TransmissionCardIdentifier}" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center"/>
-            <Button Command="{Binding AddTransmissionCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
-                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding DeleteTransmissionCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
-                        <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+                    </TextBox>
+                    <Button Command="{Binding AddCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                                <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding DeleteCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                                <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding DownLoadCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/tick.png"  />
+                                <TextBlock Text="{DynamicResource senddown}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <TextBlock Text="{DynamicResource transmissionIdentifier}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding TransmissionCardIdentifier}" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center"/>
+                    <Button Command="{Binding AddTransmissionCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                                <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding DeleteTransmissionCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                                <TextBlock Text="{DynamicResource delete}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="7" Orientation="Horizontal" HorizontalAlignment="Right">
-            <RadioButton Margin="5,0" Content="单槽显示" IsChecked="True" Style="{StaticResource RadioButtonStyle}"/>
-            <RadioButton Content="多槽显示" IsChecked="{Binding IsMultiSelected}"  Style="{StaticResource RadioButtonStyle}"/>
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <RadioButton Margin="5,0" Content="单槽显示" IsChecked="True" Style="{StaticResource RadioButtonStyle}"/>
+                    <RadioButton Content="多槽显示" IsChecked="{Binding IsMultiSelected}"  Style="{StaticResource RadioButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-        <Grid x:Name="grid1" Grid.Column="0" Grid.Row="1">
+        <Grid x:Name="grid1" Grid.Column="0" Grid.Row="1" Margin="0,5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>

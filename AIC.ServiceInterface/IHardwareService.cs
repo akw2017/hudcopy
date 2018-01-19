@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace AIC.ServiceInterface
 {
     public interface IHardwareService
-    {        
+    {
+        ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; }
         void Initialize();
         void InitServers();
         Task<List<ChannelTreeItemViewModel>> AddCard(string serverIP, string maincardIP, string json);
@@ -20,7 +21,5 @@ namespace AIC.ServiceInterface
         void GetCardFromDatabase();
         Task<List<ChannelTreeItemViewModel>> AddTransmissionCard(string serverIP, string maincardIP, string identifier, string json);
         Task<List<ChannelTreeItemViewModel>> DeleteTransmissionCard(string serverIP, string maincardIP, string identifier, string json);
-
-        ObservableCollection<ServerTreeItemViewModel> GetServers();
     }
 }

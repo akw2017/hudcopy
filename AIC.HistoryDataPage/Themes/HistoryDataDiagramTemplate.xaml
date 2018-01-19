@@ -36,122 +36,254 @@
     <DataTemplate x:Key="ReplayTemplate" DataType="{x:Type viewModel:RMSReplayDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:RMSReplayDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="TimeDomainTemplate" DataType="{x:Type viewModel:TimeDomainDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:TimeDomainDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="FrequencyDomainTemplate" DataType="{x:Type viewModel:FrequencyDomainDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:FrequencyDomainDataView Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="PowerSpectrumTemplate" DataType="{x:Type viewModel:PowerSpectrumDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:PowerSpectrumDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="PowerSpectrumDensityTemplate" DataType="{x:Type viewModel:PowerSpectrumDensityDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:PowerSpectrumDensityDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="OrthoTemplate" DataType="{x:Type viewModel:OrthoDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OrthoDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="OffDesignConditionTemplate" DataType="{x:Type viewModel:OffDesignConditionDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OffDesignConditionDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="OrderAnalysisTemplate" DataType="{x:Type viewModel:OrderAnalysisDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:OrderAnalysisDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="Time3DSpectrumTemplate" DataType="{x:Type viewModel:Time3DSpectrumDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:Time3DSpectrumView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RPM3DSpectrumTemplate" DataType="{x:Type viewModel:RPM3DSpectrumDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:RPM3DSpectrumDataView/>
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="AlarmPointTrendTemplate" DataType="{x:Type viewModel:AlarmPointTrendDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>
-                <Controls:FluidMouseDragBehavior DragButton="Left"></Controls:FluidMouseDragBehavior>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
             <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
                 <views:AlarmPointTrendDataView />
             </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
 </ResourceDictionary>

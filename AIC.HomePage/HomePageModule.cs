@@ -27,24 +27,24 @@ namespace AIC.HomePage
 
         public void Initialize()
         {
-            _container.RegisterTypeForNavigation<HomeView>();
+            _container.RegisterTypeForNavigation<TabView>();
             _container.RegisterTypeForNavigation<LoginView>();
-            _container.RegisterTypeForNavigation<MapView>();
+            _container.RegisterTypeForNavigation<HomeMapView>();
             _container.RegisterTypeForNavigation<ServerSetView>(); 
             _container.RegisterTypeForNavigation<MainRegionView>();
-            _regionManager.RegisterViewWithRegion(RegionNames.MainRegionRegion, typeof(MainRegionView));           
-            _regionManager.RegisterViewWithRegion(RegionNames.HomeViewMainRegion, typeof(LoginView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegionRegion, typeof(MainRegionView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainBodyRegion, typeof(LoginView));
 
-            //首页默认打开
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            Object viewObj = ServiceLocator.Current.GetInstance<HomeView>();
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
-            {
-                view.Closer.RequestClose += () => region.Remove(view);
-            }
-            region.Add(view, "首页");
-            region.Activate(view);
+            ////首页默认打开
+            //IRegion region = this._regionManager.Regions["MainTabRegion"];
+            //Object viewObj = ServiceLocator.Current.GetInstance<HomeView>();
+            //ICloseable view = viewObj as ICloseable;
+            //if (view != null)
+            //{
+            //    view.Closer.RequestClose += () => region.Remove(view);
+            //}
+            //region.Add(view, "首页");
+            //region.Activate(view);
 
         }
     }

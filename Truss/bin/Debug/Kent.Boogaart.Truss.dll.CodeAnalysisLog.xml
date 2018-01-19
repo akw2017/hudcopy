@@ -12,14 +12,14 @@
          <Members>
           <Member Name="#InsertItem(System.Int32,Kent.Boogaart.Truss.Primitive.BindingBase)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="False">
            <Messages>
-            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss" File="BindingManager.cs" Line="176">在外部可见方法 'BindingManager.BindingBaseCollection.InsertItem(int, BindingBase)' 中，请在使用参数“item”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#SetItem(System.Int32,Kent.Boogaart.Truss.Primitive.BindingBase)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="False">
            <Messages>
-            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss" File="BindingManager.cs" Line="184">在外部可见方法 'BindingManager.BindingBaseCollection.SetItem(int, BindingBase)' 中，请在使用参数“item”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
@@ -34,21 +34,21 @@
          <Members>
           <Member Name="#Activate(Kent.Boogaart.Truss.Primitive.IBindingContainer,Kent.Boogaart.Truss.Primitive.PropertyExpression)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="BindingBase.cs" Line="132">在外部可见方法 'BindingBase.Activate(IBindingContainer, PropertyExpression)' 中，请在使用参数“bindingContainer”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#VerifyActivated()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="BindingBase.cs" Line="201">方法 'BindingBase.VerifyActivated()' 将一个文本字符串作为对 'BindingBase.VerifyActivated(string)' 的调用的参数“message”传递。改为从资源表检索以下字符串: "BindingBase is not yet activated."。</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#VerifyNotActivated()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyNotActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyNotActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="BindingBase.cs" Line="222">方法 'BindingBase.VerifyNotActivated()' 将一个文本字符串作为对 'BindingBase.VerifyNotActivated(string)' 的调用的参数“message”传递。改为从资源表检索以下字符串: "BindingBase is currently activated and cannot be modified."。</Issue>
             </Message>
            </Messages>
@@ -59,7 +59,7 @@
          <Members>
           <Member Name="#FromLambdaExpression(System.Object,System.Linq.Expressions.LambdaExpression)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="LambdaPropertyExpression.cs" Line="40">在外部可见方法 'LambdaPropertyExpression.FromLambdaExpression(object, LambdaExpression)' 中，请在使用参数“lambdaExpression”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
@@ -70,7 +70,7 @@
          <Members>
           <Member Name="#OnActivatedCore()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyNotActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="Kent.Boogaart.Truss.Primitive.BindingBase.VerifyNotActivated(System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="MultiSourceBinding.cs" Line="137">方法 'MultiSourceBinding.OnActivatedCore()' 将一个文本字符串作为对 'BindingBase.VerifyNotActivated(string)' 的调用的参数“message”传递。改为从资源表检索以下字符串: "Bindings added to a MultiSourceBinding must not already be activated."。</Issue>
             </Message>
            </Messages>
@@ -81,7 +81,7 @@
          <Members>
           <Member Name="#FromPath(System.Object,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="1" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="PathPropertyExpression.cs" Line="39">在外部可见方法 'PathPropertyExpression.FromPath(object, string)' 中，请在使用参数“path”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
@@ -92,7 +92,7 @@
          <Members>
           <Member Name="#AttemptConversion(System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="Kent.Boogaart.Truss.Diagnostics.Log.Write(System.Diagnostics.TraceEventType,System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2017-12-28 00:52:03Z" FixCategory="DependsOnFix">
+            <Message Id="Kent.Boogaart.Truss.Diagnostics.Log.Write(System.Diagnostics.TraceEventType,System.String)" TypeName="请不要将文本作为本地化参数传递" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2018-01-16 01:10:06Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\SupportProject\AIC_HUD\AICHUD\Truss\Primitive" File="PropertyExpressionPart.cs" Line="221">方法 'PropertyExpressionPart.AttemptConversion(object)' 将一个文本字符串作为对 'Log.Write(TraceEventType, string)' 的调用的参数“message”传递。改为从资源表检索以下字符串: "Conversion was successful."。</Issue>
             </Message>
            </Messages>

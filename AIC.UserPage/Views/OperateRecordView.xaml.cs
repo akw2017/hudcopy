@@ -24,7 +24,7 @@ namespace AIC.UserPage.Views
         public OperateRecord()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuManageLog"], true);
+            this.Closer = new CloseableHeader("menuManageLog", (string)Application.Current.Resources["menuManageLog"], true);
         }
         public CloseableHeader Closer { get; private set; }
     }

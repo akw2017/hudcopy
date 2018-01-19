@@ -1,6 +1,7 @@
 ﻿using AIC.Core;
 using AIC.Core.Events;
 using AIC.Core.Helpers;
+using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
@@ -53,7 +54,8 @@ namespace AIC.HomePage.ViewModels
         private static Uri onLineMonitorView = new Uri("OnLineDataPageView", UriKind.Relative);
         private static Uri pdaManageView = new Uri("PDAManageView", UriKind.Relative);
         private static Uri loginView = new Uri("LoginView", UriKind.Relative);
-        private static Uri mapView = new Uri("MapView", UriKind.Relative);
+        //private static Uri mapView = new Uri("HomeMapView", UriKind.Relative);
+        private static Uri tabView = new Uri("TabView", UriKind.Relative);
 
         public MainRegionViewModel(ILocalConfiguration localConfiguration, IRegionManager regionManager, IEventAggregator eventAggregator, ILoginUserService loginUserService, IUserManageService userManageService, ISignalProcess signalProcess)
         {
@@ -65,9 +67,9 @@ namespace AIC.HomePage.ViewModels
             _signalProcess = signalProcess;
 
             ThemeManager.AddAppTheme("BaseGray", new Uri("pack://application:,,,/AIC.Resources;component/Styles/BaseGray.xaml"));
-            ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/AIC.Resources;component/Styles/Gray.xaml"));
+            ThemeManager.AddAccent("BlueGray", new Uri("pack://application:,,,/AIC.Resources;component/Styles/BlueGray.xaml"));
 
-            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Blue");
+            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "BlueGray");
             AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseGray");
             ThemeManager.ChangeAppStyle(Application.Current, expectedAccent, expectedTheme);
 
@@ -97,12 +99,14 @@ namespace AIC.HomePage.ViewModels
             WhenSlideChanged.Throttle(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseSlideChanged);
 
             LoginManage.LoginChanged += LoginManage_LoginChanged;
+
+            InitLanguage();
         }     
 
         #region 字段和属性
         private ObservableCollection<ExceptionModel> ExceptionModel;
 
-        private ObservableCollection<CustomSystemException> CustomSystemException;
+        private ObservableCollection<T1_SystemEvent> CustomSystemException;
 
         private MenuManageList menuManageList;
         public MenuManageList MenuManageList
@@ -159,11 +163,15 @@ namespace AIC.HomePage.ViewModels
             {
                 if (chineseChecked != value)
                 {
+                    if (EnglishChecked == false && value == false)
+                    {
+                        return;
+                    }
                     chineseChecked = value;
                     if (chineseChecked == true)
                     {
-                        SetAsChinese();
                         EnglishChecked = false;
+                        SetAsChinese();                       
                     }
                     OnPropertyChanged("ChineseChecked");
                 }
@@ -177,14 +185,18 @@ namespace AIC.HomePage.ViewModels
             {
                 if (englishChecked != value)
                 {
+                    if (ChineseChecked == false && value == false)
+                    {
+                        return;
+                    }
                     englishChecked = value;
                     if (englishChecked == true)
                     {
-                        SetAsEnglish();
                         ChineseChecked = false;
+                        SetAsEnglish();                       
                     }
                     OnPropertyChanged("EnglishChecked");
-                }
+                }     
             }
         }
 
@@ -770,7 +782,17 @@ namespace AIC.HomePage.ViewModels
 
         private void LoginFinishEvent(LoginInfo loginInfo)//登录消息
         {
-            _regionManager.RequestNavigate(RegionNames.HomeViewMainRegion, mapView);
+            _regionManager.RequestNavigate(RegionNames.MainBodyRegion, tabView);
+            ////首页默认打开
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            Object viewObj = ServiceLocator.Current.GetInstance<HomeMapView>();
+            ICloseable view = viewObj as ICloseable;
+            if (view != null)
+            {
+                view.Closer.RequestClose += () => region.Remove(view);
+            }
+            region.Add(view, "首页");
+            region.Activate(view);
 
             _eventAggregator.GetEvent<ServerMarkEvent>().Publish(_localConfiguration.ServerInfoList);
 
@@ -842,7 +864,7 @@ namespace AIC.HomePage.ViewModels
 #endif
             if (result == MessageBoxResult.OK)
             {
-                _regionManager.RequestNavigate(RegionNames.HomeViewMainRegion, loginView);
+                _regionManager.RequestNavigate(RegionNames.MainBodyRegion, loginView);
 
                 _loginUserService.SetUserLogout();
 
@@ -865,7 +887,7 @@ namespace AIC.HomePage.ViewModels
             {
                 var viewObj = views[i];
                 ICloseable view = viewObj as ICloseable;
-                if (view.Closer.Visibility == Visibility.Visible)
+                //if (view.Closer.Visibility == Visibility.Visible)
                 {
                     region.Remove(view);
                 }
@@ -1092,6 +1114,10 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<FilterDBDataView>();
             }
+            else if(viewName == "MenuDeviceNewData")
+            {
+                viewObj = ServiceLocator.Current.GetInstance<DeviceRunTestListView>();
+            }
             else if (viewName == "MenuRefreshData")
             {
                 Status = ViewModelStatus.Querying;
@@ -1124,6 +1150,14 @@ namespace AIC.HomePage.ViewModels
         #endregion
 
         #region 中英文管理
+        private void InitLanguage()
+        {
+            if (LocalSetting.IsEnglishLanguage == true)
+            {
+                EnglishChecked = true;
+            }
+        }
+
         private void SetAsChinese()
         {
             List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
@@ -1132,7 +1166,7 @@ namespace AIC.HomePage.ViewModels
                 dictionaryList.Add(dictionary);
             }
             string requestedCulture = @"/AIC.Resources;component/Themes/zh-cn.xaml";
-            ResourceDictionary resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source.OriginalString.Equals(requestedCulture));
+            ResourceDictionary resourceDictionary = dictionaryList.Where(d => d.Source != null && d.Source.OriginalString.Equals(requestedCulture)).FirstOrDefault();
             Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
             TabLanguageShift();
@@ -1145,34 +1179,32 @@ namespace AIC.HomePage.ViewModels
                 dictionaryList.Add(dictionary);
             }
             string requestedCulture = @"/AIC.Resources;component/Themes/en-us.xaml";
-            ResourceDictionary resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source.OriginalString.Equals(requestedCulture));
+            ResourceDictionary resourceDictionary = dictionaryList.Where(d => d.Source != null && d.Source.OriginalString.Equals(requestedCulture)).FirstOrDefault();
             Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
             TabLanguageShift();
         }
         private void TabLanguageShift()
         {
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            var views = region.Views.ToList();
-            for (int i = 0; i < views.Count; i++)
+            if (this._regionManager.Regions.ContainsRegionWithName("MainTabRegion"))
             {
-                var viewObj = views[i];
-                ICloseable view = viewObj as ICloseable;
-                switch (view.Closer.Title)
+                IRegion region = this._regionManager.Regions["MainTabRegion"];
+                var views = region.Views.ToList();
+                for (int i = 0; i < views.Count; i++)
                 {
-                    case "Home":
-                    case "首页": view.Closer.Title = (string)Application.Current.Resources["tabFirst"]; break;
-                    case "ServerSetting":
-                    case "服务器管理": view.Closer.Title = (string)Application.Current.Resources["menuServerSetting"]; break;
-                    case "CollectorSetting":
-                    case "数采器管理": view.Closer.Title = (string)Application.Current.Resources["menuCollectorSetting"]; break;
-                    case "UserManage":
-                    case "用户管理": view.Closer.Title = (string)Application.Current.Resources["menuUserManage"]; break;
-                    case "RoleManage":
-                    case "角色管理": view.Closer.Title = (string)Application.Current.Resources["menuRoleManage"]; break;
-                    case "SettingLog":
-                    case "管理日志": view.Closer.Title = (string)Application.Current.Resources["menuManageLog"]; break;
+                    var viewObj = views[i];
+                    ICloseable view = viewObj as ICloseable;
+                    view.Closer.Title = (string)Application.Current.Resources[view.Closer.TitleResourceName];
                 }
+            }
+            try
+            {
+                LocalSetting.IsEnglishLanguage = EnglishChecked;
+                LocalSetting.SetAppSetting("IsEnglishLanguage", EnglishChecked.ToString());    
+            }
+            catch (Exception ex)
+            {
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设置错误", ex));
             }
         }
         #endregion
@@ -1451,18 +1483,6 @@ namespace AIC.HomePage.ViewModels
         {
             AlarmAckListWin win = new AlarmAckListWin(TotalDangerList);
             win.Show();
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    CustomSystemHappenEvent(new Core.Models.CustomSystemException()
-            //    {
-            //        Type = 201,
-            //        Degree = 1,
-            //        EventTime = DateTime.Now,
-            //        Remarks = "ceshi",
-            //        T_Item_Guid = Guid.NewGuid(),
-            //        T_Item_Type = 12,
-            //    });
-            //}
         }
 
         private SoundPlayer player = new System.Media.SoundPlayer();
@@ -1496,13 +1516,13 @@ namespace AIC.HomePage.ViewModels
         private const double constantheightoffset = 60;
         private object threadLock = new object();
 
-        private void CustomSystemHappenEvent(CustomSystemException ex)
+        private void CustomSystemHappenEvent(T1_SystemEvent ex)
         {
-            ex.id = (CustomSystemException.LastOrDefault() ?? new CustomSystemException()).id + 1;
+            ex.id = (CustomSystemException.LastOrDefault() ?? new T1_SystemEvent()).id + 1;
             CustomSystemException.Add(ex);
 
             //保留当天100条数据
-            if (CustomSystemException.Count > 100)
+            if (CustomSystemException.Count >= 100)
             {
                 CustomSystemException.RemoveAt(0);
             }
@@ -1515,7 +1535,7 @@ namespace AIC.HomePage.ViewModels
                     CustomSystemException.Remove(olds[i]);
                 }
             }
-
+            _loginUserService.AddSystemEvent(ex);
             //if (heightoffsets.Count >= 5)//避免太多弹出窗口
             //{
             //    return;

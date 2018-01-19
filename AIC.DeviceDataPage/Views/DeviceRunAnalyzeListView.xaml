@@ -131,22 +131,24 @@
 
         <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <WrapPanel Grid.Row="0" Grid.Column="2" Margin="5">
-            <TextBlock Text="查询时间" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"  Margin="4,0,0,0"/>
-            <TextBlock Text="查询天数" Margin="4,0,0,0" VerticalAlignment="Center" />
-            <ComboBox VerticalAlignment="Center" ItemsSource="{Binding DayItems}" SelectedItem="{Binding SelectedDay}" Style="{DynamicResource VirtualisedMetroComboBox}"  Margin="4,0,0,0"/>         
+        <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <WrapPanel>
+                <TextBlock Text="查询时间" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"  Margin="4,0,0,0"/>
+                <TextBlock Text="查询天数" Margin="4,0,0,0" VerticalAlignment="Center" />
+                <ComboBox VerticalAlignment="Center" ItemsSource="{Binding DayItems}" SelectedItem="{Binding SelectedDay}" Style="{DynamicResource VirtualisedMetroComboBox}"  Margin="4,0,0,0"/>
 
-            <Button Command="{Binding SearchCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
-                        <TextBlock Text="{DynamicResource query}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>           
-        </WrapPanel>
-        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
+                <Button Command="{Binding SearchCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/search.png"  />
+                            <TextBlock Text="{DynamicResource query}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+        </Border>
+        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0,1,0,0"
                                  ItemsSource="{Binding DevicesView}" SelectionMode="Single"          
                                  CanUserAddRows="False" ColumnWidth="Auto" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
@@ -271,8 +273,8 @@
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                    <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                 </Style>
             </DataGrid.Style>
             <i:Interaction.Triggers>

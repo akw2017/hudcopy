@@ -25,6 +25,7 @@ using AIC.Resources.Models;
 using System.Windows;
 using AIC.M9600.Client.DataProvider;
 using AIC.Core;
+using AIC.Core.LMModels;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -106,7 +107,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 管理树
         private void InitTree()
         {
-            OrganizationTreeItems = _organizationService.GetOrganizations();
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
 
@@ -128,8 +129,8 @@ namespace AIC.OnLineDataPage.ViewModels
         #endregion
 
         #region 属性与字段
-        private ObservableCollection<CustomSystemException> customSystemException;
-        public ObservableCollection<CustomSystemException> CustomSystemException
+        private ObservableCollection<T1_SystemEvent> customSystemException;
+        public ObservableCollection<T1_SystemEvent> CustomSystemException
         {
             get { return customSystemException; }
             set
@@ -272,7 +273,7 @@ namespace AIC.OnLineDataPage.ViewModels
             ;
         }
 
-        private void CustomSystemHappenEvent(CustomSystemException ex)
+        private void CustomSystemHappenEvent(T1_SystemEvent ex)
         {
             AlarmEventTitle = "报警事件(" + ex.EventTime.ToString("yyyy-MM-dd")+ "),最新" + CustomSystemException.Count() + "条";
             Refresh();

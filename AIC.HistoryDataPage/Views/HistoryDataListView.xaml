@@ -346,69 +346,71 @@
 
         <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <wrap:WrapBreakPanel Grid.Row="0" Grid.Column="2" Margin="5">
-            <TextBlock Text="选择项:" VerticalAlignment="Center"/>
-            <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
-            <TextBlock Text="数据上限:" VerticalAlignment="Center" />
-            <TextBox Text="{Binding ChannelRecordLength}" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
-            <TextBlock Text="数据类型:" VerticalAlignment="Center" Margin="5,0,0,0"/>
-            <!--<ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:Unit}" SelectedItem="{Binding UnitFilter}" Style="{DynamicResource VirtualisedMetroComboBox}"/>-->
-            <ComboBox Width="120" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False"/>
-            <TextBlock Text="触发条件:" VerticalAlignment="Center" Margin="5,0,0,0"/>
-            <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:TriggerType}" SelectedItem="{Binding TriggerFilter}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+        <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <wrap:WrapBreakPanel>
+                <TextBlock Text="选择项:" VerticalAlignment="Center"/>
+                <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <TextBlock Text="数据上限:" VerticalAlignment="Center" />
+                <TextBox Text="{Binding ChannelRecordLength}" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
+                <TextBlock Text="数据类型:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                <!--<ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:Unit}" SelectedItem="{Binding UnitFilter}" Style="{DynamicResource VirtualisedMetroComboBox}"/>-->
+                <ComboBox Width="120" ItemsSource="{Binding UnitCategory}" SelectedItem="{Binding Unit}" Style="{DynamicResource VirtualisedMetroComboBox}" IsEditable="False"/>
+                <TextBlock Text="触发条件:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                <ComboBox IsEditable="False" Width="120" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:TriggerType}" SelectedItem="{Binding TriggerFilter}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
 
-            <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0" Visibility="Collapsed"/>
+                <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0" Visibility="Collapsed"/>
 
-            <CheckBox Content="转速" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowRPMFilter}" VerticalAlignment="Center" Visibility="Collapsed"/>
-            <TextBlock Text="起始转速:" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed"/>
-            <TextBox Text="{Binding DownRPMFilter}" Width="100" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
-            <TextBlock Text="终止转速:" VerticalAlignment="Center"  Margin="5,0,0,0" Visibility="Collapsed"/>
-            <TextBox Width="100" Text="{Binding UpRPMFilter}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                <CheckBox Content="转速" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowRPMFilter}" VerticalAlignment="Center" Visibility="Collapsed"/>
+                <TextBlock Text="起始转速:" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed"/>
+                <TextBox Text="{Binding DownRPMFilter}" Width="100" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                <TextBlock Text="终止转速:" VerticalAlignment="Center"  Margin="5,0,0,0" Visibility="Collapsed"/>
+                <TextBox Width="100" Text="{Binding UpRPMFilter}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
 
-            <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <Rectangle wrap:WrapBreakPanel.LineBreakBefore="True" VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 
-            <CheckBox Content="正常值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowNormal}"  VerticalAlignment="Center"/>
-            <CheckBox Content="预警值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowPreWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="警告值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="危险值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowDanger}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-            <CheckBox Content="无效值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowInvalid}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="正常值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowNormal}"  VerticalAlignment="Center"/>
+                <CheckBox Content="预警值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowPreWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="警告值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowWarning}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="危险值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowDanger}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <CheckBox Content="无效值" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding AllowInvalid}" VerticalAlignment="Center" Margin="2,0,0,0"/>
 
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
-            <TextBlock Text="查询时间" VerticalAlignment="Center"/>
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
-            <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center" />
-            <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <TextBlock Text="查询时间" VerticalAlignment="Center"/>
+                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False"  Value="{Binding StartTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+                <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center" />
+                <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding EndTime}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
 
-            <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
 
-            <Button Command="{Binding AddDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
-                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding RefreshDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
-                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding ClearDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
-                        <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>           
-        </wrap:WrapBreakPanel>
+                <Button Command="{Binding AddDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                            <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding RefreshDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
+                            <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding ClearDataCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                            <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </wrap:WrapBreakPanel>
+        </Border>
 
-        <TabControl Grid.Row="1" Grid.Column="2" Margin="3">
+        <TabControl Grid.Row="1" Grid.Column="2" Margin="0,1,0,0">
             <TabItem Header="振动数据" Style="{x:Null}" IsSelected="{Binding VInfoSelected}">
                 <Grid>
                     <DataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow">
@@ -458,6 +460,11 @@
                                 </GroupStyle.Panel>
                             </GroupStyle>
                         </DataGrid.GroupStyle>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                                <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
                         <DataGrid.CellStyle>
                             <Style BasedOn="{StaticResource MetroDataGridCell}"
                                 TargetType="{x:Type DataGridCell}">
@@ -498,8 +505,8 @@
                         <DataGrid.Style>
                             <Style BasedOn="{StaticResource MetroDataGrid}"
                                 TargetType="{x:Type DataGrid}">
-                                <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                                <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                             </Style>
                         </DataGrid.Style>
                     </DataGrid>                   
@@ -554,6 +561,11 @@
                                 </GroupStyle.Panel>
                             </GroupStyle>
                         </DataGrid.GroupStyle>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="DataGridColumnHeader" >
+                                <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
                         <DataGrid.CellStyle>
                             <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
@@ -594,8 +606,8 @@
                         <DataGrid.Style>
                             <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                                <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                                <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                             </Style>
                         </DataGrid.Style>
                     </DataGrid>
@@ -702,8 +714,8 @@
                         <DataGrid.Style>
                             <Style BasedOn="{StaticResource MetroDataGrid}"
                                 TargetType="{x:Type DataGrid}">
-                                <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                                <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                             </Style>
                         </DataGrid.Style>
                     </bsFilter:FilterDataGrid>                   

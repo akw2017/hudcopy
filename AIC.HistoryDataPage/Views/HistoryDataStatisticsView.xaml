@@ -37,6 +37,7 @@
             <ColumnDefinition Width="Auto"/>     
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <TreeView Grid.Row="0" Grid.RowSpan="4" x:Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
@@ -81,18 +82,19 @@
         </TreeView>
 
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
-            
-            <TextBlock Text="报警统计:" VerticalAlignment="Center" Margin="2,0,2,0"/>
-            <Button Command="{Binding RefreshCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/arrow_refresh.png"  />
-                        <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <!--<Button Command="{Binding StopDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+
+        <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="报警统计:" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                <Button Command="{Binding RefreshCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/arrow_refresh.png"  />
+                            <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <!--<Button Command="{Binding StopDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/stop.png"  />
@@ -100,18 +102,19 @@
                     </StackPanel>
                 </Button.Content>
             </Button>-->
-        </StackPanel>
+            </StackPanel>
+        </Border>
 
-        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
+        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0,1,0,0"
                                  ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
-                                 CanUserAddRows="False" ColumnWidth="*" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
+                                 CanUserAddRows="False" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
                 <!--<DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>-->
-                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" MinWidth="180" IsReadOnly="True"/>
-                <DataGridTextColumn Header="第一次采集时间"  Binding="{Binding FirstUploadTime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>
-                <DataGridTextColumn Header="最后一次采集时间" Binding="{Binding LastUploadTime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>
+                <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="第一次采集时间"  Binding="{Binding FirstUploadTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="最后一次采集时间" Binding="{Binding LastUploadTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="预警次数" Binding="{Binding PreAlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="报警次数" Binding="{Binding AlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="危险次数" Binding="{Binding DangerCount}" IsReadOnly="True"/>
@@ -159,7 +162,7 @@
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-
+                    <Setter Property="Margin" Value="0,0,20,0"/>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>
@@ -170,8 +173,8 @@
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                    <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                 </Style>
             </DataGrid.Style>
             <i:Interaction.Triggers>

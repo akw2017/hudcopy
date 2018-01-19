@@ -37,7 +37,7 @@ namespace AIC.HistoryDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuHistoryDataStatistics"], true);
+            this.Closer = new CloseableHeader("menuHistoryDataStatistics", (string)Application.Current.Resources["menuHistoryDataStatistics"], true);
           
             HistoryDataStatisticsViewModel vm = this.DataContext as HistoryDataStatisticsViewModel;
             if (vm != null)

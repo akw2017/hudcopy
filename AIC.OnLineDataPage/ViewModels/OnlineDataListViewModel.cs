@@ -421,7 +421,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 管理树
         private void InitTree()
         {
-            OrganizationTreeItems = _organizationService.GetOrganizations();
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
 
@@ -463,7 +463,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         var sg = abnormal.BaseAlarmSignal as BaseWaveSignal;
                         DiagnosticInfoClass.GetDiagnosticInfo(sg);
-                        DiagnosticInfo = sg.OrganizationDeviceName + "-诊断信息:" + sg.DiagnosticInfo;
+                        DiagnosticInfo = sg.DeviceItemName + "-诊断信息:" + sg.DiagnosticInfo;
                         DiagnosticAdvice = sg.DiagnosticAdvice;
                     }
                     else
@@ -483,7 +483,7 @@ namespace AIC.OnLineDataPage.ViewModels
             if (sg != null)
             {
                 DiagnosticInfoClass.GetDiagnosticInfo(sg);
-                DiagnosticInfo = "诊断信息:" + sg.DiagnosticInfo;
+                DiagnosticInfo = sg.DeviceItemName + "-诊断信息:" + sg.DiagnosticInfo;
                 DiagnosticAdvice = sg.DiagnosticAdvice;
             }
             else

@@ -10,6 +10,7 @@ using Microsoft.Practices.ServiceLocation;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using System;
+using AIC.Core.LMModels;
 
 namespace AIC.Core.SignalModels
 {
@@ -47,7 +48,7 @@ namespace AIC.Core.SignalModels
         private void OnAlarmGradeChanged(string propertyName)
         {
             string alarmstring = GetAlarmEventString();
-            int itemtype = GetSignType();
+            short itemtype = GetSignType();
             CustomSystemDegree degree = (this.AlarmGrade == AlarmGrade.DisConnect)? CustomSystemDegree.Information : (CustomSystemDegree)(this.Low8Alarm);
             CustomSystemType alarm = (this.AlarmGrade == AlarmGrade.DisConnect) ? CustomSystemType.DisConnect : CustomSystemType.Alarm;
 
@@ -58,7 +59,7 @@ namespace AIC.Core.SignalModels
         private void OnIsNotOKChanged(string propertyName)
         {
             string alarmstring = (IsNotOK == true) ? DeviceItemName + "." + "通道异常事件发生" : DeviceItemName + "." + "通道异常事件消失";
-            int itemtype = GetSignType();
+            short itemtype = GetSignType();
 
             DelayIsNotOK = IsNotOK;           
             PublishMessage(CustomSystemType.IsNotOK, CustomSystemDegree.Information, alarmstring, this.Guid, itemtype);
@@ -183,66 +184,66 @@ namespace AIC.Core.SignalModels
             return str;
         }
 
-        private int GetSignType()
+        private short GetSignType()
         {
             if (this is IEPEChannelSignal)
             {
-                return (int)ChannelType.IEPEChannelInfo;
+                return (short)ChannelType.IEPEChannelInfo;
             }
             else if (this is EddyCurrentDisplacementChannelSignal)
             {
-                return (int)ChannelType.EddyCurrentDisplacementChannelInfo;
+                return (short)ChannelType.EddyCurrentDisplacementChannelInfo;
             }
             else if(this is EddyCurrentKeyPhaseChannelSignal)
             {
-                return (int)ChannelType.EddyCurrentKeyPhaseChannelInfo;
+                return (short)ChannelType.EddyCurrentKeyPhaseChannelInfo;
             }
             else if (this is EddyCurrentTachometerChannelSignal)
             {
-                return (int)ChannelType.EddyCurrentTachometerChannelInfo;
+                return (short)ChannelType.EddyCurrentTachometerChannelInfo;
             }
             else if (this is DigitTachometerChannelSignal)
             {
-                return (int)ChannelType.DigitTachometerChannelInfo;
+                return (short)ChannelType.DigitTachometerChannelInfo;
             }
             else if (this is AnalogRransducerInChannelSignal)
             {
-                return (int)ChannelType.AnalogRransducerInChannelInfo;
+                return (short)ChannelType.AnalogRransducerInChannelInfo;
             }
             else if (this is AnalogRransducerOutChannelSignal)
             {
-                return (int)ChannelType.AnalogRransducerOutChannelInfo;
+                return (short)ChannelType.AnalogRransducerOutChannelInfo;
             }
             else if (this is DigitRransducerInChannelSignal)
             {
-                return (int)ChannelType.DigitRransducerInChannelInfo;
+                return (short)ChannelType.DigitRransducerInChannelInfo;
             }
             else if (this is DigitRransducerOutChannelSignal)
             {
-                return (int)ChannelType.DigitRransducerOutChannelInfo;
+                return (short)ChannelType.DigitRransducerOutChannelInfo;
             }
             else if (this is RelayChannelSignal)
             {
-                return (int)ChannelType.RelayChannelInfo;
+                return (short)ChannelType.RelayChannelInfo;
             }           
             else if (this is WirelessScalarChannelSignal)
             {
-                return (int)ChannelType.WirelessScalarChannelInfo;
+                return (short)ChannelType.WirelessScalarChannelInfo;
             }
             else if (this is WirelessVibrationChannelSignal)
             {
-                return (int)ChannelType.WirelessVibrationChannelInfo;
+                return (short)ChannelType.WirelessVibrationChannelInfo;
             }
-            return (int)ChannelType.None;
+            return (short)ChannelType.None;
         }
 
-        private void PublishMessage(CustomSystemType type, CustomSystemDegree grade, string alarmstring, Guid guid, int itemtype)
+        private void PublishMessage(CustomSystemType type, CustomSystemDegree grade, string alarmstring, Guid guid, short itemtype)
         {
             if (alarmstring == null || itemtype == (int)ChannelType.None || ACQDatetime == null)
             {
                 return;
             }
-            CustomSystemException ex = new CustomSystemException()
+            T1_SystemEvent ex = new T1_SystemEvent()
             {
                 Type = (int)type,
                 Degree = (int)grade,
@@ -282,7 +283,7 @@ namespace AIC.Core.SignalModels
             }
         }
 
-        public int Low8Alarm { get; set; }//低8位
+        public int Low8Alarm { get { return (int)AlarmGrade & 0xff; } }//低8位
         //报警限值  
         private AlarmLimit[] alarmLimit;
         public AlarmLimit[] AlarmLimit
@@ -294,10 +295,26 @@ namespace AIC.Core.SignalModels
                 {
                     alarmLimit = value;
                     OnPropertyChanged("AlarmLimit");
+                    OnPropertyChanged("AlarmLimitString");
                     if (alarmLimit != null && alarmLimit.Length > 0)
                     {
                         AlarmMax = alarmLimit.Select(p => p.Limit).Max();
                     }
+                }
+            }
+        }
+
+        public string AlarmLimitString
+        {
+            get
+            {
+                if (AlarmLimit != null)
+                {
+                    return string.Join(" ", AlarmLimit.Select(p => p.Name + ":" + p.Limit.ToString("f1")));
+                }
+                else
+                {
+                    return null;
                 }
             }
         }

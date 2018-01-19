@@ -135,31 +135,35 @@
 
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">            
-            <TextBlock Text="数据诊断:" VerticalAlignment="Center" Margin="4,0,0,0"/>
-            <Button Command="{Binding StartDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/flag_green.png"  />
-                        <TextBlock Text="{DynamicResource strStart}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <CheckBox VerticalAlignment="Center" IsChecked="True" Content="分组显示"  Style="{StaticResource CheckBoxStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding GroupViewCommand}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Unchecked">
-                        <i:InvokeCommandAction Command="{Binding UnGroupViewCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </CheckBox>
-        </StackPanel>
+        <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="数据诊断:" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    <Button Command="{Binding StartDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/flag_green.png"  />
+                                <TextBlock Text="{DynamicResource strStart}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <CheckBox VerticalAlignment="Center" IsChecked="True" Content="分组显示"  Style="{StaticResource CheckBoxStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding GroupViewCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding UnGroupViewCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0"
+        <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0,1,0,0"
                                  ItemsSource="{Binding SignalsView}" SelectedItem="{Binding SelectedSignal}" SelectionMode="Single"          
                                  CanUserAddRows="False" ColumnWidth="Auto" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" ScrollViewer.CanContentScroll="True">
@@ -289,8 +293,8 @@
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                    <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                 </Style>
             </DataGrid.Style>
             <i:Interaction.Triggers>

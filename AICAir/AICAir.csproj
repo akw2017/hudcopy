@@ -102,7 +102,7 @@
     <AssemblyOriginatorKeyFile>AICXBap_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>45.ico</ApplicationIcon>
+    <ApplicationIcon>20.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'XBAP Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -399,6 +399,7 @@
     <Resource Include="45.ico" />
     <None Include="MyData\Configuration\Servers.xml" />
     <Resource Include="MyData\Configuration\ChartFiles.xml" />
+    <Resource Include="20.ico" />
     <Content Include="MyData\Gif\Null.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

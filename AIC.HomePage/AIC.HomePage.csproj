@@ -215,7 +215,7 @@
     <Compile Include="Models\VibrationHistory.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainRegionViewModel.cs" />
-    <Compile Include="ViewModels\MapViewModel.cs" />
+    <Compile Include="ViewModels\HomeMapViewModel.cs" />
     <Compile Include="ViewModels\ServerSetViewModel.cs" />
     <Compile Include="ViewModels\ShowAlarmWinViewModel.cs" />
     <Compile Include="Views\AlarmAckListWin.xaml.cs">
@@ -245,8 +245,8 @@
     <Compile Include="Views\SendEmailWin.xaml.cs">
       <DependentUpon>SendEmailWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
+    <Compile Include="Views\TabView.xaml.cs">
+      <DependentUpon>TabView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -263,8 +263,8 @@
     <Compile Include="Views\MainRegionView.xaml.cs">
       <DependentUpon>MainRegionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MapView.xaml.cs">
-      <DependentUpon>MapView.xaml</DependentUpon>
+    <Compile Include="Views\HomeMapView.xaml.cs">
+      <DependentUpon>HomeMapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -337,7 +337,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\HomeView.xaml">
+    <Page Include="Views\TabView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -361,7 +361,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MapView.xaml">
+    <Page Include="Views\HomeMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

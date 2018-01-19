@@ -107,13 +107,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\DefaultSettin
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ShowAlarmWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ShowAbnormalWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\SendEmailWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LoginView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LockWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AboutWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LoginWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MainRegionView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\AIC.HomePage_MarkupCompile.cache
@@ -123,13 +121,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\DefaultSettin
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ShowAlarmWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ShowAbnormalWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\SendEmailWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LoginView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LockWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\AboutWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\LoginWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MainRegionView.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\MapView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\ServerSetView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\AIC.HomePage.g.resources
@@ -155,3 +151,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\PwdEditWin.ba
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TestWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.baml

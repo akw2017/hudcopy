@@ -131,17 +131,8 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     itemWidth = value;
                     OnPropertyChanged("ItemWidth");
-                    amsReplayVM.ItemWidth = value;
                     timeDomainVM.ItemWidth = value;
                     frequencyDomainVM.ItemWidth = value;
-                    powerSpectrumVM.ItemWidth = value;
-                    powerSpectrumDensityVM.ItemWidth = value;
-                    orthoDataVM.ItemWidth = value;
-                    offDesignConditionVM.ItemWidth = value;
-                    orderAnalysisVM.ItemWidth = value;
-                    time3DSpectrumVM.ItemWidth = value;
-                    rpm3DSpectrumVM.ItemWidth = value;
-                    alarmPointTrendVM.ItemWidth = value;
                 }
             }
         }
@@ -156,17 +147,8 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     itemHeight = value;
                     OnPropertyChanged("ItemHeight");
-                    amsReplayVM.ItemHeight = value;
                     timeDomainVM.ItemHeight = value;
                     frequencyDomainVM.ItemHeight = value;
-                    powerSpectrumVM.ItemHeight = value;
-                    powerSpectrumDensityVM.ItemHeight = value;
-                    orthoDataVM.ItemHeight = value;
-                    offDesignConditionVM.ItemHeight = value;
-                    orderAnalysisVM.ItemHeight = value;
-                    time3DSpectrumVM.ItemHeight = value;
-                    rpm3DSpectrumVM.ItemHeight = value;
-                    alarmPointTrendVM.ItemHeight = value;
                 }
             }
         }
@@ -177,7 +159,7 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             get
             {
-                return _databaseComponent.GetUnitCategory();
+                return _databaseComponent.UnitCategory;
             }
         }
 
@@ -299,20 +281,39 @@ namespace AIC.OnLineDataPage.ViewModels
         }
 
         private List<Color> ColorList = new List<Color>();
+
+        private double lowerLimit;
+        public double LowerLimit
+        {
+            get
+            {
+                return lowerLimit;
+            }
+            set
+            {
+                lowerLimit = value;
+                OnPropertyChanged("LowerLimit");
+            }
+        }
+
+        private double upperLimit = 10;
+        public double UpperLimit
+        {
+            get
+            {
+                return upperLimit;
+            }
+            set
+            {
+                upperLimit = value;
+                OnPropertyChanged("UpperLimit");
+            }
+        }
         #endregion
 
         #region 私有变量
-        private RMSReplayDataViewModel amsReplayVM;
         private TimeDomainDataViewModel timeDomainVM;
-        private FrequencyDomainDataViewModel frequencyDomainVM;
-        private PowerSpectrumDataViewModel powerSpectrumVM;
-        private PowerSpectrumDensityDataViewModel powerSpectrumDensityVM;
-        private OrthoDataViewModel orthoDataVM;
-        private OffDesignConditionDataViewModel offDesignConditionVM;
-        private OrderAnalysisDataViewModel orderAnalysisVM;
-        private Time3DSpectrumDataViewModel time3DSpectrumVM;
-        private RPM3DSpectrumDataViewModel rpm3DSpectrumVM;
-        private AlarmPointTrendDataViewModel alarmPointTrendVM;
+        private FrequencyDomainDataViewModel frequencyDomainVM;      
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
@@ -417,12 +418,21 @@ namespace AIC.OnLineDataPage.ViewModels
                 return this.editChartFileCommand ?? (this.editChartFileCommand = new DelegateCommand(() => this.EditChartFile()));
             }
         }
+
+        private ICommand setLimitCommand;
+        public ICommand SetLimitCommand
+        {
+            get
+            {
+                return this.setLimitCommand ?? (this.setLimitCommand = new DelegateCommand<object>(para => this.SetLimit(para)));
+            }
+        }
         #endregion
 
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.GetOrganizations();
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
         }
 
@@ -449,11 +459,6 @@ namespace AIC.OnLineDataPage.ViewModels
         {
             try
             {
-                amsReplayVM = new RMSReplayDataViewModel(true);
-                amsReplayVM.Title = "趋势";
-                amsReplayVM.ItemWidth = ItemWidth;
-                amsReplayVM.ItemHeight = ItemHeight;
-
                 timeDomainVM = new TimeDomainDataViewModel();
                 timeDomainVM.Title = "时域";
                 timeDomainVM.ItemWidth = ItemWidth;
@@ -462,68 +467,13 @@ namespace AIC.OnLineDataPage.ViewModels
                 frequencyDomainVM = new FrequencyDomainDataViewModel();
                 frequencyDomainVM.Title = "频域";
                 frequencyDomainVM.ItemWidth = ItemWidth;
-                frequencyDomainVM.ItemHeight = ItemHeight;
-
-                powerSpectrumVM = new PowerSpectrumDataViewModel();
-                powerSpectrumVM.Title = "功率谱";
-                powerSpectrumVM.ItemWidth = ItemWidth;
-                powerSpectrumVM.ItemHeight = ItemHeight;
-
-                powerSpectrumDensityVM = new PowerSpectrumDensityDataViewModel();
-                powerSpectrumDensityVM.Title = "功率谱密度";
-                powerSpectrumDensityVM.ItemWidth = ItemWidth;
-                powerSpectrumDensityVM.ItemHeight = ItemHeight;
-
-                orthoDataVM = new OrthoDataViewModel();
-                orthoDataVM.Title = "轴心轨迹";
-                orthoDataVM.ItemWidth = ItemWidth;
-                orthoDataVM.ItemHeight = ItemHeight;
-
-                //offDesignConditionVM = new OffDesignConditionDataViewModel(_dataModelProvider);//htzk123
-                offDesignConditionVM = new OffDesignConditionDataViewModel();//htzk123
-                offDesignConditionVM.Title = "变工况拟合";
-                offDesignConditionVM.ItemWidth = ItemWidth;
-                offDesignConditionVM.ItemHeight = ItemHeight;
-
-                alarmPointTrendVM = new AlarmPointTrendDataViewModel();
-                alarmPointTrendVM.Title = "报警点趋势";
-                alarmPointTrendVM.ItemWidth = ItemWidth;
-                alarmPointTrendVM.ItemHeight = ItemHeight;
-
-                orderAnalysisVM = new OrderAnalysisDataViewModel();
-                orderAnalysisVM.Title = "阶次分析";
-                orderAnalysisVM.ItemWidth = ItemWidth;
-                orderAnalysisVM.ItemHeight = ItemHeight;
-
-                time3DSpectrumVM = new Time3DSpectrumDataViewModel();
-                time3DSpectrumVM.Title = "时间三维谱";
-                time3DSpectrumVM.ItemWidth = ItemWidth;
-                time3DSpectrumVM.ItemHeight = ItemHeight;
-
-                rpm3DSpectrumVM = new RPM3DSpectrumDataViewModel();
-                rpm3DSpectrumVM.Title = "转速三维谱";
-                rpm3DSpectrumVM.ItemWidth = ItemWidth;
-                rpm3DSpectrumVM.ItemHeight = ItemHeight;
-
-                //trackTask = AMSTrackChanged;
-
-                //amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
+                frequencyDomainVM.ItemHeight = ItemHeight;            
 
                 timeDomainVM.IsVisible = true;
                 frequencyDomainVM.IsVisible = true;
 
-                historicalDataCollection.Add(amsReplayVM);
-                historicalDataCollection.Add(alarmPointTrendVM);
                 historicalDataCollection.Add(timeDomainVM);
                 historicalDataCollection.Add(frequencyDomainVM);
-                historicalDataCollection.Add(powerSpectrumVM);
-                historicalDataCollection.Add(powerSpectrumDensityVM);
-                historicalDataCollection.Add(orthoDataVM);
-                historicalDataCollection.Add(offDesignConditionVM);
-                historicalDataCollection.Add(orderAnalysisVM);
-                historicalDataCollection.Add(time3DSpectrumVM);
-                historicalDataCollection.Add(rpm3DSpectrumVM);
-
             }
             catch (Exception e)
             {
@@ -609,12 +559,6 @@ namespace AIC.OnLineDataPage.ViewModels
 
                         timeDomainVM.AddChannel(signaltoken.ChannelToken);
                         frequencyDomainVM.AddChannel(signaltoken.ChannelToken);
-                        powerSpectrumVM.AddChannel(signaltoken.ChannelToken);
-                        powerSpectrumDensityVM.AddChannel(signaltoken.ChannelToken);
-                        alarmPointTrendVM.AddChannel(signaltoken.ChannelToken);
-                        orthoDataVM.AddChannel(signaltoken.ChannelToken);
-
-                        offDesignConditionVM.AddChannel(signaltoken.ChannelToken);
                     }
                     #endregion
                     #region WirelessScalarChannelInfo
@@ -999,15 +943,8 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     SignalRemoved(token);
                 }
-                amsReplayVM.RemoveChannel(token.ChannelToken);
-                alarmPointTrendVM.RemoveChannel(token.ChannelToken);
                 timeDomainVM.RemoveChannel(token.ChannelToken);
                 frequencyDomainVM.RemoveChannel(token.ChannelToken);
-                powerSpectrumVM.RemoveChannel(token.ChannelToken);
-                powerSpectrumDensityVM.RemoveChannel(token.ChannelToken);
-                orthoDataVM.RemoveChannel(token.ChannelToken);
-                time3DSpectrumVM.RemoveChannel(token.ChannelToken);
-                offDesignConditionVM.RemoveChannel(token.ChannelToken);
             }
         }
 
@@ -1757,19 +1694,19 @@ namespace AIC.OnLineDataPage.ViewModels
             if (file != null)
             {
 #if XBAP
-                    MessageBox.Show("趋势图重名，请重新填写名称","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("趋势图重名，请重新填写名称","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
 #else
                 Xceed.Wpf.Toolkit.MessageBox.Show("趋势图重名，请重新填写名称", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
             }
             else
             {
-                ChartFileData data = new ChartFileData()
+                ChartFile = new ChartFileData()
                 {
                     Name = ChartFileName,
                     ListGuid = addedSignals.Select(p => p.Guid).ToList(),
                 };
-                chartFileCategory.Add(data);
+                chartFileCategory.Add(ChartFile);
 
                 SaveFile();
             }
@@ -1791,7 +1728,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
                 foreach (var guid in ChartFile.ListGuid)
                 {
-                    var itemTree = _organizationService.GetItems().Where(p => p.T_Item.Guid == guid).FirstOrDefault();
+                    var itemTree = _organizationService.ItemTreeItems.Where(p => p.T_Item.Guid == guid).FirstOrDefault();
                     if (itemTree != null)
                     {
                         AddData(itemTree);
@@ -1808,9 +1745,29 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void EditChartFile()
         {
-            ChartFile.Name = ChartFileName;
-            ChartFile.ListGuid = addedSignals.Select(p => p.Guid).ToList();
-            SaveFile();
+            if (ChartFile != null)
+            {
+                ChartFile.Name = ChartFileName;
+                ChartFile.ListGuid = addedSignals.Select(p => p.Guid).ToList();
+                SaveFile();
+
+            }
+        }
+        #endregion
+
+        #region 设置上下限
+        private void SetLimit(object para)
+        {
+            var sglist = para as System.Collections.IList;
+            if (sglist != null)
+            {
+                foreach (var sg in sglist)
+                {
+                    var sgtoken = sg as SignalToken;
+                    sgtoken.LowerLimit = LowerLimit;
+                    sgtoken.UpperLimit = UpperLimit;
+                }
+            }
         }
         #endregion
 

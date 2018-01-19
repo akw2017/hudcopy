@@ -1,4 +1,5 @@
-﻿using AICAir.ModuleTracker;
+﻿using AIC.Core;
+using AICAir.ModuleTracker;
 using ModuleTracking;
 using Prism.Commands;
 using Prism.Events;
@@ -18,6 +19,20 @@ namespace AICAir.ViewModels
         public ShellViewModel()
         {
                        
+        }
+
+        private string title = LocalSetting.Title;
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                OnPropertyChanged("Title");
+            }
         }
 
         private ICommand settingCommand;

@@ -17,7 +17,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="0" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="*" />
@@ -145,7 +145,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="0" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid Margin="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="*" />

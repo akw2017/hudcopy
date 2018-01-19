@@ -24,7 +24,7 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataTileView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataTile"], true);
+            this.Closer = new CloseableHeader("menuOnlineDataTile", (string)Application.Current.Resources["menuOnlineDataTile"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));
         }

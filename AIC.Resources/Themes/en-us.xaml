@@ -79,6 +79,13 @@
     <s:String x:Key="menuImportDBData">ImportDBData</s:String>
     <s:String x:Key="menuFilterDBData">SearchDBData</s:String>
 
+    <s:String x:Key="menuGeneralManage">GeneralManage</s:String>
+    <s:String x:Key="menuSystemManage">SystemManage</s:String>
+    <s:String x:Key="menuLocalSetting">LocalSetting</s:String>
+    <s:String x:Key="menuHistoryPlaySetting">HistoryPlaySettin</s:String>
+    <s:String x:Key="menuAboutVersion">AboutVersion</s:String>
+    <s:String x:Key="menuScreenShotFile">ScreenShotFile</s:String>
+
     <s:String x:Key="menuSetting">System</s:String>
     <s:String x:Key="menuServerSetting">ServerSetting</s:String>
     <s:String x:Key="menuCollectorSetting">CollectorSetting</s:String>
@@ -94,6 +101,18 @@
     <s:String x:Key="menuLanguage">Language</s:String>
     <s:String x:Key="menuChinese">Chinese</s:String>
     <s:String x:Key="menuEnglish">English</s:String>
+
+    <s:String x:Key="menuOnlineDataList">OnlineDataList</s:String>
+    <s:String x:Key="menuOnlineDataTile">OnlineDataTile</s:String>
+    <s:String x:Key="menuOnlineDataDiagram">OnlineDataDiagram</s:String>
+    <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
+    <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
+    <s:String x:Key="menuOnlineDataStatistics">OnlineAlarmStatistics</s:String>
+    <s:String x:Key="menuDataTrendChart">DataTrendChart</s:String>
+    <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
+    <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
+    <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>
+    <s:String x:Key="menuSystemEventList">HistoryEventList</s:String>
 
     <s:String x:Key="messagePDAManage1">This type cannot be added to a sub-frequency！！！</s:String>
     <s:String x:Key="messagePDAManage2">Please bind the measuring points first！！！</s:String>
@@ -139,6 +158,7 @@
     <s:String x:Key="export">Export</s:String>
     <s:String x:Key="import">Import</s:String>
     <s:String x:Key="built">Built</s:String>
+    <s:String x:Key="set">Set</s:String>
     
     <s:String x:Key="name">Name</s:String>
     <s:String x:Key="code">Code</s:String>
@@ -169,18 +189,6 @@
     <s:String x:Key="operateDateTime">OperateDateTime</s:String>
     <s:String x:Key="remarks">Remarks</s:String>
     <s:String x:Key="end">End</s:String>
-
-    <s:String x:Key="menuOnlineDataList">OnlineDataList</s:String>
-    <s:String x:Key="menuOnlineDataTile">OnlineDataTile</s:String>
-    <s:String x:Key="menuOnlineDataDiagram">OnlineDataDiagram</s:String>
-    <s:String x:Key="menuOnlineDataOverview">OnlineDataOverview</s:String>
-    <s:String x:Key="menuOnlineDataDiagnosis">OnlineDataDiagnosis</s:String>
-    <s:String x:Key="menuOnlineDataStatistics">OnlineAlarmStatistics</s:String>
-    <s:String x:Key="menuDataTrendChart">DataTrendChart</s:String>
-    <s:String x:Key="menuHistoryDataList">HistoryDataList</s:String>
-    <s:String x:Key="menuHistoryDataDiagram">HistoryDiagram</s:String>
-    <s:String x:Key="menuHistoryDataStatistics">HistoryDataDataStatistics</s:String>
-    <s:String x:Key="menuSystemEventList">HistoryEventList</s:String>
 
     <s:String x:Key="deviceName">DeviceName</s:String>
     <s:String x:Key="groupByDevice">GroupByDevice</s:String>

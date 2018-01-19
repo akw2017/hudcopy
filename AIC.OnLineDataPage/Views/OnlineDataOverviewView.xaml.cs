@@ -24,7 +24,7 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataOverviewView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataOverview"], true);
+            this.Closer = new CloseableHeader("menuOnlineDataOverview", (string)Application.Current.Resources["menuOnlineDataOverview"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
 
             //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));

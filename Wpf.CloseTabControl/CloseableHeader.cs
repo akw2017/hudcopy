@@ -12,8 +12,9 @@ namespace Wpf.CloseTabControl
 {
     public class CloseableHeader : BindableBase
     {
-        public CloseableHeader(string title, bool canClose)
+        public CloseableHeader(string titleResource, string title, bool canClose)
         {
+            this.TitleResourceName = titleResource;
             this.Title = title;
             this.canClose = canClose;
             this.CloseCommand = new DelegateCommand(Close); 
@@ -29,6 +30,8 @@ namespace Wpf.CloseTabControl
                 this.RequestClose();
             }
         }
+
+        public string TitleResourceName { get; set; }
 
         private string title;
         public string Title

@@ -771,7 +771,7 @@ namespace AIC.PDAPage.Models
                 return;
             }
             IDatabaseComponent _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
-            right.UnitCategory = _databaseComponent.GetUnitCategory();
+            right.UnitCategory = _databaseComponent.UnitCategory;//获取目录，数据库不在各个表里存，需要重新获取
 
             right.Organization = left.Organization;
             right.T_Device_Name = left.T_Device_Name;

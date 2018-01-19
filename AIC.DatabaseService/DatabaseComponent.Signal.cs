@@ -13,6 +13,7 @@ using AIC.Core.Helpers;
 using AIC.Core.Events;
 using AIC.Core;
 using AIC.M9600.Common.DTO.Device;
+using AIC.M9600.Common.SlaveDB.Generated;
 
 namespace AIC.DatabaseService
 {
@@ -168,6 +169,24 @@ namespace AIC.DatabaseService
             });
         }
 
-
+        public async Task<Dictionary<Guid, List<D_SlotStatistic>>> GetDailyStatisticsData(string ip, HashSet<Guid> guidlist, DateTime startTime, DateTime endTime)
+        {
+            return await Task.Run(() =>
+            {
+                var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
+                var statisticsData = client.QueryDailyStatisticsData(guidlist, startTime, endTime);
+                if (statisticsData.IsOK)
+                {
+                    //查询成功
+                    return statisticsData.ResponseItem;
+                }
+                else
+                {
+                    //ErrorMessage是错误信息
+                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(statisticsData.ErrorMessage)));
+                    return null;
+                }
+            });
+        }
     }
 }

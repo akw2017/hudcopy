@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/maddsrkup-compatibility/2006" 
         xmlns:prism="http://prismlibrary.com/"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        Title="昌邑石化机泵状态无线监测系统">    
+        Title="{Binding Title}">    
     <Grid>
         <Grid.RowDefinitions>                    
             <RowDefinition Height="*"/>           

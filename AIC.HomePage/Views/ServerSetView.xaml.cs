@@ -24,7 +24,7 @@ namespace AIC.HomePage.Views
         public ServerSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuServerSetting"], true);
+            this.Closer = new CloseableHeader("menuServerSetting", (string)Application.Current.Resources["menuServerSetting"], true);
         }
         public CloseableHeader Closer { get; private set; }
     }

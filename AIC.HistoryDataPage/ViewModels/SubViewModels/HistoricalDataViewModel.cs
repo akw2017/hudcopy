@@ -99,6 +99,22 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion
 
+        #region IsSelected
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         public IObservable<string> WhenPropertyChanged

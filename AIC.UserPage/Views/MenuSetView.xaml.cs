@@ -24,7 +24,7 @@ namespace AIC.UserPage.Views
         public MenuSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuMenuManage"], true);
+            this.Closer = new CloseableHeader("menuMenuManage", (string)Application.Current.Resources["menuMenuManage"], true);
         }
         public CloseableHeader Closer { get; private set; }
     }

@@ -30,27 +30,31 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" >
-            <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
-            <Button Command="{Binding ImportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/ruby_get.png"  />
-                        <TextBlock Text="{DynamicResource import}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding BuiltCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="16" Width="16" Stretch="Fill" Source="/AIC.Resources;component/Images/build.png"  />
-                        <TextBlock Text="{DynamicResource built}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        <TabControl Grid.Row="1" >
+
+        <Border Grid.Row="0" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
+                <Button Command="{Binding ImportCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/ruby_get.png"  />
+                            <TextBlock Text="{DynamicResource import}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding BuiltCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="16" Width="16" Stretch="Fill" Source="/AIC.Resources;component/Images/build.png"  />
+                            <TextBlock Text="{DynamicResource built}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="0">
             <TabItem Header="组织" Style="{x:Null}">
                 <DataGrid ItemsSource="{Binding OrganizationView}"  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
@@ -92,8 +96,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -142,8 +146,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -209,8 +213,8 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
@@ -286,13 +290,14 @@
                     <DataGrid.Style>
                         <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                            <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                            <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                         </Style>
                     </DataGrid.Style>
                 </DataGrid>
             </TabItem>           
         </TabControl>
+        
         <TextBox x:Name="txtAllMessage" Grid.Row="2" Text="{Binding Information}" IsReadOnly="True" FontSize="12" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </UserControl>

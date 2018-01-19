@@ -37,7 +37,7 @@ namespace AIC.DatabaseService
         public LoginInfo LoginInfo { get; set; }  
         public MenuManageList MenuManageList { get; set; }
         public ObservableCollection<ExceptionModel> ExceptionModel { get; private set; }
-        public ObservableCollection<CustomSystemException> CustomSystemException { get; private set; }
+        public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }
         public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator)
         {
             _localConfiguration = localConfiguration;
@@ -51,10 +51,9 @@ namespace AIC.DatabaseService
 
             MenuManageList = new MenuManageList();
             ExceptionModel = new ObservableCollection<ExceptionModel>();
-            CustomSystemException = new ObservableCollection<Core.Models.CustomSystemException>();
+            CustomSystemException = new ObservableCollection<T1_SystemEvent>();
 
-            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException);
-           
+            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException);           
         }
 
         public void Initialize()
@@ -84,19 +83,13 @@ namespace AIC.DatabaseService
                 lttask.Add(_databaseComponent.LoadOrganizationData(item.IP));
                 lttask.Add(_databaseComponent.LoadItemData(item.IP));
                 lttask.Add(_databaseComponent.LoadOrganizationPrivilegeData(item.IP));
-                //lttask.Add(_databaseComponent.LoadHardwave(item.IP));
+                //lttask.Add(_databaseComponent.LoadHardwave(item.IP));//改为延时加载
                 await Task.WhenAll(lttask.ToArray());
             }
           
             string mainserverip = LoginInfo.ServerInfo.IP;
             _databaseComponent.SetMainServerIp(mainserverip);
 
-            //_organizationService.T_Item = _databaseComponent.T_Item;
-            //_organizationService.T_DivFreInfo.Clear();
-            //foreach (var serverip in _databaseComponent.GetServerIPCategory())
-            //{
-            //    _organizationService.T_DivFreInfo.Add(serverip, _databaseComponent.GetRootCard(serverip).T_DivFreInfo);
-            //}
             _organizationService.SetDivFres();
 
             LoginInfo.LoginStatus = true;
@@ -125,12 +118,7 @@ namespace AIC.DatabaseService
                             MenuManageList.Dictionary[submenu.InternalNumber].Visibility = Visibility.Visible;
                         }                       
                     }
-                    //_organizationService.T_OrganizationPrivilege.Clear();
-                    //foreach (var organizationPrivilege in _databaseComponent.T_OrganizationPrivilege)
-                    //{
-                    //    var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == user.T_OrganizationPrivilege_Guid select p).ToList();
-                    //    _organizationService.T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
-                    //}
+
                     _organizationService.SetUserOrganizationPrivilege(user.T_OrganizationPrivilege_Guid);
                     _organizationService.InitOrganizations(false);
                 }
@@ -138,11 +126,11 @@ namespace AIC.DatabaseService
 
             //_hardwareService.InitServers();//改为延时加载
             _signalProcess.InitSignals();
-            //AddOperateRecord(OperateType.Login);  
+            //AddOperateRecord(OperateType.Login);  //登录记录取消
         }
 
         private readonly SemaphoreSlim locker = new SemaphoreSlim(1);
-        public async Task LazyLoading()
+        public async Task LazyLoading()//延时加载
         {
             await locker.WaitAsync();
             try
@@ -152,6 +140,7 @@ namespace AIC.DatabaseService
                 {
                     List<Task> lttask = new List<Task>();
                     lttask.Add(_databaseComponent.LoadHardwave(item.IP));
+                    lttask.Add(_databaseComponent.GetMeasureUnit(item.IP));
                     await Task.WhenAll(lttask.ToArray());
                 }
                 _hardwareService.InitServers();
@@ -172,7 +161,7 @@ namespace AIC.DatabaseService
                 locker.Release();
             }
         }
-        public void SetUserLogout()
+        public void SetUserLogout()//注销
         {
             LoginInfo.ClearLoginInfo();
             _databaseComponent.ClearDatabase();
@@ -249,6 +238,35 @@ namespace AIC.DatabaseService
         }
         #endregion
 
+        #region 系统事件
+        public async Task AddSystemEvent(T1_SystemEvent exception)
+        {
+            await _databaseComponent.Add<T_SystemEvent>(LoginInfo.ServerInfo.IP, exception);
+        }
+
+        public async Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype)
+        {
+            List<T_SystemEvent> list = new List<T_SystemEvent>();
+            if (name.Trim() == "" && systemtype == CustomSystemType.None)
+            {
+                list = await _databaseComponent.Query<T_SystemEvent>(ip, null, "(EventTime >= @0 and EventTime <= @1)", new object[] { start, end, });
+            }
+            else if (name.Trim() != "" && systemtype == CustomSystemType.None)
+            {
+                list = await _databaseComponent.Query<T_SystemEvent>(ip, null, "((EventTime >= @0 and EventTime <= @1) and Remarks like '%'+ @2+ '%')", new object[] { start, end, name });
+            }
+            else if (name.Trim() == "" && systemtype != CustomSystemType.None)
+            {
+                list = await _databaseComponent.Query<T_SystemEvent>(ip, null, "((EventTime >= @0 and EventTime <= @1) and Type = @2)", new object[] { start, end, ((int)systemtype) });
+            }
+            else
+            {
+                list = await _databaseComponent.Query<T_SystemEvent>(ip, null, "((EventTime >= @0 and EventTime <= @1) and Remarks like '%'+ @2+ '%' and Type = @3)", new object[] { start, end, name, ((short)systemtype).ToString() });
+            }
+            return list.Select(p => ClassCopyHelper.AutoCopy<T_SystemEvent, T1_SystemEvent>(p)).ToList();
+        }
+        #endregion
+
         #region 异常
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private void ManageException(Tuple<string, Exception> tuple)
@@ -260,15 +278,14 @@ namespace AIC.DatabaseService
                 while (ex != null)
                 {
                     var exceptionModel = BuildExceptionModel(tuple);
-                    if (ExceptionModel.Count > 100)
+                    lock (ExceptionModel)
                     {
-                        lock (ExceptionModel)
+                        if (ExceptionModel.Count > 100)
                         {
                             ExceptionModel.Clear();
-                        }
+                        }                   
+                        ExceptionModel.Add(exceptionModel);
                     }
-                    ExceptionModel.Add(exceptionModel);
-                    
                     log.Error(exceptionModel.Target, tuple.Item2);
                     ex = ex.InnerException;
                     if (ex != null)
@@ -282,6 +299,15 @@ namespace AIC.DatabaseService
                 log.Error("未处理的严重异常", e);
             }
         }
+
+        public void ClearException()
+        {
+            lock (ExceptionModel)
+            {
+                ExceptionModel.Clear();
+            }
+        }
+
         private ExceptionModel BuildExceptionModel(Tuple<string, Exception> tuple)
         {
             var ex = tuple.Item2;

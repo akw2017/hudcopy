@@ -56,3 +56,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\CheckBoxStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\TaskbarNotifier.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\TaskbarNotifier.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\BlueGrayAddition.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\BlueGray.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\GrayAddition.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\Gray.baml

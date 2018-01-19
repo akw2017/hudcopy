@@ -24,7 +24,7 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataDiagramView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuOnlineDataDiagram"], true);
+            this.Closer = new CloseableHeader("menuOnlineDataDiagram", (string)Application.Current.Resources["menuOnlineDataDiagram"], true);
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

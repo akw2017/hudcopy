@@ -20,25 +20,19 @@ namespace AIC.DatabaseService
 {
     public partial class DatabaseComponent : IDatabaseComponent
     {
-        private Dictionary<string, T1_RootCard> T_RootCard { get; set; }
-        private Dictionary<string, List<T1_Organization>> T_Organization { get; set; }
-        private Dictionary<string, List<T1_Device>> T_Device { get; set; }
-        private Dictionary<string, List<T1_Item>> T_Item { get; set; }
-        private Dictionary<string, List<T1_User>> T_User { get; set; }
-        private Dictionary<string, List<T1_Role>> T_Role { get; set; }
-        private Dictionary<string, List<T1_Menu>> T_Menu { get; set; }
-        private Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
-        private List<string> UnitCategory
-        {
-            get
-            {
-                return new List<string>()
-                {
-                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
-                };
-            }
-        }
-        private string MainServerIp { get; set; }
+        #region 字段
+        public Dictionary<string, T1_RootCard> T_RootCard { get; private set; }
+        public Dictionary<string, List<T1_Organization>> T_Organization { get; private set; }
+        public Dictionary<string, List<T1_Device>> T_Device { get; private set; }
+        public Dictionary<string, List<T1_Item>> T_Item { get; private set; }
+        public Dictionary<string, List<T1_User>> T_User { get; private set; }
+        public Dictionary<string, List<T1_Role>> T_Role { get; private set; }
+        public Dictionary<string, List<T1_Menu>> T_Menu { get; private set; }
+        public Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; private set; }
+        public List<string> UnitCategory { get; private set; }
+
+        public string MainServerIp { get; private set; }
+        #endregion
 
         public DatabaseComponent()
         {
@@ -50,8 +44,11 @@ namespace AIC.DatabaseService
             T_Role = new Dictionary<string, List<T1_Role>>();
             T_Menu = new Dictionary<string, List<T1_Menu>>();
             T_OrganizationPrivilege = new Dictionary<string, List<T1_OrganizationPrivilege>>();
-        }
-      
+            UnitCategory = new List<string>()
+                {
+                    "m/s^2", "mm/s", "um", "Pa", "RPM", "°C", "Unit"
+                };
+        }      
         public void InitDatabase(string ip)
         {
             //if (!Clients.ContainsKey(ip))
@@ -103,7 +100,6 @@ namespace AIC.DatabaseService
                 T_RootCard.Add(ip, rootCard);
             }
         }            
-
         public void ClearDatabase()
         {
             T_RootCard = new Dictionary<string, T1_RootCard>();
@@ -115,12 +111,10 @@ namespace AIC.DatabaseService
             T_Menu = new Dictionary<string, List<T1_Menu>>();
             T_OrganizationPrivilege = new Dictionary<string, List<T1_OrganizationPrivilege>>();
         }
-
         public List<string> GetServerIPCategory()
         {
             return new List<string>(T_RootCard.Keys.ToList());
         }
-
         public List<T1_User> GetUserData(string ip)
         {
             if (T_User.ContainsKey(ip))
@@ -132,7 +126,6 @@ namespace AIC.DatabaseService
                 return null; 
             }
         }
-
         public List<T1_Role> GetRoleData(string ip)
         {
             if (T_Role.ContainsKey(ip))
@@ -144,7 +137,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-
         public List<T1_Menu> GetMenuData(string ip)
         {
             if (T_Menu.ContainsKey(ip))
@@ -156,7 +148,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-
         public List<T1_Device> GetDeviceData(string ip)
         {
             if (T_Device.ContainsKey(ip))
@@ -168,7 +159,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-
         public List<T1_Organization> GetOrganizationData(string ip)
         {
             if (T_Organization.ContainsKey(ip))
@@ -180,7 +170,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-
         public List<T1_Item> GetItemData(string ip)
         {
             if (T_Item.ContainsKey(ip))
@@ -192,7 +181,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-
         public List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip)
         {
             if (T_OrganizationPrivilege.ContainsKey(ip))
@@ -204,7 +192,6 @@ namespace AIC.DatabaseService
                 return null;
             }
         }       
-
         public T1_RootCard GetRootCard(string ip)
         {
             if (T_RootCard.ContainsKey(ip))
@@ -216,23 +203,11 @@ namespace AIC.DatabaseService
                 return null;
             }
         }
-        public List<string> GetUnitCategory()
-        {
-            return UnitCategory;
-        }
-        public Dictionary<string, List<T1_OrganizationPrivilege>> GetOrganizationPrivilegeDictionary()
-        {
-            return T_OrganizationPrivilege;
-        }
-
         public void SetMainServerIp(string ip)
         {
             MainServerIp = ip;
         }
-        public string GetMainServerIp()
-        {
-            return MainServerIp;
-        }
+     
         public async Task<List<T1_User>> LoadUserData(string ip)
         {
             var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
@@ -2946,6 +2921,18 @@ namespace AIC.DatabaseService
                 }
             });
 
+        }
+
+        public async Task GetMeasureUnit(string ip)
+        {
+           
+            var list = await Query<T_MeasureUnit>(ip, null, null, null);
+
+            if (list != null)
+            {
+                UnitCategory.AddRange(list.Select(p => p.Name));
+                UnitCategory = UnitCategory.Distinct().ToList();
+            }           
         }
     }
 }

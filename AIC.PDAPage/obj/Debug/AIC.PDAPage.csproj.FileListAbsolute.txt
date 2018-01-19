@@ -734,3 +734,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\ItemsFilter.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\ItemsFilter.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\Views\FilterDBDataView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\Views\FilterDBDataView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMatlabDLL.dll

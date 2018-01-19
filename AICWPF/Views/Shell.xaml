@@ -7,8 +7,9 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:System="clr-namespace:System;assembly=mscorlib"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         Dialog:DialogParticipation.Register="{Binding}"        
-        Title="昌邑石化机泵状态无线监测系统" TitleAlignment ="Center" Margin="0,2,0,0" mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1600" 
+        Title="{Binding Title}" TitleAlignment ="Center" Margin="0,2,0,0" mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1600" 
         WindowStartupLocation="CenterScreen" WindowState="Maximized" Closing="MetroWindow_Closing" Icon="/AICWPF;component/45.ico">
     <Window.Resources>
         <System:Double x:Key="WindowTitleFontSize">28</System:Double>

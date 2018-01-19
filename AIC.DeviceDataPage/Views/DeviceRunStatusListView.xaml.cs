@@ -34,7 +34,7 @@ namespace AIC.DeviceDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuDeviceRunStatus"], true);
+            this.Closer = new CloseableHeader("menuDeviceRunStatus", (string)Application.Current.Resources["menuDeviceRunStatus"], true);
 
             DeviceRunStatusListViewModel vm = this.DataContext as DeviceRunStatusListViewModel;
             if (vm != null)

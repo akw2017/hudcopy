@@ -9,6 +9,8 @@ namespace AIC.CoreType
 {
     public enum CustomSystemType
     {
+        [Description("-")]
+        None = -1,
         [Description("报警")]
         Alarm = 201,
         [Description("断线")]

@@ -1,5 +1,7 @@
 ﻿using AIC.Core.Models;
+using AIC.ServiceInterface;
 using MahApps.Metro.Controls;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -44,9 +46,11 @@ namespace AIC.HomePage.Views
             this.Close();
         }
 
+        private static ILoginUserService _loginUserService;
         private void ClearExceptionButton_Click(object sender, RoutedEventArgs e)
         {
-            exceptionModelCollection.Clear();
+            _loginUserService = ServiceLocator.Current.GetInstance<ILoginUserService>();
+            _loginUserService.ClearException();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

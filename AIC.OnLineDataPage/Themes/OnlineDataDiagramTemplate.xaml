@@ -141,7 +141,7 @@
     <!--测点模型-->
     <DataTemplate x:Key="defaultValueTempalte">
         <Grid>
-            <Grid x:Name="grid" Margin="2" Background="{DynamicResource DeepLinearAccentColorBrush}">
+            <Grid x:Name="grid" Margin="2" Background="{DynamicResource AccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -245,7 +245,7 @@
                 <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible" />
-                <Setter TargetName="grid" Property="Background" Value="Green"/>
+                <Setter TargetName="grid" Property="Background" Value="Orange"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="Invalid">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>

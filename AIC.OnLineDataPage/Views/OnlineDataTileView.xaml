@@ -159,6 +159,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <TreeView Grid.Row="0" Grid.RowSpan="3" x:Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
@@ -324,92 +325,94 @@
             </i:Interaction.Triggers>
 
         </TreeView>
+      
         <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <WrapPanel Grid.Row="0" Grid.Column="3"  Orientation="Horizontal">  
-            <TextBlock Text="显示模式" Margin="5,0,5,0" VerticalAlignment="Center"/>
-            <RadioButton Content="数值" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Value}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="趋势" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=AMSTrend}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="时域" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TimeDomain}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="频域" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=FrequencyDomain}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="功率谱" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=PowerSpectrum}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="功率谱密度" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=PowerSpectrumDensity}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="时间三维" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Time3DSpectrum}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <!--<RadioButton Content="分频" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=MultiDivFre}" IsEnabled="False">
+        <Border Grid.Row="0" Grid.Column="3" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="显示模式" Margin="5,0,5,0" VerticalAlignment="Center"/>
+                <RadioButton Content="数值" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Value}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="趋势" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=AMSTrend}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="时域" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TimeDomain}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="频域" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=FrequencyDomain}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="功率谱" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=PowerSpectrum}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="功率谱密度" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=PowerSpectrumDensity}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="时间三维" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Time3DSpectrum}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <!--<RadioButton Content="分频" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=MultiDivFre}" IsEnabled="False">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">
                         <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </RadioButton>-->
-            <RadioButton Content="轴心轨迹" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Ortho}" IsEnabled="False">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Content="伯德" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Bode}" IsEnabled="False">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
+                <RadioButton Content="轴心轨迹" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Ortho}" IsEnabled="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="伯德" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Bode}" IsEnabled="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
 
-            <RadioButton Content="转速三维" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=RPM3D}" IsEnabled="False">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,0,0"/>
-            <TextBlock Text="预处理" Margin="5,0,5,0" VerticalAlignment="Center"/>
-            <CheckBox x:Name="filterCheckBox" Margin="5,0" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsFilter}" VerticalAlignment="Center">
-                <!--<i:Interaction.Triggers>
+                <RadioButton Content="转速三维" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=RPM3D}" IsEnabled="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,0,0"/>
+                <TextBlock Text="预处理" Margin="5,0,5,0" VerticalAlignment="Center"/>
+                <CheckBox x:Name="filterCheckBox" Margin="5,0" Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsFilter}" VerticalAlignment="Center">
+                    <!--<i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding AddFilterCommand}" CommandParameter="Filter"/>
                                     </i:EventTrigger>
@@ -417,202 +420,215 @@
                                         <i:InvokeCommandAction Command="{Binding RemoveFilterCommand}" CommandParameter="Filter"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>-->
-            </CheckBox>
-            <xctk:DropDownButton x:Name="dropDownButton" Background="Transparent" Content="滤波" VerticalAlignment="Center">
-                <xctk:DropDownButton.DropDownContent>
-                    <Grid Width="320">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <!--<RowDefinition Height="30"/>-->
-                        </Grid.RowDefinitions>
+                </CheckBox>
+                <xctk:DropDownButton x:Name="dropDownButton" Background="Transparent" Content="滤波" VerticalAlignment="Center">
+                    <xctk:DropDownButton.DropDownContent>
+                        <Grid Width="320">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <!--<RowDefinition Height="30"/>-->
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <!--<RadioButton Foreground="Black" Content="不滤波" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center"/>-->
+                                <RadioButton x:Name="bandPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="带通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}" VerticalAlignment="Center"/>
+                                <RadioButton x:Name="highPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="高通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}" VerticalAlignment="Center"/>
+                                <RadioButton x:Name="lowPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="低通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.BandPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.IsRPMBinding}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="低逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.BPPassBandFreLow}" />
+                                <Label Grid.Row="4" Content="高逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.BPPassBandFreHigh}"/>
+                                <Label Grid.Row="5" Content="过渡带宽"/>
+                                <xctk:DoubleUpDown  Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.TransitionBandwidth}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.HighPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.IsRPMBinding,Mode=TwoWay}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.PassbandFre}"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.StopbandFre}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.LowPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.PassbandAttenuationDB}"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.StopbandAttenuationDB}"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.IsRPMBinding,Mode=TwoWay}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.PassbandFre}"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.StopbandFre}"/>
+                                <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.SaveCommand}"/>
+                                    <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.ResetCommand}"/>
+                                </UniformGrid>
+                            </Grid>
+                        </Grid>
+                    </xctk:DropDownButton.DropDownContent>
+                </xctk:DropDownButton>
+                <RadioButton Content="无" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center" />
+                <RadioButton Content="包络" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Envelope}" VerticalAlignment="Center" />
+                <RadioButton Content="TFF" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TFF}" VerticalAlignment="Center" />
+                <RadioButton Content="倒频谱" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Cepstrum}" VerticalAlignment="Center" />
+
+                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,5,0"/>
+
+                <Button Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=treeview,Path=SelectedItem}" Style="{DynamicResource AccentedSquareButtonStyle}">
+                    <Button.Content>
                         <StackPanel Orientation="Horizontal">
-                            <!--<RadioButton Foreground="Black" Content="不滤波" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center"/>-->
-                            <RadioButton x:Name="bandPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="带通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}" VerticalAlignment="Center"/>
-                            <RadioButton x:Name="highPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="高通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}" VerticalAlignment="Center"/>
-                            <RadioButton x:Name="lowPassRb" Style="{StaticResource RadioButtonStyle}" Foreground="Black" Content="低通" IsChecked="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}" VerticalAlignment="Center"/>
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
+                            <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
                         </StackPanel>
-                        <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.BandPass},FallbackValue=Collapsed}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.PassbandAttenuationDB}"/>
-                            <Label Grid.Row="1" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.StopbandAttenuationDB}"/>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.IsRPMBinding}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.BPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </CheckBox>
-                            <Label Grid.Row="3" Content="低逼近带通"/>
-                            <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.BPPassBandFreLow}" />
-                            <Label Grid.Row="4" Content="高逼近带通"/>
-                            <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.BPPassBandFreHigh}"/>
-                            <Label Grid.Row="5" Content="过渡带宽"/>
-                            <xctk:DoubleUpDown  Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.TransitionBandwidth}"/>
-                            <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
-                                <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.SaveCommand}"/>
-                                <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.BPFilter.ResetCommand}"/>
-                            </UniformGrid>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.HighPass},FallbackValue=Collapsed}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.PassbandAttenuationDB}"/>
-                            <Label Grid.Row="1" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.StopbandAttenuationDB}"/>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.IsRPMBinding,Mode=TwoWay}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.HPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </CheckBox>
-                            <Label Grid.Row="3" Content="通带"/>
-                            <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.PassbandFre}"/>
-                            <Label Grid.Row="4" Content="阻带"/>
-                            <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.StopbandFre}"/>
-                            <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
-                                <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.SaveCommand}"/>
-                                <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.HPFilter.ResetCommand}"/>
-                            </UniformGrid>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="5,5,25,0" Visibility="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.LowPass},FallbackValue=Collapsed}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Maximum="3" Increment="0.1" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.PassbandAttenuationDB}"/>
-                            <Label Grid.Row="1" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="40" Maximum="120" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.StopbandAttenuationDB}"/>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.IsRPMBinding,Mode=TwoWay}" Foreground="Black" Grid.Row="2" Content="绑定转速" Grid.ColumnSpan="2" >
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.BindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource proxy}, Path=Data.SelectedSignalMonitor.Signal.LPFilter.UnBindRPMCommand}" CommandParameter="{Binding Source={StaticResource proxy},Path= Data.SelectedSignalMonitor.Signal.RPM}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </CheckBox>
-                            <Label Grid.Row="3" Content="通带"/>
-                            <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.PassbandFre}"/>
-                            <Label Grid.Row="4" Content="阻带"/>
-                            <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.StopbandFre}"/>
-                            <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
-                                <Button Content="保存" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.SaveCommand}"/>
-                                <Button Content="重置" Margin="5" Command="{Binding Source={StaticResource proxy},Path=Data.SelectedSignalMonitor.Signal.LPFilter.ResetCommand}"/>
-                            </UniformGrid>
-                        </Grid>
-                    </Grid>
-                </xctk:DropDownButton.DropDownContent>
-            </xctk:DropDownButton>
-            <RadioButton Content="无" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}" VerticalAlignment="Center" />
-            <RadioButton Content="包络" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Envelope}" VerticalAlignment="Center" />
-            <RadioButton Content="TFF" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=TFF}" VerticalAlignment="Center" />
-            <RadioButton Content="倒频谱" GroupName="pregroup" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding SignalPreProccessType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Cepstrum}" VerticalAlignment="Center" />
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding ShowFunctionsCommand}" CommandParameter="{Binding ElementName=treeview,Path=SelectedItem}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
+                            <TextBlock Text="模式" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding ClearAllCommand}"  Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
+                            <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,5,0"/>
+                <CheckBox x:Name="chkbox" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="隐藏控制条" />
+                <!--<CheckBox Margin="5,0,0,0" IsChecked="{Binding IsShowAlarm}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="显示报警值" />-->
+            </WrapPanel>
+        </Border>
 
-            <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,5,0"/>
-            
-            <Button Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=treeview,Path=SelectedItem}" Style="{DynamicResource AccentedSquareButtonStyle}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/add.png"  />
-                        <TextBlock Text="{DynamicResource add}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding ShowFunctionsCommand}" CommandParameter="{Binding ElementName=treeview,Path=SelectedItem}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/refresh.png"  />
-                        <TextBlock Text="模式" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding ClearAllCommand}"  Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Stretch="None" Source="/AIC.Resources;component/Images/delete3.png"  />
-                        <TextBlock Text="{DynamicResource clear}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,5,0"/>
-            <CheckBox x:Name="chkbox" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="隐藏控制条" />
-            <!--<CheckBox Margin="5,0,0,0" IsChecked="{Binding IsShowAlarm}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="显示报警值" />-->
-        </WrapPanel>
-
-        <ListBox Grid.Row="1" Grid.Column="3" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,15,0" Background="{x:Null}" BorderBrush="{x:Null}"
+        <Grid Grid.Row="1" Grid.Column="3" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Row="1" Grid.Column="0" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" 
                      ItemsSource="{Binding SignalMonitors,Mode=TwoWay}" SelectedItem="{Binding SelectedSignalMonitor}"  
                      ItemContainerStyle="{StaticResource SignalMonitorStyle}" Style="{StaticResource FluidListBoxStyle}"           
                      ScrollViewer.HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility, Mode=TwoWay}" 
                      ScrollViewer.VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility, Mode=TwoWay}">
-            <!--<ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
-                        <core:FluidWrapPanel.ElementEasing>
-                            <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
-                        </core:FluidWrapPanel.ElementEasing>
-                        <core:FluidWrapPanel.DragEasing>
-                            <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
-                        </core:FluidWrapPanel.DragEasing>
-                    </core:FluidWrapPanel>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>-->
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Loaded">
-                    <command:ExInvokeCommandAction Command="{Binding ListBoxLoadedComamnd}"/>
-                </i:EventTrigger>
-                <command:RoutedEventTrigger RoutedEvent="ScrollViewer.ScrollChanged">
-                    <command:ExInvokeCommandAction Command="{Binding ScrollChangedComamnd}"/>
-                </command:RoutedEventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
-
-        <Grid x:Name="grid" Grid.Row="1" Grid.Column="3">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
+                            <core:FluidWrapPanel.ElementEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                            </core:FluidWrapPanel.ElementEasing>
+                            <core:FluidWrapPanel.DragEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                            </core:FluidWrapPanel.DragEasing>
+                        </core:FluidWrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <command:ExInvokeCommandAction Command="{Binding ListBoxLoadedComamnd}"/>
+                    </i:EventTrigger>
+                    <command:RoutedEventTrigger RoutedEvent="ScrollViewer.ScrollChanged">
+                        <command:ExInvokeCommandAction Command="{Binding ScrollChangedComamnd}"/>
+                    </command:RoutedEventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+            <Slider Grid.Row="0" Grid.Column="0" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal"  />
+            <Slider Grid.Row="1" Grid.Column="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="600" Orientation="Vertical"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}"/>
+        </Grid>
+        <!--<Grid x:Name="grid" Grid.Row="1" Grid.Column="3">
             <Grid.RenderTransform>
                 <TransformGroup>
-                    <TranslateTransform X="5" Y="-18"/>
+                    <TranslateTransform X="0" Y="-6"/>
                 </TransformGroup>
             </Grid.RenderTransform>
             <RadioButton Grid.Row="1" Margin="0,5,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" GroupName="Orientation" Style="{StaticResource RadioButtonStyle}" FontSize="24" IsChecked="{Binding Orientation,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Horizontal}"/>
@@ -629,6 +645,6 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Resources>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

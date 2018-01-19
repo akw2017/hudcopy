@@ -24,7 +24,8 @@ namespace AICWPF.Views
         public ShellPage()
         {
             InitializeComponent();
-            Bootstrapper.ShellPage = this;//XBAP.1            
+            Bootstrapper.ShellPage = this;//XBAP.1  
+            this.DataContext = new ShellViewModel();
         }      
 
         private void MainContent_SelectionChanged(object sender, SelectionChangedEventArgs e)

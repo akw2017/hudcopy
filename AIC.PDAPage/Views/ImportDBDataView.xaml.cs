@@ -33,7 +33,7 @@ namespace AIC.PDAPage.Views
             InitializeComponent();
             _eventAggregator = eventAggregator;
             
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuImportDBData"], true);
+            this.Closer = new CloseableHeader("menuImportDBData", (string)Application.Current.Resources["menuImportDBData"], true);
 
             // 这里是从后台工作线程触发，更新UI是跨线程操作，需要用Dispatcher.Invoke这种形式
             ((ImportDBDataViewModel)DataContext).NewMessageArrived += (o, args) =>

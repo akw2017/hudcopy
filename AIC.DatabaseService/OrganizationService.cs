@@ -17,12 +17,14 @@ namespace AIC.HardwareService
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
 
-        private ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get; set; }      
-        private ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; set; }
-        private List<ItemTreeItemViewModel> ItemTreeItems { get; set; }
-        private List<DivFreTreeItemViewModel> DivFreTreeItems { get; set; }
+        #region 字段
+        public ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems { get; private set; }
+        public ObservableCollection<OrganizationTreeItemViewModel> RecycledTreeItems { get; private set; }
+        public List<ItemTreeItemViewModel> ItemTreeItems { get; private set; }
+        public List<DivFreTreeItemViewModel> DivFreTreeItems { get; private set; }
+        public Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get; private set; }
         private Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
-        private Dictionary<string, List<T1_DivFreInfo>> T_DivFreInfo { get; set; }        
+        #endregion
 
         public OrganizationService(ICardProcess cardProcess, IDatabaseComponent databaseComponent)
         {
@@ -43,17 +45,6 @@ namespace AIC.HardwareService
         {
             
         }
-
-        public void SetUserOrganizationPrivilege(Guid? guid)
-        {
-            T_OrganizationPrivilege.Clear();
-            foreach (var organizationPrivilege in _databaseComponent.GetOrganizationPrivilegeDictionary())
-            {
-                var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == guid select p).ToList();
-                T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
-            }
-        }
-
         public void InitOrganizations(bool isadmin)
         {
             //从数据库取出，去重复
@@ -67,7 +58,6 @@ namespace AIC.HardwareService
                 GetOrganizationFromDatabase(item, isadmin);                             
             }
         }
-
         public void AddItem(ItemTreeItemViewModel item)
         {
             if (item == null)
@@ -90,18 +80,6 @@ namespace AIC.HardwareService
                 ItemTreeItems.Remove(item);
             }
         }
-        public List<ItemTreeItemViewModel> GetItems()
-        {
-            return ItemTreeItems;
-        }
-        public ObservableCollection<OrganizationTreeItemViewModel> GetRecycleds()
-        {
-            return RecycledTreeItems;
-        }
-        public ObservableCollection<OrganizationTreeItemViewModel> GetOrganizations()
-        {
-            return OrganizationTreeItems;
-        }
         public void AddDivFre(DivFreTreeItemViewModel divfre)
         {
             if (divfre == null)
@@ -113,7 +91,6 @@ namespace AIC.HardwareService
                 DivFreTreeItems.Add(divfre);
             }
         }
-
         public void DeleteDivFre(DivFreTreeItemViewModel divfre)
         {
             if (divfre == null)
@@ -124,15 +101,7 @@ namespace AIC.HardwareService
             {
                 DivFreTreeItems.Remove(divfre);
             }
-        }
-
-        public List<DivFreTreeItemViewModel> GetDivFres()
-        {
-            return DivFreTreeItems;
-        }
-
-      
-
+        }  
         public void SetDivFres()
         {
             T_DivFreInfo.Clear();
@@ -141,7 +110,15 @@ namespace AIC.HardwareService
                 T_DivFreInfo.Add(serverip, _databaseComponent.GetRootCard(serverip).T_DivFreInfo);
             }
         }
-
+        public void SetUserOrganizationPrivilege(Guid? guid)
+        {
+            T_OrganizationPrivilege.Clear();
+            foreach (var organizationPrivilege in _databaseComponent.T_OrganizationPrivilege)
+            {
+                var userorganizationPrivilege = (from p in organizationPrivilege.Value where p.Guid == guid select p).ToList();
+                T_OrganizationPrivilege.Add(organizationPrivilege.Key, userorganizationPrivilege);
+            }
+        }
         public void SaveOrganizationToDatabase(string ip)//测试，废弃
         {
             //T_Organization[ip].Clear();
@@ -166,7 +143,6 @@ namespace AIC.HardwareService
             //    T_Organization[ip].Add(organization.T_Organization);
             //}
         }
-
         public void GetOrganizationFromDatabase(string ip, bool isadmin)
         {
             var roots = from p in _databaseComponent.GetOrganizationData(ip) where p.Level == 0 && p.Is_Disabled == false orderby p.Sort_No select p;
@@ -203,7 +179,6 @@ namespace AIC.HardwareService
                 ItemTreeItems.Add(organization);
             }
         }
-
         private void GetSubOrganization(OrganizationTreeItemViewModel parent_organization, string ip, bool isadmin)
         {
             if (parent_organization == null)
@@ -275,7 +250,6 @@ namespace AIC.HardwareService
                 }
             }
         }
-
         public void SaveItemToDatabase(string ip)////测试，废弃
         {
             //T_Item[ip].Clear();
@@ -285,7 +259,6 @@ namespace AIC.HardwareService
             //    T_Item[ip].Add(item.T_Item);
             //}
         }
-
         public void GetItemFromDatabase(string ip)////测试，废弃
         { 
             //从数据库取出，去重复
@@ -302,7 +275,6 @@ namespace AIC.HardwareService
                 }
             }
         }          
-
 
         #region 测试
         private OrganizationTreeItemViewModel node1;

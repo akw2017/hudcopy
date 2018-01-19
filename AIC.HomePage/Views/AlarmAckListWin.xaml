@@ -65,8 +65,8 @@
                 <DataGrid.Style>
                     <Style BasedOn="{StaticResource MetroDataGrid}"
                        TargetType="{x:Type DataGrid}">
-                        <!--<Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />-->
+                        <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource AccentColorBrush4}" />
                     </Style>
                 </DataGrid.Style>
             </DataGrid>

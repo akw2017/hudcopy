@@ -57,9 +57,9 @@ namespace AIC.HistoryDataPage.ViewModels
         #region 管理树
         private void InitTree()
         { 
-            OrganizationTreeItems = _organizationService.GetOrganizations();
-            RecycledTreeItems = _organizationService.GetRecycleds(); ;
-            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);
+            OrganizationTreeItems = _organizationService.OrganizationTreeItems;
+            RecycledTreeItems = _organizationService.RecycledTreeItems; ;
+            SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);//可能无效了
             TreeExpanded();
         }
 
@@ -105,6 +105,36 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private ObservableCollection<HistoricalDataViewModel> historicalDataCollection = new ObservableCollection<HistoricalDataViewModel>();
         public IEnumerable<HistoricalDataViewModel> HistoricalDatas { get { return historicalDataCollection; } }
+
+        private HistoricalDataViewModel selectedHistoricalData;
+        public HistoricalDataViewModel SelectedHistoricalData
+        {
+            get { return selectedHistoricalData; }
+            set
+            {
+                if (value == null)
+                {
+                    if (historicalDataCollection.Count != 0)
+                    {
+                        return;
+                    }
+                }
+                if (selectedHistoricalData != value)
+                {
+                    if (selectedHistoricalData != null)
+                    {
+                        selectedHistoricalData.IsSelected = false;
+                    }
+                    selectedHistoricalData = value;
+                    if (selectedHistoricalData != null)
+                    {
+                        selectedHistoricalData.IsSelected = true;
+                    }
+
+                    OnPropertyChanged("SelectedHistoricalData");
+                }
+            }
+        }
 
         private ObservableCollection<ChannelToken> addedChannels = new ObservableCollection<ChannelToken>();
         public IEnumerable<ChannelToken> AddedChannels { get { return addedChannels; } }
@@ -732,7 +762,7 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             get
             {
-                return _databaseComponent.GetUnitCategory();
+                return _databaseComponent.UnitCategory;
             }
         }
 
@@ -1348,7 +1378,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         return;
                     }
 
-                    var channel = _cardProcess.GetChannel(_hardwareService.GetServers(), item_parent.T_Item);
+                    var channel = _cardProcess.GetChannel(_hardwareService.ServerTreeItems, item_parent.T_Item);
                     if (channel == null || channel.IChannel == null)
                     {
                         return;

@@ -42,7 +42,7 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuDataTrendChart"], true);
+            this.Closer = new CloseableHeader("menuDataTrendChart", (string)Application.Current.Resources["menuDataTrendChart"], true);
 
             ViewModel = this.DataContext as HistoryDataTrendViewModel;
             ViewModel.SignalAdded += ViewModel_SignalAdded;

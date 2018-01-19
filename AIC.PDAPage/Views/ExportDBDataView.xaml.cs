@@ -32,7 +32,7 @@ namespace AIC.PDAPage.Views
             InitializeComponent();
             _eventAggregator = eventAggregator;
             
-            this.Closer = new CloseableHeader((string)Application.Current.Resources["menuExportDBData"], true);
+            this.Closer = new CloseableHeader("menuExportDBData", (string)Application.Current.Resources["menuExportDBData"], true);
         }
         public CloseableHeader Closer { get; private set; }
 

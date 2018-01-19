@@ -1,6 +1,7 @@
 ﻿using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.M9600.Common.DTO.Web;
+using AIC.M9600.Common.SlaveDB.Generated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,16 @@ namespace AIC.ServiceInterface
 {
     public interface IDatabaseComponent
     {
-       
+        Dictionary<string, T1_RootCard> T_RootCard { get; }
+        Dictionary<string, List<T1_Organization>> T_Organization { get; }
+        Dictionary<string, List<T1_Device>> T_Device { get; }
+        Dictionary<string, List<T1_Item>> T_Item { get; }
+        Dictionary<string, List<T1_User>> T_User { get; }
+        Dictionary<string, List<T1_Role>> T_Role { get; }
+        Dictionary<string, List<T1_Menu>> T_Menu { get; }
+        Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; }
+        List<string> UnitCategory { get; }
+        string MainServerIp { get; }
         void InitDatabase(string ip);
         void ClearDatabase();
         List<string> GetServerIPCategory();
@@ -22,12 +32,8 @@ namespace AIC.ServiceInterface
         List<T1_Organization> GetOrganizationData(string ip);
         List<T1_Item> GetItemData(string ip);
         List<T1_OrganizationPrivilege> GetOrganizationPrivilegeData(string ip);
-        T1_RootCard GetRootCard(string ip);
-        List<string> GetUnitCategory();
-        Dictionary<string, List<T1_OrganizationPrivilege>> GetOrganizationPrivilegeDictionary();
-        void SetMainServerIp(string ip);
-        string GetMainServerIp();
-
+        T1_RootCard GetRootCard(string ip);       
+        void SetMainServerIp(string ip);   
         Task<List<T1_User>> LoadUserData(string ip);
         Task<List<T1_Role>> LoadRoleData(string ip);
         Task<List<T1_Menu>> LoadMenuData(string ip);
@@ -59,6 +65,7 @@ namespace AIC.ServiceInterface
 
         Task<Tuple<T1_Role, T1_User>> UserLogin(string ip, string user, string pwd);
         Task<string> UserPing(string ip);
+        Task GetMeasureUnit(string ip);
 
         Task<Dictionary<string, LatestSampleData>> GetLatestData();
         Task<List<T>> GetHistoryData<T>(string ip, Guid guid, string[] columns, DateTime startTime, DateTime endTime, string condition, object[] args);
@@ -66,7 +73,6 @@ namespace AIC.ServiceInterface
         Task<LatestSampleData> GetHistoryData(string ip, Dictionary<Guid, string> itemGuids, DateTime startTime, DateTime endTime);
         Task<List<T>> GetHistoryWaveformData<T>(string ip, Dictionary<Guid, Tuple<Guid, DateTime>> recordLabs, IProgress<double> process = null);
         Task<Dictionary<Guid, Dictionary<string, double>>> GetStatisticsData(string ip, HashSet<Guid> guidlist);
-
-
+        Task<Dictionary<Guid, List<D_SlotStatistic>>> GetDailyStatisticsData(string ip, HashSet<Guid> guidlist, DateTime startTime, DateTime endTime);
     }
 }

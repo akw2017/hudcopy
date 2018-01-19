@@ -594,13 +594,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\DefaultSettingWin.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ShowAlarmWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ShowAbnormalWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\SendEmailWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LoginView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LockWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AboutWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LoginWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MainRegionView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage_MarkupCompile.cache
@@ -609,13 +607,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\DefaultSettingWin.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ShowAlarmWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ShowAbnormalWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\SendEmailWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LoginView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LockWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\AboutWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\LoginWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MainRegionView.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\MapView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\ServerSetView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage.g.resources
@@ -655,3 +651,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HistoryQuickPlayWi
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HistoryQuickPlayWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.DeviceDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.DeviceDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TabView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TabView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMatlabDLL.dll

@@ -17,7 +17,7 @@ namespace AIC.ServiceInterface
         LoginInfo LoginInfo { get; set; }        
         MenuManageList MenuManageList { get; set; }
         ObservableCollection<ExceptionModel> ExceptionModel { get; }
-        ObservableCollection<CustomSystemException> CustomSystemException { get; }
+        ObservableCollection<T1_SystemEvent> CustomSystemException { get; }
         void Initialize();
 
         LoginInfo InitLoginServer(ServerInfo serverinfo);
@@ -30,5 +30,8 @@ namespace AIC.ServiceInterface
         Task AwaitLazyLoading();
         void AddOperateRecord(OperateType operateType);
         Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType);
+        void ClearException();
+        Task AddSystemEvent(T1_SystemEvent exception);
+        Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype);
     }
 }
