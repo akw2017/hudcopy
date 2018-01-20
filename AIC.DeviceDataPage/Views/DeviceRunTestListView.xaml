@@ -161,13 +161,14 @@
                 <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceTreeItemViewModel.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="开始时间"  Binding="{Binding StartTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="结束时间"  Binding="{Binding EndTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="运行时间"  Binding="{Binding RunHours, StringFormat={}{0:F1}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="停止时间"  Binding="{Binding StopHours, StringFormat={}{0:F1}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="预警次数"  Binding="{Binding PreAlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="报警次数"  Binding="{Binding AlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="危险次数"  Binding="{Binding DangerCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="分析时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="级别"  Binding="{Binding AlarmGrade,Converter={StaticResource gradeToStringConverter}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="最大值"  Binding="{Binding MaxResult,StringFormat={}{0:F1}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="最小值"  Binding="{Binding MinResult,StringFormat={}{0:F1}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="诊断结果">
                     <DataGridTemplateColumn.CellTemplate>

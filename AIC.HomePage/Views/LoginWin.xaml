@@ -47,8 +47,8 @@
                 core:PasswordBoxHelper.Attach="True"
                 core:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </PasswordBox>
-            <CheckBox Grid.Row="4" Grid.Column="0" Content="记住用户" IsChecked="{Binding ServerInfo.IsSaveUserName}" FontSize="16" Margin="5,0,0,0"></CheckBox>
-            <CheckBox Grid.Row="4" Grid.Column="1" Content="记住密码" IsChecked="{Binding ServerInfo.IsSaveUserPwd}" FontSize="16"></CheckBox>
+            <CheckBox Grid.Row="4" Grid.Column="0" Content="{DynamicResource rememberUser}" IsChecked="{Binding ServerInfo.IsSaveUserName}" FontSize="16" Margin="5,0,0,0"></CheckBox>
+            <CheckBox Grid.Row="4" Grid.Column="1" Content="{DynamicResource rememberPwd}" IsChecked="{Binding ServerInfo.IsSaveUserPwd}" FontSize="16"></CheckBox>
             <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RrrorInformation}" Foreground="#FFFF0000"/>           
             <Button Grid.Row="6" Grid.Column="0" x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" Click="btnOK_Click" IsDefault="True">
                 <Button.Content>

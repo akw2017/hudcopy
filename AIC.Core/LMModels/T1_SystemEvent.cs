@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AIC.Core.LMModels
 {
     public class T1_SystemEvent : T_SystemEvent
-    {
+    { 
         public CustomSystemDegree CustomSystemDegree
         {
             get

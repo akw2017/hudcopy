@@ -20,6 +20,7 @@ namespace AIC.Core
 
         public static bool IsEnglishLanguage = Convert.ToBoolean(ConfigurationManager.AppSettings["IsEnglishLanguage"]);
         public static string Title = Convert.ToString(ConfigurationManager.AppSettings["Title"]);
+        public static bool IsEventServer = Convert.ToBoolean(ConfigurationManager.AppSettings["IsEventServer"]);
 
         public static string[] sArray = Version.Split('.');
 

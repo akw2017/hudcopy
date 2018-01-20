@@ -967,16 +967,27 @@
 
     <ControlTemplate x:Key="PauseToggleButton" TargetType="{x:Type ToggleButton}">
         <StackPanel x:Name="stack" Orientation="Horizontal">
-            <Image x:Name="image" Stretch="Fill" Height="16" Width="16" Source="/AIC.Resources;component/Images/pause_green.png"/>
+            <!--<Image x:Name="image" Stretch="Fill" Height="16" Width="16" Source="/AIC.Resources;component/Images/pause_green.png"/>-->
             <TextBlock x:Name="txt" Text="{DynamicResource pause}" VerticalAlignment="Center"/>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Source" TargetName="image" Value="/AIC.Resources;component/Images/play_red.png"/>
+                <!--<Setter Property="Source" TargetName="image" Value="/AIC.Resources;component/Images/play_red.png"/>-->
                 <Setter Property="Text" TargetName="txt" Value="{DynamicResource play}"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter TargetName="stack" Property="Background" Value="{StaticResource DarkBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ToggleTextButton" TargetType="{x:Type ToggleButton}">
+       
+        <TextBlock x:Name="txt" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Content}" FontSize="{TemplateBinding FontSize}" TextDecorations="Underline" />
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" TargetName="txt" Value="Red"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

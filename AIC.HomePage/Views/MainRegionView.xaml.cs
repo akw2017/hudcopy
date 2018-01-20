@@ -1,5 +1,6 @@
 ﻿using AIC.Core;
 using AIC.Core.Events;
+using AIC.Resources.Views;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,9 @@ namespace AIC.HomePage.Views
             //释放资源
             fs.Close();
             fs.Dispose();
+
+            PopupWindow win = new PopupWindow("提示", "截屏完成！！！");
+            win.Show();
         }
     }
 }

@@ -554,7 +554,7 @@ namespace AIC.UserPage.ViewModels
                 //    MyOrganizationPrivilege.Add(myorganization);
                 //}
 
-                _loginUserService.AddOperateRecord(OperateType.OrganizationManage);
+                _loginUserService.AddOperateRecord(ServerIP, OperateType.OrganizationManage);
 
                 MyOrganizationPrivilegeMid = (from p in MyOrganizationPrivilege where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
                 TotalItems = MyOrganizationPrivilegeMid.Count;

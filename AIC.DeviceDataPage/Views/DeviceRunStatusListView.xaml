@@ -145,7 +145,7 @@
                     </Button.Content>
                 </Button>
 
-                <Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
+                <!--<Rectangle VerticalAlignment="Stretch" Width="2"  Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
                 <TextBlock Text="设备开始运行至现在" VerticalAlignment="Center" Margin="4,0,0,0"/>
                 <Button Command="{Binding SearchAllCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
                     <Button.Content>
@@ -154,7 +154,7 @@
                             <TextBlock Text="{DynamicResource strStart}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button.Content>
-                </Button>
+                </Button>-->
             </WrapPanel>
         </Border>
 

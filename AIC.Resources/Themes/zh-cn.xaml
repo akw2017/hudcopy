@@ -204,4 +204,7 @@
 
     <s:String x:Key="clear">清除</s:String>
     <s:String x:Key="more">信息</s:String>
+
+    <s:String x:Key="rememberUser">记住用户</s:String>
+    <s:String x:Key="rememberPwd">记住密码</s:String>
 </ResourceDictionary>

@@ -204,4 +204,7 @@
 
     <s:String x:Key="clear">Clear</s:String>
     <s:String x:Key="more">More</s:String>
+
+    <s:String x:Key="rememberUser">RememberUser</s:String>
+    <s:String x:Key="rememberPwd">RememberPassword</s:String>
 </ResourceDictionary>

@@ -53,7 +53,7 @@ namespace AIC.Core.SignalModels
             CustomSystemType alarm = (this.AlarmGrade == AlarmGrade.DisConnect) ? CustomSystemType.DisConnect : CustomSystemType.Alarm;
 
             DelayAlarmGrade = AlarmGrade;
-            PublishMessage(alarm, degree, alarmstring, this.Guid, itemtype);
+            PublishMessage(alarm, degree, alarmstring, this.Guid, itemtype, this.ServerIP);
         }
 
         private void OnIsNotOKChanged(string propertyName)
@@ -62,7 +62,7 @@ namespace AIC.Core.SignalModels
             short itemtype = GetSignType();
 
             DelayIsNotOK = IsNotOK;           
-            PublishMessage(CustomSystemType.IsNotOK, CustomSystemDegree.Information, alarmstring, this.Guid, itemtype);
+            PublishMessage(CustomSystemType.IsNotOK, CustomSystemDegree.Information, alarmstring, this.Guid, itemtype, this.ServerIP);
         }
 
         private string GetAlarmEventString()
@@ -237,13 +237,13 @@ namespace AIC.Core.SignalModels
             return (short)ChannelType.None;
         }
 
-        private void PublishMessage(CustomSystemType type, CustomSystemDegree grade, string alarmstring, Guid guid, short itemtype)
+        private void PublishMessage(CustomSystemType type, CustomSystemDegree grade, string alarmstring, Guid guid, short itemtype, string serverIP)
         {
             if (alarmstring == null || itemtype == (int)ChannelType.None || ACQDatetime == null)
             {
                 return;
             }
-            T1_SystemEvent ex = new T1_SystemEvent()
+            T1_SystemEvent systemEvent = new T1_SystemEvent()
             {
                 Type = (int)type,
                 Degree = (int)grade,
@@ -252,6 +252,7 @@ namespace AIC.Core.SignalModels
                 T_Item_Guid = guid,
                 T_Item_Type = itemtype,
             };
+            Tuple<string, T1_SystemEvent> ex = new Tuple<string, T1_SystemEvent>(serverIP, systemEvent);
             _eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
         }
         #region 属性

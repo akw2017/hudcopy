@@ -28,10 +28,10 @@ namespace AIC.ServiceInterface
         void SetUserLogout();
         Task LazyLoading();
         Task AwaitLazyLoading();
-        void AddOperateRecord(OperateType operateType);
+        void AddOperateRecord(string ip, OperateType operateType);
         Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType);
         void ClearException();
-        Task AddSystemEvent(T1_SystemEvent exception);
+        Task AddSystemEvent(string ip, T1_SystemEvent exception);
         Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype);
     }
 }

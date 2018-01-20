@@ -2910,3 +2910,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\images\point-coll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\images\quanjing.png
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\images\ruler.cur
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\images\stop_icon.png
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tiles\3\0\0.jpg

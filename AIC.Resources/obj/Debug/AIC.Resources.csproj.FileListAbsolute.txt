@@ -196,3 +196,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\Gray.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGrayAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGray.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\PopupWindow.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\PopupWindow.baml

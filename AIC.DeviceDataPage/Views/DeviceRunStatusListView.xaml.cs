@@ -91,13 +91,15 @@ namespace AIC.DeviceDataPage.Views
             _chart.ViewXY.XAxes[0].Title.Visible = false;
             _chart.ViewXY.XAxes[0].ValueType = AxisValueType.Number;
             _chart.ViewXY.XAxes[0].ScrollMode = XAxisScrollMode.None;
-            _chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.XAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Hide X axis
             //_chart.ViewXY.XAxes[0].Visible = false;
             _chart.ViewXY.YAxes[0].Visible = true;
             _chart.ViewXY.YAxes[0].Title.Visible = false;
-            _chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.YAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Arrange bars side-by-side and fit to width of the chart
             _chart.ViewXY.BarViewOptions.Grouping = BarsGrouping.ByLocation;
@@ -246,10 +248,12 @@ namespace AIC.DeviceDataPage.Views
             m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
             m_chart.ViewXY.XAxes[0].MajorGrid.Visible = false;
             m_chart.ViewXY.XAxes[0].AxisThickness = 2;
-            m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+            m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);// Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(0xff, 0x00, 0x00, 0x00);
             m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
             m_chart.ViewXY.YAxes[0].SetRange(0, 28);
-            m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);// Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            m_chart.ViewXY.XAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
+            m_chart.ViewXY.YAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             m_chart.ViewXY.LegendBoxes[0].Visible = true;
             m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;

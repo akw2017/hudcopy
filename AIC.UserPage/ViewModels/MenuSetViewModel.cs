@@ -528,7 +528,7 @@ namespace AIC.UserPage.ViewModels
                     default: return;
                 }
 
-                _loginUserService.AddOperateRecord(OperateType.MenuManage);
+                _loginUserService.AddOperateRecord(ServerIP, OperateType.MenuManage);
 
                 T_MenuMid = (from p in T_Menu where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
                 TotalItems = T_MenuMid.Count;

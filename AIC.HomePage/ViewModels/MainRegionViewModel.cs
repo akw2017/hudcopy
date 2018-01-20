@@ -782,17 +782,7 @@ namespace AIC.HomePage.ViewModels
 
         private void LoginFinishEvent(LoginInfo loginInfo)//登录消息
         {
-            _regionManager.RequestNavigate(RegionNames.MainBodyRegion, tabView);
-            ////首页默认打开
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            Object viewObj = ServiceLocator.Current.GetInstance<HomeMapView>();
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
-            {
-                view.Closer.RequestClose += () => region.Remove(view);
-            }
-            region.Add(view, "首页");
-            region.Activate(view);
+            OpenFirstTab();
 
             _eventAggregator.GetEvent<ServerMarkEvent>().Publish(_localConfiguration.ServerInfoList);
 
@@ -878,7 +868,22 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
-        private void CloseTabs()
+        private void OpenFirstTab()
+        {
+            _regionManager.RequestNavigate(RegionNames.MainBodyRegion, tabView);
+            ////首页默认打开
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            Object viewObj = ServiceLocator.Current.GetInstance<HomeMapView>();
+            ICloseable view = viewObj as ICloseable;
+            if (view != null)
+            {
+                view.Closer.RequestClose += () => region.Remove(view);
+            }
+            region.Add(view, "首页");
+            region.Activate(view);
+        }
+
+        private void CloseTabs(bool firstTabClosed = true)
         {
             //关闭除主页外其他视图
             IRegion region = this._regionManager.Regions["MainTabRegion"];
@@ -887,7 +892,11 @@ namespace AIC.HomePage.ViewModels
             {
                 var viewObj = views[i];
                 ICloseable view = viewObj as ICloseable;
-                //if (view.Closer.Visibility == Visibility.Visible)
+                if (view.Closer.Visibility == Visibility.Visible)
+                {
+                    region.Remove(view);
+                }
+                else if (firstTabClosed == true)
                 {
                     region.Remove(view);
                 }
@@ -1122,11 +1131,13 @@ namespace AIC.HomePage.ViewModels
             {
                 Status = ViewModelStatus.Querying;
                 WaitInfo = "刷新中";
-                CloseTabs();
+                CloseTabs(false);
                 MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Collapsed);
                 await _loginUserService.SetUserLogin();
                 Status = ViewModelStatus.None;
-                await _loginUserService.LazyLoading();                
+                PopupWindow win = new PopupWindow("提示", "刷新完成！！！");
+                win.Show();
+                await _loginUserService.LazyLoading();
                 return;
             }
             else if (viewName == "test")
@@ -1516,10 +1527,10 @@ namespace AIC.HomePage.ViewModels
         private const double constantheightoffset = 60;
         private object threadLock = new object();
 
-        private void CustomSystemHappenEvent(T1_SystemEvent ex)
+        private void CustomSystemHappenEvent(Tuple<string, T1_SystemEvent> ex)
         {
-            ex.id = (CustomSystemException.LastOrDefault() ?? new T1_SystemEvent()).id + 1;
-            CustomSystemException.Add(ex);
+            ex.Item2.id = (CustomSystemException.LastOrDefault() ?? new T1_SystemEvent()).id + 1;
+            CustomSystemException.Add(ex.Item2);
 
             //保留当天100条数据
             if (CustomSystemException.Count >= 100)
@@ -1527,7 +1538,7 @@ namespace AIC.HomePage.ViewModels
                 CustomSystemException.RemoveAt(0);
             }
 
-            var olds = CustomSystemException.Where(p => p.EventTime.Date != ex.EventTime.Date).ToList();
+            var olds = CustomSystemException.Where(p => p.EventTime.Date != ex.Item2.EventTime.Date).ToList();
             if (olds != null)
             {
                for(int i =0; i < olds.Count; i++ )
@@ -1535,8 +1546,8 @@ namespace AIC.HomePage.ViewModels
                     CustomSystemException.Remove(olds[i]);
                 }
             }
-            _loginUserService.AddSystemEvent(ex);
-            //if (heightoffsets.Count >= 5)//避免太多弹出窗口
+            _loginUserService.AddSystemEvent(ex.Item1, ex.Item2);
+            //if (heightoffsets.Count >= 5)//避免太多弹出窗口//htzk123，弹出窗口太多，废弃
             //{
             //    return;
             //}

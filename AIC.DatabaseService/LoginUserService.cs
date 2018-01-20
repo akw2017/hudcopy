@@ -202,7 +202,7 @@ namespace AIC.DatabaseService
         #endregion
 
         #region 操作记录
-        public void AddOperateRecord(OperateType operateType)
+        public void AddOperateRecord(string ip, OperateType operateType)
         {         
             T1_OperateRecord LM_OperateRecord = new T1_OperateRecord()
             {               
@@ -212,7 +212,7 @@ namespace AIC.DatabaseService
                 OperateType = (short)operateType,
             };
 
-            _databaseComponent.Add<T_OperateRecord>(LoginInfo.ServerInfo.IP, LM_OperateRecord);
+            _databaseComponent.Add<T_OperateRecord>(ip, LM_OperateRecord);
         }
 
         public async Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType)
@@ -239,9 +239,19 @@ namespace AIC.DatabaseService
         #endregion
 
         #region 系统事件
-        public async Task AddSystemEvent(T1_SystemEvent exception)
+        public async Task AddSystemEvent(string ip, T1_SystemEvent exception)
         {
-            await _databaseComponent.Add<T_SystemEvent>(LoginInfo.ServerInfo.IP, exception);
+            if (LocalSetting.IsHistoryMode == true)//历史模式不存事件
+            {
+                return;
+            }
+            string hostName = System.Net.Dns.GetHostName();//本机名 
+            System.Net.IPAddress[] addressList = System.Net.Dns.GetHostAddresses(hostName);//会返回所有地址，包括IPv4和IPv6 
+          
+            if (addressList.Select(p => p.ToString()).Contains(ip) || ip == "127.0.0.1" || LocalSetting.IsEventServer == true)//运行在服务器上，或者事件服务器
+            {
+                await _databaseComponent.Add<T_SystemEvent>(ip, exception);
+            }
         }
 
         public async Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype)

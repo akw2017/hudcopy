@@ -30,6 +30,7 @@ using AIC.M9600.Common.SlaveDB.Generated;
 using Newtonsoft.Json;
 using AIC.M9600.Common.DTO.Device;
 using System.Diagnostics;
+using AIC.M9600.Common.DTO;
 
 namespace AIC.DeviceDataPage.ViewModels
 {
@@ -325,33 +326,34 @@ namespace AIC.DeviceDataPage.ViewModels
             {
                 return; 
             }
-           
-            //if (infoList.Count > 0)
-            //{
-            //    int count = infoList.Count;
-            //    var midinfo = infoList[count / 2];
-            //    device.StartTime = start;
-            //    device.EndTime = start.AddDays(day);
-            //    device.RunHours = midinfo.RunHours;
-            //    device.TotalHours = day * 24;
-            //    device.StopHours = device.TotalHours - device.RunHours;
-            //    device.PreAlarmCount = infoList.Select(p => p.PreAlarmCount).Sum();
-            //    device.AlarmCount = infoList.Select(p => p.AlarmCount).Sum();
-            //    device.DangerCount = infoList.Select(p => p.DangerCount).Sum();
-            //    device.RunInfo = midinfo.RunInfo;
-  
-            //    device.ACQDatetime = midinfo.ACQDatetime;
-            //    device.RecordLab = midinfo.RecordLab;
-            //    device.T_Item_Guid = midinfo.T_Item_Guid;
-            //    device.RPM = (float)midinfo.RPM;
-            //    device.MaxResult = midinfo.MaxResult;
-            //    device.MinResult = midinfo.MinResult;
-            //    device.Unit = midinfo.Unit;
-            //    device.AlarmGrade = midinfo.AlarmGrade;
-            //}
+
+            var infoList = result.Select(p => GetSubDeviceRunInfo(p.Value, start, day)).OrderBy(p => p.RunHours).ToList();
+            if (infoList.Count > 0)
+            {
+                int count = infoList.Count;
+                var midinfo = infoList[count / 2];
+                device.StartTime = start;
+                device.EndTime = start.AddDays(day);
+                device.RunHours = midinfo.RunHours;
+                device.TotalHours = day * 24;
+                device.StopHours = device.TotalHours - device.RunHours;
+                device.PreAlarmCount = infoList.Select(p => p.PreAlarmCount).Sum();
+                device.AlarmCount = infoList.Select(p => p.AlarmCount).Sum();
+                device.DangerCount = infoList.Select(p => p.DangerCount).Sum();
+                device.RunInfo = midinfo.RunInfo;
+
+                device.ACQDatetime = midinfo.ACQDatetime;
+                device.RecordLab = midinfo.RecordLab;
+                device.T_Item_Guid = midinfo.T_Item_Guid;
+                device.RPM = (float)midinfo.RPM;
+                device.MaxResult = midinfo.MaxResult;
+                device.MinResult = midinfo.MinResult;
+                device.Unit = midinfo.Unit;
+                device.AlarmGrade = midinfo.AlarmGrade;
+            }
         }
 
-        private DeviceRunInfo GetSubDeviceRunInfo(List<D_WirelessVibrationSlot> result, DateTime start, int day)
+        private DeviceRunInfo GetSubDeviceRunInfo(List<D_SlotStatistic> result, DateTime start, int day)
         {
             DeviceRunInfo devicerunInfo = new DeviceRunInfo();
             devicerunInfo.RunInfo = new List<RunInfo>();
@@ -367,43 +369,48 @@ namespace AIC.DeviceDataPage.ViewModels
 
             if (result != null && result.Count > 0)
             {
-                //分组
-                var groupresult = result.GroupBy(p => new { Year = p.ACQDatetime.Year, Month = p.ACQDatetime.Month, Day = p.ACQDatetime.Day });
-                foreach (var groupdata in groupresult)
+                //分组               
+                foreach (var dayresult in result)
                 {
+                    DateTime time = dayresult.StatisticsTime.AddDays(-1);
                     double hours = 0;
-                    foreach (var data in groupdata)
+                    var extraData = JsonConvert.DeserializeObject<SlotExtraData>(dayresult.ExtraData);
+                    if (extraData != null)
                     {
-                        var extraInfoJson = data.ExtraInfoJSON;
-                        if (!string.IsNullOrWhiteSpace(extraInfoJson))
-                        {
-                            M9600.Common.DTO.Device.ExtraInfo extraInfo = JsonConvert.DeserializeObject<M9600.Common.DTO.Device.ExtraInfo>(extraInfoJson.Substring(1, extraInfoJson.Length - 2));
-                            if (extraInfo != null)
-                            {
-                                hours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
-                                //DeviceRunInfo.RunHours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
-                                devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
-                                devicerunInfo.AlarmCount += extraInfo.AlarmCount;
-                                devicerunInfo.DangerCount += extraInfo.DangerCount;
-                            }
-                        }
+                        M9600.Common.DTO.Device.ExtraInfo extraInfo = new M9600.Common.DTO.Device.ExtraInfo();
+                        //foreach (var data in extraData.StatisticsInfo)
+                        //{
+                        //    if (data.Key == "NormalTimeLength")
+                        //    {
+                        //        extraInfo.NormalTimeLength = data.Value;
+                        //    }
+                        //}
+                        extraInfo = DictionaryToClassHelper.DicToObject<M9600.Common.DTO.Device.ExtraInfo>(extraData.StatisticsInfo.ToDictionary(p =>p.Key, p => p.Value as object));
+
+                        var runhours = (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                        var allhours = (extraInfo.InvalidTimeLength + extraInfo.NotOKTimeLength + extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                      
+                        devicerunInfo.RunHours += runhours / allhours * 24;
+                        devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
+                        devicerunInfo.AlarmCount += extraInfo.AlarmCount;
+                        devicerunInfo.DangerCount += extraInfo.DangerCount;
                     }
-                    DateTime time = groupdata.First().ACQDatetime;
+                    
                     devicerunInfo.RunHours += hours;
                     RunInfo runinfo = devicerunInfo.RunInfo.Where(p => p.Time.Year == time.Year && p.Time.Month == time.Month && p.Time.Day == time.Day).First();
                     runinfo.RunHours = hours;
-                    var max = groupdata.Where(p => p.IsValidWave == true).OrderBy(p => p.AlarmGrade & 0xff).ThenBy(n => n.Result).LastOrDefault();
+                    var max = JsonConvert.DeserializeObject<SlotDiagnosticData>(dayresult.SecondaryMaxDiagnosticData);
                     if (max != null)
                     {
-                        runinfo.MaxResult = max.Result.Value;
-                        runinfo.MinResult = groupdata.Where(p => p.AlarmGrade == max.AlarmGrade).OrderBy(n => n.Result).Select(p => p.Result).First() ?? runinfo.MaxResult;
-                        runinfo.ACQDatetime = max.ACQDatetime;
-                        runinfo.RecordLab = (max.IsValidWave == true) ? max.RecordLab.Value : new Guid();
-                        runinfo.T_Item_Guid = max.T_Item_Guid;
+                        runinfo.MaxResult = max.Result;
+                        runinfo.ACQDatetime = max.ACQDateTime;
+                        runinfo.RecordLab = max.RecordLab.Value;
+                        runinfo.T_Item_Guid = dayresult.T_Item_Guid;
                         runinfo.RPM = (float)max.RPM;
                         runinfo.Unit = max.Unit;
                         runinfo.AlarmGrade = (AlarmGrade)(max.AlarmGrade & 0x00ffff00);
                     }
+                   
                 }
 
                 RunInfo maxruninfo = devicerunInfo.RunInfo.OrderBy(p => p.MaxResult).LastOrDefault();

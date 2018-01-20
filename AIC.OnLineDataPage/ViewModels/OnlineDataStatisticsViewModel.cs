@@ -273,9 +273,9 @@ namespace AIC.OnLineDataPage.ViewModels
             ;
         }
 
-        private void CustomSystemHappenEvent(T1_SystemEvent ex)
+        private void CustomSystemHappenEvent(Tuple<string, T1_SystemEvent> ex)
         {
-            AlarmEventTitle = "报警事件(" + ex.EventTime.ToString("yyyy-MM-dd")+ "),最新" + CustomSystemException.Count() + "条";
+            AlarmEventTitle = "报警事件(" + ex.Item2.EventTime.ToString("yyyy-MM-dd")+ "),最新" + CustomSystemException.Count() + "条";
             Refresh();
         }
 
