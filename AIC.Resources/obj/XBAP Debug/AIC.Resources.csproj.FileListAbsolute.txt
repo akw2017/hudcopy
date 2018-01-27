@@ -60,3 +60,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\BlueGrayAdd
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\BlueGray.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\GrayAddition.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Styles\Gray.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\PopupWindow.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\PopupWindow.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\TabControlStyle.baml

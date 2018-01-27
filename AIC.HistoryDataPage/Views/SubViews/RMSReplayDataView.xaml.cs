@@ -567,6 +567,12 @@ namespace AIC.HistoryDataPage.Views
             if (m_chart.ViewXY.LineSeriesCursors.Count > 1)
             {
                 m_chart.ViewXY.LineSeriesCursors[1].Visible = ismulticursor;
+               
+            }
+            if (m_chart.ViewXY.Annotations.Count > 1)
+            {
+                m_chart.ViewXY.Annotations[1].Visible = ismulticursor;
+
             }
         }
         private void CreateChart()
@@ -813,6 +819,7 @@ namespace AIC.HistoryDataPage.Views
             cursorValueDisplay2.AutoSizePadding = 5;
             cursorValueDisplay2.Text = "";
             cursorValueDisplay2.ClipInsideGraph = false;
+            cursorValueDisplay2.Visible = false;
             m_chart.ViewXY.Annotations.Add(cursorValueDisplay2);
         }
         private void CreateBand()
@@ -879,7 +886,6 @@ namespace AIC.HistoryDataPage.Views
                 string strChannelStringFormat = "{0}: {1}({2})";
                 string strValue = "";
                 bool bLabelVisible = false;
-                bool hasWave = false;
 
                 foreach (PointLineSeries series in m_chart.ViewXY.PointLineSeries)
                 {
@@ -896,7 +902,7 @@ namespace AIC.HistoryDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
-                            hasWave = contract.IsValidWave ?? false;
+                            strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
                         }
                         else
                         {
@@ -913,6 +919,7 @@ namespace AIC.HistoryDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;                           
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result??0.0, 3), unit);
+                            strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
                         }
                         else
                         {
@@ -953,7 +960,7 @@ namespace AIC.HistoryDataPage.Views
                     // series.Title.Text = strValue;
                     iSeriesNumber++;
                 }
-                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss") + (hasWave ? " ~" : string.Empty));
+                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;
@@ -975,7 +982,10 @@ namespace AIC.HistoryDataPage.Views
         private void cursor2_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
         {
             e.CancelRendering = true;
-            UpdateCursor2Result(e.Cursor.ValueAtXAxis);
+            if (e.Cursor.Visible == true)
+            {
+                UpdateCursor2Result(e.Cursor.ValueAtXAxis);
+            }
         }
 
         private void UpdateCursor2Result(double xValue)
@@ -997,7 +1007,6 @@ namespace AIC.HistoryDataPage.Views
                 string strChannelStringFormat = "{0}: {1}({2})";
                 string strValue = "";
                 bool bLabelVisible = false;
-                bool hasWave = false;
 
                 foreach (PointLineSeries series in m_chart.ViewXY.PointLineSeries)
                 {
@@ -1013,8 +1022,8 @@ namespace AIC.HistoryDataPage.Views
                         {
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
-                            strValue = string.Format("{0}: {1}({2})|{3}|{4}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3), contract.IsValidWave);
-                            hasWave = contract.IsValidWave ?? false;
+                            strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
+                            strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
                         }
                         else
                         {
@@ -1031,6 +1040,7 @@ namespace AIC.HistoryDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
+                            strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
                         }
                         else
                         {
@@ -1071,7 +1081,7 @@ namespace AIC.HistoryDataPage.Views
                     // series.Title.Text = strValue;
                     iSeriesNumber++;
                 }
-                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss") + (hasWave ? " ~" : string.Empty));
+                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;

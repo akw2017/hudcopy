@@ -1188,7 +1188,7 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 实时数据
         private void RealTimeDataRefresh(object obj)
         {
-            if (locker.CurrentCount == 0)
+            if (locker.CurrentCount == 0)//不等待直接返回
             {
                 return;
             }

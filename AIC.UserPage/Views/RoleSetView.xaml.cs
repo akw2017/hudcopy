@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,9 @@ namespace AIC.UserPage.Views
         public RoleSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuRoleManage", (string)Application.Current.Resources["menuRoleManage"], true);
+
+            var menu = MenuManageList.GetMenu("menuRoleManage");
+            this.Closer = new CloseableHeader("menuRoleManage", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
     }

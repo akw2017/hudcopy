@@ -96,6 +96,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wpf.GridSelected\Wpf.GridSelected.csproj">
+      <Project>{9388d1e7-a59f-4e89-875a-e31086b31d45}</Project>
+      <Name>Wpf.GridSelected</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
       <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
       <Name>Wpf.VirtualizingWrapPanel</Name>

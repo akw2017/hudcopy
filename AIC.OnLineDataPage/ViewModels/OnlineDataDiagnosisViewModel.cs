@@ -58,7 +58,52 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (itemPl == null) return false;
                 if (selectedsignals.Contains(itemPl))
                 {
-                    return true;
+                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlertSignal == false && IsAlertSignal == false && IsDangerSignal == false && IsUnConnectSignal == false)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.Invalid && IsInvalidSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.HighNormal && IsNormalSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.HighPreAlarm && IsPreAlertSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.HighAlarm && IsAlertSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.HighDanger && IsDangerSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.LowDanger && IsDangerSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.LowAlarm && IsAlertSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.LowPreAlarm && IsPreAlertSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.LowNormal && IsNormalSignal == true)
+                    {
+                        return true;
+                    }
+                    if (itemPl.AlarmGrade == AlarmGrade.DisConnect && IsUnConnectSignal == true)
+                    {
+                        return true;
+                    }
+
+                    return false;
                 }
                 return false;
             };
@@ -137,6 +182,180 @@ namespace AIC.OnLineDataPage.ViewModels
                 {
                     selectedSignal = value;
                     OnPropertyChanged(() => SelectedSignal);
+                }
+            }
+        }
+
+        private bool isInvalidSignal;
+        public bool IsInvalidSignal
+        {
+            get { return isInvalidSignal; }
+            set
+            {
+                if (isInvalidSignal != value)
+                {
+                    isInvalidSignal = value;
+                    OnPropertyChanged(() => IsInvalidSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private bool isNormalSignal;
+        public bool IsNormalSignal
+        {
+            get { return isNormalSignal; }
+            set
+            {
+                if (isNormalSignal != value)
+                {
+                    isNormalSignal = value;
+                    OnPropertyChanged(() => IsNormalSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private bool isPreAlertSignal;
+        public bool IsPreAlertSignal
+        {
+            get { return isPreAlertSignal; }
+            set
+            {
+                if (isPreAlertSignal != value)
+                {
+                    isPreAlertSignal = value;
+                    OnPropertyChanged(() => IsPreAlertSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private bool isAlertSignal;
+        public bool IsAlertSignal
+        {
+            get { return isAlertSignal; }
+            set
+            {
+                if (isAlertSignal != value)
+                {
+                    isAlertSignal = value;
+                    OnPropertyChanged(() => IsAlertSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private bool isDangerSignal;
+        public bool IsDangerSignal
+        {
+            get { return isDangerSignal; }
+            set
+            {
+                if (isDangerSignal != value)
+                {
+                    isDangerSignal = value;
+                    OnPropertyChanged(() => IsDangerSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private bool isUnConnectSignal;
+        public bool IsUnConnectSignal
+        {
+            get { return isUnConnectSignal; }
+            set
+            {
+                if (isUnConnectSignal != value)
+                {
+                    isUnConnectSignal = value;
+                    OnPropertyChanged(() => IsUnConnectSignal);
+                    _view.Refresh();
+                }
+            }
+        }
+
+        private int normalCount;
+        public int NormalCount
+        {
+            get { return normalCount; }
+            set
+            {
+                if (normalCount != value)
+                {
+                    normalCount = value;
+                    this.OnPropertyChanged(() => this.NormalCount);
+                }
+            }
+        }
+
+        private int preAlertCount;
+        public int PreAlertCount
+        {
+            get { return preAlertCount; }
+            set
+            {
+                if (preAlertCount != value)
+                {
+                    preAlertCount = value;
+                    this.OnPropertyChanged(() => this.PreAlertCount);
+                }
+            }
+        }
+
+        private int alertCount;
+        public int AlertCount
+        {
+            get { return alertCount; }
+            set
+            {
+                if (alertCount != value)
+                {
+                    alertCount = value;
+                    this.OnPropertyChanged(() => this.AlertCount);
+                }
+            }
+        }
+
+        private int dangerCount;
+        public int DangerCount
+        {
+            get { return dangerCount; }
+            set
+            {
+                if (dangerCount != value)
+                {
+                    dangerCount = value;
+                    this.OnPropertyChanged(() => this.DangerCount);
+                }
+            }
+        }
+
+        private int abnormalCount;
+        public int AbnormalCount
+        {
+            get { return abnormalCount; }
+            set
+            {
+                if (abnormalCount != value)
+                {
+                    abnormalCount = value;
+                    this.OnPropertyChanged(() => this.AbnormalCount);
+                }
+            }
+        }
+
+        private int unConnectCount;
+        public int UnConnectCount
+        {
+            get { return unConnectCount; }
+            set
+            {
+                if (unConnectCount != value)
+                {
+                    unConnectCount = value;
+                    this.OnPropertyChanged(() => this.UnConnectCount);
                 }
             }
         }
@@ -290,6 +509,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 selectedsignals = _cardProcess.GetItems(para as OrganizationTreeItemViewModel).Select(p => p.BaseAlarmSignal);
                 FirstName = (selectedsignals.FirstOrDefault() != null) ? selectedsignals.FirstOrDefault().OrganizationDeviceName : null;
                 _view.Refresh();
+                ShowAlarmCount();
             }
         }
 
@@ -335,16 +555,13 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 Status = ViewModelStatus.Querying;
                 cts = new CancellationTokenSource();
-                var token = cts.Token;
 
-                await Task.Run(() =>
-                {                   
-                    foreach (var item in _view.AsParallel())
-                    {
-                        var sg = item as BaseWaveSignal;
-                        DiagnosticInfoClass.GetDiagnosticInfo(sg);     
-                    }
-                }, token);               
+                foreach (var item in _view.AsParallel())
+                {
+                    var sg = item as BaseWaveSignal;
+                    sg.IsDiagnostic = true;
+                }
+                await WaitDiagnosis(10);
             }
             catch(OperationCanceledException)
             {
@@ -360,6 +577,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
+                ShowAlarmCount();
                 Status = ViewModelStatus.None;
             }
         }
@@ -367,7 +585,70 @@ namespace AIC.OnLineDataPage.ViewModels
         private void StopDiagnosis()
         {
             cts.Cancel();
-        }       
-   
+        }
+
+        private async Task WaitDiagnosis(int delaytime)
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < delaytime; i++)
+                {
+                    Thread.Sleep(1000);
+                    bool finish = true;
+                    foreach (var item in _view.AsParallel())
+                    {
+                        var sg = item as BaseWaveSignal;
+                        if (sg.IsDiagnostic == true)
+                        {
+                            finish = false;
+                            break;
+                        }                          
+                    }
+                    if (finish == true)
+                    {
+                        cts.Token.ThrowIfCancellationRequested();
+                        break;
+                    }
+                }
+            });
+        }
+
+        private void ShowAlarmCount()
+        {
+            NormalCount = 0;
+            PreAlertCount = 0;
+            AlertCount = 0;
+            DangerCount = 0;
+            AbnormalCount = 0;
+            UnConnectCount = 0;
+            foreach (var item in _view.AsParallel())
+            {
+                var sg = item as BaseWaveSignal;
+                if (sg != null)
+                {
+                    switch (sg.DiagnosticGrade)
+                    {
+                        case AlarmGrade.HighNormal:
+                        case AlarmGrade.LowNormal:
+                            NormalCount++; break;
+                        case AlarmGrade.HighPreAlarm:
+                        case AlarmGrade.LowPreAlarm:
+                            PreAlertCount++; break;
+                        case AlarmGrade.HighAlarm:
+                        case AlarmGrade.LowAlarm:
+                            AlertCount++; break;
+                        case AlarmGrade.HighDanger:
+                        case AlarmGrade.LowDanger:
+                            DangerCount++; break;
+                        case AlarmGrade.Abnormal:
+                            AbnormalCount++; break;
+                        case AlarmGrade.DisConnect:
+                            UnConnectCount++; break;
+                        default:
+                            UnConnectCount++; break;
+                    }
+                }
+            }
+        }
     }
 }

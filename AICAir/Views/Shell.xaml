@@ -14,7 +14,84 @@
     <Window.Resources>
         <System:Double x:Key="WindowTitleFontSize">28</System:Double>
         <FontFamily x:Key="HeaderFontFamily">Segoe UI Semibold, Lucida Sans Unicode, Verdana</FontFamily>
+        <Style x:Key="WindowButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Lower" />
+            <Setter Property="MinHeight"
+                Value="25" />
+            <Setter Property="FontFamily"
+                Value="{DynamicResource DefaultFont}" />
+            <Setter Property="FontWeight"
+                Value="SemiBold" />
+            <Setter Property="Background"
+                Value="{DynamicResource TransparentWhiteBrush}" />
+            <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackBrush}" />
+            <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+            <Setter Property="Padding"
+                Value="5,6" />
+            <Setter Property="BorderThickness"
+                Value="2" />
+            <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              RecognizesAccessKey="True"
+                              Opacity="0.5" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Normal">
+                                <Setter TargetName="contentPresenter" Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
+                            </Trigger >
+                            <Trigger Property="IsMouseOver"
+                                    Value="True">
+                                <Setter TargetName="contentPresenter" Property="Opacity"
+                                    Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="Background"
+                                    Value="{DynamicResource GrayNormalBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                 Value="True">
+                                <Setter Property="Background"
+                                    Value="{DynamicResource BlackBrush}" />
+                                <Setter Property="Foreground"
+                                    Value="{DynamicResource WhiteBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands ShowLastSeparator="False">
+            <Button Click="ShowNotifyIcon_Click" Width="35" Height="30" Style="{DynamicResource WindowButtonStyle}" ToolTip="最小化到托盘">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" >
+                        <Path Width="10" Height="10" Stretch="Fill" Fill="{DynamicResource IdealForegroundColorBrush}" Data="F1 M 19,44.3333L 57,44.3333L 57,52.25L 19,52.25L 19,44.3333 Z M 38,22.1667L 57,41.1667L 19,41.1667L 38,22.1667 Z " RenderTransformOrigin="0.5, 0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="180"/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

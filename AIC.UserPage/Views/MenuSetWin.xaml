@@ -42,7 +42,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding T_Menu.InternalNumber,Converter={StaticResource intIconConverter}}"/>
+                                    <Image Width="16" Height="16" Stretch="Fill" Source="{Binding T_Menu.IconPath}"/>
                                     <TextBlock Text="{Binding T_Menu.ShowText}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>

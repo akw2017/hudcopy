@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,9 @@ namespace AIC.UserPage.Views
         public MenuSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuMenuManage", (string)Application.Current.Resources["menuMenuManage"], true);
+
+            var menu = MenuManageList.GetMenu("menuMenuManage");
+            this.Closer = new CloseableHeader("menuMenuManage", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
     }

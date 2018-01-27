@@ -135,6 +135,11 @@
             <DataTrigger Value="True" Binding="{Binding IsDragConnectionOver}">
                 <Setter TargetName="PART_ConnectorContainer" Property="Visibility" Value="Visible" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                <Setter TargetName="PART_DragThumb" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_ConnectorContainer" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
@@ -165,7 +170,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>                   
-                    <s:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll" />
+                    <s:DragThumb x:Name="PART_DragThumb" Visibility="Visible" Cursor="SizeAll" />
                     <!--<Grid HorizontalAlignment="Right" Margin="0, 0, 5, 0" Visibility="{Binding Signal.HasBattery,Converter={StaticResource boolToVisibilityConverter}}">
                         <Border BorderBrush="Black" BorderThickness="1" Width="32" Height="20">
                             <Controls:MetroProgressBar Width="30" Height="18" Value="{Binding Signal.BatteryEnergy}" Foreground="Green" />
@@ -239,13 +244,18 @@
             <DataTrigger Value="True" Binding="{Binding IsDragConnectionOver}">
                 <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                <Setter TargetName="PART_DragThumb" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
             <DataTrigger Value="True" Binding="{Binding IsSelected}">
                 <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
                 <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible" />
-                <Setter TargetName="grid" Property="Background" Value="Orange"/>
+                <Setter TargetName="grid" Property="Background" Value="{DynamicResource AccentColorBrush4}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="Invalid">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
@@ -273,7 +283,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:TimeDomainChartViewModel}">   
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:TimeDomainChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -285,7 +295,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:FrequencyDomainChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:FrequencyDomainChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -297,7 +307,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:RMSTrendChartViewModel}">
         <Grid >
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:RMSTrendChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -309,7 +319,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:PowerSpectrumChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:PowerSpectrumChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -321,7 +331,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:PowerSpectrumDensityChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:PowerSpectrumDensityChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -333,7 +343,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:MultiDivFreChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:MultiDivFreChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -345,7 +355,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:OrthoChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:OrthoChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -357,7 +367,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:OrderAnalysisChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:OrderAnalysisChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -369,7 +379,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:NyquistChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:NyquistChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -381,7 +391,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:BodeChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:BodeChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -393,7 +403,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:Time3DChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:Time3DChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -405,7 +415,7 @@
 
     <DataTemplate DataType="{x:Type subviewmodels:RPM3DChartViewModel}">
         <Grid>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <subviews:RPM3DChartView />
             </Grid>
             <Path Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />

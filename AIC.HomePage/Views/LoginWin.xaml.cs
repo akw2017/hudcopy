@@ -26,12 +26,19 @@ namespace AIC.HomePage.Views
         public delegate void TransferParaData(LoginInfo logininfo);
         public event TransferParaData Parachanged;
 
+        public bool isClosed = false;
         public LoginInfo LoginInfo;
         public LoginWin(LoginInfo logininfo)
         {
             LoginInfo = logininfo;
             InitializeComponent();
             this.DataContext = LoginInfo;
+            this.Closed += LoginWin_Closed;
+        }
+
+        private void LoginWin_Closed(object sender, EventArgs e)
+        {
+            isClosed = true;
         }
 
         public void SetLogin(LoginInfo logininfo)
@@ -45,6 +52,7 @@ namespace AIC.HomePage.Views
             if (LoginInfo.Error == "")
             {
                 waitring.Visibility = Visibility.Visible;
+                btnOK.IsEnabled = false;
                 btnClose.IsEnabled = false;
                 Parachanged(LoginInfo);              
             }
@@ -62,6 +70,7 @@ namespace AIC.HomePage.Views
         public void WaitStop()
         {
             waitring.Visibility = Visibility.Collapsed;
+            btnOK.IsEnabled = true;
             btnClose.IsEnabled = true;
         }
 

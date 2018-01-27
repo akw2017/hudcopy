@@ -1,4 +1,5 @@
 ﻿using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -34,7 +35,8 @@ namespace AIC.DeviceDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuDeviceRunAnalyze",(string)Application.Current.Resources["menuDeviceRunAnalyze"], true);
+            var menu = MenuManageList.GetMenu("menuDeviceRunAnalyze");
+            this.Closer = new CloseableHeader("menuDeviceRunAnalyze", menu.Name, true, menu.IconPath);
 
             DeviceRunAnalyzeListViewModel vm = this.DataContext as DeviceRunAnalyzeListViewModel;
             if (vm != null)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,9 @@ namespace AIC.UserPage.Views
         public OrganizationPrivilegeSetView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuOrganizationManage", (string)Application.Current.Resources["menuOrganizationManage"], true);
+
+            var menu = MenuManageList.GetMenu("menuOrganizationManage");
+            this.Closer = new CloseableHeader("menuOrganizationManage", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
 

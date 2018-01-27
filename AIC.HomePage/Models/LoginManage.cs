@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.ServiceLocation;
 using AIC.ServiceInterface;
+using System.Threading;
 
 namespace AIC.HomePage.Models
 {
@@ -39,19 +40,11 @@ namespace AIC.HomePage.Models
                 win.SetLogin(logininfo);
             }
             return succeed;
-        }
+        }    
 
         private async static void Win_Parachanged(LoginInfo logininfo)
         {
             _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
-
-            //string pingresult = await _databaseComponent.UserPing(logininfo.ServerInfo.IP);
-            //if (pingresult != "OK")
-            //{
-            //    logininfo.RrrorInformation = pingresult;
-            //    win.WaitStop();
-            //    return;
-            //}
 
             Dictionary<string, Task<string>> lttask = new Dictionary<string, Task<string>>();
             foreach (var serverinfo in logininfo.ServerInfoList)
@@ -136,7 +129,11 @@ namespace AIC.HomePage.Models
                     }
                 }
 
-                succeed = true;                
+                if (win.isClosed == true)
+                {
+                    return;
+                }
+                succeed = true;
                 win.Close();
                 LoginChanged(succeed);
                 return;
@@ -226,6 +223,10 @@ namespace AIC.HomePage.Models
                 }
             }
 
+            if (win.isClosed == true)
+            {
+                return;
+            }
             succeed = true;
             win.Close();
             LoginChanged(succeed);

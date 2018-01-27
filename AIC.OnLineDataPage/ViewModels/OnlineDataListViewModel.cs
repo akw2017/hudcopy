@@ -21,6 +21,7 @@ using AIC.CoreType;
 using AIC.MatlabMath;
 using AIC.OnLineDataPage.Models;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -442,8 +443,9 @@ namespace AIC.OnLineDataPage.ViewModels
         }
         #endregion
 
+        private CancellationTokenSource cts;
         private IEnumerable<BaseAlarmSignal> selectedsignals;
-        public void SelectedTreeChanged(object para)
+        public async void SelectedTreeChanged(object para)
         {
             var sw = Stopwatch.StartNew();
             if (para is OrganizationTreeItemViewModel)
@@ -462,7 +464,15 @@ namespace AIC.OnLineDataPage.ViewModels
                     if (abnormal != null && abnormal.BaseAlarmSignal is BaseWaveSignal)
                     {
                         var sg = abnormal.BaseAlarmSignal as BaseWaveSignal;
-                        DiagnosticInfoClass.GetDiagnosticInfo(sg);
+                        sg.IsDiagnostic = true;
+                        try
+                        {
+                            await WaitingDiagnostic(sg, 10);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            return;
+                        }
                         DiagnosticInfo = sg.DeviceItemName + "-诊断信息:" + sg.DiagnosticInfo;
                         DiagnosticAdvice = sg.DiagnosticAdvice;
                     }
@@ -477,12 +487,20 @@ namespace AIC.OnLineDataPage.ViewModels
             Console.WriteLine("消耗时间" + sw.Elapsed.ToString());
         }
 
-        private void SelectedDataGridChanged(object para)
+        private async void SelectedDataGridChanged(object para)
         {
             var sg = para as BaseWaveSignal;
             if (sg != null)
             {
-                DiagnosticInfoClass.GetDiagnosticInfo(sg);
+                (sg as BaseWaveSignal).IsDiagnostic = true;
+                try
+                {
+                    await WaitingDiagnostic(sg, 10);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
                 DiagnosticInfo = sg.DeviceItemName + "-诊断信息:" + sg.DiagnosticInfo;
                 DiagnosticAdvice = sg.DiagnosticAdvice;
             }
@@ -493,6 +511,31 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        private async Task WaitingDiagnostic(BaseWaveSignal sg, int delaytime)
+        {
+            if (cts != null)
+            {
+                cts.Cancel();
+            }
+
+            DiagnosticInfo = null;
+            DiagnosticAdvice = null;
+
+            cts = new CancellationTokenSource();
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < delaytime; i++)
+                {
+                    Thread.Sleep(1000);
+
+                    if (sg.IsDiagnostic == true)
+                    {
+                        cts.Token.ThrowIfCancellationRequested();
+                        break;
+                    }
+                }
+            },cts.Token);
+        }
         private void GroupView()
         {
             _view.GroupDescriptions.Clear();
@@ -556,7 +599,6 @@ namespace AIC.OnLineDataPage.ViewModels
         }
 
         private System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
-
         private void timeCycle(object sender, EventArgs e)
         {
             NormalCount = 0;
@@ -586,6 +628,8 @@ namespace AIC.OnLineDataPage.ViewModels
                         case AlarmGrade.Abnormal:
                             AbnormalCount++; break;
                         case AlarmGrade.DisConnect:
+                            UnConnectCount++; break;
+                        default:
                             UnConnectCount++; break;
                     }
                 }

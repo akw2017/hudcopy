@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.UserManageModels;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,9 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuOnlineDataList", (string)Application.Current.Resources["menuOnlineDataList"], true);
+            var menu = MenuManageList.GetMenu("menuOnlineDataList");
+            this.Closer = new CloseableHeader("menuOnlineDataList", menu.Name, true, menu.IconPath);
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

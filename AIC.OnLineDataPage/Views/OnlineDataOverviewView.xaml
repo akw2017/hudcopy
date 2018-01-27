@@ -22,8 +22,8 @@
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="SignalMonitorStyle" TargetType="{x:Type ListViewItem}" >
-                <Setter Property="Margin" Value="5" />
-                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Padding" Value="2" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -155,126 +155,87 @@
        
         <Border Grid.Row="0" Grid.Column="3" Padding="5" Background="{DynamicResource AccentColorBrush2}">
             <StackPanel Orientation="Horizontal">
-
                 <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="无效" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="正常" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="预警" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="警告" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="危险" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
-                <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低危" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低预警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="#FF85CBEB" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低正常" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>-->
+                <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
+                    <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <TextBlock Text="断线" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsUnConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                </StackPanel>
                 <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
                 <TextBlock Text="显示模式:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                 <RadioButton x:Name="radioValue" Content="数值" IsChecked="True" Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton x:Name="radioBar" Content="柱状图" Style="{StaticResource RadioButtonStyle}"/>
             </StackPanel>
         </Border>
-
-        <ListView Grid.Row="1" Grid.Column="3" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,1,0,0"  Background="{x:Null}" BorderBrush="{x:Null}"
+        
+        <Grid Grid.Row="1" Grid.Column="3" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Row="1" Grid.Column="0" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,1,0,0"  Background="{x:Null}" BorderBrush="{x:Null}"
                      ItemsSource="{Binding SignalList}" SelectedItem="{Binding SelectedSignalMonitor}"  
                      ItemContainerStyle="{StaticResource SignalMonitorStyle}" 
                      ScrollViewer.HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility, Mode=TwoWay}" 
-                     ScrollViewer.VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility, Mode=TwoWay}">          
-            <ListView.Resources>
-                <ControlTemplate TargetType="{x:Type GroupItem}"
+                     ScrollViewer.VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility, Mode=TwoWay}">
+                <ListView.Resources>
+                    <ControlTemplate TargetType="{x:Type GroupItem}"
                    x:Key="defaultGroup">
-                    <ItemsPresenter />
-                </ControlTemplate>
-            </ListView.Resources>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <!--<ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" BorderThickness="0,0,0,0">
-                                            <Expander.Header>
-                                                <StackPanel Orientation="Horizontal" Width="Auto">
-                                                    <TextBlock x:Name="txtname" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>                                                    
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <Expander.Content>
-                                                <Border BorderBrush="{DynamicResource AccentColorBrush2}" BorderThickness="0">
-                                                    <ItemsPresenter/>
-                                                </Border>
-                                            </Expander.Content>
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=Name}" Value="">
-                                    <Setter Property="Template" Value="{StaticResource defaultGroup}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>                      
-                    </GroupStyle.ContainerStyle>
-                    <GroupStyle.Panel>
-                        <ItemsPanelTemplate>
-                            <DataGridRowsPresenter/>
-                        </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </ListView.GroupStyle>-->                
-        </ListView>
-    
-        <Grid x:Name="grid" Grid.Row="1" Grid.Column="3">
-            <Slider Grid.Row="1" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Horizontal" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,65,0" />
-            <Slider Grid.Row="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Vertical" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,5,0" />
-            <Grid.Resources>
-                <Style TargetType="{x:Type Grid}">                    
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=chkbox,Path=IsChecked}" Value="true">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-        </Grid>       
+                        <ItemsPresenter />
+                    </ControlTemplate>
+                </ListView.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
+                            <core:FluidWrapPanel.ElementEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                            </core:FluidWrapPanel.ElementEasing>
+                            <core:FluidWrapPanel.DragEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                            </core:FluidWrapPanel.DragEasing>
+                        </core:FluidWrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListView>
+            <Slider Grid.Row="0" Grid.Column="0" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal"  />
+            <Slider Grid.Row="1" Grid.Column="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="600" Orientation="Vertical"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}"/>
+        </Grid>
+            
     </Grid>
 </UserControl>

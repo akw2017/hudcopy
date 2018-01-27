@@ -392,6 +392,8 @@ namespace AIC.OnLineDataPage.Views.SubViews
             {
                 m_chart = new LightningChartUltimate();
                 m_chart.BeginUpdate();
+
+                Color whiteColor = ((SolidColorBrush)Application.Current.Resources["ChartWhiteAccentColorBrush"]).Color;
                 m_chart.Title.Text = string.Empty;
                 m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.LeftThenRight;
 
@@ -423,24 +425,24 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
                 m_chart.ViewXY.XAxes[0].LabelsPosition = Alignment.Near;
                 m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Alignment = Alignment.Near;
-                m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Color = whiteColor;// Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Alignment = Alignment.Near;
-                m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Color = whiteColor;// Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 m_chart.ViewXY.XAxes[0].VerticalAlign = AlignmentVertical.Top;
 
                 //Setup y-axis
                 m_chart.ViewXY.YAxes[0].Title.Visible = false;
                 m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
                 m_chart.ViewXY.YAxes[0].AxisThickness = 2;
-                m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.YAxes[0].AxisColor = whiteColor;//  Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 //m_chart.ViewXY.YAxes[0].MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
                 m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
                 m_chart.ViewXY.YAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
                 m_chart.ViewXY.YAxes[0].MiniScale.Visible = false;
                 m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Alignment = Alignment.Far;
-                m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Color = whiteColor;//  Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Alignment = Alignment.Far;
-                m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Color = whiteColor;// Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 m_chart.ViewXY.YAxes[0].Alignment = AlignmentHorizontal.Right;
 
                 //Second Y Axis
@@ -457,9 +459,9 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 secondYAxis.LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
                 secondYAxis.MiniScale.Visible = false;
                 secondYAxis.MajorDivTickStyle.Alignment = Alignment.Near;
-                secondYAxis.MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                secondYAxis.MajorDivTickStyle.Color = whiteColor;// Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 secondYAxis.MinorDivTickStyle.Alignment = Alignment.Near;
-                secondYAxis.MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+                secondYAxis.MinorDivTickStyle.Color = whiteColor;//  Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                 secondYAxis.Alignment = AlignmentHorizontal.Left;
 
                 m_chart.ViewXY.LegendBoxes[0].Visible = true;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,9 @@ namespace AIC.HistoryDataPage.Views
         public HistoryEventListView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuSystemEventList", (string)Application.Current.Resources["menuSystemEventList"], true);
+
+            var menu = MenuManageList.GetMenu("menuSystemEventList");
+            this.Closer = new CloseableHeader("menuSystemEventList", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
     }

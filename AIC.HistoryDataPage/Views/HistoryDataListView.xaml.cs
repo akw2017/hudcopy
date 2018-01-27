@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.UserManageModels;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,9 @@ namespace AIC.HistoryDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuHistoryDataList", (string)Application.Current.Resources["menuHistoryDataList"], true);
+            var menu = MenuManageList.GetMenu("menuHistoryDataList");
+            this.Closer = new CloseableHeader("menuHistoryDataList", menu.Name, true, menu.IconPath);
+        
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

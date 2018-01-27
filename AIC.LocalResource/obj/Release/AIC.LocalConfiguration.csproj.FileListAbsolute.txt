@@ -1,3 +1,5 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\AIC.LocalConfiguration.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\AIC.LocalConfiguration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\AIC.LocalConfiguration.pdb
@@ -58,5 +60,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\tr\FluentValidati
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\Release\AIC.LocalConfiguration.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\Release\AIC.LocalConfiguration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\Release\AIC.LocalConfiguration.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Release\Resources\AICMatlabDLL.dll

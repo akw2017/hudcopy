@@ -155,3 +155,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.GridSelected.pdb

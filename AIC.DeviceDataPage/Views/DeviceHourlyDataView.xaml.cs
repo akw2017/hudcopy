@@ -1,4 +1,5 @@
 ﻿using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -34,7 +35,9 @@ namespace AIC.DeviceDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuDeviceHourlyData", (string)Application.Current.Resources["menuDeviceHourlyData"], true);
+            var menu = MenuManageList.GetMenu("menuDeviceHourlyData");
+            this.Closer = new CloseableHeader("menuDeviceHourlyData", menu.Name, true, menu.IconPath);
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

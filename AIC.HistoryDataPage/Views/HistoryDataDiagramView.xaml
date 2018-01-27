@@ -508,10 +508,12 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <ListBox x:Name="ReplayListBox" Grid.Row="1" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" 
-                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                         ItemsSource="{Binding HistoricalDatas}" SelectedItem="{Binding SelectedHistoricalData}"  ItemContainerStyle="{StaticResource SignalMonitorStyle}" Style="{StaticResource FluidListBoxStyle}">
-                    <!--<ListBox.ItemsPanel>
+                <ScrollViewer x:Name="scrollviewer" Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Disabled" >
+                    <ListBox x:Name="ReplayListBox" Background="{x:Null}" BorderBrush="{x:Null}" 
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                         ItemsSource="{Binding HistoricalDatas}" SelectedItem="{Binding SelectedHistoricalData}"  ItemContainerStyle="{StaticResource SignalMonitorStyle}">
+                        <!--Style="{StaticResource FluidListBoxStyle}"-->
+                        <!--<ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="Horizontal"  DragOpacity="1" DragScale="1">
                                 <core:FluidWrapPanel.ElementEasing>
@@ -523,15 +525,16 @@
                             </core:FluidWrapPanel>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>-->
-                    <!--<ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>-->                   
-                </ListBox>
-                <Slider Grid.Row="0" Grid.Column="0" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal"  />
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </ScrollViewer>
+                <Slider Grid.Row="0" Grid.Column="0" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal" />
                 <Slider Grid.Row="1" Grid.Column="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="600" Orientation="Vertical"/>
-                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}" Visibility="Collapsed"/>
                 <!--<Grid>
                     <Grid.RenderTransform>
                         <TransformGroup>

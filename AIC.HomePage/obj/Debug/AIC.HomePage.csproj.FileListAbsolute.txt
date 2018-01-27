@@ -655,5 +655,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TabView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\TabView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.GridSelected.pdb

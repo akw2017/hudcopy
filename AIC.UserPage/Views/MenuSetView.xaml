@@ -72,7 +72,7 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*" Margin="0,1,0,0"
+        <DataGrid x:Name="table" Grid.Row="1" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="*" Margin="0,1,0,0" HorizontalScrollBarVisibility="Disabled"
                   ItemsSource="{Binding T_MenuView}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding id}" MinWidth="100" ></DataGridTextColumn>
@@ -83,7 +83,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding InternalNumber,Converter={StaticResource intIconConverter}}"/>
+                                <Image Width="16" Height="16" Stretch="Fill" Source="{Binding IconPath}"/>
                                 <TextBlock Text="{Binding ShowText}" Margin="4,0,0,0"/>
                             </StackPanel>
                         </DataTemplate>

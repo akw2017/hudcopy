@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.CloseTabControl;
+using AIC.Core.UserManageModels;
 
 namespace AIC.OnLineDataPage.Views
 {
@@ -24,7 +25,10 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataOverviewView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuOnlineDataOverview", (string)Application.Current.Resources["menuOnlineDataOverview"], true);
+
+            var menu = MenuManageList.GetMenu("menuOnlineDataOverview");
+            this.Closer = new CloseableHeader("menuOnlineDataOverview", menu.Name, true, menu.IconPath);
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
 
             //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));

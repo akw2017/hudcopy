@@ -27,6 +27,15 @@ namespace AIC.Core.LMModels
                 NotifyPropertyChange("Name");//htzk123
             }
         }
+
+        public string IconPath
+        {
+            get
+            {
+                return MenuManageList.GetIconPath(InternalNumber);
+            }
+        }
+
         //public Guid Guid { get; set; }//名称 
         //public string Code { get; set; }//代号 
         //public int Type { get; set; }//类型 

@@ -39,12 +39,25 @@ namespace AIC.Core.UserManageModels
             }
         }
 
+        public string Name
+        {
+            get { return T_Menu.ShowText; }
+        }
+
+        public int Number
+        {
+            get { return T_Menu.InternalNumber; }
+        }
+
+        public string IconPath { get; set; }
+
         public T1_Menu T_Menu { get; set; }
-        public MyMenu(int number, string text)
+        public MyMenu(int number, string text, string path = "/AIC.Resources;component/Images/application.png")
         {
             T_Menu = new T1_Menu();
             T_Menu.InternalNumber = number;
             T_Menu.ShowText = text;
+            IconPath = path;
             Visibility = Visibility.Collapsed;
         }
     }

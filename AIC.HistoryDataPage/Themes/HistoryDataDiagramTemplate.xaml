@@ -38,7 +38,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:RMSReplayDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -61,7 +61,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:TimeDomainDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -84,7 +84,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:FrequencyDomainDataView Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -107,7 +107,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:PowerSpectrumDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -130,7 +130,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:PowerSpectrumDensityDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -153,7 +153,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:OrthoDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -176,7 +176,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:OffDesignConditionDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -199,7 +199,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:OrderAnalysisDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -222,7 +222,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:Time3DSpectrumView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -245,7 +245,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:RPM3DSpectrumDataView/>
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -268,7 +268,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="3" Background="{DynamicResource ChartAccentColorBrush}">
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <views:AlarmPointTrendDataView />
             </Grid>
             <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />

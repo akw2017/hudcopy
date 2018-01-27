@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\PopupBehavior.cs" />
     <Compile Include="Controls\TextButton.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TreeViewLineConverter.cs" />
@@ -316,6 +317,10 @@
     <Page Include="Themes\Style.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\TabControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\TreeViewStyle.xaml">
       <SubType>Designer</SubType>
@@ -648,6 +653,9 @@
   <ItemGroup>
     <Resource Include="Images\color.png" />
     <Resource Include="Images\color_swatch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\layout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

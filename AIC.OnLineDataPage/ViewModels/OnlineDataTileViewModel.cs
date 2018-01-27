@@ -24,6 +24,7 @@ using System.Windows;
 using Wpf.PageNavigationControl;
 using AIC.Core.ExCommand;
 using AIC.OnLineDataPage.ViewModels.SubViewModels;
+using Wpf.GridSelected;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -32,6 +33,9 @@ namespace AIC.OnLineDataPage.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IOrganizationService _organizationService;
         private readonly ICardProcess _cardProcess;
+
+        public delegate void UpdateListColumnRow(int column, int row);
+        public event UpdateListColumnRow UpdateListShow;
         public OnlineDataTileViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ICardProcess cardProcess)
         {
             _eventAggregator = eventAggregator;
@@ -296,6 +300,17 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
             }
         }
+
+        private RectangleGridEventArgs select;
+        public RectangleGridEventArgs Select
+        {
+            get { return select; }
+            set
+            {
+                select = value;
+                OnPropertyChanged("Select");              
+            }
+        }
         # endregion
 
         #region Command
@@ -361,7 +376,14 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-
+        private DelegateCommand<object> selectRowColumnChangedComamnd;
+        public DelegateCommand<object> SelectRowColumnChangedComamnd
+        {
+            get
+            {
+                return this.selectRowColumnChangedComamnd ?? (this.selectRowColumnChangedComamnd = new DelegateCommand<object>(para => this.SelectRowColumnChanged(para)));
+            }
+        }
         #endregion
 
         #region 添加、删除显示
@@ -622,6 +644,17 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        private void SelectRowColumnChanged(object para)
+        {
+            RoutedPropertyChangedEventArgs<RectangleGridEventArgs> args = ((ExCommandParameter)para).EventArgs as RoutedPropertyChangedEventArgs<RectangleGridEventArgs>;
+            if (args != null)
+            {
+                if (UpdateListShow != null)
+                {
+                    UpdateListShow(args.NewValue.Row, args.NewValue.Column);
+                }
+            }
+        }
         #endregion
 
         #region 页面控制       

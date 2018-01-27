@@ -55,315 +55,307 @@
                 <Setter Property="Header"
                         Value="{Binding Name, Mode=OneWay}" />
             </Style>
-            <Style TargetType="TabItem">
-                <Setter Property="HeaderTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <DockPanel>
-                                <Image Stretch="None" Source="/AIC.Resources;component/Images/application.png" DockPanel.Dock="Left" Margin="0,0,6,0"/>
-                                <Grid DockPanel.Dock="Right" Margin="6,0,0,0">
-                                    <Button Command="{Binding Path=CloseCommand}" Cursor="Hand" FontWeight="Bold" Width="24" Height="24" Visibility="{Binding Path=Visibility}" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="X" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button Cursor="Hand" Width="24" Height="24" 
-                                            Visibility="{Binding Path=LockVisibility}" 
-                                            Command="{Binding DataContext.UnLockCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
-                                            CommandParameter="{Binding Path=Title}">
-                                        <Image Source="/AIC.Resources;component/Images/lock.png" Margin="-1,-1,-1,-1" Stretch="Fill"/>
-                                    </Button>
-                                </Grid>
-                                <ContentPresenter Content="{Binding Path=Title}" VerticalAlignment="Center" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Header" Value="{Binding Path=Content.Closer,RelativeSource={x:Static RelativeSource.Self}}"></Setter>
-            </Style>
+        
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Background="{DynamicResource AccentColorBrush}" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave">
-            <MenuItem Header="{DynamicResource menuOnlineData}" Background="{DynamicResource TransparentWhiteBrush}">
-                <MenuItem Header="{DynamicResource menuOnlineDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/application_view_gallery.png"/>
-                    </MenuItem.Icon>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Menu Background="{DynamicResource AccentColorBrush}" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave">
+                <MenuItem Header="{DynamicResource menuOnlineData}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuOnlineDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}" InputGestureText="Ctrl+D">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataDiagram.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOnlineDataList}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataList" Visibility="{Binding MenuManageList.MenuOnlineDataList.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataList.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOnlineDataTile}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataTile" Visibility="{Binding MenuManageList.MenuOnlineDataTile.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataTile.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOnlineDataOverview}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataOverview" Visibility="{Binding MenuManageList.MenuOnlineDataOverview.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataOverview.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOnlineDataDiagnosis}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagnosis" Visibility="{Binding MenuManageList.MenuOnlineDataDiagnosis.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataDiagnosis.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOnlineDataStatistics}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataStatistics" Visibility="{Binding MenuManageList.MenuOnlineDataStatistics.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOnlineDataStatistics.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuOnlineDataList}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataList" Visibility="{Binding MenuManageList.MenuOnlineDataList.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/application_view_detail.png"/>
-                    </MenuItem.Icon>
+                <MenuItem Header="{DynamicResource menuHistoricalData}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuHistoryDataList}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataList" Visibility="{Binding MenuManageList.MenuHistoryDataList.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuHistoryDataList.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuHistoryDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataDiagram" Visibility="{Binding MenuManageList.MenuHistoryDataDiagram.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuHistoryDataDiagram.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuHistoryDataStatistics}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataStatistics" Visibility="{Binding MenuManageList.MenuHistoryDataStatistics.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuHistoryDataStatistics.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuDataTrendChart}" Command="{Binding NavigateCommand}" CommandParameter="MenuDataTrendChart" Visibility="{Binding MenuManageList.MenuDataTrendChart.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDataTrendChart.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuSystemEventList}" Command="{Binding NavigateCommand}" CommandParameter="MenuSystemEventList" Visibility="{Binding MenuManageList.MenuSystemEventList.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuSystemEventList.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuOnlineDataTile}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataTile" Visibility="{Binding MenuManageList.MenuOnlineDataTile.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/application_view_tile.png"/>
-                    </MenuItem.Icon>
+                <MenuItem Header="{DynamicResource menuDeviceData}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <!--昌邑石化-->
+                    <MenuItem Header="{DynamicResource menuDeviceRunStatus}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunStatus" Visibility="{Binding MenuManageList.MenuDeviceRunStatus.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDeviceRunStatus.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuDeviceRunAnalyze}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunAnalyze" Visibility="{Binding MenuManageList.MenuDeviceRunAnalyze.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDeviceRunAnalyze.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuDeviceHourlyData}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceHourlyData" Visibility="{Binding MenuManageList.MenuDeviceHourlyData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDeviceHourlyData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="新接口测试" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceNewData" Visibility="Collapsed">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuOnlineDataOverview}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataOverview" Visibility="{Binding MenuManageList.MenuOnlineDataOverview.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/application_home.png"/>
-                    </MenuItem.Icon>
+                <MenuItem Header="{DynamicResource menuDBManage}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuExportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuExportDBData" Visibility="{Binding MenuManageList.MenuExportDBData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuExportDBData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuImportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuImportDBData" Visibility="{Binding MenuManageList.MenuImportDBData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuImportDBData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuFilterDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuFilterDBData" Visibility="{Binding MenuManageList.MenuFilterDBData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuFilterDBData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuOnlineDataDiagnosis}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagnosis" Visibility="{Binding MenuManageList.MenuOnlineDataDiagnosis.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/pill_go.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuOnlineDataStatistics}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataStatistics" Visibility="{Binding MenuManageList.MenuOnlineDataStatistics.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/chart_pie.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuHistoricalData}" Background="{DynamicResource TransparentWhiteBrush}">
-                <MenuItem Header="{DynamicResource menuHistoryDataList}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataList" Visibility="{Binding MenuManageList.MenuHistoryDataList.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/table_save.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuHistoryDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataDiagram" Visibility="{Binding MenuManageList.MenuHistoryDataDiagram.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/picture_save.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuHistoryDataStatistics}" Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryDataStatistics" Visibility="{Binding MenuManageList.MenuHistoryDataStatistics.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/chart_bar.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuDataTrendChart}" Command="{Binding NavigateCommand}" CommandParameter="MenuDataTrendChart" Visibility="{Binding MenuManageList.MenuDataTrendChart.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/chart_curve.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuSystemEventList}" Command="{Binding NavigateCommand}" CommandParameter="MenuSystemEventList" Visibility="{Binding MenuManageList.MenuSystemEventList.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/monitor_lightning.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuDeviceData}" Background="{DynamicResource TransparentWhiteBrush}">
-                <!--昌邑石化-->
-                <MenuItem Header="{DynamicResource menuDeviceRunStatus}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunStatusList" Visibility="{Binding MenuManageList.MenuEquipmentRunStatus.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/cog_go.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuDeviceRunAnalyze}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunAnalyze" Visibility="{Binding MenuManageList.MenuDeviceRunAnalyze.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/cog_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuDeviceHourlyData}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceHourlyData" Visibility="{Binding MenuManageList.MenuDeviceHourlyData.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="新接头测试" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceNewData" Visibility="{Binding MenuManageList.MenuDeviceHourlyData.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuDBManage}" Background="{DynamicResource TransparentWhiteBrush}">
-                <MenuItem Header="{DynamicResource menuExportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuExportDBData" Visibility="{Binding MenuManageList.MenuExportDBData.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/export32.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuImportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuImportDBData" Visibility="{Binding MenuManageList.MenuImportDBData.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/import32.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuFilterDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuFilterDBData" Visibility="{Binding MenuManageList.MenuFilterDBData.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/search.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuGeneralManage}" Background="{DynamicResource TransparentWhiteBrush}">
-                <MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/user_go.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuLogout}" Command="{Binding LogoutCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/user_delete.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuExit}" Command="{Binding ExitCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/export.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuLock}" Command="{Binding LockCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/lock.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuUnLock}" Command="{Binding UnLockCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/lock_open.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>             
-                <MenuItem Header="{DynamicResource menuUserManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuUserManage" Visibility="{Binding MenuManageList.MenuUserManage.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/users.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuRoleManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuRoleManage" Visibility="{Binding MenuManageList.MenuRoleManage.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/user.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuMenuManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuMenuManage" Visibility="{Binding MenuManageList.MenuMenuManage.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/application_edit.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuOrganizationManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuOrganizationManage" Visibility="{Binding MenuManageList.MenuOrganizationManage.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/chart_organisation.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuManageLog}" Command="{Binding NavigateCommand}" CommandParameter="MenuManageLog" Visibility="{Binding MenuManageList.MenuManageLog.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/page_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuServerSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuServerSetting" Visibility="{Binding MenuManageList.MenuServerSetting.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/database_gear.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuCollectorSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuCollectorSetting" Visibility="{Binding MenuManageList.MenuCollectorSetting.Visibility}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/brick_edit.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <!--<MenuItem Header="{DynamicResource menuEquipmentSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuEquipmentSetting" Visibility="{Binding MenuManageList.MenuEquipmentSetting.Visibility}">
+                <MenuItem Header="{DynamicResource menuGeneralManage}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/user_go.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuLogout}" Command="{Binding LogoutCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/user_delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuExit}" Command="{Binding ExitCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/export.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuLock}" Command="{Binding LockCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/lock.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuUnLock}" Command="{Binding UnLockCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/lock_open.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuUserManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuUserManage" Visibility="{Binding MenuManageList.MenuUserManage.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuUserManage.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuRoleManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuRoleManage" Visibility="{Binding MenuManageList.MenuRoleManage.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuRoleManage.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuMenuManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuMenuManage" Visibility="{Binding MenuManageList.MenuMenuManage.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuMenuManage.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuOrganizationManage}" Command="{Binding NavigateCommand}" CommandParameter="MenuOrganizationManage" Visibility="{Binding MenuManageList.MenuOrganizationManage.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuOrganizationManage.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuManageLog}" Command="{Binding NavigateCommand}" CommandParameter="MenuManageLog" Visibility="{Binding MenuManageList.MenuManageLog.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuManageLog.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuServerSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuServerSetting" Visibility="{Binding MenuManageList.MenuServerSetting.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuServerSetting.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuCollectorSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuCollectorSetting" Visibility="{Binding MenuManageList.MenuCollectorSetting.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuCollectorSetting.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <!--<MenuItem Header="{DynamicResource menuEquipmentSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuEquipmentSetting" Visibility="{Binding MenuManageList.MenuEquipmentSetting.Visibility}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/chart_organisation.png"/>
                     </MenuItem.Icon>
                 </MenuItem>-->
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuSystemManage}" Background="{DynamicResource TransparentWhiteBrush}">
-                <MenuItem Header="{DynamicResource menuTheme}" Background="{DynamicResource TransparentWhiteBrush}"                         
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuSystemManage}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuTheme}" Background="{DynamicResource TransparentWhiteBrush}"                         
                           ItemsSource="{Binding AppThemes, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/color.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuStyle}" Background="{DynamicResource TransparentWhiteBrush}"                         
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/color.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuStyle}" Background="{DynamicResource TransparentWhiteBrush}"                         
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/color_swatch.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuLanguage}" >
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/arrow_switch.png"/>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{DynamicResource menuChinese}" IsCheckable="True" IsChecked="{Binding ChineseChecked}" />
-                    <MenuItem Header="{DynamicResource menuEnglish}" IsCheckable="True" IsChecked="{Binding EnglishChecked}"/>
-                </MenuItem>
-                <!--<MenuItem Header="{DynamicResource menuHelp}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/color_swatch.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuWindow}" Background="{DynamicResource TransparentWhiteBrush}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/application_edit.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem IsCheckable="True" Header="{DynamicResource menuShowInTaskbar}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
+                        <MenuItem IsCheckable="True" Header="{DynamicResource menuTopmost}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
+                        <MenuItem IsCheckable="True" Header="{DynamicResource menuMaximizeFullScreen}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
+                        <MenuItem Header="关闭打开窗口" Command="{Binding CloseWindowsCommand}"/>
+
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuLanguage}" >
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/arrow_switch.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{DynamicResource menuChinese}" IsCheckable="True" IsChecked="{Binding ChineseChecked}" />
+                        <MenuItem Header="{DynamicResource menuEnglish}" IsCheckable="True" IsChecked="{Binding EnglishChecked}"/>
+                    </MenuItem>
+                    <!--<MenuItem Header="{DynamicResource menuHelp}">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_30.png"/>
                     </MenuItem.Icon>
                 </MenuItem>-->
-                <!--<MenuItem Header="{DynamicResource menuAbout}" Command="{Binding AboutCommand}">
+                    <!--<MenuItem Header="{DynamicResource menuAbout}" Command="{Binding AboutCommand}">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_15.png"/>
                     </MenuItem.Icon>
                 </MenuItem>-->
-                <!--<MenuItem Header="{DynamicResource menuFeedback}" Command="{Binding FeedbackCommand}">
+                    <!--<MenuItem Header="{DynamicResource menuFeedback}" Command="{Binding FeedbackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/AIC.Resources;component/Images/email_error.png"/>
                     </MenuItem.Icon>
                 </MenuItem>-->
-                <MenuItem Header="{DynamicResource menuLocalSetting}" Command="{Binding SettingCommmad}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/wrench_orange.png"/>
-                    </MenuItem.Icon>
+                    <MenuItem Header="{DynamicResource menuLocalSetting}" Command="{Binding SettingCommmad}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/wrench_orange.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuHistoryPlaySetting}" Command="{Binding HistoryQuickPlaySettingCommmad}">
+                        <!--昌邑石化-->
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/film_start.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuAboutVersion}" Command="{Binding AboutVersionCommmad}">
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_15.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuAbnormalList}" Command="{Binding AbnormalListCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/table_error.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuSystemLog}" Command="{Binding SystemLogCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/folder_error.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuScreenShotFile}" Command="{Binding ScreenShotFolderCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/AIC.Resources;component/Images/folder_picture.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource menuHistoryPlaySetting}" Command="{Binding HistoryQuickPlaySettingCommmad}"><!--昌邑石化-->
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/film_start.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuAboutVersion}" Command="{Binding AboutVersionCommmad}">
-                    <MenuItem.Icon>
-                        <Image Height="16" Width="16" Source="/AIC.Resources;component/Images/001_15.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuAbnormalList}" Command="{Binding AbnormalListCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/table_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuSystemLog}" Command="{Binding SystemLogCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/folder_error.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuScreenShotFile}" Command="{Binding ScreenShotFolderCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/AIC.Resources;component/Images/folder_picture.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{DynamicResource menuWindow}" Background="{DynamicResource TransparentWhiteBrush}" Visibility="Collapsed">
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuShowInTaskbar}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuTopmost}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
-                <MenuItem IsCheckable="True" Header="{DynamicResource menuMaximizeFullScreen}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
-            </MenuItem>
-        </Menu>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-            <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding NavigateCommand}" CommandParameter="MenuRefreshData" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="{DynamicResource refresh}"/> </Hyperlink></TextBlock>
-            <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Click="ScreenShot_Click" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="{DynamicResource screenShot}"/> </Hyperlink></TextBlock>
-            <ToggleButton IsChecked="{Binding Pause}" Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0" Padding="0" FontSize="15" Cursor="Hand" Template="{StaticResource ToggleTextButton}" Foreground="{DynamicResource TextBrush}" Content="{DynamicResource pause}"/>
-            <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding EditPwdCommand}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="修改密码"/> </Hyperlink></TextBlock>
-            <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding LogoutCommand}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="注销"/> </Hyperlink></TextBlock>
-            <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <TextBlock Text="{Binding LoginUser}"/></TextBlock>
-        </StackPanel>
-       
-        <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
-            <ToolBar Visibility="Collapsed">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/application_view_gallery.png"  />
-                            <TextBlock Text="{DynamicResource menuOnlineData}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryData" Visibility="{Binding MenuManageList.MenuHistoryDataDiagram.Visibility}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/picture_save.png"  />
-                            <TextBlock Text="{DynamicResource menuHistoricalData}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <!--<Button Command="{Binding NavigateCommand}" CommandParameter="MenuAlarmData" Visibility="{Binding MenuManageList.MenuAlarmData.Visibility}">
+
+            </Menu>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding NavigateCommand}" CommandParameter="MenuRefreshData" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="{DynamicResource refresh}"/> </Hyperlink></TextBlock>
+                <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Click="ScreenShot_Click" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="{DynamicResource screenShot}"/> </Hyperlink></TextBlock>
+                <ToggleButton IsChecked="{Binding Pause}" Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0" Padding="0" FontSize="15" Cursor="Hand" Template="{StaticResource ToggleTextButton}" Foreground="{DynamicResource TextBrush}" Content="{DynamicResource pause}"/>
+                <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding EditPwdCommand}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="修改密码"/> </Hyperlink></TextBlock>
+                <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <Hyperlink Command="{Binding LogoutCommand}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="注销"/> </Hyperlink></TextBlock>
+                <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <TextBlock Text="{Binding LoginUser}"/></TextBlock>
+            </StackPanel>
+          
+            <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
+                <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：北京航天智控监测技术研究院"/>
+            </Grid>
+            <!--青岛众志测控技术有限公司-->
+            <!--昌邑石化-->
+
+            <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}" Visibility="Collapsed">
+                <ToolBar Visibility="Collapsed">
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/application_view_gallery.png"  />
+                                <TextBlock Text="{DynamicResource menuOnlineData}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="MenuHistoryData" Visibility="{Binding MenuManageList.MenuHistoryDataDiagram.Visibility}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/picture_save.png"  />
+                                <TextBlock Text="{DynamicResource menuHistoricalData}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <!--<Button Command="{Binding NavigateCommand}" CommandParameter="MenuAlarmData" Visibility="{Binding MenuManageList.MenuAlarmData.Visibility}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="None" Source="/AIC.Resources;component/Images/database_error.png"  />
@@ -371,7 +363,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>-->
-                <!--<Separator Visibility="{Binding Login1Visibility}"></Separator>
+                    <!--<Separator Visibility="{Binding Login1Visibility}"></Separator>
                 <Button x:Name="serverbtn" Command="{Binding NavigateCommand}" CommandParameter="MenuServerSetting" Visibility="{Binding MenuManageList.MenuServerSetting.Visibility}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -388,7 +380,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>-->
-                <!--<Button Command="{Binding NavigateCommand}" CommandParameter="MenuEquipmentSetting" Visibility="{Binding MenuManageList.MenuEquipmentSetting.Visibility}">
+                    <!--<Button Command="{Binding NavigateCommand}" CommandParameter="MenuEquipmentSetting" Visibility="{Binding MenuManageList.MenuEquipmentSetting.Visibility}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="None" Source="/AIC.Resources;component/Images/database_save.png"  />
@@ -396,131 +388,152 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>-->
-                <!--<Separator Visibility="{Binding Login2Visibility}"></Separator>-->
+                    <!--<Separator Visibility="{Binding Login2Visibility}"></Separator>-->
 
 
-            </ToolBar>
-            <ToolBar HorizontalAlignment="Right" Visibility="Collapsed">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="MenuRefreshData" Visibility="{Binding LoginVisibility}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
-                            <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding NavigateCommand}" CommandParameter="test" Visibility="Collapsed">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
-                            <TextBlock Text="测试" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="ScreenShot" Click="ScreenShot_Click" Visibility="{Binding LoginVisibility}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="None" Source="/AIC.Resources;component/Images/cut.png"  />
-                            <TextBlock Text="{DynamicResource screenShot}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <ToggleButton x:Name="togglebtn" IsChecked="{Binding Pause}" Template="{StaticResource PauseToggleButton}" Visibility="{Binding LoginVisibility}" />
-            </ToolBar>
-        </Grid>
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" BorderBrush="Red" BorderThickness="2" CornerRadius="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0}[X{1}] {2:yyyy-MM-dd HH:mm:ss}">
-                            <Binding Path="HistoryModeName" />
-                            <Binding Path="HistoryModeActualSpeedUpRatio" />
-                            <Binding Path="HistoryplayTime" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-                <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="24" Height="24" Margin="5,0,0,0" RenderTransformOrigin="0.5, 0.5" Command="{Binding DecreaseSpeedCommand}">
-                        <Path  Stretch="Uniform" Fill="Green" Data="M 53.8335,22.1665L 33.1281,38L 53.8335,53.8335L 53.8335,22.1665 Z M 29.4742,23.3844L 22.1665,23.3844L 22.1665,52.6155L 29.4742,52.6155L 29.4742,23.3844 Z "/>
+                </ToolBar>
+                <ToolBar HorizontalAlignment="Right" Visibility="Collapsed">
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="MenuRefreshData" Visibility="{Binding LoginVisibility}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
+                                <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
                     </Button>
-                    <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding PauseSpeedCommand}">
-                        <Path Stretch="Uniform" Fill="Green" Data="F1 M 26.9167,23.75L 33.25,23.75L 33.25,52.25L 26.9167,52.25L 26.9167,23.75 Z M 42.75,23.75L 49.0833,23.75L 49.0833,52.25L 42.75,52.25L 42.75,23.75 Z "/>
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="test" Visibility="Collapsed">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/pencil.png"  />
+                                <TextBlock Text="测试" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="ScreenShot" Click="ScreenShot_Click" Visibility="{Binding LoginVisibility}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/cut.png"  />
+                                <TextBlock Text="{DynamicResource screenShot}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <ToggleButton x:Name="togglebtn" IsChecked="{Binding Pause}" Template="{StaticResource PauseToggleButton}" Visibility="{Binding LoginVisibility}" />
+                </ToolBar>
+            </Grid>
+
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" BorderBrush="Red" BorderThickness="2" CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}[X{1}] {2:yyyy-MM-dd HH:mm:ss}">
+                                <Binding Path="HistoryModeName" />
+                                <Binding Path="HistoryModeActualSpeedUpRatio" />
+                                <Binding Path="HistoryplayTime" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Width="24" Height="24" Margin="5,0,0,0" RenderTransformOrigin="0.5, 0.5" Command="{Binding DecreaseSpeedCommand}">
+                            <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" Data="M 53.8335,22.1665L 33.1281,38L 53.8335,53.8335L 53.8335,22.1665 Z M 29.4742,23.3844L 22.1665,23.3844L 22.1665,52.6155L 29.4742,52.6155L 29.4742,23.3844 Z "/>
+                        </Button>
+                        <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding PauseSpeedCommand}">
+                            <Path Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 26.9167,23.75L 33.25,23.75L 33.25,52.25L 26.9167,52.25L 26.9167,23.75 Z M 42.75,23.75L 49.0833,23.75L 49.0833,52.25L 42.75,52.25L 42.75,23.75 Z "/>
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SpeedPause}" Value="True">
+                                            <Setter  Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding PauseSpeedCommand}">
+                            <Path Stretch="Uniform" Fill="Red" Data="F1 M 30.0833,22.1667L 50.6665,37.6043L 50.6665,38.7918L 30.0833,53.8333L 30.0833,22.1667 Z "/>
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SpeedPause}" Value="True">
+                                            <Setter  Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding IncreaseSpeedCommand}">
+                            <Path Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" Data="M 22.1665,22.1665L 42.8718,38L 22.1665,53.8335L 22.1665,22.1665 Z M 46.5257,23.3844L 53.8335,23.3844L 53.8335,52.6155L 46.5257,52.6155L 46.5257,23.3844 Z "/>
+                        </Button>
+                        <Slider x:Name="slider" Foreground='Red' Height="20" Width="200" Margin="5" Value="{Binding HistoryplayProcess}" VerticalAlignment="Center" Style="{DynamicResource FlatSlider}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseMove">
+                                    <i:InvokeCommandAction Command="{Binding HistotyProcessChangedCommand}" CommandParameter="{Binding Value, ElementName=slider}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Slider>
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
                                 <Setter Property="Visibility" Value="Visible"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SpeedPause}" Value="True">
+                                    <DataTrigger Binding="{Binding IsHistoryRrackingMode}" Value="True">
                                         <Setter  Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding PauseSpeedCommand}">
-                        <Path Stretch="Uniform" Fill="Red" Data="F1 M 30.0833,22.1667L 50.6665,37.6043L 50.6665,38.7918L 30.0833,53.8333L 30.0833,22.1667 Z "/>
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
+                        </StackPanel.Style>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" Text="---跟踪当前时间---" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SpeedPause}" Value="True">
+                                    <DataTrigger Binding="{Binding IsHistoryRrackingMode}" Value="True">
                                         <Setter  Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding IncreaseSpeedCommand}">
-                        <Path Stretch="Uniform" Fill="Green" Data="M 22.1665,22.1665L 42.8718,38L 22.1665,53.8335L 22.1665,22.1665 Z M 46.5257,23.3844L 53.8335,23.3844L 53.8335,52.6155L 46.5257,52.6155L 46.5257,23.3844 Z "/>
-                    </Button>
-                    <Slider x:Name="slider" Foreground='Red' Height="20" Width="200" Margin="5" Value="{Binding HistoryplayProcess}" VerticalAlignment="Center" Style="{DynamicResource FlatSlider}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseMove">
-                                <i:InvokeCommandAction Command="{Binding HistotyProcessChangedCommand}" CommandParameter="{Binding Value, ElementName=slider}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Slider>
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsHistoryRrackingMode}" Value="True">
-                                    <Setter  Property="Visibility" Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
-                </StackPanel>
-                <TextBlock Grid.Row="1" Text="---跟踪当前时间---" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsHistoryRrackingMode}" Value="True">
-                                    <Setter  Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowHistoryplay}" Value="True">
+                                <Setter  Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+       
+            <Grid.Resources>
+                <Style TargetType="{x:Type Grid}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsShowHistoryplay}" Value="True">
-                            <Setter  Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding ElementName=toggle,Path=IsChecked}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Border.Style>
-        </Border>
-        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="MainBodyRegion"/>      
-        <TextBlock Grid.Row="2" FontSize="16" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Top" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="8">版权所有Copyright©2017：北京航天智控监测技术研究院</TextBlock> <!--青岛众志测控技术有限公司--><!--昌邑石化-->
-        <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
+            </Grid.Resources>
+        </Grid>      
+        
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="MainBodyRegion"/>
+
+        <ToggleButton x:Name="toggle" Grid.Row="1" Width="32" Height="13" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{DynamicResource ToggleArrowButtonStyle}" ToolTip="折叠展开菜单栏" Margin="1">
+            <ToggleButton.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="0" Y="-5"/>
+                </TransformGroup>
+            </ToggleButton.RenderTransform>
+        </ToggleButton>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
             <StatusBar>
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -543,31 +556,31 @@
                         <Path Visibility="{Binding IsConnected,Converter={StaticResource boolToVisibilityConverter},ConverterParameter=invert}" Data="F1 M 48.0542,39.5833L 53.0417,44.5708L 58.0291,39.5834L 60.1666,41.7209L 55.1792,46.7083L 60.1667,51.6958L 58.0292,53.8333L 53.0417,48.8458L 48.0542,53.8333L 45.9167,51.6958L 50.9042,46.7083L 45.9167,41.7208L 48.0542,39.5833 Z M 23.7499,23.7501L 26.9166,23.7501L 26.9166,33.25L 23.75,33.2501L 23.7499,23.7501 Z M 28.4999,25.3335L 31.6666,25.3335L 31.6666,39.5835L 28.5,39.5834L 26.9166,41.1667L 26.9166,50.6667L 23.7499,50.6667L 23.75,41.1667L 22.1666,39.5834L 18.9999,39.5835L 18.9999,25.3335L 22.1666,25.3335L 22.1666,34.8334L 22.9583,34.8335L 27.7083,34.8334L 28.5,34.8334L 28.4999,25.3335 Z M 28.5,47.5001L 28.5,44.3334L 45.6792,44.3334L 48.0541,46.7083L 47.2624,47.5001L 39.5833,47.5L 39.5833,50.6667L 43.5416,50.6667L 44.3333,53.8334L 31.6667,53.8334L 32.4583,50.6667L 36.4166,50.6667L 36.4166,47.5L 28.5,47.5001 Z M 49.0833,30.0834L 33.25,30.0834L 33.25,26.9167L 53.8333,26.9167L 53.8332,40.9293L 53.0416,41.7209L 49.0833,37.7625L 49.0833,30.0834 Z " Stretch="Fill" Fill="Red" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <TextBlock Text=" 离线" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding IsConnected,Converter={StaticResource boolToVisibilityConverter},ConverterParameter=invert}"/>
                         <TextBlock Foreground="White" >
-                        <Run>&#160;测点总数:</Run>
+                        <Run>&#160;测点总数</Run>
                         <Run Text="{Binding Count}"/>
                         </TextBlock >
                         <TextBlock Foreground="Pink">
-                        <Run>&#160;无效:</Run>
+                        <Run>&#160;无效</Run>
                         <Run Text="{Binding AbnormalCount}" />
                         </TextBlock>
                         <TextBlock Foreground="{DynamicResource TextBrush}" >
-                        <Run>&#160;正常:</Run>
+                        <Run>&#160;正常</Run>
                         <Run Text="{Binding NormalCount}" />
                         </TextBlock>
                         <TextBlock Foreground="Yellow">
-                        <Run>&#160;预警:</Run>
+                        <Run>&#160;预警</Run>
                         <Run Text="{Binding PreAlertCount}" />
                         </TextBlock>
                         <TextBlock Foreground="DarkOrange">
-                        <Run>&#160;警告:</Run>
+                        <Run>&#160;警告</Run>
                         <Run Text="{Binding AlertCount}" />
                         </TextBlock>
                         <TextBlock Foreground="Red">
-                        <Run>&#160;危险:</Run>
+                        <Run>&#160;危险</Run>
                         <Run Text="{Binding DangerCount}" />
                         </TextBlock>
                         <TextBlock Foreground="DarkRed">
-                        <Run>&#160;断线:</Run>
+                        <Run>&#160;断线</Run>
                         <Run Text="{Binding UnConnectCount}" />
                         </TextBlock>
                         <ToggleButton x:Name="mutebtn" IsChecked="{Binding Mute}" FontSize="20" Template="{StaticResource SoundToggleButton}" Margin="2,0,0,0"/>

@@ -297,7 +297,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="设备名称" VerticalAlignment="Center" Margin="5,0"/>
                     <TextBox Text="{Binding DeviceName}" VerticalAlignment="Center" Margin="5,0" IsReadOnly="True" Width="200"/>
-                    <CheckBox x:Name="chk" IsChecked="True" Content="锁定布局" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" IsEnabled="{Binding CanOperated}" Margin="5,0"></CheckBox>
+                    <CheckBox x:Name="chk" IsChecked="{Binding IsReadOnly}" Content="锁定布局" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" IsEnabled="{Binding CanOperated}" Margin="5,0"></CheckBox>
                     <Button Command="{Binding SaveLayoutCommand}" Style="{DynamicResource AccentedSquareButtonStyle}"  VerticalAlignment="Center" Margin="5,0">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
@@ -312,7 +312,7 @@
         
         <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush2}">
             <Grid >
-                <dd:DiagramControl DataContext="{Binding DiagramViewModel}" ItemTemplateSelector="{StaticResource valueTypeTemplateSelector}"  Margin="3" Background="Transparent" IsEnabled="{Binding IsChecked,ElementName=chk,Converter={StaticResource negateConverter}}"/>
+                <dd:DiagramControl DataContext="{Binding DiagramViewModel}" ItemTemplateSelector="{StaticResource valueTypeTemplateSelector}"  Margin="3" Background="Transparent"/>
             </Grid>
         </Border>
 

@@ -864,86 +864,67 @@ namespace AIC.LocalConfiguration
                         {
                             var vSg = keyValuePair.Key as BaseWaveSignal;
                             {
-                                if (keyValuePair.Value is D1_WirelessVibrationSlot)
+                                if (vSg.IsDiagnostic == true)//诊断
                                 {
-                                    var waveslot = keyValuePair.Value as D1_WirelessVibrationSlot;
-                                    if (waveslot.Waveform == null || waveslot.Waveform.WaveData == null)
+                                    if (keyValuePair.Value is D1_WirelessVibrationSlot)
                                     {
-                                        return;
-                                    }
+                                        var waveslot = keyValuePair.Value as D1_WirelessVibrationSlot;
+                                        if (waveslot.Waveform == null || waveslot.Waveform.WaveData == null)
+                                        {
+                                            return;
+                                        }
 
-                                    //获取原始波形
-                                    vSg.Waveform = Algorithm.ByteToSingle(waveslot.Waveform.WaveData);
-                                    vSg.SampleFre = waveslot.SampleFre.Value;
-                                    vSg.SamplePoint = waveslot.SamplePoint.Value;
-                                    if (vSg.SampleFre == 0 || vSg.SamplePoint == 0)
-                                    {
-                                        EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("波形采样频率/点数为0", null));
-                                        return;
+                                        //获取原始波形
+                                        vSg.Waveform = Algorithm.ByteToSingle(waveslot.Waveform.WaveData);
+                                        vSg.SampleFre = waveslot.SampleFre.Value;
+                                        vSg.SamplePoint = waveslot.SamplePoint.Value;
+                                        if (vSg.SampleFre == 0 || vSg.SamplePoint == 0)
+                                        {
+                                            EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("波形采样频率/点数为0", null));
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            try
+                                            {
+                                                DiagnosticInfoClass.GetDiagnosticInfo(vSg);
+                                            }
+                                            finally
+                                            {
+                                                vSg.IsDiagnostic = false;
+                                            }
+                                        }
                                     }
-                                }                               
+                                }
 
                                 if (vSg.NeedProcess)
                                 {
                                     try
                                     {
-                                        
-
-                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.VData))//由于诊断需要，移到外部
+                                        #region 原始波形
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.VData))
                                         {
                                             #region
-                                            //if (keyValuePair.Value is D1_WirelessVibrationSlot)
-                                            //{
-                                            //    var waveslot = keyValuePair.Value as D1_WirelessVibrationSlot;
-                                            //    if (waveslot.Waveform == null || waveslot.Waveform.WaveData == null)
-                                            //    {
-                                            //        return;
-                                            //    }
+                                            if (keyValuePair.Value is D1_WirelessVibrationSlot)
+                                            {
+                                                var waveslot = keyValuePair.Value as D1_WirelessVibrationSlot;
+                                                if (waveslot.Waveform == null || waveslot.Waveform.WaveData == null)
+                                                {
+                                                    return;
+                                                }
 
-                                            //    vSg.Waveform = Algorithm.ByteToSingle(waveslot.Waveform.WaveData);
-                                            //    vSg.SampleFre = waveslot.SampleFre.Value;
-                                            //    vSg.SamplePoint = waveslot.SamplePoint.Value;
-                                            //    if (vSg.SampleFre == 0 || vSg.SamplePoint == 0)
-                                            //    {
-                                            //        EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("波形采样频率/点数", null));
-                                            //        return;
-                                            //    }
-                                            //}
+                                                vSg.Waveform = Algorithm.ByteToSingle(waveslot.Waveform.WaveData);
+                                                vSg.SampleFre = waveslot.SampleFre.Value;
+                                                vSg.SamplePoint = waveslot.SamplePoint.Value;
+                                                if (vSg.SampleFre == 0 || vSg.SamplePoint == 0)
+                                                {
+                                                    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("波形采样频率/点数", null));
+                                                    return;
+                                                }
+                                            }
                                             #endregion
                                         }
-
-                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumVData))//滤波
-                                        {
-                                            vSg.Filter();
-                                        }
-                                        else
-                                        {
-                                            vSg.FilterWaveform = null;
-                                            vSg.FilterFrequency = null;
-                                            vSg.FilterAmplitude = null;
-                                            vSg.FilterPhase = null;
-                                            vSg.FilterPowerSpectrum = null;
-                                            vSg.FilterPowerSpectrumDensity = null;
-                                        }
-
-                                        #region 避免破坏原始波形，分离出来，放入ProcessWave
-                                        //if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Envelope))//包络
-                                        //{
-                                        //    vSg.Waveform = Algorithm.Instance.Envelope(vSg.Waveform, vSg.SamplePoint);
-                                        //}
-                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.TFF))//TFF
-                                        //{
-                                        //    vSg.Waveform = Algorithm.Instance.TFF(vSg.Waveform, vSg.SamplePoint, vSg.SampleFre);
-                                        //}
-                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))//倒频谱
-                                        //{
-                                        //    vSg.Waveform = Algorithm.Instance.Cepstrum(vSg.Waveform, vSg.SamplePoint);
-                                        //}     
-                                        //预处理波形
-                                        ProcessWave(vSg);
-                                        ProcessFilterWave(vSg);
                                         #endregion
-
 
                                         #region 原始波形处理
                                         if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Time))
@@ -998,6 +979,36 @@ namespace AIC.LocalConfiguration
                                             int length = (int)(vSg.SamplePoint / 2.56) + 1;
                                             var output = Algorithm.Instance.PowerSpectrumDensityAction(vSg.Waveform, vSg.SampleFre, vSg.SamplePoint, vSg.IsPowerSpectrumDensityDB);
                                             vSg.PowerSpectrumDensity = output.Take(length).ToArray();
+                                        }
+                                        #endregion
+
+                                        #region 过滤波形
+                                        if (vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterEnvelopeVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterTFFVData) || vSg.SignalProcessTypes.Contains(SignalProcessorType.FilterCepstrumVData))//滤波
+                                        {
+                                            try
+                                            {
+                                                vSg.Filter();
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("过滤处理", ex));
+                                                vSg.FilterWaveform = null;
+                                                vSg.FilterFrequency = null;
+                                                vSg.FilterAmplitude = null;
+                                                vSg.FilterPhase = null;
+                                                vSg.FilterPowerSpectrum = null;
+                                                vSg.FilterPowerSpectrumDensity = null;
+                                                return;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            vSg.FilterWaveform = null;
+                                            vSg.FilterFrequency = null;
+                                            vSg.FilterAmplitude = null;
+                                            vSg.FilterPhase = null;
+                                            vSg.FilterPowerSpectrum = null;
+                                            vSg.FilterPowerSpectrumDensity = null;
                                         }
                                         #endregion
 
@@ -1056,13 +1067,47 @@ namespace AIC.LocalConfiguration
                                             vSg.FilterPowerSpectrumDensity = output.Take(length).ToArray();
                                         }
                                         #endregion
+
+                                        #region 避免破坏原始波形，分离出来，放入ProcessWave
+                                        //if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Envelope))//包络
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.Envelope(vSg.Waveform, vSg.SamplePoint);
+                                        //}
+                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.TFF))//TFF
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.TFF(vSg.Waveform, vSg.SamplePoint, vSg.SampleFre);
+                                        //}
+                                        //else if (vSg.SignalProcessTypes.Contains(SignalProcessorType.Cepstrum))//倒频谱
+                                        //{
+                                        //    vSg.Waveform = Algorithm.Instance.Cepstrum(vSg.Waveform, vSg.SamplePoint);
+                                        //}     
+                                        //预处理波形
+                                        ProcessWave(vSg);
+                                        ProcessFilterWave(vSg);
+                                        #endregion                                       
                                     }
                                     catch (Exception ex)
                                     {
                                         EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据处理", ex));
                                     }
                                 }
-                                if (NeedClear(vSg))
+                                else//清除原始波形和过滤波形
+                                {
+                                    vSg.FilterWaveform = null;
+                                    vSg.FilterFrequency = null;
+                                    vSg.FilterAmplitude = null;
+                                    vSg.FilterPhase = null;
+                                    vSg.FilterPowerSpectrum = null;
+                                    vSg.FilterPowerSpectrumDensity = null;
+                                    vSg.Waveform = null;
+                                    vSg.Frequency = null;
+                                    vSg.Amplitude = null;
+                                    vSg.Phase = null;
+                                    vSg.PowerSpectrum = null;
+                                    vSg.PowerSpectrumDensity = null;
+                                }
+
+                                if (NeedClear(vSg))//清除处理波形
                                 {
                                     ClearWave(vSg);
                                     ClearFilterWave(vSg);

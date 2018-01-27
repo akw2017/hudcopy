@@ -54,7 +54,7 @@
                     </Button>
                 </Grid>
 
-                <Grid Grid.Row="1"  Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1"  Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <Path x:Name="NotOKPath" Visibility="Collapsed" Stretch="Fill" Margin="30" Fill="LightCoral" Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 38,23.75C 35.2116,23.75 32.6102,24.5509 30.4134,25.9352L 50.0648,45.5866C 51.4491,43.3898 52.25,40.7884 52.25,38C 52.25,30.13 45.87,23.75 38,23.75 Z M 23.75,38C 23.75,45.8701 30.1299,52.25 38,52.25C 40.7884,52.25 43.3897,51.4491 45.5865,50.0649L 25.9351,30.4136C 24.5509,32.6103 23.75,35.2117 23.75,38 Z "/>
 
                     <!--<Grid Visibility="{Binding Path=IsShowAlarm, Converter={StaticResource booleanToVisibilityConverter}}">                       
@@ -70,7 +70,7 @@
                     </Grid>-->
 
                     <Viewbox TextOptions.TextFormattingMode="Ideal">
-                        <TextBlock x:Name="AMSText" Text="{Binding Signal.Result, StringFormat=F3, Mode=TwoWay}" Margin="1,0,0,0" />
+                        <TextBlock x:Name="AMSText" Foreground="{DynamicResource WhiteColorBrush}" Text="{Binding Signal.Result, StringFormat=F3, Mode=TwoWay}" Margin="1,0,0,0" />
                     </Viewbox>
                     <TextBlock Text="{Binding Signal.IP}" Foreground="#FF85CBEB" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" FontSize="9"/>
                     <TextBlock Text="{Binding Signal.Unit}" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="1,0,0,0"  />
@@ -163,7 +163,7 @@
                     </Button>
                 </Grid>
 
-                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:TimeDomainChartView DataContext="{Binding  DataViewModel}"/>
                 </Grid>
 
@@ -225,7 +225,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:FrequencyDomainChartView Grid.Row="1" DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -287,7 +287,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:Time3DChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -349,7 +349,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:RPM3DChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -411,7 +411,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:OrthoChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -473,7 +473,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:RMSTrendChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -535,7 +535,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:NyquistChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -597,7 +597,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:MultiDivFreChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
 
@@ -659,7 +659,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:BodeChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
                 <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -720,7 +720,7 @@
                         <Image Source="/AIC.Resources;component/Images/delete3.png" />
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:NyquistChartView DataContext="{Binding DataViewModel}"/>
                 </Grid>
                 <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
@@ -782,7 +782,7 @@
                     </Button>
                 </Grid>
 
-                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:PowerSpectrumChartView DataContext="{Binding  DataViewModel}"/>
                 </Grid>
 
@@ -845,7 +845,7 @@
                     </Button>
                 </Grid>
 
-                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartAccentColorBrush}">
+                <Grid  Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                     <subviews:PowerSpectrumDensityChartView DataContext="{Binding  DataViewModel}"/>
                 </Grid>
 

@@ -881,3 +881,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.WrapBreakPanel
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.GridSelected.pdb

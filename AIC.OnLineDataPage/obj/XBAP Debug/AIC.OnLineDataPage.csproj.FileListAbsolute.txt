@@ -191,3 +191,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.WrapBreak
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Loya.Dameer.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.GridSelected.pdb

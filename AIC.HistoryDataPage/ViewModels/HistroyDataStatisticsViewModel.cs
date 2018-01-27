@@ -237,74 +237,74 @@ namespace AIC.HistoryDataPage.ViewModels
       
         private async void Refresh()
         {
-            _view.Refresh();
-            try
-            {
-                Status = ViewModelStatus.Querying;
+            //_view.Refresh();
+            //try
+            //{
+            //    Status = ViewModelStatus.Querying;
 
-                string ip = null;
-                HashSet<Guid> guidlist = new HashSet<Guid>();
-                List<BaseAlarmSignal> sglist = new List<BaseAlarmSignal>();
-                foreach (var item in _view)
-                {
-                    var sg = item as BaseWaveSignal;
-                    if (sg != null)
-                    {
-                        guidlist.Add(sg.Guid);
-                        sglist.Add(sg);
-                        if (ip == null)
-                        {
-                            ip = sg.ServerIP;
-                        }
-                    }
-                }
-                if (sglist.Count == 0)
-                {
-                    return;
-                }
+            //    string ip = null;
+            //    HashSet<Guid> guidlist = new HashSet<Guid>();
+            //    List<BaseAlarmSignal> sglist = new List<BaseAlarmSignal>();
+            //    foreach (var item in _view)
+            //    {
+            //        var sg = item as BaseWaveSignal;
+            //        if (sg != null)
+            //        {
+            //            guidlist.Add(sg.Guid);
+            //            sglist.Add(sg);
+            //            if (ip == null)
+            //            {
+            //                ip = sg.ServerIP;
+            //            }
+            //        }
+            //    }
+            //    if (sglist.Count == 0)
+            //    {
+            //        return;
+            //    }
                
-                var alarmlist = await _databaseComponent.GetStatisticsData(ip, guidlist);
+            //    var alarmlist = await _databaseComponent.GetStatisticsData(ip, guidlist);
                 
-                foreach (var alarm in alarmlist)
-                {                    
-                    if (alarm.Value.Count > 0)
-                    {
-                        BaseAlarmSignal sg = sglist.Where(p => p.Guid == alarm.Key).FirstOrDefault();
-                        if (sg != null)
-                        {
-                            if (alarm.Value.ContainsKey("PreAlarmCount"))
-                            {
-                                sg.PreAlarmCount = alarm.Value["PreAlarmCount"];
-                            }
-                            if (alarm.Value.ContainsKey("AlarmCount"))
-                            {
-                                sg.AlarmCount = alarm.Value["AlarmCount"];
-                            }
-                            if (alarm.Value.ContainsKey("DangerCount"))
-                            {
-                                sg.DangerCount = alarm.Value["DangerCount"];
-                            }
-                            var first = alarm.Value["FirstUploadTime"];
-                            var last = alarm.Value["LastUploadTime"];
-                            sg.FirstUploadTime = new DateTime((long)first);
-                            sg.LastUploadTime = new DateTime((long)last);
-                        }                     
-                    }                   
-                }
+            //    foreach (var alarm in alarmlist)
+            //    {                    
+            //        if (alarm.Value.Count > 0)
+            //        {
+            //            BaseAlarmSignal sg = sglist.Where(p => p.Guid == alarm.Key).FirstOrDefault();
+            //            if (sg != null)
+            //            {
+            //                if (alarm.Value.ContainsKey("PreAlarmCount"))
+            //                {
+            //                    sg.PreAlarmCount = alarm.Value["PreAlarmCount"];
+            //                }
+            //                if (alarm.Value.ContainsKey("AlarmCount"))
+            //                {
+            //                    sg.AlarmCount = alarm.Value["AlarmCount"];
+            //                }
+            //                if (alarm.Value.ContainsKey("DangerCount"))
+            //                {
+            //                    sg.DangerCount = alarm.Value["DangerCount"];
+            //                }
+            //                var first = alarm.Value["FirstUploadTime"];
+            //                var last = alarm.Value["LastUploadTime"];
+            //                sg.FirstUploadTime = new DateTime((long)first);
+            //                sg.LastUploadTime = new DateTime((long)last);
+            //            }                     
+            //        }                   
+            //    }
 
-                if (UpdateChart != null)
-                {
-                    UpdateChart(sglist);
-                }
-            }
-            catch(Exception ex)
-            {
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("报警统计", ex));
-            }
-            finally
-            {
-                Status = ViewModelStatus.None;
-            }
+            //    if (UpdateChart != null)
+            //    {
+            //        UpdateChart(sglist);
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("报警统计", ex));
+            //}
+            //finally
+            //{
+            //    Status = ViewModelStatus.None;
+            //}
         }          
     }
 }

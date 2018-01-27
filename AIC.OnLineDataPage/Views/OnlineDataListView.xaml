@@ -183,11 +183,15 @@
                         <Grid Margin="2,0,2,0">
                             <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
                         </Grid>
+                        <!--<CheckBox x:Name="IconFind" VerticalAlignment="Center" Height="24" Width="24" BorderThickness="0" Visibility="Collapsed" Style="{DynamicResource CheckBoxPopupStyle}">
+                            --><!--<Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}"  Data="F1 M 14.8076,31.1139L 20.0677,25.9957C 19.3886,24.8199 19.25,23.4554 19.25,22C 19.25,17.5817 22.5817,14 27,14C 31.4183,14 35,17.5817 35,22C 35,26.4183 31.4183,29.75 27,29.75C 25.6193,29.75 24.3204,29.6502 23.1868,29.0345L 17.8861,34.1924C 17.105,34.9734 15.5887,34.9734 14.8076,34.1924C 14.0266,33.4113 14.0266,31.895 14.8076,31.1139 Z M 27,17C 24.2386,17 22,19.2386 22,22C 22,24.7614 24.2386,27 27,27C 29.7614,27 32,24.7614 32,22C 32,19.2386 29.7614,17 27,17 Z " />--><!--
+                        </CheckBox>-->                       
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
                             <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
                             <Setter TargetName="IconPath" Property="Width" Value="24"/>
+                            <!--<Setter TargetName="IconFind" Property="Visibility" Value="Visible"/>-->
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
                             <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
@@ -271,7 +275,6 @@
         <Border Grid.Row="0" Grid.Column="2" Padding="5" Background="{DynamicResource AccentColorBrush2}">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-
                     <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                     <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                         <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
@@ -309,27 +312,6 @@
                         <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                         <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsUnConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                     </StackPanel>
-                    <!--<StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低危" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低预警" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                <Ellipse Fill="#FF85CBEB" VerticalAlignment="Center" Height="24" Width="24"/>
-                <TextBlock Text="低正常" VerticalAlignment="Center" />
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsLowNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
-            </StackPanel>-->
-
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >

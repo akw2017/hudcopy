@@ -47,6 +47,20 @@ namespace DiagramDesigner
             }
         }
 
+        private bool isReadOnly;//htzk123
+        public bool IsReadOnly
+        {
+            get { return isReadOnly; }
+            set
+            {
+                if (isReadOnly != value)
+                {
+                    isReadOnly = value;
+                    NotifyChanged("IsReadOnly");
+                }
+            }
+        }
+
         protected virtual void ItemIsSelected() { ;}
 
 

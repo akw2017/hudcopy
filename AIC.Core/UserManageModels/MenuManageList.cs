@@ -34,46 +34,46 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuHistoryDataStatistics { get; set; }
         public MyMenu MenuDataTrendChart { get; set; }
         public MyMenu MenuSystemEventList { get; set; }
-        public MyMenu MenuEquipmentRunStatus { get; set; }
+        public MyMenu MenuDeviceRunStatus { get; set; }
         public MyMenu MenuDeviceRunAnalyze { get; set; }
         public MyMenu MenuDeviceHourlyData { get; set; }
         public MyMenu MenuExportDBData { get; set; }
         public MyMenu MenuImportDBData { get; set; }
         public MyMenu MenuFilterDBData { get; set; }
-        public Dictionary<int, MyMenu> Dictionary { get; set; }
+        public static Dictionary<int, MyMenu> Dictionary;
 
         public MenuManageList()
         {
-            MenuUserManage = new MyMenu(0, (string)Application.Current.Resources["menuUserManage"]);
-            MenuRoleManage = new MyMenu(1, (string)Application.Current.Resources["menuRoleManage"]);
-            MenuMenuManage = new MyMenu(2, (string)Application.Current.Resources["menuMenuManage"]);
-            MenuOrganizationManage = new MyMenu(3, (string)Application.Current.Resources["menuOrganizationManage"]);
-            MenuManageLog = new MyMenu(4, (string)Application.Current.Resources["menuManageLog"]);
-            MenuServerSetting = new MyMenu(5, (string)Application.Current.Resources["menuServerSetting"]);
-            MenuCollectorSetting = new MyMenu(6, (string)Application.Current.Resources["menuCollectorSetting"]);
-            MenuEquipmentSetting = new MyMenu(7, (string)Application.Current.Resources["menuEquipmentSetting"]);
-            MenuOnlineData = new MyMenu(8, (string)Application.Current.Resources["menuOnlineData"]);
-            MenuHistoricalData = new MyMenu(9, (string)Application.Current.Resources["menuHistoricalData"]);
-            MenuAlarmData = new MyMenu(10, (string)Application.Current.Resources["menuAlartmData"]);
-            MenuRunningMonitor = new MyMenu(11, (string)Application.Current.Resources["menuRunningMonitor"]);
-            MenuRunningAnalyze = new MyMenu(12, (string)Application.Current.Resources["menuRunningAnalyze"]);
-            MenuOnlineDataList = new MyMenu(13, (string)Application.Current.Resources["menuOnlineDataList"]);
-            MenuOnlineDataTile = new MyMenu(14, (string)Application.Current.Resources["menuOnlineDataTile"]);
-            MenuOnlineDataDiagram = new MyMenu(15, (string)Application.Current.Resources["menuOnlineDataDiagram"]);
-            MenuOnlineDataOverview = new MyMenu(16, (string)Application.Current.Resources["menuOnlineDataOverview"]);
-            MenuHistoryDataList = new MyMenu(17, (string)Application.Current.Resources["menuHistoryDataList"]);
-            MenuHistoryDataDiagram = new MyMenu(18, (string)Application.Current.Resources["menuHistoryDataDiagram"]);
-            MenuOnlineDataDiagnosis = new MyMenu(19, (string)Application.Current.Resources["menuOnlineDataDiagnosis"]);
-            MenuOnlineDataStatistics = new MyMenu(20, (string)Application.Current.Resources["menuOnlineDataStatistics"]);
-            MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"]);
-            MenuSystemEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"]);
-            MenuDataTrendChart = new MyMenu(23, (string)Application.Current.Resources["menuDataTrendChart"]);
-            MenuEquipmentRunStatus = new MyMenu(24, (string)Application.Current.Resources["menuDeviceRunStatus"]);
-            MenuDeviceRunAnalyze = new MyMenu(25, (string)Application.Current.Resources["menuDeviceRunAnalyze"]);
-            MenuDeviceHourlyData = new MyMenu(26, (string)Application.Current.Resources["menuDeviceHourlyData"]);
-            MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"]);
-            MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"]);
-            MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"]);
+            MenuUserManage = new MyMenu(0, (string)Application.Current.Resources["menuUserManage"], "/AIC.Resources;component/Images/users.png");
+            MenuRoleManage = new MyMenu(1, (string)Application.Current.Resources["menuRoleManage"], "/AIC.Resources;component/Images/user.png");
+            MenuMenuManage = new MyMenu(2, (string)Application.Current.Resources["menuMenuManage"], "/AIC.Resources;component/Images/application_edit.png");
+            MenuOrganizationManage = new MyMenu(3, (string)Application.Current.Resources["menuOrganizationManage"], "/AIC.Resources;component/Images/chart_organisation.png");
+            MenuManageLog = new MyMenu(4, (string)Application.Current.Resources["menuManageLog"], "/AIC.Resources;component/Images/page_error.png");
+            MenuServerSetting = new MyMenu(5, (string)Application.Current.Resources["menuServerSetting"], "/AIC.Resources;component/Images/database_gear.png");
+            MenuCollectorSetting = new MyMenu(6, (string)Application.Current.Resources["menuCollectorSetting"], "/AIC.Resources;component/Images/brick_edit.png");
+            //MenuEquipmentSetting = new MyMenu(7, (string)Application.Current.Resources["menuEquipmentSetting"], "/AIC.Resources;component/Images/chart_organisation.png");
+            //MenuOnlineData = new MyMenu(8, (string)Application.Current.Resources["menuOnlineData"]);
+            //MenuHistoricalData = new MyMenu(9, (string)Application.Current.Resources["menuHistoricalData"]);
+            //MenuAlarmData = new MyMenu(10, (string)Application.Current.Resources["menuAlartmData"]);
+            //MenuRunningMonitor = new MyMenu(11, (string)Application.Current.Resources["menuRunningMonitor"]);
+            //MenuRunningAnalyze = new MyMenu(12, (string)Application.Current.Resources["menuRunningAnalyze"]);
+            MenuOnlineDataList = new MyMenu(13, (string)Application.Current.Resources["menuOnlineDataList"], "/AIC.Resources;component/Images/application_view_detail.png");
+            MenuOnlineDataTile = new MyMenu(14, (string)Application.Current.Resources["menuOnlineDataTile"], "/AIC.Resources;component/Images/application_view_tile.png");
+            MenuOnlineDataDiagram = new MyMenu(15, (string)Application.Current.Resources["menuOnlineDataDiagram"], "/AIC.Resources;component/Images/application_view_gallery.png");
+            MenuOnlineDataOverview = new MyMenu(16, (string)Application.Current.Resources["menuOnlineDataOverview"], "/AIC.Resources;component/Images/application_home.png");
+            MenuHistoryDataList = new MyMenu(17, (string)Application.Current.Resources["menuHistoryDataList"], "/AIC.Resources;component/Images/table_save.png");
+            MenuHistoryDataDiagram = new MyMenu(18, (string)Application.Current.Resources["menuHistoryDataDiagram"], "/AIC.Resources;component/Images/application_view_gallery.png");
+            MenuOnlineDataDiagnosis = new MyMenu(19, (string)Application.Current.Resources["menuOnlineDataDiagnosis"], "/AIC.Resources;component/Images/pill_go.png");
+            MenuOnlineDataStatistics = new MyMenu(20, (string)Application.Current.Resources["menuOnlineDataStatistics"], "/AIC.Resources;component/Images/chart_pie.png");
+            MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"], "/AIC.Resources;component/Images/chart_curve.png");
+            MenuSystemEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"], "/AIC.Resources;component/Images/monitor_lightning.png");
+            MenuDataTrendChart = new MyMenu(23, (string)Application.Current.Resources["menuDataTrendChart"], "/AIC.Resources;component/Images/chart_curve.png");
+            MenuDeviceRunStatus = new MyMenu(24, (string)Application.Current.Resources["menuDeviceRunStatus"], "/AIC.Resources;component/Images/cog_go.png");
+            MenuDeviceRunAnalyze = new MyMenu(25, (string)Application.Current.Resources["menuDeviceRunAnalyze"], "/AIC.Resources;component/Images/cog_error.png");
+            MenuDeviceHourlyData = new MyMenu(26, (string)Application.Current.Resources["menuDeviceHourlyData"], "/AIC.Resources;component/Images/cog_edit.png");
+            MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"], "/AIC.Resources;component/Images/export32.png");
+            MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"], "/AIC.Resources;component/Images/import32.png");
+            MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"], "/AIC.Resources;component/Images/search.png");
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -99,12 +99,25 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(21, MenuHistoryDataStatistics);
             Dictionary.Add(22, MenuSystemEventList);
             Dictionary.Add(23, MenuDataTrendChart);
-            Dictionary.Add(24, MenuEquipmentRunStatus);
+            Dictionary.Add(24, MenuDeviceRunStatus);
             Dictionary.Add(25, MenuDeviceRunAnalyze);
             Dictionary.Add(26, MenuDeviceHourlyData);
             Dictionary.Add(27, MenuExportDBData);
             Dictionary.Add(28, MenuImportDBData);
             Dictionary.Add(29, MenuFilterDBData);
+        }
+
+        public static MyMenu GetMenu(string strname)
+        {
+            string name = (string)Application.Current.Resources[strname];
+            var menu = (from p in Dictionary where p.Value.Name == name select p.Value).FirstOrDefault();
+            return menu;
+        }
+
+        public static string GetIconPath(int internalNumber)
+        {
+            var path = (from p in Dictionary where p.Value.Number == internalNumber select p.Value.IconPath).FirstOrDefault();
+            return path;
         }
     }
 }

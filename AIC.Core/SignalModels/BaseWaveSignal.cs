@@ -65,6 +65,9 @@ namespace AIC.Core.SignalModels
         public float BiasVoltHigh { get; set; }//偏置高电压
         public float BiasVoltLow { get; set; }//偏置低电压  
 
+        #region 诊断
+        public bool IsDiagnostic { get; set; }
+
         private string diagnosticInfo = null;
         public string DiagnosticInfo//诊断信息        
         {
@@ -150,7 +153,7 @@ namespace AIC.Core.SignalModels
         }
         #endregion
 
-        #region old
+        #region 波形
 
         public Dictionary<string, double[]> WaveformList { get; set; }
         public Dictionary<string, double[]> FrequencyList { get; set; }
@@ -812,6 +815,7 @@ namespace AIC.Core.SignalModels
                 FilterWaveform = LPFilter.Filter(Waveform, SamplePoint, SampleFre, RPM);
             }
         }
+        #endregion
         #endregion
     }
 }

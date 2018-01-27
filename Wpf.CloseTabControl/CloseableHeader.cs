@@ -12,12 +12,13 @@ namespace Wpf.CloseTabControl
 {
     public class CloseableHeader : BindableBase
     {
-        public CloseableHeader(string titleResource, string title, bool canClose)
+        public CloseableHeader(string titleResource, string title, bool canClose, string path= "/AIC.Resources;component/Images/application.png")
         {
             this.TitleResourceName = titleResource;
             this.Title = title;
             this.canClose = canClose;
-            this.CloseCommand = new DelegateCommand(Close); 
+            this.CloseCommand = new DelegateCommand(Close);
+            this.ImagePath = path;
         }
 
         public event Action RequestClose;
@@ -43,6 +44,8 @@ namespace Wpf.CloseTabControl
                 OnPropertyChanged("Title");
             }
         }
+
+        public string ImagePath { get; set; }
 
         private bool canClose;
         public Visibility Visibility

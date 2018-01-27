@@ -255,6 +255,7 @@ namespace AIC.Core.SignalModels
             Tuple<string, T1_SystemEvent> ex = new Tuple<string, T1_SystemEvent>(serverIP, systemEvent);
             _eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
         }
+
         #region 属性
         private DateTime? aCQDatetime;
         public DateTime? ACQDatetime//采集时间     
@@ -530,35 +531,7 @@ namespace AIC.Core.SignalModels
                     OnPropertyChanged("PreAlarmTimeLength");
                 }
             }
-        }
-
-        private DateTime firstUploadTime;
-        public DateTime FirstUploadTime      
-        {
-            get { return firstUploadTime; }
-            set
-            {
-                if (firstUploadTime != value)
-                {
-                    firstUploadTime = value;
-                    OnPropertyChanged("FirstUploadTime");
-                }
-            }
-        }
-
-        private DateTime lastUploadTime;
-        public DateTime LastUploadTime
-        {
-            get { return lastUploadTime; }
-            set
-            {
-                if (lastUploadTime != value)
-                {
-                    lastUploadTime = value;
-                    OnPropertyChanged("LastUploadTime");
-                }
-            }
-        }
+        }      
 
         private bool alarmAck = false;
         public bool AlarmAck
@@ -574,6 +547,7 @@ namespace AIC.Core.SignalModels
             }
         }
 
+        /*
         //低危
         #region LowDanger
         private double lowDanger;
@@ -675,6 +649,7 @@ namespace AIC.Core.SignalModels
             }
         }
         #endregion
+         */
 
         //低危方程
         #region Property FormulaLowDanger
@@ -792,6 +767,7 @@ namespace AIC.Core.SignalModels
         //        }
         //    }
         //}
+       
 
         //延迟报警级别
         private AlarmGrade delayAlarmGrade = AlarmGrade.HighNormal;
@@ -807,6 +783,7 @@ namespace AIC.Core.SignalModels
                 }
             }
         }
+        
 
         public double DelayAlarmTime { get; set; }
         public double NotOKDelayAlarmTime { get; set; }

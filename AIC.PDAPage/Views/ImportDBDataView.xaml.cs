@@ -1,5 +1,6 @@
 ﻿using AIC.Core.Events;
 using AIC.Core.OrganizationModels;
+using AIC.Core.UserManageModels;
 using AIC.PDAPage.ViewModels;
 using Prism.Events;
 using System;
@@ -33,7 +34,8 @@ namespace AIC.PDAPage.Views
             InitializeComponent();
             _eventAggregator = eventAggregator;
             
-            this.Closer = new CloseableHeader("menuImportDBData", (string)Application.Current.Resources["menuImportDBData"], true);
+            var menu = MenuManageList.GetMenu("menuImportDBData");
+            this.Closer = new CloseableHeader("menuImportDBData", menu.Name, true, menu.IconPath);
 
             // 这里是从后台工作线程触发，更新UI是跨线程操作，需要用Dispatcher.Invoke这种形式
             ((ImportDBDataViewModel)DataContext).NewMessageArrived += (o, args) =>

@@ -420,14 +420,32 @@ namespace AIC.OnLineDataPage.ViewModels
         }
         #endregion IsShowNumericChart
 
+        private bool isReadOnly;
+        public bool IsReadOnly
+        {
+            get { return isReadOnly; }
+            set
+            {
+                if (isReadOnly != value)
+                {
+                    isReadOnly = value;
+                    this.OnPropertyChanged("IsReadOnly");
+                    DiagramItemsReadOnly(isReadOnly);
+                }
+            }
+        }
+
         private bool canOperated;
         public bool CanOperated
         {
             get { return canOperated; }
             set
             {
-                canOperated = value;
-                OnPropertyChanged("CanOperated");
+                if (canOperated != value)
+                {
+                    canOperated = value;
+                    this.OnPropertyChanged("CanOperated");
+                }
             }
         }
         #endregion
@@ -632,7 +650,8 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                     }
 
-                    BuildDevice(device);                    
+                    BuildDevice(device);
+                    DiagramItemsReadOnly(IsReadOnly);//是否可读
                 }
                 
             }
@@ -848,6 +867,14 @@ namespace AIC.OnLineDataPage.ViewModels
             catch (Exception ex)
             {
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-设备切换", ex));
+            }
+        }
+
+        private void DiagramItemsReadOnly(bool isreadonly)
+        {
+            foreach(var item in DiagramViewModel.Items)
+            {
+                item.IsReadOnly = isreadonly;
             }
         }
 
@@ -1262,7 +1289,6 @@ namespace AIC.OnLineDataPage.ViewModels
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-移除图谱", ex));
             }
         }
-
         public void ShowProperty(object arg)
         {
             //if (propertyVM == null)

@@ -96,8 +96,11 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
                 return false;
             };
-           
+
             //_signalList.SortDescriptions.Add(new SortDescription("DeviceName", ListSortDirection.Ascending));
+            readDataTimer.Tick += new EventHandler(timeCycle);
+            readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
+            readDataTimer.Start();
         }        
 
         #region 管理树
@@ -359,7 +362,90 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
             }
         }
-     
+
+        private int normalCount;
+        public int NormalCount
+        {
+            get { return normalCount; }
+            set
+            {
+                if (normalCount != value)
+                {
+                    normalCount = value;
+                    this.OnPropertyChanged(() => this.NormalCount);
+                }
+            }
+        }
+
+        private int preAlertCount;
+        public int PreAlertCount
+        {
+            get { return preAlertCount; }
+            set
+            {
+                if (preAlertCount != value)
+                {
+                    preAlertCount = value;
+                    this.OnPropertyChanged(() => this.PreAlertCount);
+                }
+            }
+        }
+
+        private int alertCount;
+        public int AlertCount
+        {
+            get { return alertCount; }
+            set
+            {
+                if (alertCount != value)
+                {
+                    alertCount = value;
+                    this.OnPropertyChanged(() => this.AlertCount);
+                }
+            }
+        }
+
+        private int dangerCount;
+        public int DangerCount
+        {
+            get { return dangerCount; }
+            set
+            {
+                if (dangerCount != value)
+                {
+                    dangerCount = value;
+                    this.OnPropertyChanged(() => this.DangerCount);
+                }
+            }
+        }
+
+        private int abnormalCount;
+        public int AbnormalCount
+        {
+            get { return abnormalCount; }
+            set
+            {
+                if (abnormalCount != value)
+                {
+                    abnormalCount = value;
+                    this.OnPropertyChanged(() => this.AbnormalCount);
+                }
+            }
+        }
+
+        private int unConnectCount;
+        public int UnConnectCount
+        {
+            get { return unConnectCount; }
+            set
+            {
+                if (unConnectCount != value)
+                {
+                    unConnectCount = value;
+                    this.OnPropertyChanged(() => this.UnConnectCount);
+                }
+            }
+        }
         #endregion
 
         #region Command   
@@ -445,5 +531,44 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
         #endregion
+
+        private System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
+        private void timeCycle(object sender, EventArgs e)
+        {
+            NormalCount = 0;
+            PreAlertCount = 0;
+            AlertCount = 0;
+            DangerCount = 0;
+            AbnormalCount = 0;
+            UnConnectCount = 0;
+            foreach (var item in _view.AsParallel())
+            {
+                var sg = item as SignalListViewModel;
+                if (sg != null)
+                {
+                    switch (sg.Device.Alarm)
+                    {
+                        case AlarmGrade.HighNormal:
+                        case AlarmGrade.LowNormal:
+                            NormalCount++; break;
+                        case AlarmGrade.HighPreAlarm:
+                        case AlarmGrade.LowPreAlarm:
+                            PreAlertCount++; break;
+                        case AlarmGrade.HighAlarm:
+                        case AlarmGrade.LowAlarm:
+                            AlertCount++; break;
+                        case AlarmGrade.HighDanger:
+                        case AlarmGrade.LowDanger:
+                            DangerCount++; break;
+                        case AlarmGrade.Abnormal:
+                            AbnormalCount++; break;
+                        case AlarmGrade.DisConnect:
+                            UnConnectCount++; break;
+                        default:
+                            UnConnectCount++; break;
+                    }
+                }
+            }
+        }
     }
 }

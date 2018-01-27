@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Wpf.GridSelected.RectangleGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wpf.GridSelected"
+             xmlns:wrap="clr-namespace:Wpf.WrapBreakPanel;assembly=Wpf.WrapBreakPanel"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <wrap:WrapBreakPanel>
+            <Rectangle x:Name="rect1" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2" />
+            <Rectangle x:Name="rect2" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect3" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect4" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect5" wrap:WrapBreakPanel.LineBreakBefore="True"  IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2" />
+            <Rectangle x:Name="rect6" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect7" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect8" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect9" wrap:WrapBreakPanel.LineBreakBefore="True"  IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2" />
+            <Rectangle x:Name="rect10" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect11" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect12" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect13" wrap:WrapBreakPanel.LineBreakBefore="True"  IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2" />
+            <Rectangle x:Name="rect14" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect15" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+            <Rectangle x:Name="rect16" IsHitTestVisible="True" SnapsToDevicePixels="True" MouseEnter="Rectangle_MouseEnter"  MouseLeave="Rectangle_MouseLeave" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" Stroke="Black" Width="24" Height="24" Margin="2"/>
+        </wrap:WrapBreakPanel>
+    </Grid>
+</UserControl>

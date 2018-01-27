@@ -13,6 +13,7 @@
              xmlns:localControls="clr-namespace:AIC.OnLineDataPage.Controls"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"    
+             xmlns:mygrid="clr-namespace:Wpf.GridSelected;assembly=Wpf.GridSelected"
              xmlns:virtualizingWrapPanel="clr-namespace:Wpf.VirtualizingWrapPanel;assembly=Wpf.VirtualizingWrapPanel"
             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -58,6 +59,8 @@
             </Style>
 
             <Style x:Key="SignalMonitorStyle" TargetType="{x:Type ListBoxItem}" >
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Padding" Value="2" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -581,8 +584,26 @@
                     </Button.Content>
                 </Button>
                 <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0,5,0"/>
-                <CheckBox x:Name="chkbox" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="隐藏控制条" />
-                <!--<CheckBox Margin="5,0,0,0" IsChecked="{Binding IsShowAlarm}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="显示报警值" />-->
+                <!--<CheckBox x:Name="chkbox" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" Content="隐藏控制条" />-->
+                <Border BorderThickness="2" BorderBrush="{DynamicResource BlackBrush}" Background="{DynamicResource AccentColorBrush}" Padding="0" Margin="0,0,0,0">
+                    <xctk:DropDownButton Background="Transparent" >
+                        <xctk:DropDownButton.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="Fill" Width="16" Height="16" Source="/AIC.Resources;component/Images/layout.png"  />
+                                <TextBlock Text="排列" FontWeight="SemiBold" FontFamily="{DynamicResource DefaultFont}" Foreground="White" FontSize="15" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </xctk:DropDownButton.Content>
+                        <xctk:DropDownButton.DropDownContent>
+                            <mygrid:RectangleGrid x:Name="rectgrid" Select="{Binding Source={StaticResource proxy},Path=Data.Select, Mode=TwoWay}" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectRowColumnChanged">
+                                        <command:ExInvokeCommandAction Command="{Binding Source={StaticResource proxy},Path=Data.SelectRowColumnChangedComamnd}" CommandParameter="{Binding ElementName=rectgrid}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </mygrid:RectangleGrid>
+                        </xctk:DropDownButton.DropDownContent>
+                    </xctk:DropDownButton>
+                </Border>
             </WrapPanel>
         </Border>
 

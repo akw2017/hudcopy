@@ -444,6 +444,10 @@
       <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
       <Name>Wpf.CloseTabControl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wpf.GridSelected\Wpf.GridSelected.csproj">
+      <Project>{9388d1e7-a59f-4e89-875a-e31086b31d45}</Project>
+      <Name>Wpf.GridSelected</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
       <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>
       <Name>Wpf.PageNavigationControl</Name>

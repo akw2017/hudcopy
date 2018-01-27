@@ -3,6 +3,7 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Models;
 using AIC.OnLineDataPage.ViewModels;
@@ -42,7 +43,8 @@ namespace AIC.OnLineDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuDataTrendChart", (string)Application.Current.Resources["menuDataTrendChart"], true);
+            var menu = MenuManageList.GetMenu("menuDataTrendChart");
+            this.Closer = new CloseableHeader("menuDataTrendChart", menu.Name, true, menu.IconPath);
 
             ViewModel = this.DataContext as HistoryDataTrendViewModel;
             ViewModel.SignalAdded += ViewModel_SignalAdded;

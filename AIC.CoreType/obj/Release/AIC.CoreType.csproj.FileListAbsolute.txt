@@ -343,8 +343,8 @@ E:\在线监测\SourceCode\AICClient1.0\Common\AIC.CoreType\obj\Release\AIC.Core
 E:\在线监测\SourceCode\AICClient1.0\Common\AIC.CoreType\obj\Release\AIC.CoreType.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\bin\Release\AIC.CoreType.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\bin\Release\AIC.CoreType.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.Properties.Resources.resources
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.csprojResolveAssemblyReference.cache

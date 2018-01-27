@@ -2909,11 +2909,11 @@ namespace AIC.DatabaseService
                     string error = queryResult.ErrorMessage;
                     if (queryResult.ErrorType == "#ServerVersionUnmatch")
                     {
-                        error = "版本" + LocalSetting.Version + "与服务器版本" + error + "不匹配！#";
+                        error = "客户端版本" + LocalSetting.Version + "与服务器" + ip +"版本" + error + "不匹配！#";
                     }
                     else
                     {
-                        error = "请确定服务器正常#" + error;
+                        error = "请确定服务器" + ip + "正常#" + error;
                     }
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("服务器" + "数据库访问", new Exception(error)));

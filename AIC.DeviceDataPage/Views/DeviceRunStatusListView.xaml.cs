@@ -1,4 +1,5 @@
 ﻿using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -34,7 +35,8 @@ namespace AIC.DeviceDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuDeviceRunStatus", (string)Application.Current.Resources["menuDeviceRunStatus"], true);
+            var menu = MenuManageList.GetMenu("menuDeviceRunStatus");
+            this.Closer = new CloseableHeader("menuDeviceRunStatus", menu.Name, true, menu.IconPath);
 
             DeviceRunStatusListViewModel vm = this.DataContext as DeviceRunStatusListViewModel;
             if (vm != null)
@@ -63,6 +65,8 @@ namespace AIC.DeviceDataPage.Views
                 _chart.Dispose();
                 _chart = null;
             }
+            Color blackColor = ((SolidColorBrush)Application.Current.Resources["ChartBlackAccentColorBrush"]).Color;
+
             // Create a new chart.
             _chart = new LightningChartUltimate();
             _chart.BeginUpdate();
@@ -91,15 +95,15 @@ namespace AIC.DeviceDataPage.Views
             _chart.ViewXY.XAxes[0].Title.Visible = false;
             _chart.ViewXY.XAxes[0].ValueType = AxisValueType.Number;
             _chart.ViewXY.XAxes[0].ScrollMode = XAxisScrollMode.None;
-            _chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
-            _chart.ViewXY.XAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
+            _chart.ViewXY.XAxes[0].AxisColor = blackColor;// Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.XAxes[0].LabelsColor = blackColor;//Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Hide X axis
             //_chart.ViewXY.XAxes[0].Visible = false;
             _chart.ViewXY.YAxes[0].Visible = true;
             _chart.ViewXY.YAxes[0].Title.Visible = false;
-            _chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
-            _chart.ViewXY.YAxes[0].LabelsColor = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
+            _chart.ViewXY.YAxes[0].AxisColor = blackColor;//Color.FromArgb(0xff, 0x00, 0x00, 0x00);//Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.YAxes[0].LabelsColor = blackColor;// Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Arrange bars side-by-side and fit to width of the chart
             _chart.ViewXY.BarViewOptions.Grouping = BarsGrouping.ByLocation;
@@ -126,8 +130,8 @@ namespace AIC.DeviceDataPage.Views
             _chart.ViewXY.XAxes[0].CustomTicks.Clear();
 
             int pointsCount = deviceList.Count();
-            double max = deviceList.Select(p => p.RunHours).Max();
-            double min = 0 - deviceList.Select(p => p.StopHours).Max();
+            double max = Math.Max(deviceList.Select(p => p.RunHours).Max(), deviceList.Select(p => p.StopHours).Max());
+            double min = 0 - max;
             int with = (int)((_chart.ActualWidth - 100) / (pointsCount + 1) - 20);
             _chart.ViewXY.YAxes[0].SetRange(min, max);
             _chart.ViewXY.XAxes[0].SetRange(0.0, (double)(pointsCount + 1));
@@ -143,16 +147,16 @@ namespace AIC.DeviceDataPage.Views
                         data[j].Value = device.RunHours;
                         data[j].Location = j + 1;
                         //Set label text
-                        data[j].Text = device.RunHours.ToString("0");
-                        data[j].Tag = device.RunHours.ToString("0");
+                        data[j].Text = "运行" + device.RunHours.ToString("0") + "小时";
+                        data[j].Tag = "运行" + device.RunHours.ToString("0") + "小时";
                     }
                     else if (i == 1)
                     {
                         data[j].Value = 0 - device.StopHours;
                         data[j].Location = j + 1;
                         //Set label text                       
-                        data[j].Text = device.StopHours.ToString("0");
-                        data[j].Tag = device.StopHours.ToString("0");
+                        data[j].Text = "停止" + device.StopHours.ToString("0") + "小时";
+                        data[j].Tag = "停止" + device.StopHours.ToString("0") + "小时";
                     }
 
                     if (i == 0)

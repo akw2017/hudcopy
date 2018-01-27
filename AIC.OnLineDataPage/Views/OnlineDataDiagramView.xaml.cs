@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataDiagramView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuOnlineDataDiagram", (string)Application.Current.Resources["menuOnlineDataDiagram"], true);
+
+            var menu = MenuManageList.GetMenu("menuOnlineDataDiagram");
+            this.Closer = new CloseableHeader("menuOnlineDataDiagram", menu.Name, true, menu.IconPath);
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }

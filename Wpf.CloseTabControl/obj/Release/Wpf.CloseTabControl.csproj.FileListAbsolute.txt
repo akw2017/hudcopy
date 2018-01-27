@@ -16,8 +16,8 @@ D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\bin\Release\Microsoft.Pract
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\bin\Release\Prism.xml
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\bin\Release\Prism.Unity.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\bin\Release\Prism.Wpf.xml
-D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.Properties.Resources.resources
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.CloseTabControl\obj\Release\Wpf.CloseTabControl.csprojResolveAssemblyReference.cache

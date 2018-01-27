@@ -3,6 +3,7 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Axes;
@@ -37,7 +38,8 @@ namespace AIC.HistoryDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuHistoryDataStatistics", (string)Application.Current.Resources["menuHistoryDataStatistics"], true);
+            var menu = MenuManageList.GetMenu("menuHistoryDataStatistics");
+            this.Closer = new CloseableHeader("menuHistoryDataStatistics", menu.Name, true, menu.IconPath);        
           
             HistoryDataStatisticsViewModel vm = this.DataContext as HistoryDataStatisticsViewModel;
             if (vm != null)
@@ -62,6 +64,8 @@ namespace AIC.HistoryDataPage.Views
                 _chart.Dispose();
                 _chart = null;
             }
+
+            Color blackColor = ((SolidColorBrush)Application.Current.Resources["ChartBlackAccentColorBrush"]).Color;
             // Create a new chart.
             _chart = new LightningChartUltimate();
             _chart.BeginUpdate();
@@ -89,13 +93,15 @@ namespace AIC.HistoryDataPage.Views
             _chart.ViewXY.XAxes[0].Title.Visible = false;
             _chart.ViewXY.XAxes[0].ValueType = AxisValueType.Number;
             _chart.ViewXY.XAxes[0].ScrollMode = XAxisScrollMode.None;
-            _chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.XAxes[0].AxisColor = blackColor;// Color.FromArgb(0xff, 0x00, 0x00, 0x00);
+            _chart.ViewXY.XAxes[0].LabelsColor = blackColor;//Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Hide X axis
             //_chart.ViewXY.XAxes[0].Visible = false;
             _chart.ViewXY.YAxes[0].Visible = true;
             _chart.ViewXY.YAxes[0].Title.Visible = false;
-            _chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            _chart.ViewXY.YAxes[0].AxisColor = blackColor;//Color.FromArgb(0xff, 0x00, 0x00, 0x00);
+            _chart.ViewXY.YAxes[0].LabelsColor = blackColor;//Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 
             //Arrange bars side-by-side and fit to width of the chart
             _chart.ViewXY.BarViewOptions.Grouping = BarsGrouping.ByLocation;

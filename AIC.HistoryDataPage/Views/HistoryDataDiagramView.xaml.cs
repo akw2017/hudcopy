@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.UserManageModels;
 using AIC.HistoryDataPage.ViewModels;
 using Prism.Events;
 using System;
@@ -33,9 +34,10 @@ namespace AIC.HistoryDataPage.Views
         {
             InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuHistoryDataDiagram", (string)Application.Current.Resources["menuHistoryDataDiagram"], true);
-            Loaded += HistoryDataDiagramView_Loaded;
+            var menu = MenuManageList.GetMenu("menuHistoryDataDiagram");
+            this.Closer = new CloseableHeader("menuHistoryDataDiagram", menu.Name, true, menu.IconPath);
 
+            Loaded += HistoryDataDiagramView_Loaded;
         }
         public CloseableHeader Closer { get; private set; }
 
@@ -64,8 +66,9 @@ namespace AIC.HistoryDataPage.Views
                 count = count - subcount;
             }
            
-            ViewModel.ItemWidth = ReplayListBox.ActualWidth / count - 20;
-            ViewModel.ItemHeight = ReplayListBox.ActualHeight - 10;
+            ViewModel.ItemWidth = scrollviewer.ActualWidth / count - 20;
+            ViewModel.ItemHeight = scrollviewer.ActualHeight - 10;
+           
         }
 
         private void VerticalAlignButtonClick(object sender, RoutedEventArgs e)
@@ -77,8 +80,9 @@ namespace AIC.HistoryDataPage.Views
                 count = count - subcount;
             }
 
-            ViewModel.ItemWidth = ReplayListBox.ActualWidth - 60;
-            ViewModel.ItemHeight = ReplayListBox.ActualHeight / count - 10;
+            ViewModel.ItemWidth = scrollviewer.ActualWidth - 60;
+            ViewModel.ItemHeight = scrollviewer.ActualHeight / count - 10;
+            scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
         }
 
         private void AllAlignButtonClick(object sender, RoutedEventArgs e)
@@ -91,23 +95,23 @@ namespace AIC.HistoryDataPage.Views
             }
             if (count == 1 || count == 2)
             {
-                ViewModel.ItemWidth = ReplayListBox.ActualWidth - 60;
-                ViewModel.ItemHeight = ReplayListBox.ActualHeight / count - 10;
+                ViewModel.ItemWidth = scrollviewer.ActualWidth - 60;
+                ViewModel.ItemHeight = scrollviewer.ActualHeight / count - 10;
             }
             else if (count == 3 || count == 4)
             {
-                ViewModel.ItemWidth = ReplayListBox.ActualWidth / 2 - 40;
-                ViewModel.ItemHeight = ReplayListBox.ActualHeight / 2 - 10;
+                ViewModel.ItemWidth = scrollviewer.ActualWidth / 2 - 40;
+                ViewModel.ItemHeight = scrollviewer.ActualHeight / 2 - 10;
             }
             else if (count == 5 || count == 6)
             {
-                ViewModel.ItemWidth = ReplayListBox.ActualWidth / 3 - 20;
-                ViewModel.ItemHeight = ReplayListBox.ActualHeight / 2 - 10;
+                ViewModel.ItemWidth = scrollviewer.ActualWidth / 3 - 20;
+                ViewModel.ItemHeight = scrollviewer.ActualHeight / 2 - 10;
             }
             else if (count > 6)
             {
-                ViewModel.ItemWidth = ReplayListBox.ActualWidth / 3 - 10;
-                ViewModel.ItemHeight = ReplayListBox.ActualHeight / Math.Ceiling((double)count / 3) - 10;
+                ViewModel.ItemWidth = scrollviewer.ActualWidth / 3 - 10;
+                ViewModel.ItemHeight = scrollviewer.ActualHeight / Math.Ceiling((double)count / 3) - 10;
             }
         }
 

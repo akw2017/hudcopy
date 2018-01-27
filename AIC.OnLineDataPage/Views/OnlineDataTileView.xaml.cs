@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using AIC.OnLineDataPage.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,12 +26,28 @@ namespace AIC.OnLineDataPage.Views
         public OnlineDataTileView()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuOnlineDataTile", (string)Application.Current.Resources["menuOnlineDataTile"], true);
+
+            var menu = MenuManageList.GetMenu("menuOnlineDataTile");
+            this.Closer = new CloseableHeader("menuExportDBData", menu.Name, true, menu.IconPath);
+
+
+            if (ViewModel != null)
+            {
+                ViewModel.UpdateListShow += ViewModel_UpdateListShow; ;
+            }
+
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));
-        }
+
+        }    
 
         public CloseableHeader Closer { get; private set; }
+
+        OnlineDataTileViewModel ViewModel
+        {
+            get { return DataContext as OnlineDataTileViewModel; }
+            set { this.DataContext = value; }
+        }
 
         ///// <summary>
         ///// Handle the OnScorllCommand event for RichTextBox
@@ -51,6 +69,9 @@ namespace AIC.OnLineDataPage.Views
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
+            HorizontalAlignInit();
+
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
@@ -73,6 +94,18 @@ namespace AIC.OnLineDataPage.Views
                 //恢复
                 grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
             }
+        }
+
+        private void HorizontalAlignInit()
+        {
+            ViewModel_UpdateListShow(4, 4);
+            ViewModel.Select = new Wpf.GridSelected.RectangleGridEventArgs(4, 4);
+        }
+
+        private void ViewModel_UpdateListShow(int row, int column)
+        {
+            ViewModel.ItemWidth = (listview.ActualWidth - 40 - 6 * (column + 1)) / column ;
+            ViewModel.ItemHeight = (listview.ActualHeight - 6 - 6 * (row + 1)) / row;
         }
     }
 }

@@ -2723,3 +2723,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tools\Heatma
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tools\MarkerClusterer_min.js
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tools\RectangleZoom_min.js
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tools\TextIconOverlay_min.js
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tiles\3\0\0.jpg
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.GridSelected.pdb

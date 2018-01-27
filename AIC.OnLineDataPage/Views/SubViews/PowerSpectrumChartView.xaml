@@ -79,7 +79,7 @@
         </Grid.RowDefinitions>
         <Grid Name="gridChart" >
         </Grid>
-        <TextBlock x:Name="txtValue" FontSize="16" Grid.Row="2"/>
+        <TextBlock x:Name="txtValue" Foreground="{DynamicResource WhiteColorBrush}" FontSize="16" Grid.Row="2"/>
         <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
             <CheckBox x:Name="filterCheckBox" IsChecked="{Binding IsFilter}" VerticalAlignment="Center">
             </CheckBox>

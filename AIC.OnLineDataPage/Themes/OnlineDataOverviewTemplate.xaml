@@ -17,7 +17,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="0" Background="{DynamicResource AccentColorBrush}">
+            <Grid Margin="2" Background="{DynamicResource AccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="*" />
@@ -145,7 +145,7 @@
             <i:Interaction.Behaviors>
                 <core:FluidMouseDragBehavior DragButton="Left"/>
             </i:Interaction.Behaviors>
-            <Grid Margin="0" Background="{DynamicResource AccentColorBrush}">
+            <Grid Margin="2" Background="{DynamicResource AccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="*" />
@@ -190,9 +190,9 @@
                         </ListBox.Resources>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <StackPanel Orientation="Horizontal" Background="Transparent">                                   
+                                    <ProgressBar x:Name="ProgressBar" Style="{x:Null}" Value="{Binding BaseAlarmSignal.Result}" Maximum="{Binding BaseAlarmSignal.AlarmMax}" Foreground="Green" Width="60" Margin="5,0,5,0"/>
                                     <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
-                                    <ProgressBar x:Name="ProgressBar" Style="{x:Null}" Value="{Binding BaseAlarmSignal.Result}" Maximum="{Binding BaseAlarmSignal.AlarmMax}" Foreground="Green" Width="60" Margin="5,0,0,0"/>
                                     <!--<TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />-->
                                 </StackPanel>
                                 <DataTemplate.Triggers>

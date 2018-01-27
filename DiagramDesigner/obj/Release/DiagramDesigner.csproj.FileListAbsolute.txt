@@ -358,8 +358,6 @@ E:\在线监测\SourceCode\AICClient1.0\Component\DiagramDesigner\bin\Release\pt
 E:\在线监测\SourceCode\AICClient1.0\Component\DiagramDesigner\bin\Release\ru\FluentValidation.resources.dll
 E:\在线监测\SourceCode\AICClient1.0\Component\DiagramDesigner\bin\Release\sv\FluentValidation.resources.dll
 E:\在线监测\SourceCode\AICClient1.0\Component\DiagramDesigner\bin\Release\tr\FluentValidation.resources.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\DiagramDesigner.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\DiagramDesigner.pdb
@@ -429,3 +427,5 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Release\DiagramDesigner.Pro
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Release\DiagramDesigner.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Release\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Release\DiagramDesigner.pdb
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Release\Resources\AICMatlabDLL.dll

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.UserManageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,9 @@ namespace AIC.UserPage.Views
         public OperateRecord()
         {
             InitializeComponent();
-            this.Closer = new CloseableHeader("menuManageLog", (string)Application.Current.Resources["menuManageLog"], true);
+
+            var menu = MenuManageList.GetMenu("menuManageLog");
+            this.Closer = new CloseableHeader("menuManageLog", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
     }

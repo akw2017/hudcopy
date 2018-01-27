@@ -7,7 +7,156 @@
              xmlns:prism="http://prismlibrary.com/"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="TabItem"
+           x:Key="TabItemStyle">
+            <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+            <Setter Property="IsTabStop"
+                Value="False" />
+            <Setter Property="Padding"
+                Value="6,2,6,2" />
+            <Setter Property="Margin"
+                Value="2" />
+            <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+            <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+            <Setter Property="MinWidth"
+                Value="5" />
+            <Setter Property="MinHeight"
+                Value="5" />
+            <Setter Property="BorderThickness"
+                Value="1,1,1,0" />
+            <Setter Property="BorderBrush"
+                Value="{DynamicResource AccentColorBrush}" />
+            <Setter Property="Background"
+                Value="Transparent" />
+            <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+            <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Border"
+                            Margin="1,1,1,0"
+                            HorizontalAlignment="Stretch"                           
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="4,4,0,0">
+                            <DockPanel HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
+                                <DockPanel.Resources>
+                                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                                </DockPanel.Resources>
+                                <ContentPresenter x:Name="ContentSite"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              DockPanel.Dock="Top" />                               
+                            </DockPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                                <Setter Property="DockPanel.Dock"
+                                    TargetName="ContentSite"
+                                    Value="Left" />
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement"
+                                 Value="Top">
+                                <Setter Property="DockPanel.Dock"
+                                    TargetName="ContentSite"
+                                    Value="Top" />
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                                <Setter Property="DockPanel.Dock"
+                                    TargetName="ContentSite"
+                                    Value="Right" />
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                                <Setter Property="DockPanel.Dock"
+                                    TargetName="ContentSite"
+                                    Value="Bottom" />
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                 Value="true">
+                                <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                 Value="false">
+                                <Setter Property="Background"
+                                    Value="{DynamicResource WhiteBrush}" />
+                            </Trigger>
+                            <Trigger SourceName="ContentSite"
+                                 Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush2}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver"
+                                           SourceName="ContentSite"
+                                           Value="True" />
+                                    <Condition Property="IsSelected"
+                                           Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TabItem" BasedOn="{StaticResource TabItemStyle}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <DockPanel>                            
+                            <Image Source="{Binding Path=ImagePath}" Stretch="None" DockPanel.Dock="Left" Margin="2,0,6,0"/>
+                            <Grid DockPanel.Dock="Right" Margin="6,0,2,0">
+                                <Button Command="{Binding Path=CloseCommand}" Cursor="Hand" FontWeight="Bold" Width="24" Height="24" Visibility="{Binding Path=Visibility}" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="X" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Cursor="Hand" Width="24" Height="24" 
+                                            Visibility="{Binding Path=LockVisibility}" 
+                                            Command="{Binding DataContext.UnLockCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                            CommandParameter="{Binding Path=Title}">
+                                    <Image Source="/AIC.Resources;component/Images/lock.png" Margin="-1,-1,-1,-1" Stretch="Fill"/>
+                                </Button>
+                            </Grid>
+                            <ContentPresenter Content="{Binding Path=Title}" VerticalAlignment="Center" />
+                        </DockPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Header" Value="{Binding Path=Content.Closer,RelativeSource={x:Static RelativeSource.Self}}"></Setter>
+        </Style>
+        <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MetroTabControl}">
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+            <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <TabControl x:Name="tabControl" Padding="0" Margin="0" prism:RegionManager.RegionName="MainTabRegion"/>
+        <TabControl x:Name="tabControl" prism:RegionManager.RegionName="MainTabRegion"/>
     </Grid>
 </UserControl>

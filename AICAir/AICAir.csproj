@@ -190,7 +190,9 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -354,6 +356,10 @@
     <ProjectReference Include="..\Truss\Truss.csproj">
       <Project>{d316baf2-3cc2-4e41-9b68-bf49ab9a0b6d}</Project>
       <Name>Truss</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.GridSelected\Wpf.GridSelected.csproj">
+      <Project>{9388d1e7-a59f-4e89-875a-e31086b31d45}</Project>
+      <Name>Wpf.GridSelected</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wpf.PageNavigationControl\Wpf.PageNavigationControl.csproj">
       <Project>{243f837b-b663-4cb1-ad58-d4747fc23620}</Project>

@@ -764,6 +764,16 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
+        private ICommand closeWindowsCommand;
+        public ICommand CloseWindowsCommand
+        {
+            get
+            {
+                return this.closeWindowsCommand ?? (this.closeWindowsCommand = new DelegateCommand(() => this.CloseWindows()));
+            }
+        }
+
+
         private event EventHandler<EventArgs> trackChanged;
         public IObservable<EventArgs> WhenSlideChanged
         {
@@ -873,6 +883,11 @@ namespace AIC.HomePage.ViewModels
             _regionManager.RequestNavigate(RegionNames.MainBodyRegion, tabView);
             ////首页默认打开
             IRegion region = this._regionManager.Regions["MainTabRegion"];
+            if (region.GetView("首页") != null)
+            {
+                region.Activate(region.GetView("首页"));
+                return;
+            }
             Object viewObj = ServiceLocator.Current.GetInstance<HomeMapView>();
             ICloseable view = viewObj as ICloseable;
             if (view != null)
@@ -1099,7 +1114,7 @@ namespace AIC.HomePage.ViewModels
             {
                 viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
             }
-            else if (viewName == "MenuDeviceRunStatusList")
+            else if (viewName == "MenuDeviceRunStatus")
             {
                 viewObj = ServiceLocator.Current.GetInstance<DeviceRunStatusListView>();
             }
@@ -1282,6 +1297,11 @@ namespace AIC.HomePage.ViewModels
         {
             VersionWin win = new VersionWin();
             win.ShowDialog();
+        }
+
+        private void CloseWindows()
+        {
+            CloseTabs(false);
         }
         #endregion
 

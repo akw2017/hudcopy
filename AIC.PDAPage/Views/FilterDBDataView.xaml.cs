@@ -1,5 +1,6 @@
 ﻿using AIC.Core.Events;
 using AIC.Core.OrganizationModels;
+using AIC.Core.UserManageModels;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,9 @@ namespace AIC.PDAPage.Views
         {
             InitializeComponent();
             _eventAggregator = eventAggregator;
-            
-            this.Closer = new CloseableHeader("menuFilterDBData", (string)Application.Current.Resources["menuFilterDBData"], true);
+
+            var menu = MenuManageList.GetMenu("menuFilterDBData");
+            this.Closer = new CloseableHeader("menuFilterDBData", menu.Name, true, menu.IconPath);
         }
         public CloseableHeader Closer { get; private set; }
 

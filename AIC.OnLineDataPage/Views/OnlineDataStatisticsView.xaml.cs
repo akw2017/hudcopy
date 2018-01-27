@@ -3,6 +3,7 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.SignalModels;
+using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.OnLineDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -38,9 +39,11 @@ namespace AIC.OnLineDataPage.Views
     {
         public OnlineDataStatisticsView()
         {
-            InitializeComponent();          
+            InitializeComponent();
 
-            this.Closer = new CloseableHeader("menuOnlineDataStatistics", (string)Application.Current.Resources["menuOnlineDataStatistics"], true);
+            var menu = MenuManageList.GetMenu("menuOnlineDataStatistics");
+            this.Closer = new CloseableHeader("menuOnlineDataStatistics", menu.Name, true, menu.IconPath);
+
 
             ViewModel = this.DataContext as OnlineDataStatisticsViewModel;
             if (ViewModel != null)
