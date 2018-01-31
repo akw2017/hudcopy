@@ -206,7 +206,7 @@
                 <CheckBox x:Name="envelopeCheckBox" Content="包络" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked"  Unchecked="CheckBox_Unchecked"/>
                 <CheckBox x:Name="tffCheckBox" Content="TFF" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                 <CheckBox x:Name="cepstrumCheckBox" Content="倒频谱" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-                <CheckBox Content="参数" HorizontalAlignment="Right" IsChecked="{Binding ShowDetail}" Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <CheckBox x:Name="showCheckBox" IsChecked="True" Content="参数" HorizontalAlignment="Right" Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>

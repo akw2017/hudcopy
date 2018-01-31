@@ -234,7 +234,7 @@
                     <CheckBox x:Name="cepstrumCheckBox" Content="倒频谱" Foreground="#FF87CDEE" VerticalAlignment="Center" Checked="filterCheckBox_Checked" Unchecked="CheckBox_UnChecked"/>
                     <RepeatButton FontFamily="Marlett" FontSize="20" Content="3" Margin="2,0" Click="MovePrevious_Click" Style="{StaticResource RepeatButtonStyle}"/>
                     <RepeatButton FontFamily="Marlett" FontSize="20" Content="4"  Click="MoveNext_Click" Style="{StaticResource RepeatButtonStyle}"/>
-                    <CheckBox Content="参数" HorizontalAlignment="Right" IsChecked="{Binding ShowDetail}" Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="2,0,5,0"/>
+                    <CheckBox x:Name="showCheckBox" Content="参数" IsChecked="True" HorizontalAlignment="Right" Foreground="#FF87CDEE" VerticalAlignment="Center" Margin="2,0,5,0"/>
                 </StackPanel>
 
 

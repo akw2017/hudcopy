@@ -126,10 +126,10 @@ namespace AIC.Core.SignalModels
                     ItemName = names[0];
                     DeviceName = names[1];
                     
-                    OrganizationName = string.Join("-", names.Where((p, i)=> i != 0 && i != 1).Select(p => p).Reverse());
-                    OrganizationDeviceName = OrganizationName + "-" + DeviceName;
-                    DeviceItemName = DeviceName + "-" + ItemName;
-                    FullName = OrganizationName + "-" + DeviceName + "-" + ItemName;
+                    OrganizationName = string.Join("/", names.Where((p, i)=> i != 0 && i != 1).Select(p => p).Reverse());
+                    OrganizationDeviceName = OrganizationName + "/" + DeviceName;
+                    DeviceItemName = DeviceName + "/" + ItemName;
+                    FullName = OrganizationName + "/" + DeviceName + "/" + ItemName;
                 }
                 OnPropertyChanged("Names");
             }

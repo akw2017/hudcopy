@@ -384,8 +384,7 @@ namespace AIC.LocalConfiguration
                 {
                     latestdata = await _databaseComponent.GetLatestData();
                     return await CheckedSignal(latestdata);
-                }
-               
+                }                
             }
             catch(Exception ex)
             {
@@ -651,7 +650,7 @@ namespace AIC.LocalConfiguration
                         await Task.WhenAll(lttask.Values.ToArray());
                         foreach (var task in lttask)
                         {
-                            if (task.Value != null)
+                            if (task.Value != null && task.Value.Result != null && task.Value.Result.Count > 0)
                             {
                                 var result = task.Value.Result.FirstOrDefault();
                                 WirelessVibrationSlotData_Waveform waveform = new WirelessVibrationSlotData_Waveform();
@@ -856,8 +855,9 @@ namespace AIC.LocalConfiguration
                         else if (keyValuePair.Key is WirelessScalarChannelSignal)
                         {
                             SetAlarmSignal(keyValuePair.Key as WirelessScalarChannelSignal, keyValuePair.Value);
-                        }
+                        }   
                     }
+                    
                     Parallel.ForEach(keyValuePairs, keyValuePair =>
                     {
                         if (keyValuePair.Key is BaseWaveSignal)
@@ -1116,6 +1116,58 @@ namespace AIC.LocalConfiguration
                         }
                     });
                 });
+                #region 趋势
+                foreach (var keyValuePair in keyValuePairs)
+                {
+                    var sg = keyValuePair.Key;
+
+                    if (sg.SignalProcessorTrend.Count > 0)
+                    {
+                        if (sg.TrendData != null && sg.TrendData.Count > 0 && sg.TrendData.LastOrDefault().ACQDateTime == sg.ACQDatetime)
+                        {
+                            continue;
+                        }
+                        else if (sg.TrendData != null && sg.TrendData.Count > 0 && sg.TrendData.LastOrDefault().ACQDateTime < sg.ACQDatetime)
+                        {
+                            sg.TrendData.RemoveAt(0);
+                            sg.TrendData.Add(new TrendPointData(sg.ACQDatetime.Value, sg.Result.Value, sg.Unit, (int)sg.AlarmGrade));
+                            continue;
+                        }
+
+
+                        if (sg is WirelessVibrationChannelSignal)
+                        {
+                            var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
+                            if (results == null)
+                            {
+                                sg.TrendData = null;
+                            }
+                            else
+                            {
+                                sg.TrendData = results.OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
+                            }
+
+                        }
+                        else if (sg is WirelessScalarChannelSignal)
+                        {
+                            var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
+                            if (results == null)
+                            {
+                                sg.TrendData = null;
+                            }
+                            else
+                            {
+                                sg.TrendData = results.OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        sg.TrendData = null;
+                    }
+                }
+                #endregion
             }
         }
         private void SetDivfreSignal(BaseDivfreSignal sg, IBaseAlarmSlot idata)

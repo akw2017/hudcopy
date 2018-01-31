@@ -13,10 +13,5 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         {
           
         }
-
-        public BodeChartViewModel(BaseAlarmSignal signal, bool isupdate) : this(signal)           
-        {
-            IsUpdated = isupdate;
-        }
     }
 }

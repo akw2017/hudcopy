@@ -34,19 +34,25 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public BodeChartView()
         {
             InitializeComponent();
-            CreateChart();
+            //CreateChart();
         }
 
         protected override void ViewModel_Closed(object sender, EventArgs e)
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            //gridChart.Children.Clear();
-            //if (m_chart != null)
-            //{
-            //    m_chart.Dispose();
-            //    m_chart = null;
-            //}
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+        }
+
+        protected override void ViewModel_Opened(object sender, EventArgs e)
+        {
+            base.ViewModel_Opened(sender, e);
+            CreateChart();
         }
 
         void showLineCheckBox_Checked(object sender, RoutedEventArgs e)

@@ -39,21 +39,27 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public Time3DChartView()
         {
             InitializeComponent();
-            CreateTime3DChart();
+            //CreateTime3DChart();
         }
 
         protected override void ViewModel_Closed(object sender, EventArgs e)
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            //gridTime3DChart.Children.Clear();
-            //if (time3Dchart != null)
-            //{
-            //    time3Dchart.Dispose();
-            //    time3Dchart = null;
-            //}
+            gridTime3DChart.Children.Clear();
+            if (time3Dchart != null)
+            {
+                time3Dchart.Dispose();
+                time3Dchart = null;
+                m_surface = null;
+            }
         }
 
+        protected override void ViewModel_Opened(object sender, EventArgs e)
+        {
+            base.ViewModel_Opened(sender, e);
+            CreateTime3DChart();
+        }
         protected override void ViewModel_SignalChanged()
         {
             try

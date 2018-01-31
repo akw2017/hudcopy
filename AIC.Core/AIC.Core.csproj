@@ -143,6 +143,7 @@
     <Compile Include="Behaviors\ControlMouseDownCommandBehavior.cs" />
     <Compile Include="ControlModels\ITreeItemViewModel.cs" />
     <Compile Include="Controls\MyListBox.cs" />
+    <Compile Include="Controls\TabContent.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\AlarmLimitToStringConverter.cs" />
     <Compile Include="Converters\RowToIndexConv.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Filters\NotifyDataErrorInfoBase.cs" />
     <Compile Include="FluidWrapPanel\FluidLayoutManager.cs" />
     <Compile Include="FluidWrapPanel\FluidMouseDragBehavior.cs" />
+    <Compile Include="FluidWrapPanel\VirtualizingFluidWrapPanel.cs" />
     <Compile Include="FluidWrapPanel\FluidWrapPanel.cs" />
     <Compile Include="Behaviors\ItemsControlDragDropBehavior\ContentControlHelp.cs" />
     <Compile Include="Behaviors\ItemsControlDragDropBehavior\DragAdorner.cs" />

@@ -38,34 +38,45 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public RMSTrendChartView()
         {
             InitializeComponent();
-            CreateChart();
+            //CreateChart();
         }
 
         protected override void ViewModel_Closed(object sender, EventArgs e)
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            //gridChart.Children.Clear();
-            //if (m_chart != null)
-            //{
-            //    m_chart.Dispose();
-            //    m_chart = null;               
-            //}
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            needinit = false;
         }
 
-        //private bool initializing = false;
-        private readonly SemaphoreSlim locker = new SemaphoreSlim(1);//加锁，避免同时进行SignalChanged
-
-        protected override async void ViewModel_SignalChanged()
+        protected override void ViewModel_Opened(object sender, EventArgs e)
         {
-            await locker.WaitAsync();
+            base.ViewModel_Opened(sender, e);
+            CreateChart();
+        }
+
+        private bool initializing = false;
+        private bool needinit = false;     
+
+        protected override void ViewModel_SignalChanged()
+        {
+            if (initializing == true)
+            {
+                return;
+            }
             try
             {
-                //initializing = true;
+                needinit = true;
+                initializing = true;
                 txtValue.Text = string.Empty;
                 m_chart.BeginUpdate();
                 m_chart.ViewXY.PointLineSeries[0].SeriesEventMarkers.Clear();
-                m_chart.ViewXY.PointLineSeries[0].Clear();
+                m_chart.ViewXY.PointLineSeries[0].Clear();              
 
                 if (ViewModel != null && (ViewModel.Signal is BaseAlarmSignal) && (ViewModel.Signal as BaseAlarmSignal).Result != null && (ViewModel.Signal as BaseAlarmSignal).ACQDatetime != null)
                 {
@@ -74,17 +85,17 @@ namespace AIC.OnLineDataPage.Views.SubViews
                     m_chart.ViewXY.XAxes[0].SetRange(dMinX, dMaxX);
                     m_chart.ViewXY.YAxes[0].SetRange(((BaseAlarmSignal)ViewModel.Signal).Result.Value * 0.5, ((BaseAlarmSignal)ViewModel.Signal).Result.Value * 1.5);
                 }
-                await InitDataChart();
+                m_chart.EndUpdate();
+                //InitDataChart();              
             }
             catch (Exception ex)
-            {               
+            {
+                m_chart.EndUpdate();
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-趋势-信号变换", ex));
             }
             finally
             {
-                m_chart.EndUpdate();
-                locker.Release();
-                //initializing = false;
+                initializing = false;
             }
         }
 
@@ -92,101 +103,103 @@ namespace AIC.OnLineDataPage.Views.SubViews
 
         protected async Task InitDataChart()
         {
-            try
+            //有效值趋势
+            if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal) || ViewModel.Signal.ACQDatetime == null)
             {
-                //有效值趋势
-                if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal) || ViewModel.Signal.ACQDatetime == null)
+                return;
+            }
+
+            var sg = ViewModel.Signal as BaseAlarmSignal;
+            DateTime lasttime = new DateTime();
+            if (m_chart.ViewXY.PointLineSeries[0].Points != null && m_chart.ViewXY.PointLineSeries[0].Points.Count() > 0)
+            {
+                lasttime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(m_chart.ViewXY.PointLineSeries[0].Points.Select(p => p.X).Max());
+            }
+            _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
+            List<TrendPointData> datas = new List<TrendPointData>();
+            if (sg is WirelessScalarChannelSignal)
+            {
+                var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
+                if (results == null || results.Count == 0)
                 {
                     return;
                 }
-                
-                var sg = ViewModel.Signal as BaseAlarmSignal;
-                DateTime lasttime = new DateTime();
-                if (m_chart.ViewXY.PointLineSeries[0].Points != null && m_chart.ViewXY.PointLineSeries[0].Points.Count() > 0)
+                else
                 {
-                    lasttime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(m_chart.ViewXY.PointLineSeries[0].Points.Select(p => p.X).Max());
+                    datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
                 }
-                _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
-                List<TrendPointData> datas = new List<TrendPointData>();
-                if (sg is WirelessScalarChannelSignal)
-                {
-                    var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
-                    if (results == null || results.Count == 0)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
-                    }
-                }
-                else  if (sg is WirelessVibrationChannelSignal)
-                {
-                    var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
-                    if (results == null || results.Count == 0)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
-                    }
-                }
-               
-                SubInitDataChart(datas);
             }
-            catch (Exception ex)
+            else if (sg is WirelessVibrationChannelSignal)
             {
-                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-趋势", ex));
+                var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
+                if (results == null || results.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
+                }
             }
+
+            SubInitDataChart(datas);
         }
 
         private void SubInitDataChart(List<TrendPointData> datas)
         {
-            SeriesPoint[] points = new SeriesPoint[1];
-
-            PointLineSeries series = m_chart.ViewXY.PointLineSeries[0];
-            for (int i = 0; i < datas.Count; i++)
+            try
             {
-                m_dLatestX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(datas[i].ACQDateTime);
-                points[0].X = m_dLatestX;
-                points[0].Y = datas[i].Result;
-                points[0].Tag = datas[i].Unit;
+                if (m_chart != null)
+                {
+                    m_chart.BeginUpdate();
+                    SeriesPoint[] points = new SeriesPoint[1];
 
-                AddMarker(series, points[0], datas[i].AlarmGrade);
+                    PointLineSeries series = m_chart.ViewXY.PointLineSeries[0];
+                    for (int i = 0; i < datas.Count; i++)
+                    {
+                        m_dLatestX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(datas[i].ACQDateTime);
+                        points[0].X = m_dLatestX;
+                        points[0].Y = datas[i].Result;
+                        points[0].Tag = datas[i].Unit;
 
-                series.AddPoints(points, false);
+                        AddMarker(series, points[0], datas[i].AlarmGrade);
+
+                        series.AddPoints(points, false);
+                    }
+
+                    double maxValue = 10, minValue = 0;
+                    if (datas.Count > 0)
+                    {
+                        maxValue = datas.Select(p => p.Result).Max() * 1.5;
+                        minValue = datas.Select(p => p.Result).Min() * 0.5;
+                    }
+
+                    if (ViewModel != null && (ViewModel.Signal is BaseAlarmSignal) && (ViewModel.Signal as BaseAlarmSignal).Result != null)
+                    {
+                        m_chart.ViewXY.YAxes[0].SetRange(minValue, maxValue);
+                    }
+                    if (!(bool)scrollCheckBox.IsChecked)
+                    {
+                        m_chart.ViewXY.XAxes[0].ScrollPosition = m_dLatestX;
+                    }
+                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_dLatestX;
+                    m_chart.EndUpdate();                  
+                }
             }
-
-            double maxValue = 10, minValue = 0;
-            if (datas.Count > 0)
+            catch (Exception ex)
             {
-                maxValue = datas.Select(p => p.Result).Max() * 1.5;
-                minValue = datas.Select(p => p.Result).Min() * 0.5;
+                m_chart.EndUpdate();
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-趋势-信号变换", ex));
             }
-
-            if (ViewModel != null && (ViewModel.Signal is BaseAlarmSignal) && (ViewModel.Signal as BaseAlarmSignal).Result != null)
-            {
-                m_chart.ViewXY.YAxes[0].SetRange(minValue, maxValue);
-            }
-            if (!(bool)scrollCheckBox.IsChecked)
-            {
-                m_chart.ViewXY.XAxes[0].ScrollPosition = m_dLatestX;
-            }
-            m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_dLatestX;
         }
-
   
         protected override void UpdateChart(object args)
         {
-            if (locker.CurrentCount == 0)//不等待直接返回
+            if (initializing == true)
             {
                 return;
             }
-            //if (initializing == true)
-            //{
-            //    return;
-            //}
+           
             //有效值趋势
             if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal))
             {
@@ -198,13 +211,19 @@ namespace AIC.OnLineDataPage.Views.SubViews
             {
                 return;
             }
-            if (ViewModel.IsUpdated == false)
-            {
-                //加入缓存数据
-                return;
-            }
+
             try
             {
+                if (needinit == true)
+                {
+                    if (sg.TrendData == null)
+                    {
+                        return;
+                    }
+                    SubInitDataChart(sg.TrendData);
+                    needinit = false;
+                }
+
                 List<TrendPointData> datas = new List<TrendPointData>();
                 DateTime lasttime = new DateTime();
                 if (m_chart.ViewXY.PointLineSeries[0].Points != null && m_chart.ViewXY.PointLineSeries[0].Points.Count() > 0)

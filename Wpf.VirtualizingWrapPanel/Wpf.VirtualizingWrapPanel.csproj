@@ -48,7 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="VirtualizingWrapPanel.cs" />
+    <Compile Include="VirtualizingWrapPanelEx.cs" />
+    <Compile Include="WrapPanelAlignment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

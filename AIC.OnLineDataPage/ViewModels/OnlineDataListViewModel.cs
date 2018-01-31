@@ -57,7 +57,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (itemPl == null) return false;
                 if (selectedsignals.Contains(itemPl))
                 {
-                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlertSignal == false && IsAlertSignal == false && IsDangerSignal == false && IsUnConnectSignal == false)
+                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlarmSignal == false && IsAlarmSignal == false && IsDangerSignal == false && DisConnectSignal == false)
                     {
                         return true;
                     }
@@ -69,11 +69,11 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.AlarmGrade == AlarmGrade.HighPreAlarm && IsPreAlertSignal == true)
+                    if (itemPl.AlarmGrade == AlarmGrade.HighPreAlarm && IsPreAlarmSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.AlarmGrade == AlarmGrade.HighAlarm && IsAlertSignal == true)
+                    if (itemPl.AlarmGrade == AlarmGrade.HighAlarm && IsAlarmSignal == true)
                     {
                         return true;
                     }
@@ -85,11 +85,11 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.AlarmGrade == AlarmGrade.LowAlarm && IsAlertSignal == true)
+                    if (itemPl.AlarmGrade == AlarmGrade.LowAlarm && IsAlarmSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.AlarmGrade == AlarmGrade.LowPreAlarm && IsPreAlertSignal == true)
+                    if (itemPl.AlarmGrade == AlarmGrade.LowPreAlarm && IsPreAlarmSignal == true)
                     {
                         return true;
                     }
@@ -97,7 +97,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.AlarmGrade == AlarmGrade.DisConnect && IsUnConnectSignal == true)
+                    if (itemPl.AlarmGrade == AlarmGrade.DisConnect && DisConnectSignal == true)
                     {
                         return true;
                     }
@@ -205,7 +205,7 @@ namespace AIC.OnLineDataPage.ViewModels
         }
 
         private bool isPreAlertSignal;
-        public bool IsPreAlertSignal
+        public bool IsPreAlarmSignal
         {
             get { return isPreAlertSignal; }
             set
@@ -213,14 +213,14 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (isPreAlertSignal != value)
                 {
                     isPreAlertSignal = value;
-                    OnPropertyChanged(() => IsPreAlertSignal);
+                    OnPropertyChanged(() => IsPreAlarmSignal);
                     Refresh();
                 }
             }
         }
 
         private bool isAlertSignal;
-        public bool IsAlertSignal
+        public bool IsAlarmSignal
         {
             get { return isAlertSignal; }
             set
@@ -228,7 +228,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (isAlertSignal != value)
                 {
                     isAlertSignal = value;
-                    OnPropertyChanged(() => IsAlertSignal);
+                    OnPropertyChanged(() => IsAlarmSignal);
                     Refresh();
                 }
             }
@@ -250,7 +250,7 @@ namespace AIC.OnLineDataPage.ViewModels
         }     
 
         private bool isUnConnectSignal;
-        public bool IsUnConnectSignal
+        public bool DisConnectSignal
         {
             get { return isUnConnectSignal; }
             set
@@ -258,7 +258,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (isUnConnectSignal != value)
                 {
                     isUnConnectSignal = value;
-                    OnPropertyChanged(() => IsUnConnectSignal);
+                    OnPropertyChanged(() => DisConnectSignal);
                     Refresh();
                 }
             }
@@ -556,7 +556,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
 
             BaseAlarmSignal firstsignal;
-            if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlertSignal == false && IsAlertSignal == false && IsDangerSignal == false && IsUnConnectSignal == false)
+            if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlarmSignal == false && IsAlarmSignal == false && IsDangerSignal == false && DisConnectSignal == false)
             {
                 firstsignal = selectedsignals.FirstOrDefault();                           
             }
@@ -572,12 +572,12 @@ namespace AIC.OnLineDataPage.ViewModels
                     grades.Add(AlarmGrade.HighNormal);
                     grades.Add(AlarmGrade.LowNormal);
                 }
-                if (IsPreAlertSignal == true)
+                if (IsPreAlarmSignal == true)
                 {
                     grades.Add(AlarmGrade.HighPreAlarm);
                     grades.Add(AlarmGrade.LowPreAlarm);
                 }
-                if (IsAlertSignal == true)
+                if (IsAlarmSignal == true)
                 {
                     grades.Add(AlarmGrade.HighAlarm);
                     grades.Add(AlarmGrade.LowAlarm);
@@ -587,7 +587,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     grades.Add(AlarmGrade.HighDanger);
                     grades.Add(AlarmGrade.LowDanger);
                 }
-                if (IsUnConnectSignal == true)
+                if (DisConnectSignal == true)
                 {
                     grades.Add(AlarmGrade.DisConnect);
                 }

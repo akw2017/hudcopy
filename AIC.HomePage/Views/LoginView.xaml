@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="0,30,0,0">
         <!--<Image x:Name="image" Opacity="1" Stretch="Fill" Source="/AIC.Resources;component/Images/Splash.png" ></Image>-->
         <!--<StackPanel HorizontalAlignment="Right" Margin="0,0,50,0">            
             <TextBlock Text="●在线振动监测"  FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0"/>
@@ -205,7 +205,7 @@
                             <StackPanel Margin="10">
                                 <TextBlock Margin="3">专业振动监测平台</TextBlock>
                                 <Button Margin="3">联系我们</Button>
-                                <TextBox Margin="3">[北京航天智控]</TextBox>
+                                <TextBox Margin="3">[青岛众志测控]</TextBox>
                             </StackPanel>
                         </Border>
                     </Viewport2DVisual3D.Visual>

@@ -28,6 +28,7 @@ namespace AIC.Test
                 list.Add(i);
             }
             //listbox.ItemsSource = list;
+            //listbox2.ItemsSource = list;
         }
 
         List<int> list = new List<int>();
@@ -36,7 +37,14 @@ namespace AIC.Test
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(index);
-            //index++;
+            index++;
+        }
+
+        int index2 = 0;
+        private void Grid_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("-" + index2);
+            index2++;
         }
     }
 }

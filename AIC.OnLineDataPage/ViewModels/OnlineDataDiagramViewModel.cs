@@ -559,15 +559,15 @@ namespace AIC.OnLineDataPage.ViewModels
                 _signalProcess.SignalsRemoved += _signalProcess_SignalRemoved;
 
                 List<ChartViewModelBase> list = new List<ChartViewModelBase>();
-                timeDomainOnLineVM = new TimeDomainChartViewModel(SelectedSignal, true);
+                timeDomainOnLineVM = new TimeDomainChartViewModel(SelectedSignal);
                 list.Add(timeDomainOnLineVM); //昌邑石化
                 IsTimeDomainChecked = true;
 
-                frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(SelectedSignal, true);
+                frequencyDomainOnLineVM = new FrequencyDomainChartViewModel(SelectedSignal);
                 list.Add(frequencyDomainOnLineVM); //昌邑石化
                 IsFrequencyDomainChecked = true;
 
-                amsTrendOnLineVM = new RMSTrendChartViewModel(SelectedSignal, true);
+                amsTrendOnLineVM = new RMSTrendChartViewModel(SelectedSignal);
                 list.Add(amsTrendOnLineVM);
                 IsRMSTrendChecked = true;
 
@@ -579,9 +579,9 @@ namespace AIC.OnLineDataPage.ViewModels
                 //orderAnalysisOnLineVM = new OrderAnalysisChartViewModel(null, true);
                 //orthoOnLineVM = new OrthoChartViewModel(null, true);
                 //rpm3DSpectrumOnLineVM = new RPM3DChartViewModel(null, true);
-                time3DSpectrumOnLineVM = new Time3DChartViewModel(null, true);
-                powerSpectrumOnLineVM = new PowerSpectrumChartViewModel(null, true);
-                powerSpectrumDensityOnLineVM = new PowerSpectrumDensityChartViewModel(null, true);
+                time3DSpectrumOnLineVM = new Time3DChartViewModel(null);
+                powerSpectrumOnLineVM = new PowerSpectrumChartViewModel(null);
+                powerSpectrumDensityOnLineVM = new PowerSpectrumDensityChartViewModel(null);
 
                 LoadGroupDocument();
 

@@ -100,7 +100,7 @@ namespace AIC.HistoryDataPage.Views
                 series.Title.MoveByMouse = false;
                 series.Title.MouseInteraction = false;
                 series.Title.Offset = new PointIntXY(5, 5);
-                series.Title.Visible = true;
+                series.Title.Visible = false;
 
                 if (m_chart.ViewXY.Annotations.Count == 0)
                 {
@@ -285,6 +285,9 @@ namespace AIC.HistoryDataPage.Views
             m_chart.EndUpdate();
 
             gridChart.Children.Add(m_chart);
+
+            showCheckBox.Checked += showCheckBox_Checked;
+            showCheckBox.Unchecked += showCheckBox_Checked;
         }
 
         private void CreateCalloutAnnotation()
@@ -604,6 +607,20 @@ namespace AIC.HistoryDataPage.Views
             }
             int length = (int)(samplePoint / 2.56) + 1;
             token.VData.PowerSpectrum = Algorithm.Instance.PowerSpectrumAction(input, sampleFre, samplePoint, dbCheckBox.IsChecked.Value).Take(length).ToArray();
+        }
+
+        private void showCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (showCheckBox.IsChecked == true)
+            {
+                m_chart.ViewXY.Annotations[1].Visible = true;
+                m_chart.ViewXY.LegendBoxes[0].Visible = true;
+            }
+            else
+            {
+                m_chart.ViewXY.Annotations[1].Visible = false;
+                m_chart.ViewXY.LegendBoxes[0].Visible = false;
+            }
         }
     }
 }

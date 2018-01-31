@@ -22,11 +22,6 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
           
         }
 
-        public OrthoChartViewModel(BaseAlarmSignal signal, bool isupdate) : this(signal)           
-        {
-            IsUpdated = isupdate;
-        }
-
         private ObservableCollection<BaseWaveSignal> relativeSignalCollection = new ObservableCollection<BaseWaveSignal>();
         //private ISignalCache signalCache;       
 

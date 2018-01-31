@@ -1356,23 +1356,19 @@ namespace AIC.HomePage.ViewModels
                                 }
                             }
                             IsConnected = await _signalProcess.GetSignalData(HistoryplayTime.Value, true);
-                            if (IsConnected == true)
-                            {
-                                _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
-                            }
-                            SetStatus();
                         }
+
                     }
                     else
                     {
                         HistoryplayTime = null;
                         IsConnected = await _signalProcess.GetSignalData(DateTime.Now, false);
-                        if (IsConnected == true)
-                        {
-                            _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
-                        }
-                        SetStatus();
                     }
+                    if (IsConnected == true)
+                    {
+                        _eventAggregator.GetEvent<SignalBroadcastingEvent>().Publish(null);
+                    }
+                    SetStatus();
                 }
                 finally
                 {

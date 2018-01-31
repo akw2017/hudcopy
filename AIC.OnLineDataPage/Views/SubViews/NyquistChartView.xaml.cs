@@ -36,7 +36,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             m_chart = null;
             InitializeComponent();
-            CreateChart();
+            //CreateChart();
             divCombobox.SelectionChanged += divCombobox_SelectionChanged;
             divCheckBox.Checked += divCheckBox_Checked;
             divCheckBox.Unchecked += divCheckBox_Unchecked;
@@ -48,13 +48,19 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             base.ViewModel_Closed(sender, e);
             // Don't forget to clear chart grid child list.
-            //gridChart.Children.Clear();
-            //if (m_chart != null)
-            //{
-            //    m_chart.Dispose();
-            //    m_chart = null;
-            //}
-        }        
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+        }
+
+        protected override void ViewModel_Opened(object sender, EventArgs e)
+        {
+            base.ViewModel_Opened(sender, e);
+            CreateChart();
+        }
 
         protected override void ViewModel_SignalChanged()
         {

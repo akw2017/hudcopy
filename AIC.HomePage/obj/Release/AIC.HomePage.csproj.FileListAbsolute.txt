@@ -1,3 +1,5 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.HomePage.pdb

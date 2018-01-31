@@ -61,7 +61,7 @@ namespace AIC.Core.OrganizationModels
             set
             {
                 names = value;
-                FullName = string.Join("-", names.Reverse());
+                FullName = string.Join("/", names.Reverse());
                 OnPropertyChanged("Names");
             }
         }

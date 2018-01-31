@@ -25,6 +25,7 @@ namespace AIC.Core.SignalModels
             Guid = guid;
             _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
             BufferData = new List<TrendPointData>();
+            SignalProcessorTrend = new List<bool>();
         }
 
         public void SubscribeAlarmGrade(double alarmDelay)
@@ -547,113 +548,116 @@ namespace AIC.Core.SignalModels
             }
         }
 
+        public List<bool> SignalProcessorTrend { get; set; }
+        public List<TrendPointData> TrendData{ get; set; }
+
         /*
-        //低危
-        #region LowDanger
-        private double lowDanger;
-        public double LowDanger
+    //低危
+    #region LowDanger
+    private double lowDanger;
+    public double LowDanger
+    {
+        get { return lowDanger; }
+        set
         {
-            get { return lowDanger; }
-            set
+            if (lowDanger != value)
             {
-                if (lowDanger != value)
-                {
-                    lowDanger = value;
-                    OnPropertyChanged("LowDanger");
-                }
+                lowDanger = value;
+                OnPropertyChanged("LowDanger");
             }
         }
-        #endregion
+    }
+    #endregion
 
-        //低警
-        #region LowAlarm
-        private double lowAlert;
-        public double LowAlarm
+    //低警
+    #region LowAlarm
+    private double lowAlert;
+    public double LowAlarm
+    {
+        get { return lowAlert; }
+        set
         {
-            get { return lowAlert; }
-            set
+            if (lowAlert != value)
             {
-                if (lowAlert != value)
-                {
-                    lowAlert = value;
-                    OnPropertyChanged("LowAlarm");
-                }
+                lowAlert = value;
+                OnPropertyChanged("LowAlarm");
             }
         }
-        #endregion
+    }
+    #endregion
 
-        //正常(低)
-        #region LowNormal
-        private double lowNormal;
-        public double LowNormal
+    //正常(低)
+    #region LowNormal
+    private double lowNormal;
+    public double LowNormal
+    {
+        get { return lowNormal; }
+        set
         {
-            get { return lowNormal; }
-            set
+            if (lowNormal != value)
             {
-                if (lowNormal != value)
-                {
-                    lowNormal = value;
-                    OnPropertyChanged("LowNormal");
-                }
+                lowNormal = value;
+                OnPropertyChanged("LowNormal");
             }
         }
-        #endregion
+    }
+    #endregion
 
-        //正常(高)
-        #region HighNormal
-        private double higtNormal;
-        public double HighNormal
+    //正常(高)
+    #region HighNormal
+    private double higtNormal;
+    public double HighNormal
+    {
+        get { return higtNormal; }
+        set
         {
-            get { return higtNormal; }
-            set
+            if (higtNormal != value)
             {
-                if (higtNormal != value)
-                {
-                    higtNormal = value;
-                    OnPropertyChanged("HighNormal");
-                }
+                higtNormal = value;
+                OnPropertyChanged("HighNormal");
             }
         }
-        #endregion
+    }
+    #endregion
 
-        //高警
-        #region HighAlarm
-        private double highAlert;
-        public double HighAlarm
+    //高警
+    #region HighAlarm
+    private double highAlert;
+    public double HighAlarm
+    {
+        get { return highAlert; }
+        set
         {
-            get { return highAlert; }
-            set
+            if (highAlert != value)
             {
-                if (highAlert != value)
-                {
-                    highAlert = value;
-                    OnPropertyChanged("HighAlarm");
-                }
+                highAlert = value;
+                OnPropertyChanged("HighAlarm");
             }
         }
-        #endregion
+    }
+    #endregion
 
-        //高危
-        #region HighDanger
-        private double highDanger;
-        public double HighDanger
+    //高危
+    #region HighDanger
+    private double highDanger;
+    public double HighDanger
+    {
+        get { return highDanger; }
+        set
         {
-            get { return highDanger; }
-            set
+            if (highDanger != value)
             {
-                if (highDanger != value)
-                {
-                    highDanger = value;
-                    OnPropertyChanged("HighDanger");
-                }
+                highDanger = value;
+                OnPropertyChanged("HighDanger");
             }
         }
-        #endregion
-         */
+    }
+    #endregion
+     */
 
         //低危方程
         #region Property FormulaLowDanger
-        private string formulaLowDanger;
+    private string formulaLowDanger;
         public string FormulaLowDanger
         {
             get { return formulaLowDanger; }

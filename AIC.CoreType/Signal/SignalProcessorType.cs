@@ -67,5 +67,6 @@ namespace AIC.CoreType
         FilterCepstrumFrequency,
         FilterCepstrumPowerSpectrum,
         FilterCepstrumPowerSpectrumDensity,
+
     }
 }

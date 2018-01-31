@@ -55,6 +55,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\DataGridStyle.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\GreyStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\GridSplitterStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\Style.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TreeViewStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\WaitingDlg.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.g.resources
@@ -62,4 +63,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.Propert
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TabControlStyle.baml

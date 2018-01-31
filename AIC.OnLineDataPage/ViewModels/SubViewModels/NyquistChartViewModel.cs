@@ -17,11 +17,6 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
           
         }
 
-        public NyquistChartViewModel(BaseAlarmSignal signal, bool isupdate) : this(signal)           
-        {
-            IsUpdated = isupdate;
-        }
-
         public override void AddProcessor()
         {
             if (Signal is BaseWaveSignal)

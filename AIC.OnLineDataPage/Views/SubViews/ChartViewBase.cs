@@ -8,8 +8,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
 {
     public class ChartViewBase : UserControl
     {
-        private bool initialized = false;
-        private bool closed = false;
+        //private bool initialized = false;
         static ChartViewBase()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(ChartViewBase), new FrameworkPropertyMetadata(typeof(ChartViewBase)));
@@ -18,14 +17,13 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public ChartViewBase()
         {
             Loaded += ChartViewBase_Loaded;
-            Unloaded += ChartViewBase_Unloaded;                       
-           
-            IsVisibleChanged += ChartViewBase_IsVisibleChanged;
+            Unloaded += ChartViewBase_Unloaded;
+            IsVisibleChanged += ChartViewBase_IsVisibleChanged;               
         }
 
         private void ChartViewBase_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-             
+            Console.WriteLine(this.IsVisible.ToString());
         }
 
         public ChartViewModelBase ViewModel { get; set; }
@@ -35,18 +33,11 @@ namespace AIC.OnLineDataPage.Views.SubViews
             if (DataContext is ChartViewModelBase)
             {
                 ViewModel = DataContext as ChartViewModelBase;
-                ViewModel.SignalChanged += ViewModel_SignalChanged;
+                ViewModel.Opened += ViewModel_Opened;
+                ViewModel.Open();
+                ViewModel.SignalChanged += ViewModel_SignalChanged; 
+                ViewModel_SignalChanged();
                 ViewModel.Closed += ViewModel_Closed;
-                if (closed == true)
-                {
-                    ViewModel.Open();
-                    closed = false;
-                }
-                //if (!initialized)
-                {
-                    ViewModel_SignalChanged();
-                    initialized = true;
-                }
                 ViewModel.Subscribe(UpdateChart);
             }
         }
@@ -55,11 +46,11 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             if (ViewModel != null)
             {
-                closed = true;
-                //ViewModel.Unsubscribe();
+                ViewModel.Opened -= ViewModel_Opened;
+                ViewModel.SignalChanged -= ViewModel_SignalChanged;
                 ViewModel.Close();
                 ViewModel.Closed -= ViewModel_Closed;
-                ViewModel.SignalChanged -= ViewModel_SignalChanged;
+
                 ViewModel = null;
             }
         }
@@ -73,9 +64,16 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
         }
 
+        protected virtual void ViewModel_Opened(object sender, EventArgs e)
+        {
+
+        }
+
         protected virtual void UpdateChart(object args)
         {
 
         }
+
+
     }
 }

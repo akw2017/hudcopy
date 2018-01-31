@@ -16,10 +16,5 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         {
           
         }
-
-        public MultiDivFreChartViewModel(BaseAlarmSignal signal, bool isupdate) : this(signal)           
-        {
-            IsUpdated = isupdate;
-        }
     }
 }

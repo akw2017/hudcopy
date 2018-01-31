@@ -11,4 +11,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\Release\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\bin\Release\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\Release\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\Release\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.MatlabMath\obj\Release\AIC.MatlabMath.csprojResolveAssemblyReference.cache

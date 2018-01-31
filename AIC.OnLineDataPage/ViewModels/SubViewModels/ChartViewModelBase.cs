@@ -16,19 +16,20 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         private SubscriptionToken subscriptionToken;
         private IEventAggregator _eventAggregator;
         public event EventHandler Closed;
+        public event EventHandler Opened;
         public event SignalChangedHandler SignalChanged;
 
-        protected ChartViewModelBase(BaseAlarmSignal signal)
+        protected ChartViewModelBase(BaseAlarmSignal sg)
         {
-            SetSignal(signal);
+            Signal = sg;
             _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();          
         }
 
-        protected ChartViewModelBase(BaseAlarmSignal signal, bool isfilter, SignalPreProccessType signalPreType)
+        protected ChartViewModelBase(BaseAlarmSignal sg, bool isfilter, SignalPreProccessType signalPreType)
         {
             IsFilter = isfilter;
             SignalPreProccessType = signalPreType;
-            SetSignal(signal);
+            Signal = sg;
             _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
 
@@ -39,15 +40,8 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             {
                 signalProcessedEvent.Unsubscribe(subscriptionToken);
             }
-            subscriptionToken = signalProcessedEvent.Subscribe(action, ThreadOption.UIThread, true, Filter);
+            subscriptionToken = signalProcessedEvent.Subscribe(action, ThreadOption.UIThread, true);
         }
-
-        protected virtual bool Filter(object message)
-        {
-            return IsUpdated;
-        }
-
-        public bool IsUpdated { get; set; }
 
         public void Unsubscribe()
         {
@@ -166,6 +160,11 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         public void Open()
         {
             AddProcessor();
+            var handler = Opened;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
     }
 }

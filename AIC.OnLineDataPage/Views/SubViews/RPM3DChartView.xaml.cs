@@ -33,19 +33,25 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public RPM3DChartView()
         {
             InitializeComponent();
-            CreateRPM3DChart();
+            //CreateRPM3DChart();
         }
 
         protected override void ViewModel_Closed(object sender, EventArgs e)
         {
             base.ViewModel_Closed(sender, e);
-            // Don't forget to clear chart grid child list.
-            //gridChart.Children.Clear();
-            //if (rpm3Dchart != null)
-            //{
-            //    rpm3Dchart.Dispose();
-            //    rpm3Dchart = null;
-            //}
+            //Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (rpm3Dchart != null)
+            {
+                rpm3Dchart.Dispose();
+                rpm3Dchart = null;
+            }
+        }
+
+        protected override void ViewModel_Opened(object sender, EventArgs e)
+        {
+            base.ViewModel_Opened(sender, e);
+            CreateRPM3DChart();
         }
 
         protected override void ViewModel_SignalChanged()

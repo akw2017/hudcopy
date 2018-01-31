@@ -1114,31 +1114,34 @@ namespace AIC.HistoryDataPage.ViewModels
                         vdata.Phase = output[1].Take(length).ToArray();
                     }
                     validTokens[i].VData = vdata;
-                }));              
+                }));
+
+                //进行2次筛选，避免获取数据过程中，删除了数据
+                var updatetokens = tokens.Intersect(AddedChannels.OfType<BaseWaveChannelToken>());
 
                 if (ShowTimeDomain)
                 {
-                    timeDomainVM.ChangeChannelData(tokens);
+                    timeDomainVM.ChangeChannelData(updatetokens);
                 }
                 if (ShowFrequencyDomain)
                 {
-                    frequencyDomainVM.ChangeChannelData(tokens);
+                    frequencyDomainVM.ChangeChannelData(updatetokens);
                 }
                 if (ShowPowerSpectrum)
                 {
-                    powerSpectrumVM.ChangeChannelData(tokens);
+                    powerSpectrumVM.ChangeChannelData(updatetokens);
                 }
                 if (ShowPowerSpectrumDensity)
                 {
-                    powerSpectrumDensityVM.ChangeChannelData(tokens);
+                    powerSpectrumDensityVM.ChangeChannelData(updatetokens);
                 }
                 if (ShowAlarmPointTrend)
                 {
-                    //await alarmPointTrendVM.ChangeSnapshotData(tokens);
+                    //await alarmPointTrendVM.ChangeSnapshotData(updatetokens);
                 }
                 if (ShowOrtho)
                 {
-                    await orthoDataVM.ChangeOrthoData(tokens);
+                    //await orthoDataVM.ChangeOrthoData(updatetokens);
                 }              
             }
             catch (Exception ex)
@@ -1273,29 +1276,32 @@ namespace AIC.HistoryDataPage.ViewModels
                     validTokens[i].VData = vdata;
                 }));
 
+                //进行2次筛选，避免获取数据过程中，删除了数据
+                var updatetokens = tokens.Intersect(AddedChannels.OfType<BaseWaveChannelToken>());
+
                 if (ShowTimeDomain)
                 {
-                    timeDomainVM2.ChangeChannelData(tokens);
+                    timeDomainVM2.ChangeChannelData(updatetokens);
                 }
                 if (ShowFrequencyDomain)
                 {
-                    frequencyDomainVM2.ChangeChannelData(tokens);
+                    frequencyDomainVM2.ChangeChannelData(updatetokens);
                 }
                 if (ShowPowerSpectrum)
                 {
-                    powerSpectrumVM2.ChangeChannelData(tokens);
+                    powerSpectrumVM2.ChangeChannelData(updatetokens);
                 }
                 if (ShowPowerSpectrumDensity)
                 {
-                    powerSpectrumDensityVM2.ChangeChannelData(tokens);
+                    powerSpectrumDensityVM2.ChangeChannelData(updatetokens);
                 }
                 if (ShowAlarmPointTrend)
                 {
-                    //await alarmPointTrendVM.ChangeSnapshotData(tokens);
+                    //await alarmPointTrendVM.ChangeSnapshotData(updatetokens);
                 }
                 if (ShowOrtho)
                 {
-                    //await orthoDataVM.ChangeOrthoData(tokens);
+                    //await orthoDataVM.ChangeOrthoData(updatetokens);
                 }
             }
             catch (Exception ex)

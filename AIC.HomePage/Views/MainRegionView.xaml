@@ -72,7 +72,7 @@
             </Grid.RowDefinitions>
             <Menu Background="{DynamicResource AccentColorBrush}" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave">
                 <MenuItem Header="{DynamicResource menuOnlineData}" Background="{DynamicResource TransparentWhiteBrush}">
-                    <MenuItem Header="{DynamicResource menuOnlineDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}" InputGestureText="Ctrl+D">
+                    <MenuItem Header="{DynamicResource menuOnlineDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">
                         <MenuItem.Icon>
                             <Image Source="{Binding MenuManageList.MenuOnlineDataDiagram.IconPath}"/>
                         </MenuItem.Icon>
@@ -147,7 +147,7 @@
                             <Image Source="{Binding MenuManageList.MenuDeviceHourlyData.IconPath}"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="新接口测试" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceNewData" Visibility="Collapsed">
+                    <MenuItem Header="新接口测试" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceNewData">
                         <MenuItem.Icon>
                             <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
                         </MenuItem.Icon>
@@ -332,7 +332,7 @@
             </StackPanel>
           
             <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
-                <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：北京航天智控监测技术研究院"/>
+                <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：青岛众志测控技术有限公司"/>
             </Grid>
             <!--青岛众志测控技术有限公司-->
             <!--昌邑石化-->

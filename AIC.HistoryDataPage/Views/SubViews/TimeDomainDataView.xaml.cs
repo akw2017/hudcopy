@@ -104,35 +104,40 @@ namespace AIC.HistoryDataPage.Views
                 series.Title.MoveByMouse = false;
                 series.Title.MouseInteraction = false;
                 series.Title.Offset = new PointIntXY(5, 5);
-                series.Title.Visible = true;
+                series.Title.Visible = false;
 
-                //Update Annotation      
                 StringBuilder sb = new StringBuilder();
-                string[] branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 0; i < branches.Length; i++)
-                {
-                    sb.AppendLine(branches[i]);
-                }
-                string text = string.Format("{0}:", m_chart.ViewXY.YAxes.Count);
+                string[] branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                 if (vToken.VData != null && vToken.VData.Waveform != null)
                 {
-                    series.SamplesDouble = vToken.VData.Waveform;
-                    axisY.Title.Text += "\r\n" + "  (" + vToken.VData.Unit + ")";
-                    text = string.Format("{0,6}|{1,6}|{2,6}|{3,7}|{4,6}|{5,9}|{6,9}|{7,9}|{8,9}|{9,9}|{10,9}",
-                        vToken.VData.RMSValue.ToString("0.00"),
-                        vToken.VData.PeakValue.ToString("0.00"),
-                        vToken.VData.PeakPeakValue.ToString("0.00"),
-                        vToken.VData.Slope.ToString("0.00"),
-                        vToken.VData.Kurtosis.ToString("0.00"),
-                        vToken.VData.KurtosisValue.ToString("0.00"),
-                        vToken.VData.WaveIndex.ToString("0.00"),
-                        vToken.VData.PeakIndex.ToString("0.00"),
-                        vToken.VData.ImpulsionIndex.ToString("0.00"),
-                        vToken.VData.RootAmplitude.ToString("0.00"),
-                        vToken.VData.ToleranceIndex.ToString("0.00"));
+                    sb.AppendLine(branches[0] + vToken.VData.RMSValue.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[1] + vToken.VData.PeakValue.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[2] + vToken.VData.PeakPeakValue.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[3] + vToken.VData.Slope.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[4] + vToken.VData.Kurtosis.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[5] + vToken.VData.KurtosisValue.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[6] + vToken.VData.WaveIndex.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[7] + vToken.VData.PeakIndex.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[8] + vToken.VData.ImpulsionIndex.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[9] + vToken.VData.RootAmplitude.ToString("0.00").PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[10] + vToken.VData.ToleranceIndex.ToString("0.00").PadLeft(8, ' ') + "|");                    
                 }
-                sb.Append(text);
+                else
+                {
+                    sb.AppendLine(branches[0] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[1] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[2] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[3] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[4] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[5] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[6] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[7] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[8] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[9] + "".PadLeft(8, ' ') + "|");
+                    sb.AppendLine(branches[10] + "".PadLeft(8, ' ') + "|");
+                }
                 annotation.Text = sb.ToString().Trim();
+
                 m_chart.ViewXY.SampleDataSeries.Add(series);
 
                 m_chart.ViewXY.ZoomToFit();
@@ -162,18 +167,20 @@ namespace AIC.HistoryDataPage.Views
                     int firstIndex = m_chart.ViewXY.YAxes.IndexOf(yAxis);
                     m_chart.ViewXY.YAxes.Remove(yAxis);
 
-                    if (m_chart.ViewXY.Annotations.Count > 0)
-                    {
-                        AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
-                        var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        branches.RemoveAt(firstIndex + 1);
-                        StringBuilder sb = new StringBuilder();
-                        foreach (var branch in branches)
-                        {
-                            sb.AppendLine(branch);
-                        }
-                        annotation.Text = sb.ToString().Trim();
-                    }
+                    //if (m_chart.ViewXY.Annotations.Count > 0)
+                    //{
+                    //    AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
+                    //    var branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    //    branches.RemoveAt(firstIndex + 1);
+                    //    StringBuilder sb = new StringBuilder();
+                    //    foreach (var branch in branches)
+                    //    {
+                    //        sb.AppendLine(branch);
+                    //    }
+                    //    annotation.Text = sb.ToString().Trim();
+                    //}
+
+
                 }
 
                 if (m_chart.ViewXY.YAxes.Count == 0)
@@ -261,19 +268,29 @@ namespace AIC.HistoryDataPage.Views
             axisYnone.Units.Text = "none";
             m_chart.ViewXY.YAxes.Add(axisYnone);
 
-            m_chart.ViewXY.LegendBoxes[0].Visible = false;
+            m_chart.ViewXY.LegendBoxes[0].Visible = true;
+            m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
+            m_chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
+            m_chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
+            m_chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
+            m_chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopRight;
+            m_chart.ViewXY.LegendBoxes[0].Offset.SetValues(-80, 10);
+            m_chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
 
             m_chart.ViewXY.ZoomToFit();
             m_chart.EndUpdate();
 
             gridChart.Children.Add(m_chart);
+
+            showCheckBox.Checked += showCheckBox_Checked;
+            showCheckBox.Unchecked += showCheckBox_Checked;
         }
         private void CreateAnnotation()
         {
             AnnotationXY cursorValueDisplay = new AnnotationXY(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], m_chart.ViewXY.YAxes[0]);
             cursorValueDisplay.Style = AnnotationStyle.Rectangle;
             cursorValueDisplay.LocationCoordinateSystem = CoordinateSystem.ScreenCoordinates;
-            cursorValueDisplay.LocationScreenCoords = new PointFloatXY(500, 37);
+            cursorValueDisplay.LocationScreenCoords = new PointFloatXY(500, 90);
             cursorValueDisplay.Sizing = AnnotationXYSizing.Automatic;
             cursorValueDisplay.TextStyle.Font = new WpfFont(System.Drawing.FontFamily.GenericMonospace, 9.5, System.Drawing.FontStyle.Regular);
             cursorValueDisplay.TextStyle.Color = Colors.White;
@@ -286,15 +303,26 @@ namespace AIC.HistoryDataPage.Views
             cursorValueDisplay.ResizeByMouse = false;
             cursorValueDisplay.RotateByMouse = false;
             cursorValueDisplay.Shadow.Visible = false;
-            cursorValueDisplay.AutoSizePadding = 5;
-            cursorValueDisplay.Text = "  有效值|  峰值| 峰峰值|  斜度|  峭度| 峭度指标| 波形指标| 峰值指标| 脉冲指标| 方根幅值| 裕度指标|";
+            cursorValueDisplay.AutoSizePadding = 8;
+
+            cursorValueDisplay.Text = "有效值　:\r\n" +
+                "峰值　　:\r\n" +
+                "峰峰值　:\r\n" +
+                "斜度　　:\r\n" +
+                "峭度　　:\r\n" +
+                "峭度指标:\r\n" +
+                "波形指标:\r\n" +
+                "峰值指标:\r\n" +
+                "脉冲指标:\r\n" +
+                "方根幅值:\r\n" +
+                "裕度指标:";
 
             cursorValueDisplay.ClipInsideGraph = false;        
             m_chart.ViewXY.Annotations.Add(cursorValueDisplay);
-            Binding b = new Binding();
-            b.Source = DataContext as TimeDomainDataViewModel;
-            b.Path = new PropertyPath("ShowDetail");
-            b.Mode = BindingMode.TwoWay;
+            //Binding b = new Binding();
+            //b.Source = DataContext as TimeDomainDataViewModel;
+            //b.Path = new PropertyPath("ShowDetail");
+            //b.Mode = BindingMode.TwoWay;
             //BindingOperations.SetBinding(cursorValueDisplay, AnnotationXY.VisibleProperty, b);//htzk123
         }
 
@@ -372,6 +400,19 @@ namespace AIC.HistoryDataPage.Views
             m_chart.BeginUpdate();
 
             AnnotationXY annotation = m_chart.ViewXY.Annotations[0];
+            annotation.Text = "有效值　:\r\n" +
+             "峰值　　:\r\n" +
+             "峰峰值　:\r\n" +
+             "斜度　　:\r\n" +
+             "峭度　　:\r\n" +
+             "峭度指标:\r\n" +
+             "波形指标:\r\n" +
+             "峰值指标:\r\n" +
+             "脉冲指标:\r\n" +
+             "方根幅值:\r\n" +
+             "裕度指标:";
+            string[] branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
             for (int k = 0; k < tokens.Length; k++)
             {
                 var series = m_chart.ViewXY.SampleDataSeries.Where(o => o.Tag == tokens[k]).SingleOrDefault();
@@ -379,7 +420,7 @@ namespace AIC.HistoryDataPage.Views
                 {
                     continue;
                 }
-                string[] branches = annotation.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                
 
                 if (tokens[k].VData != null)
                 {
@@ -393,23 +434,32 @@ namespace AIC.HistoryDataPage.Views
                     }
                     series.SamplesDouble = tokens[k].VData.FilterWaveform;
 
-                    branches[k + 1] = string.Format("{0,6}|{1,6}|{2,6}|{3,7}|{4,6}|{5,9}|{6,9}|{7,9}|{8,9}|{9,9}|{10,9}",
-                        tokens[k].VData.RMSValue.ToString("0.00"),
-                        tokens[k].VData.PeakValue.ToString("0.00"),
-                        tokens[k].VData.PeakPeakValue.ToString("0.00"),
-                        tokens[k].VData.Slope.ToString("0.00"),
-                        tokens[k].VData.Kurtosis.ToString("0.00"),
-                        tokens[k].VData.KurtosisValue.ToString("0.00"),
-                        tokens[k].VData.WaveIndex.ToString("0.00"),
-                        tokens[k].VData.PeakIndex.ToString("0.00"),
-                        tokens[k].VData.ImpulsionIndex.ToString("0.00"),
-                        tokens[k].VData.RootAmplitude.ToString("0.00"),
-                        tokens[k].VData.ToleranceIndex.ToString("0.00"));
+                    branches[0] += tokens[k].VData.RMSValue.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[1] += tokens[k].VData.PeakValue.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[2] += tokens[k].VData.PeakPeakValue.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[3] += tokens[k].VData.Slope.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[4] += tokens[k].VData.Kurtosis.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[5] += tokens[k].VData.KurtosisValue.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[6] += tokens[k].VData.WaveIndex.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[7] += tokens[k].VData.PeakIndex.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[8] += tokens[k].VData.ImpulsionIndex.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[9] += tokens[k].VData.RootAmplitude.ToString("0.00").PadLeft(8, ' ') + "|";
+                    branches[10] += tokens[k].VData.ToleranceIndex.ToString("0.00").PadLeft(8, ' ') + "|";
                 }
                 else
                 {
                     series.Clear();
-                    branches[k + 1] = string.Format("{0,6}|{1,6}|{2,6}|{3,7}|{4,6}|{5,9}|{6,9}|{7,9}|{8,9}|{9,9}|{10,9}", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
+                    branches[0] += "".PadLeft(8, ' ') + "|";
+                    branches[1] += "".PadLeft(8, ' ') + "|";
+                    branches[2] += "".PadLeft(8, ' ') + "|";
+                    branches[3] += "".PadLeft(8, ' ') + "|";
+                    branches[4] += "".PadLeft(8, ' ') + "|";
+                    branches[5] += "".PadLeft(8, ' ') + "|";
+                    branches[6] += "".PadLeft(8, ' ') + "|";
+                    branches[7] += "".PadLeft(8, ' ') + "|";
+                    branches[8] += "".PadLeft(8, ' ') + "|";
+                    branches[9] += "".PadLeft(8, ' ') + "|";
+                    branches[10] += "".PadLeft(8, ' ') + "|";
                 }
 
                 StringBuilder sb = new StringBuilder();
@@ -422,6 +472,7 @@ namespace AIC.HistoryDataPage.Views
             m_chart.ViewXY.ZoomToFit();
             m_chart.EndUpdate();
         }
+
 
         private async Task AlgorithmAllAsync(IEnumerable<BaseWaveChannelToken> tokens)
         {
@@ -464,6 +515,20 @@ namespace AIC.HistoryDataPage.Views
                 input = await Task.Run(() => { return Algorithm.Instance.Cepstrum(input, samplePoint); });
             }
             token.VData.FilterWaveform = input;
+        }
+
+        private void showCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (showCheckBox.IsChecked == true)
+            {
+                m_chart.ViewXY.Annotations[0].Visible = true;
+                m_chart.ViewXY.LegendBoxes[0].Visible = true;
+            }
+            else
+            {
+                m_chart.ViewXY.Annotations[0].Visible = false;
+                m_chart.ViewXY.LegendBoxes[0].Visible = false;
+            }
         }
     }
 }

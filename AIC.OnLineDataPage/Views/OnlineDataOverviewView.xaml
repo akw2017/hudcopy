@@ -172,13 +172,13 @@
                     <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="预警" VerticalAlignment="Center" />
                     <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="警告" VerticalAlignment="Center" />
                     <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlertSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                     <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
@@ -190,7 +190,7 @@
                     <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
                     <TextBlock Text="断线" VerticalAlignment="Center" />
                     <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsUnConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding DisConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
                 <TextBlock Text="显示模式:" VerticalAlignment="Center" Margin="2,0,2,0"/>

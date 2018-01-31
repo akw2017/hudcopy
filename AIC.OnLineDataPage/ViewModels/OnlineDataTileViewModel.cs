@@ -25,6 +25,7 @@ using Wpf.PageNavigationControl;
 using AIC.Core.ExCommand;
 using AIC.OnLineDataPage.ViewModels.SubViewModels;
 using Wpf.GridSelected;
+using AIC.Resources.Models;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -311,6 +312,34 @@ namespace AIC.OnLineDataPage.ViewModels
                 OnPropertyChanged("Select");              
             }
         }
+
+        private ViewModelStatus _status = ViewModelStatus.None;
+        public ViewModelStatus Status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged("Status");
+                }
+            }
+        }
+
+        public string waitinfo = "图表添加中";
+        public string WaitInfo
+        {
+            get
+            {
+                return waitinfo;
+            }
+            set
+            {
+                waitinfo = value;
+                OnPropertyChanged("WaitInfo");
+            }
+        }
         # endregion
 
         #region Command
@@ -388,10 +417,11 @@ namespace AIC.OnLineDataPage.ViewModels
 
         #region 添加、删除显示
         private bool adding = false;
-        private void Add(object para)
+        private async void  Add(object para)
         {
             try
             {
+                Status = ViewModelStatus.Querying;
                 OrganizationTreeItemViewModel organization = para as OrganizationTreeItemViewModel;
                 adding = true;
                 if (organization is DivFreTreeItemViewModel)//分频
@@ -406,6 +436,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
+                    await Task.Delay(500);
                 }
                 else if (organization is ItemTreeItemViewModel)//测点
                 {
@@ -429,6 +460,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
+                    await Task.Delay(500);
                 }
                 else if (organization is DeviceTreeItemViewModel)//设备
                 {
@@ -453,6 +485,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                         SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
+                        await Task.Delay(500);
                     }
                 }
                 else if (organization is OrganizationTreeItemViewModel)//组织
@@ -479,10 +512,11 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                         SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
+                        await Task.Delay(500);
                     }
                 }
 
-                GetItemsIsUpated(lineCount, startNo, endNo);
+                //GetItemsIsUpated(lineCount, startNo, endNo);
             }
             catch (Exception ex)
             {
@@ -490,6 +524,7 @@ namespace AIC.OnLineDataPage.ViewModels
             }
             finally
             {
+                Status = ViewModelStatus.None;
                 adding = false;
             }
         }
@@ -506,14 +541,14 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void ClearAll(object args)
         {
-            foreach (var viewModel in SignalMonitors)
-            {
-                viewModel.Close();
-            }
+            //foreach (var viewModel in SignalMonitors)
+            //{
+            //    viewModel.Close();
+            //}
             SignalMonitors.Clear();
         }
 
-        private void ShowFunctions(object args)
+        private async void ShowFunctions(object args)
         {
             var item = args as ItemTreeItemViewModel;
 
@@ -526,16 +561,14 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 return;
             }
-
             try
             {
-                List<SignalTileViewModel> models = new List<SignalTileViewModel>();
+                Status = ViewModelStatus.Querying;
                 foreach (SignalDisplayType displayType in Enum.GetValues(typeof(SignalDisplayType)))
                 {
                     if (displayType == SignalDisplayType.AlarmPointTrend
                         || displayType == SignalDisplayType.OffDesignCondition
                         || displayType == SignalDisplayType.SingleDivFre
-                        //|| displayType == SignalDisplayType.Time3DSpectrum
                         || displayType == SignalDisplayType.RPM3D
                         || displayType == SignalDisplayType.OrderAnalysis
                         || displayType == SignalDisplayType.Nyquist
@@ -553,19 +586,18 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                     }
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, displayType, IsFilter, SignalPreProccessType);
-                    if (viewModel != null)
-                    {
-                        models.Add(viewModel);
-                    }
+                    SignalMonitors.Add(viewModel);
+                    await Task.Delay(500);
                 }
-                if (models.Count > 1)
-                {
-                    SignalMonitors.AddItems(models);
-                }
+              
             }
             catch (Exception ex)
             {
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-多功能拼图", ex));
+            }
+            finally
+            {
+                Status = ViewModelStatus.None;
             }
         }
 
@@ -595,7 +627,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         SelectedSignalMonitor.SetDisplayModeAsync(CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         if (SelectedSignalMonitor.DataViewModel != null)
                         {
-                            SelectedSignalMonitor.DataViewModel.IsUpdated = true;
+                            //SelectedSignalMonitor.DataViewModel.IsUpdated = true;
                         }
                     }
                 }
@@ -677,28 +709,28 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void ScrollChanged(object value)
         {
-            var sender = ((ExCommandParameter)value).Sender as ListBox;
-            var args = ((ExCommandParameter)value).EventArgs as ScrollChangedEventArgs;
-            if (args != null)
-            {
-                var HorizontalOffset = args.HorizontalOffset;
-                var VerticalOffset = args.VerticalOffset;
-                var ExtentWidth = args.ExtentWidth;
-                var ExtentHeight = args.ExtentHeight;
-                if (Orientation == Orientation.Vertical)//横向滑动
-                {
-                    lineCount = (int)(ExtentHeight / ItemHeight);
-                    startNo = (int)(HorizontalOffset / ItemWidth);
-                    endNo = (int)Math.Ceiling((HorizontalOffset + listWidth) / ItemWidth);
-                }
-                else if (Orientation == Orientation.Horizontal)//竖向滑动
-                {
-                    lineCount = (int)(ExtentWidth / ItemWidth);
-                    startNo = (int)(VerticalOffset / ItemHeight);
-                    endNo = (int)Math.Ceiling((VerticalOffset + listHeight) / ItemHeight);
-                }
-                GetItemsIsUpated(lineCount, startNo, endNo);
-            }
+            //var sender = ((ExCommandParameter)value).Sender as ListBox;
+            //var args = ((ExCommandParameter)value).EventArgs as ScrollChangedEventArgs;
+            //if (args != null)
+            //{
+            //    var HorizontalOffset = args.HorizontalOffset;
+            //    var VerticalOffset = args.VerticalOffset;
+            //    var ExtentWidth = args.ExtentWidth;
+            //    var ExtentHeight = args.ExtentHeight;
+            //    if (Orientation == Orientation.Vertical)//横向滑动
+            //    {
+            //        lineCount = (int)(ExtentHeight / ItemHeight);
+            //        startNo = (int)(HorizontalOffset / ItemWidth);
+            //        endNo = (int)Math.Ceiling((HorizontalOffset + listWidth) / ItemWidth);
+            //    }
+            //    else if (Orientation == Orientation.Horizontal)//竖向滑动
+            //    {
+            //        lineCount = (int)(ExtentWidth / ItemWidth);
+            //        startNo = (int)(VerticalOffset / ItemHeight);
+            //        endNo = (int)Math.Ceiling((VerticalOffset + listHeight) / ItemHeight);
+            //    }
+            //    GetItemsIsUpated(lineCount, startNo, endNo);
+            //}
         }
 
         private void GetItemsIsUpated(int linecount, int startno, int endno)
@@ -712,11 +744,11 @@ namespace AIC.OnLineDataPage.ViewModels
 
                 if (i >= startno * linecount && i < endno * linecount)
                 {
-                    SignalMonitors[i].DataViewModel.IsUpdated = true;
+                    //SignalMonitors[i].DataViewModel.IsUpdated = true;
                 }
                 else
                 {
-                    SignalMonitors[i].DataViewModel.IsUpdated = true;
+                    //SignalMonitors[i].DataViewModel.IsUpdated = true;
                 }
             }
         }

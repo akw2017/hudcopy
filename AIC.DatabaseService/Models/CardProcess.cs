@@ -858,7 +858,7 @@ namespace AIC.DatabaseService.Models
             var parent = organization.Parent;
             while (parent != null)
             {
-                sb.Insert(0, parent.Name + "-");
+                sb.Insert(0, parent.Name + "/");
                 parent = parent.Parent;
             }
 

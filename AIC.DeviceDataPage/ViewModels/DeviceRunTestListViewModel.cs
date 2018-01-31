@@ -321,7 +321,7 @@ namespace AIC.DeviceDataPage.ViewModels
                 }
             }
           
-            var result = await _databaseComponent.GetDailyStatisticsData(device.DeviceTreeItemViewModel.ServerIP, guidlist, start, start.AddDays(day));
+            var result = await _databaseComponent.GetDailyStatisticsData(device.DeviceTreeItemViewModel.ServerIP, guidlist, start.AddDays(1), start.AddDays(1 + day));
             if (result == null || result.Count == 0)
             {
                 return; 
@@ -391,12 +391,13 @@ namespace AIC.DeviceDataPage.ViewModels
                         var allhours = (extraInfo.InvalidTimeLength + extraInfo.NotOKTimeLength + extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
                       
                         devicerunInfo.RunHours += runhours / allhours * 24;
+                        hours = runhours / allhours * 24;
                         devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
                         devicerunInfo.AlarmCount += extraInfo.AlarmCount;
                         devicerunInfo.DangerCount += extraInfo.DangerCount;
                     }
                     
-                    devicerunInfo.RunHours += hours;
+                   
                     RunInfo runinfo = devicerunInfo.RunInfo.Where(p => p.Time.Year == time.Year && p.Time.Month == time.Month && p.Time.Day == time.Day).First();
                     runinfo.RunHours = hours;
                     var max = JsonConvert.DeserializeObject<SlotDiagnosticData>(dayresult.SecondaryMaxDiagnosticData);

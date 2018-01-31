@@ -51,7 +51,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 var itemPl = (SignalListViewModel)item;
                 if (selecteddevices.Contains(itemPl.Device))
                 {
-                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlertSignal == false && IsAlertSignal == false && IsDangerSignal == false)
+                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlarmSignal == false && IsAlarmSignal == false && IsDangerSignal == false)
                     {
                         return true;
                     }
@@ -63,11 +63,11 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighPreAlarm && IsPreAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighPreAlarm && IsPreAlarmSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.HighAlarm && IsAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.HighAlarm && IsAlarmSignal == true)
                     {
                         return true;
                     }
@@ -79,11 +79,11 @@ namespace AIC.OnLineDataPage.ViewModels
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowAlarm && IsAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowAlarm && IsAlarmSignal == true)
                     {
                         return true;
                     }
-                    if (itemPl.Device.Alarm == AlarmGrade.LowPreAlarm && IsPreAlertSignal == true)
+                    if (itemPl.Device.Alarm == AlarmGrade.LowPreAlarm && IsPreAlarmSignal == true)
                     {
                         return true;
                     }
@@ -319,7 +319,7 @@ namespace AIC.OnLineDataPage.ViewModels
         }
 
         private bool isPreAlertSignal;
-        public bool IsPreAlertSignal
+        public bool IsPreAlarmSignal
         {
             get { return isPreAlertSignal; }
             set
@@ -327,14 +327,14 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (isPreAlertSignal != value)
                 {
                     isPreAlertSignal = value;
-                    OnPropertyChanged(() => IsPreAlertSignal);
+                    OnPropertyChanged(() => IsPreAlarmSignal);
                     _view.Refresh();
                 }
             }
         }
 
         private bool isAlertSignal;
-        public bool IsAlertSignal
+        public bool IsAlarmSignal
         {
             get { return isAlertSignal; }
             set
@@ -342,7 +342,7 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (isAlertSignal != value)
                 {
                     isAlertSignal = value;
-                    OnPropertyChanged(() => IsAlertSignal);
+                    OnPropertyChanged(() => IsAlarmSignal);
                     _view.Refresh();
                 }
             }

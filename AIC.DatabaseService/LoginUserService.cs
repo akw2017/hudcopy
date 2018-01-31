@@ -53,7 +53,7 @@ namespace AIC.DatabaseService
             ExceptionModel = new ObservableCollection<ExceptionModel>();
             CustomSystemException = new ObservableCollection<T1_SystemEvent>();
 
-            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException);           
+            _eventAggregator.GetEvent<ThrowExceptionEvent>().Subscribe(ManageException, ThreadOption.UIThread);           
         }
 
         public void Initialize()

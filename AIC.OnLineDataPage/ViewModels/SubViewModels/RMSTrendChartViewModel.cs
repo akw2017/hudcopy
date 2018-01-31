@@ -1,4 +1,5 @@
 ﻿using AIC.Core.SignalModels;
+using AIC.CoreType;
 using System;
 
 namespace AIC.OnLineDataPage.ViewModels.SubViewModels
@@ -11,15 +12,22 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
           
         }
 
-        public RMSTrendChartViewModel(BaseAlarmSignal signal, bool isupdate) : this(signal)           
+        public override void AddProcessor()
         {
-            IsUpdated = isupdate;
+            if (Signal is BaseAlarmSignal)
+            {
+                Signal.SignalProcessorTrend.Add(true);
+                Console.WriteLine(Signal.SignalProcessorTrend.Count.ToString());
+            }
         }
 
-
-        protected override bool Filter(object message)
+        public override void RemoveProcessor()
         {
-            return true;
+            if (Signal is BaseAlarmSignal)
+            {
+                Signal.SignalProcessorTrend.Remove(true);
+                Console.WriteLine(Signal.SignalProcessorTrend.Count.ToString());
+            }
         }
     }
 }

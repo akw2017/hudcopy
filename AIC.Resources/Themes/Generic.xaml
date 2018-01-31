@@ -20,6 +20,7 @@
         <ResourceDictionary Source="/AIC.Resources;component/Themes/TreeViewStyle.xaml" />
         <ResourceDictionary Source="/AIC.Resources;component/Themes/DataGridStyle.xaml" />
         <ResourceDictionary Source="/AIC.Resources;component/Themes/CheckBoxStyle.xaml" />
+        <ResourceDictionary Source="/AIC.Resources;component/Themes/TabControlStyle.xaml" />
 
         <ResourceDictionary Source="/AIC.Resources;component/Themes/en-us.xaml"/>
         <ResourceDictionary Source="/AIC.Resources;component/Themes/zh-cn.xaml"/>

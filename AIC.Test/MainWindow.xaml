@@ -5,15 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf.VirtualizingWrapPanel;assembly=Wpf.VirtualizingWrapPanel"
         xmlns:mygrid ="clr-namespace:Wpf.GridSelected;assembly=Wpf.GridSelected"
+        xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <DataTemplate x:Key="ListBoxDataTemplate">
-            <Grid Loaded="Grid_Loaded">
-                <Label Content="{Binding}"></Label>
+            <Grid Loaded="Grid_Loaded" Unloaded="Grid_Unloaded">
+                <Label Content="{Binding}" Width="50" Height="50"></Label>
             </Grid>
         </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+            <!--<Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer x:Name="ScrollViewer"  CanContentScroll="True">
+                            <ItemsPresenter  />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+            <!--<Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <local:VirtualizingWrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>-->
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <core:VirtualizingFluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="50" ItemWidth="50" IsComposing="True" Orientation="Horizontal" DragOpacity="1" DragScale="1">
+                            <core:VirtualizingFluidWrapPanel.ElementEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
+                            </core:VirtualizingFluidWrapPanel.ElementEasing>
+                            <core:VirtualizingFluidWrapPanel.DragEasing>
+                                <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
+                            </core:VirtualizingFluidWrapPanel.DragEasing>
+                        </core:VirtualizingFluidWrapPanel>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListBoxStyle2" TargetType="{x:Type ListBox}">
             <!--<Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
             <Setter Property="Template">
@@ -33,10 +68,41 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ListBoxStyle3" TargetType="{x:Type ListBox}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer x:Name="ScrollViewer"  CanContentScroll="True">
+                            <ItemsPresenter  />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <local:VirtualizingWrapPanelEx Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" ChildHeight="50"  ChildWidth="50" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
-        <!--<ListBox Style="{StaticResource ListBoxStyle}" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox"></ListBox>-->
-        <!--<ListBox Style="{StaticResource ListBoxStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox"></ListBox>-->
-        <mygrid:RectangleGrid/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--<ListBox Style="{StaticResource ListBoxStyle}" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox" HorizontalAlignment="Right" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ></ListBox>-->
+        <!--<ListBox Style="{StaticResource ListBoxStyle2}" Grid.Row="1" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox2"></ListBox>-->
+        <!--<ListBox Style="{StaticResource ListBoxStyle3}" Grid.Row="1" ItemTemplate="{StaticResource  ListBoxDataTemplate}"  x:Name="listbox2"></ListBox>-->
+        <ListBox x:Name="listbox2" ItemTemplate="{StaticResource  ListBoxDataTemplate}" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <local:VirtualizingWrapPanelEx ChildWidth="50" ChildHeight="50" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </Grid>
 </Window>

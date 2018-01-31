@@ -15,7 +15,8 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"    
              xmlns:mygrid="clr-namespace:Wpf.GridSelected;assembly=Wpf.GridSelected"
              xmlns:virtualizingWrapPanel="clr-namespace:Wpf.VirtualizingWrapPanel;assembly=Wpf.VirtualizingWrapPanel"
-            prism:ViewModelLocator.AutoWireViewModel="True"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
@@ -136,7 +137,7 @@
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
-                            <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
+                            <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" DragOpacity="1" DragScale="1">
                                 <core:FluidWrapPanel.ElementEasing>
                                     <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
                                 </core:FluidWrapPanel.ElementEasing>
@@ -618,7 +619,7 @@
             </Grid.ColumnDefinitions>
             <ListBox Grid.Row="1" Grid.Column="0" x:Name="listview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" 
                      ItemsSource="{Binding SignalMonitors,Mode=TwoWay}" SelectedItem="{Binding SelectedSignalMonitor}"  
-                     ItemContainerStyle="{StaticResource SignalMonitorStyle}" Style="{StaticResource FluidListBoxStyle}"           
+                     ItemContainerStyle="{StaticResource SignalMonitorStyle}"        
                      ScrollViewer.HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility, Mode=TwoWay}" 
                      ScrollViewer.VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility, Mode=TwoWay}">
                 <ListBox.ItemsPanel>
@@ -631,6 +632,8 @@
                                 <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
                             </core:FluidWrapPanel.DragEasing>
                         </core:FluidWrapPanel>
+                        <!--<virtualizingWrapPanel:VirtualizingWrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>-->
+                        <!--<virtualizingWrapPanel:VirtualizingWrapPanelEx  ChildHeight="{Binding ItemHeight}" ChildWidth="{Binding ItemWidth}"/>-->
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <i:Interaction.Triggers>

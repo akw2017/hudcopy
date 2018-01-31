@@ -105,7 +105,7 @@ namespace AIC.OnLineDataPage.Views
         private void ViewModel_UpdateListShow(int row, int column)
         {
             ViewModel.ItemWidth = (listview.ActualWidth - 40 - 6 * (column + 1)) / column ;
-            ViewModel.ItemHeight = (listview.ActualHeight - 6 - 6 * (row + 1)) / row;
+            ViewModel.ItemHeight = (listview.ActualHeight - 20 - 6 * (row + 1)) / row;
         }
     }
 }
