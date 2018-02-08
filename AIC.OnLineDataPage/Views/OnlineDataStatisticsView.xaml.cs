@@ -35,7 +35,7 @@ namespace AIC.OnLineDataPage.Views
     /// <summary>
     /// Interaction logic for MapView.xaml
     /// </summary>
-    public partial class OnlineDataStatisticsView : UserControl, ICloseable
+    public partial class OnlineDataStatisticsView : DisposableUserControl, ICloseable
     {
         public OnlineDataStatisticsView()
         {
@@ -54,6 +54,22 @@ namespace AIC.OnLineDataPage.Views
            
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't forget to clear _chart from grid child list.
+                gridChart.Children.Clear();
+
+                if (_chart != null)
+                {
+                    _chart.Dispose();
+                    _chart = null;
+                }
+            }
+        }
+
         public CloseableHeader Closer { get; private set; }
 
         OnlineDataStatisticsViewModel ViewModel;
@@ -163,67 +179,14 @@ namespace AIC.OnLineDataPage.Views
             _chart.EndUpdate();
         }
 
-        //private void UpdateChart(List<BaseAlarmSignal> sglist)
-        //{
-        //    _chart.BeginUpdate();
-        //    _chart.ViewXY.BarSeries.Clear();
-        //    int pointsCount = sglist.Count;
-        //    var max = sglist.Max(p => p.AlarmCount + p.PreAlarmCount + p.DangerCount);
-        //    _chart.ViewXY.YAxes[0].SetRange(0, max);          
-        //    // Add a bar series for each point, with a different color.
-        //    for (int index = 0; index < pointsCount; index++)
-        //    {
-        //        if (index >= 16)
-        //        {
-        //            break;
-        //        }
-        //        BarSeriesValue[] data = new BarSeriesValue[1];
-        //        data[0].Value = sglist[index].PreAlarmCount + sglist[index].AlarmCount + sglist[index].DangerCount;
-        //        data[0].Location = index;
-        //        //Set label text
-        //        data[0].Text = "预警" + sglist[index].PreAlarmCount.ToString("0") + "警告" + sglist[index].AlarmCount.ToString("0") + "危险" + sglist[index].DangerCount.ToString("0");
-
-        //        BarSeries bs = new BarSeries(_chart.ViewXY, _chart.ViewXY.XAxes[0], _chart.ViewXY.YAxes[0]);
-        //        //Set series title 
-        //        bs.Title.Text = sglist[index].ItemName;
-        //        //Set series fill 
-        //        //bs.Fill.Color = DefaultColors.SeriesForBlackBackgroundWpf[index];
-        //        //bs.Fill.GradientColor = ChartTools.CalcGradient(DefaultColors.SeriesForBlackBackgroundWpf[index], Colors.Black, 50);
-        //        //bs.BorderColor = ChartTools.CalcGradient(bs.Fill.Color, Colors.Black, 70); 
-        //        Color color = DefaultColors.SeriesWpf[index];
-        //        bs.Fill.Color = Color.FromArgb(240, color.R, color.G, color.B);
-
-        //        bs.Fill.GradientColor = ChartTools.CalcGradient(bs.Fill.Color, Colors.Black, 50);
-        //        bs.Fill.GradientDirection = 0;
-        //        bs.Fill.Style = RectFillStyle.ColorOnly;
-        //        bs.BarThickness = 100;
-        //        bs.Shadow.Visible = true;
-        //        bs.Shadow.Offset.SetValues(2, 2);
-        //        bs.BorderColor = ChartTools.CalcGradient(bs.Fill.Color, Colors.Black, 70);
-        //        bs.LabelStyle.Shadow.Style = TextShadowStyle.DropShadow;
-
-        //        bs.Shadow.Visible = true;
-        //        bs.Shadow.Offset.SetValues(2, 2);
-
-        //        //Set label text style
-        //        bs.LabelStyle.Angle = 0;
-        //        bs.LabelStyle.VerticalAlign = BarsTitleVerticalAlign.BarTop;             
-
-        //        //Assign the value
-        //        bs.Values = data;
-
-        //        _chart.ViewXY.BarSeries.Add(bs);
-
-        //    }
-        //    _chart.EndUpdate();
-        //}
-
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
                 btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+
+            table.PreviewMouseWheel += table_PreviewMouseWheel;
 
             Timer timer = new Timer()
             {

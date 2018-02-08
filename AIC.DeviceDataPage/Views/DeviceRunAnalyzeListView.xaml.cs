@@ -1,4 +1,6 @@
-﻿using AIC.Core.SignalModels;
+﻿using AIC.Core;
+using AIC.Core.Helpers;
+using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
@@ -9,6 +11,7 @@ using Arction.Wpf.Charting.SeriesXY;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,7 +32,7 @@ namespace AIC.DeviceDataPage.Views
     /// <summary>
     /// Interaction logic for ServerSetView.xaml
     /// </summary>
-    public partial class DeviceRunAnalyzeListView : UserControl, ICloseable
+    public partial class DeviceRunAnalyzeListView : DisposableUserControl, ICloseable
     {
         public DeviceRunAnalyzeListView()
         {
@@ -48,8 +51,25 @@ namespace AIC.DeviceDataPage.Views
             CreateChart();
             CreateChartMore();
 
-            this.Loaded += new RoutedEventHandler(Window_Loaded);
+            this.Loaded += Window_Loaded;
         }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't forget to clear _chart from grid child list.
+                gridChart.Children.Clear();
+
+                if (_chart != null)
+                {
+                    _chart.Dispose();
+                    _chart = null;
+                }
+            }
+        }
+
         public CloseableHeader Closer { get; private set; }
 
         private LightningChartUltimate _chart;
@@ -453,5 +473,7 @@ namespace AIC.DeviceDataPage.Views
             }
             return count;
         }
+
+       
     }
 }

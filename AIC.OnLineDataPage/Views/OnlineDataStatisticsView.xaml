@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataStatisticsView"
+﻿<core:DisposableUserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataStatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -154,7 +154,7 @@
             <GroupBox Grid.Column ="1" Header="{Binding AlarmEventTitle}">
                 <ScrollViewer Margin="5" x:Name="scrollvw" Grid.Column ="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" BorderThickness="1" BorderBrush="{Binding AccentColorBrush}">
                     <StackPanel Orientation="Vertical" >
-                        <DataGrid x:Name="table" HeadersVisibility="None" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto" ItemsSource="{Binding CustomSystemException}" PreviewMouseWheel="table_PreviewMouseWheel">
+                        <DataGrid x:Name="table" HeadersVisibility="None" AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True" ColumnWidth="Auto" ItemsSource="{Binding CustomSystemException}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="类型" Binding="{Binding CustomSystemType, Converter={StaticResource enumDescriptionConverter}}" ></DataGridTextColumn>
@@ -197,9 +197,9 @@
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
                 <DataGrid.Columns>
                     <!--<DataGridTextColumn Header="组织机构"  Binding="{Binding OrganizationName}" IsReadOnly="True" />-->
-                    <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" MinWidth="180" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" MinWidth="180" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" MinWidth="230" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="测点名称"  Binding="{Binding ItemName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="采集时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="数值"  Binding="{Binding Result,StringFormat=F3}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                 </DataGrid.Columns>
@@ -310,4 +310,4 @@
             </DataGrid>
         </Border>
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

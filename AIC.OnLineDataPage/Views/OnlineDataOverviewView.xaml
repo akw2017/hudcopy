@@ -157,41 +157,42 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="无效" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="Pink" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="正常" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding NormalCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="{DynamicResource TextBrush}" IsChecked="{Binding IsNormalSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="Yellow" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="预警" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsPreAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding PreAlertCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="Yellow" IsChecked="{Binding IsPreAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="DarkOrange" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="警告" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding AlertCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="DarkOrange" IsChecked="{Binding IsAlarmSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="Red" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="危险" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding DangerCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="Red" IsChecked="{Binding IsDangerSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                    <Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>
+                    <!--<Ellipse Fill="DarkRed" VerticalAlignment="Center" Height="24" Width="24"/>-->
                     <TextBlock Text="断线" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding DisConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                    <TextBlock Text="{Binding UnConnectCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                    <CheckBox VerticalAlignment="Center" BorderBrush="DarkRed" IsChecked="{Binding DisConnectSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                 </StackPanel>
+
                 <Rectangle VerticalAlignment="Stretch" Width="2" Stroke="{DynamicResource AccentColorBrush}" Margin="5,0"/>
                 <TextBlock Text="显示模式:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                 <RadioButton x:Name="radioValue" Content="数值" IsChecked="True" Style="{StaticResource RadioButtonStyle}" />

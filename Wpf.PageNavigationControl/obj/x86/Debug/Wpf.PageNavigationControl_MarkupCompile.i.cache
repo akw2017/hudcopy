@@ -4,17 +4,17 @@
 library
 C#
 .cs
-D:\SupportProject\AIC_HUD\AICHUID\Wpf.PageNavigationControl\obj\x86\Debug\
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.PageNavigationControl\obj\x86\Debug\
 Wpf.PageNavigationControl
 none
 false
 DEBUG;TRACE
 
-2781254699
+32116867685
 
-12480895310
-141236662551
-PageNavigation.xaml;Themes\Generic.xaml;
+121819915875
+151244808106
+TrendNavigation.xaml;PageNavigation.xaml;Themes\Generic.xaml;
 
-False
+True
 

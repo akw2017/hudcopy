@@ -2913,3 +2913,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\images\stop_icon.
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tiles\3\0\0.jpg
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.Wpf.xml

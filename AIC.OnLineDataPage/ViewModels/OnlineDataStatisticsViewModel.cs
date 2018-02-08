@@ -71,10 +71,10 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (itemPl == null) return false;
                 if (selectedsignals.Contains(itemPl))
                 {
-                    if(itemPl.DelayAlarmGrade == AlarmGrade.HighNormal || itemPl.DelayAlarmGrade == AlarmGrade.LowNormal)
-                    {
-                        return false;
-                    }
+                    //if(itemPl.DelayAlarmGrade == AlarmGrade.HighNormal || itemPl.DelayAlarmGrade == AlarmGrade.LowNormal)
+                    //{
+                    //    return false;
+                    //}
                     return true;
                 }
                 return false;
@@ -257,7 +257,6 @@ namespace AIC.OnLineDataPage.ViewModels
         }
         #endregion
 
-        private AlarmGrade? SliceAlarmGrade;
         private IEnumerable<BaseAlarmSignal> selectedsignals;
         public void SelectedTreeChanged(object para)
         {
@@ -312,7 +311,12 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                 }
             }
-            FirstAlarmGrade = selectedsignals.Where(p => grades.Contains(p.DelayAlarmGrade)).FirstOrDefault().DelayAlarmGrade;
+
+            var sg = selectedsignals.Where(p => grades.Contains(p.DelayAlarmGrade)).FirstOrDefault();
+            if (sg != null)
+            {
+                FirstAlarmGrade = sg.DelayAlarmGrade;
+            }
             //_view.Refresh();
         }
     }

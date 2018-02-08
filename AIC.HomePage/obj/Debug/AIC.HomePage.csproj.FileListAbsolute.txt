@@ -657,3 +657,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\Views\HomeMapView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.Wpf.xml

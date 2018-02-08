@@ -1,4 +1,5 @@
-﻿using AIC.Core.SignalModels;
+﻿using AIC.Core;
+using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
@@ -29,7 +30,7 @@ namespace AIC.DeviceDataPage.Views
     /// <summary>
     /// Interaction logic for ServerSetView.xaml
     /// </summary>
-    public partial class DeviceRunTestListView : UserControl, ICloseable
+    public partial class DeviceRunTestListView : DisposableUserControl, ICloseable
     {
         public DeviceRunTestListView()
         {
@@ -50,6 +51,22 @@ namespace AIC.DeviceDataPage.Views
 
             this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't forget to clear _chart from grid child list.
+                gridChart.Children.Clear();
+
+                if (_chart != null)
+                {
+                    _chart.Dispose();
+                    _chart = null;
+                }
+            }
+        }
+
         public CloseableHeader Closer { get; private set; }
 
         private LightningChartUltimate _chart;

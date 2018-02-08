@@ -419,6 +419,20 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
+        private BaseAlarmSignal firstDangerItem;
+        public BaseAlarmSignal FirstDangerItem
+        {
+            get { return firstDangerItem; }
+            set
+            {
+                if (firstDangerItem != value)
+                {
+                    firstDangerItem = value;
+                    OnPropertyChanged("FirstDangerItem");
+                }
+            }
+        }
+
         private bool mute;
         public bool Mute
         {
@@ -1027,12 +1041,14 @@ namespace AIC.HomePage.ViewModels
             {
                 return;
             }
+
             IRegion region = this._regionManager.Regions["MainTabRegion"];
             if (region.GetView(viewName) != null)
             {
                 region.Activate(region.GetView(viewName));
                 return;
             }
+
             object viewObj = null;
             if (viewName == "MenuServerSetting")
             {
@@ -1168,7 +1184,15 @@ namespace AIC.HomePage.ViewModels
             ICloseable view = viewObj as ICloseable;
             if (view != null)
             {
-                view.Closer.RequestClose += () => region.Remove(view);
+                view.Closer.RequestClose += () => 
+                {
+                    var disposable = view as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                    region.Remove(view);
+                };//region.Remove(view);
             }
             region.Add(view, viewName);
             region.Activate(view);
@@ -1436,8 +1460,12 @@ namespace AIC.HomePage.ViewModels
             {
                 Alarm = AlarmGrade.HighNormal;
             }
-            DangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.AlarmAck == false && o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Take(5));
+            DangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.AlarmAck == false && o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Take(3));
             TotalDangerList = new ObservableCollection<BaseAlarmSignal>(signals.Where(o => o.IsConnected == true && (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)));
+            if (TotalDangerList.Count >= 1)
+            {
+                FirstDangerItem = TotalDangerList[0];
+            }
         }
 
         private void DecreaseSpeed()

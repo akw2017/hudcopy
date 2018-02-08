@@ -32,6 +32,8 @@ namespace AIC.OnLineDataPage.ViewModels
         private readonly IOrganizationService _organizationService;
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
+        public delegate void UpdatePie3D(IList<int> countlist);
+        public event UpdatePie3D UpdateChart;
 
         public OnlineDataDiagnosisViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess)
         {
@@ -58,59 +60,16 @@ namespace AIC.OnLineDataPage.ViewModels
                 if (itemPl == null) return false;
                 if (selectedsignals.Contains(itemPl))
                 {
-                    if (IsInvalidSignal == false && IsNormalSignal == false && IsPreAlarmSignal == false && IsAlarmSignal == false && IsDangerSignal == false && DisConnectSignal == false)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.Invalid && IsInvalidSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.HighNormal && IsNormalSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.HighPreAlarm && IsPreAlarmSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.HighAlarm && IsAlarmSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.HighDanger && IsDangerSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.LowDanger && IsDangerSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.LowAlarm && IsAlarmSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.LowPreAlarm && IsPreAlarmSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.LowNormal && IsNormalSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == AlarmGrade.DisConnect && DisConnectSignal == true)
-                    {
-                        return true;
-                    }
-                    if (itemPl.DiagnosticGrade == 0x00 && DisConnectSignal == true)
-                    {
-                        return true;
-                    }
-                    return false;
+                    //if (itemPl.DiagnosticGrade == AlarmGrade.HighNormal || itemPl.DiagnosticGrade == AlarmGrade.LowNormal)
+                    //{
+                    //    return false;
+                    //}
+                    return true;
                 }
                 return false;
             };
-            _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
+            _view.SortDescriptions.Add(new SortDescription("DiagnosticGrade", ListSortDirection.Descending));
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("DiagnosticGrade"));//对视图进行分组
             InitTree();
         }
 
@@ -454,6 +413,29 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
             }
         }
+
+        private AlarmGrade firstAlarmGrade;
+        public AlarmGrade FirstAlarmGrade
+        {
+            get { return firstAlarmGrade; }
+            set
+            {
+                if (firstAlarmGrade != value)
+                {
+                    firstAlarmGrade = value;
+                    OnPropertyChanged(() => FirstAlarmGrade);
+                }
+            }
+        }
+
+        private DelegateCommand refreshCommand;
+        public DelegateCommand RefreshCommand
+        {
+            get
+            {
+                return this.refreshCommand ?? (this.refreshCommand = new DelegateCommand(() => this.Refresh()));
+            }
+        }
         #endregion
 
         #region Command
@@ -565,14 +547,15 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 Status = ViewModelStatus.Querying;
                 cts = new CancellationTokenSource();
-
+      
                 foreach (var sg in selectedsignals.OfType<BaseWaveSignal>())
                 {
                     sg.IsDiagnostic = true;
                 }
+                //await Task.Delay(TimeSpan.FromSeconds(20), cts.Token);
                 await WaitDiagnosis(10);
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
 #if XBAP
                 MessageBox.Show("取消成功！！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -599,27 +582,30 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private async Task WaitDiagnosis(int delaytime)
         {
-            await Task.Run(() =>
+            for (int i = 0; i < delaytime; i++)
             {
-                for (int i = 0; i < delaytime; i++)
+                await Task.Delay(TimeSpan.FromSeconds(1), cts.Token);
+
+                if (cts.IsCancellationRequested) //点击取消按钮
                 {
-                    Thread.Sleep(1000);
-                    bool finish = true;
-                    foreach (var sg in selectedsignals.OfType<BaseWaveSignal>())
+                    break;         
+                }
+
+                bool finish = true;
+                foreach (var sg in selectedsignals.OfType<BaseWaveSignal>())
+                {
+                    if (sg.IsDiagnostic == true)
                     {
-                        if (sg.IsDiagnostic == true)
-                        {
-                            finish = false;
-                            break;
-                        }                          
-                    }
-                    if (finish == true)
-                    {
-                        cts.Token.ThrowIfCancellationRequested();
+                        finish = false;
                         break;
                     }
                 }
-            });
+                if (finish == true)
+                {
+                    cts.Token.ThrowIfCancellationRequested();
+                    break;
+                }
+            }
         }
 
         private void ShowAlarmCount()
@@ -700,9 +686,47 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void Refresh()
         {
-            UpdateFirstName();
+            //UpdateFirstName();
+            //_view.Refresh();
+            //ShowAlarmCount();
+            if (selectedsignals == null)
+            {
+                return;
+            }
+
             _view.Refresh();
-            ShowAlarmCount();
+            int NormalCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.HighNormal || o.DiagnosticGrade == AlarmGrade.LowNormal)).Count();
+            int PreAlertCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.HighPreAlarm || o.DiagnosticGrade == AlarmGrade.LowPreAlarm)).Count();
+            int AlertCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.HighAlarm || o.DiagnosticGrade == AlarmGrade.LowAlarm)).Count();
+            int DangerCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.HighDanger || o.DiagnosticGrade == AlarmGrade.LowDanger)).Count();
+            int AbnormalCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.Abnormal)).Count();
+            int UnConnectCount = selectedsignals.Where(o => (o.DiagnosticGrade == AlarmGrade.DisConnect || o.DiagnosticGrade == 0x00)).Count();
+            if (UpdateChart != null)
+            {
+                UpdateChart(new List<int> { NormalCount, PreAlertCount, AlertCount, DangerCount, AbnormalCount, UnConnectCount });
+            }
+        }
+
+        public void SliceClick(AlarmGrade alarmgrade)
+        {
+            List<AlarmGrade> grades = new List<AlarmGrade>();
+            foreach (AlarmGrade grade in Enum.GetValues(typeof(AlarmGrade)))
+            {
+                if ((alarmgrade & grade) == grade)
+                {
+                    if (!grades.Contains(grade))
+                    {
+                        grades.Add(grade);
+                    }
+                }
+            }
+
+            var sg = selectedsignals.Where(p => grades.Contains(p.DiagnosticGrade)).FirstOrDefault();
+            if (sg != null)
+            {
+                FirstAlarmGrade = sg.DiagnosticGrade;
+            }
+            //_view.Refresh();
         }
     }
 }

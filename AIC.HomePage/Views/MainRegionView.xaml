@@ -332,7 +332,7 @@
             </StackPanel>
           
             <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
-                <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：青岛众志测控技术有限公司"/>
+                <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：北京航天智控监测技术研究院"/>
             </Grid>
             <!--青岛众志测控技术有限公司-->
             <!--昌邑石化-->
@@ -545,6 +545,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -629,10 +630,13 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <TextBlock ToolTip="报警栏详情" VerticalAlignment="Center"> <Hyperlink Command="{Binding DangerListDetailCommmad}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="..."/> </Hyperlink></TextBlock>
+                      
                     </StackPanel>
                 </StatusBarItem>
-                <StatusBarItem Grid.Column="3" Visibility="Collapsed">
+                <StatusBarItem Grid.Column="3">
+                    <TextBlock ToolTip="报警栏详情" VerticalAlignment="Center"> <Hyperlink Command="{Binding DangerListDetailCommmad}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="..."/> </Hyperlink></TextBlock>
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="4" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="ellipse" Width="12" Height="12" Fill="Red">
                             <Ellipse.Triggers>
@@ -648,7 +652,7 @@
                         <TextBlock  VerticalAlignment="Center"> <Hyperlink Command="{Binding AlarmListCommmad}"> <TextBlock Text="报警列表"/> </Hyperlink></TextBlock>
                     </StackPanel>
                 </StatusBarItem>
-                <StatusBarItem Grid.Column="4" Visibility="{Binding ExceptListVisibility}">
+                <StatusBarItem Grid.Column="5" Visibility="{Binding ExceptListVisibility}">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="ellipse2" Width="12" Height="12" Fill="Yellow">
                             <Ellipse.Triggers>
@@ -664,7 +668,7 @@
                         <TextBlock  VerticalAlignment="Center"> <Hyperlink Command="{Binding ExceptListCommmad}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="异常列表"/> </Hyperlink></TextBlock>
                     </StackPanel>
                 </StatusBarItem>
-                <StatusBarItem  Grid.Column="5" Content="{Binding NowTime}" HorizontalAlignment="Right" />
+                <StatusBarItem  Grid.Column="6" Content="{Binding NowTime}" HorizontalAlignment="Right" />
             </StatusBar>
         </Grid>
     </Grid>

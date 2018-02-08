@@ -292,6 +292,7 @@ namespace AIC.DeviceDataPage.ViewModels
             {
                 return;
             }
+
             var infoList = result.GroupBy(p => p.T_Item_Guid, (key, group) => new { Key = key, Value = group }).Select(p => GetSubDeviceRunInfo(p.Value.ToList(), start, day)).OrderBy(p => p.RunHours).ToList();
             if (infoList.Count > 0)
             {
@@ -300,6 +301,10 @@ namespace AIC.DeviceDataPage.ViewModels
                 device.StartTime = start;
                 device.EndTime = start.AddDays(day);
                 device.RunHours = midinfo.RunHours;
+                if (device.RunHours > day * 24)
+                {
+                    device.RunHours = day * 24;
+                }
                 device.TotalHours = day * 24;
                 device.StopHours = device.TotalHours - device.RunHours;
                 device.PreAlarmCount = infoList.Select(p => p.PreAlarmCount).Sum();
@@ -406,7 +411,8 @@ namespace AIC.DeviceDataPage.ViewModels
             devicerunInfo.DangerCount = 0;
 
             if (result != null && result.Count > 0)
-            {          
+            {
+                result = result.OrderBy(p => p.ACQDatetime).ToList();
                 //分组
                 var groupresult = result.GroupBy(p => new { Year = p.ACQDatetime.Year, Month = p.ACQDatetime.Month, Day = p.ACQDatetime.Day });
                 foreach (var groupdata in groupresult)
@@ -420,7 +426,16 @@ namespace AIC.DeviceDataPage.ViewModels
                             M9600.Common.DTO.Device.ExtraInfo extraInfo = JsonConvert.DeserializeObject<M9600.Common.DTO.Device.ExtraInfo>(extraInfoJson.Substring(1, extraInfoJson.Length - 2));
                             if (extraInfo != null)
                             {
-                                hours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                                //hours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                                switch (data.AlarmGrade& 0xff)
+                                {
+                                    case 0: break;
+                                    case 1: hours += extraInfo.NormalTimeLength / 3600; break;
+                                    case 2: hours += extraInfo.PreAlarmTimeLength / 3600; break;
+                                    case 3: hours += extraInfo.AlarmTimeLength / 3600; break;
+                                    case 4: hours += extraInfo.DangerTimeLength / 3600; break;
+                                }
+                                
                                 //DeviceRunInfo.RunHours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
                                 devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
                                 devicerunInfo.AlarmCount += extraInfo.AlarmCount;

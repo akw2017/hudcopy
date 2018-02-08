@@ -29,7 +29,7 @@ namespace AIC.Core
                     case AlarmGrade.HighDanger: 
                     case AlarmGrade.LowDanger: return "危险";
                     case AlarmGrade.DisConnect:return "断线";
-                    //default:return grade.ToString();
+                    default: return "无效";
                 }
             }
             return null;

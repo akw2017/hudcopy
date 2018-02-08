@@ -226,6 +226,7 @@
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="FunctionalExtensions.cs" />
     <Compile Include="Helpers\DictionaryToClassHelper.cs" />
+    <Compile Include="Controls\DisposableUserControl.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\GetEnumDescription.cs" />
     <Compile Include="Helpers\TableHelper.cs" />

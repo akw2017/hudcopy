@@ -2,9 +2,17 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.HomePage.ViewModels;
 using AIC.OnLineDataPage.Views;
 using AIC.ServiceInterface;
+using Arction.Wpf.Charting;
+using Arction.Wpf.Charting.Annotations;
+using Arction.Wpf.Charting.Axes;
+using Arction.Wpf.Charting.EventMarkers;
+using Arction.Wpf.Charting.SeriesPolar;
+using Arction.Wpf.Charting.Titles;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Regions;
 using System;
@@ -45,14 +53,14 @@ namespace AIC.HomePage.Views
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _loginUserService = loginUserService;
-
+            
             DoSomething ds = new DoSomething();
             this.webBrowser.ObjectForScripting = ds;
             ds.TransferClicked += Ds_TransferClicked;
             //this.webBrowser.Navigate(new Uri(System.Environment.CurrentDirectory + @"/MyData/Htmls/BMapOffline.html", UriKind.RelativeOrAbsolute));//获取根目录的html文件  
-            
+
             string serverhtml = "http://" + _loginUserService.LoginInfo.ServerInfo.IP + ":38080/BMapOffline.html";
-           
+
             if (GetPage(@serverhtml))
             {
                 this.webBrowser.Navigate(new Uri(@serverhtml));//获取根目录的html文件  
@@ -80,6 +88,11 @@ namespace AIC.HomePage.Views
             this.Loaded += new RoutedEventHandler(Window_Loaded);
 
             this.Closer = new CloseableHeader("tabFirst", (string)Application.Current.Resources["tabFirst"], false);
+        }
+
+        private void CefSetting()
+        {
+            
         }
 
         public CloseableHeader Closer { get; private set; }
@@ -120,13 +133,13 @@ namespace AIC.HomePage.Views
             }
             catch (WebException e)
             {
-                Console.WriteLine("\r\nWebException Raised. The following error occured : {0}", e.Status);                
+                Console.WriteLine("\r\nWebException Raised. The following error occured : {0}", e.Status);
             }
             catch (Exception e)
             {
                 Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
             }
-            
+
             return ok;
         }
 
@@ -160,49 +173,56 @@ namespace AIC.HomePage.Views
         }
         private void timeCycle(object sender, EventArgs e)
         {
+            ServerInfo first = null;
             webBrowser.InvokeScript("removeOverlay", null);
             foreach (var server in ServerInfo)
             {
                 if (server.LoginResult == true)
                 {
+                    if (first != null)
+                    {
+                        object[] objs2 = new object[4] {
+                        first.Longitude,
+                        first.Latitude,
+                        server.Longitude,
+                        server.Latitude};
+                        webBrowser.InvokeScript("addCurve", objs2);
+                    }
+                    else
+                    {
+                        first = server;
+                    }
+
+                    string name = (server.Factory == null || server.Factory == "")? server.IP: server.Factory;
                     object[] objs = new object[4] {
                     server.Longitude,
                     server.Latitude,
                     0,
-                    server.Factory};
+                    name};
                     webBrowser.InvokeScript("addMarker", objs);
+                    
                 }
+               
             }
             readDataTimer.Stop();
+            
         }
         private void HideHtml(int para)
         {
-            #if XBAP
+#if XBAP
             if (para == 0)
             {
                 //隐藏并用Image替代WebBrowser
-                imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
-                webBrowser.Visibility = Visibility.Hidden;
+                //imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
+                //webBrowser.Visibility = Visibility.Hidden;
             }
             else
             {
                 //恢复WebBrowser
-                imageResource.Source = null;
-                webBrowser.Visibility = Visibility.Visible;
+                //imageResource.Source = null;
+                //webBrowser.Visibility = Visibility.Visible;
             }
-            #endif
-        }
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //恢复WebBrowser
-            imageResource.Source = null;
-            webBrowser.Visibility = Visibility.Visible;
-        }
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
-        {
-            //隐藏并用Image替代WebBrowser
-            imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
-            webBrowser.Visibility = Visibility.Hidden;
+#endif
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e)
@@ -219,7 +239,7 @@ namespace AIC.HomePage.Views
             GridLength temp = grdWorkbench.ColumnDefinitions[0].Width;
             GridLength zero = new GridLength(0);
             if (!temp.Equals(zero))
-            {                
+            {
                 //折叠
                 m_WidthCache = grdWorkbench.ColumnDefinitions[0].Width;
                 grdWorkbench.ColumnDefinitions[0].Width = new GridLength(0);
@@ -230,6 +250,7 @@ namespace AIC.HomePage.Views
                 grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
             }
         }
+
     }
 
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
