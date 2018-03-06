@@ -35,7 +35,7 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/layer/layer.js"></script>
     <script type="text/javascript" src="tools/CurveLine.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/baidu_map_v2.css"/>
+    <link rel="stylesheet" type="text/css" href="css/baidu_map_v2.css" />
 </head>
 <body>
     <div id="map">
@@ -49,10 +49,11 @@
                 { minZoom: 1, maxZoom: 20 });            // 创建Map实例
 
         var markers = [];
+        var markerClusterer = null;
 
-        //var point = new BMap.Point(116.404, 39.915); // 创建点坐标
-        var point = new BMap.Point(119.373313, 36.850671);
-	    map.centerAndZoom(point, 8);                 
+        var point = new BMap.Point(116.404, 39.915); // 创建点坐标
+        //var point = new BMap.Point(119.373313, 36.850671);
+	    map.centerAndZoom(point, 6);                 
 	    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
 	    map.addControl(new BMap.NavigationControl());   //缩放按钮
 	    // 在鼠标位置添加标注
@@ -85,28 +86,28 @@
 	    
 	    //addMarkerClusterer();
 
-	    //百度地图API功能
-	    function loadJScript() {
-		    var script = document.createElement("script");
-		    script.type = "text/javascript";
-		    script.src = "baidumap_offline_v2_20160921_min.js";
-		    document.body.appendChild(script);    
-    	    //异步加载增加代码
-    	    window.BMap=window.BMap||{};
-  	        window.BMap.apiLoad=function(){delete window.BMap.apiLoad;if(typeof init=="function"){init()}}
-	    }
-	    function init() {
-		    var map = new BMap.Map("map");            // 创建Map实例
-		    var point = new BMap.Point(116.404, 39.915); // 创建点坐标
-		    map.centerAndZoom(point, 8);                 
-		    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
-            map.addControl(new BMap.NavigationControl());   //缩放按钮
-	    }  
+	//百度地图API功能
+	function loadJScript() {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "baidumap_offline_v2_20160921_min.js";
+		document.body.appendChild(script);    
+    	//异步加载增加代码
+    	window.BMap=window.BMap||{};
+  	window.BMap.apiLoad=function(){delete window.BMap.apiLoad;if(typeof init=="function"){init()}}
+	}
+	function init() {
+		var map = new BMap.Map("map");            // 创建Map实例
+		var point = new BMap.Point(116.404, 39.915); // 创建点坐标
+		map.centerAndZoom(point, 8);                 
+		map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+                map.addControl(new BMap.NavigationControl());   //缩放按钮
+	}  
 
 
         function map_init() {
             map = new BMap.Map("map" ,
-                { minZoom : 1, maxZoom : 12 });
+                { minZoom : 1, maxZoom : 14 });
 
             //第1步：设置地图中心点，广州市
             //var point = new BMap.Point(113.312213, 23.147267);
@@ -144,7 +145,13 @@
         //清除覆盖物
         function removeOverlay() {
             map.clearOverlays();
+            //for (var i = 0; i < markers.length; i++) {
+            //    map.removeOverlay(markers[i]);
+            //}
             markers = [];
+            if (markerClusterer != null){
+            markerClusterer.clearMarkers();         //此步骤需要  
+            }
         }
 
         //移动到某一点
@@ -152,22 +159,56 @@
             map.panTo(new BMap.Point(lng, lat));
         }
 
+        //addMarker(116.404, 39.915, "123", "456");
+
         // 添加标注
-        function addMarker(lng, lat, index, title, des) {
+        function addMarker(lng, lat, title, color, number) {
 
             //标注图标
             var myIcon = new BMap.Icon("images/marker_red_hd.png",
                 new BMap.Size(23, 25), {
                     offset: new BMap.Size(10, 25),
-                    imageOffset: new BMap.Size(0, 0 - index * 25)
+                    imageOffset: new BMap.Size(0, 0 - 0 * 25)
                 });
+            //var myIcon = new BMap.Icon("images/red.png",
+            //   new BMap.Size(24, 24), {
+            //       anchor: new BMap.Size(8, 8)
+            //   });
+
+
             var point = new BMap.Point(lng, lat);
-            var marker = new BMap.Marker(point, { icon: myIcon });
+            //var marker = new BMap.Marker(point, { icon: myIcon });
+
+            //设置marker图标为水滴
+            //var marker = new BMap.Marker(point, {
+            //    // 指定Marker的icon属性为Symbol
+            //    icon: new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+            //        scale: 2,//图标缩放大小
+            //        fillColor: "orange",//填充颜色
+            //        fillOpacity: 1//填充透明度
+            //    })
+            //});
+
+            var marker = new BMap.Marker(point, {
+                // 指定Marker的icon属性为Symbol
+                icon: new BMap.Symbol('m 0,0C 2,9, 12,17, 12,25C 12,33 5,38, 0,38C -5,38 -12,33 -12,25, -12,17 -2,9 0,0 z', {
+                    rotation: 180,//顺时针旋转180度
+                    scale: 1,//图标缩放大小
+                    strokeColor: color,
+                    strokeWeight: 0,//线宽
+                    fillColor: color,//填充颜色
+                    fillOpacity: 1//填充透明度
+                })
+            });
+
             map.addOverlay(marker);
+
+            var myCompOverlay = new ComplexCustomOverlay(point, number);
+            map.addOverlay(myCompOverlay);
 
             //跳动的动画
             //marker.setAnimation(BMAP_ANIMATION_BOUNCE);	
-            
+
             //根据坐标点，获取详细地址信息
             //if (myGeo == null)
             //    myGeo = new BMap.Geocoder();
@@ -184,7 +225,14 @@
 
             markers.push(marker);
             //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-            var markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+
+            if (markerClusterer == null) {
+                markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+            }
+            else {
+                markerClusterer.addMarker(marker);//显示聚合的标志物
+            }
+
             return marker;
         }
 
@@ -194,6 +242,7 @@
             //标签
             var label = new BMap.Label(title, { offset: new BMap.Size(20, -10) });
             //marker.setLabel(label);
+            //marker.setTitle(title);
 
             //pop弹窗标题
             //var title = '<div style="font-weight:bold;color:#CE5521;font-size:14px">' + '...' + '</div>';
@@ -222,23 +271,42 @@
             //marker.addEventListener("click", openInfoWinFun);
             marker.addEventListener("click", function (e) {
                 window.external.ClickEvent(title);
+                //c_Obj.clickEvent(title);
             });
-
-            return openInfoWinFun;
         }
 
         //添加聚合点
         function addMarkerClusterer() {
             var MAX = 10;
-            var markers = [];
+            markers = [];
+
             var pt = null;
             var i = 0;
             for (; i < MAX; i++) {
                 pt = new BMap.Point(Math.random() * 40 + 85, Math.random() * 30 + 21);
-                markers.push(new BMap.Marker(pt));
+                //markers.push(new BMap.Marker(pt));
+                markers.push(new BMap.Marker(pt, {
+                    // 指定Marker的icon属性为Symbol
+                    icon: new BMap.Symbol('m 0,0C 2,9, 12,17, 12,25C 12,33 5,38, 0,38C -5,38 -12,33 -12,25, -12,17 -2,9 0,0 z', {
+                        rotation: 180,//顺时针旋转180度
+                        scale: 1,//图标缩放大小
+                        strokeColor: 'red',
+                        strokeWeight: 0,//线宽
+                        fillColor: 'red',//填充颜色
+                        fillOpacity: 1//填充透明度
+                    })
+                }));
             }
-            //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-            var markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+
+            if (markerClusterer == null) {
+                //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+                markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+            }
+            else {
+                for (var i = 0; i < markers.length; i++) {
+                    markerClusterer.addMarker(markers[i]);//显示聚合的标志物
+                }
+            }
         }
 
         //添加弧线
@@ -253,88 +321,40 @@
             //curve.enableEditing(); //开启编辑功能
         }
 
-        // 复杂的自定义覆盖物
-        function ComplexCustomOverlay(point, text, mouseoverText) {
+        // ************************************自定义覆盖物**************************************************************
+        // 覆盖物构造方法
+        function ComplexCustomOverlay(point, index) {
             this._point = point;
-            this._text = text;
-            this._overText = mouseoverText;
+            this._index = index;
         }
         ComplexCustomOverlay.prototype = new BMap.Overlay();
         ComplexCustomOverlay.prototype.initialize = function (map) {
             this._map = map;
-            var div = this._div = document.createElement("div");
-            div.style.position = "absolute";
-            div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
-            div.style.backgroundColor = "#EE5D5B";
-            div.style.border = "1px solid #BC3B3A";
-            div.style.color = "white";
-            div.style.height = "18px";
-            div.style.padding = "2px";
-            div.style.lineHeight = "18px";
-            div.style.whiteSpace = "nowrap";
-            div.style.MozUserSelect = "none";
-            div.style.fontSize = "12px"
             var span = this._span = document.createElement("span");
-            div.appendChild(span);
+            //这里用jquery设置样式
+            $(span).css({
+                'position': 'absolute',
+                'zIndex': BMap.Overlay.getZIndex(this._point.lat),
+                'display': 'block',
+                'width': '26px',
+                'color': '#FFF',
+                'font-size': '14px',
+                'text-align': 'center',
+                'point-events': 'none'
+            });
+            //设置数字也就是我们的标注
+            this._span.innerHTML = this._index;
+            map.getPanes().labelPane.appendChild(span);
 
-            span.appendChild(document.createTextNode(this._text));
-
-            var that = this;
-
-            var arrow = this._arrow = document.createElement("div");
-            arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
-            arrow.style.position = "absolute";
-            arrow.style.width = "11px";
-            arrow.style.height = "10px";
-            arrow.style.top = "22px";
-            arrow.style.left = "10px";
-            arrow.style.overflow = "hidden";
-            div.appendChild(arrow);
-
-            div.onmouseover = function () {
-                this.style.backgroundColor = "#6BADCA";
-                this.style.borderColor = "#0000ff";
-                this.getElementsByTagName("span")[0].innerHTML = that._overText;
-                arrow.style.backgroundPosition = "0px -20px";
-            }
-
-            div.onmouseout = function () {
-                this.style.backgroundColor = "#EE5D5B";
-                this.style.borderColor = "#BC3B3A";
-                this.getElementsByTagName("span")[0].innerHTML = that._text;
-                arrow.style.backgroundPosition = "0px 0px";
-            }
-
-            map.getPanes().labelPane.appendChild(div);
-
-            return div;
+            return span;
         }
-        ComplexCustomOverlay.prototype.draw = function () {
+
+        ComplexCustomOverlay.prototype.draw = function(){
             var map = this._map;
             var pixel = map.pointToOverlayPixel(this._point);
-            this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
-            this._div.style.top = pixel.y - 30 + "px";
-        }
-
-        // 添加标注
-        function addInfoMarker(lng, lat, index, title, des) {
-
-            //标注图标
-            var myIcon = new BMap.Icon("images/marker_red_hd.png",
-                new BMap.Size(23, 25), {
-                    offset: new BMap.Size(10, 25),
-                    imageOffset: new BMap.Size(0, 0 - index * 25)
-                });
-            var point = new BMap.Point(lng, lat);
-            var marker = new BMap.Marker(point, { icon: myIcon });
-            map.addOverlay(marker);
-
-            var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(lng, lat), title, title);
-
-            map.addOverlay(myCompOverlay);
-            //var p = marker.getPosition();       //获取marker的位置
-            //addInfoWindow(marker, title, p.lng + "," + p.lat);
-            return marker;
+            //设置自定义覆盖物span 与marker的位置
+            this._span.style.left = pixel.x - 12+'px';
+            this._span.style.top  = pixel.y - 35+'px';
         }
 
         //异步调用百度js

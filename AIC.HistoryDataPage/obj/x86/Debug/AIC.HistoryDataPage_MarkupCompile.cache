@@ -4,17 +4,17 @@
 library
 C#
 .cs
-D:\SupportProject\AIC_HUD\AICHUID\AIC.HistoryDataPage\obj\x86\Debug\
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\
 AIC.HistoryDataPage
 none
 false
-DEBUG;TRACE
+TRACE;DEBUG;XBAP
 
-15-930244547
+19808257222
 
-40-186254738
-1001626319947
-Themes\HistoryDataDiagramTemplate.xaml;Views\HistoryDataDiagramView.xaml;Views\HistoryDataListView.xaml;Views\SubViews\AlarmPointTrendDataView.xaml;Views\SubViews\AMSReplayDataView.xaml;Views\SubViews\DynamicFittingDataView.xaml;Views\SubViews\FrequencyDomainDataView.xaml;Views\SubViews\OffDesignConditionDataView.xaml;Views\SubViews\OrderAnalysisDataView.xaml;Views\SubViews\OrthoDataView.xaml;Views\SubViews\PowerSpectrumDataView.xaml;Views\SubViews\PowerSpectrumDensityDataView.xaml;Views\SubViews\RPM3DSpectrumDataView.xaml;Views\SubViews\Time3DSpectrumView.xaml;Views\SubViews\TimeDomainDataView.xaml;
+51-2067342345
+104717164051
+Themes\HistoryDataDiagramTemplate.xaml;Views\HistoryDataDiagramView.xaml;Views\HistoryDataListView.xaml;Views\HistoryDataStatisticsView.xaml;Views\HistoryDataTrendView.xaml;Views\HistoryEventAlarmTrendView.xaml;Views\HistoryEventListView.xaml;Views\SubViews\AlarmPointTrendDataView.xaml;Views\SubViews\RMSReplayDataView.xaml;Views\SubViews\DynamicFittingDataView.xaml;Views\SubViews\FrequencyDomainDataView.xaml;Views\SubViews\OffDesignConditionDataView.xaml;Views\SubViews\OrderAnalysisDataView.xaml;Views\SubViews\OrthoDataView.xaml;Views\SubViews\PowerSpectrumDataView.xaml;Views\SubViews\PowerSpectrumDensityDataView.xaml;Views\SubViews\RPM3DSpectrumDataView.xaml;Views\SubViews\Time3DSpectrumView.xaml;Views\SubViews\TimeDomainDataView.xaml;
 
 False
 

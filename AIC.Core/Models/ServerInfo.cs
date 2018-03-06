@@ -1,4 +1,5 @@
 ﻿using AIC.Core.LMModels;
+using AIC.CoreType;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -174,6 +175,8 @@ namespace AIC.Core.Models
         public string UserPwd { get; set; }
         public bool IsSaveUserName { get; set; }
         public bool IsSaveUserPwd { get; set; }
+        public AlarmGrade AlarmGrade { get; set; }
+        public int AlarmCount { get; set; }
 
         public ServerInfo()
         {

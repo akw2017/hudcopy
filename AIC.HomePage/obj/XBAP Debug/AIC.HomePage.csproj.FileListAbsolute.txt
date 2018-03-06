@@ -149,11 +149,15 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TestWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HistoryQuickPlayWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\PwdEditWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TestWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\TabView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Debug\Views\HomeMapView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\XBAP Debug\LiveCharts.Wpf.xml

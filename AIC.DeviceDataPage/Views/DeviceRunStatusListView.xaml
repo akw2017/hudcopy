@@ -54,7 +54,7 @@
                             <Setter TargetName="IconPath" Property="Width" Value="24"/>
                         </DataTrigger>
                         <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
@@ -85,7 +85,7 @@
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <!--<DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />

@@ -7,6 +7,7 @@
     <s:String x:Key="strLock">锁定</s:String>
     <s:String x:Key="strUnLock">解锁</s:String>
     <s:String x:Key="strUser">用户</s:String>
+    <s:String x:Key="strUserLogin">用户登录</s:String>
     <s:String x:Key="strRole">级别</s:String>
     <s:String x:Key="strPassword">密码</s:String>
     <s:String x:Key="strOK">确定</s:String>   
@@ -78,6 +79,9 @@
     <s:String x:Key="menuExportDBData">数据库导出</s:String>
     <s:String x:Key="menuImportDBData">数据库导入</s:String>
     <s:String x:Key="menuFilterDBData">数据库筛选</s:String>
+
+    <s:String x:Key="menuDeviceQucikData">设备数据快览</s:String>
+    <s:String x:Key="menuItemQucikData">测点数据快览</s:String>
 
     <s:String x:Key="menuGeneralManage">综合管理</s:String>
     <s:String x:Key="menuSystemManage">系统管理</s:String>

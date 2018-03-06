@@ -663,3 +663,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.Wpf.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.QuickDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.QuickDataPage.pdb

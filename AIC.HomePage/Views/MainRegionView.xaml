@@ -171,11 +171,11 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="{DynamicResource menuGeneralManage}" Background="{DynamicResource TransparentWhiteBrush}">
-                    <MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
+                    <!--<MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
                         <MenuItem.Icon>
                             <Image Source="/AIC.Resources;component/Images/user_go.png"/>
                         </MenuItem.Icon>
-                    </MenuItem>
+                    </MenuItem>-->
                     <MenuItem Header="{DynamicResource menuLogout}" Command="{Binding LogoutCommand}">
                         <MenuItem.Icon>
                             <Image Source="/AIC.Resources;component/Images/user_delete.png"/>
@@ -432,7 +432,7 @@
                             <MultiBinding StringFormat="{}{0}[X{1}] {2:yyyy-MM-dd HH:mm:ss}">
                                 <Binding Path="HistoryModeName" />
                                 <Binding Path="HistoryModeActualSpeedUpRatio" />
-                                <Binding Path="HistoryplayTime" />
+                                <Binding Path="HistoryPlayTime" />
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
@@ -469,7 +469,7 @@
                         <Button Width="24" Height="24" Margin="5,0,0,0" Command="{Binding IncreaseSpeedCommand}">
                             <Path Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" Data="M 22.1665,22.1665L 42.8718,38L 22.1665,53.8335L 22.1665,22.1665 Z M 46.5257,23.3844L 53.8335,23.3844L 53.8335,52.6155L 46.5257,52.6155L 46.5257,23.3844 Z "/>
                         </Button>
-                        <Slider x:Name="slider" Foreground='Red' Height="20" Width="200" Margin="5" Value="{Binding HistoryplayProcess}" VerticalAlignment="Center" Style="{DynamicResource FlatSlider}">
+                        <Slider x:Name="slider" Foreground='Red' Height="20" Width="200" Margin="5" Value="{Binding HistoryPlayProcess}" VerticalAlignment="Center" Style="{DynamicResource FlatSlider}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseMove">
                                     <i:InvokeCommandAction Command="{Binding HistotyProcessChangedCommand}" CommandParameter="{Binding Value, ElementName=slider}"/>
@@ -504,7 +504,7 @@
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsShowHistoryplay}" Value="True">
+                            <DataTrigger Binding="{Binding IsShowHistoryPlay}" Value="True">
                                 <Setter  Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -541,8 +541,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -556,39 +556,42 @@
                         <TextBlock Text=" 在线" Foreground="Green" VerticalAlignment="Center" Visibility="{Binding IsConnected,Converter={StaticResource boolToVisibilityConverter}}"/>
                         <Path Visibility="{Binding IsConnected,Converter={StaticResource boolToVisibilityConverter},ConverterParameter=invert}" Data="F1 M 48.0542,39.5833L 53.0417,44.5708L 58.0291,39.5834L 60.1666,41.7209L 55.1792,46.7083L 60.1667,51.6958L 58.0292,53.8333L 53.0417,48.8458L 48.0542,53.8333L 45.9167,51.6958L 50.9042,46.7083L 45.9167,41.7208L 48.0542,39.5833 Z M 23.7499,23.7501L 26.9166,23.7501L 26.9166,33.25L 23.75,33.2501L 23.7499,23.7501 Z M 28.4999,25.3335L 31.6666,25.3335L 31.6666,39.5835L 28.5,39.5834L 26.9166,41.1667L 26.9166,50.6667L 23.7499,50.6667L 23.75,41.1667L 22.1666,39.5834L 18.9999,39.5835L 18.9999,25.3335L 22.1666,25.3335L 22.1666,34.8334L 22.9583,34.8335L 27.7083,34.8334L 28.5,34.8334L 28.4999,25.3335 Z M 28.5,47.5001L 28.5,44.3334L 45.6792,44.3334L 48.0541,46.7083L 47.2624,47.5001L 39.5833,47.5L 39.5833,50.6667L 43.5416,50.6667L 44.3333,53.8334L 31.6667,53.8334L 32.4583,50.6667L 36.4166,50.6667L 36.4166,47.5L 28.5,47.5001 Z M 49.0833,30.0834L 33.25,30.0834L 33.25,26.9167L 53.8333,26.9167L 53.8332,40.9293L 53.0416,41.7209L 49.0833,37.7625L 49.0833,30.0834 Z " Stretch="Fill" Fill="Red" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <TextBlock Text=" 离线" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding IsConnected,Converter={StaticResource boolToVisibilityConverter},ConverterParameter=invert}"/>
-                        <TextBlock Foreground="White" >
+                        <TextBlock Foreground="White" VerticalAlignment="Center" >
                         <Run>&#160;测点总数</Run>
                         <Run Text="{Binding Count}"/>
                         </TextBlock >
-                        <TextBlock Foreground="Pink">
+                        <TextBlock Foreground="HotPink" VerticalAlignment="Center">
                         <Run>&#160;无效</Run>
                         <Run Text="{Binding AbnormalCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="{DynamicResource TextBrush}" >
+                        <TextBlock Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center">
                         <Run>&#160;正常</Run>
                         <Run Text="{Binding NormalCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="Yellow">
+                        <TextBlock Foreground="Yellow" VerticalAlignment="Center">
                         <Run>&#160;预警</Run>
                         <Run Text="{Binding PreAlertCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="DarkOrange">
+                        <TextBlock Foreground="DarkOrange" VerticalAlignment="Center">
                         <Run>&#160;警告</Run>
                         <Run Text="{Binding AlertCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="Red">
+                        <TextBlock Foreground="Red" VerticalAlignment="Center">
                         <Run>&#160;危险</Run>
                         <Run Text="{Binding DangerCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="DarkRed">
+                        <TextBlock Foreground="DarkRed" VerticalAlignment="Center">
                         <Run>&#160;断线</Run>
                         <Run Text="{Binding UnConnectCount}" />
                         </TextBlock>
-                        <ToggleButton x:Name="mutebtn" IsChecked="{Binding Mute}" FontSize="20" Template="{StaticResource SoundToggleButton}" Margin="2,0,0,0"/>
+                        <ToggleButton x:Name="mutebtn" IsChecked="{Binding Mute}" FontSize="20" Template="{StaticResource SoundToggleButton}" Margin="2,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </StatusBarItem>
                 <Separator  Grid.Column="1" Style="{StaticResource MetroStatusBarSeparator}" />
-                <StatusBarItem Grid.Column="2" Visibility="Visible" >
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock ToolTip="报警栏详情" VerticalAlignment="Center"> <Hyperlink Command="{Binding DangerListDetailCommmad}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="报警"/> </Hyperlink></TextBlock>
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="3" Visibility="Visible" >
                     <StatusBarItem.Style>
                         <Style TargetType="StatusBarItem">
                             <Setter Property="Margin" Value="0" />
@@ -633,9 +636,7 @@
                       
                     </StackPanel>
                 </StatusBarItem>
-                <StatusBarItem Grid.Column="3">
-                    <TextBlock ToolTip="报警栏详情" VerticalAlignment="Center"> <Hyperlink Command="{Binding DangerListDetailCommmad}" Foreground="{DynamicResource TextBrush}"> <TextBlock Text="..."/> </Hyperlink></TextBlock>
-                </StatusBarItem>
+            
                 <StatusBarItem Grid.Column="4" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="ellipse" Width="12" Height="12" Fill="Red">

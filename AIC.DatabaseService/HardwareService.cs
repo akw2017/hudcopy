@@ -8,6 +8,7 @@ using AIC.M9600.Common.MasterDB.Generated;
 using AIC.ServiceInterface;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,15 +19,13 @@ namespace AIC.DatabaseService
 {
     public class HardwareService : IHardwareService
     {
-        private readonly ILocalConfiguration _localConfiguration;
         private readonly IConvertToDataBaseFormat _convertToDataBaseFormat;
         private readonly IConvertFromDataBaseFormat _convertFromDataBaseFormat;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ICardProcess _cardProcess;
         public ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; private set; }
-        public HardwareService(ILocalConfiguration localConfiguration, IConvertToDataBaseFormat convertToDataBaseFormat, IConvertFromDataBaseFormat convertFromDataBaseFormat, IDatabaseComponent databaseComponent, ICardProcess cardProcess)
+        public HardwareService(IConvertToDataBaseFormat convertToDataBaseFormat, IConvertFromDataBaseFormat convertFromDataBaseFormat, IDatabaseComponent databaseComponent, ICardProcess cardProcess)
         {
-            _localConfiguration = localConfiguration;
             _convertToDataBaseFormat = convertToDataBaseFormat;
             _convertFromDataBaseFormat = convertFromDataBaseFormat;
             _databaseComponent = databaseComponent;
@@ -40,12 +39,12 @@ namespace AIC.DatabaseService
 
         }
 
-        public void InitServers()
+        public void InitServers(IEnumerable<ServerInfo> serverlist)
         {
             ServerTreeItems.Clear();
-            foreach (var serverinfo in _localConfiguration.ServerInfoList.Where(p => p.LoginResult == true))
+            foreach (var server in serverlist)
             {
-                CardTreeGenerate.AddCardServerTree(ServerTreeItems, serverinfo.IP);
+                CardTreeGenerate.AddCardServerTree(ServerTreeItems, server.IP);
             }
             GetCardFromDatabase();
         }

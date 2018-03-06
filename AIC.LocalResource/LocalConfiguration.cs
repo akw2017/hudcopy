@@ -1,9 +1,11 @@
 ﻿using AIC.Core;
+using AIC.Core.Helpers;
 using AIC.Core.Models;
 using AIC.Core.Servers;
 using AIC.ServiceInterface;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,12 +16,13 @@ namespace AIC.LocalConfiguration
     public class LocalConfiguration : ILocalConfiguration
     {       
       
-        public List<ServerInfo> ServerInfoList { get; set; }
+        public ObservableCollection<ServerInfo> ServerInfoList { get; set; }
+        public IEnumerable<ServerInfo> LoginServerInfoList { get { return ServerInfoList.Where(p => p.LoginResult == true).Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)); } }
 
         IXmlDataService dataService = new XmlDataService();
         public LocalConfiguration()
         {
-            ServerInfoList = new List<ServerInfo>();            
+            ServerInfoList = new ObservableCollection<ServerInfo>();            
         }
 
         //string dir = @LocalSetting.ServerXmlDir;//昌邑石化
@@ -27,15 +30,16 @@ namespace AIC.LocalConfiguration
         public void Initialize()
         {
             try
-            {               
-                ServerInfoList = dataService.ReadServerXml(dir).ToList();
+            {
+                ServerInfoList.Clear();
+                ServerInfoList.AddRange(dataService.ReadServerXml(dir));
             }
             catch { }
             finally
             {
                 if (ServerInfoList == null)
                 {
-                    ServerInfoList = new List<ServerInfo>();
+                    ServerInfoList = new ObservableCollection<ServerInfo>();
                 }
                 if (ServerInfoList.Count == 0)
                 {
@@ -56,12 +60,14 @@ namespace AIC.LocalConfiguration
         }
         public void ReadServerInfo()
         {
-            Initialize();
+            //Initialize();
         }
 
         public void WriteServerInfo(IList<ServerInfo> info)
-        {          
-            ServerInfoList = new List<ServerInfo>(info);          
+        {
+            var serverlist = info.Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)).ToArray();
+            ServerInfoList.Clear();            
+            ServerInfoList.AddRange(serverlist);  //去重        
             
             var filename = dir.Substring(dir.LastIndexOf("\\"));
             var directory = dir.Substring(0, dir.Length - filename.Length);
@@ -69,7 +75,7 @@ namespace AIC.LocalConfiguration
             {
                 Directory.CreateDirectory(@directory);
             }
-            dataService.WriteServerXml(dir, info);
+            dataService.WriteServerXml(dir, ServerInfoList);
         }
     }
 }

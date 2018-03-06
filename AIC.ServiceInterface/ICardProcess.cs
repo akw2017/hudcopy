@@ -14,8 +14,6 @@ namespace AIC.ServiceInterface
     {
         List<ISlot> GetCardSlot(ICard card);
         List<IChannel> GetSlotChannel(ISlot slot);
-        IList<ItemTreeItemViewModel> DeleteBindItem(OrganizationTreeItemViewModel organization);
-        IList<ChannelTreeItemViewModel> DeleteBindChannel(IList<ServerTreeItemViewModel> servers, IList<ItemTreeItemViewModel> items);
         List<MainCardTreeItemViewModel> GetMainCards(IList<ServerTreeItemViewModel> servers);
         IChannel GetHardwareChannel(IList<ServerTreeItemViewModel> servers, T1_Item item);      
         IChannel GetHardwareChannel(IList<WireMatchingCard> cards, int cardNum, int slotNum, int chnNum);

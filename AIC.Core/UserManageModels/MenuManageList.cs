@@ -40,6 +40,9 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuExportDBData { get; set; }
         public MyMenu MenuImportDBData { get; set; }
         public MyMenu MenuFilterDBData { get; set; }
+        public MyMenu DeviceQucikData { get; set; }
+        public MyMenu ItemQucikData { get; set; }
+
         public static Dictionary<int, MyMenu> Dictionary;
 
         public MenuManageList()
@@ -74,6 +77,8 @@ namespace AIC.Core.UserManageModels
             MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"], "/AIC.Resources;component/Images/export32.png");
             MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"], "/AIC.Resources;component/Images/import32.png");
             MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"], "/AIC.Resources;component/Images/search.png");
+            DeviceQucikData = new MyMenu(30, (string)Application.Current.Resources["menuDeviceQucikData"], "/AIC.Resources;component/Images/search.png");
+            ItemQucikData = new MyMenu(31, (string)Application.Current.Resources["menuItemQucikData"], "/AIC.Resources;component/Images/search.png");
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -105,6 +110,8 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(27, MenuExportDBData);
             Dictionary.Add(28, MenuImportDBData);
             Dictionary.Add(29, MenuFilterDBData);
+            Dictionary.Add(30, DeviceQucikData);
+            Dictionary.Add(31, ItemQucikData);
         }
 
         public static MyMenu GetMenu(string strname)

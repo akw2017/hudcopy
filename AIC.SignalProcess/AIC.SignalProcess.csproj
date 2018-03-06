@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SignalProcess.cs" />
+    <Compile Include="SignalProcess.Statistics.cs" />
     <Compile Include="SignalProcessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\JsonTest.cs" />

@@ -8,6 +8,9 @@ using System.Windows.Interop;
 using Arction.Wpf.Charting;
 using AICAir.Chart;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using System.Reflection;
+using System.IO;
 
 //注意下面的语句一定要加上，指定log4net使用.config文件来读取配置信息
 //如果是WinForm（假定程序为MyDemo.exe，则需要一个MyDemo.exe.config文件）
@@ -54,6 +57,7 @@ namespace AICAir
             log.Fatal(e.ExceptionObject);
         }
 
+        #region 避免程序多开
         [DllImport("user32", CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindow(string cls, string win);
         [DllImport("user32")]
@@ -96,6 +100,7 @@ namespace AICAir
                     OpenIcon(other);
             }
         }
+        #endregion
 
         protected override void OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs e)
         {

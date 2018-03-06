@@ -2,6 +2,7 @@
 using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace AIC.ServiceInterface
     {
         ObservableCollection<ServerTreeItemViewModel> ServerTreeItems { get; }
         void Initialize();
-        void InitServers();
+        void InitServers(IEnumerable<ServerInfo> serverlist);
         Task<List<ChannelTreeItemViewModel>> AddCard(string serverIP, string maincardIP, string json);
         Task<List<ChannelTreeItemViewModel>> DeleteCard(string serverIP, string maincardIP, string json);
         Task<List<ChannelTreeItemViewModel>> ForceDeleteCard(string serverIP, string maincardIP);

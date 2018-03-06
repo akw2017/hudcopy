@@ -43,7 +43,9 @@ namespace AIC.PDAPage.ViewModels
         private readonly ICardProcess _cardProcess;
         private readonly ISignalProcess _signalProcess;
         private readonly IDatabaseComponent _databaseComponent;
-        public PDASystemManageViewModel(IEventAggregator eventAggregator, IHardwareService hardwareService, IOrganizationService organizationService, IConvertToDataBaseFormat convertToDataBaseFormat, ILoginUserService loginUserService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent)
+        private readonly ILocalConfiguration _localConfiguration;
+
+        public PDASystemManageViewModel(IEventAggregator eventAggregator, IHardwareService hardwareService, IOrganizationService organizationService, IConvertToDataBaseFormat convertToDataBaseFormat, ILoginUserService loginUserService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration)
         {
             _eventAggregator = eventAggregator;
             _hardwareService = hardwareService;
@@ -53,6 +55,7 @@ namespace AIC.PDAPage.ViewModels
             _cardProcess = cardProcess;
             _signalProcess = signalProcess;
             _databaseComponent = databaseComponent;
+            _localConfiguration = localConfiguration;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
@@ -1004,7 +1007,7 @@ namespace AIC.PDAPage.ViewModels
         #region 编辑树
         private bool CanOperate(object para)
         {
-            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            if (_localConfiguration.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
                 return true;
             }
@@ -3753,7 +3756,7 @@ namespace AIC.PDAPage.ViewModels
                 //更新延时报警
                 if (SelectedChannel.T_AbstractChannelInfo.T_Item_Guid != null)
                 {
-                    var sg = _signalProcess.GetSignal(SelectedChannel.T_AbstractChannelInfo.T_Item_Guid.Value);
+                    var sg = _signalProcess.GetSignal(SelectedChannel.T_AbstractChannelInfo.T_Item_Guid.Value, SelectedServerTree.ServerIP); //var sg = _signalProcess.GetSignal(SelectedChannel.T_AbstractChannelInfo.T_Item_Guid.Value);
                     if (sg != null)
                     {
                         sg.DelayAlarmTime = SelectedChannel.DelayAlarmTime;

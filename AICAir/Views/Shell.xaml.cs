@@ -27,7 +27,7 @@ namespace AICAir.Views
                 System.Windows.Application.Current.Shutdown();
             }
 #if XBAP
-            MessageBoxResult result = MessageBox.Show((string)System.Windows.Application.Current.Resources["strExitSystem"], (string)System.Windows.Application.Current.Resources["strExit"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            MessageBoxResult result = System.Windows.MessageBox.Show((string)System.Windows.Application.Current.Resources["strExitSystem"], (string)System.Windows.Application.Current.Resources["strExit"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
 #else
             MessageBoxResult result = Xceed.Wpf.Toolkit.MessageBox.Show((string)System.Windows.Application.Current.Resources["strExitSystem"], (string)System.Windows.Application.Current.Resources["strExit"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
 #endif

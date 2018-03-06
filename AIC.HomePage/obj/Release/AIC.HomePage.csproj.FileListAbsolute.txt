@@ -158,3 +158,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.Propertie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\LiveCharts.Wpf.xml

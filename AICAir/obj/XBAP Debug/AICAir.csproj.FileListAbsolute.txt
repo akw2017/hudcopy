@@ -2726,3 +2726,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tools\TextIc
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\tiles\3\0\0.jpg
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MyData\Htmls\images\red.png
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.xml

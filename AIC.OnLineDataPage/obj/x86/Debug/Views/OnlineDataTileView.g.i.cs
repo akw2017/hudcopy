@@ -12,10 +12,8 @@
 using AIC.Core;
 using AIC.Core.ExCommand;
 using AIC.Core.OrganizationModels;
-using AIC.Core.SignalModels;
 using AIC.CoreType;
 using AIC.OnLineDataPage.Controls;
-using AIC.OnLineDataPage.Converters;
 using AIC.OnLineDataPage.Views;
 using Prism.Interactivity;
 using Prism.Interactivity.InteractionRequest;

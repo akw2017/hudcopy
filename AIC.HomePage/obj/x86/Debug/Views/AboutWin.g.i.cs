@@ -9,7 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using AIC.Core;
 using AIC.HomePage.Controls;
 using AIC.HomePage.Views;
 using MahApps.Metro.Controls;

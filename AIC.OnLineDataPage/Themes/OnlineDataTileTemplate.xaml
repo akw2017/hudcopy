@@ -97,7 +97,7 @@
                 <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="Invalid">
-                <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
+                <Setter TargetName="AMSText" Property="Foreground" Value="HotPink"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighPreAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Yellow"/>

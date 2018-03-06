@@ -9,7 +9,9 @@
              xmlns:prism="http://prismlibrary.com/"  
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              Dialog:DialogParticipation.Register="{Binding}" 
+             Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -19,7 +21,10 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0,30,0,0">
+    <Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <!--<Image x:Name="image" Opacity="1" Stretch="Fill" Source="/AIC.Resources;component/Images/Splash.png" ></Image>-->
         <!--<StackPanel HorizontalAlignment="Right" Margin="0,0,50,0">            
             <TextBlock Text="●在线振动监测"  FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0"/>
@@ -30,204 +35,13 @@
         <!--<StackPanel VerticalAlignment="Bottom" Margin="0,0,0,50">
             <TextBlock Text="专业振动监测平台" FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"/>            
         </StackPanel>-->
-        
-        <Grid HorizontalAlignment="Right" Width="400" VerticalAlignment="Stretch" Margin="0,50,50,50">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Viewport3D Grid.Row="0" >
-                <Viewport3D.Camera>
-                    <PerspectiveCamera          
-          LookDirection="0.860635186352138,-0.38398378411531,-0.334460056731904"
-          UpDirection="0.029961777553063,0.999518146084944,-0.00810971841540775"
-          Position="-22,15,13"
-          NearPlaneDistance="1"
-          FarPlaneDistance="100"
-          FieldOfView="38"
-            >
-
-                    </PerspectiveCamera>
-                </Viewport3D.Camera>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <DirectionalLight
-             Color="White"
-             Direction="-2,-3,-1" />
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <DirectionalLight
-             Color="White"
-             Direction="2,1,1" />
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <GeometryModel3D>
-                            <GeometryModel3D.Geometry>
-                                <MeshGeometry3D Positions="0,0,0 10,0,0 0,10,0 10,10,0
-                                           0,0,10 10,0,10 0,10,10 10,10,10"
-                      TriangleIndices="0,2,1 1,2,3 
-                                                 0,1,4 1,5,4 1,7,5 1,3,7 
-                                                 4,5,6 7,6,5 2,6,3 3,6,7"
-                       Normals="0,1,0 0,1,0 1,0,0 1,0,0
-                                 0,1,0 0,1,0 1,0,0 1,0,0" />
-
-                            </GeometryModel3D.Geometry>
-                            <GeometryModel3D.Material>
-                                <DiffuseMaterial Brush="{DynamicResource AccentColorBrush}" />
-                            </GeometryModel3D.Material>
-                        </GeometryModel3D>
-                    </ModelVisual3D.Content>
-                    <ModelVisual3D.Transform>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="{Binding ElementName=sliderRotate, Path=Value}"
-                                     Axis="0 1 0" />
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </ModelVisual3D.Transform>
-                </ModelVisual3D>
-
-                <Viewport2DVisual3D>
-                    <Viewport2DVisual3D.Geometry>
-                        <MeshGeometry3D
-                Positions="0,0,0 0,0,10 0,10,0 0,10,10"
-               TriangleIndices="0,1,2 2,1,3"
-               TextureCoordinates="0,1 1,1 0,0 1,0"
-                               />
-                    </Viewport2DVisual3D.Geometry>
-
-                    <Viewport2DVisual3D.Material>
-                        <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True" />
-                    </Viewport2DVisual3D.Material>
-
-                    <Viewport2DVisual3D.Visual>
-                        <Border BorderBrush="Yellow" BorderThickness="1">
-                            <StackPanel Margin="10">
-                                <TextBlock Margin="3">在线振动监测</TextBlock>
-                                <TextBlock Margin="3">海量数据分析</TextBlock>
-                                <TextBlock Margin="3">在线故障诊断</TextBlock>
-                                <TextBlock Margin="3">历史数据回放</TextBlock>
-                            </StackPanel>
-                        </Border>
-                    </Viewport2DVisual3D.Visual>
-
-                    <Viewport2DVisual3D.Transform>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="{Binding ElementName=sliderRotate, Path=Value}" 
-                                       Axis="0 1 0" />
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </Viewport2DVisual3D.Transform>
-                </Viewport2DVisual3D>
-
-            </Viewport3D>
-            <Viewport3D Grid.Row="1">
-                <Viewport3D.Camera>
-                    <PerspectiveCamera          
-          LookDirection="2,-1,-1"
-          UpDirection="0,1,0"
-          Position="-20,15,15"
-          NearPlaneDistance="1"
-          FarPlaneDistance="100"
-          FieldOfView="40"
-            >
-
-                    </PerspectiveCamera>
-                </Viewport3D.Camera>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <DirectionalLight
-             Color="White"
-             Direction="-2,-3,-1" />
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <DirectionalLight
-             Color="White"
-             Direction="2,1,1" />
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <GeometryModel3D>
-                            <GeometryModel3D.Geometry>
-                                <MeshGeometry3D Positions="0,0,0 10,0,0 0,10,0 10,10,0
-                                           0,0,10 10,0,10 0,10,10 10,10,10"
-                      TriangleIndices="0,2,1 1,2,3 
-                                                 0,1,4 1,5,4 1,7,5 1,3,7 
-                                                 4,5,6 7,6,5 2,6,3 3,6,7"
-                       Normals="0,1,0 0,1,0 1,0,0 1,0,0
-                                 0,1,0 0,1,0 1,0,0 1,0,0" />
-
-                            </GeometryModel3D.Geometry>
-                            <GeometryModel3D.Material>
-                                <DiffuseMaterial Brush="{DynamicResource AccentColorBrush}" />
-                            </GeometryModel3D.Material>
-                        </GeometryModel3D>
-                    </ModelVisual3D.Content>
-                    <ModelVisual3D.Transform>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="{Binding ElementName=sliderRotate, Path=Value}"
-                                     Axis="0 1 0" />
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </ModelVisual3D.Transform>
-                </ModelVisual3D>
-
-                <Viewport2DVisual3D>
-                    <Viewport2DVisual3D.Geometry>
-                        <MeshGeometry3D
-                Positions="0,0,0 0,0,10 0,10,0 0,10,10"
-               TriangleIndices="0,1,2 2,1,3"
-               TextureCoordinates="0,1 1,1 0,0 1,0"
-                               />
-                    </Viewport2DVisual3D.Geometry>
-
-                    <Viewport2DVisual3D.Material>
-                        <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True" />
-                    </Viewport2DVisual3D.Material>
-
-                    <Viewport2DVisual3D.Visual>
-                        <Border BorderBrush="Yellow" BorderThickness="1">
-                            <StackPanel Margin="10">
-                                <TextBlock Margin="3">专业振动监测平台</TextBlock>
-                                <Button Margin="3">联系我们</Button>
-                                <TextBox Margin="3">[北京航天智控]</TextBox> <!--青岛众志测控-->
-                            </StackPanel>
-                        </Border>
-                    </Viewport2DVisual3D.Visual>
-
-                    <Viewport2DVisual3D.Transform>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="{Binding ElementName=sliderRotate, Path=Value}" 
-                                       Axis="0 1 0" />
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </Viewport2DVisual3D.Transform>
-                </Viewport2DVisual3D>
-
-            </Viewport3D>
-        </Grid>
-        <ListBox x:Name="myListBox" ItemsSource="{Binding ServerInfo}" Background="Transparent">
-            <ListBox.ItemsPanel>
+        <Expander ExpandDirection="Down" Header="服务器列表" Width="300" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <ListBox x:Name="myListBox" ItemsSource="{Binding ServerInfoList}" Background="Transparent">
+            <!--<ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+            </ListBox.ItemsPanel>-->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DataTemplate.Resources>
@@ -238,7 +52,7 @@
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </DataTemplate.Resources>
-                    <Grid x:Name="tile" Width="300" Height="125"                            
+                    <Grid x:Name="tile" Height="55"                            
                                Background="{DynamicResource AccentColorBrush}"
                                Margin="3">                       
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -250,7 +64,7 @@
                             <CheckBox IsChecked="{Binding IsLogin}" VerticalAlignment="Bottom"/>
                             <!--<Image Source="{Binding Path=IsLoginBigIcon}" Width="16" Height="16" VerticalAlignment="Bottom"></Image>-->
                         </StackPanel>
-                        <TextBlock Text="{Binding Factory}" Margin="6,0,0,4" Foreground="{DynamicResource WhiteBrush}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{Binding Name}" Margin="6,0,0,6" Foreground="{DynamicResource WhiteBrush}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -269,12 +83,71 @@
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>
-            </ListBox.ItemTemplate>           
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding LoginCommand}" CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
+            </ListBox.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding LoginCommand}" CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedServerChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+        </Expander>
+
+        <GroupBox VerticalAlignment="Center" HorizontalAlignment="Center">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Height="40">
+                    <Image Stretch="Fill" Height="28" Width="28" Source="/AIC.Resources;component/Images/user_go.png" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource strUserLogin}" FontSize="24" VerticalAlignment="Center" Foreground="{DynamicResource WhiteBrush}"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <Grid Background ="{DynamicResource AccentColorBrush}">
+                <Grid Margin="20" Height="245" Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource strServer}" />
+                    <TextBox x:Name="txtServer" Grid.Row="0" Grid.Column="1" Style="{DynamicResource MetroTextBox}"
+                        Text = "{Binding LoginInfo.ServerInfo.IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                    </TextBox>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource strSecondaryserver}" />
+                    <CheckBox x:Name="chkSecondaryServer" IsChecked="{Binding LoginInfo.HasSecondaryServer}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+                    <!--昌邑石化-->
+                    <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource strUser}"/>
+                    <TextBox x:Name="txtUser" Grid.Row="2" Grid.Column="1" Style="{DynamicResource MetroTextBox}"
+                        Text = "{Binding LoginInfo.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource strPassword}"/>
+                    <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="txtPwd" VerticalContentAlignment="Center" 
+                        core:PasswordBoxHelper.Attach="True"
+                        core:PasswordBoxHelper.Password="{Binding LoginInfo.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </PasswordBox>
+                    <CheckBox Grid.Row="4" Grid.Column="0" Content="{DynamicResource rememberUser}" IsChecked="{Binding LoginInfo.ServerInfo.IsSaveUserName}" FontSize="16" Margin="5,0,0,0"></CheckBox>
+                    <CheckBox Grid.Row="4" Grid.Column="1" Content="{DynamicResource rememberPwd}" IsChecked="{Binding LoginInfo.ServerInfo.IsSaveUserPwd}" FontSize="16"></CheckBox>
+                    <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding LoginInfo.RrrorInformation}" Foreground="#FFFF0000"/>
+                    <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding LoginCommand}" Style="{DynamicResource AccentedSquareButtonStyle}"   IsDefault="True">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                                <TextBlock Text="{DynamicResource strLogin}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Controls:ProgressRing x:Name="waitring" Grid.RowSpan="7" Grid.ColumnSpan="2"
+                                       Width="40"
+                                       Height="40" Visibility="Hidden"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

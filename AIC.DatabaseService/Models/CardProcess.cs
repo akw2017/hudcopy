@@ -168,58 +168,6 @@ namespace AIC.DatabaseService.Models
             }
             return Channels;
         }
-        //删除绑定,有问题
-        public IList<ItemTreeItemViewModel> DeleteBindItem(OrganizationTreeItemViewModel organization)
-        {
-            if (organization is DivFreTreeItemViewModel)//分频
-            {
-                return null;
-            }          
-
-            List<ItemTreeItemViewModel> delete_items = new List<ItemTreeItemViewModel>();
-            if (organization is ItemTreeItemViewModel)//节点为测点
-            {
-                delete_items.Add(organization as ItemTreeItemViewModel);
-            }
-            var items = GetItems(organization.Children);
-            if (items != null)//子节点中的测点
-            {
-                delete_items.AddRange(items);
-            }
-          
-            var bind_items = from p in delete_items where (p is ItemTreeItemViewModel) && (p as ItemTreeItemViewModel).IsPaired == true select p as ItemTreeItemViewModel;
-                           
-            return bind_items.ToList();
-        }
-
-        public IList<ChannelTreeItemViewModel> DeleteBindChannel(IList<ServerTreeItemViewModel> servers, IList<ItemTreeItemViewModel> items)
-        {
-            List<ChannelTreeItemViewModel> delete_items = new List<ChannelTreeItemViewModel>();
-
-            var bind_channel = from p in GetChannels(servers) where p.IsPaired == true select p;
-
-            foreach (var item in items)
-            {                
-                ChannelTreeItemViewModel channel = (from p in bind_channel where p.IChannel.T_Item_Guid == item.T_Item.Guid.ToString() select p).FirstOrDefault();
-
-                if (channel != null)
-                {
-                    //var i_channel = channel.IChannel;/*GetHardwareChannel(servers, item.T_Item.ServerIP, item.T_Item.IP, item.T_Item.CardNum, item.T_Item.SlotNum, item.T_Item.CHNum);*/
-                    //i_channel.Organization.Clear();
-
-                    //channel.IsPaired = false;
-                    //channel.IChannel.T_Item_Name = null;
-                    //channel.IChannel.T_Item_Code = null;
-                    //channel.IChannel.T_Item_Guid = null;
-                    //channel.IChannel.T_Device_Name = null;
-                    //channel.IChannel.T_Device_Code = null;
-                    //channel.IChannel.T_Device_Guid = null;
-                    delete_items.Add(channel);
-                }                
-            }
-            return delete_items;
-        }
-
 
         //将服务树中所有通道list出来
         public List<ChannelTreeItemViewModel> GetChannels(IList<ServerTreeItemViewModel> servers)
@@ -248,7 +196,7 @@ namespace AIC.DatabaseService.Models
             return channels;
         }
 
-        //将服务树中指定Ip所有通道list出来
+        //将服务树中指定Channel所有通道list出来
         private List<ChannelTreeItemViewModel> GetChannels(IList<ServerTreeItemViewModel> servers, WireType wiretype)
         {
             if (servers == null || servers.Count == 0)
@@ -336,8 +284,8 @@ namespace AIC.DatabaseService.Models
 
             foreach (var server in servers)
             {
-                //if (server.ServerIP == item.ServerIP)
-                //{
+                if (server.ServerIP == item.ServerIP) //服务器IP匹配20180306
+                {
                     foreach (var maincard in server.Children)
                     {
                         if ((maincard as MainCardTreeItemViewModel).MainControlCardIP == item.IP)
@@ -355,7 +303,7 @@ namespace AIC.DatabaseService.Models
                             }
                         }
                     }
-                //}
+                }
             }
 
             return null;
@@ -371,7 +319,7 @@ namespace AIC.DatabaseService.Models
 
             foreach (var server in servers)
             {
-                if (server.ServerIP == serverip)
+                if (server.ServerIP == serverip)//服务器IP匹配20180306
                 {
                     foreach (var maincard in server.Children)
                     {
@@ -472,23 +420,25 @@ namespace AIC.DatabaseService.Models
             if ((item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
                              || (item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo))
             {
-                var channels = from p in GetChannels(servers, WireType.Wireless) select p;
+                var channels = GetChannels(servers, WireType.Wireless);
                 ChannelTreeItemViewModel channel = (from p in channels where
                                                     (p.Parent.Parent.Parent.Parent as MainCardTreeItemViewModel).MainControlCardIP == item.IP &&
                                                     (p.Parent.Parent as TransmissionCardTreeItemViewModel).SlaveIdentifier == item.SlaveIdentifier && 
                                                     (p.Parent as SlotTreeItemViewModel).SlotNum == item.SlotNum &&                                                     
-                                                    p.CHNum == item.CHNum
+                                                    p.CHNum == item.CHNum &&
+                                                    p.ServerIP == item.ServerIP//服务器IP匹配20180306
                                                     select p).FirstOrDefault();
                 return channel;
             }
             else
             {
-                var channels = from p in GetChannels(servers, WireType.Wire) select p;
+                var channels = GetChannels(servers, WireType.Wire);
                 ChannelTreeItemViewModel channel = (from p in channels
                                                     where (p.Parent.Parent.Parent as MainCardTreeItemViewModel).MainControlCardIP == item.IP
                                                     && (p.Parent.Parent as WireMatchingCardTreeItemViewModel).CardNum == item.CardNum
                                                     && (p.Parent as SlotTreeItemViewModel).SlotNum == item.SlotNum
-                                                    && p.CHNum == item.CHNum
+                                                    && p.CHNum == item.CHNum &&
+                                                    p.ServerIP == item.ServerIP//服务器IP匹配20180306
                                                     select p).FirstOrDefault();
                 return channel;
             }            

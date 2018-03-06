@@ -59,7 +59,7 @@
                             <Setter TargetName="IconPath" Property="Width" Value="24"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
@@ -92,7 +92,7 @@
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsRunning}" Value="false">
                             <Setter TargetName="txtRun" Property="Visibility" Value="Collapsed"/>
@@ -204,7 +204,7 @@
                                             <Setter  Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="Invalid">
-                                            <Setter  Property="Foreground" Value="Pink"/>
+                                            <Setter  Property="Foreground" Value="HotPink"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="HighPreAlarm">
                                             <Setter Property="Foreground" Value="Yellow"/>
@@ -344,7 +344,7 @@
                        TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="Invalid">
-                                <Setter  Property="Foreground" Value="Pink"/>
+                                <Setter  Property="Foreground" Value="HotPink"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=DiagnosticGrade}" Value="HighPreAlarm">
                                 <Setter Property="Foreground" Value="Yellow"/>

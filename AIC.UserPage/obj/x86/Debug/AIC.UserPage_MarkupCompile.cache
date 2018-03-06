@@ -4,16 +4,16 @@
 library
 C#
 .cs
-D:\SupportProject\AIC_HUD\AICHUID\AIC.UserPage\obj\x86\Debug\
+D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\obj\x86\Debug\
 AIC.UserPage
 none
 false
-DEBUG;TRACE
+TRACE;DEBUG;XBAP
 
 102013080453
 
 2374121957
-84-1043862136
+87-1031737044
 Themes\Generic.xaml;Views\MenuSetView.xaml;Views\OrganizationPrivilegeSetWin.xaml;Views\OrganizationPrivilegeSetView.xaml;Views\RoleSetView.xaml;Views\MenuSetWin.xaml;Views\RoleSetWin.xaml;Views\OperateRecordView.xaml;Views\UserSetWin.xaml;Views\UserSetView.xaml;
 
 False

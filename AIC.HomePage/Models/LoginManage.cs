@@ -11,6 +11,7 @@ using System.Windows;
 using Microsoft.Practices.ServiceLocation;
 using AIC.ServiceInterface;
 using System.Threading;
+using AIC.Core.Helpers;
 
 namespace AIC.HomePage.Models
 {
@@ -19,10 +20,10 @@ namespace AIC.HomePage.Models
         private static LoginWin win;
         private static bool succeed; 
         private static IDatabaseComponent _databaseComponent;
+        private static ILocalConfiguration _localConfiguration;
 
         public delegate void TransferLoginResult(bool result);
         public static event TransferLoginResult LoginChanged;
-
 
         public static bool Enter(LoginInfo logininfo)
         {
@@ -45,9 +46,10 @@ namespace AIC.HomePage.Models
         private async static void Win_Parachanged(LoginInfo logininfo)
         {
             _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
+            _localConfiguration = ServiceLocator.Current.GetInstance<ILocalConfiguration>();
 
             Dictionary<string, Task<string>> lttask = new Dictionary<string, Task<string>>();
-            foreach (var serverinfo in logininfo.ServerInfoList)
+            foreach (var serverinfo in _localConfiguration.ServerInfoList.Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)))
             {
                 if (serverinfo.IP == logininfo.ServerInfo.IP)
                 {
@@ -73,14 +75,14 @@ namespace AIC.HomePage.Models
                         return;
                     }
 
-                    logininfo.ServerInfoList.Where(p => p.IP == task.Key).ToList().ForEach(p => { p.LoginResult = false; p.Permission = "网络未连接"; });
+                    _localConfiguration.ServerInfoList.Where(p => p.IP == task.Key).ToList().ForEach(p => { p.LoginResult = false; p.Permission = "网络未连接"; });
                 }
             }
 
             //超级密码登陆
             if ((logininfo.UserName == "superadmin" && logininfo.Password == "superadmin"))
             {
-                foreach (var serverinfo in logininfo.ServerInfoList)
+                foreach (var serverinfo in _localConfiguration.ServerInfoList)
                 {
                     if (serverinfo.IP == logininfo.ServerInfo.IP)
                     {
@@ -147,7 +149,7 @@ namespace AIC.HomePage.Models
                 return;
             }
 
-            foreach (var serverinfo in logininfo.ServerInfoList)
+            foreach (var serverinfo in _localConfiguration.ServerInfoList)
             {
                 if (serverinfo.IP == logininfo.ServerInfo.IP)
                 {

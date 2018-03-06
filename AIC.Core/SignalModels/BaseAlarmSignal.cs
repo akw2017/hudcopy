@@ -286,7 +286,46 @@ namespace AIC.Core.SignalModels
             }
         }
 
-        public int Low8Alarm { get { return (int)AlarmGrade & 0xff; } }//低8位
+        public int Low8Alarm//低8位
+        {
+            get
+            {
+                switch (DelayAlarmGrade)
+                {
+                    case AlarmGrade.Invalid:
+                        {
+                            return 0;
+                        }
+                    case AlarmGrade.HighNormal:
+                    case AlarmGrade.LowNormal:
+                        {
+
+                            return 1;
+                        }
+                    case AlarmGrade.HighPreAlarm:
+                    case AlarmGrade.LowPreAlarm:
+                        {
+                            return 2;
+                        }
+                    case AlarmGrade.HighAlarm:
+                    case AlarmGrade.LowAlarm:
+                        {
+                            return 3;
+                        }
+                    case AlarmGrade.HighDanger:
+                    case AlarmGrade.LowDanger:
+                        {
+                            return 4;
+                        }
+                    case AlarmGrade.DisConnect:
+                        {
+                            return -1;
+                        }
+                    default: return -1;
+                }
+            }
+        }
+
         //报警限值  
         private AlarmLimit[] alarmLimit;
         public AlarmLimit[] AlarmLimit
@@ -334,7 +373,18 @@ namespace AIC.Core.SignalModels
                     OnPropertyChanged("AlarmMax");
                 }
             }
-        }       
+        }
+
+
+        public double PercentResult
+        {
+            get
+            {
+                var percentResult = (Result ?? 0) / AlarmMax * 100;
+                return (percentResult > 100)? 100 : percentResult;
+            }
+          
+        }
 
         public byte? ACQ_Unit_Type { get; set; }//数采器类型
         public byte? AsySyn { get; set; }//异步/同步
@@ -357,6 +407,7 @@ namespace AIC.Core.SignalModels
                 {
                     result = value;
                     OnPropertyChanged("Result");
+                    OnPropertyChanged("PercentResult");
                 }
             }
         }

@@ -10,9 +10,35 @@ namespace AIC.Core.Models
 {
     public partial class LoginInfo : BindableBase
     {
-        public string UserName { get; set; }
+        private string userName;
+        public string UserName
+        {
+            get
+            {
+                return userName;
+            }
+            set
+            {
+                userName = value;
+                OnPropertyChanged("UserName");
+            }
+        }
+
         public string UserCode { get; set; }
-        public string Password { get; set; }
+
+        private string password;
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
         public bool LoginStatus { get; set; }
         public string Level { get; set; }
 
@@ -30,20 +56,30 @@ namespace AIC.Core.Models
             }
         }
 
-        public ServerInfo ServerInfo { get; set; }
+        private ServerInfo serverInfo;
+        public ServerInfo ServerInfo
+        {
+            get
+            {
+                return serverInfo;
+            }
+            set
+            {
+                serverInfo = value;
+                OnPropertyChanged("ServerInfo");
+            }
+        }
 
         public bool HasSecondaryServer { get; set; }
 
-        public IList<ServerInfo> ServerInfoList { get; set; }
-        public LoginInfo(string user, string password, string level, ServerInfo serverinfo, IList<ServerInfo> serverInfoList)
+        public LoginInfo(string user, string password, string level, ServerInfo serverinfo)
         {
             UserName = user;
             Password = password;
             Level = level;
             ServerInfo = serverinfo;
-            ServerInfoList = serverInfoList;
         }
-        public LoginInfo(string user, string level, ServerInfo info, IList<ServerInfo> serverInfoList) : this(user, "", level, info, serverInfoList) { }
+        public LoginInfo(string user, string level, ServerInfo info) : this(user, "", level, info) { }
 
         public void SetLoginInfo(string user, string password, string level, ServerInfo serverinfo)
         {

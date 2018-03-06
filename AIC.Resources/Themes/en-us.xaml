@@ -7,6 +7,7 @@
     <s:String x:Key="strLock">Lock</s:String>
     <s:String x:Key="strUnLock">UnLock</s:String>
     <s:String x:Key="strUser">User</s:String>
+    <s:String x:Key="strUserLogin">User Login</s:String>
     <s:String x:Key="strRole">Role</s:String>
     <s:String x:Key="strPassword">Password</s:String>
     <s:String x:Key="strOK">OK</s:String>
@@ -78,6 +79,9 @@
     <s:String x:Key="menuExportDBData">ExportDBData</s:String>
     <s:String x:Key="menuImportDBData">ImportDBData</s:String>
     <s:String x:Key="menuFilterDBData">SearchDBData</s:String>
+
+    <s:String x:Key="menuDeviceQucikData">DeviceQucikData</s:String>
+    <s:String x:Key="menuItemQucikData">ItemQucikData</s:String>
 
     <s:String x:Key="menuGeneralManage">GeneralManage</s:String>
     <s:String x:Key="menuSystemManage">SystemManage</s:String>

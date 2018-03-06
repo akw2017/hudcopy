@@ -226,7 +226,9 @@ namespace AIC.HardwareService
                     var t_item = _databaseComponent.GetItemData(ip).Where(p => p.Is_Disabled == false && p.Guid == organization.T_Organization.Guid).FirstOrDefault();
                     if (t_item != null)
                     {
-                        organization.RecoverBind(t_item);                       
+                        organization.RecoverBind(t_item);
+                        t_item.ServerIP = parent_organization.ServerIP;//改为初始化时候填充，覆盖数据库的ServerIP。 
+                        //如果彻底删除此项，必须修改//服务器IP匹配20180306                
                     }
                     ItemTreeItems.Add(organization);
 

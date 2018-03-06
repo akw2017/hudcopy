@@ -25,6 +25,7 @@ using AIC.HardwareService;
 using AIC.DatabaseService;
 using AIC.DatabaseService.Models;
 using AIC.UserPage;
+using AIC.SignalProcess;
 
 namespace AICAir
 {

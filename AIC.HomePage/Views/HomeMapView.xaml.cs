@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.CoreType;
 using AIC.HomePage.ViewModels;
 using AIC.OnLineDataPage.Views;
 using AIC.ServiceInterface;
@@ -13,10 +14,12 @@ using Arction.Wpf.Charting.SeriesPolar;
 using Arction.Wpf.Charting.Titles;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Microsoft.Win32;
 using Prism.Events;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -35,6 +38,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.CloseTabControl;
 
+
 namespace AIC.HomePage.Views
 {
     /// <summary>
@@ -45,27 +49,29 @@ namespace AIC.HomePage.Views
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
         private readonly ILoginUserService _loginUserService;
+        private readonly ILocalConfiguration _localConfiguration;
         private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Htmls\\BMapOffline.html";
 
-        public HomeMapView(IEventAggregator eventAggregator, IRegionManager regionManager, ILoginUserService loginUserService)
+        public HomeMapView(ILocalConfiguration localConfiguration, IEventAggregator eventAggregator, IRegionManager regionManager, ILoginUserService loginUserService)
         {
             InitializeComponent();
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _loginUserService = loginUserService;
-            
+            _localConfiguration = localConfiguration;
+
+            #region            
             DoSomething ds = new DoSomething();
             this.webBrowser.ObjectForScripting = ds;
             ds.TransferClicked += Ds_TransferClicked;
             //this.webBrowser.Navigate(new Uri(System.Environment.CurrentDirectory + @"/MyData/Htmls/BMapOffline.html", UriKind.RelativeOrAbsolute));//获取根目录的html文件  
+            this.webBrowser.LoadCompleted += WebBrowser_LoadCompleted;
 
             string serverhtml = "http://" + _loginUserService.LoginInfo.ServerInfo.IP + ":38080/BMapOffline.html";
 
             if (GetPage(@serverhtml))
             {
                 this.webBrowser.Navigate(new Uri(@serverhtml));//获取根目录的html文件  
-                readDataTimer.Tick += new EventHandler(timeCycle);
-                readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
             }
             else
             {
@@ -78,24 +84,119 @@ namespace AIC.HomePage.Views
                 {
                     //this.webBrowser.Navigate(new Uri(@LocalSetting.MapHtmlUri));//获取根目录的html文件  //昌邑石化
                     this.webBrowser.Navigate(new Uri(@dir));//获取根目录的html文件 
-                    readDataTimer.Tick += new EventHandler(timeCycle);
-                    readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
                 }
             }
+            #endregion
 
-            _eventAggregator.GetEvent<ServerMarkEvent>().Subscribe(AddMarker);
             _eventAggregator.GetEvent<HideHtmlEvent>().Subscribe(HideHtml);
-            this.Loaded += new RoutedEventHandler(Window_Loaded);
 
             this.Closer = new CloseableHeader("tabFirst", (string)Application.Current.Resources["tabFirst"], false);
-        }
 
-        private void CefSetting()
-        {
-            
+
+            HomeMapViewModel vm = this.DataContext as HomeMapViewModel;
+            if (vm != null)
+            {
+                vm.ShowMapAlarmChanged += ShowMapAlarmChanged;
+                vm.ShowMapServerChanged += ShowMapServerChanged;
+            }
         }
 
         public CloseableHeader Closer { get; private set; }
+
+        #region 地图数据加载
+        private void WebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            ShowMapAlarmChanged();
+
+            webBrowser.InvokeScript("MoveToPoint", new object[2] { _loginUserService.LoginInfo.ServerInfo.Longitude, _loginUserService.LoginInfo.ServerInfo.Latitude });
+        }
+
+        private void ShowMapAlarmChanged()
+        {
+            webBrowser.InvokeScript("removeOverlay", null);
+            foreach (var server in _localConfiguration.LoginServerInfoList)
+            {
+                string name = (server.Name == null || server.Name == "") ? server.IP : server.Name;
+                string number = (server.AlarmCount > 99) ? "99+" : server.AlarmCount.ToString();
+                switch (server.AlarmGrade)
+                {
+                    case AlarmGrade.Invalid: 
+                    case AlarmGrade.HighNormal:
+                    case AlarmGrade.LowNormal:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "green", number });
+                            break;
+                        }
+                    case AlarmGrade.HighPreAlarm:
+                    case AlarmGrade.LowPreAlarm:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "yellow", number });
+                            break;
+                        }
+                    case AlarmGrade.HighAlarm:
+                    case AlarmGrade.LowAlarm:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "orange", number });
+                            break;
+                        }
+                    case AlarmGrade.HighDanger:
+                    case AlarmGrade.LowDanger:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "red", number });
+                            break;
+                        }
+                    case AlarmGrade.DisConnect:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "darkred", number });
+                            break;
+                        }
+                    default:
+                        {
+                            webBrowser.InvokeScript("addMarker", new object[5] { server.Longitude, server.Latitude, name, "green", "" });
+                            break;
+                        }
+                }
+
+            }
+        }
+
+        private void ShowMapServerChanged()
+        {
+            Move_Click(null, null);
+        }
+        #endregion
+
+        #region 测试使用
+        private void Move_Click(object sender, RoutedEventArgs e)
+        {
+            object[] objs = new object[2] {
+                double.Parse(this.jin.Text),
+                double.Parse(this.wei.Text)};
+            webBrowser.InvokeScript("MoveToPoint", objs);
+        }
+        private void Mark_Click(object sender, RoutedEventArgs e)
+        {
+            object[] objs = new object[5] {
+                double.Parse(this.jin.Text),
+                double.Parse(this.wei.Text),
+                "123",
+                "red",
+                "10"};
+            webBrowser.InvokeScript("addMarker", objs);
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            webBrowser.InvokeScript("removeOverlay", null);
+        }
+
+        private void AddMarks_Click(object sender, RoutedEventArgs e)
+        {
+            webBrowser.InvokeScript("addMarkerClusterer", null);
+        }        
+        #endregion
+
+        #region 辅助网页打开程序
 
         private static string ConvertExtendedASCII(string HTML)
         {
@@ -111,6 +212,21 @@ namespace AIC.HomePage.Views
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 判断是否中文
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <returns></returns>
+        public bool IsChinese(char Text)
+        {
+
+            if ((int)Text > 127)
+                return true;
+
+            return false;
+        }
+
+        //测试是否连通
         public static bool GetPage(String url)
         {
             bool ok = false;
@@ -142,115 +258,49 @@ namespace AIC.HomePage.Views
 
             return ok;
         }
+        #endregion
 
+        #region
         private void Ds_TransferClicked(string str)
         {
-            string viewName = "MenuOnlineDataList";
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            if (region.GetView(viewName) != null)
+            Dispatcher.BeginInvoke(new Action(delegate
             {
-                region.Activate(region.GetView(viewName));
-                return;
-            }
-            Object viewObj = ServiceLocator.Current.GetInstance<OnlineDataListView>();
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
-            {
-                view.Closer.RequestClose += () => region.Remove(view);
-            }
-            region.Add(view, viewName);
-            region.Activate(view);
+                HomeMapViewModel vm = this.DataContext as HomeMapViewModel;
+                if (vm != null)
+                {
+                    vm.GotoCommand.Execute(str);
+                }                
+            }));
         }
 
-        private System.Windows.Threading.DispatcherTimer readDataTimer = new System.Windows.Threading.DispatcherTimer();
 
         //public CloseableHeader Closer { get; private set; }
-        IList<ServerInfo> ServerInfo;
-        private void AddMarker(IList<ServerInfo> serverInfo)
-        {
-            ServerInfo = serverInfo;
-            readDataTimer.Start();
-        }
-        private void timeCycle(object sender, EventArgs e)
-        {
-            ServerInfo first = null;
-            webBrowser.InvokeScript("removeOverlay", null);
-            foreach (var server in ServerInfo)
-            {
-                if (server.LoginResult == true)
-                {
-                    if (first != null)
-                    {
-                        object[] objs2 = new object[4] {
-                        first.Longitude,
-                        first.Latitude,
-                        server.Longitude,
-                        server.Latitude};
-                        webBrowser.InvokeScript("addCurve", objs2);
-                    }
-                    else
-                    {
-                        first = server;
-                    }
+        //IList<ServerInfo> ServerInfo;
+        //private void AddMarker(IList<ServerInfo> serverInfo)
+        //{
+        //    ServerInfo = serverInfo;
+        //}
 
-                    string name = (server.Factory == null || server.Factory == "")? server.IP: server.Factory;
-                    object[] objs = new object[4] {
-                    server.Longitude,
-                    server.Latitude,
-                    0,
-                    name};
-                    webBrowser.InvokeScript("addMarker", objs);
-                    
-                }
-               
-            }
-            readDataTimer.Stop();
-            
-        }
+        #endregion
+
         private void HideHtml(int para)
         {
 #if XBAP
             if (para == 0)
             {
                 //隐藏并用Image替代WebBrowser
-                //imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
-                //webBrowser.Visibility = Visibility.Hidden;
+                imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
+                webBrowser.Visibility = Visibility.Hidden;
             }
             else
             {
                 //恢复WebBrowser
-                //imageResource.Source = null;
-                //webBrowser.Visibility = Visibility.Visible;
+                imageResource.Source = null;
+                webBrowser.Visibility = Visibility.Visible;
             }
 #endif
         }
-
-        void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
-            Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
-            if (btnGrdSplitter != null)
-                btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
-        }
-
-        GridLength m_WidthCache;
-        void btnGrdSplitter_Click(object sender, RoutedEventArgs e)
-        {
-            GridLength temp = grdWorkbench.ColumnDefinitions[0].Width;
-            GridLength zero = new GridLength(0);
-            if (!temp.Equals(zero))
-            {
-                //折叠
-                m_WidthCache = grdWorkbench.ColumnDefinitions[0].Width;
-                grdWorkbench.ColumnDefinitions[0].Width = new GridLength(0);
-            }
-            else
-            {
-                //恢复
-                grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
-            }
-        }
-
+        
     }
 
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
@@ -268,7 +318,10 @@ namespace AIC.HomePage.Views
         public void ClickEvent(string str)
         {
             this.Name = str;
-            TransferClicked(str);
+            if (TransferClicked != null)
+            {
+                TransferClicked(str);
+            }
             //MessageBox.Show("Welcome " + str);           
         }
     }

@@ -33,11 +33,14 @@ namespace AIC.UserPage.ViewModels
         private readonly IDatabaseComponent _databaseComponent;
         private readonly IEventAggregator _eventAggregator;
         private readonly ILoginUserService _loginUserService;
-        public RoleSetViewModel(IDatabaseComponent databaseComponent, IEventAggregator eventAggregator, ILoginUserService loginUserService)
+        private readonly ILocalConfiguration _localConfiguration;
+
+        public RoleSetViewModel(IDatabaseComponent databaseComponent, IEventAggregator eventAggregator, ILoginUserService loginUserService, ILocalConfiguration localConfiguration)
         {
             _databaseComponent = databaseComponent;
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
+            _localConfiguration = localConfiguration;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
@@ -219,7 +222,7 @@ namespace AIC.UserPage.ViewModels
 
         private bool CanOperate(object para)
         {
-            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            if (_localConfiguration.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
                 return true;
             }

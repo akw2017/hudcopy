@@ -9,14 +9,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using AIC.Core;
 using AIC.Core.ExCommand;
-using AIC.CoreType;
 using AIC.UserPage;
-using AIC.UserPage.Converters;
-using AIC.UserPage.Views;
-using Loya.Dameer;
-using MahApps.Metro.Controls;
 using Prism.Interactivity;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

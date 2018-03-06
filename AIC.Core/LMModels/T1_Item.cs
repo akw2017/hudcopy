@@ -98,7 +98,7 @@ namespace AIC.Core.LMModels
             }
             TempData.IP = ip;
             TempData.Identifier = identifier;
-            TempData.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            TempData.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             TempData.Is_Disabled = false;
             TempData.Modify_Time = DateTime.Now;
         }
@@ -166,7 +166,7 @@ namespace AIC.Core.LMModels
             }
             TempData.IP = ip;
             TempData.Identifier = identifier;
-            TempData.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            TempData.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             TempData.Is_Disabled = false;
             TempData.Modify_Time = DateTime.Now;
             TempData.Name = organization.Name;
@@ -204,7 +204,7 @@ namespace AIC.Core.LMModels
             TempData.Is_Disabled = this.Is_Disabled;
             TempData.IP = this.IP;
             TempData.Identifier = this.Identifier;
-            TempData.ServerIP = this.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            TempData.ServerIP = this.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             TempData.ItemType = this.ItemType;
             TempData.SlaveIdentifier = this.SlaveIdentifier;
         }
@@ -228,7 +228,7 @@ namespace AIC.Core.LMModels
             this.Is_Disabled = TempData.Is_Disabled;
             this.IP = TempData.IP;
             this.Identifier = TempData.Identifier;
-            this.ServerIP = TempData.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            this.ServerIP = TempData.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             this.ItemType = TempData.ItemType;
             this.SlaveIdentifier = TempData.SlaveIdentifier;
             TempData = null;

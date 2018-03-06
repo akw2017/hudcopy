@@ -146,6 +146,8 @@
     <Compile Include="Controls\TabContent.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\AlarmLimitToStringConverter.cs" />
+    <Compile Include="Converters\GradeToMyValueConverter.cs" />
+    <Compile Include="Converters\GradeToColorConverter.cs" />
     <Compile Include="Converters\RowToIndexConv.cs" />
     <Compile Include="Converters\IntToUnitConverter.cs" />
     <Compile Include="Converters\IndexConverter.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Events\LoginEvent.cs" />
     <Compile Include="Events\ServerChangedEvent.cs" />
     <Compile Include="Events\ServerMarkEvent.cs" />
+    <Compile Include="Events\StatisticalInformationDataChangedEvent.cs" />
     <Compile Include="Events\ThrowExceptionEvent.cs" />
     <Compile Include="ExCommand\CommandReference.cs" />
     <Compile Include="ExCommand\CustomCommandAction.cs" />
@@ -324,6 +327,7 @@
     <Compile Include="SignalModels\DigitRransducerOutChannelSignal.cs" />
     <Compile Include="SignalModels\AnalogRransducerOutChannelSignal.cs" />
     <Compile Include="SignalModels\DivFreSignal.cs" />
+    <Compile Include="SignalModels\StatisticalInformationData.cs" />
     <Compile Include="SignalModels\TrendPointData.cs" />
     <Compile Include="SignalModels\WirelessVibrationChannelSignal.cs" />
     <Compile Include="SignalModels\WirelessScalarChannelSignal.cs" />

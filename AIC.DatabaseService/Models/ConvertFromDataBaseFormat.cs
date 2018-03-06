@@ -76,7 +76,7 @@ namespace AIC.DatabaseService.Models
             card.SleepTime = t_card.SleepTime.Value;
             card.BatteryEnergy = (float)t_card.BatteryEnergy.Value; //htzk123
             card.Remarks = t_card.Remarks;
-            card.ExtraInfo = JsonConvert.DeserializeObject<ExtraInfo>(t_card.ExtraInfo);
+            card.ExtraInfo = JsonConvert.DeserializeObject<ChannelExtraInfo>(t_card.ExtraInfo);
 
             card.T_TransmissionCard = t_card;
             return card;

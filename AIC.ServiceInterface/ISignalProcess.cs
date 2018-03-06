@@ -21,11 +21,14 @@ namespace AIC.ServiceInterface
         void AddDivfre(DivFreTreeItemViewModel divfreTM);
         void DeleteDivfre(DivFreTreeItemViewModel divfreTMs);
         void Suspend(bool suspend);
-        BaseAlarmSignal GetSignal(Guid guid);
+        BaseAlarmSignal GetSignal(Guid guid, string serverip); //BaseAlarmSignal GetSignal(Guid guid);
 
         Task<bool> GetSignalData(DateTime time, bool isHistoryMode);
 
         event SignalChangedEvent SignalsAdded;
         event SignalChangedEvent SignalsRemoved;
+
+        void GetDailyMedianData(DateTime startTime, DateTime endTime);
+        event StatisticalInformationDataChangedEvent StatisticalInformationDataChanged;
     }
 }

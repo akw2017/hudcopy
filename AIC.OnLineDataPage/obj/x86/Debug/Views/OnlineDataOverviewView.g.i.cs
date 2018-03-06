@@ -12,24 +12,8 @@
 using AIC.Core;
 using AIC.Core.ExCommand;
 using AIC.Core.OrganizationModels;
-using AIC.Core.SignalModels;
 using AIC.CoreType;
-using AIC.Domain;
-using AIC.OnLineDataPage.Controls;
-using AIC.OnLineDataPage.Converters;
-using AIC.OnLineDataPage.Models;
 using AIC.OnLineDataPage.Views;
-using BolapanControl.ItemsFilter;
-using BolapanControl.ItemsFilter.Initializer;
-using BolapanControl.ItemsFilter.Model;
-using BolapanControl.ItemsFilter.View;
-using BolapanControl.ItemsFilter.ViewModel;
-using DiagramDesigner;
-using MahApps.Metro.Controls;
-using Microsoft.Expression.Interactivity.Core;
-using Microsoft.Expression.Interactivity.Input;
-using Microsoft.Expression.Interactivity.Layout;
-using Microsoft.Expression.Interactivity.Media;
 using Prism.Interactivity;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -57,20 +41,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
 using Wpf.PageNavigationControl;
-using Xceed.Wpf.Toolkit;
-using Xceed.Wpf.Toolkit.Chromes;
-using Xceed.Wpf.Toolkit.Core.Converters;
-using Xceed.Wpf.Toolkit.Core.Input;
-using Xceed.Wpf.Toolkit.Core.Media;
-using Xceed.Wpf.Toolkit.Core.Utilities;
-using Xceed.Wpf.Toolkit.Panels;
-using Xceed.Wpf.Toolkit.Primitives;
-using Xceed.Wpf.Toolkit.PropertyGrid;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
-using Xceed.Wpf.Toolkit.PropertyGrid.Commands;
-using Xceed.Wpf.Toolkit.PropertyGrid.Converters;
-using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
-using Xceed.Wpf.Toolkit.Zoombox;
 
 
 namespace AIC.OnLineDataPage.Views {

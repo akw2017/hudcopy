@@ -6,10 +6,12 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:control="clr-namespace:AIC.Core.OrganizationModels;assembly=AIC.Core"
              xmlns:convert="clr-namespace:AIC.HomePage.Converters"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" 
              xmlns:local="clr-namespace:AIC.HomePage"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Control.Resources>
@@ -28,142 +30,161 @@
                     </HierarchicalDataTemplate>
                 </ContextMenu.ItemTemplate>
             </ContextMenu>
+            <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
+            <core:GradeToColorConverter x:Key="gradeToColorConverter"/>
+            <core:GradeToMyValueConverter x:Key="gradeToMyValueConverter"/>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView Grid.Row="0" Name="treeview"              
-                        ItemsSource="{Binding OrganizationTreeItems}" 
-                        Style="{DynamicResource VirtualisedMetroTreeView}" >
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type control:OrganizationTreeItemViewModel}" ItemsSource="{Binding Path=Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <Path x:Name="IconPath" Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
-                        <Grid Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto"/>
-                        </Grid>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding T_Organization.Level}" Value="0">
-                            <Setter TargetName="IconPath" Property="Data" Value="F1 M 28.5,20.5833L 47.5,20.5833L 47.5,23.75L 28.5,23.75L 28.5,20.5833 Z M 49.0833,31.6667L 64.9166,31.6667L 64.9166,34.8334L 49.0833,34.8334L 49.0833,31.6667 Z M 28.5,25.3334L 34.8333,25.3334L 41.1666,25.3334L 47.5,25.3334L 47.5,52.25L 41.1666,52.25L 41.1666,42.75L 34.8333,42.75L 34.8333,52.25L 28.5,52.25L 28.5,25.3334 Z M 49.0833,52.25L 49.0833,36.4167L 53.8333,36.4167L 60.1666,36.4167L 64.9166,36.4167L 64.9166,52.25L 60.1666,52.25L 60.1666,44.3333L 53.8333,44.3333L 53.8333,52.25L 49.0833,52.25 Z M 11.0833,52.25L 11.0833,44.3333L 11.0833,41.1667L 19.7917,34.8334L 26.9167,41.1667L 26.9167,44.3333L 26.9167,52.25L 22.1667,52.25L 22.1667,44.3333L 15.8333,44.3333L 15.8333,52.25L 11.0833,52.25 Z M 19.7916,29.6875L 26.9166,36.0209L 26.9166,39.1875L 19.7916,32.8542L 9.49999,40.375L 9.49999,37.2084L 19.7916,29.6875 Z "/>
-                            <Setter TargetName="IconPath" Property="Width" Value="24"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type control:DeviceTreeItemViewModel}">
-                    <StackPanel Orientation="Horizontal">
-                        <Path Width="18" Height="18" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
-                        <Grid  Margin="2,0,2,0">
-                            <TextBlock x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" Width="Auto" />
-                        </Grid>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowPreAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowAlarm">
-                            <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="HighDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Alarm}" Value="LowDanger">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-                        </DataTrigger>
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-            </TreeView.Resources>
-
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem" BasedOn="{StaticResource LineTreeViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=OneTime}" />
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=OneTime}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
-
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectedItemChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-
-        </TreeView>
-
-        <GridSplitter x:Name="gsSplitterr" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
-
-        <Image Grid.Column="2" x:Name="imageResource" />
+        <Image x:Name="imageResource" Visibility="Collapsed" />
       
-        <WebBrowser Grid.Column="2" Grid.ColumnSpan="2" x:Name="webBrowser" />
+        <WebBrowser x:Name="webBrowser" />    
 
-        <Grid x:Name="browserGrid" Grid.Column="2" Grid.ColumnSpan="2"/>
-
-        <Expander Grid.Column="3" ExpandDirection="Left">
-            <Expander.Content>
+        <Grid Grid.Column="1" Width="320" Background="#A6C2DE">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            <GroupBox Header="{DynamicResource strServer}">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <lvc:AngularGauge Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="100" Height="100" Value="10" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="300" TicksForeground="White" Foreground="White" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
-                        <lvc:AngularGauge.Sections>
-                            <lvc:AngularSection FromValue="0" ToValue="100" Fill="Red"/>
-                        </lvc:AngularGauge.Sections>
-                    </lvc:AngularGauge>
-                    <lvc:AngularGauge Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="100" Height="100" Value="10" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="300" TicksForeground="White" Foreground="White" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
-                        <lvc:AngularGauge.Sections>
-                            <lvc:AngularSection FromValue="0" ToValue="100" Fill="Yellow"/>
-                        </lvc:AngularGauge.Sections>
-                    </lvc:AngularGauge>
-                    <lvc:AngularGauge Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="100" Height="100" Value="10" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="300" TicksForeground="White" Foreground="White" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
-                        <lvc:AngularGauge.Sections>
-                            <lvc:AngularSection FromValue="0" ToValue="100" Fill="Green"/>
-                        </lvc:AngularGauge.Sections>
-                    </lvc:AngularGauge>
+                    <ComboBox x:Name="servers" ItemsSource="{Binding ServerInfoList}" DisplayMemberPath="Name" SelectedItem="{Binding ServerInfo}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedServerChangedComamnd}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <Button Grid.Column="1" Content="Go" Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem, ElementName=servers}" Margin="4,0,0,0"/>
                 </Grid>
-            </Expander.Content>
-        </Expander>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Header="报警前三">
+                <Viewbox>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding FirstDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                            <lvc:AngularGauge.Sections>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=2}" Fill="Orange"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=3}" Fill="Red"/>
+                            </lvc:AngularGauge.Sections>
+                        </lvc:AngularGauge>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <TextBlock Text="{Binding FirstDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
+                            <TextBlock Background="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        </StackPanel>
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding SecondDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                            <lvc:AngularGauge.Sections>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=2}" Fill="Orange"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=3}" Fill="Red"/>
+                            </lvc:AngularGauge.Sections>
+                        </lvc:AngularGauge>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <TextBlock Text="{Binding SecondDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
+                            <TextBlock Background="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        </StackPanel>
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding ThirdDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                            <lvc:AngularGauge.Sections>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=2}" Fill="Orange"/>
+                                <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=3}" Fill="Red"/>
+                            </lvc:AngularGauge.Sections>
+                        </lvc:AngularGauge>
+                        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <TextBlock Text="{Binding ThirdDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
+                            <TextBlock Background="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </GroupBox>
+
+            <GroupBox Grid.Row="2" Header="报警曲线">
+                <lvc:CartesianChart  Series="{Binding SeriesCollection}" LegendLocation="None">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="点数" LabelFormatter="{Binding YFormatter}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="日期" Labels="{Binding Labels}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </GroupBox>
+
+            <GroupBox Grid.Row="3" Header="报警排名">
+              
+                <ListBox x:Name="myListBox" ItemsSource="{Binding AlarmServerInfoList}" Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <Path x:Name="pathIcon" Width="28" Height="28" Stretch="Fill" Fill="Green" Data="F1 M 54.8392,24.4749C 55.3507,24.2457 55.8111,24.1311 56.2202,24.1311C 56.6172,24.1311 56.966,24.2232 57.2668,24.4073C 57.5675,24.5915 57.8171,24.8339 58.0156,25.1347L 58.4575,26.1536L 58.6017,27.2737C 58.6017,29.6143 58.4667,31.8014 58.1966,33.8351C 57.9266,35.8688 57.5522,37.7644 57.0734,39.5218C 56.5947,41.2793 56.0289,42.8997 55.3763,44.383C 54.7236,45.8663 54.0167,47.232 53.2556,48.4801C 52.4946,49.7281 51.6925,50.8636 50.8496,51.8866C 50.0067,52.9095 49.1556,53.8302 48.2963,54.6486C 45.2682,57.5252 41.8351,59.6285 37.9969,60.9583C 34.1505,59.6285 30.7174,57.5252 27.6976,54.6486C 26.4086,53.421 25.1463,51.9633 23.9105,50.2754C 22.6748,48.5875 21.5751,46.6244 20.6114,44.3861C 19.6478,42.1478 18.8713,39.616 18.2821,36.7905C 17.6929,33.965 17.3982,30.7928 17.3982,27.2737L 17.5609,26.1413L 18.0397,25.1439C 18.2504,24.8493 18.5123,24.613 18.8253,24.435C 19.1383,24.257 19.4933,24.168 19.8902,24.168C 20.2871,24.168 20.7106,24.2703 21.1608,24.4749C 22.196,24.9495 23.1484,25.2851 24.0179,25.4815C 24.8875,25.6779 25.6925,25.7761 26.4332,25.7761C 27.4193,25.7761 28.3052,25.6298 29.0909,25.3372C 29.8765,25.0447 30.5987,24.6743 31.2575,24.2263L 33.0805,22.787L 34.7009,21.3476L 36.2906,20.2336C 36.8266,19.939 37.3954,19.7917 37.9969,19.7917C 38.6107,19.7917 39.1866,19.939 39.7247,20.2336L 41.3175,21.3476L 42.9471,22.787L 44.7701,24.2263C 45.4227,24.6743 46.1419,25.0447 46.9275,25.3372C 47.7132,25.6298 48.5991,25.7761 49.5852,25.7761C 50.3258,25.7761 51.1279,25.6779 51.9913,25.4815C 52.8546,25.2851 53.804,24.9495 54.8392,24.4749 Z "/>
+                                        <TextBlock Text="{Binding Index}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="2"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Text="报警率" Foreground="Red" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding AlarmRate,StringFormat={}{0:P}}" Foreground="Red" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding AlarmGrade}" Value="4">
+                                    <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmGrade}" Value="3">
+                                    <Setter TargetName="pathIcon" Property="Fill" Value="Orange"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+ 
+            </GroupBox>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+            <TextBlock Text="经度" VerticalAlignment="Center" Margin="4,0,0,0"  Visibility="Collapsed"/>
+            <TextBox Width="200" x:Name="jin" VerticalAlignment="Center" Text="{Binding ServerInfo.Longitude}" Margin="4,0,0,0" Visibility="Collapsed"/>
+            <TextBlock Text="纬度" VerticalAlignment="Center" Margin="4,0,0,0"  Visibility="Collapsed"/>
+            <TextBox Width="200" x:Name="wei" VerticalAlignment="Center" Text="{Binding ServerInfo.Latitude}" Margin="4,0,0,0" Visibility="Collapsed"/>
+            <Button Content="移动" Click="Move_Click" VerticalAlignment="Center" Margin="4,0,0,0" Visibility="Collapsed"/>
+            <Button Content="标注" Click="Mark_Click" VerticalAlignment="Center" Margin="4,0,0,0" Visibility="Collapsed"/>
+            <Button Content="清空" Click="Clear_Click" VerticalAlignment="Center" Margin="4,0,0,0" Visibility="Collapsed"/>
+            <Button Content="添加聚合点" Click="AddMarks_Click" VerticalAlignment="Center" Margin="4,0,0,0" Visibility="Collapsed"/>
+        </StackPanel>
     </Grid>
 </UserControl>

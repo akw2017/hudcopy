@@ -31,7 +31,7 @@ namespace AIC.Core.OrganizationModels
                     isRunning = value;
                     if (Parent != null)
                     {
-                        var alarms = Parent.Children.Where(o => (o as ItemTreeItemViewModel).T_Item != null && (o as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo).OrderBy(o => (o as ItemTreeItemViewModel).IsRunning).Select(o => (o as ItemTreeItemViewModel).IsRunning).ToList();
+                        var alarms = Parent.Children.Where(o => (o as ItemTreeItemViewModel).T_Item != null && (o as ItemTreeItemViewModel).T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo).OrderBy(o => (o as ItemTreeItemViewModel).IsRunning).Select(o => (o as ItemTreeItemViewModel).IsRunning).ToList();//需要扩展为全部振动点
                         if (alarms.Count > 0)
                         {
                             int count = alarms.Count;
@@ -258,7 +258,7 @@ namespace AIC.Core.OrganizationModels
             }
             T_Item.IP = ip;
             T_Item.Identifier = identifier;
-            T_Item.ServerIP = serverip;//废弃ServerIP，但数据库不允许为空，依旧填充
+            T_Item.ServerIP = serverip;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             T_Item.T_Device_Guid = T_Organization.Parent_Guid.Value;
 
             //InitSignal();
@@ -327,7 +327,7 @@ namespace AIC.Core.OrganizationModels
             T_Item.Is_Disabled = true;
             T_Item.IP = old.T_Item.IP;
             T_Item.Identifier = old.T_Item.Identifier;
-            T_Item.ServerIP = old.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            T_Item.ServerIP = old.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             T_Item.ItemType = old.T_Item.ItemType;
             T_Item.SlaveIdentifier = old.T_Item.SlaveIdentifier;
             T_Item.ChannelHDID = old.T_Item.ChannelHDID;
@@ -377,7 +377,7 @@ namespace AIC.Core.OrganizationModels
             T_Item.Is_Disabled = false;
             T_Item.IP = recycle.T_Item.IP;
             T_Item.Identifier = recycle.T_Item.Identifier;
-            T_Item.ServerIP = recycle.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            T_Item.ServerIP = recycle.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
             T_Item.ItemType = recycle.T_Item.ItemType;
             T_Item.SlaveIdentifier = recycle.T_Item.SlaveIdentifier;
             T_Item.ChannelHDID = recycle.T_Item.ChannelHDID;

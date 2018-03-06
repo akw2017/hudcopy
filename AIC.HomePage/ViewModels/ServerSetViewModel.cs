@@ -123,9 +123,9 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
-        private List<ServerInfo> ServerInfoList;      
+        private ObservableCollection<ServerInfo> ServerInfoList;      
 
-        private List<ServerInfo> ServerInfoView;       
+        private ObservableCollection<ServerInfo> ServerInfoView;       
 
         private ObservableCollection<ServerInfo> serverInfoShow;
         public ObservableCollection<ServerInfo> ServerInfoShow
@@ -223,7 +223,7 @@ namespace AIC.HomePage.ViewModels
         private void Query()
         {
             //_view.Refresh();
-            ServerInfoView = (from p in ServerInfoList where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
+            ServerInfoView = new ObservableCollection<ServerInfo>(from p in ServerInfoList where p.Name.Contains(SearchName) || SearchName == "" select p);
             TotalItems = ServerInfoView.Count;
             ServerInfoShow = new ObservableCollection<ServerInfo>(ServerInfoView.Skip((CurrentPage - 1) * PageSize).Take(PageSize));
         }
@@ -347,7 +347,7 @@ namespace AIC.HomePage.ViewModels
 
                 _eventAggregator.GetEvent<ServerChangedEvent>().Publish(ServerInfoList);
                 //_view.Refresh();
-                ServerInfoView = (from p in ServerInfoList where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
+                ServerInfoView = new ObservableCollection<ServerInfo>(from p in ServerInfoList where p.Name.Contains(SearchName) || SearchName == "" select p);
                 TotalItems = ServerInfoView.Count;
                 ServerInfoShow = new ObservableCollection<ServerInfo>(ServerInfoView.Skip((CurrentPage - 1) * PageSize).Take(PageSize));
             }

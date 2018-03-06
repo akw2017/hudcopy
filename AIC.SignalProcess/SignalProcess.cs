@@ -23,9 +23,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AIC.M9600.Common.SlaveDB.Generated;
 
-namespace AIC.LocalConfiguration
+namespace AIC.SignalProcess
 {
-    public class SignalProcess : ISignalProcess
+    public partial class SignalProcess : ISignalProcess
     {
         private readonly IOrganizationService _organizationService;
         private readonly IEventAggregator _eventAggregator;
@@ -45,25 +45,30 @@ namespace AIC.LocalConfiguration
             _hardwareService = hardwareService;
 
             bindingManager = new BindingManager();
-            SgDict = new Dictionary<Guid, BaseAlarmSignal>();
+            SgDict = new Dictionary<string, IDictionary<Guid, BaseAlarmSignal>>(); //SgDict = new Dictionary<Guid, BaseAlarmSignal>();
         }
 
         #region 属性与字段
-        private IDictionary<Guid, BaseAlarmSignal> SgDict;
+        private IDictionary<string, IDictionary<Guid, BaseAlarmSignal>> SgDict;  //private IDictionary<Guid, BaseAlarmSignal> SgDict;
         public IEnumerable<BaseAlarmSignal> Signals
         {
-            get { return SgDict.Values; }
+            get
+            {
+                return SgDict.SelectMany(p => p.Value).Select(p => p.Value).ToArray();// return SgDict.Values;
+            }
         }
-        public BaseAlarmSignal GetSignal(Guid guid)
+
+        //将serverip扩展上，避免复制数据库出现的冲突
+        public BaseAlarmSignal GetSignal(Guid guid, string serverip)//public BaseAlarmSignal GetSignal(Guid guid)
         {
-            if (SgDict.ContainsKey(guid))
+            if (SgDict.ContainsKey(serverip))
             {
-                return SgDict[guid];
+                if (SgDict[serverip].ContainsKey(guid))
+                {
+                    return SgDict[serverip][guid];
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         #endregion
 
@@ -103,6 +108,8 @@ namespace AIC.LocalConfiguration
             SgDict.Clear();
             foreach (var item in _organizationService.ItemTreeItems.Where(p => p.IsPaired == true))
             {
+                string serverip = item.ServerIP;
+
                 item.InitSignal();
                 item.BaseAlarmSignal.HasBattery = false;
                 if (item.BaseAlarmSignal is IEPEChannelSignal)
@@ -155,12 +162,15 @@ namespace AIC.LocalConfiguration
                     var sg = item.BaseAlarmSignal as WirelessVibrationChannelSignal;
                     sg.HasBattery = true;
                 }
-                if (!SgDict.ContainsKey(item.T_Item.Guid))
+
+                if (!SgDict.ContainsKey(serverip))//初始化字典
+                {
+                    SgDict.Add(serverip, new Dictionary<Guid, BaseAlarmSignal>());
+                }
+
+                if (!SgDict[serverip].ContainsKey(item.T_Item.Guid))//if (!SgDict.ContainsKey(item.T_Item.Guid))
                 {
                     //获取显示名称
-                    //item.BaseAlarmSignal.OrganizationName = _cardProcess.GetOrganizationName(item.Parent.Parent);
-                    //item.BaseAlarmSignal.DeviceName = item.Parent.Name;
-                    //item.BaseAlarmSignal.ItemName = item.Name;
                     item.BaseAlarmSignal.Names = item.Names;
                     item.BaseAlarmSignal.IP = item.T_Item.IP;
                     item.BaseAlarmSignal.ServerIP = item.ServerIP;
@@ -175,7 +185,7 @@ namespace AIC.LocalConfiguration
                     //    item.BaseAlarmSignal.SubscribeIsNotOK(item.BaseAlarmSignal.NotOKDelayAlarmTime);
                     //}
 
-                    SgDict.Add(item.T_Item.Guid, item.BaseAlarmSignal);
+                    SgDict[serverip].Add(item.T_Item.Guid, item.BaseAlarmSignal); //SgDict.Add(item.T_Item.Guid, item.BaseAlarmSignal);
                     bindingManager.Bindings.Add(new TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>(item, tm => tm.Alarm, item.BaseAlarmSignal, s => s.DelayAlarmGrade) { Mode = BindingMode.OneWayToTarget });
                     bindingManager.Bindings.Add(new TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>(item, tm => tm.IsConnected, item.BaseAlarmSignal, s => s.IsConnected) { Mode = BindingMode.OneWayToTarget });
                     bindingManager.Bindings.Add(new TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>(item, tm => tm.IsRunning, item.BaseAlarmSignal, s => s.IsRunning) { Mode = BindingMode.OneWayToTarget });
@@ -198,8 +208,13 @@ namespace AIC.LocalConfiguration
         }
         public void LazyInitSignals()
         {
+            string serverip = string.Empty;
             foreach (var item in _organizationService.ItemTreeItems.Where(p => p.IsPaired == true))
             {
+                if (serverip != item.ServerIP)
+                {
+                    serverip = item.ServerIP;
+                }
                 //延时报警
                 var channel = _cardProcess.GetChannel(_hardwareService.ServerTreeItems, item.T_Item);
                 if (channel != null)
@@ -214,7 +229,8 @@ namespace AIC.LocalConfiguration
         public void BindItem(ItemTreeItemViewModel item)
         {
             if (item == null) return;
-            if (!SgDict.ContainsKey(item.T_Item.Guid))
+            if (!SgDict.ContainsKey(item.ServerIP)) return;
+            if (!SgDict[item.ServerIP].ContainsKey(item.T_Item.Guid))//if (!SgDict.ContainsKey(item.T_Item.Guid))
             {
                 lock (SgDict)
                 {
@@ -250,7 +266,7 @@ namespace AIC.LocalConfiguration
                         item.BaseAlarmSignal.SubscribeIsNotOK(item.BaseAlarmSignal.NotOKDelayAlarmTime);
                     }
 
-                    SgDict.Add(item.T_Item.Guid, item.BaseAlarmSignal);
+                    SgDict[item.ServerIP].Add(item.T_Item.Guid, item.BaseAlarmSignal);//SgDict.Add(item.T_Item.Guid, item.BaseAlarmSignal);
 
                     bindingManager.Bindings.Add(new TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>(item, tm => tm.Alarm, item.BaseAlarmSignal, s => s.DelayAlarmGrade) { Mode = BindingMode.OneWayToTarget });
                     bindingManager.Bindings.Add(new TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>(item, tm => tm.IsConnected, item.BaseAlarmSignal, s => s.IsConnected) { Mode = BindingMode.OneWayToTarget });
@@ -278,11 +294,12 @@ namespace AIC.LocalConfiguration
         public void UnBindItem(ItemTreeItemViewModel item)
         {
             if (item == null) return;
-            if (SgDict.ContainsKey(item.T_Item.Guid))
+            if (!SgDict.ContainsKey(item.ServerIP)) return;
+            if (SgDict[item.ServerIP].ContainsKey(item.T_Item.Guid))//if (SgDict.ContainsKey(item.T_Item.Guid))
             {
                 lock (SgDict)
                 {
-                    SgDict.Remove(item.T_Item.Guid);
+                    SgDict[item.ServerIP].Remove(item.T_Item.Guid);//SgDict.Remove(item.T_Item.Guid);
 
                     var bindings = bindingManager.Bindings.OfType<TypedBinding<ItemTreeItemViewModel, BaseAlarmSignal>>().Where(o => o.TargetObject == item).ToArray();
                     foreach (var binding in bindings)
@@ -307,16 +324,17 @@ namespace AIC.LocalConfiguration
         }
         public void AddDivfre(DivFreTreeItemViewModel divfreTM)
         {
-            if (divfreTM == null) return;
+            if (divfreTM == null) return;           
             var item = divfreTM.Parent as ItemTreeItemViewModel;
             if (item == null) return;
+            if (!SgDict.ContainsKey(item.ServerIP)) return;
             if (item.IsPaired)
             {
                 lock (SgDict)
                 {
-                    if (SgDict.ContainsKey(item.T_Item.Guid))
+                    if (SgDict[item.ServerIP].ContainsKey(item.T_Item.Guid))//if (SgDict.ContainsKey(item.T_Item.Guid))
                     {
-                        var sg = SgDict[item.T_Item.Guid];
+                        var sg = SgDict[item.ServerIP][item.T_Item.Guid]; //var sg = SgDict[item.T_Item.Guid];
                         if (sg is BaseDivfreSignal)
                         {
                             var vSg = sg as BaseDivfreSignal;
@@ -336,13 +354,14 @@ namespace AIC.LocalConfiguration
             if (divfreTM == null) return;
             var item = divfreTM.Parent as ItemTreeItemViewModel;
             if (item == null) return;
+            if (!SgDict.ContainsKey(item.ServerIP)) return;
             if (item.IsPaired)
             {
                 lock (SgDict)
                 {
-                    if (SgDict.ContainsKey(item.T_Item.Guid))
+                    if (SgDict[item.ServerIP].ContainsKey(item.T_Item.Guid))//if (SgDict.ContainsKey(item.T_Item.Guid))
                     {
-                        var sg = SgDict[item.T_Item.Guid];
+                        var sg = SgDict[item.ServerIP][item.T_Item.Guid]; //var sg = SgDict[item.T_Item.Guid];
                         if (sg is BaseDivfreSignal)
                         {
                             var vSg = sg as BaseDivfreSignal;
@@ -384,9 +403,9 @@ namespace AIC.LocalConfiguration
                 {
                     latestdata = await _databaseComponent.GetLatestData();
                     return await CheckedSignal(latestdata);
-                }                
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据获取", ex));
             }
@@ -408,7 +427,7 @@ namespace AIC.LocalConfiguration
                 }
                 return false;
             }
-            else if (latestdata.Count == 0)
+            else if (latestdata.Values.Count == 0)
             {
                 foreach (var sg in Signals)
                 {
@@ -423,7 +442,7 @@ namespace AIC.LocalConfiguration
             }
             else
             {
-                foreach (var data in latestdata.Values)
+                foreach (var data in latestdata)
                 {
                     await ProcessSignal(data);
                 }
@@ -433,6 +452,7 @@ namespace AIC.LocalConfiguration
         private async Task<Dictionary<string, LatestSampleData>> GetLatestHistoryData(DateTime historyplayTime, float dataInterval)
         {
             Dictionary<string, LatestSampleData> latestdata = new Dictionary<string, LatestSampleData>();
+            bool success = false;
             var GroupSignals = Signals.GroupBy(p => p.ServerIP);
             foreach (var subSignals in GroupSignals)
             {
@@ -501,7 +521,10 @@ namespace AIC.LocalConfiguration
                 {
                     continue;
                 }
-
+                else
+                {
+                    success = true;
+                }
                 LatestSampleData filterdata = new LatestSampleData();
                 if (data.IEPESlot != null)
                 {
@@ -667,20 +690,28 @@ namespace AIC.LocalConfiguration
 
                 latestdata.Add(subSignals.Key, filterdata);
             }
+
+            if (success == false)
+            {
+                return null;
+            }
             return latestdata;
         }
         #endregion
 
         #region 处理信号
-        public async Task ProcessSignal(LatestSampleData data)
+        public async Task ProcessSignal(KeyValuePair<string, LatestSampleData> ipdata)
         {
+            var data = ipdata.Value;
+            var serverip = ipdata.Key;
+
             List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>> keyValuePairs = new List<KeyValuePair<BaseAlarmSignal, IBaseAlarmSlot>>();
             //获取数据
             if (data.IEPESlot != null)
             {
                 foreach (var slotdata in data.IEPESlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<IEPESlotData, D1_IEPESlot>(slotdata);
@@ -692,7 +723,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.EddyCurrentDisplacementSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid,serverip);//var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentDisplacementSlotData, D1_EddyCurrentDisplacementSlot>(slotdata);
@@ -704,7 +735,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.EddyCurrentKeyPhaseSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentKeyPhaseSlotData, D1_EddyCurrentKeyPhaseSlot>(slotdata);
@@ -716,7 +747,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.EddyCurrentTachometerSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip);//var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<EddyCurrentTachometerSlotData, D1_EddyCurrentTachometerSlot>(slotdata);
@@ -728,7 +759,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.DigitTachometerSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<DigitTachometerSlotData, D1_DigitTachometerSlot>(slotdata);
@@ -740,7 +771,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.AnalogRransducerInSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerInSlotData, D1_AnalogRransducerInSlot>(slotdata);
@@ -752,7 +783,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.RelaySlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<RelaySlotData, D1_RelaySlot>(slotdata);
@@ -764,7 +795,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.DigitRransducerInSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerInSlotData, D1_DigitRransducerInSlot>(slotdata);
@@ -776,7 +807,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.DigitRransducerOutSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<DigitRransducerOutSlotData, D1_DigitRransducerOutSlot>(slotdata);
@@ -788,7 +819,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.AnalogRransducerOutSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<AnalogRransducerOutSlotData, D1_AnalogRransducerOutSlot>(slotdata);
@@ -800,7 +831,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.WirelessScalarSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<WirelessScalarSlotData, D1_WirelessScalarSlot>(slotdata);
@@ -812,7 +843,7 @@ namespace AIC.LocalConfiguration
             {
                 foreach (var slotdata in data.WirelessVibrationSlot)
                 {
-                    var signal = GetSignal(slotdata.T_Item_Guid);
+                    var signal = GetSignal(slotdata.T_Item_Guid, serverip); //var signal = GetSignal(slotdata.T_Item_Guid);
                     if (signal != null)
                     {
                         var islotdata = ClassCopyHelper.AutoCopy<WirelessVibrationSlotData, D1_WirelessVibrationSlot>(slotdata);
@@ -821,7 +852,7 @@ namespace AIC.LocalConfiguration
                 }
             }
 
-            List<BaseAlarmSignal> disConnectedSignals = Signals.Except(keyValuePairs.Select(o => o.Key)).ToList();
+            List<BaseAlarmSignal> disConnectedSignals = Signals.Where(p => p.ServerIP == serverip).Except(keyValuePairs.Select(o => o.Key)).ToList();
             if (disConnectedSignals.Count > 0)
             {
                 foreach (var sg in disConnectedSignals)
@@ -1301,14 +1332,15 @@ namespace AIC.LocalConfiguration
             sg.SaveLab = idata.SaveLab;
             sg.ContinueLab = idata.ContinueLab;
             sg.ExtraInfo = idata.ExtraInfo;
-            sg.Result = idata.Result;
+           
             sg.IsValidCH = idata.IsValidCH;
             sg.Unit = idata.Unit;
             //sg.ChannelHDID = idata.ChannelHDID;//数据不完整，抛弃
 
             sg.AlarmGrade = (AlarmGrade)(idata.AlarmGrade & 0x00ffff00);
-            //sg.Low8Alarm = idata.AlarmGrade & 0xff;
+            //sg.Low8Alarm = idata.AlarmGrade & 0x000000ff;
             sg.AlarmLimit = idata.AlarmLimit;
+            sg.Result = idata.Result;
         }
         #endregion
 

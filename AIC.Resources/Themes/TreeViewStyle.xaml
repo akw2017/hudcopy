@@ -305,5 +305,141 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="PresetDownArrowStyle" TargetType ="{x:Type Label}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Label}">
+                    <Border x:Name="PART_Background" Background="#02000000">
+                        <Path Data="F1 M439.22619,483.9185 L384.0285,515.8315 329.32864,483.9185 329.32864,468.9785 384.0285,501.8875 439.22619,468.9785 z M439.22619,461.0095 L384.0285,492.9225 329.32864,461.0095 329.32864,446.0685 384.0285,479.4765 439.22619,446.0685 z" Fill="Black" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
         
+    <Style x:Key="MenuTreeViewItem" TargetType="TreeViewItem">
+        <Style.Resources>
+            <LinearGradientBrush x:Key="ItemAreaBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+                <GradientStop Color="#66000000" Offset="0" />
+                <GradientStop Color="#22000000" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="SelectedItemAreaBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+                <GradientStop Color="Orange" Offset="0" />
+                <GradientStop Color="OrangeRed" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ItemBorderBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+                <GradientStop Color="LightGray" Offset="0" />
+                <GradientStop Color="Gray" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="SelectedItemBorderBrush" StartPoint="0.5, 0" EndPoint="0.5, 1">
+                <GradientStop Color="Yellow" Offset="0" />
+                <GradientStop Color="Black" Offset="1" />
+            </LinearGradientBrush>
+            <DropShadowBitmapEffect x:Key="DropShadowEffect" />
+        </Style.Resources>
+        <Setter Property="Cursor" Value ="Hand"/>
+        <!-- Make each TreeViewItem show it's children in a horizontal StackPanel. -->
+        <Setter Property="ItemsPanel">
+            <Setter.Value>       
+                <ItemsPanelTemplate>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" IsItemsHost="True" Margin="10,2" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>       
+                <ControlTemplate x:Name="Parent" TargetType="TreeViewItem">
+                    <Grid Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                                                   
+                        <Border Grid.Row="0" Name="Bd" Background="{StaticResource ItemAreaBrush}" BorderBrush="{StaticResource ItemBorderBrush}" BorderThickness="0.6" Padding="6" Tag="{Binding ElementName=PART_Header}">
+                                                           
+                            <ContentPresenter Name="PART_Header" ContentSource="Header" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0" />
+                                                       
+                        </Border>
+                                                   
+                        <Label x:Name="BtnArrow" Width="25" Height="15" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{DynamicResource PresetDownArrowStyle}" Tag="{Binding ElementName=PART_Header}" IsEnabled="False"></Label>
+                                                   
+                        <!--{RelativeSource FindAncestor,AncestorType={x:Type TreeViewItem},AncestorLevel=2}}<-->
+                                                   
+                        <ItemsPresenter x:Name="GridChild" Grid.Row="1"/>
+                                               
+                    </Grid>
+                                           
+                    <ControlTemplate.Triggers>
+                                                   
+                        <!--When the item is selected in the TreeView, use the "selected" colors and give it a drop shadow. -->
+                                                   
+                        <Trigger Property="IsSelected" Value="True">
+                                                           
+                            <Setter TargetName="Bd" Property="Panel.Background" Value="{StaticResource SelectedItemAreaBrush}" />
+                                                           
+                            <Setter TargetName="Bd" Property="Border.BorderBrush" Value="{StaticResource SelectedItemBorderBrush}" />
+                                                           
+                            <Setter TargetName="Bd" Property="Border.BitmapEffect" Value="{StaticResource DropShadowEffect}" />
+                                                           
+                            <Setter Property="IsExpanded"  Value="True"/>
+                                                                
+                           
+                        </Trigger>
+                                                   
+                        <!--<MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="HasItems"  Value="true"/>
+                                    <Condition Property="IsExpanded"  Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="GridChild"  Property="Visibility"  Value="Collapsed"/>
+                            </MultiTrigger>-->
+                                                   
+                        <Trigger Property="IsSelected" Value="False">
+                                                           
+                            <Setter Property="IsExpanded"  Value="False"/>
+                                                           
+                        </Trigger>
+                                                   
+                        <Trigger Property="HasItems"  Value="false">
+                                                           
+                            <Setter TargetName="BtnArrow"  Property="Visibility"  Value="Hidden"/>
+                                                           
+                        </Trigger>
+                                                   
+                        <Trigger Property="HasItems"  Value="true">
+                                                           
+                            <Setter TargetName="BtnArrow"  Property="Visibility"  Value="Visible"/>
+                                                           
+                        </Trigger>
+                                                    
+                           
+                        <Trigger Property="IsExpanded" Value="false">
+                                                           
+                            <Setter TargetName="GridChild"  Property="Visibility"  Value="Collapsed"/>
+                                                           
+                        </Trigger>
+                                                   
+                        <Trigger Property="IsExpanded" Value="True">
+                                                           
+                            <Setter TargetName="GridChild"  Property="Visibility"  Value="Visible"/>
+                                                           
+                        </Trigger>
+                                                   
+                        <Trigger Property="IsEnabled" Value="false">
+                                                           
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                                       
+                        </Trigger>
+                                               
+                    </ControlTemplate.Triggers>
+                                       
+                </ControlTemplate>
+                               
+            </Setter.Value>
+                       
+        </Setter>
+               
+    </Style>
+
 </ResourceDictionary>

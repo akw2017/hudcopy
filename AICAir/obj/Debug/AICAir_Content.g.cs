@@ -61,6 +61,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/point-collection/blue-marke-15x16.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/point-collection/red-marker-10x13.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/quanjing.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/red.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/ruler.cur")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/images/stop_icon.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/htmls/js/fox.gif")]

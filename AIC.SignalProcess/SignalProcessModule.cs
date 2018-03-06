@@ -3,7 +3,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using System;
 
-namespace AIC.LocalConfiguration
+namespace AIC.SignalProcess
 {
     public class SignalProcessModule : IModule
     {

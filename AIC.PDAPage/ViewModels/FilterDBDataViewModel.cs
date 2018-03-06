@@ -21,15 +21,15 @@ namespace AIC.PDAPage.ViewModels
         private readonly IOrganizationService _organizationService;
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
-        private readonly ILoginUserService _loginUserService;
+        private readonly ILocalConfiguration _localConfiguration;
         private readonly IHardwareService _hardwareService;
 
-        public FilterDBDataViewModel(IOrganizationService organizationService, ICardProcess cardProcess, IDatabaseComponent databaseComponent, ILoginUserService loginUserService, IHardwareService hardwareService)
+        public FilterDBDataViewModel(IOrganizationService organizationService, ICardProcess cardProcess, IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration, IHardwareService hardwareService)
         {
             _organizationService = organizationService;
             _cardProcess = cardProcess;
             _databaseComponent = databaseComponent;
-            _loginUserService = loginUserService;
+            _localConfiguration = localConfiguration;
             _hardwareService = hardwareService;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
@@ -212,7 +212,7 @@ namespace AIC.PDAPage.ViewModels
         }
         private bool CanOperate(object para)
         {
-            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            if (_localConfiguration.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
                 return true;
             }

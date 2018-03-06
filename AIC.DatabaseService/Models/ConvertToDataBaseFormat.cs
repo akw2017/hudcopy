@@ -837,7 +837,7 @@ namespace AIC.DatabaseService.Models
             t_item.Is_Disabled = item.T_Item.Is_Disabled;
             t_item.IP = IP;
             t_item.Identifier = identifier;
-            t_item.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            t_item.ServerIP = serverIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
 
             return t_item;
         }
@@ -863,7 +863,7 @@ namespace AIC.DatabaseService.Models
             t_item.Is_Disabled = item.T_Item.Is_Disabled;
             t_item.IP = item.T_Item.IP;
             t_item.Identifier = item.T_Item.Identifier;
-            t_item.ServerIP = item.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            t_item.ServerIP = item.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
 
             return t_item;
         }
@@ -886,7 +886,7 @@ namespace AIC.DatabaseService.Models
             t_item.Is_Disabled = item.T_Item.Is_Disabled;
             t_item.IP = item.T_Item.IP;
             t_item.Identifier = item.T_Item.Identifier;
-            t_item.ServerIP = item.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充
+            t_item.ServerIP = item.T_Item.ServerIP;//废弃ServerIP，但数据库不允许为空，依旧填充//改为初始化时候填充，覆盖数据库的ServerIP。
 
             return t_item;
         }      

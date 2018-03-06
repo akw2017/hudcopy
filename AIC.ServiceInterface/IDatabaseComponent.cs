@@ -74,5 +74,8 @@ namespace AIC.ServiceInterface
         Task<List<T>> GetHistoryWaveformData<T>(string ip, Dictionary<Guid, Tuple<Guid, DateTime>> recordLabs, IProgress<double> process = null);
         Task<Dictionary<Guid, Dictionary<string, double>>> GetStatisticsData(string ip, HashSet<Guid> guidlist);
         Task<Dictionary<Guid, List<D_SlotStatistic>>> GetDailyStatisticsData(string ip, HashSet<Guid> guidlist, DateTime startTime, DateTime endTime);
+
+        Task<List<T>> GetDailyMedianData<T>(string ip, DateTime startTime, DateTime endTime, string columns = "*");
+        Task<List<T>> GetDailyMedianData<T>(DateTime startTime, DateTime endTime, string columns = "*");
     }
 }

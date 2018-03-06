@@ -33,13 +33,15 @@ namespace AIC.UserPage.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly ILoginUserService _loginUserService;
         private readonly IDatabaseComponent _databaseComponent;
+        private readonly ILocalConfiguration _localConfiguration;
 
-        public OperateRecordViewModel(IUserManageService userManageService, IEventAggregator eventAggregator, ILoginUserService loginUserService, IDatabaseComponent databaseComponent)
+        public OperateRecordViewModel(IUserManageService userManageService, IEventAggregator eventAggregator, ILoginUserService loginUserService, IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration)
         {
             _userManageService = userManageService;
             _eventAggregator = eventAggregator;
             _loginUserService = loginUserService;
             _databaseComponent = databaseComponent;
+            _localConfiguration = localConfiguration;
 
             SearchStartTime = DateTime.Now.AddDays(-1);
             SearchEndTime = DateTime.Now;
@@ -255,7 +257,7 @@ namespace AIC.UserPage.ViewModels
 
         private bool CanOperate(object para)
         {
-            if (_loginUserService.LoginInfo.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
+            if (_localConfiguration.ServerInfoList.Where(p => p.IP == ServerIP).Where(p => p.Permission.Contains("admin") || p.Permission.Contains("管理员")).Count() > 0)
             {
                 return true;
             }

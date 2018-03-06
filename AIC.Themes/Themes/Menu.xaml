@@ -34,7 +34,7 @@
                     <Border
             Name="Border"
             Background="Orange"
-            BorderBrush="Pink"
+            BorderBrush="HotPink"
             BorderThickness="1" >
                         <controls:IndexingStackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                     </Border>

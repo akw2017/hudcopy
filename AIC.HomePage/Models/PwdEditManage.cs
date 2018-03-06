@@ -18,6 +18,7 @@ namespace AIC.HomePage.Models
         private static PwdEditWin win;
         private static bool succeed;
         private static IDatabaseComponent _databaseComponent;
+        private static ILocalConfiguration _localConfiguration;
 
         //仅仅是为了兼容网页模式ShowDialog不生效
         private static bool winshow = false;
@@ -48,9 +49,11 @@ namespace AIC.HomePage.Models
         private static async void Win_Parachanged(LoginInfo logininfo, string pwd)
         {
             _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
+            _localConfiguration = ServiceLocator.Current.GetInstance<ILocalConfiguration>();
+
             logininfo.Password = pwd;
             string encryptedpwd = MyEncrypt.EncryptDES(pwd);
-            var servers = logininfo.ServerInfoList.Where(p => p.LoginResult == true);
+            var servers = _localConfiguration.ServerInfoList.Where(p => p.LoginResult == true);
 
             Dictionary<string, Task<bool>> lttask = new Dictionary<string, Task<bool>>();
             foreach (var serverinfo in servers)

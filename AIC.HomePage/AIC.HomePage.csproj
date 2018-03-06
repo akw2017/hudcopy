@@ -215,6 +215,7 @@
     <Compile Include="Converters\IntBoolConverter.cs" />
     <Compile Include="HomePageModule.cs" />
     <Compile Include="Menus\AccentColorMenuData.cs" />
+    <Compile Include="Models\AlarmServerInfo.cs" />
     <Compile Include="Models\PwdEditManage.cs" />
     <Compile Include="Models\LockManage.cs" />
     <Compile Include="Models\LoginManage.cs" />
@@ -418,6 +419,10 @@
     <ProjectReference Include="..\AIC.PDAPage\AIC.PDAPage.csproj">
       <Project>{f45f77e4-17b9-4535-9a5a-92942192b080}</Project>
       <Name>AIC.PDAPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.QuickDataPage\AIC.QuickDataPage.csproj">
+      <Project>{37ab5b49-b4d1-4181-a003-f37285d93fa9}</Project>
+      <Name>AIC.QuickDataPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
       <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>

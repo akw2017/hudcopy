@@ -2725,3 +2725,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.TrustInfo.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\red.png
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.xml

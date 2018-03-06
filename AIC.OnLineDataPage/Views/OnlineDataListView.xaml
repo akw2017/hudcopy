@@ -112,7 +112,7 @@
                                     <Ellipse x:Name="ellipse" Fill="#FF85CBEB" HorizontalAlignment="Center" Height="12" Margin="0" Width="12" VerticalAlignment="Center"/>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
-                                            <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
+                                            <Setter TargetName="ellipse" Property="Fill" Value="HotPink"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                                             <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
@@ -194,7 +194,7 @@
                             <!--<Setter TargetName="IconFind" Property="Visibility" Value="Visible"/>-->
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Alarm}" Value="HighPreAlarm">
                             <Setter TargetName="txtName" Property="Foreground" Value="Yellow" />
@@ -227,7 +227,7 @@
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Alarm}" Value="Invalid">
-                            <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                            <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsRunning}" Value="false">
                             <Setter TargetName="txtRun" Property="Visibility" Value="Collapsed"/>
@@ -277,10 +277,10 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="报警级别:" VerticalAlignment="Center" Margin="2,0,2,0"/>
                     <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
-                        <!--<Ellipse Fill="Pink" VerticalAlignment="Center" Height="24" Width="24"/>-->
+                        <!--<Ellipse Fill="HotPink" VerticalAlignment="Center" Height="24" Width="24"/>-->
                         <TextBlock Text="无效" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding AbnormalCount}" VerticalAlignment="Center" Margin="2,0,2,0"/>
-                        <CheckBox VerticalAlignment="Center" BorderBrush="Pink" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+                        <CheckBox VerticalAlignment="Center" BorderBrush="HotPink" IsChecked="{Binding IsInvalidSignal, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
                     </StackPanel>
                     <StackPanel Margin="5,2,5,2" Orientation="Horizontal">
                         <!--<Ellipse Fill="{DynamicResource TextBrush}" VerticalAlignment="Center" Height="24" Width="24"/>-->
@@ -395,7 +395,7 @@
                                             <Ellipse x:Name="ellipse" Fill="#FF85CBEB" HorizontalAlignment="Center" Height="12" Margin="0" Width="12" VerticalAlignment="Center"/>
                                             <DataTemplate.Triggers>
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
-                                                    <Setter TargetName="ellipse" Property="Fill" Value="Pink"/>
+                                                    <Setter TargetName="ellipse" Property="Fill" Value="HotPink"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighAlarm">
                                                     <Setter TargetName="ellipse" Property="Fill" Value="DarkOrange"/>
@@ -534,7 +534,7 @@
                        TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="Invalid">
-                            <Setter  Property="Foreground" Value="Pink"/>
+                            <Setter  Property="Foreground" Value="HotPink"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Path=DelayAlarmGrade}" Value="HighPreAlarm">
                             <Setter Property="Foreground" Value="Yellow"/>

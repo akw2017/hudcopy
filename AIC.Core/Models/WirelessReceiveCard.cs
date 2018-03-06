@@ -131,7 +131,7 @@ namespace AIC.Core.Models
                 OnPropertyChanged("Remarks");
             }
         }
-        public ExtraInfo ExtraInfo { get; set; } //附加信息
+        public ChannelExtraInfo ExtraInfo { get; set; } //附加信息
         public WirelessScalarSlot WirelessScalarSlot { get; set; } //标量槽
         public WirelessVibrationSlot WirelessVibrationSlot { get; set; } //振动槽
 
@@ -145,7 +145,7 @@ namespace AIC.Core.Models
         }
     }
 
-    public class ExtraInfo
+    public class ChannelExtraInfo//避免类重名冲突，将ExtraInfo改为ChannelExtraInfo
     {
 
     }

@@ -4,17 +4,17 @@
 library
 C#
 .cs
-D:\SupportProject\AIC_HUD\AICHUID\AIC.HomePage\obj\x86\Debug\
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\x86\Debug\
 AIC.HomePage
 none
 false
 TRACE;DEBUG;XBAP
 
-14-2029284786
+20725455194
 
-30693681430
-97-986478153
-Views\DefaultSettingWin.xaml;Views\ShowAlarmWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\HomeView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\MapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;
+382097556214
+108520236829
+Views\AlarmAckListWin.xaml;Views\HistoryQuickPlayWin.xaml;Views\PwdEditWin.xaml;Views\TestWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAlarmWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\TabView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\HomeMapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
 
 False
 

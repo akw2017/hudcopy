@@ -258,7 +258,7 @@
                 <Setter TargetName="grid" Property="Background" Value="{DynamicResource AccentColorBrush4}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="Invalid">
-                <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
+                <Setter TargetName="AMSText" Property="Foreground" Value="HotPink"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Signal.DelayAlarmGrade}" Value="HighPreAlarm">
                 <Setter TargetName="AMSText" Property="Foreground" Value="Yellow"/>

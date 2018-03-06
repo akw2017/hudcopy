@@ -883,3 +883,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Loya.Dameer.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.Wpf.xml

@@ -70,7 +70,7 @@
                                 </StackPanel>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
-                                        <Setter TargetName="AMSText" Property="Foreground" Value="Pink"/>
+                                        <Setter TargetName="AMSText" Property="Foreground" Value="HotPink"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighPreAlarm">
                                         <Setter TargetName="AMSText" Property="Foreground" Value="Yellow"/>
@@ -116,7 +116,7 @@
             </DataTrigger>
 
             <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
-                <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
                 <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
@@ -197,7 +197,7 @@
                                 </StackPanel>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
-                                        <Setter TargetName="ProgressBar" Property="Foreground" Value="Pink"/>
+                                        <Setter TargetName="ProgressBar" Property="Foreground" Value="HotPink"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="HighPreAlarm">
                                         <Setter TargetName="ProgressBar" Property="Foreground" Value="Yellow"/>
@@ -243,7 +243,7 @@
             </DataTrigger>
 
             <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
-                <Setter TargetName="txtName" Property="Foreground" Value="Pink"/>
+                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
                 <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>

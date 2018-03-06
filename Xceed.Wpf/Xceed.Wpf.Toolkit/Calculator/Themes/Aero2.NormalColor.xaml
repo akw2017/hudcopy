@@ -32,7 +32,7 @@
 
     <Style x:Key="CalculatorClearButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Background" Value="Pink" />
+        <Setter Property="Background" Value="HotPink" />
     </Style>
 
     <Style x:Key="CalculatorDigitButtonStyle" TargetType="{x:Type Button}">

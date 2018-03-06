@@ -37,7 +37,8 @@ namespace AIC.DatabaseService
         public LoginInfo LoginInfo { get; set; }  
         public MenuManageList MenuManageList { get; set; }
         public ObservableCollection<ExceptionModel> ExceptionModel { get; private set; }
-        public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }
+        public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }       
+
         public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator)
         {
             _localConfiguration = localConfiguration;
@@ -58,8 +59,7 @@ namespace AIC.DatabaseService
 
         public void Initialize()
         {
-            var serverinfolist = _localConfiguration.ServerInfoList ?? new List<ServerInfo>();
-            LoginInfo = new LoginInfo("", "", new ServerInfo(), serverinfolist);
+            LoginInfo = new LoginInfo("", "", new ServerInfo());
         }
 
         #region 登录管理
@@ -69,20 +69,18 @@ namespace AIC.DatabaseService
         }
 
         public async Task SetUserLogin()
-        {         
-            var servers = _localConfiguration.ServerInfoList.Where(p => p.LoginResult == true);
-
-            foreach (var item in servers.Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)))
+        {
+            foreach (var server in _localConfiguration.LoginServerInfoList)
             {
-                _databaseComponent.InitDatabase(item.IP);
+                _databaseComponent.InitDatabase(server.IP);
                 List<Task> lttask = new List<Task>();
-                lttask.Add(_databaseComponent.LoadUserData(item.IP));
-                lttask.Add(_databaseComponent.LoadRoleData(item.IP));
-                lttask.Add(_databaseComponent.LoadMenuData(item.IP));
-                lttask.Add(_databaseComponent.LoadDeviceData(item.IP));
-                lttask.Add(_databaseComponent.LoadOrganizationData(item.IP));
-                lttask.Add(_databaseComponent.LoadItemData(item.IP));
-                lttask.Add(_databaseComponent.LoadOrganizationPrivilegeData(item.IP));
+                lttask.Add(_databaseComponent.LoadUserData(server.IP));
+                lttask.Add(_databaseComponent.LoadRoleData(server.IP));
+                lttask.Add(_databaseComponent.LoadMenuData(server.IP));
+                lttask.Add(_databaseComponent.LoadDeviceData(server.IP));
+                lttask.Add(_databaseComponent.LoadOrganizationData(server.IP));
+                lttask.Add(_databaseComponent.LoadItemData(server.IP));
+                lttask.Add(_databaseComponent.LoadOrganizationPrivilegeData(server.IP));
                 //lttask.Add(_databaseComponent.LoadHardwave(item.IP));//改为延时加载
                 await Task.WhenAll(lttask.ToArray());
             }
@@ -135,16 +133,16 @@ namespace AIC.DatabaseService
             await locker.WaitAsync();
             try
             {
-                var servers = _localConfiguration.ServerInfoList.Where(p => p.LoginResult == true);
-                foreach (var item in servers.Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)))
+                foreach (var server in _localConfiguration.LoginServerInfoList)
                 {
                     List<Task> lttask = new List<Task>();
-                    lttask.Add(_databaseComponent.LoadHardwave(item.IP));
-                    lttask.Add(_databaseComponent.GetMeasureUnit(item.IP));
+                    lttask.Add(_databaseComponent.LoadHardwave(server.IP));
+                    lttask.Add(_databaseComponent.GetMeasureUnit(server.IP));
+                   
                     await Task.WhenAll(lttask.ToArray());
                 }
-                _hardwareService.InitServers();
-                _signalProcess.LazyInitSignals();
+                _hardwareService.InitServers(_localConfiguration.LoginServerInfoList);
+                _signalProcess.LazyInitSignals();               
             }
             finally
             {
@@ -167,8 +165,8 @@ namespace AIC.DatabaseService
             _databaseComponent.ClearDatabase();
             //重新获取本地配置文件
             _localConfiguration.ReadServerInfo();
-            LoginInfo.ServerInfoList = _localConfiguration.ServerInfoList ?? new List<ServerInfo>();
-            _eventAggregator.GetEvent<ServerChangedEvent>().Publish(_localConfiguration.ServerInfoList);
+            
+            //_eventAggregator.GetEvent<ServerChangedEvent>().Publish(_localConfiguration.ServerInfoList);
             MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Collapsed);
         }
 
@@ -180,12 +178,12 @@ namespace AIC.DatabaseService
         {
             ServerInfo defaultserverinfo = null;
 
-            defaultserverinfo = (from p in LoginInfo.ServerInfoList where p.IsLogin == true select p).FirstOrDefault();
+            defaultserverinfo = _localConfiguration.LoginServerInfoList.FirstOrDefault();
             if (defaultserverinfo == null)
             {
-                if (LoginInfo.ServerInfoList.Count > 0)
+                if (_localConfiguration.ServerInfoList.Count > 0)
                 {
-                    defaultserverinfo = LoginInfo.ServerInfoList[0];
+                    defaultserverinfo = _localConfiguration.ServerInfoList[0];
                 }
                 else
                 {
