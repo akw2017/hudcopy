@@ -4,13 +4,16 @@ using AIC.Core.Events;
 using AIC.Core.Helpers;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
+using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.DatabaseService.Models;
 using AIC.M9600.Common.MasterDB.Generated;
 using AIC.Resources.Views;
 using AIC.ServiceInterface;
+using Microsoft.Practices.ServiceLocation;
 using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +23,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Wpf.CloseTabControl;
 
 namespace AIC.DatabaseService
 {
@@ -33,13 +37,16 @@ namespace AIC.DatabaseService
         private readonly ISignalProcess _signalProcess;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IRegionManager _regionManager;
 
         public LoginInfo LoginInfo { get; set; }  
         public MenuManageList MenuManageList { get; set; }
         public ObservableCollection<ExceptionModel> ExceptionModel { get; private set; }
-        public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }       
+        public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }
+        public ServerInfo GotoServerInfo { get; set; }
+        public BaseAlarmSignal GotoSignal { get; set; }
 
-        public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator)
+        public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _localConfiguration = localConfiguration;
             _hardwareService = hardwareService;
@@ -49,6 +56,7 @@ namespace AIC.DatabaseService
             _signalProcess = signalProcess;
             _databaseComponent = databaseComponent;
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
 
             MenuManageList = new MenuManageList();
             ExceptionModel = new ObservableCollection<ExceptionModel>();
@@ -346,6 +354,136 @@ namespace AIC.DatabaseService
         }
         #endregion
 
+        #region 调转管理
 
+        public object GotoTab<T>(string viewName)
+        {
+            if (!this._regionManager.Regions.ContainsRegionWithName("MainTabRegion"))
+            {
+                return null;
+            }
+
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            if (region.GetView(viewName) != null)
+            {
+                region.Activate(region.GetView(viewName));
+                return region.GetView(viewName);
+            }
+
+            Object viewObj = ServiceLocator.Current.GetInstance<T>();
+            ICloseable view = viewObj as ICloseable;
+            if (view != null)
+            {
+                view.Closer.RequestClose += () =>
+                {
+                    var disposable = view as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                    region.Remove(view);
+                };
+            }
+            region.Add(view, viewName);
+            region.Activate(view);
+            return null;
+        }
+        public void TabLanguageShift()
+        {
+            if (this._regionManager.Regions.ContainsRegionWithName("MainTabRegion"))
+            {
+                IRegion region = this._regionManager.Regions["MainTabRegion"];
+                var views = region.Views.ToList();
+                for (int i = 0; i < views.Count; i++)
+                {
+                    var viewObj = views[i];
+                    ICloseable view = viewObj as ICloseable;
+                    view.Closer.Title = (string)Application.Current.Resources[view.Closer.TitleResourceName];
+                }
+            }
+        }
+        public void CloseTabs(bool firstTabClosed = true)
+        {
+            //关闭除主页外其他视图
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            var views = region.Views.ToList();
+            for (int i = views.Count - 1; i >= 0; i--)
+            {
+                var viewObj = views[i];
+                ICloseable view = viewObj as ICloseable;
+                if (view.Closer.Visibility == Visibility.Visible)
+                {
+                    region.Remove(view);
+                }
+                else if (firstTabClosed == true)
+                {
+                    region.Remove(view);
+                }
+            }
+        }
+        public void LockTabs()
+        {
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            var views = region.Views.ToList();
+            for (int i = 0; i < views.Count; i++)
+            {
+                var viewObj = views[i];
+                ICloseable view = viewObj as ICloseable;
+                if (view.Closer.Visibility == Visibility.Visible)
+                {
+                    view.Closer.LockVisibility = Visibility.Visible;
+                }
+            }
+        }
+
+        public void UnLockTabs(string name)
+        {
+            IRegion region = this._regionManager.Regions["MainTabRegion"];
+            if (name == null)
+            {
+                var views = region.Views.ToList();
+                for (int i = 0; i < views.Count; i++)
+                {
+                    var viewObj = views[i];
+                    ICloseable view = viewObj as ICloseable;
+                    if (view.Closer.Visibility == Visibility.Visible)
+                    {
+                        view.Closer.LockVisibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            else
+            {
+                var views = region.Views.ToList();
+                for (int i = 0; i < views.Count; i++)
+                {
+                    var viewObj = views[i];
+                    ICloseable view = viewObj as ICloseable;
+                    if (view.Closer.Visibility == Visibility.Visible && view.Closer.Title == name)
+                    {
+                        view.Closer.LockVisibility = Visibility.Collapsed;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void SetGotoServerInfo(string servername)
+        {
+            GotoServerInfo = _localConfiguration.ServerInfoList.Where(p => p.Name == servername).FirstOrDefault();
+            if (GotoServerInfo == null)
+            {
+                GotoServerInfo = _localConfiguration.ServerInfoList.Where(p => p.IP == servername).FirstOrDefault();
+                if (GotoServerInfo == null)
+                {
+                    GotoServerInfo = _localConfiguration.ServerInfoList.FirstOrDefault();
+                }
+            }
+        }
+        public void SetGotoSignal(BaseAlarmSignal sg)
+        {
+            GotoSignal = sg;
+        }
+        #endregion
     }
 }

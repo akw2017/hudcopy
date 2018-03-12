@@ -85,8 +85,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
                     m_chart.ViewXY.XAxes[0].SetRange(dMinX, dMaxX);
                     m_chart.ViewXY.YAxes[0].SetRange(((BaseAlarmSignal)ViewModel.Signal).Result.Value * 0.5, ((BaseAlarmSignal)ViewModel.Signal).Result.Value * 1.5);
                 }
-                m_chart.EndUpdate();
-                //InitDataChart();              
+                m_chart.EndUpdate();             
             }
             catch (Exception ex)
             {
@@ -100,50 +99,6 @@ namespace AIC.OnLineDataPage.Views.SubViews
         }
 
         private IDatabaseComponent _databaseComponent;
-
-        protected async Task InitDataChart()
-        {
-            //有效值趋势
-            if (ViewModel == null || !(ViewModel.Signal is BaseAlarmSignal) || ViewModel.Signal.ACQDatetime == null)
-            {
-                return;
-            }
-
-            var sg = ViewModel.Signal as BaseAlarmSignal;
-            DateTime lasttime = new DateTime();
-            if (m_chart.ViewXY.PointLineSeries[0].Points != null && m_chart.ViewXY.PointLineSeries[0].Points.Count() > 0)
-            {
-                lasttime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(m_chart.ViewXY.PointLineSeries[0].Points.Select(p => p.X).Max());
-            }
-            _databaseComponent = ServiceLocator.Current.GetInstance<IDatabaseComponent>();
-            List<TrendPointData> datas = new List<TrendPointData>();
-            if (sg is WirelessScalarChannelSignal)
-            {
-                var results = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
-                if (results == null || results.Count == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
-                }
-            }
-            else if (sg is WirelessVibrationChannelSignal)
-            {
-                var results = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(sg.ServerIP, sg.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, sg.ACQDatetime.Value.AddHours(-24), sg.ACQDatetime.Value, null, null);
-                if (results == null || results.Count == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    datas = results.Where(p => p.ACQDatetime > lasttime).OrderBy(p => p.ACQDatetime).Select(p => new TrendPointData(p.ACQDatetime, p.Result.Value, p.Unit, p.AlarmGrade)).ToList();
-                }
-            }
-
-            SubInitDataChart(datas);
-        }
 
         private void SubInitDataChart(List<TrendPointData> datas)
         {

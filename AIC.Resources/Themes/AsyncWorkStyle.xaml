@@ -14,7 +14,7 @@
                   Height="Auto"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
-                  Panel.ZIndex="2000"
+                  Panel.ZIndex="2"
                   Visibility="{Binding Path=Status,
                                Converter={StaticResource MyConverter}}">
                             <Grid Width="Auto"

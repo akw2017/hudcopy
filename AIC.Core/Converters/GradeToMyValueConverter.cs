@@ -20,7 +20,7 @@ namespace AIC.Core
                 string para = parameter as string;
                 if (value is AlarmGrade || value is int)
                 {
-                    AlarmGrade grade = (AlarmGrade)value;
+                    AlarmGrade grade = (AlarmGrade)((int)value & 0x00ffff00);//兼容历史数据没有去除后8位
                     switch (grade)
                     {
                         case AlarmGrade.Invalid:
@@ -37,78 +37,78 @@ namespace AIC.Core
                         case AlarmGrade.HighNormal:
                         case AlarmGrade.LowNormal:
                             {
+                                if (para == "0")
                                 {
-                                    if (para == "0")
-                                    {
-                                        return 100;
-                                    }
-                                    else
-                                    {
-                                        return 0;
-                                    }
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
                                 }
                             }
                         case AlarmGrade.HighPreAlarm:
                         case AlarmGrade.LowPreAlarm:
                             {
+                                if (para == "1")
                                 {
-                                    if (para == "1")
-                                    {
-                                        return 100;
-                                    }
-                                    else
-                                    {
-                                        return 0;
-                                    }
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
                                 }
                             }
                         case AlarmGrade.HighAlarm:
                         case AlarmGrade.LowAlarm:
                             {
+                                if (para == "2")
                                 {
-                                    if (para == "2")
-                                    {
-                                        return 100;
-                                    }
-                                    else
-                                    {
-                                        return 0;
-                                    }
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
                                 }
                             }
                         case AlarmGrade.HighDanger:
                         case AlarmGrade.LowDanger:
                             {
+                                if (para == "3")
                                 {
-                                    if (para == "3")
-                                    {
-                                        return 100;
-                                    }
-                                    else
-                                    {
-                                        return 0;
-                                    }
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
                                 }
                             }
                         case AlarmGrade.DisConnect:
                             {
+                                if (para == "0")
                                 {
-                                    if (para == "0")
-                                    {
-                                        return 100;
-                                    }
-                                    else
-                                    {
-                                        return 0;
-                                    }
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
                                 }
                             }
-                        default: return 0;//绿色
+                        default:
+                            {
+                                if (para == "0")
+                                {
+                                    return 100;
+                                }
+                                else
+                                {
+                                    return 0;
+                                }
+                            }
                     }
                 }
             }
            
-            return null;
+            return 0;//绿色
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

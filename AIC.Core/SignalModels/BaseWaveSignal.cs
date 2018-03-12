@@ -26,7 +26,7 @@ namespace AIC.Core.SignalModels
         {            
             SignalProcessTypes.Add(tp);
             NeedProcess = true;
-            Console.WriteLine(SignalProcessTypes.Count.ToString());
+            Console.WriteLine(this.FullName + this.SignalProcessTypes.Count.ToString());
         }
 
         public void RemoveProcess(SignalProcessorType tp)
@@ -39,7 +39,7 @@ namespace AIC.Core.SignalModels
                     NeedProcess = false;
                 }
             }
-            Console.WriteLine(SignalProcessTypes.Count.ToString());
+            Console.WriteLine(this.FullName + this.SignalProcessTypes.Count.ToString());
         }
 
         #region 属性 

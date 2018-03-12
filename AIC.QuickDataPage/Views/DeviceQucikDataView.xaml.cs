@@ -3,6 +3,7 @@ using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
 using AIC.Core.UserManageModels;
+using AIC.QuickDataPage.ViewModels;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,44 @@ namespace AIC.QuickDataPage.Views
             var menu = MenuManageList.GetMenu("menuDeviceQucikData");
             this.Closer = new CloseableHeader("menuDeviceQucikData", menu.Name, true, menu.IconPath);
 
+            this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
         public CloseableHeader Closer { get; private set; }
+
+        public void GotoServer(ServerInfo serverinfo)
+        {
+            DeviceQucikDataViewModel vm = this.DataContext as DeviceQucikDataViewModel;
+            if (vm != null)
+            {
+                vm.ServerInfo = serverinfo;
+            }
+        }
+
+        void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
+            Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
+            if (btnGrdSplitter != null)
+                btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+        }
+
+        GridLength m_WidthCache;
+        void btnGrdSplitter_Click(object sender, RoutedEventArgs e)
+        {
+            GridLength temp = grdWorkbench.ColumnDefinitions[0].Width;
+            GridLength zero = new GridLength(0);
+            if (!temp.Equals(zero))
+            {
+                //折叠
+                m_WidthCache = grdWorkbench.ColumnDefinitions[0].Width;
+                grdWorkbench.ColumnDefinitions[0].Width = new GridLength(0);
+            }
+            else
+            {
+                //恢复
+                grdWorkbench.ColumnDefinitions[0].Width = m_WidthCache;
+            }
+        }
 
     }
 }

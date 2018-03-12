@@ -12,6 +12,7 @@ namespace AIC.ServiceInterface
     {
         ObservableCollection<ServerInfo> ServerInfoList { get; }
         IEnumerable<ServerInfo> LoginServerInfoList { get; }
+
         void Initialize();
         void ReadServerInfo();
         void WriteServerInfo(IList<ServerInfo> info);

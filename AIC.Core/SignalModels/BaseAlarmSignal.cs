@@ -257,6 +257,21 @@ namespace AIC.Core.SignalModels
             _eventAggregator.GetEvent<CustomSystemEvent>().Publish(ex);
         }
 
+        public void AddProcessorTrend(bool trend = true)
+        {
+            this.SignalProcessorTrend.Add(trend);
+            Console.WriteLine(this.FullName + this.SignalProcessorTrend.Count.ToString());
+        }
+
+        public void RemoveProcessorTrend(bool trend = true)
+        {
+            if (this.SignalProcessorTrend.Contains(trend))
+            {
+                this.SignalProcessorTrend.Remove(true);                
+            }
+            Console.WriteLine(this.FullName + this.SignalProcessorTrend.Count.ToString());
+        }
+
         #region 属性
         private DateTime? aCQDatetime;
         public DateTime? ACQDatetime//采集时间     
@@ -340,7 +355,7 @@ namespace AIC.Core.SignalModels
                     OnPropertyChanged("AlarmLimitString");
                     if (alarmLimit != null && alarmLimit.Length > 0)
                     {
-                        AlarmMax = alarmLimit.Select(p => p.Limit).Max();
+                        AlarmMax = alarmLimit.Select(p => Math.Abs(p.Limit)).Max();
                     }
                 }
             }
@@ -380,7 +395,7 @@ namespace AIC.Core.SignalModels
         {
             get
             {
-                var percentResult = (Result ?? 0) / AlarmMax * 100;
+                var percentResult = (Math.Abs(Result ?? 0)) / AlarmMax * 100;
                 return (percentResult > 100)? 100 : percentResult;
             }
           
@@ -843,8 +858,6 @@ namespace AIC.Core.SignalModels
         public double DelayAlarmTime { get; set; }
         public double NotOKDelayAlarmTime { get; set; }
         #endregion
-
-
 
         //旋转方向
         //private ForwardRotation forwardRotation;

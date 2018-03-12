@@ -30,5 +30,8 @@ namespace AIC.ServiceInterface
 
         void GetDailyMedianData(DateTime startTime, DateTime endTime);
         event StatisticalInformationDataChangedEvent StatisticalInformationDataChanged;
+
+        Dictionary<string, List<StatisticalInformationData>>  StatisticalInformation { get; }
+        Dictionary<string, List<Tuple<DateTime, int, int, int, int>>> ServerLevelStatisticalResult { get; }
     }
 }

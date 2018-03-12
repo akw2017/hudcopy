@@ -380,5 +380,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.MatlabMath.dl
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Wpf.CloseTabControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Wpf.CloseTabControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMatlabDLL.dll

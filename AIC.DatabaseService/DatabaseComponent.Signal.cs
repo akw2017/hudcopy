@@ -189,7 +189,7 @@ namespace AIC.DatabaseService
             });
         }
 
-        public async Task<List<T>> GetDailyMedianData<T>(string ip, DateTime startTime, DateTime endTime, string columns ="*")//仅扩展了无线振动信号
+        public async Task<List<T>> GetDailyMedianData<T>(string ip, string table, DateTime startTime, DateTime endTime, string columns ="*")//仅扩展了无线振动信号
         {
             return await Task.Run(() =>
             {
@@ -201,7 +201,8 @@ namespace AIC.DatabaseService
                 string sqlfull = null;
                 for (DateTime dt = startTime; dt <= endTime; dt = Convert.ToDateTime(dt.ToString("yyyy-MM-01 00:00:00")).AddMonths(1))
                 {
-                    string tablename = "D_WirelessVibrationSlot_E" + dt.ToString("yyyyMM");
+                    //string tablename = "D_WirelessVibrationSlot_E" + dt.ToString("yyyyMM");
+                    string tablename = table + "_E" + dt.ToString("yyyyMM");
                     string sql = @"
                         select " + columns + @"  from (  
                             select *,
@@ -247,17 +248,23 @@ namespace AIC.DatabaseService
             });
         }
 
-        public async Task<List<T>> GetDailyMedianData<T>(DateTime startTime, DateTime endTime, string columns = "*")
+        public async Task<Dictionary<string, List<T>>> GetDailyMedianData<T>(DateTime startTime, DateTime endTime, string columns = "*")
         {
-            List<T> mediandata = new List<T>();
+            Dictionary<string, List<T>> mediandata = new Dictionary<string, List<T>>();
             if (T_RootCard.Count > 0)
             {                
                 foreach (var ip in T_RootCard.Keys)
                 {
-                    var data = await GetDailyMedianData<T>(ip, startTime, endTime);
+                    mediandata.Add(ip, new List<T>());
+                    var data = await GetDailyMedianData<T>(ip, "D_WirelessVibrationSlot", startTime, endTime, columns);
                     if (data != null)
                     {
-                        mediandata.AddRange(data);
+                        mediandata[ip].AddRange(data);
+                    }
+                    data = await GetDailyMedianData<T>(ip, "D_WirelessScalarSlot", startTime, endTime, columns);
+                    if (data != null)
+                    {
+                        mediandata[ip].AddRange(data);
                     }
                 }
             }

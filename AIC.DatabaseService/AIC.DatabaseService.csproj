@@ -119,6 +119,7 @@
       <HintPath>..\packages\Nito.AsyncEx.3.0.0\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -133,6 +134,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -201,6 +203,10 @@
     <ProjectReference Include="..\AIC9600Client\AIC.M9600.Common.SlaveDB\AIC.M9600.Common.SlaveDB.csproj">
       <Project>{56fd6a48-aebb-44a2-9725-1304a9bf87a9}</Project>
       <Name>AIC.M9600.Common.SlaveDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.CloseTabControl\Wpf.CloseTabControl.csproj">
+      <Project>{811a8482-ba1d-49dd-bbf9-10a0d26d70d1}</Project>
+      <Name>Wpf.CloseTabControl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -62,7 +62,6 @@ namespace AIC.LocalConfiguration
         {
             //Initialize();
         }
-
         public void WriteServerInfo(IList<ServerInfo> info)
         {
             var serverlist = info.Distinct(EqualityHelper<ServerInfo>.CreateComparer(p => p.IP)).ToArray();
@@ -76,6 +75,6 @@ namespace AIC.LocalConfiguration
                 Directory.CreateDirectory(@directory);
             }
             dataService.WriteServerXml(dir, ServerInfoList);
-        }
+        }       
     }
 }

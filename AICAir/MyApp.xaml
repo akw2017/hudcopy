@@ -17,6 +17,7 @@
                
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/GreyStyle.xaml" />
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/AsyncWorkStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/BottomAsyncWorkStyle.xaml" />
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/GridSplitterStyle.xaml" />
                 <!--<ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />-->
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />

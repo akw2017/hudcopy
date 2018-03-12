@@ -37,14 +37,13 @@ namespace AIC.HomePage.ViewModels
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
         private readonly ILoginUserService _loginUserService;
-        private readonly IRegionManager _regionManager;
 
         public delegate void ShowMapAlarm();
         public event ShowMapAlarm ShowMapAlarmChanged;
         public delegate void ShowMapServer();
         public event ShowMapServer ShowMapServerChanged;
 
-        public HomeMapViewModel(ILocalConfiguration localConfiguration, IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, ILoginUserService loginUserService, IRegionManager regionManager)
+        public HomeMapViewModel(ILocalConfiguration localConfiguration, IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, ILoginUserService loginUserService)
         {
             _localConfiguration = localConfiguration;
             _loginUserService = loginUserService;
@@ -52,7 +51,6 @@ namespace AIC.HomePage.ViewModels
             _organizationService = organizationService;
             _signalProcess = signalProcess;
             _cardProcess = cardProcess;
-            _regionManager = regionManager;
 
             _signalProcess.StatisticalInformationDataChanged += StatisticalInformationDataChanged;
 
@@ -193,7 +191,7 @@ namespace AIC.HomePage.ViewModels
             if (ShowMapServerChanged != null)
             {
                 ShowMapServerChanged();
-                StatisticalInformationDataChanged(statisticalResult);
+                StatisticalInformationDataChanged();
             }
         }
 
@@ -263,27 +261,31 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
-        private Dictionary<string, List<Tuple<DateTime, int, int, int>>> statisticalResult;
-        private void StatisticalInformationDataChanged(Dictionary<string, List<Tuple<DateTime, int, int, int>>> statisticalresult)
+        private void StatisticalInformationDataChanged()
         {
-            statisticalResult = statisticalresult;
+            var statisticalresult = _signalProcess.ServerLevelStatisticalResult;
             System.Windows.Application.Current.Dispatcher.Invoke((Action)(() =>//调用线程必须为 STA
             {
                 SeriesCollection = new SeriesCollection
                 {
                     new LineSeries
                     {
-                        Title = "危险点数",
+                        Title = "预警点数",
                         Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色                        
                     },
                     new LineSeries
                     {
                         Title = "报警点数",
                         Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色
-                        
-                    }
+                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                                         
+                    },
+                    new LineSeries
+                    {
+                        Title = "危险点数",
+                        Values = new ChartValues<int> { },
+                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                    },
                 };
                 Labels = new string[] { };
                 YFormatter = value => value.ToString("0");
@@ -292,13 +294,14 @@ namespace AIC.HomePage.ViewModels
 
                 if (statisticalresult != null && statisticalresult.ContainsKey(ServerInfo.IP))
                 {
-                    var data = statisticalresult[ServerInfo.IP];
+                    var tuple = statisticalresult[ServerInfo.IP];
 
-                    Labels = data.Select(p => p.Item1.ToString("MM/dd")).ToArray();
-                    SeriesCollection[0].Values.AddRange(data.Select(p => p.Item3 as object));
-                    SeriesCollection[1].Values.AddRange(data.Select(p => p.Item4 as object));
+                    Labels = tuple.Select(p => p.Item1.ToString("MM/dd")).ToArray();
+                    SeriesCollection[2].Values.AddRange(tuple.Select(p => p.Item3 as object));
+                    SeriesCollection[1].Values.AddRange(tuple.Select(p => p.Item4 as object));
+                    SeriesCollection[0].Values.AddRange(tuple.Select(p => p.Item5 as object));
 
-                    foreach(var serverkey in statisticalresult)
+                    foreach (var serverkey in statisticalresult)
                     {
                         AlarmServerInfo serverinfo = new AlarmServerInfo();
                         serverinfo.Name = ServerInfoList.Where(p => p.IP == serverkey.Key).Select(p => p.Name).FirstOrDefault();
@@ -311,7 +314,10 @@ namespace AIC.HomePage.ViewModels
                         {
                             serverinfo.AlarmGrade = 3;
                         }
-                        //预警没有加入
+                        else if (serverkey.Value.Select(p => (p.Item2 == 0) ? 0 : (p.Item5)).Average() > 0)
+                        {
+                            serverinfo.AlarmGrade = 2;
+                        }
                         else
                         {
                             serverinfo.AlarmGrade = 1;
@@ -327,21 +333,24 @@ namespace AIC.HomePage.ViewModels
 
         private void Goto(object para)
         {
-            string viewName = "MenuOnlineDataList";
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            if (region.GetView(viewName) != null)
+            if (para is BaseAlarmSignal)//测点
             {
-                region.Activate(region.GetView(viewName));
-                return;
+                _loginUserService.SetGotoServerInfo((para as BaseAlarmSignal).ServerIP);
+                _loginUserService.SetGotoSignal(para as BaseAlarmSignal);
+                ItemQucikDataView view = _loginUserService.GotoTab<ItemQucikDataView>("MenuItemQucikData") as ItemQucikDataView;
+                if (view != null)
+                {
+                }
             }
-            Object viewObj = ServiceLocator.Current.GetInstance<DeviceQucikDataView>();
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
+            else if (para is string)//服务器
             {
-                view.Closer.RequestClose += () => region.Remove(view);
+                _loginUserService.SetGotoServerInfo(para as string);
+                DeviceQucikDataView view = _loginUserService.GotoTab<DeviceQucikDataView>("MenuDeviceQucikData") as DeviceQucikDataView;
+                if (view != null)
+                {
+                    view.GotoServer(_loginUserService.GotoServerInfo);
+                }
             }
-            region.Add(view, viewName);
-            region.Activate(view);
         }
     }
 }

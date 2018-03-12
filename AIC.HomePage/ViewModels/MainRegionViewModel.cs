@@ -797,7 +797,7 @@ namespace AIC.HomePage.ViewModels
 
                 LoginUser = null;
 
-                CloseTabs();
+                _loginUserService.CloseTabs();
 
                 LoginVisibility = Visibility.Collapsed;
             }
@@ -807,57 +807,18 @@ namespace AIC.HomePage.ViewModels
         {
             _regionManager.RequestNavigate(RegionNames.MainBodyRegion, tabView);
             ////首页默认打开
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            if (region.GetView("首页") != null)
-            {
-                region.Activate(region.GetView("首页"));
-                return;
-            }
-            Object viewObj = ServiceLocator.Current.GetInstance<HomeMapView>();
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
-            {
-                view.Closer.RequestClose += () => region.Remove(view);
-            }
-            region.Add(view, "首页");
-            region.Activate(view);
-        }
-
-        private void CloseTabs(bool firstTabClosed = true)
-        {
-            //关闭除主页外其他视图
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            var views = region.Views.ToList();
-            for (int i = views.Count - 1; i >= 0; i--)
-            {
-                var viewObj = views[i];
-                ICloseable view = viewObj as ICloseable;
-                if (view.Closer.Visibility == Visibility.Visible)
-                {
-                    region.Remove(view);
-                }
-                else if (firstTabClosed == true)
-                {
-                    region.Remove(view);
-                }
-            }
-        }
+            _loginUserService.GotoTab<HomeMapView>("首页");
+        }      
 
         private void EditPwd()
         {
             if (PwdEditManage.Enter(_loginUserService.LoginInfo))
             {
-                IRegion region = this._regionManager.Regions["MainTabRegion"];
-                var views = region.Views.ToList();
-                for (int i = 0; i < views.Count; i++)
-                {
-                    var viewObj = views[i];
-                    ICloseable view = viewObj as ICloseable;
-                    if (view.Closer.Visibility == Visibility.Visible)
-                    {
-                        view.Closer.LockVisibility = Visibility.Visible;
-                    }
-                }
+#if XBAP
+                MessageBox.Show("密码修改成功!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("密码修改成功!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+#endif
             }
         }
         private void Lock()
@@ -869,17 +830,7 @@ namespace AIC.HomePage.ViewModels
             }
             if (LockManage.Lock(_loginUserService.LoginInfo))
             {
-                IRegion region = this._regionManager.Regions["MainTabRegion"];
-                var views = region.Views.ToList();
-                for (int i = 0; i < views.Count; i++)
-                {
-                    var viewObj = views[i];
-                    ICloseable view = viewObj as ICloseable;
-                    if (view.Closer.Visibility == Visibility.Visible)
-                    {
-                        view.Closer.LockVisibility = Visibility.Visible;
-                    }
-                }
+                _loginUserService.LockTabs();
             }
         }
 
@@ -894,34 +845,7 @@ namespace AIC.HomePage.ViewModels
             }
             if (LockManage.UnLock(_loginUserService.LoginInfo))
             {
-                IRegion region = this._regionManager.Regions["MainTabRegion"];
-                if (name == null)
-                {
-                    var views = region.Views.ToList();
-                    for (int i = 0; i < views.Count; i++)
-                    {
-                        var viewObj = views[i];
-                        ICloseable view = viewObj as ICloseable;
-                        if (view.Closer.Visibility == Visibility.Visible)
-                        {
-                            view.Closer.LockVisibility = Visibility.Collapsed;
-                        }
-                    }
-                }
-                else
-                {
-                    var views = region.Views.ToList();
-                    for (int i = 0; i < views.Count; i++)
-                    {
-                        var viewObj = views[i];
-                        ICloseable view = viewObj as ICloseable;
-                        if (view.Closer.Visibility == Visibility.Visible && view.Closer.Title == name)
-                        {
-                            view.Closer.LockVisibility = Visibility.Collapsed;
-                            break;
-                        }
-                    }
-                }
+                _loginUserService.UnLockTabs(name);
             }
         }
 
@@ -947,133 +871,117 @@ namespace AIC.HomePage.ViewModels
             if (viewName == null)
             {
                 return;
-            }
-            if (!this._regionManager.Regions.ContainsRegionWithName("MainTabRegion"))
-            {
-                return;
-            }
+            }         
 
-            IRegion region = this._regionManager.Regions["MainTabRegion"];
-            if (region.GetView(viewName) != null)
-            {
-                region.Activate(region.GetView(viewName));
-                return;
-            }
-
-            object viewObj = null;
             if (viewName == "MenuServerSetting")
             {
-                viewObj = ServiceLocator.Current.GetInstance<ServerSetView>();
+                _loginUserService.GotoTab<ServerSetView>(viewName);
             }
-            //else if (viewName == "MenuOnlineData")
-            //{
-            //    viewObj = ServiceLocator.Current.GetInstance<OnLineDataPageView>();
-            //}
             else if (viewName == "MenuCollectorSetting")
             {
-                viewObj = ServiceLocator.Current.GetInstance<PDASystemManageView>();
+                _loginUserService.GotoTab<PDASystemManageView>(viewName);
             }
             else if (viewName == "MenuUserManage")
             {
-                viewObj = ServiceLocator.Current.GetInstance<UserSetView>();
+                _loginUserService.GotoTab<UserSetView>(viewName);
             }
             else if (viewName == "MenuRoleManage")
             {
-                viewObj = ServiceLocator.Current.GetInstance<RoleSetView>();
+                _loginUserService.GotoTab<RoleSetView>(viewName);
             }
             else if (viewName == "MenuMenuManage")
             {
-                viewObj = ServiceLocator.Current.GetInstance<MenuSetView>();
+                _loginUserService.GotoTab<MenuSetView>(viewName);
             }
             else if (viewName == "MenuOrganizationManage")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OrganizationPrivilegeSetView>();
+                _loginUserService.GotoTab<OrganizationPrivilegeSetView>(viewName);
             }
             else if (viewName == "MenuManageLog")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OperateRecord>();
+                _loginUserService.GotoTab<OperateRecord>(viewName);
             }
             else if (viewName == "MenuOnlineDataOverview")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataOverviewView>();
+                _loginUserService.GotoTab<OnlineDataOverviewView>(viewName);
             }
             else if (viewName == "MenuOnlineDataList")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataListView>();
+                _loginUserService.GotoTab<OnlineDataListView>(viewName);
             }
             else if (viewName == "MenuOnlineDataTile")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataTileView>();
+                _loginUserService.GotoTab<OnlineDataTileView>(viewName);
             }
             else if (viewName == "MenuOnlineDataDiagram")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataDiagramView>();
+                _loginUserService.GotoTab<OnlineDataDiagramView>(viewName);
             }
             else if (viewName == "MenuHistoryDataList")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryDataListView>();
+                _loginUserService.GotoTab<HistoryDataListView>(viewName);
             }
             else if (viewName == "MenuHistoryDataDiagram")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryDataDiagramView>();
+                _loginUserService.GotoTab<HistoryDataDiagramView>(viewName);
             }
             else if (viewName == "MenuHistoryData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryDataDiagramView>();
+                _loginUserService.GotoTab<HistoryDataDiagramView>(viewName);
             }
             else if (viewName == "MenuOnlineDataDiagnosis")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataDiagnosisView>();
+                _loginUserService.GotoTab<OnlineDataDiagnosisView>(viewName);
             }
             else if (viewName == "MenuOnlineDataStatistics")
             {
-                viewObj = ServiceLocator.Current.GetInstance<OnlineDataStatisticsView>();
+                _loginUserService.GotoTab<OnlineDataStatisticsView>(viewName);
             }
             else if (viewName == "MenuHistoryDataStatistics")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryDataStatisticsView>();
+                _loginUserService.GotoTab<HistoryDataStatisticsView>(viewName);
             }
             else if (viewName == "MenuSystemEventList")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryEventListView>();
+                _loginUserService.GotoTab<HistoryEventListView>(viewName);
             }
             else if (viewName == "MenuDataTrendChart")
             {
-                viewObj = ServiceLocator.Current.GetInstance<HistoryDataTrendView>();
+                _loginUserService.GotoTab<HistoryDataTrendView>(viewName);
             }
             else if (viewName == "MenuDeviceRunStatus")
             {
-                viewObj = ServiceLocator.Current.GetInstance<DeviceRunStatusListView>();
+                _loginUserService.GotoTab<DeviceRunStatusListView>(viewName);
             }
             else if (viewName == "MenuDeviceRunAnalyze")
             {
-                viewObj = ServiceLocator.Current.GetInstance<DeviceRunAnalyzeListView>();
+                _loginUserService.GotoTab<DeviceRunAnalyzeListView>(viewName);
             }
             else if (viewName == "MenuDeviceHourlyData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<DeviceHourlyDataView>();
+                _loginUserService.GotoTab<DeviceHourlyDataView>(viewName);
             }
             else if (viewName == "MenuExportDBData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<ExportDBDataView>();
+                _loginUserService.GotoTab<ExportDBDataView>(viewName);
             }
             else if (viewName == "MenuImportDBData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<ImportDBDataView>();
+                _loginUserService.GotoTab<ImportDBDataView>(viewName);
             }
             else if (viewName == "MenuFilterDBData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<FilterDBDataView>();
+                _loginUserService.GotoTab<FilterDBDataView>(viewName);
             }
             else if(viewName == "MenuDeviceNewData")
             {
-                viewObj = ServiceLocator.Current.GetInstance<DeviceRunTestListView>();
+                _loginUserService.GotoTab<DeviceRunTestListView>(viewName);
             }
             else if (viewName == "MenuRefreshData")
             {
                 Status = ViewModelStatus.Querying;
                 WaitInfo = "刷新中";
-                CloseTabs(false);
+                _loginUserService.CloseTabs(false);
                 MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Collapsed);
                 await _loginUserService.SetUserLogin();
                 Status = ViewModelStatus.None;
@@ -1087,26 +995,7 @@ namespace AIC.HomePage.ViewModels
                 TestWin win = new TestWin();
                 win.Show();
                 return;
-            }
-            else
-            {
-                return;
-            }
-            ICloseable view = viewObj as ICloseable;
-            if (view != null)
-            {
-                view.Closer.RequestClose += () => 
-                {
-                    var disposable = view as IDisposable;
-                    if (disposable != null)
-                    {
-                        disposable.Dispose();
-                    }
-                    region.Remove(view);
-                };//region.Remove(view);
-            }
-            region.Add(view, viewName);
-            region.Activate(view);
+            }            
         }
         #endregion
 
@@ -1147,17 +1036,7 @@ namespace AIC.HomePage.ViewModels
         }
         private void TabLanguageShift()
         {
-            if (this._regionManager.Regions.ContainsRegionWithName("MainTabRegion"))
-            {
-                IRegion region = this._regionManager.Regions["MainTabRegion"];
-                var views = region.Views.ToList();
-                for (int i = 0; i < views.Count; i++)
-                {
-                    var viewObj = views[i];
-                    ICloseable view = viewObj as ICloseable;
-                    view.Closer.Title = (string)Application.Current.Resources[view.Closer.TitleResourceName];
-                }
-            }
+            _loginUserService.TabLanguageShift();
             try
             {
                 LocalSetting.IsEnglishLanguage = EnglishChecked;
@@ -1236,7 +1115,7 @@ namespace AIC.HomePage.ViewModels
 
         private void CloseWindows()
         {
-            CloseTabs(false);
+            _loginUserService.CloseTabs(false);
         }
         #endregion
 

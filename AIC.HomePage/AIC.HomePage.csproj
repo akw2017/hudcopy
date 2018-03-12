@@ -215,7 +215,6 @@
     <Compile Include="Converters\IntBoolConverter.cs" />
     <Compile Include="HomePageModule.cs" />
     <Compile Include="Menus\AccentColorMenuData.cs" />
-    <Compile Include="Models\AlarmServerInfo.cs" />
     <Compile Include="Models\PwdEditManage.cs" />
     <Compile Include="Models\LockManage.cs" />
     <Compile Include="Models\LoginManage.cs" />

@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.Events
 {
-    public delegate void StatisticalInformationDataChangedEvent(Dictionary<string, List<Tuple<DateTime, int, int, int>>> statisticalresult);
+    public delegate void StatisticalInformationDataChangedEvent();
 }

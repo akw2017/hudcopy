@@ -1,6 +1,7 @@
 ﻿using AIC.Core.ControlModels;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
+using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using System;
@@ -33,5 +34,16 @@ namespace AIC.ServiceInterface
         void ClearException();
         Task AddSystemEvent(string ip, T1_SystemEvent exception);
         Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype);
+
+        ServerInfo GotoServerInfo { get; }
+        BaseAlarmSignal GotoSignal { get; }
+        object GotoTab<T>(string viewName);
+        void TabLanguageShift();
+        void CloseTabs(bool firstTabClosed = true);
+        void LockTabs();
+        void UnLockTabs(string name);
+        void SetGotoServerInfo(string servername);
+        void SetGotoSignal(BaseAlarmSignal sg);
+      
     }
 }

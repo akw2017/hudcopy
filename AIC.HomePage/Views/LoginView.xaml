@@ -11,7 +11,7 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              Dialog:DialogParticipation.Register="{Binding}" 
-             Style="{DynamicResource AsyncWorkUserControlStyle}"
+             Style="{DynamicResource BottomAsyncWorkUserControlStyle}"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1000">
     <UserControl.Resources>

@@ -250,5 +250,82 @@ namespace AIC.Core.LMModels
                 return attrib.Description;
             }
         }
+
+        public string GetHardWaveInfo()
+        {
+            switch(this.ItemType)
+            {
+                case (int)ChannelType.IEPEChannelInfo: 
+                case (int)ChannelType.EddyCurrentDisplacementChannelInfo:
+                case (int)ChannelType.EddyCurrentKeyPhaseChannelInfo:
+                case (int)ChannelType.DigitTachometerChannelInfo:
+                case (int)ChannelType.AnalogRransducerInChannelInfo:
+                case (int)ChannelType.RelayChannelInfo: 
+                case (int)ChannelType.DigitRransducerInChannelInfo: 
+                case (int)ChannelType.DigitRransducerOutChannelInfo: 
+                case (int)ChannelType.AnalogRransducerOutChannelInfo: 
+                    {
+                        return this.CardNum.Value.ToString("0000") + "_" + this.SlotNum + "_" + this.CHNum + "_0" + "@" + this.ServerIP;
+                    }
+                case (int)ChannelType.WirelessVibrationChannelInfo: 
+                case (int)ChannelType.WirelessScalarChannelInfo:
+                    {
+                        return this.SlaveIdentifier.PadLeft(4, '0') + "_" + this.SlotNum + "_" + this.CHNum + "_0" + "@" + this.ServerIP; 
+                    }
+            }
+            return null;
+        }
+
+        public string GetHardWaveType()
+        {
+            switch (this.ItemType)
+            {
+                case (int)ChannelType.IEPEChannelInfo:
+                    {
+                        return "IEPE";
+                    }
+                case (int)ChannelType.EddyCurrentDisplacementChannelInfo:
+                    {
+                        return "EddyCurrentDisplacement";
+                    }
+                case (int)ChannelType.EddyCurrentKeyPhaseChannelInfo:
+                    {
+                        return "EddyCurrentKeyPhase";
+                    }
+                case (int)ChannelType.DigitTachometerChannelInfo:
+                    {
+                        return "DigitTachometer";
+                    }
+                case (int)ChannelType.AnalogRransducerInChannelInfo:
+                    {
+                        return "AnalogRransducerIn";
+                    }
+                case (int)ChannelType.RelayChannelInfo:
+                    {
+                        return "Relay";
+                    }
+                case (int)ChannelType.DigitRransducerInChannelInfo:
+                    {
+                        return "DigitRransducerIn";
+                    }
+                case (int)ChannelType.DigitRransducerOutChannelInfo:
+                    {
+                        return "DigitRransducerOut";
+                    }
+                case (int)ChannelType.AnalogRransducerOutChannelInfo:
+                    {
+                        return "AnalogRransducerOut";
+                    }
+                case (int)ChannelType.WirelessVibrationChannelInfo:
+                    {
+                        return "WirelessVibration";
+                    }
+                case (int)ChannelType.WirelessScalarChannelInfo:
+                    {
+                        return "WirelessScalar";
+                    }
+            }
+            return null;
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace AIC.HomePage.Views
             _loginUserService = loginUserService;
             _localConfiguration = localConfiguration;
 
+
             #region            
             DoSomething ds = new DoSomething();
             this.webBrowser.ObjectForScripting = ds;

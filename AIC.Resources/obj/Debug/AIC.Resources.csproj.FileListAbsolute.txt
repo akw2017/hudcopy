@@ -199,3 +199,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\PopupWindow.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Views\PopupWindow.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\TabControlStyle.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\BottomAsyncWorkStyle.baml

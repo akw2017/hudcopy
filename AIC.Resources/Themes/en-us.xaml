@@ -22,8 +22,11 @@
     <s:String x:Key="strLogout">Logout</s:String>
     <s:String x:Key="strLogoutSystem">Logout User?</s:String>
     <s:String x:Key="strStart">Start</s:String>
-    <s:String x:Key="strStop">Stop</s:String>    
-
+    <s:String x:Key="strStop">Stop</s:String>
+    <s:String x:Key="strItem">Item</s:String>
+    <s:String x:Key="strDevice">Device</s:String>
+    <s:String x:Key="strOrganization">Organization</s:String>
+    
     <s:String x:Key="strMainControlCard">MainControlCard</s:String>
     <s:String x:Key="strWireMatchingCard">WireMatchingCard</s:String>
     <s:String x:Key="strIEPESlot">IEPESlot</s:String>

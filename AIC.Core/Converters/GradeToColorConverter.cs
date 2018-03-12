@@ -17,7 +17,7 @@ namespace AIC.Core
         {
             if (value is AlarmGrade || value is int)
             {
-                AlarmGrade grade = (AlarmGrade)value;
+                AlarmGrade grade = (AlarmGrade)((int)value & 0x00ffff00);//兼容历史数据没有去除后8位
                 switch (grade)
                 {
                     case AlarmGrade.Invalid: return new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00));//绿色
@@ -33,7 +33,7 @@ namespace AIC.Core
                     default: return new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00));//绿色
                 }
             }
-            return null;
+            return new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00));//绿色
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

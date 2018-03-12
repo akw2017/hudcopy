@@ -260,6 +260,7 @@
     <Compile Include="Maybe.cs" />
     <Compile Include="ControlModels\ContextMenuViewModel.cs" />
     <Compile Include="Helpers\EqualityHelper.cs" />
+    <Compile Include="Models\AlarmServerInfo.cs" />
     <Compile Include="Models\DiagnosticInfoClass.cs" />
     <Compile Include="Models\ExceptionModel.cs" />
     <Compile Include="Models\LoginInfo.cs" />

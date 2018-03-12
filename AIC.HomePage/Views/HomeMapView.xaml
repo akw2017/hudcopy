@@ -69,11 +69,11 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
-                    <Button Grid.Column="1" Content="Go" Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem, ElementName=servers}" Margin="4,0,0,0"/>
+                    <Button Grid.Column="1" Content="Go" Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem.Name, ElementName=servers}" Margin="4,0,0,0"/>
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Header="报警前三">
+            <GroupBox Grid.Row="1" Header="报警前三(实时)">
                 <Viewbox>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -87,7 +87,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding FirstDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding FirstDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -96,11 +96,18 @@
                             </lvc:AngularGauge.Sections>
                         </lvc:AngularGauge>
 
-                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <TextBlock Text="{Binding FirstDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
-                            <TextBlock Background="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" ToolTip="{Binding FirstDangerItem.DeviceItemName}">
+                            <TextBlock HorizontalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:f3}{1}">
+                                        <Binding Path="FirstDangerItem.Result" />
+                                        <Binding Path="FirstDangerItem.Unit"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Button Command="{Binding GotoCommand}" CommandParameter="{Binding FirstDangerItem}" Background="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Content="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Style="{StaticResource TextButtonStyle}" Width="50" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <lvc:AngularGauge Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding SecondDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding SecondDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -108,11 +115,18 @@
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=3}" Fill="Red"/>
                             </lvc:AngularGauge.Sections>
                         </lvc:AngularGauge>
-                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <TextBlock Text="{Binding SecondDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
-                            <TextBlock Background="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom" ToolTip="{Binding SecondDangerItem.DeviceItemName}">
+                            <TextBlock HorizontalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:f3}{1}">
+                                        <Binding Path="SecondDangerItem.Result" />
+                                        <Binding Path="SecondDangerItem.Unit"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Button Command="{Binding GotoCommand}" CommandParameter="{Binding SecondDangerItem}" Background="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Content="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Style="{StaticResource TextButtonStyle}" Width="50" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <lvc:AngularGauge Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding ThirdDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="5" Wedge="280" TicksForeground="Black" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding ThirdDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -120,18 +134,29 @@
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=3}" Fill="Red"/>
                             </lvc:AngularGauge.Sections>
                         </lvc:AngularGauge>
-                        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <TextBlock Text="{Binding ThirdDangerItem.Result,StringFormat=f3}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
-                            <TextBlock Background="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Text="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Width="50" TextAlignment="Center"/>
+                        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" ToolTip="{Binding ThirdDangerItem.DeviceItemName}">
+                            <TextBlock HorizontalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:f3}{1}">
+                                        <Binding Path="ThirdDangerItem.Result" />
+                                        <Binding Path="ThirdDangerItem.Unit"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Button Command="{Binding GotoCommand}" CommandParameter="{Binding ThirdDangerItem}" Background="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Content="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Style="{StaticResource TextButtonStyle}" Width="50" HorizontalContentAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Header="报警曲线">
+            <GroupBox Grid.Row="2" Header="报警曲线(七天)">
                 <lvc:CartesianChart  Series="{Binding SeriesCollection}" LegendLocation="None">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="点数" LabelFormatter="{Binding YFormatter}" Foreground="Black"></lvc:Axis>
+                        <lvc:Axis Title="点数" LabelFormatter="{Binding YFormatter}" Foreground="Black" MinValue="0">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1" />
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="日期" Labels="{Binding Labels}" Foreground="Black"></lvc:Axis>
@@ -139,23 +164,20 @@
                 </lvc:CartesianChart>
             </GroupBox>
 
-            <GroupBox Grid.Row="3" Header="报警排名">
-              
-                <ListBox x:Name="myListBox" ItemsSource="{Binding AlarmServerInfoList}" Background="Transparent">
+            <GroupBox Grid.Row="3" Header="报警排名(七天)">
+                <ListBox x:Name="myListBox" ItemsSource="{Binding AlarmServerInfoList}" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="2">
-                                <StackPanel Orientation="Horizontal">
-                                    <Grid>
+                            <Grid Margin="10, 2">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding AlarmRate,StringFormat={}{0:P}}" Foreground="Red" VerticalAlignment="Center"/>
+                                    <TextBlock DockPanel.Dock="Right" Text="报警率" Foreground="Red" VerticalAlignment="Center" />
+                                    <Grid DockPanel.Dock="Left">
                                         <Path x:Name="pathIcon" Width="28" Height="28" Stretch="Fill" Fill="Green" Data="F1 M 54.8392,24.4749C 55.3507,24.2457 55.8111,24.1311 56.2202,24.1311C 56.6172,24.1311 56.966,24.2232 57.2668,24.4073C 57.5675,24.5915 57.8171,24.8339 58.0156,25.1347L 58.4575,26.1536L 58.6017,27.2737C 58.6017,29.6143 58.4667,31.8014 58.1966,33.8351C 57.9266,35.8688 57.5522,37.7644 57.0734,39.5218C 56.5947,41.2793 56.0289,42.8997 55.3763,44.383C 54.7236,45.8663 54.0167,47.232 53.2556,48.4801C 52.4946,49.7281 51.6925,50.8636 50.8496,51.8866C 50.0067,52.9095 49.1556,53.8302 48.2963,54.6486C 45.2682,57.5252 41.8351,59.6285 37.9969,60.9583C 34.1505,59.6285 30.7174,57.5252 27.6976,54.6486C 26.4086,53.421 25.1463,51.9633 23.9105,50.2754C 22.6748,48.5875 21.5751,46.6244 20.6114,44.3861C 19.6478,42.1478 18.8713,39.616 18.2821,36.7905C 17.6929,33.965 17.3982,30.7928 17.3982,27.2737L 17.5609,26.1413L 18.0397,25.1439C 18.2504,24.8493 18.5123,24.613 18.8253,24.435C 19.1383,24.257 19.4933,24.168 19.8902,24.168C 20.2871,24.168 20.7106,24.2703 21.1608,24.4749C 22.196,24.9495 23.1484,25.2851 24.0179,25.4815C 24.8875,25.6779 25.6925,25.7761 26.4332,25.7761C 27.4193,25.7761 28.3052,25.6298 29.0909,25.3372C 29.8765,25.0447 30.5987,24.6743 31.2575,24.2263L 33.0805,22.787L 34.7009,21.3476L 36.2906,20.2336C 36.8266,19.939 37.3954,19.7917 37.9969,19.7917C 38.6107,19.7917 39.1866,19.939 39.7247,20.2336L 41.3175,21.3476L 42.9471,22.787L 44.7701,24.2263C 45.4227,24.6743 46.1419,25.0447 46.9275,25.3372C 47.7132,25.6298 48.5991,25.7761 49.5852,25.7761C 50.3258,25.7761 51.1279,25.6779 51.9913,25.4815C 52.8546,25.2851 53.804,24.9495 54.8392,24.4749 Z "/>
                                         <TextBlock Text="{Binding Index}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="2"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <TextBlock Text="报警率" Foreground="Red" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding AlarmRate,StringFormat={}{0:P}}" Foreground="Red" VerticalAlignment="Center"/>
-                                </StackPanel>
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="2"/>
+                                </DockPanel>
                             </Grid>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding AlarmGrade}" Value="4">
@@ -164,16 +186,18 @@
                                 <DataTrigger Binding="{Binding AlarmGrade}" Value="3">
                                     <Setter TargetName="pathIcon" Property="Fill" Value="Orange"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmGrade}" Value="2">
+                                    <Setter TargetName="pathIcon" Property="Fill" Value="Yellow"/>
+                                </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem, ElementName=myListBox}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBox>
- 
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem.Name, ElementName=myListBox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
             </GroupBox>
         </Grid>
         <StackPanel Orientation="Horizontal" Visibility="Collapsed">

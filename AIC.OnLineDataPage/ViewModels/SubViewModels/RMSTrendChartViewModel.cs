@@ -16,8 +16,7 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         {
             if (Signal is BaseAlarmSignal)
             {
-                Signal.SignalProcessorTrend.Add(true);
-                Console.WriteLine(Signal.SignalProcessorTrend.Count.ToString());
+                Signal.AddProcessorTrend();
             }
         }
 
@@ -25,8 +24,7 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         {
             if (Signal is BaseAlarmSignal)
             {
-                Signal.SignalProcessorTrend.Remove(true);
-                Console.WriteLine(Signal.SignalProcessorTrend.Count.ToString());
+                Signal.RemoveProcessorTrend();
             }
         }
     }
