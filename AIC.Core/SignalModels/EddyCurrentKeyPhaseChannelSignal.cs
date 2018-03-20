@@ -18,7 +18,7 @@ namespace AIC.Core.SignalModels
         {
             var list = new List<SignalDisplayType>();
             list.Add(SignalDisplayType.Value);
-            list.Add(SignalDisplayType.AMSTrend);
+            list.Add(SignalDisplayType.RMSTrend);
             list.Add(SignalDisplayType.TimeDomain);
             return list;
         }

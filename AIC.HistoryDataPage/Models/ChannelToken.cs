@@ -18,14 +18,15 @@ namespace AIC.HistoryDataPage.Models
         public string DisplayName { get; set; }
         public string IP { get; set; }
         public Guid Guid { get; set; }
+        public int ItemType { get; set; }
         public SolidColorBrush SolidColorBrush { get; set; }
     }
 
-    public class BaseWaveChannelToken : ChannelToken
+    public class BaseWaveChannelToken : BaseAlarmChannelToken
     {        
         private event EventHandler disposed;
         private event EventHandler dataChanged;
-        public List<IBaseWaveSlot> DataContracts { get; set; }
+        //public new List<IBaseWaveSlot> DataContracts { get; set; }
         public VibrationData VData { get; set; }
         public int CurrentIndex { get; set; }
         public void RaiseDataChanged()
@@ -66,7 +67,7 @@ namespace AIC.HistoryDataPage.Models
 
     public class BaseDivfreChannelToken : BaseWaveChannelToken
     {
-        public new List<IBaseDivfreSlot> DataContracts { get; set; }  
+        //public new List<IBaseDivfreSlot> DataContracts { get; set; }  
     }
 
     public class BaseAlarmChannelToken : ChannelToken

@@ -124,22 +124,6 @@
                     <TextBlock Text="{DynamicResource serverIP}" Margin="4,0,0,0" VerticalAlignment="Center"/>
                     <!--<TextBox Text="{Binding ServerIP}" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center" IsReadOnly="True"/>-->
                     <ComboBox Width="200" ItemsSource="{Binding ServerIPCategory}" SelectedItem="{Binding ServerIP}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False" Margin="4,0,0,0"/>
-                    <Button Command="{Binding UploadDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Stretch="None" Source="/AIC.Resources;component/Images/database_go.png"  />
-                                <TextBlock Text="{DynamicResource upload}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                    <Button Command="{Binding RefreshDateBaseCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  Visibility="Collapsed">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Stretch="None" Source="/AIC.Resources;component/Images/database_refresh.png"  />
-                                <TextBlock Text="{DynamicResource refresh}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
                     <TextBlock Text="{DynamicResource pdaip}" Margin="4,0,0,0" VerticalAlignment="Center"/>
                     <TextBox x:Name="txtMainCardIP" Style="{DynamicResource MetroTextBox}" Margin="4,0,0,0" Width="200" VerticalAlignment="Center"
                 Text="{Binding MainControlCardIPEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
@@ -165,6 +149,14 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Stretch="None" Source="/AIC.Resources;component/Images/tick.png"  />
                                 <TextBlock Text="{DynamicResource senddown}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding SaveCardCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0"  >
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Stretch="None" Source="/AIC.Resources;component/Images/filesave.png"  />
+                                <TextBlock Text="{DynamicResource save}" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button.Content>
                     </Button>

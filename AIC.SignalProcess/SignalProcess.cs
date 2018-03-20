@@ -881,12 +881,16 @@ namespace AIC.SignalProcess
                     {
                         if (keyValuePair.Key is WirelessVibrationChannelSignal)
                         {
-                            SetDivfreSignal(keyValuePair.Key as WirelessVibrationChannelSignal, keyValuePair.Value);
+                            SetDivfreSignal(keyValuePair.Key as WirelessVibrationChannelSignal, keyValuePair.Value as IBaseDivfreSlot);
                         }
                         else if (keyValuePair.Key is WirelessScalarChannelSignal)
                         {
                             SetAlarmSignal(keyValuePair.Key as WirelessScalarChannelSignal, keyValuePair.Value);
                         }   
+                        else if (keyValuePair.Key is IEPEChannelSignal)
+                        {
+                            SetDivfreSignal(keyValuePair.Key as IEPEChannelSignal, keyValuePair.Value as IBaseDivfreSlot);
+                        }
                     }
                     
                     Parallel.ForEach(keyValuePairs, keyValuePair =>
@@ -1201,56 +1205,56 @@ namespace AIC.SignalProcess
                 #endregion
             }
         }
-        private void SetDivfreSignal(BaseDivfreSignal sg, IBaseAlarmSlot idata)
+        private void SetDivfreSignal(BaseDivfreSignal sg, IBaseDivfreSlot idata)
         {
             sg.IBaseAlarmSlot = idata;
 
             sg.IsResetFlag = true;
 
+            setwave(sg, idata);
+
             if (idata is D1_WirelessVibrationSlot)
             {
                 var data = idata as D1_WirelessVibrationSlot;
                 sg.BatteryEnergy = (float)data.BatteryEnergy.Value;
-
-                setwave(sg, data);
-
-                var divfres = data.DivFreInfo;
-
-                //分频信号
-                foreach (var item in sg.DivFres)
-                {
-                    var divFreContract = divfres.Where(p => p.Guid == item.Guid).SingleOrDefault();
-                    if (divFreContract != null)
-                    {
-                        item.RecordLab = divFreContract.RecordLab.Value;
-                        item.ACQDatetime = divFreContract.ACQDatetime;
-                        item.DescriptionFre = divFreContract.DescriptionFre;
-                        item.AlarmType = divFreContract.AlarmGrade;
-                        item.DivFreType = (DivFreType)Enum.Parse(typeof(DivFreType), divFreContract.DivFreCode.ToString());
-                        item.Name = divFreContract.Name;
-
-                        if (divFreContract.AlarmLimit != null)
-                        {
-                            item.LowDanger = divFreContract.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
-                            item.LowAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
-                            item.LowNormal = divFreContract.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
-                            item.HighNormal = divFreContract.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
-                            item.HighAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
-                            item.HighDanger = divFreContract.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
-                            item.AlarmGrade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), divFreContract.AlarmGrade.ToString());
-                            item.Phase = divFreContract.Phase.Value;
-                            item.Result = divFreContract.Result.Value;
-                        }
-                        item.IsConnected = true;
-                        item.IsRead = true;
-                    }
-                    else
-                    {
-                        item.IsConnected = false;
-                        item.IsRead = false;
-                    }
-                }
             }
+
+            //var divfres = idata.DivFreInfo;
+
+            ////分频信号
+            //foreach (var item in sg.DivFres)
+            //{
+            //    var divFreContract = divfres.Where(p => p.Guid == item.Guid).SingleOrDefault();
+            //    if (divFreContract != null)
+            //    {
+            //        item.RecordLab = divFreContract.RecordLab.Value;
+            //        item.ACQDatetime = divFreContract.ACQDatetime;
+            //        item.DescriptionFre = divFreContract.DescriptionFre;
+            //        item.AlarmType = divFreContract.AlarmGrade;
+            //        item.DivFreType = (DivFreType)Enum.Parse(typeof(DivFreType), divFreContract.DivFreCode.ToString());
+            //        item.Name = divFreContract.Name;
+
+            //        if (divFreContract.AlarmLimit != null)
+            //        {
+            //            item.LowDanger = divFreContract.AlarmLimit.Where(p => p.Name == "低危").Select(p => p.Limit).FirstOrDefault();
+            //            item.LowAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "低警").Select(p => p.Limit).FirstOrDefault();
+            //            item.LowNormal = divFreContract.AlarmLimit.Where(p => p.Name == "低正常").Select(p => p.Limit).FirstOrDefault();
+            //            item.HighNormal = divFreContract.AlarmLimit.Where(p => p.Name == "高正常").Select(p => p.Limit).FirstOrDefault();
+            //            item.HighAlarm = divFreContract.AlarmLimit.Where(p => p.Name == "高警").Select(p => p.Limit).FirstOrDefault();
+            //            item.HighDanger = divFreContract.AlarmLimit.Where(p => p.Name == "高危").Select(p => p.Limit).FirstOrDefault();
+            //            item.AlarmGrade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), divFreContract.AlarmGrade.ToString());
+            //            item.Phase = divFreContract.Phase.Value;
+            //            item.Result = divFreContract.Result.Value;
+            //        }
+            //        item.IsConnected = true;
+            //        item.IsRead = true;
+            //    }
+            //    else
+            //    {
+            //        item.IsConnected = false;
+            //        item.IsRead = false;
+            //    }
+            //}
 
             //if (idata.AlarmLimit != null)
             //{
@@ -1292,7 +1296,7 @@ namespace AIC.SignalProcess
             sg.IsConnected = true;
             sg.IsRunning = false;
         }
-        private void setwave(BaseDivfreSignal sg, D1_WirelessVibrationSlot idata)
+        private void setwave(BaseDivfreSignal sg, IBaseDivfreSlot idata)
         {
             sg.MountDegree = idata.MountDegree.Value;
             sg.TPDirCode = (int)idata.TPDirCode.Value;

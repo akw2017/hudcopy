@@ -255,6 +255,7 @@
     <Compile Include="ViewModels\OnlineDataOverviewViewModel.cs" />
     <Compile Include="ViewModels\OnlineDataStatisticsViewModel.cs" />
     <Compile Include="Models\SignalListViewModel.cs" />
+    <Compile Include="ViewModels\SubViewModels\DiagnoseViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\NyquistChartViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\ChartViewModelBase.cs" />
     <Compile Include="ViewModels\OnlineDataListViewModel.cs" />
@@ -333,6 +334,9 @@
     </Compile>
     <Compile Include="Views\InfoViews\WirelessVibrationInfoWin.xaml.cs">
       <DependentUpon>WirelessVibrationInfoWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\DiagnoseView.xaml.cs">
+      <DependentUpon>DiagnoseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubViews\OrderAnalysisChartView.xaml.cs">
       <DependentUpon>OrderAnalysisChartView.xaml</DependentUpon>
@@ -580,6 +584,10 @@
     <Page Include="Views\InfoViews\WirelessVibrationInfoWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SubViews\DiagnoseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SubViews\OrderAnalysisChartView.xaml">
       <Generator>MSBuild:Compile</Generator>

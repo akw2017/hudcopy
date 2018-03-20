@@ -12,9 +12,20 @@ namespace AIC.HistoryDataPage.ViewModels
 {
     public class HistoricalDataViewModel : BindableBase
     {
+        public event EventHandler Closed;
         public HistoricalDataViewModel()
         {
-            DisplayMode = SignalDisplayType.AMSTrend;
+            //DisplayMode = SignalDisplayType.RMSTrend;
+
+        }
+
+        public void Close()
+        {
+            var handler = Closed;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         #region Public Property

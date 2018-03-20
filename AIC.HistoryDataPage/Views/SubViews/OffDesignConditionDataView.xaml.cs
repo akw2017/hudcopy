@@ -1,4 +1,5 @@
-﻿using AIC.HistoryDataPage.ViewModels;
+﻿using AIC.Core;
+using AIC.HistoryDataPage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -19,11 +20,24 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for OffDesignConditionDataView.xaml
     /// </summary>
-    public partial class OffDesignConditionDataView : UserControl
+    public partial class OffDesignConditionDataView : DisposableUserControl
     {
         public OffDesignConditionDataView()
         {
             InitializeComponent();
         }
+
+        //protected void ViewModel_Closed(object sender, EventArgs e)
+        //{
+        //    // Don't forget to clear chart grid child list.
+        //    gridChart.Children.Clear();
+        //    if (m_chart != null)
+        //    {
+        //        m_chart.Dispose();
+        //        m_chart = null;
+        //    }
+        //    base.Dispose();
+        //    base.GCCollect();
+        //}
     }
 }

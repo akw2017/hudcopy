@@ -361,7 +361,7 @@ namespace AIC.Core
             }
 
             return result;
-        }
+        }     
 
         /// <summary>
         /// Creates a TransformGroup based on the given Translation, Scale and Rotation

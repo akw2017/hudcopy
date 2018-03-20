@@ -284,24 +284,6 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
-        private bool isShowAlarm = false;
-        public bool IsShowAlarm
-        {
-            get { return isShowAlarm; }
-            set
-            {
-                if (isShowAlarm != value)
-                {
-                    isShowAlarm = value;
-                    OnPropertyChanged("IsShowAlarm");
-                    foreach (var item in SignalMonitors)
-                    {
-                        item.IsShowAlarm = value;
-                    }
-                }
-            }
-        }
-
         private RectangleGridEventArgs select;
         public RectangleGridEventArgs Select
         {
@@ -338,6 +320,20 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 waitinfo = value;
                 OnPropertyChanged("WaitInfo");
+            }
+        }
+
+        private List<UIElement> fluidElements = new List<UIElement>();
+        public List<UIElement> FluidElements
+        {
+            get
+            {
+                return fluidElements;
+            }
+            set
+            {
+                fluidElements = value;
+                OnPropertyChanged("FluidElements");
             }
         }
         # endregion
@@ -452,7 +448,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     if (!(signal is BaseWaveSignal))
                     {
-                        if (!(CurrentSignalDisplayType == SignalDisplayType.AMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
+                        if (!(CurrentSignalDisplayType == SignalDisplayType.RMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
                         {
                             CurrentSignalDisplayType = SignalDisplayType.Value;
                         }
@@ -478,7 +474,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                         if (!(signal is BaseWaveSignal))
                         {
-                            if (!(CurrentSignalDisplayType == SignalDisplayType.AMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
+                            if (!(CurrentSignalDisplayType == SignalDisplayType.RMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
                             {
                                 continue;
                             }
@@ -505,7 +501,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                         if (!(signal is BaseWaveSignal))
                         {
-                            if (!(CurrentSignalDisplayType == SignalDisplayType.AMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
+                            if (!(CurrentSignalDisplayType == SignalDisplayType.RMSTrend || CurrentSignalDisplayType == SignalDisplayType.Value))
                             {
                                 continue;
                             }
@@ -534,17 +530,17 @@ namespace AIC.OnLineDataPage.ViewModels
             SignalTileViewModel viewModel = para as SignalTileViewModel;
             if (viewModel != null && SignalMonitors.Contains(viewModel))
             {
-                //viewModel.Close();
+                viewModel.Close();
                 SignalMonitors.Remove(viewModel);
             }
         }
 
         private void ClearAll(object args)
         {
-            //foreach (var viewModel in SignalMonitors)
-            //{
-            //    viewModel.Close();
-            //}
+            foreach (var viewModel in SignalMonitors)
+            {
+                viewModel.Close();
+            }
             SignalMonitors.Clear();
         }
 
@@ -580,7 +576,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                     if (!(signal is BaseWaveSignal))
                     {
-                        if (!(displayType == SignalDisplayType.AMSTrend || displayType == SignalDisplayType.Value))
+                        if (!(displayType == SignalDisplayType.RMSTrend || displayType == SignalDisplayType.Value))
                         {
                             continue;
                         }
@@ -709,50 +705,115 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void ScrollChanged(object value)
         {
-            //var sender = ((ExCommandParameter)value).Sender as ListBox;
-            //var args = ((ExCommandParameter)value).EventArgs as ScrollChangedEventArgs;
-            //if (args != null)
-            //{
-            //    var HorizontalOffset = args.HorizontalOffset;
-            //    var VerticalOffset = args.VerticalOffset;
-            //    var ExtentWidth = args.ExtentWidth;
-            //    var ExtentHeight = args.ExtentHeight;
-            //    if (Orientation == Orientation.Vertical)//横向滑动
-            //    {
-            //        lineCount = (int)(ExtentHeight / ItemHeight);
-            //        startNo = (int)(HorizontalOffset / ItemWidth);
-            //        endNo = (int)Math.Ceiling((HorizontalOffset + listWidth) / ItemWidth);
-            //    }
-            //    else if (Orientation == Orientation.Horizontal)//竖向滑动
-            //    {
-            //        lineCount = (int)(ExtentWidth / ItemWidth);
-            //        startNo = (int)(VerticalOffset / ItemHeight);
-            //        endNo = (int)Math.Ceiling((VerticalOffset + listHeight) / ItemHeight);
-            //    }
-            //    GetItemsIsUpated(lineCount, startNo, endNo);
-            //}
+            var xx = this.FluidElements;
+            var sender = ((ExCommandParameter)value).Sender as ListBox;
+            var args = ((ExCommandParameter)value).EventArgs as ScrollChangedEventArgs;
+            if (args != null)
+            {
+                var offset = new Size(args.HorizontalOffset, args.VerticalOffset);
+                var extent = new Size(args.ExtentWidth, args.ExtentHeight);
+                var viewport = new Size(args.ViewportWidth, args.ViewportHeight);
+
+                int firstVisibleItemIndex = 0;
+                int lastVisibleItemIndex = 0;
+                GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex, extent, offset, viewport);
+
+                CleanUpItems(firstVisibleItemIndex, lastVisibleItemIndex);
+            }
         }
 
-        private void GetItemsIsUpated(int linecount, int startno, int endno)
+        private void CleanUpItems(int firstVisibleItemIndex, int lastVisibleItemIndex)
         {
-            for (int i = 0; i < SignalMonitors.Count; i++)
+            for (int i = 0; i < this.FluidElements.Count; i++)
             {
-                if (SignalMonitors[i].DataViewModel == null)
+                var viewModel = (this.FluidElements[i] as ListBoxItem).DataContext as SignalTileViewModel;
+                if (viewModel != null)
                 {
-                    continue;
-                }
-
-                if (i >= startno * linecount && i < endno * linecount)
-                {
-                    //SignalMonitors[i].DataViewModel.IsUpdated = true;
-                }
-                else
-                {
-                    //SignalMonitors[i].DataViewModel.IsUpdated = true;
+                    if (firstVisibleItemIndex <= i && i <= lastVisibleItemIndex)
+                    {
+                        viewModel.Load();
+                    }
+                    else
+                    {
+                        viewModel.Unload();
+                    }
                 }
             }
         }
 
+        private void GetVisibleRange(ref int firstVisibleItemIndex, ref int lastVisibleItemIndex, Size extent, Size offset, Size viewport )
+        {
+            try
+            {
+                if (this.Orientation == Orientation.Horizontal)
+                {
+                    int childrenPerRow = CalculateChildrenPerRow(extent);
+                    firstVisibleItemIndex = Convert.ToInt32(Math.Floor(offset.Height / this.ItemHeight)) * childrenPerRow;
+                    lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((offset.Height + viewport.Height) / this.ItemHeight)) * childrenPerRow - 1;
+                }
+                else
+                {
+                    int childrenPerColumn = CalculateChildrenPerColumn(extent);
+                    firstVisibleItemIndex = Convert.ToInt32(Math.Floor(offset.Width / this.ItemWidth)) * childrenPerColumn;
+                    lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((offset.Width + viewport.Width) / this.ItemWidth)) * childrenPerColumn - 1;
+                }
+                int itemCount = this.FluidElements.Count;
+                if (lastVisibleItemIndex >= itemCount)
+                {
+                    lastVisibleItemIndex = itemCount - 1;
+                }
+            }
+            catch (OverflowException)
+            {
+                // No idea if we can ignore this
+            }
+        }
+
+        private int CalculateChildrenPerRow(Size availableSize)
+        {
+            // Figure out how many children fit on each row
+            int childrenPerRow = 0;
+
+            if (availableSize.Width == double.PositiveInfinity)
+            {
+                childrenPerRow = this.FluidElements.Count;
+            }
+            else
+            {
+                try
+                {
+                    childrenPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ItemWidth)));
+                }
+                catch (OverflowException)
+                {
+                    // No idea if we can ignore this
+                }
+            }
+            return childrenPerRow;
+        }
+
+        private int CalculateChildrenPerColumn(Size availableSize)
+        {
+            // Figure out how many children fit on each row
+            int childrenPerColumn = 0;
+
+            if (availableSize.Height == double.PositiveInfinity)
+            {
+                childrenPerColumn = this.FluidElements.Count;
+            }
+            else
+            {
+                try
+                {
+                    childrenPerColumn = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Height / this.ItemHeight)));
+                }
+                catch (OverflowException)
+                {
+                    // No idea if we can ignore this
+                }
+            }
+            return childrenPerColumn;
+        }
         #endregion
     }
 }

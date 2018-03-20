@@ -1,4 +1,5 @@
-﻿using AIC.HistoryDataPage.ViewModels;
+﻿using AIC.Core;
+using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Series3D;
 using System;
@@ -23,9 +24,9 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for Time3DSpectrum.xaml
     /// </summary>
-    public partial class Time3DSpectrumView : UserControl
+    public partial class Time3DSpectrumView : DisposableUserControl
     {
-        private LightningChartUltimate time3Dchart;
+        private LightningChartUltimate m_chart;
         private SurfaceGridSeries3D m_surface;
         private WaterfallSeries3D m_waterfallFront;
         private Double m_dCurrentZ = 0;
@@ -37,14 +38,31 @@ namespace AIC.HistoryDataPage.Views
             Loaded += Time3DSpectrumView_Loaded;
         }
 
-        private Time3DSpectrumDataViewModel ViewModel { get; set; }
+        private Time3DSpectrumDataViewModel ViewModel
+        {
+            get { return DataContext as Time3DSpectrumDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
 
         private　void Time3DSpectrumView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = DataContext as Time3DSpectrumDataViewModel;
+            Loaded -= Time3DSpectrumView_Loaded;
             if (ViewModel!=null)
             {
-
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
 
@@ -52,26 +70,26 @@ namespace AIC.HistoryDataPage.Views
         {
             if (turple!=null)
             {
-                time3Dchart.BeginUpdate();
+                m_chart.BeginUpdate();
                 m_dCurrentZ += 1;
                 SurfacePoint[,] surfaceData = m_surface.Data;
-                double dZMin = m_dCurrentZ - (time3Dchart.View3D.ZAxisPrimary3D.Maximum - time3Dchart.View3D.ZAxisPrimary3D.Minimum);
+                double dZMin = m_dCurrentZ - (m_chart.View3D.ZAxisPrimary3D.Maximum - m_chart.View3D.ZAxisPrimary3D.Minimum);
                 double dZMax = m_dCurrentZ;
                 var datas = turple.Item2.Select(o => (double)o).ToArray();
 
                 double yMax = datas.Max();
-                if (time3Dchart.View3D.YAxisPrimary3D.Maximum < yMax)
+                if (m_chart.View3D.YAxisPrimary3D.Maximum < yMax)
                 {
                     m_surface.ContourPalette = CreatePalette(m_surface, yMax);
-                    time3Dchart.View3D.YAxisPrimary3D.SetRange(0, yMax * 1.2);
+                    m_chart.View3D.YAxisPrimary3D.SetRange(0, yMax * 1.2);
                 }
 
                 var xMax = turple.Item1.Max();
-                if (xMax != time3Dchart.View3D.XAxisPrimary3D.Maximum)
+                if (xMax != m_chart.View3D.XAxisPrimary3D.Maximum)
                 {
-                    time3Dchart.View3D.XAxisPrimary3D.SetRange(0, xMax);
-                    m_surface.SetRangesXZ(time3Dchart.View3D.XAxisPrimary3D.Minimum, time3Dchart.View3D.XAxisPrimary3D.Maximum,
-                        time3Dchart.View3D.ZAxisPrimary3D.Minimum, time3Dchart.View3D.ZAxisPrimary3D.Maximum);
+                    m_chart.View3D.XAxisPrimary3D.SetRange(0, xMax);
+                    m_surface.SetRangesXZ(m_chart.View3D.XAxisPrimary3D.Minimum, m_chart.View3D.XAxisPrimary3D.Maximum,
+                        m_chart.View3D.ZAxisPrimary3D.Minimum, m_chart.View3D.ZAxisPrimary3D.Maximum);
                 }
 
                 if (m_surface.SizeX != datas.Length)
@@ -87,105 +105,105 @@ namespace AIC.HistoryDataPage.Views
                     }
                 }
                 m_surface.InsertRowBackAndScroll(datas, dZMin, dZMax, dZMin, dZMax);
-                time3Dchart.EndUpdate();
+                m_chart.EndUpdate();
             }
         }
 
         private void CreateTime3DChart()
         {
-            // Clear any timeGrid3DChart's children.
-            timeGrid3DChart.Children.Clear();
-            if (time3Dchart != null)
+            // Clear any gridChart's children.
+            gridChart.Children.Clear();
+            if (m_chart != null)
             {
                 // If a chart is already created, dispose it.
-                time3Dchart.Dispose();
-                time3Dchart = null;
+                m_chart.Dispose();
+                m_chart = null;
             }
 
             // Create a new chart.
-            time3Dchart = new LightningChartUltimate();
-            time3Dchart.ChartName = "Spectrum 3D chart";
-            time3Dchart.Title.Text = string.Empty;
+            m_chart = new LightningChartUltimate();
+            m_chart.ChartName = "Spectrum 3D chart";
+            m_chart.Title.Text = string.Empty;
 
             //Disable rendering, strongly recommended before updating chart properties
-            time3Dchart.BeginUpdate();
+            m_chart.BeginUpdate();
 
             //Set 3D as active view
-            time3Dchart.ActiveView = ActiveView.View3D;
+            m_chart.ActiveView = ActiveView.View3D;
 
             //Setup background
-            time3Dchart.ChartBackground.GradientColor = Colors.Black;
-            time3Dchart.ChartBackground.Color = Colors.DimGray;
-            time3Dchart.ChartBackground.GradientFill = GradientFill.Radial;
+            m_chart.ChartBackground.GradientColor = Colors.Black;
+            m_chart.ChartBackground.Color = Colors.DimGray;
+            m_chart.ChartBackground.GradientFill = GradientFill.Radial;
 
             //Setup LegendBox
-            time3Dchart.View3D.LegendBox.Layout = LegendBoxLayout.VerticalColumnSpan;
-            time3Dchart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
-            time3Dchart.View3D.LegendBox.SurfaceScales.ScaleSizeDim1 = 150;
-            time3Dchart.View3D.LegendBox.SurfaceScales.ScaleSizeDim2 = 10;
-            time3Dchart.View3D.LegendBox.ShowCheckboxes = false;
+            m_chart.View3D.LegendBox.Layout = LegendBoxLayout.VerticalColumnSpan;
+            m_chart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleSizeDim1 = 150;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleSizeDim2 = 10;
+            m_chart.View3D.LegendBox.ShowCheckboxes = false;
 
             //Hide all walls but bottom
-            time3Dchart.View3D.WallOnBack.Visible = false;
-            time3Dchart.View3D.WallOnLeft.Visible = false;
-            time3Dchart.View3D.WallOnRight.Visible = false;
-            time3Dchart.View3D.WallOnTop.Visible = false;
-            time3Dchart.View3D.WallOnFront.Visible = false;
-            time3Dchart.View3D.WallOnBottom.Visible = true;
+            m_chart.View3D.WallOnBack.Visible = false;
+            m_chart.View3D.WallOnLeft.Visible = false;
+            m_chart.View3D.WallOnRight.Visible = false;
+            m_chart.View3D.WallOnTop.Visible = false;
+            m_chart.View3D.WallOnFront.Visible = false;
+            m_chart.View3D.WallOnBottom.Visible = true;
 
             //Setup primary x-axis
-            time3Dchart.View3D.XAxisPrimary3D.Orientation = PlaneXAxis3D.XY;
-            time3Dchart.View3D.XAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
-            time3Dchart.View3D.XAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
-            time3Dchart.View3D.XAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            time3Dchart.View3D.XAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            time3Dchart.View3D.XAxisPrimary3D.Title.Text = "频率 (Hz)";
-            time3Dchart.View3D.XAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.XAxisPrimary3D.Orientation = PlaneXAxis3D.XY;
+            m_chart.View3D.XAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
+            m_chart.View3D.XAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
+            m_chart.View3D.XAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.XAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.XAxisPrimary3D.Title.Text = "频率 (Hz)";
+            m_chart.View3D.XAxisPrimary3D.Title.Color = Colors.Yellow;
 
             //Setup primary y-axis
-            time3Dchart.View3D.YAxisPrimary3D.Orientation = PlaneYAxis3D.XY;
-            time3Dchart.View3D.YAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
-            time3Dchart.View3D.YAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
-            time3Dchart.View3D.YAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            time3Dchart.View3D.YAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            time3Dchart.View3D.YAxisPrimary3D.Title.Text = "幅值 P(f)";
-            time3Dchart.View3D.YAxisPrimary3D.Title.Color = Colors.Yellow;
-            time3Dchart.View3D.YAxisPrimary3D.SetRange(0, 0);
-            time3Dchart.View3D.YAxisPrimary3D.LabelsNumberFormat = "0.00";
+            m_chart.View3D.YAxisPrimary3D.Orientation = PlaneYAxis3D.XY;
+            m_chart.View3D.YAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
+            m_chart.View3D.YAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
+            m_chart.View3D.YAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.YAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.YAxisPrimary3D.Title.Text = "幅值 P(f)";
+            m_chart.View3D.YAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.YAxisPrimary3D.SetRange(0, 0);
+            m_chart.View3D.YAxisPrimary3D.LabelsNumberFormat = "0.00";
 
             //Setup primary z-axis
-            time3Dchart.View3D.ZAxisPrimary3D.Reversed = true;
-            time3Dchart.View3D.ZAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            time3Dchart.View3D.ZAxisPrimary3D.Title.Text = "时间";
-            time3Dchart.View3D.ZAxisPrimary3D.Title.Color = Colors.Yellow;
-            time3Dchart.View3D.ZAxisPrimary3D.ValueType = AxisValueType.DateTime;
-            time3Dchart.View3D.ZAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            time3Dchart.View3D.ZAxisPrimary3D.SetRange(1, 100);
-            time3Dchart.View3D.ZAxisPrimary3D.LabelsVisible = false;
-            time3Dchart.View3D.WallOnBottom.GridStrips = WallGridStripXZ.X;
+            m_chart.View3D.ZAxisPrimary3D.Reversed = true;
+            m_chart.View3D.ZAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.ZAxisPrimary3D.Title.Text = "时间";
+            m_chart.View3D.ZAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.ZAxisPrimary3D.ValueType = AxisValueType.DateTime;
+            m_chart.View3D.ZAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.ZAxisPrimary3D.SetRange(1, 100);
+            m_chart.View3D.ZAxisPrimary3D.LabelsVisible = false;
+            m_chart.View3D.WallOnBottom.GridStrips = WallGridStripXZ.X;
 
             //Setup legend box
-            time3Dchart.View3D.LegendBox.SeriesTitleColor = Colors.White;
-            time3Dchart.View3D.LegendBox.ValueLabelColor = Colors.White;
-            time3Dchart.View3D.LegendBox.SurfaceScales.ScaleBorderColor = Colors.White;
-            time3Dchart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
-            time3Dchart.View3D.LegendBox.Offset.SetValues(0, 0);
-            time3Dchart.View3D.LegendBox.Fill.Style = RectFillStyle.None;
-            time3Dchart.View3D.LegendBox.Shadow.Visible = false;
-            time3Dchart.View3D.LegendBox.BorderWidth = 0;
+            m_chart.View3D.LegendBox.SeriesTitleColor = Colors.White;
+            m_chart.View3D.LegendBox.ValueLabelColor = Colors.White;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleBorderColor = Colors.White;
+            m_chart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
+            m_chart.View3D.LegendBox.Offset.SetValues(0, 0);
+            m_chart.View3D.LegendBox.Fill.Style = RectFillStyle.None;
+            m_chart.View3D.LegendBox.Shadow.Visible = false;
+            m_chart.View3D.LegendBox.BorderWidth = 0;
 
             //Setup camera            
-            time3Dchart.View3D.Camera.RotationX = 18.6;
-            time3Dchart.View3D.Camera.RotationY = -23.6;
-            time3Dchart.View3D.Camera.RotationZ = 0;
-            time3Dchart.View3D.Camera.Target.SetValues(-9.5f, -10f, -5.8f);
-            time3Dchart.View3D.Camera.ViewDistance = 163;
+            m_chart.View3D.Camera.RotationX = 18.6;
+            m_chart.View3D.Camera.RotationY = -23.6;
+            m_chart.View3D.Camera.RotationZ = 0;
+            m_chart.View3D.Camera.Target.SetValues(-9.5f, -10f, -5.8f);
+            m_chart.View3D.Camera.ViewDistance = 163;
 
             //double dAxisZMin = updateRate / 1000.0;
             //double dAxisZMax = 100 * updateRate / 1000.0;
             //m_dStepZ = updateRate / 1000.0;
 
-            //time3Dchart.View3D.ZAxisPrimary3D.SetRange(dAxisZMin, dAxisZMax);
+            //m_chart.View3D.ZAxisPrimary3D.SetRange(dAxisZMin, dAxisZMax);
             //m_dCurrentZ = dAxisZMax;
 
             //Add Surface
@@ -197,17 +215,17 @@ namespace AIC.HistoryDataPage.Views
           //  CreateWaterfallFront();
 
             //Allow chart rendering
-            time3Dchart.EndUpdate();
+            m_chart.EndUpdate();
 
-            timeGrid3DChart.Children.Add(time3Dchart);
+            gridChart.Children.Add(m_chart);
         }
 
         private void CreateSurface()
         {
             if (m_surface == null)
             {
-                m_surface = new SurfaceGridSeries3D(time3Dchart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
-                time3Dchart.View3D.SurfaceGridSeries3D.Add(m_surface);
+                m_surface = new SurfaceGridSeries3D(m_chart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
+                m_chart.View3D.SurfaceGridSeries3D.Add(m_surface);
             }
             m_surface.InitialValue = 0;
             m_surface.Title.Text = string.Empty;
@@ -218,8 +236,8 @@ namespace AIC.HistoryDataPage.Views
             m_surface.SuppressLighting = false;
             m_surface.BaseColor = Colors.White;
             m_surface.SetSize(400, 100);
-            m_surface.SetRangesXZ(time3Dchart.View3D.XAxisPrimary3D.Minimum, time3Dchart.View3D.XAxisPrimary3D.Maximum,
-                time3Dchart.View3D.ZAxisPrimary3D.Minimum, time3Dchart.View3D.ZAxisPrimary3D.Maximum);
+            m_surface.SetRangesXZ(m_chart.View3D.XAxisPrimary3D.Minimum, m_chart.View3D.XAxisPrimary3D.Maximum,
+                m_chart.View3D.ZAxisPrimary3D.Minimum, m_chart.View3D.ZAxisPrimary3D.Maximum);
             m_surface.ContourPalette = CreatePalette(m_surface, 10);
             m_surface.TraceMouseCell = true;
         }
@@ -228,12 +246,12 @@ namespace AIC.HistoryDataPage.Views
         {
             if (m_waterfallFront == null)
             {
-                m_waterfallFront = new WaterfallSeries3D(time3Dchart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
-                time3Dchart.View3D.WaterfallSeries3D.Add(m_waterfallFront);
+                m_waterfallFront = new WaterfallSeries3D(m_chart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
+                m_chart.View3D.WaterfallSeries3D.Add(m_waterfallFront);
             }
 
             // m_waterfallFront.SetSize(ViewModel.SgProcessor.FFTLength, 1);
-            m_waterfallFront.BaseLevel = time3Dchart.View3D.YAxisPrimary3D.Minimum;
+            m_waterfallFront.BaseLevel = m_chart.View3D.YAxisPrimary3D.Minimum;
             m_waterfallFront.FadeAway = 0;
             m_waterfallFront.SuppressLighting = false;
             m_waterfallFront.BaseColor = Colors.White;
@@ -242,13 +260,13 @@ namespace AIC.HistoryDataPage.Views
             //Init one row
             SurfacePoint[,] areaData = m_waterfallFront.Data;
             int iColCount = m_waterfallFront.SizeX;
-            double dX = time3Dchart.View3D.XAxisPrimary3D.Minimum;
+            double dX = m_chart.View3D.XAxisPrimary3D.Minimum;
             double dStepX;
             if (iColCount > 1)
-                dStepX = (time3Dchart.View3D.XAxisPrimary3D.Maximum - time3Dchart.View3D.XAxisPrimary3D.Minimum) / (double)(iColCount - 1);
+                dStepX = (m_chart.View3D.XAxisPrimary3D.Maximum - m_chart.View3D.XAxisPrimary3D.Minimum) / (double)(iColCount - 1);
             else
                 dStepX = 0;
-            double dZ = time3Dchart.View3D.ZAxisSecondary3D.Maximum;
+            double dZ = m_chart.View3D.ZAxisSecondary3D.Maximum;
             double dY = m_waterfallFront.InitialValue;
             for (int iCol = 0; iCol < iColCount; iCol++)
             {
@@ -278,27 +296,27 @@ namespace AIC.HistoryDataPage.Views
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            time3Dchart.BeginUpdate();
-            foreach (var series in time3Dchart.View3D.SurfaceGridSeries3D)
+            m_chart.BeginUpdate();
+            foreach (var series in m_chart.View3D.SurfaceGridSeries3D)
             {
                 series.Clear();
             }
-            time3Dchart.EndUpdate();
+            m_chart.EndUpdate();
         }
 
         private void ScreenshotButton_Click(object sender, RoutedEventArgs e)
         {
-            time3Dchart.CopyToClipboard(ClipboardImageFormat.Jpg);
+            m_chart.CopyToClipboard(ClipboardImageFormat.Jpg);
         }
 
         private void clearChartBtn_Click(object sender, RoutedEventArgs e)
         {
-            time3Dchart.BeginUpdate();
-            foreach (var series in time3Dchart.View3D.SurfaceGridSeries3D)
+            m_chart.BeginUpdate();
+            foreach (var series in m_chart.View3D.SurfaceGridSeries3D)
             {
                 series.Clear();
             }
-            time3Dchart.EndUpdate();
+            m_chart.EndUpdate();
         }
     }
 }

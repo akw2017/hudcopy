@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataTileView"
+﻿<core:DisposableUserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataTileView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -96,7 +96,7 @@
                     <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.Time3DSpectrum}">
                         <Setter Property="ContentTemplate" Value="{StaticResource Time3DSpectrumDomainTemplate}" />
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.AMSTrend}">
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.RMSTrend}">
                         <Setter Property="ContentTemplate" Value="{StaticResource AMSTrendTemplate}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.MultiDivFre}">
@@ -116,6 +116,9 @@
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.PowerSpectrumDensity}">
                         <Setter Property="ContentTemplate" Value="{StaticResource PowerSpectrumDensityTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.Diagnose}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource DiagnoseTemplate}" />
                     </DataTrigger>
                     <Trigger Property="IsKeyboardFocusWithin" Value="true">
                         <Setter Property="IsSelected" Value="true" />
@@ -342,7 +345,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </RadioButton>
-                <RadioButton Content="趋势" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=AMSTrend}">
+                <RadioButton Content="趋势" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=RMSTrend}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
@@ -407,6 +410,14 @@
                 </RadioButton>
 
                 <RadioButton Content="转速三维" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=RPM3D}" IsEnabled="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+
+                <RadioButton Content="诊断" Style="{StaticResource RadioButtonStyle}"  IsChecked="{Binding CurrentSignalDisplayType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Diagnose}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding SelectSignalDisplayModeCommand}"/>
@@ -624,7 +635,7 @@
                      ScrollViewer.VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility, Mode=TwoWay}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" DragOpacity="1" DragScale="1">
+                        <core:FluidWrapPanel x:Name="fluidWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="False" ItemHeight="{Binding ItemHeight}" ItemWidth="{Binding ItemWidth}" IsComposing="{Binding IsComposing}" Orientation="{Binding Orientation}" FluidElements="{Binding FluidElements,Mode=OneWayToSource}" DragOpacity="1" DragScale="1" >
                             <core:FluidWrapPanel.ElementEasing>
                                 <BackEase EasingMode="EaseOut" Amplitude="0.35"></BackEase>
                             </core:FluidWrapPanel.ElementEasing>
@@ -632,7 +643,6 @@
                                 <BackEase EasingMode="EaseOut" Amplitude="0.65"></BackEase>
                             </core:FluidWrapPanel.DragEasing>
                         </core:FluidWrapPanel>
-                        <!--<virtualizingWrapPanel:VirtualizingWrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>-->
                         <!--<virtualizingWrapPanel:VirtualizingWrapPanelEx  ChildHeight="{Binding ItemHeight}" ChildWidth="{Binding ItemWidth}"/>-->
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
@@ -649,26 +659,5 @@
             <Slider Grid.Row="1" Grid.Column="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="600" Orientation="Vertical"/>
             <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsComposing, Mode=TwoWay}" ToolTip="允许拖拽" Style="{x:Null}"/>
         </Grid>
-        <!--<Grid x:Name="grid" Grid.Row="1" Grid.Column="3">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <TranslateTransform X="0" Y="-6"/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <RadioButton Grid.Row="1" Margin="0,5,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" GroupName="Orientation" Style="{StaticResource RadioButtonStyle}" FontSize="24" IsChecked="{Binding Orientation,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Horizontal}"/>
-            <RadioButton Grid.Row="1" Margin="0,35,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" GroupName="Orientation" Style="{StaticResource RadioButtonStyle}" FontSize="24" IsChecked="{Binding Orientation,Converter={StaticResource enumBooleanConverter}, ConverterParameter=Vertical}"/>
-            <CheckBox IsChecked="{Binding IsComposing, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,1,0" />
-            <Slider Grid.Row="1" Value="{Binding ItemWidth,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="1550" Orientation="Horizontal" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,65,0"  />
-            <Slider Grid.Row="1" Value="{Binding ItemHeight,Delay=200}" Style="{DynamicResource FlatSlider}" Minimum="120" Maximum="800" Orientation="Vertical" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,5,0" />
-            <Grid.Resources>
-                <Style TargetType="{x:Type Grid}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=chkbox,Path=IsChecked}" Value="true">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-        </Grid>-->
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

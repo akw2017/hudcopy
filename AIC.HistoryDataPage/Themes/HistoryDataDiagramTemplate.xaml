@@ -263,6 +263,29 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
+    <DataTemplate x:Key="DistributionMapTemplate" DataType="{x:Type viewModel:DistributionMapViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
+            </i:Interaction.Behaviors>
+            <Grid Margin="3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
+                <views:DistributionMapView />
+            </Grid>
+            <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+            <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
     <DataTemplate x:Key="AlarmPointTrendTemplate" DataType="{x:Type viewModel:AlarmPointTrendDataViewModel}">
         <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
             <i:Interaction.Behaviors>

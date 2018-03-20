@@ -97,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ServerQucikDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ItemQucikDataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,8 +124,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ServerQucikDataViewModel.cs" />
     <Compile Include="ViewModels\ItemQucikDataViewModel.cs" />
     <Compile Include="ViewModels\DeviceQucikDataViewModel.cs" />
+    <Compile Include="Views\ServerQucikDataView.xaml.cs">
+      <DependentUpon>ServerQucikDataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ItemQucikDataView.xaml.cs">
       <DependentUpon>ItemQucikDataView.xaml</DependentUpon>
     </Compile>

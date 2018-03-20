@@ -42,8 +42,6 @@ namespace AIC.ServiceInterface
         void CloseTabs(bool firstTabClosed = true);
         void LockTabs();
         void UnLockTabs(string name);
-        void SetGotoServerInfo(string servername);
-        void SetGotoSignal(BaseAlarmSignal sg);
-      
+        ServerInfo GetServerInfo(string servername);
     }
 }

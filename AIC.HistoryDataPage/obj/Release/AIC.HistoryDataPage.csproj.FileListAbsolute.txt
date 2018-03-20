@@ -154,3 +154,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.baml

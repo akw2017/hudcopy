@@ -1,4 +1,5 @@
 ﻿using AIC.Core;
+using AIC.Core.OrganizationModels;
 using AIC.Domain;
 using DiagramDesigner;
 
@@ -32,6 +33,20 @@ namespace AIC.OnLineDataPage.Models
             BuildMenuOptions();
             propertyChangedSubscription = WhenPropertyChanged.Where(o => o.ToString() == "Left" || o.ToString() == "Top" || o.ToString() == "ItemWidth" || o.ToString() == "ItemHeight").Subscribe(ChangeImageElement);
             connectorsChangedSubscription = WhenConnectorsChanged.Subscribe(OnConnectorsChanged);  
+        }
+
+        private DeviceTreeItemViewModel device;
+        public DeviceTreeItemViewModel Device
+        {
+            get { return device; }
+            set
+            {
+                if (device != value)
+                {
+                    device = value;
+                    NotifyChanged("Device");
+                }
+            }
         }
 
         private string dir = System.AppDomain.CurrentDomain.BaseDirectory + "MyData\\Gif";

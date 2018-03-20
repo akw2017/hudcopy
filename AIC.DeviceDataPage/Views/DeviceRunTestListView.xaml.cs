@@ -39,17 +39,22 @@ namespace AIC.DeviceDataPage.Views
             var menu = MenuManageList.GetMenu("menuDeviceRunAnalyze");
             this.Closer = new CloseableHeader("menuDeviceRunAnalyze", menu.Name, true, menu.IconPath);
 
-            DeviceRunAnalyzeListViewModel vm = this.DataContext as DeviceRunAnalyzeListViewModel;
-            if (vm != null)
+            if (ViewModel != null)
             {
-                vm.UpdateChart += UpdateChart;
-                vm.ShowBarSeriesChanged += ShowBarSeriesChanged;
+                ViewModel.UpdateChart += UpdateChart;
+                ViewModel.ShowBarSeriesChanged += ShowBarSeriesChanged;
             }
 
             CreateChart();
             CreateChartMore();
 
             this.Loaded += new RoutedEventHandler(Window_Loaded);
+        }
+
+        private DeviceRunAnalyzeListViewModel ViewModel//htzk123,可能有问题
+        {
+            get { return DataContext as DeviceRunAnalyzeListViewModel; }
+            set { this.DataContext = value; }
         }
 
         protected override void Dispose(bool disposing)
@@ -63,6 +68,13 @@ namespace AIC.DeviceDataPage.Views
                 {
                     _chart.Dispose();
                     _chart = null;
+                }
+
+                gridChartMore.Children.Clear();
+                if (m_chart != null)
+                {
+                    m_chart.Dispose();
+                    m_chart = null;
                 }
             }
         }
@@ -421,6 +433,7 @@ namespace AIC.DeviceDataPage.Views
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)

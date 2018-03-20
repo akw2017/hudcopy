@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="0,0,0,0" Grid.ColumnSpan="2" >
+                <Grid x:Name="gridheader" Background="Green" Margin="0,0,0,0" Grid.ColumnSpan="2" >
                     <Grid.ToolTip>
                         <TextBlock FontWeight="Bold">
                             <TextBlock.Text>
@@ -48,26 +48,29 @@
                 </Grid>
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="5, 0, 5, 20" VerticalAlignment="Center">
-                    <TextBlock x:Name="txtRun" Foreground="LawnGreen" Text="运行" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="txtRun" Foreground="Green" Text="运行" VerticalAlignment="Center"/>
                     <TextBlock x:Name="txtStop" Foreground="Red" Text="停止" Visibility="Collapsed" VerticalAlignment="Center"/>
-                    <Ellipse x:Name="ellipse" Width="24" Height="24" Fill="LawnGreen"/>                  
+                    <Path x:Name="pathIcon" Width="28" Height="28" Stretch="Fill" Stroke="Black"  Fill="Green" Margin="2" Data="F1 M 54.8392,24.4749C 55.3507,24.2457 55.8111,24.1311 56.2202,24.1311C 56.6172,24.1311 56.966,24.2232 57.2668,24.4073C 57.5675,24.5915 57.8171,24.8339 58.0156,25.1347L 58.4575,26.1536L 58.6017,27.2737C 58.6017,29.6143 58.4667,31.8014 58.1966,33.8351C 57.9266,35.8688 57.5522,37.7644 57.0734,39.5218C 56.5947,41.2793 56.0289,42.8997 55.3763,44.383C 54.7236,45.8663 54.0167,47.232 53.2556,48.4801C 52.4946,49.7281 51.6925,50.8636 50.8496,51.8866C 50.0067,52.9095 49.1556,53.8302 48.2963,54.6486C 45.2682,57.5252 41.8351,59.6285 37.9969,60.9583C 34.1505,59.6285 30.7174,57.5252 27.6976,54.6486C 26.4086,53.421 25.1463,51.9633 23.9105,50.2754C 22.6748,48.5875 21.5751,46.6244 20.6114,44.3861C 19.6478,42.1478 18.8713,39.616 18.2821,36.7905C 17.6929,33.965 17.3982,30.7928 17.3982,27.2737L 17.5609,26.1413L 18.0397,25.1439C 18.2504,24.8493 18.5123,24.613 18.8253,24.435C 19.1383,24.257 19.4933,24.168 19.8902,24.168C 20.2871,24.168 20.7106,24.2703 21.1608,24.4749C 22.196,24.9495 23.1484,25.2851 24.0179,25.4815C 24.8875,25.6779 25.6925,25.7761 26.4332,25.7761C 27.4193,25.7761 28.3052,25.6298 29.0909,25.3372C 29.8765,25.0447 30.5987,24.6743 31.2575,24.2263L 33.0805,22.787L 34.7009,21.3476L 36.2906,20.2336C 36.8266,19.939 37.3954,19.7917 37.9969,19.7917C 38.6107,19.7917 39.1866,19.939 39.7247,20.2336L 41.3175,21.3476L 42.9471,22.787L 44.7701,24.2263C 45.4227,24.6743 46.1419,25.0447 46.9275,25.3372C 47.7132,25.6298 48.5991,25.7761 49.5852,25.7761C 50.3258,25.7761 51.1279,25.6779 51.9913,25.4815C 52.8546,25.2851 53.804,24.9495 54.8392,24.4749 Z "/>
                 </StackPanel>
                 <Grid Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0">
-                    <ListView ItemsSource="{Binding Device.Children}" Margin="0,2,0,0" Background="Transparent" BorderBrush="Transparent">
-                        <ListView.Resources>
-                            <Style TargetType="{x:Type ListViewItem}">
+                    <ListBox ItemsSource="{Binding Device.Children}" Margin="0,2,0,0" Background="Transparent" BorderBrush="Transparent">
+                        <ListBox.Resources>
+                            <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="FontSize" Value="16" />
                             </Style>
-                        </ListView.Resources>
-                        <ListView.ItemTemplate>
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="Transparent">
-                                    <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
-                                    <TextBlock x:Name="AMSText" FontSize="16" Text="{Binding BaseAlarmSignal.Result,  StringFormat=F3, Mode=TwoWay}" Width="Auto" Margin="5,0,0,0"/>
-                                    <TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />
-                                    <!--<TextBlock Text="{Binding T_Item.IP}" FontSize="16" Margin="5,0,0,0" />-->
-                                </StackPanel>
+                                <Grid >
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock x:Name="AMSText" FontSize="16" Text="{Binding BaseAlarmSignal.Result,  StringFormat=F3, Mode=TwoWay}" Width="Auto" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />
+                                    </StackPanel>
+                                </Grid>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
                                         <Setter TargetName="AMSText" Property="Foreground" Value="HotPink"/>
@@ -92,51 +95,46 @@
                                     </DataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-
-                <Path x:Name="TopLeftPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
-                <Path x:Name="TopRightPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
-                <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
-                <Path x:Name="BottomRightPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>               
             </Grid>
         </Grid>
         <DataTemplate.Triggers>
-            <DataTrigger Value="True" Binding="{Binding IsSelected}">
-                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
+                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="HotPink"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Yellow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowPreAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Yellow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="DarkOrange"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                <Setter TargetName="pathIcon" Property="Fill" Value="DarkOrange" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighDanger">
+                <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowDanger">
+                <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Device.IsRunning}" Value="false">
                 <Setter TargetName="txtRun" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="txtStop" Property="Visibility" Value="Visible"/>
-                <Setter TargetName="ellipse" Property="Fill" Value="Red"/>
+                <Setter TargetName="gridheader" Property="Background" Value="Red"></Setter>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
             </DataTrigger>
-
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
-                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowPreAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighDanger">
-                <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowDanger">
-                <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-            </DataTrigger>
-
         </DataTemplate.Triggers>
     </DataTemplate>
 
@@ -154,7 +152,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="0,0,0,0" Grid.ColumnSpan="2" >
+                <Grid x:Name="gridheader" Background="Green" Margin="0,0,0,0" Grid.ColumnSpan="2" >
                     <Grid.ToolTip>
                         <TextBlock FontWeight="Bold">
                             <TextBlock.Text>
@@ -176,25 +174,28 @@
                 </Grid>
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="5, 0, 5, 20" VerticalAlignment="Center">
-                    <TextBlock x:Name="txtRun" Foreground="LawnGreen" Text="运行" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="txtRun" Foreground="Green" Text="运行" VerticalAlignment="Center"/>
                     <TextBlock x:Name="txtStop" Foreground="Red" Text="停止" Visibility="Collapsed" VerticalAlignment="Center"/>
-                    <Ellipse x:Name="ellipse" Width="24" Height="24" Fill="LawnGreen"/>
+                    <Path x:Name="pathIcon" Width="28" Height="28" Stretch="Fill" Stroke="Black"  Fill="Green" Margin="2" Data="F1 M 54.8392,24.4749C 55.3507,24.2457 55.8111,24.1311 56.2202,24.1311C 56.6172,24.1311 56.966,24.2232 57.2668,24.4073C 57.5675,24.5915 57.8171,24.8339 58.0156,25.1347L 58.4575,26.1536L 58.6017,27.2737C 58.6017,29.6143 58.4667,31.8014 58.1966,33.8351C 57.9266,35.8688 57.5522,37.7644 57.0734,39.5218C 56.5947,41.2793 56.0289,42.8997 55.3763,44.383C 54.7236,45.8663 54.0167,47.232 53.2556,48.4801C 52.4946,49.7281 51.6925,50.8636 50.8496,51.8866C 50.0067,52.9095 49.1556,53.8302 48.2963,54.6486C 45.2682,57.5252 41.8351,59.6285 37.9969,60.9583C 34.1505,59.6285 30.7174,57.5252 27.6976,54.6486C 26.4086,53.421 25.1463,51.9633 23.9105,50.2754C 22.6748,48.5875 21.5751,46.6244 20.6114,44.3861C 19.6478,42.1478 18.8713,39.616 18.2821,36.7905C 17.6929,33.965 17.3982,30.7928 17.3982,27.2737L 17.5609,26.1413L 18.0397,25.1439C 18.2504,24.8493 18.5123,24.613 18.8253,24.435C 19.1383,24.257 19.4933,24.168 19.8902,24.168C 20.2871,24.168 20.7106,24.2703 21.1608,24.4749C 22.196,24.9495 23.1484,25.2851 24.0179,25.4815C 24.8875,25.6779 25.6925,25.7761 26.4332,25.7761C 27.4193,25.7761 28.3052,25.6298 29.0909,25.3372C 29.8765,25.0447 30.5987,24.6743 31.2575,24.2263L 33.0805,22.787L 34.7009,21.3476L 36.2906,20.2336C 36.8266,19.939 37.3954,19.7917 37.9969,19.7917C 38.6107,19.7917 39.1866,19.939 39.7247,20.2336L 41.3175,21.3476L 42.9471,22.787L 44.7701,24.2263C 45.4227,24.6743 46.1419,25.0447 46.9275,25.3372C 47.7132,25.6298 48.5991,25.7761 49.5852,25.7761C 50.3258,25.7761 51.1279,25.6779 51.9913,25.4815C 52.8546,25.2851 53.804,24.9495 54.8392,24.4749 Z "/>
                 </StackPanel>
-                <Grid Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0">
-                    <ListView ItemsSource="{Binding Device.Children}" Margin="0,2,0,0" Background="Transparent" BorderBrush="Transparent">
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,0">
+                    <ListBox ItemsSource="{Binding Device.Children}" Margin="0,2,0,0" Background="Transparent" BorderBrush="Transparent">
                         <ListBox.Resources>
-                            <Style TargetType="{x:Type ListViewItem}">
+                            <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="FontSize" Value="16" />
                             </Style>
                         </ListBox.Resources>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="Transparent">                                   
-                                    <ProgressBar x:Name="ProgressBar" Style="{x:Null}" Value="{Binding BaseAlarmSignal.Result}" Maximum="{Binding BaseAlarmSignal.AlarmMax}" Foreground="Green" Width="60" Margin="5,0,5,0"/>
-                                    <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
-                                    <!--<TextBlock Text="{Binding BaseAlarmSignal.Unit}" FontSize="16" Margin="5,0,0,0" />-->
-                                </StackPanel>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name, Mode=TwoWay}" Width="Auto" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <ProgressBar x:Name="ProgressBar" Style="{x:Null}" Value="{Binding BaseAlarmSignal.Result}" Maximum="{Binding BaseAlarmSignal.AlarmMax}" Foreground="Green" Width="60" Margin="5,0,5,0"/>
+                                    </StackPanel>
+                                </Grid>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding BaseAlarmSignal.DelayAlarmGrade}" Value="Invalid">
                                         <Setter TargetName="ProgressBar" Property="Foreground" Value="HotPink"/>
@@ -220,50 +221,45 @@
                                 </DataTemplate.Triggers>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListView>
-                </Grid>
-
-                <Path x:Name="TopLeftPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
-                <Path x:Name="TopRightPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
-                <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
-                <Path x:Name="BottomRightPath" Grid.RowSpan="2" Grid.ColumnSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+                    </ListBox>
+                </Grid>                
             </Grid>
         </Grid>
         <DataTemplate.Triggers>
-            <DataTrigger Value="True" Binding="{Binding IsSelected}">
-                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
-                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
+                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="HotPink"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Yellow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowPreAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Yellow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="DarkOrange"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowAlarm">
+                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
+                <Setter TargetName="pathIcon" Property="Fill" Value="DarkOrange" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighDanger">
+                <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowDanger">
+                <Setter TargetName="txtName" Property="Foreground" Value="Red" />
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Device.IsRunning}" Value="false">
                 <Setter TargetName="txtRun" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="txtStop" Property="Visibility" Value="Visible"/>
-                <Setter TargetName="ellipse" Property="Fill" Value="Red"/>
+                <Setter TargetName="gridheader" Property="Background" Value="Red"></Setter>
+                <Setter TargetName="pathIcon" Property="Fill" Value="Red"/>
             </DataTrigger>
-
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="Invalid">
-                <Setter TargetName="txtName" Property="Foreground" Value="HotPink"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighPreAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowPreAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="Yellow"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowAlarm">
-                <Setter TargetName="txtName" Property="Foreground" Value="DarkOrange" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="HighDanger">
-                <Setter TargetName="txtName" Property="Foreground" Value="Red"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Device.Alarm}" Value="LowDanger">
-                <Setter TargetName="txtName" Property="Foreground" Value="Red" />
-            </DataTrigger>
-
         </DataTemplate.Triggers>
     </DataTemplate>
 

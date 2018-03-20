@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataDiagramView"
+﻿<core:DisposableUserControl x:Class="AIC.OnLineDataPage.Views.OnlineDataDiagramView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -524,10 +524,10 @@
                             <CheckBox Margin="5,0" Content="趋势图" IsChecked="{Binding IsRMSTrendChecked}" Style="{StaticResource CheckBoxStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="AMSTrend"/>
+                                        <i:InvokeCommandAction Command="{Binding AddGraphFuncCommand}" CommandParameter="RMSTrend"/>
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding RemoveGraphFuncCommand}" CommandParameter="AMSTrend"/>
+                                        <i:InvokeCommandAction Command="{Binding RemoveGraphFuncCommand}" CommandParameter="RMSTrend"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
@@ -639,4 +639,4 @@
             </Grid>
         </Expander>
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

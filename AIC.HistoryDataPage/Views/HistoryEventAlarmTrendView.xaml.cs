@@ -30,6 +30,12 @@ namespace AIC.HistoryDataPage.Views
             SizeChanged += HistoryEventAlarmTrendView_SizeChanged;          
         }
 
+        private HistoryEventAlarmTrendViewModel ViewModel
+        {
+            get { return DataContext as HistoryEventAlarmTrendViewModel; }
+            set { this.DataContext = value; }
+        }
+
         public HistoryEventAlarmTrendView(string name, int height) : this()
         {
             this.Title = name + "报警趋势";
@@ -47,11 +53,7 @@ namespace AIC.HistoryDataPage.Views
             VerticalAlignButtonClick(null, null);
         }
 
-        public HistoryEventAlarmTrendViewModel ViewModel
-        {
-            get { return DataContext as HistoryEventAlarmTrendViewModel; }
-            set { this.DataContext = value; }
-        }
+      
 
         private void HistoryDataDiagramView_Loaded(object sender, RoutedEventArgs e)
         {

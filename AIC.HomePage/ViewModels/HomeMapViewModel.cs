@@ -26,6 +26,7 @@ using Microsoft.Practices.ServiceLocation;
 using Wpf.CloseTabControl;
 using AIC.OnLineDataPage.Views;
 using AIC.QuickDataPage.Views;
+using AIC.CoreType;
 
 namespace AIC.HomePage.ViewModels
 {
@@ -52,7 +53,7 @@ namespace AIC.HomePage.ViewModels
             _signalProcess = signalProcess;
             _cardProcess = cardProcess;
 
-            _signalProcess.StatisticalInformationDataChanged += StatisticalInformationDataChanged;
+            _signalProcess.DailyChanged += DailyChanged;
 
             ServerInfoList = _localConfiguration.LoginServerInfoList;
             ServerInfo = _loginUserService.LoginInfo.ServerInfo;
@@ -161,6 +162,87 @@ namespace AIC.HomePage.ViewModels
                 }
             }
         }
+
+        private int normalCount;
+        public int NormalCount
+        {
+            get { return normalCount; }
+            set
+            {
+                if (normalCount != value)
+                {
+                    normalCount = value;
+                    this.OnPropertyChanged("NormalCount");
+                }
+            }
+        }
+        private int preAlarmCount;
+        public int PreAlarmCount
+        {
+            get { return preAlarmCount; }
+            set
+            {
+                if (preAlarmCount != value)
+                {
+                    preAlarmCount = value;
+                    this.OnPropertyChanged("PreAlarmCount");
+                }
+            }
+        }
+        private int alarmCount;
+        public int AlarmCount
+        {
+            get { return alarmCount; }
+            set
+            {
+                if (alarmCount != value)
+                {
+                    alarmCount = value;
+                    this.OnPropertyChanged("AlarmCount");
+                }
+            }
+        }
+        private int dangerCount;
+        public int DangerCount
+        {
+            get { return dangerCount; }
+            set
+            {
+                if (dangerCount != value)
+                {
+                    dangerCount = value;
+                    this.OnPropertyChanged("DangerCount");
+                }
+            }
+        }
+
+        private int abnormalCount;
+        public int AbnormalCount
+        {
+            get { return abnormalCount; }
+            set
+            {
+                if (abnormalCount != value)
+                {
+                    abnormalCount = value;
+                    this.OnPropertyChanged("AbnormalCount");
+                }
+            }
+        }
+
+        private int unConnectCount;
+        public int UnConnectCount
+        {
+            get { return unConnectCount; }
+            set
+            {
+                if (unConnectCount != value)
+                {
+                    unConnectCount = value;
+                    this.OnPropertyChanged("UnConnectCount");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -191,7 +273,7 @@ namespace AIC.HomePage.ViewModels
             if (ShowMapServerChanged != null)
             {
                 ShowMapServerChanged();
-                StatisticalInformationDataChanged();
+                DailyChanged();
             }
         }
 
@@ -252,6 +334,16 @@ namespace AIC.HomePage.ViewModels
                         server.AlarmCount = signals.Value.Count();
                         update = true;
                     }
+
+                    if (server.IP == ServerInfo.IP)
+                    {
+                        NormalCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
+                        PreAlarmCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
+                        AlarmCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
+                        DangerCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
+                        AbnormalCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
+                        UnConnectCount = signals.Value.Where(o => (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
+                    }
                 }
             }
 
@@ -261,7 +353,7 @@ namespace AIC.HomePage.ViewModels
             }
         }
 
-        private void StatisticalInformationDataChanged()
+        private void DailyChanged()
         {
             var statisticalresult = _signalProcess.ServerLevelStatisticalResult;
             System.Windows.Application.Current.Dispatcher.Invoke((Action)(() =>//调用线程必须为 STA
@@ -276,7 +368,7 @@ namespace AIC.HomePage.ViewModels
                     },
                     new LineSeries
                     {
-                        Title = "报警点数",
+                        Title = "警告点数",
                         Values = new ChartValues<int> { },
                         Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                                         
                     },
@@ -335,20 +427,18 @@ namespace AIC.HomePage.ViewModels
         {
             if (para is BaseAlarmSignal)//测点
             {
-                _loginUserService.SetGotoServerInfo((para as BaseAlarmSignal).ServerIP);
-                _loginUserService.SetGotoSignal(para as BaseAlarmSignal);
                 ItemQucikDataView view = _loginUserService.GotoTab<ItemQucikDataView>("MenuItemQucikData") as ItemQucikDataView;
                 if (view != null)
                 {
+                    view.GotoItem(_loginUserService.GetServerInfo((para as BaseAlarmSignal).ServerIP), para as BaseAlarmSignal);
                 }
             }
             else if (para is string)//服务器
             {
-                _loginUserService.SetGotoServerInfo(para as string);
-                DeviceQucikDataView view = _loginUserService.GotoTab<DeviceQucikDataView>("MenuDeviceQucikData") as DeviceQucikDataView;
+                ServerQucikDataView view = _loginUserService.GotoTab<ServerQucikDataView>("MenuDeviceQucikData") as ServerQucikDataView;
                 if (view != null)
                 {
-                    view.GotoServer(_loginUserService.GotoServerInfo);
+                    view.GotoServer(_loginUserService.GetServerInfo(para as string));
                 }
             }
         }

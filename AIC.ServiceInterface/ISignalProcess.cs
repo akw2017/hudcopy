@@ -29,9 +29,11 @@ namespace AIC.ServiceInterface
         event SignalChangedEvent SignalsRemoved;
 
         void GetDailyMedianData(DateTime startTime, DateTime endTime);
-        event StatisticalInformationDataChangedEvent StatisticalInformationDataChanged;
+        event DailyChangedEvent DailyChanged;
 
         Dictionary<string, List<StatisticalInformationData>>  StatisticalInformation { get; }
         Dictionary<string, List<Tuple<DateTime, int, int, int, int>>> ServerLevelStatisticalResult { get; }
+        void GetRunningDays(DateTime now);
+        Dictionary<string, double> RunningDays { get; }
     }
 }

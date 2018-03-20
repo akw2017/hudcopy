@@ -348,6 +348,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+
         private bool isMulticursor;
         public bool IsMulticursor//多关标模式
         {
@@ -455,6 +456,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     orderAnalysisVM.ItemWidth = value;
                     time3DSpectrumVM.ItemWidth = value;
                     rpm3DSpectrumVM.ItemWidth = value;
+                    distributionMapVM.ItemWidth = value;
                     alarmPointTrendVM.ItemWidth = value;
                 }
             }
@@ -484,7 +486,9 @@ namespace AIC.HistoryDataPage.ViewModels
                     orderAnalysisVM.ItemHeight = value;
                     time3DSpectrumVM.ItemHeight = value;
                     rpm3DSpectrumVM.ItemHeight = value;
+                    distributionMapVM.ItemHeight = value;
                     alarmPointTrendVM.ItemHeight = value;
+
                 }
             }
         }
@@ -716,6 +720,21 @@ namespace AIC.HistoryDataPage.ViewModels
             }
         }
 
+        private bool showDistributionMap;
+        public bool ShowDistributionMap
+        {
+            get { return showDistributionMap; }
+            set
+            {
+                if (showDistributionMap != value)
+                {
+                    showDistributionMap = value;
+                    OnPropertyChanged("ShowDistributionMap");
+                    distributionMapVM.IsVisible = value;
+                }
+            }
+        }
+
         private bool allowRPMFilter;
         public bool AllowRPMFilter
         {
@@ -729,6 +748,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+
+    
 
         private double upRPMFilter;
         public double UpRPMFilter
@@ -757,6 +778,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
+
+       
 
         public List<string> UnitCategory
         {
@@ -863,6 +886,7 @@ namespace AIC.HistoryDataPage.ViewModels
         private Time3DSpectrumDataViewModel time3DSpectrumVM;
         private RPM3DSpectrumDataViewModel rpm3DSpectrumVM;
         private AlarmPointTrendDataViewModel alarmPointTrendVM;
+        private DistributionMapViewModel distributionMapVM;
         private SynchronizationContext uiContext = SynchronizationContext.Current;
         private Func<IEnumerable<BaseWaveChannelToken>, Task> trackTask { get; set; }
         private bool isTrackRunning;
@@ -953,6 +977,11 @@ namespace AIC.HistoryDataPage.ViewModels
                 rpm3DSpectrumVM.ItemWidth = ItemWidth;
                 rpm3DSpectrumVM.ItemHeight = ItemHeight;
 
+                distributionMapVM = new DistributionMapViewModel();
+                distributionMapVM.Title = "分布图";
+                distributionMapVM.ItemWidth = ItemWidth;
+                distributionMapVM.ItemHeight = ItemHeight;
+
                 ShowAMS = true;
                 ShowAlarmPointTrend = false;
                 ShowTimeDomain = true;
@@ -962,6 +991,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 ShowOrderAnalysis = false;
                 ShowTime3DSpectrum = false;
                 ShowRPM3DSpectrum = false;
+                ShowDistributionMap = false;
 
                 trackTask = AMSTrackChanged;
                 track2Task = AMSTrack2Changed;
@@ -983,7 +1013,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 historicalDataCollection.Add(offDesignConditionVM);
                 historicalDataCollection.Add(orderAnalysisVM);
                 historicalDataCollection.Add(time3DSpectrumVM);
-                historicalDataCollection.Add(rpm3DSpectrumVM);               
+                historicalDataCollection.Add(rpm3DSpectrumVM);
+                historicalDataCollection.Add(distributionMapVM);             
             }
             catch (Exception e)
             {
@@ -1045,7 +1076,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         var divtoken = token as BaseDivfreChannelToken;
 
                         List<D_WirelessVibrationSlot_Waveform> data = null;
-                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        if (divtoken.CurrentIndex != -1 && (divtoken.DataContracts[divtoken.CurrentIndex] as IBaseDivfreSlot).IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
                         {
                             data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                         }
@@ -1205,7 +1236,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         var divtoken = token as BaseDivfreChannelToken;
 
                         List<D_WirelessVibrationSlot_Waveform> data = null;
-                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        if (divtoken.CurrentIndex != -1 && (divtoken.DataContracts[divtoken.CurrentIndex] as IBaseDivfreSlot).IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
                         {
                             data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                         }
@@ -1313,7 +1344,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private void SelectedTreeChanged(object para)
         {
-            SelectedTreeItem = para as OrganizationTreeItemViewModel;
+            SelectedTreeItem = para as ItemTreeItemViewModel;
             if (SelectedTreeItem is ItemTreeItemViewModel)
             {
                 var itemTree = SelectedTreeItem as ItemTreeItemViewModel;
@@ -1364,7 +1395,9 @@ namespace AIC.HistoryDataPage.ViewModels
 
             string conditionWave;
             string conditionAlarm;
-            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
+            object[] objectWave;
+            object[] objectAlarm;
+            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, out objectWave, out objectAlarm,  AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter,Unit, DownRPMFilter, UpRPMFilter);
 
             string selectedip = SelectedTreeItem.ServerIP;
 
@@ -1479,87 +1512,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     WaitInfo = "获取数据中";
                     Status = ViewModelStatus.Querying;
-                    if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
-                    {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });                       
-                        if (result == null || result.Count == 0)
-                        {
-#if XBAP
-                            MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#else
-                            Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#endif
-                            return;
-                        }
-                        result = result.OrderBy(p => p.ACQDatetime).ToList(); //result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
-                        BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
-                        {                            
-                            DisplayName = (item.BaseAlarmSignal != null)? item.BaseAlarmSignal.DeviceItemName : item.FullName,
-                            IP = selectedip,
-                            Guid = item.T_Item.Guid,
-                            DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList(),
-                        };
-                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
-                        {
-                            if (!ColorList.Contains(color))
-                            {
-                                ColorList.Add(color);
-                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
-                                break;
-                            }
-                        }
-                        amsReplayVM.AddChannel(channeltoken);
-                        timeDomainVM.AddChannel(channeltoken);
-                        frequencyDomainVM.AddChannel(channeltoken);
-                        powerSpectrumVM.AddChannel(channeltoken);
-                        powerSpectrumDensityVM.AddChannel(channeltoken);
-                        timeDomainVM2.AddChannel(channeltoken);//多光标新增
-                        frequencyDomainVM2.AddChannel(channeltoken);//多光标新增
-                        powerSpectrumVM2.AddChannel(channeltoken);//多光标新增
-                        powerSpectrumDensityVM2.AddChannel(channeltoken);//多光标新增
-                        //alarmPointTrendVM.AddChannel(channeltoken);
-                        //orthoDataVM.AddChannel(channeltoken);
-                        //offDesignConditionVM.AddChannel(channeltoken);
-
-                        addedChannels.Add(channeltoken);
-                    }
-                    else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
-                    {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });                        
-                        if (result == null || result.Count == 0)
-                        {
-#if XBAP
-                            MessageBox.Show("没有数据，请重新选择条件","提示",MessageBoxButton.OK,MessageBoxImage.Warning);
-#else
-                            Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#endif
-                            return;
-                        }
-                        result = result.OrderBy(p => p.ACQDatetime).ToList();
-                        BaseAlarmChannelToken channeltoken = new BaseAlarmChannelToken()
-                        {
-                            DisplayName = (item.BaseAlarmSignal != null) ? item.BaseAlarmSignal.DeviceItemName : item.FullName,
-                            IP = selectedip,
-                            Guid = item.T_Item.Guid,
-                            DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList(),
-                        };
-                        foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
-                        {
-                            if (!ColorList.Contains(color))
-                            {
-                                ColorList.Add(color);
-                                channeltoken.SolidColorBrush = new SolidColorBrush(color);
-                                break;
-                            }
-                        }
-                        if (ShowAMS)
-                        {
-                            amsReplayVM.AddChannel(channeltoken);
-                        }
-                        addedChannels.Add(channeltoken);
-                    }
+                    SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm);
                 }
                 catch (Exception ex)
                 {
@@ -1581,11 +1534,104 @@ namespace AIC.HistoryDataPage.ViewModels
             }
             #endregion
         }
+
+        private async void SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm)
+        {
+            List<IBaseAlarmSlot> result = await GetData(item.ServerIP, item.T_Item.Guid, item.T_Item.ItemType, conditionWave, conditionAlarm, objectWave, objectAlarm);
+
+            if (result == null || result.Count == 0)
+            {
+#if XBAP
+                MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
+
+            if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+            {
+                BaseDivfreChannelToken channeltoken = new BaseDivfreChannelToken()
+                {
+                    DisplayName = (item.BaseAlarmSignal != null) ? item.BaseAlarmSignal.DeviceItemName : item.FullName,
+                    IP = item.ServerIP,
+                    Guid = item.T_Item.Guid,
+                    ItemType = item.T_Item.ItemType,
+                    DataContracts = result,
+                };
+                foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                {
+                    if (!ColorList.Contains(color))
+                    {
+                        ColorList.Add(color);
+                        channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                        break;
+                    }
+                }
+                amsReplayVM.AddChannel(channeltoken);
+                timeDomainVM.AddChannel(channeltoken);
+                frequencyDomainVM.AddChannel(channeltoken);
+                powerSpectrumVM.AddChannel(channeltoken);
+                powerSpectrumDensityVM.AddChannel(channeltoken);
+                timeDomainVM2.AddChannel(channeltoken);//多光标新增
+                frequencyDomainVM2.AddChannel(channeltoken);//多光标新增
+                powerSpectrumVM2.AddChannel(channeltoken);//多光标新增
+                powerSpectrumDensityVM2.AddChannel(channeltoken);//多光标新增
+                //alarmPointTrendVM.AddChannel(channeltoken);
+                //orthoDataVM.AddChannel(channeltoken);
+                //offDesignConditionVM.AddChannel(channeltoken);
+                distributionMapVM.AddChannel(channeltoken);
+                addedChannels.Add(channeltoken);
+            }
+            else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
+            {             
+                BaseAlarmChannelToken channeltoken = new BaseAlarmChannelToken()
+                {
+                    DisplayName = (item.BaseAlarmSignal != null) ? item.BaseAlarmSignal.DeviceItemName : item.FullName,
+                    IP = item.ServerIP,
+                    Guid = item.T_Item.Guid,
+                    ItemType = item.T_Item.ItemType,
+                    DataContracts = result,
+                };
+                foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
+                {
+                    if (!ColorList.Contains(color))
+                    {
+                        ColorList.Add(color);
+                        channeltoken.SolidColorBrush = new SolidColorBrush(color);
+                        break;
+                    }
+                }
+
+                amsReplayVM.AddChannel(channeltoken);
+                distributionMapVM.AddChannel(channeltoken);
+                addedChannels.Add(channeltoken);
+            }
+        }
+
+        private async Task<List<IBaseAlarmSlot>> GetData(string serverip, Guid guid, int itemtype, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm)
+        {
+            List<IBaseAlarmSlot> result = new List<IBaseAlarmSlot>();
+            if (itemtype == (int)ChannelType.WirelessVibrationChannelInfo)
+            {
+                result = await _databaseComponent.GetUniformHistoryData(itemtype, serverip, guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, objectWave);
+
+            }
+            else if (itemtype == (int)ChannelType.WirelessScalarChannelInfo)
+            {
+                result = await _databaseComponent.GetUniformHistoryData(itemtype, serverip, guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, objectAlarm);
+            }
+
+            return result;
+        }
+
         private async void RefreshData(object para)
         {
             string conditionWave;
             string conditionAlarm;
-            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
+            object[] objectWave;
+            object[] objectAlarm;
+            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, out objectWave, out objectAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter, Unit, DownRPMFilter, UpRPMFilter);
 
             try
             {
@@ -1597,13 +1643,8 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     foreach (var item in vibratonChannels)
                     {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(item.IP, item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade", "IsValidWave", "RecordLab", "RPM" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });
-                        if (result != null && result.Count > 0)
-                        {
-                            result = result.OrderBy(p => p.ACQDatetime).ToList(); //result = result.OrderBy(p => p.ACQDatetime).Where(p => p.IsValidWave == true).ToList();
-                            item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList();
-                        }
+                        List<IBaseAlarmSlot> result = await GetData(item.IP, item.Guid, item.ItemType, conditionWave, conditionAlarm, objectWave, objectAlarm);
+                        item.DataContracts = result;                        
                     }
                 }
                 var alarmChannels = addedChannels.OfType<BaseAlarmChannelToken>().ToArray();
@@ -1611,15 +1652,12 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     foreach (var item in alarmChannels)
                     {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(item.IP, item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });
-                        if (result != null && result.Count > 0)
-                        {
-                            result = result.OrderBy(p => p.ACQDatetime).ToList();
-                            item.DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessScalarSlot, D1_WirelessScalarSlot>(p) as IBaseAlarmSlot).ToList();
-                        }
+                        List<IBaseAlarmSlot> result = await GetData(item.IP, item.Guid, item.ItemType, conditionWave, conditionAlarm, objectWave, objectAlarm);
+                        item.DataContracts = result;
                     }
                 }
+
+                #region 分频
                 var divfreChannels = addedChannels.OfType<DivFreChannelToken>().ToArray();
                 if (divfreChannels.Length > 0)
                 {
@@ -1668,8 +1706,10 @@ namespace AIC.HistoryDataPage.ViewModels
                         item.SlotDataContracts = slotdata;
                     }
                 }
+                #endregion
 
                 amsReplayVM.ChannelDataChanged(addedChannels);
+                distributionMapVM.ChangeChannelData(addedChannels);
                 offDesignConditionVM.ChannelDataChanged(addedChannels);
             }
             catch (Exception ex)
@@ -1699,6 +1739,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 orthoDataVM.RemoveChannel(token);
                 time3DSpectrumVM.RemoveChannel(token);
                 offDesignConditionVM.RemoveChannel(token);
+                distributionMapVM.RemoveChannel(token);
             }
             addedChannels.Clear();
         }
@@ -1723,8 +1764,17 @@ namespace AIC.HistoryDataPage.ViewModels
                 orthoDataVM.RemoveChannel(token);
                 time3DSpectrumVM.RemoveChannel(token);
                 offDesignConditionVM.RemoveChannel(token);
+                distributionMapVM.RemoveChannel(token);
             }
         }     
+
+        public void Close()
+        {
+            foreach (var viewmodel in this.HistoricalDatas)
+            {
+                viewmodel.Close();
+            }
+        }
     }
   
 }

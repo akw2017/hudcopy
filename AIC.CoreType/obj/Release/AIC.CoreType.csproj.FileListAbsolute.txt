@@ -347,4 +347,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.Propertie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.CoreType\obj\Release\AIC.CoreType.csprojResolveAssemblyReference.cache

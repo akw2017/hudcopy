@@ -1,4 +1,4 @@
-﻿D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\GeneratedInternalTypeHelper.g.cs
+﻿
 
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Themes\Generic.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Themes\OnlineDataOverviewTemplate.xaml;;
@@ -12,6 +12,7 @@ FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataDiagramView
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataOverviewView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataStatisticsView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataTileView.xaml;;
+FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\DiagnoseView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\OrderAnalysisChartView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\NyquistChartView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\BodeChartView.xaml;;

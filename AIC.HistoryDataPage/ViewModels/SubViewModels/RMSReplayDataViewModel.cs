@@ -58,7 +58,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
         public RMSReplayDataViewModel(bool addAlarmMarker = false)
         {
-            DisplayMode = SignalDisplayType.AMSTrend;
+            DisplayMode = SignalDisplayType.RMSTrend;
             contractsCollection = new ObservableCollection<BaseWaveChannelToken>();
             allGraphTypes = new Dictionary<string, Object>();
             allGraphTypes.Add("转速三维谱", "RPM3D");

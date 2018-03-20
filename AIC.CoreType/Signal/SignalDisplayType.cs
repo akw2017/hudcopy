@@ -16,8 +16,8 @@ namespace AIC.CoreType
         TimeDomain,
         [EnumDescription(EnumValue = SignalDisplayType.FrequencyDomain)]
         FrequencyDomain,
-        [EnumDescription(EnumValue = SignalDisplayType.AMSTrend)]
-        AMSTrend,
+        [EnumDescription(EnumValue = SignalDisplayType.RMSTrend)]
+        RMSTrend,
         [EnumDescription(EnumValue = SignalDisplayType.MultiDivFre)]
         MultiDivFre,
         [EnumDescription(EnumValue = SignalDisplayType.SingleDivFre)]
@@ -42,5 +42,9 @@ namespace AIC.CoreType
         OrderAnalysis,
         [EnumDescription(EnumValue = SignalDisplayType.AlarmPointTrend)]
         AlarmPointTrend,
+        [EnumDescription(EnumValue = SignalDisplayType.Diagnose)]
+        Diagnose,
+        [EnumDescription(EnumValue = SignalDisplayType.DistributionMap)]
+        DistributionMap,
     }
 }

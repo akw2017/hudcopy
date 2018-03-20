@@ -28,9 +28,9 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for MapView.xaml
     /// </summary>
-    public partial class HistoryDataDiagramView : UserControl, ICloseable
+    public partial class HistoryDataDiagramView : DisposableUserControl, ICloseable
     {
-        public HistoryDataDiagramView(IEventAggregator eventAggregator)
+        public HistoryDataDiagramView()
         {
             InitializeComponent();
 
@@ -41,6 +41,20 @@ namespace AIC.HistoryDataPage.Views
         }
         public CloseableHeader Closer { get; private set; }
 
+        private HistoryDataDiagramViewModel ViewModel
+        {
+            get { return DataContext as HistoryDataDiagramViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ViewModel.Close();
+            }
+        }
+
         private void HistoryDataDiagramView_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= HistoryDataDiagramView_Loaded;
@@ -49,13 +63,7 @@ namespace AIC.HistoryDataPage.Views
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
                 btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
-        }
-
-        HistoryDataDiagramViewModel ViewModel
-        {
-            get { return DataContext as HistoryDataDiagramViewModel; }
-            set { this.DataContext = value; }
-        }
+        }      
 
         private void HorizontalAlignButtonClick(object sender, RoutedEventArgs e)
         {

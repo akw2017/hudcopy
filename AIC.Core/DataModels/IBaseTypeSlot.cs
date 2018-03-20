@@ -46,8 +46,16 @@ namespace AIC.Core.DataModels
     }
 
     public interface IBaseDivfreSlot : IBaseWaveSlot
-    {     
+    {
+        int? MountDegree { get; set; } //安装角度
+        byte? TPDirCode { get; set; } //测点方向
         double? RPM { get; set; } //转速      
+        bool? IsMultiplication { get; set; } //是否倍增
+        double? MultiplicationCor { get; set; } //倍增系数
+        double? BiasVoltHigh { get; set; } //偏置高电压
+        double? BiasVoltLow { get; set; } //偏置低电压
+
+        //WirelessVibrationSlotData_DivFreInfo[] DivFreInfo { get; set; }
     }
 
     public interface IBaseAlarmSlot : IBaseTypeSlot

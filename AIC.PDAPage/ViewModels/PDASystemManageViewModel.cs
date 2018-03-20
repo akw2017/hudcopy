@@ -837,6 +837,21 @@ namespace AIC.PDAPage.ViewModels
             }
         }
 
+        private DelegateCommand<object> saveCardCommand;
+        public DelegateCommand<object> SaveCardCommand
+        {
+            get
+            {
+                if (saveCardCommand == null)
+                {
+                    saveCardCommand = new DelegateCommand<object>(
+                        para => SaveCard(para), para => CanOperate(para)
+                        );
+                }
+                return saveCardCommand;
+            }
+        }
+
         public DelegateCommand<object> addTransmissionCardCommand;
         public DelegateCommand<object> AddTransmissionCardCommand
         {
@@ -4036,6 +4051,33 @@ namespace AIC.PDAPage.ViewModels
             finally
             {
                 Status = ViewModelStatus.None;
+            }
+        }
+
+        private void SaveCard(object para)
+        {
+            var server = ServerTreeItems.Where(p => p.ServerIP == ServerIP).FirstOrDefault();
+            if (server == null)
+            {
+                return;
+            }
+            var maincard = server.Children.OfType<MainCardTreeItemViewModel>().Where(p => p.MainControlCardIP == MainControlCardIPEdit).FirstOrDefault();
+            if (maincard == null)
+            {
+#if XBAP
+                MessageBox.Show("请重新选中主板", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("请重新选中主板", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
+            string json = GetRootjson(RequestType.ModifiedConfig, maincard, maincard.ServerIP);
+            using (StreamWriter sw = new StreamWriter("主板" + maincard.MainControlCardIP + "配置文件" + DateTime.Now.ToString("yyyy-MM-dd")+ ".json" , false))
+            {               
+                sw.Write(json);
+                sw.Close();
+                string dir = System.AppDomain.CurrentDomain.BaseDirectory;
+                System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
             }
         }
 

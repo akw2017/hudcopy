@@ -1781,7 +1781,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     DisplayName = signaltoken.DisplayName,
                     IP = signaltoken.IP,
                     Guid = signaltoken.Guid,
-                    DataContracts = signaltoken.DataContracts,
+                    DataContracts = signaltoken.DataContracts.Select(p => p as IBaseAlarmSlot).ToList(),
                     SolidColorBrush = signaltoken.SolidColorBrush,
                 };
                 return channeltoken;
@@ -1794,7 +1794,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     DisplayName = signaltoken.DisplayName,
                     IP = signaltoken.IP,
                     Guid = signaltoken.Guid,
-                    DataContracts = signaltoken.DataContracts,
+                    DataContracts = signaltoken.DataContracts.Select(p => p as IBaseAlarmSlot).ToList(),
                     SolidColorBrush = signaltoken.SolidColorBrush,
                 };
                 return channeltoken;

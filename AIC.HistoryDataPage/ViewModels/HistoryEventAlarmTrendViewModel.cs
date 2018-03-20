@@ -299,7 +299,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         var divtoken = token as BaseDivfreChannelToken;
 
                         List<D_WirelessVibrationSlot_Waveform> data = null;
-                        if (divtoken.CurrentIndex != -1 && divtoken.DataContracts[divtoken.CurrentIndex].IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
+                        if (divtoken.CurrentIndex != -1 && (divtoken.DataContracts[divtoken.CurrentIndex] as IBaseDivfreSlot).IsValidWave.Value == true)//修正拖动太快，CurrentIndex一直在变
                         {
                             data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                         }
@@ -406,7 +406,7 @@ namespace AIC.HistoryDataPage.ViewModels
                             DisplayName = item.BaseAlarmSignal.DeviceItemName,
                             IP = selectedip,
                             Guid = item.T_Item.Guid,
-                            DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseDivfreSlot).ToList(),
+                            DataContracts = result.Select(p => ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot, D1_WirelessVibrationSlot>(p) as IBaseAlarmSlot).ToList(),
                         };
                         foreach (var color in DefaultColors.SeriesForBlackBackgroundWpf)
                         {

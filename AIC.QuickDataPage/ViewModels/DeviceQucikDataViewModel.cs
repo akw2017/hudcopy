@@ -49,8 +49,8 @@ namespace AIC.QuickDataPage.ViewModels
             _regionManager = regionManager;
             _loginUserService = loginUserService;
 
-            _signalProcess.StatisticalInformationDataChanged += StatisticalInformationDataChanged;   
-            InitTree();
+            _signalProcess.DailyChanged += DailyChanged;
+            ServerInfoList = _localConfiguration.LoginServerInfoList;
 
             readDataTimer.Tick += new EventHandler(timeCycle);
             readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -194,6 +194,87 @@ namespace AIC.QuickDataPage.ViewModels
                 }
             }
         }
+
+        private int normalCount;
+        public int NormalCount
+        {
+            get { return normalCount; }
+            set
+            {
+                if (normalCount != value)
+                {
+                    normalCount = value;
+                    this.OnPropertyChanged("NormalCount");
+                }
+            }
+        }
+        private int preAlarmCount;
+        public int PreAlarmCount
+        {
+            get { return preAlarmCount; }
+            set
+            {
+                if (preAlarmCount != value)
+                {
+                    preAlarmCount = value;
+                    this.OnPropertyChanged("PreAlarmCount");
+                }
+            }
+        }
+        private int alarmCount;
+        public int AlarmCount
+        {
+            get { return alarmCount; }
+            set
+            {
+                if (alarmCount != value)
+                {
+                    alarmCount = value;
+                    this.OnPropertyChanged("AlarmCount");
+                }
+            }
+        }
+        private int dangerCount;
+        public int DangerCount
+        {
+            get { return dangerCount; }
+            set
+            {
+                if (dangerCount != value)
+                {
+                    dangerCount = value;
+                    this.OnPropertyChanged("DangerCount");
+                }
+            }
+        }
+
+        private int abnormalCount;
+        public int AbnormalCount
+        {
+            get { return abnormalCount; }
+            set
+            {
+                if (abnormalCount != value)
+                {
+                    abnormalCount = value;
+                    this.OnPropertyChanged("AbnormalCount");
+                }
+            }
+        }
+
+        private int unConnectCount;
+        public int UnConnectCount
+        {
+            get { return unConnectCount; }
+            set
+            {
+                if (unConnectCount != value)
+                {
+                    unConnectCount = value;
+                    this.OnPropertyChanged("UnConnectCount");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -226,14 +307,21 @@ namespace AIC.QuickDataPage.ViewModels
         #endregion
 
         #region 管理树
-        private void InitTree()
+        public void Init(ServerInfo serverinfo, DeviceTreeItemViewModel device)
         {
-            ServerInfoList = _localConfiguration.LoginServerInfoList;
-            ServerInfo = _loginUserService.GotoServerInfo;
+            ServerInfo = serverinfo;
             OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerInfo.IP));
-            DeviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel>(_cardProcess.GetDevices(OrganizationTreeItems));
+            OrganizationTreeItem = device;
+            if (OrganizationTreeItem == null)
+            {
+                DeviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel>(_cardProcess.GetDevices(OrganizationTreeItems));
+            }
+            else
+            {
+                DeviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel> { device };
+            }
             selectedsignals = _signalProcess.Signals.OfType<BaseAlarmSignal>().Where(p => p.ServerIP == ServerInfo.IP).ToList();
-            StatisticalInformationDataChanged();
+            DailyChanged();
             //TreeExpanded();
         }
 
@@ -256,23 +344,23 @@ namespace AIC.QuickDataPage.ViewModels
 
         private List<BaseAlarmSignal> selectedsignals;
 
-        public void SelectedServerChanged(object para)
+        private void SelectedServerChanged(object para)
         {
             if (para is ServerInfo)
             {
-                InitTree();
+                Init(para as ServerInfo, null);
                 timeCycle(null, null);
             }
         }
 
-        public void SelectedTreeChanged(object para)
+        private void SelectedTreeChanged(object para)
         {
             if (para is OrganizationTreeItemViewModel)
             {
                 OrganizationTreeItem = para as OrganizationTreeItemViewModel;
                 selectedsignals = _cardProcess.GetItems(para as OrganizationTreeItemViewModel).Where(p => p.BaseAlarmSignal != null).Select(p => p.BaseAlarmSignal).ToList();
                 DeviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel>(_cardProcess.GetDevices(para as OrganizationTreeItemViewModel));
-                StatisticalInformationDataChanged();
+                DailyChanged();
                 timeCycle(null, null);
             }
         }
@@ -313,10 +401,17 @@ namespace AIC.QuickDataPage.ViewModels
             {
                 ThirdDangerItem = null;
             }
+
+            NormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
+            PreAlarmCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
+            AlarmCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
+            DangerCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
+            AbnormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
+            UnConnectCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
             #endregion
         }
 
-        private void StatisticalInformationDataChanged()
+        private void DailyChanged()
         {
             var statisticalInfo = _signalProcess.StatisticalInformation;
             if (statisticalInfo == null || !statisticalInfo.ContainsKey(ServerInfo.IP))
@@ -336,7 +431,7 @@ namespace AIC.QuickDataPage.ViewModels
                     },
                     new LineSeries
                     {
-                        Title = "报警点数",
+                        Title = "警告点数",
                         Values = new ChartValues<int> { },
                         Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                        
                     },
@@ -347,7 +442,6 @@ namespace AIC.QuickDataPage.ViewModels
                         Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
                     },
                 };
-                Labels = new string[] { };
                 YFormatter = value => value.ToString("0");
 
                 var serverInfoList = new List<AlarmServerInfo>();  
@@ -423,12 +517,10 @@ namespace AIC.QuickDataPage.ViewModels
         {
             if (para is BaseAlarmSignal)//测点
             {
-                _loginUserService.SetGotoServerInfo((para as BaseAlarmSignal).ServerIP);
-                _loginUserService.SetGotoSignal(para as BaseAlarmSignal);
                 ItemQucikDataView view = _loginUserService.GotoTab<ItemQucikDataView>("MenuItemQucikData") as ItemQucikDataView;
                 if (view != null)
                 {
-                    view.GotoItem(para as BaseAlarmSignal);
+                    view.GotoItem(_loginUserService.GetServerInfo((para as BaseAlarmSignal).ServerIP), para as BaseAlarmSignal);
                 }
             }
             else if (para is string)//设备名

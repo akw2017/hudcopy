@@ -43,6 +43,13 @@
     <s:String x:Key="strSlot">卡槽</s:String>
     <s:String x:Key="strChannel">通道</s:String>
 
+    <s:String x:Key="strDanger">危险</s:String>
+    <s:String x:Key="strAlarm">警告</s:String>
+    <s:String x:Key="strPreAlarm">预警</s:String>
+    <s:String x:Key="strNormal">正常</s:String>
+    <s:String x:Key="strAbnormal">无效</s:String>
+    <s:String x:Key="strUnConnect">断线</s:String>
+
     <s:String x:Key="tabFirst">首页</s:String>
 
     <s:String x:Key="menuUser">用户</s:String>
@@ -83,6 +90,7 @@
     <s:String x:Key="menuImportDBData">数据库导入</s:String>
     <s:String x:Key="menuFilterDBData">数据库筛选</s:String>
 
+    <s:String x:Key="menuServerQucikData">服务数据快览</s:String>
     <s:String x:Key="menuDeviceQucikData">设备数据快览</s:String>
     <s:String x:Key="menuItemQucikData">测点数据快览</s:String>
 

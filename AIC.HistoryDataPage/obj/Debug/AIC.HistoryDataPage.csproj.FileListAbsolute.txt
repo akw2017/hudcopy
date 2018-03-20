@@ -571,3 +571,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryEven
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryEventListView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryEventAlarmTrendView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryEventAlarmTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\SubViews\DistributionMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\SubViews\DistributionMapView.baml

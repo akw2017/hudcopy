@@ -32,19 +32,18 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for MapView.xaml
     /// </summary>
-    public partial class HistoryDataStatisticsView : UserControl, ICloseable
+    public partial class HistoryDataStatisticsView : DisposableUserControl, ICloseable
     {
         public HistoryDataStatisticsView()
         {
             InitializeComponent();
 
             var menu = MenuManageList.GetMenu("menuHistoryDataStatistics");
-            this.Closer = new CloseableHeader("menuHistoryDataStatistics", menu.Name, true, menu.IconPath);        
-          
-            HistoryDataStatisticsViewModel vm = this.DataContext as HistoryDataStatisticsViewModel;
-            if (vm != null)
+            this.Closer = new CloseableHeader("menuHistoryDataStatistics", menu.Name, true, menu.IconPath);   
+           
+            if (ViewModel != null)
             {
-                vm.UpdateChart += UpdateChart;
+                ViewModel.UpdateChart += UpdateChart;
             }
 
             CreateChart();
@@ -53,6 +52,27 @@ namespace AIC.HistoryDataPage.Views
         }     
 
         public CloseableHeader Closer { get; private set; }
+
+        private HistoryDataStatisticsViewModel ViewModel
+        {
+            get { return DataContext as HistoryDataStatisticsViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't forget to clear _chart from grid child list.
+                gridChart.Children.Clear();
+
+                if (_chart != null)
+                {
+                    _chart.Dispose();
+                    _chart = null;
+                }
+            }
+        }
 
         private LightningChartUltimate _chart;
 
@@ -249,6 +269,7 @@ namespace AIC.HistoryDataPage.Views
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)

@@ -51,7 +51,6 @@ namespace AIC.Core.SignalModels
                 else return null;
             }
         }
-
         public string AlarmLimitJSON { get; set; }
         public static string GetColumnsString()
         {

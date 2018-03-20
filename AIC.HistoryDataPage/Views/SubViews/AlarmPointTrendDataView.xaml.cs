@@ -1,4 +1,5 @@
 ﻿
+using AIC.Core;
 using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -26,10 +27,9 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for AlarmPointTrendDataView.xaml
     /// </summary>
-    public partial class AlarmPointTrendDataView : UserControl
+    public partial class AlarmPointTrendDataView : DisposableUserControl
     {
         private LightningChartUltimate m_chart;
-        private AlarmPointTrendDataViewModel viewModel;
         private readonly IEventAggregator _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         private IDisposable snapshotDataChangedSubscription;
         private IDisposable showTimeOrFrequencySubscription;
@@ -40,13 +40,34 @@ namespace AIC.HistoryDataPage.Views
             showAMSCheckBox.IsChecked = true;
             Loaded += AlarmPointTrendDataView_Loaded;
         }
+
+        private AlarmPointTrendDataViewModel ViewModel
+        {
+            get { return DataContext as AlarmPointTrendDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
+
         private void AlarmPointTrendDataView_Loaded(object sender, RoutedEventArgs e)
         {
-            viewModel = DataContext as AlarmPointTrendDataViewModel;
-            if (viewModel != null)
+            Loaded -= AlarmPointTrendDataView_Loaded;
+            if (ViewModel != null)
             {
-                snapshotDataChangedSubscription = viewModel.WhenSnapshotDataChanged.Subscribe(OnSnapshotDataChanged);
-                showTimeOrFrequencySubscription = viewModel.WhenShowTimeOrFrequency.Subscribe(OnShowTimeOrFrequencyS);  
+                snapshotDataChangedSubscription = ViewModel.WhenSnapshotDataChanged.Subscribe(OnSnapshotDataChanged);
+                showTimeOrFrequencySubscription = ViewModel.WhenShowTimeOrFrequency.Subscribe(OnShowTimeOrFrequencyS);
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
         private void OnSnapshotDataChanged(SnapshotAMSContract2 contract)
@@ -83,7 +104,7 @@ namespace AIC.HistoryDataPage.Views
                 }
                 else
                 {
-                    viewModel.CurrentSnapshotContract = null;
+                    ViewModel.CurrentSnapshotContract = null;
                     if (m_chart.ViewXY.PointLineSeries[0].PointCount > 0)
                     {
                         m_chart.ViewXY.PointLineSeries[0].Clear();
@@ -112,7 +133,7 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
-                if (viewModel == null || viewModel.CurrentSnapshotContract == null) return;
+                if (ViewModel == null || ViewModel.CurrentSnapshotContract == null) return;
 
                 PointLineSeries series = m_chart.ViewXY.PointLineSeries[0];
                 PointLineSeries series1 = m_chart.ViewXY.PointLineSeries[1];
@@ -132,7 +153,7 @@ namespace AIC.HistoryDataPage.Views
                 //htzk123,数据
                 //SeriesPoint point = series.Points[index];
                 //Guid id = (Guid)point.Tag;
-                //SnapshotItemContract2 itemContract2 = viewModel.CurrentSnapshotContract.Item.Where(o => o.id == id).SingleOrDefault();
+                //SnapshotItemContract2 itemContract2 = ViewModel.CurrentSnapshotContract.Item.Where(o => o.id == id).SingleOrDefault();
                 //if (itemContract2 == null) return;
                 //ChannelDataContract channelData = itemContract2.Data;
 
@@ -164,7 +185,7 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
-                if (viewModel == null || viewModel.CurrentSnapshotContract == null) return;
+                if (ViewModel == null || ViewModel.CurrentSnapshotContract == null) return;
 
                 PointLineSeries series = m_chart.ViewXY.PointLineSeries[0];
                 PointLineSeries series1 = m_chart.ViewXY.PointLineSeries[1];
@@ -186,7 +207,7 @@ namespace AIC.HistoryDataPage.Views
                     Guid id = (Guid)point.Tag;
 
                     //htzk123,数据
-                    //SnapshotItemContract2 itemContract2 = viewModel.CurrentSnapshotContract.Item.Where(o => o.id == id).SingleOrDefault();
+                    //SnapshotItemContract2 itemContract2 = ViewModel.CurrentSnapshotContract.Item.Where(o => o.id == id).SingleOrDefault();
                     //if (itemContract2 == null) return;
                     //ChannelDataContract channelData = itemContract2.Data;
 

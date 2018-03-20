@@ -18,7 +18,7 @@ namespace AIC.Core.SignalModels
         protected override IEnumerable<SignalDisplayType> CreateSupportFunView()
         {
             var list = new List<SignalDisplayType>();
-            list.Add(SignalDisplayType.AMSTrend);
+            list.Add(SignalDisplayType.RMSTrend);
             list.Add(SignalDisplayType.Value);
             return list;
         }

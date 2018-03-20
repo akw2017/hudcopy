@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AIC.HistoryDataPage.Views.HistoryDataStatisticsView"
+﻿<core:DisposableUserControl x:Class="AIC.HistoryDataPage.Views.HistoryDataStatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -190,4 +190,4 @@
 
         <Grid Name="gridChart" Grid.Row="3" Grid.Column ="2"/>
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

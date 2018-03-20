@@ -18,19 +18,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.SeriesXY;
+using AIC.Core;
 
 namespace AIC.HistoryDataPage.Views
 {
     /// <summary>
     /// Interaction logic for MultiDivFreOnLineView.xaml
     /// </summary>
-    public partial class OrthoDataView : UserControl
+    public partial class OrthoDataView : DisposableUserControl
     {
         private LightningChartUltimate m_chart;
         //private VibrationSignal relativedSignal;//htzk123
         private float[] relaFFTValues = new float[1024];
         private float[] relaPhases = new float[1024];
-        private OrthoDataViewModel viewModel;
         private IDisposable orthoDataChangedSubscription;
         public OrthoDataView()
         {
@@ -40,13 +40,32 @@ namespace AIC.HistoryDataPage.Views
             Loaded += OrthoDataView_Loaded;
         }
 
+        private OrthoDataViewModel ViewModel
+        {
+            get { return DataContext as OrthoDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
+
         void OrthoDataView_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OrthoDataView_Loaded;
-            viewModel = DataContext as OrthoDataViewModel;
-            if (viewModel != null)
+            if (ViewModel != null)
             {
-                orthoDataChangedSubscription = viewModel.WhenOrthoDataChanged.Subscribe(OnOrthoDataChanged);
+                orthoDataChangedSubscription = ViewModel.WhenOrthoDataChanged.Subscribe(OnOrthoDataChanged);
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using AIC.Core.Events;
+﻿using AIC.Core;
+using AIC.Core.DataModels;
+using AIC.Core.Events;
 using AIC.Core.SignalModels;
 using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
@@ -30,7 +32,7 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for DynamicFittingCurveView.xaml
     /// </summary>
-    public partial class DynamicFittingDataView : UserControl
+    public partial class DynamicFittingDataView : DisposableUserControl
     {        
         private LightningChartUltimate m_chart;
 
@@ -44,7 +46,24 @@ namespace AIC.HistoryDataPage.Views
             Loaded += DynamicFittingDataView_Loaded;
         }
 
-        private ChannelToken ViewModel { get; set; }
+        private ChannelToken ViewModel
+        {
+            get { return DataContext as ChannelToken; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
 
         private void DynamicFittingDataView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,6 +83,7 @@ namespace AIC.HistoryDataPage.Views
                     dataChangedSubscription = ((DivFreChannelToken)ViewModel).WhenDataChanged.Subscribe(OnDataChanged);
                     disposedSubscription = ((DivFreChannelToken)ViewModel).WhenDisposed.Subscribe(OnDisposed);
                 }
+                //ViewModel.Closed += ViewModel_Closed;
             }
         }
 
@@ -90,7 +110,7 @@ namespace AIC.HistoryDataPage.Views
                     SeriesPoint[] points = new SeriesPoint[vChannel.DataContracts.Count];
                     for (int i = 0; i < vChannel.DataContracts.Count; i++)
                     {                       
-                        points[i].X = vChannel.DataContracts[i].RPM ?? 0;
+                        points[i].X = (vChannel.DataContracts[i] as IBaseDivfreSlot).RPM ?? 0;
                         points[i].Y = vChannel.DataContracts[i].Result?? 0;
                     }
                     ps.Points = points;
@@ -130,7 +150,7 @@ namespace AIC.HistoryDataPage.Views
                     SeriesPoint[] points = new SeriesPoint[vChannel.DataContracts.Count];
                     for (int i = 0; i < vChannel.DataContracts.Count; i++)
                     {                        
-                        points[i].X = vChannel.DataContracts[i].RPM ?? 0;
+                        points[i].X = (vChannel.DataContracts[i] as IBaseDivfreSlot).RPM ?? 0;
                         points[i].Y = vChannel.DataContracts[i].Result?? 0;
                     }
                     ps.Points = points;

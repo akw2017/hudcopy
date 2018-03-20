@@ -62,7 +62,7 @@
         </EventTrigger>
     </view:ChartViewBase.Triggers>
     <Grid>
-        <Grid Name="gridTime3DChart">
+        <Grid Name="gridChart">
 
         </Grid>
         <Button Content="时间三维谱" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ScreenshotButton_Click" Margin="5,0,0,0">

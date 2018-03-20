@@ -1,4 +1,5 @@
-﻿using AIC.Core.Events;
+﻿using AIC.Core;
+using AIC.Core.Events;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Series3D;
@@ -23,10 +24,10 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for RPM3DSpectrumDataView.xaml
     /// </summary>
-    public partial class RPM3DSpectrumDataView : UserControl
+    public partial class RPM3DSpectrumDataView : DisposableUserControl
     {
         private SynchronizationContext uiContext = SynchronizationContext.Current; 
-        private LightningChartUltimate rpm3Dchart;
+        private LightningChartUltimate m_chart;
         private SurfaceGridSeries3D m_surface;
         private WaterfallSeries3D m_waterfallFront;
 
@@ -40,21 +41,39 @@ namespace AIC.HistoryDataPage.Views
             Unloaded += RPM3DSpectrumDataView_Unloaded;
         }
 
-        private RPM3DSpectrumDataViewModel ViewModel { get; set; }
+        private RPM3DSpectrumDataViewModel ViewModel
+        {
+            get { return DataContext as RPM3DSpectrumDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
 
         private　void RPM3DSpectrumView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = DataContext as RPM3DSpectrumDataViewModel;
+            Loaded -= RPM3DSpectrumView_Loaded;
             if (ViewModel != null)
             {
-                rpm3Dchart.BeginUpdate();
+                m_chart.BeginUpdate();
                 m_surface.SetSize(ViewModel.SizeX, ViewModel.SizeY);
-                rpm3Dchart.EndUpdate();
+                m_chart.EndUpdate();
                 if (rpm3DSpectrumSubscrible != null)
                 {
                     rpm3DSpectrumSubscrible.Dispose();
                 }
                 rpm3DSpectrumSubscrible = ViewModel.WhenPropertyChanged.Where(o => o.ToString() == "RPM3DSpectrumData").ObserveOn(uiContext).Subscribe(OnRPM3DSpectrumDataChanged);
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
 
@@ -80,7 +99,7 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
-                rpm3Dchart.BeginUpdate();
+                m_chart.BeginUpdate();
 
                 m_surface.Clear();
                 RPM3DSpectrumObject rpm3DSpectrum = rpm3DObj;
@@ -88,19 +107,19 @@ namespace AIC.HistoryDataPage.Views
                 {
                     Dictionary<Tuple<double, double>, double[]> dataSource = rpm3DSpectrum.DataSource;
 
-                    rpm3Dchart.View3D.XAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinX, rpm3DSpectrum.RangeMaxX);
-                    rpm3Dchart.View3D.YAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinY, rpm3DSpectrum.RangeMaxY * 1.2);
-                    rpm3Dchart.View3D.ZAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinZ, rpm3DSpectrum.RangeMaxZ);
+                    m_chart.View3D.XAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinX, rpm3DSpectrum.RangeMaxX);
+                    m_chart.View3D.YAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinY, rpm3DSpectrum.RangeMaxY * 1.2);
+                    m_chart.View3D.ZAxisPrimary3D.SetRange(rpm3DSpectrum.RangeMinZ, rpm3DSpectrum.RangeMaxZ);
 
-                    m_surface.SetRangesXZ(rpm3Dchart.View3D.XAxisPrimary3D.Minimum, rpm3Dchart.View3D.XAxisPrimary3D.Maximum,
-                        rpm3Dchart.View3D.ZAxisPrimary3D.Minimum, rpm3Dchart.View3D.ZAxisPrimary3D.Maximum);
+                    m_surface.SetRangesXZ(m_chart.View3D.XAxisPrimary3D.Minimum, m_chart.View3D.XAxisPrimary3D.Maximum,
+                        m_chart.View3D.ZAxisPrimary3D.Minimum, m_chart.View3D.ZAxisPrimary3D.Maximum);
 
                     m_surface.ContourPalette = CreatePalette(m_surface, rpm3DSpectrum.RangeMaxY);
 
-                    double dXAxisMin = rpm3Dchart.View3D.XAxisPrimary3D.Minimum;
-                    double dXAxisMax = rpm3Dchart.View3D.XAxisPrimary3D.Maximum;
-                    double dZAxisMin = rpm3Dchart.View3D.ZAxisPrimary3D.Minimum;
-                    double dZAxisMax = rpm3Dchart.View3D.ZAxisPrimary3D.Maximum;
+                    double dXAxisMin = m_chart.View3D.XAxisPrimary3D.Minimum;
+                    double dXAxisMax = m_chart.View3D.XAxisPrimary3D.Maximum;
+                    double dZAxisMin = m_chart.View3D.ZAxisPrimary3D.Minimum;
+                    double dZAxisMax = m_chart.View3D.ZAxisPrimary3D.Maximum;
                     double dStepX = (dXAxisMax - dXAxisMin) / (m_surface.SizeX - 1);
                     double dStepZ = (dZAxisMax - dZAxisMin) / (m_surface.SizeZ - 1);
 
@@ -120,109 +139,109 @@ namespace AIC.HistoryDataPage.Views
                         }
                     }
                 }
-                rpm3Dchart.EndUpdate();
+                m_chart.EndUpdate();
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-转速三维谱", ex));
-                rpm3Dchart.EndUpdate();
+                m_chart.EndUpdate();
             }
         }
 
         private void CreateRPM3DChart()
         {
             // Clear any timeGrid3DChart's children.
-            rpmGrid3DChart.Children.Clear();
-            if (rpm3Dchart != null)
+            gridChart.Children.Clear();
+            if (m_chart != null)
             {
                 // If a chart is already created, dispose it.
-                rpm3Dchart.Dispose();
-                rpm3Dchart = null;
+                m_chart.Dispose();
+                m_chart = null;
             }
 
             // Create a new chart.
-            rpm3Dchart = new LightningChartUltimate();
-            rpm3Dchart.ChartName = "Spectrum 3D chart";
-            rpm3Dchart.Title.Text = string.Empty;
+            m_chart = new LightningChartUltimate();
+            m_chart.ChartName = "Spectrum 3D chart";
+            m_chart.Title.Text = string.Empty;
 
             //Disable rendering, strongly recommended before updating chart properties
-            rpm3Dchart.BeginUpdate();
+            m_chart.BeginUpdate();
 
             //Set 3D as active view
-            rpm3Dchart.ActiveView = ActiveView.View3D;
+            m_chart.ActiveView = ActiveView.View3D;
 
             //Setup background
-            rpm3Dchart.ChartBackground.GradientColor = Colors.Black;
-            rpm3Dchart.ChartBackground.Color = Colors.DimGray;
-            rpm3Dchart.ChartBackground.GradientFill = GradientFill.Radial;
+            m_chart.ChartBackground.GradientColor = Colors.Black;
+            m_chart.ChartBackground.Color = Colors.DimGray;
+            m_chart.ChartBackground.GradientFill = GradientFill.Radial;
 
             //Setup LegendBox
-            rpm3Dchart.View3D.LegendBox.Layout = LegendBoxLayout.VerticalColumnSpan;
-            rpm3Dchart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
-            rpm3Dchart.View3D.LegendBox.SurfaceScales.ScaleSizeDim1 = 150;
-            rpm3Dchart.View3D.LegendBox.SurfaceScales.ScaleSizeDim2 = 10;
-            rpm3Dchart.View3D.LegendBox.ShowCheckboxes = false;
+            m_chart.View3D.LegendBox.Layout = LegendBoxLayout.VerticalColumnSpan;
+            m_chart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleSizeDim1 = 150;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleSizeDim2 = 10;
+            m_chart.View3D.LegendBox.ShowCheckboxes = false;
 
             //Hide all walls but bottom
-            rpm3Dchart.View3D.WallOnBack.Visible = false;
-            rpm3Dchart.View3D.WallOnLeft.Visible = false;
-            rpm3Dchart.View3D.WallOnRight.Visible = false;
-            rpm3Dchart.View3D.WallOnTop.Visible = false;
-            rpm3Dchart.View3D.WallOnFront.Visible = false;
-            rpm3Dchart.View3D.WallOnBottom.Visible = true;
+            m_chart.View3D.WallOnBack.Visible = false;
+            m_chart.View3D.WallOnLeft.Visible = false;
+            m_chart.View3D.WallOnRight.Visible = false;
+            m_chart.View3D.WallOnTop.Visible = false;
+            m_chart.View3D.WallOnFront.Visible = false;
+            m_chart.View3D.WallOnBottom.Visible = true;
 
             //Setup primary x-axis
-            rpm3Dchart.View3D.XAxisPrimary3D.Orientation = PlaneXAxis3D.XY;
-            rpm3Dchart.View3D.XAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
-            rpm3Dchart.View3D.XAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
-            rpm3Dchart.View3D.XAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            rpm3Dchart.View3D.XAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            rpm3Dchart.View3D.XAxisPrimary3D.Title.Text = "频率 (Hz)";
-            rpm3Dchart.View3D.XAxisPrimary3D.Title.Color = Colors.Yellow;
-            rpm3Dchart.View3D.XAxisPrimary3D.SetRange(0, 0);
+            m_chart.View3D.XAxisPrimary3D.Orientation = PlaneXAxis3D.XY;
+            m_chart.View3D.XAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
+            m_chart.View3D.XAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
+            m_chart.View3D.XAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.XAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.XAxisPrimary3D.Title.Text = "频率 (Hz)";
+            m_chart.View3D.XAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.XAxisPrimary3D.SetRange(0, 0);
 
             //Setup primary y-axis
-            rpm3Dchart.View3D.YAxisPrimary3D.Orientation = PlaneYAxis3D.XY;
-            rpm3Dchart.View3D.YAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
-            rpm3Dchart.View3D.YAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
-            rpm3Dchart.View3D.YAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            rpm3Dchart.View3D.YAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            rpm3Dchart.View3D.YAxisPrimary3D.Title.Text = "幅值 P(f)";
-            rpm3Dchart.View3D.YAxisPrimary3D.Title.Color = Colors.Yellow;
-            rpm3Dchart.View3D.YAxisPrimary3D.SetRange(0, 0);
-            rpm3Dchart.View3D.YAxisPrimary3D.LabelsNumberFormat = "0.00";
+            m_chart.View3D.YAxisPrimary3D.Orientation = PlaneYAxis3D.XY;
+            m_chart.View3D.YAxisPrimary3D.CornerAlignment = AxisAlignment3D.Outside;
+            m_chart.View3D.YAxisPrimary3D.MajorDivTickStyle.Alignment = Alignment.Far;
+            m_chart.View3D.YAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.YAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.YAxisPrimary3D.Title.Text = "幅值 P(f)";
+            m_chart.View3D.YAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.YAxisPrimary3D.SetRange(0, 0);
+            m_chart.View3D.YAxisPrimary3D.LabelsNumberFormat = "0.00";
 
             //Setup primary z-axis
-            rpm3Dchart.View3D.ZAxisPrimary3D.Reversed = true;
-            rpm3Dchart.View3D.ZAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
-            rpm3Dchart.View3D.ZAxisPrimary3D.Title.Text = "转速";
-            rpm3Dchart.View3D.ZAxisPrimary3D.Title.Color = Colors.Yellow;
-            rpm3Dchart.View3D.ZAxisPrimary3D.ValueType = AxisValueType.Number;
-            rpm3Dchart.View3D.ZAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
-            rpm3Dchart.View3D.WallOnBottom.GridStrips = WallGridStripXZ.X;
+            m_chart.View3D.ZAxisPrimary3D.Reversed = true;
+            m_chart.View3D.ZAxisPrimary3D.LabelsColor = Color.FromArgb(200, 255, 255, 255);
+            m_chart.View3D.ZAxisPrimary3D.Title.Text = "转速";
+            m_chart.View3D.ZAxisPrimary3D.Title.Color = Colors.Yellow;
+            m_chart.View3D.ZAxisPrimary3D.ValueType = AxisValueType.Number;
+            m_chart.View3D.ZAxisPrimary3D.MajorDivTickStyle.Color = Colors.Orange;
+            m_chart.View3D.WallOnBottom.GridStrips = WallGridStripXZ.X;
 
             //Setup legend box
-            rpm3Dchart.View3D.LegendBox.SeriesTitleColor = Colors.White;
-            rpm3Dchart.View3D.LegendBox.ValueLabelColor = Colors.White;
-            rpm3Dchart.View3D.LegendBox.SurfaceScales.ScaleBorderColor = Colors.White;
-            rpm3Dchart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
-            rpm3Dchart.View3D.LegendBox.Offset.SetValues(0, 0);
-            rpm3Dchart.View3D.LegendBox.Fill.Style = RectFillStyle.None;
-            rpm3Dchart.View3D.LegendBox.Shadow.Visible = false;
-            rpm3Dchart.View3D.LegendBox.BorderWidth = 0;
+            m_chart.View3D.LegendBox.SeriesTitleColor = Colors.White;
+            m_chart.View3D.LegendBox.ValueLabelColor = Colors.White;
+            m_chart.View3D.LegendBox.SurfaceScales.ScaleBorderColor = Colors.White;
+            m_chart.View3D.LegendBox.Position = LegendBoxPosition.TopRight;
+            m_chart.View3D.LegendBox.Offset.SetValues(0, 0);
+            m_chart.View3D.LegendBox.Fill.Style = RectFillStyle.None;
+            m_chart.View3D.LegendBox.Shadow.Visible = false;
+            m_chart.View3D.LegendBox.BorderWidth = 0;
 
             //Setup camera            
-            rpm3Dchart.View3D.Camera.RotationX = 18.6;
-            rpm3Dchart.View3D.Camera.RotationY = -23.6;
-            rpm3Dchart.View3D.Camera.RotationZ = 0;
-            rpm3Dchart.View3D.Camera.Target.SetValues(-9.5f, -10f, -5.8f);
-            rpm3Dchart.View3D.Camera.ViewDistance = 163;
+            m_chart.View3D.Camera.RotationX = 18.6;
+            m_chart.View3D.Camera.RotationY = -23.6;
+            m_chart.View3D.Camera.RotationZ = 0;
+            m_chart.View3D.Camera.Target.SetValues(-9.5f, -10f, -5.8f);
+            m_chart.View3D.Camera.ViewDistance = 163;
 
             //double dAxisZMin = updateRate / 1000.0;
             //double dAxisZMax = 100 * updateRate / 1000.0;
             //m_dStepZ = updateRate / 1000.0;
 
-            //rpm3Dchart.View3D.ZAxisPrimary3D.SetRange(dAxisZMin, dAxisZMax);
+            //m_chart.View3D.ZAxisPrimary3D.SetRange(dAxisZMin, dAxisZMax);
             //m_dCurrentZ = dAxisZMax;
 
             //Add Surface
@@ -234,17 +253,17 @@ namespace AIC.HistoryDataPage.Views
           //  CreateWaterfallFront();
 
             //Allow chart rendering
-            rpm3Dchart.EndUpdate();
+            m_chart.EndUpdate();
 
-            rpmGrid3DChart.Children.Add(rpm3Dchart);
+            gridChart.Children.Add(m_chart);
         }
 
         private void CreateSurface()
         {
             if (m_surface == null)
             {
-                m_surface = new SurfaceGridSeries3D(rpm3Dchart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
-                rpm3Dchart.View3D.SurfaceGridSeries3D.Add(m_surface);
+                m_surface = new SurfaceGridSeries3D(m_chart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
+                m_chart.View3D.SurfaceGridSeries3D.Add(m_surface);
             }
             m_surface.InitialValue = 0;
             m_surface.Title.Text = string.Empty;
@@ -260,12 +279,12 @@ namespace AIC.HistoryDataPage.Views
         {
             if (m_waterfallFront == null)
             {
-                m_waterfallFront = new WaterfallSeries3D(rpm3Dchart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
-                rpm3Dchart.View3D.WaterfallSeries3D.Add(m_waterfallFront);
+                m_waterfallFront = new WaterfallSeries3D(m_chart.View3D, Axis3DBinding.Primary, Axis3DBinding.Primary, Axis3DBinding.Primary);
+                m_chart.View3D.WaterfallSeries3D.Add(m_waterfallFront);
             }
 
             // m_waterfallFront.SetSize(ViewModel.SgProcessor.FFTLength, 1);
-            m_waterfallFront.BaseLevel = rpm3Dchart.View3D.YAxisPrimary3D.Minimum;
+            m_waterfallFront.BaseLevel = m_chart.View3D.YAxisPrimary3D.Minimum;
             m_waterfallFront.FadeAway = 0;
             m_waterfallFront.SuppressLighting = false;
             m_waterfallFront.BaseColor = Colors.White;
@@ -274,13 +293,13 @@ namespace AIC.HistoryDataPage.Views
             //Init one row
             SurfacePoint[,] areaData = m_waterfallFront.Data;
             int iColCount = m_waterfallFront.SizeX;
-            double dX = rpm3Dchart.View3D.XAxisPrimary3D.Minimum;
+            double dX = m_chart.View3D.XAxisPrimary3D.Minimum;
             double dStepX;
             if (iColCount > 1)
-                dStepX = (rpm3Dchart.View3D.XAxisPrimary3D.Maximum - rpm3Dchart.View3D.XAxisPrimary3D.Minimum) / (double)(iColCount - 1);
+                dStepX = (m_chart.View3D.XAxisPrimary3D.Maximum - m_chart.View3D.XAxisPrimary3D.Minimum) / (double)(iColCount - 1);
             else
                 dStepX = 0;
-            double dZ = rpm3Dchart.View3D.ZAxisSecondary3D.Maximum;
+            double dZ = m_chart.View3D.ZAxisSecondary3D.Maximum;
             double dY = m_waterfallFront.InitialValue;
             for (int iCol = 0; iCol < iColCount; iCol++)
             {
@@ -310,7 +329,7 @@ namespace AIC.HistoryDataPage.Views
 
         private void ScreenshotButton_Click(object sender, RoutedEventArgs e)
         {
-            rpm3Dchart.CopyToClipboard(ClipboardImageFormat.Jpg);
+            m_chart.CopyToClipboard(ClipboardImageFormat.Jpg);
         }
     }
 }

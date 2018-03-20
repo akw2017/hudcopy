@@ -1,4 +1,5 @@
-﻿using AIC.OnLineDataPage.ViewModels;
+﻿using AIC.Core;
+using AIC.OnLineDataPage.ViewModels;
 using AIC.OnLineDataPage.ViewModels.SubViewModels;
 using System;
 using System.Windows;
@@ -6,53 +7,75 @@ using System.Windows.Controls;
 
 namespace AIC.OnLineDataPage.Views.SubViews
 {
-    public class ChartViewBase : UserControl
+    public class ChartViewBase : DisposableUserControl
     {
         //private bool initialized = false;
         static ChartViewBase()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(ChartViewBase), new FrameworkPropertyMetadata(typeof(ChartViewBase)));
         }
-
+       
         public ChartViewBase()
         {
             Loaded += ChartViewBase_Loaded;
             Unloaded += ChartViewBase_Unloaded;
-            IsVisibleChanged += ChartViewBase_IsVisibleChanged;               
-        }
-
-        private void ChartViewBase_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Console.WriteLine(this.IsVisible.ToString());
         }
 
         public ChartViewModelBase ViewModel { get; set; }
 
-        private void ChartViewBase_Loaded(object sender, RoutedEventArgs e)
+        private bool isloaded = false;//因为人工加载的添加，必须避免反复加载
+        protected virtual void ChartViewBase_Loaded(object sender, RoutedEventArgs e)
         {
+            if (isloaded == true)
+            {
+                return;
+            }
+            isloaded = true;
+
             if (DataContext is ChartViewModelBase)
             {
                 ViewModel = DataContext as ChartViewModelBase;
-                ViewModel.Opened += ViewModel_Opened;
-                ViewModel.Open();
+                ViewModel.ProcessorLoaded();
+                ViewModel.SignalChanged -= ViewModel_SignalChanged;
                 ViewModel.SignalChanged += ViewModel_SignalChanged; 
-                ViewModel_SignalChanged();
-                ViewModel.Closed += ViewModel_Closed;
+                //ViewModel_SignalChanged(); 
                 ViewModel.Subscribe(UpdateChart);
+                ViewModel.Closed -= ViewModel_Closed;
+                ViewModel.Closed += ViewModel_Closed;
+                ViewModel.Disposed -= ViewModel_Disposed;
+                ViewModel.Disposed += ViewModel_Disposed;
+                ViewModel.HandUnloaded -= ViewModel_HandUnloaded;
+                ViewModel.HandUnloaded += ViewModel_HandUnloaded;
+                ViewModel.HandLoaded -= ViewModel_HandLoaded;
+                ViewModel.HandLoaded += ViewModel_HandLoaded;
             }
         }
 
-        private void ChartViewBase_Unloaded(object sender, RoutedEventArgs e)
+        protected virtual void ChartViewBase_Unloaded(object sender, RoutedEventArgs e)
         {
+            if (isloaded == false)
+            {
+                return;
+            }
+            isloaded = false;
+
             if (ViewModel != null)
             {
-                ViewModel.Opened -= ViewModel_Opened;
-                ViewModel.SignalChanged -= ViewModel_SignalChanged;
-                ViewModel.Close();
-                ViewModel.Closed -= ViewModel_Closed;
-
+                //ViewModel.SignalChanged -= ViewModel_SignalChanged;
+                ViewModel.ProcessorUnloaded();
+                //ViewModel.Closed -= ViewModel_Closed;
                 ViewModel = null;
             }
+        }
+
+        protected virtual void ViewModel_HandUnloaded(object sender, EventArgs e)
+        {
+            ChartViewBase_Unloaded(null, null);
+        }
+
+        protected virtual void ViewModel_HandLoaded(object sender, EventArgs e)
+        {
+            ChartViewBase_Loaded(null, null);
         }
 
         protected virtual void ViewModel_SignalChanged()
@@ -62,9 +85,10 @@ namespace AIC.OnLineDataPage.Views.SubViews
 
         protected virtual void ViewModel_Closed(object sender, EventArgs e)
         {
+            
         }
 
-        protected virtual void ViewModel_Opened(object sender, EventArgs e)
+        protected virtual void ViewModel_Disposed(object sender, EventArgs e)
         {
 
         }
@@ -73,7 +97,5 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
 
         }
-
-
     }
 }

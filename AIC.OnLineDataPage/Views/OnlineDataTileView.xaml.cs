@@ -1,4 +1,5 @@
-﻿using AIC.Core.UserManageModels;
+﻿using AIC.Core;
+using AIC.Core.UserManageModels;
 using AIC.OnLineDataPage.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace AIC.OnLineDataPage.Views
     /// <summary>
     /// Interaction logic for OnLineTileView.xaml
     /// </summary>
-    public partial class OnlineDataTileView : UserControl, ICloseable
+    public partial class OnlineDataTileView : DisposableUserControl, ICloseable
     {
         public OnlineDataTileView()
         {
@@ -33,21 +34,29 @@ namespace AIC.OnLineDataPage.Views
 
             if (ViewModel != null)
             {
-                ViewModel.UpdateListShow += ViewModel_UpdateListShow; ;
+                ViewModel.UpdateListShow += ViewModel_UpdateListShow;
             }
 
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));
 
-        }    
+        }      
 
         public CloseableHeader Closer { get; private set; }
 
-        OnlineDataTileViewModel ViewModel
+        private OnlineDataTileViewModel ViewModel
         {
             get { return DataContext as OnlineDataTileViewModel; }
             set { this.DataContext = value; }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ViewModel.ClearAllCommand.Execute(null);
+            }
+        }        
 
         ///// <summary>
         ///// Handle the OnScorllCommand event for RichTextBox

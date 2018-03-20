@@ -130,7 +130,9 @@ namespace Wpf.VirtualizingWrapPanel
                         }
 
                         // Measurements will depend on layout algorithm
-                        child.Measure(GetChildSize());
+                        //child.Measure(GetChildSize());
+                        Size availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+                        child.Measure(availableItemSize);
                         itemIndex += 1;
                         childIndex += 1;
                     }
@@ -343,7 +345,8 @@ namespace Wpf.VirtualizingWrapPanel
                 xCoordForItem = startXForRow + (column * this.ChildWidth);
             }
 
-            child.Arrange(new Rect(xCoordForItem, row * this.ChildHeight, this.ChildWidth, this.ChildHeight));
+            //child.Arrange(new Rect(xCoordForItem, row * this.ChildHeight, this.ChildWidth, this.ChildHeight));
+            child.Arrange(new Rect(xCoordForItem, row * this.ChildHeight, child.DesiredSize.Width, child.DesiredSize.Height));
         }
 
         /// <summary>

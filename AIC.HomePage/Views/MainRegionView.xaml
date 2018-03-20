@@ -65,12 +65,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Background="{DynamicResource AccentColorBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Menu Background="{DynamicResource AccentColorBrush}" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave">
+
+            <Menu Background="Transparent" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave">
                 <MenuItem Header="{DynamicResource menuOnlineData}" Background="{DynamicResource TransparentWhiteBrush}">
                     <MenuItem Header="{DynamicResource menuOnlineDataDiagram}" Command="{Binding NavigateCommand}" CommandParameter="MenuOnlineDataDiagram" Visibility="{Binding MenuManageList.MenuOnlineDataDiagram.Visibility}">
                         <MenuItem.Icon>
@@ -152,24 +153,7 @@
                             <Image Source="/AIC.Resources;component/Images/cog_edit.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuDBManage}" Background="{DynamicResource TransparentWhiteBrush}">
-                    <MenuItem Header="{DynamicResource menuExportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuExportDBData" Visibility="{Binding MenuManageList.MenuExportDBData.Visibility}">
-                        <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuExportDBData.IconPath}"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{DynamicResource menuImportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuImportDBData" Visibility="{Binding MenuManageList.MenuImportDBData.Visibility}">
-                        <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuImportDBData.IconPath}"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{DynamicResource menuFilterDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuFilterDBData" Visibility="{Binding MenuManageList.MenuFilterDBData.Visibility}">
-                        <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuFilterDBData.IconPath}"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+                </MenuItem>              
                 <MenuItem Header="{DynamicResource menuGeneralManage}" Background="{DynamicResource TransparentWhiteBrush}">
                     <!--<MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
                         <MenuItem.Icon>
@@ -220,6 +204,23 @@
                         <MenuItem.Icon>
                             <Image Source="{Binding MenuManageList.MenuManageLog.IconPath}"/>
                         </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuDBManage}" Background="{DynamicResource TransparentWhiteBrush}">
+                        <MenuItem Header="{DynamicResource menuExportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuExportDBData" Visibility="{Binding MenuManageList.MenuExportDBData.Visibility}">
+                            <MenuItem.Icon>
+                                <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuExportDBData.IconPath}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource menuImportDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuImportDBData" Visibility="{Binding MenuManageList.MenuImportDBData.Visibility}">
+                            <MenuItem.Icon>
+                                <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuImportDBData.IconPath}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource menuFilterDBData}" Command="{Binding NavigateCommand}" CommandParameter="MenuFilterDBData" Visibility="{Binding MenuManageList.MenuFilterDBData.Visibility}">
+                            <MenuItem.Icon>
+                                <Image Height="16" Width="16" Source="{Binding MenuManageList.MenuFilterDBData.IconPath}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{DynamicResource menuServerSetting}" Command="{Binding NavigateCommand}" CommandParameter="MenuServerSetting" Visibility="{Binding MenuManageList.MenuServerSetting.Visibility}">
                         <MenuItem.Icon>
@@ -319,7 +320,6 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-
             </Menu>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -331,9 +331,10 @@
                 <TextBlock Visibility="{Binding LoginVisibility}" VerticalAlignment="Center" Margin="5,0"> <TextBlock Text="{Binding LoginUser}"/></TextBlock>
             </StackPanel>
           
-            <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
+            <Grid Grid.Row="1">
                 <TextBlock FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Text="版权所有Copyright©2017：北京航天智控监测技术研究院"/>
             </Grid>
+
             <!--青岛众志测控技术有限公司-->
             <!--昌邑石化-->
 
@@ -564,7 +565,7 @@
                         <Run>&#160;无效</Run>
                         <Run Text="{Binding AbnormalCount}" />
                         </TextBlock>
-                        <TextBlock Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center">
+                        <TextBlock Foreground="Green" VerticalAlignment="Center">
                         <Run>&#160;正常</Run>
                         <Run Text="{Binding NormalCount}" />
                         </TextBlock>

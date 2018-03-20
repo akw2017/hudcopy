@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="AIC.HistoryDataPage.Views.RMSReplayDataView"
+﻿<core:DisposableUserControl x:Class="AIC.HistoryDataPage.Views.RMSReplayDataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:AIC.HistoryDataPage.Views"            
              xmlns:lcu="http://www.arction.com/schemas/" 
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              mc:Ignorable="d" 
              d:DesignHeight="299" d:DesignWidth="453">
     <UserControl.Resources>
@@ -98,4 +99,4 @@
             </Button>
         </Grid>      
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

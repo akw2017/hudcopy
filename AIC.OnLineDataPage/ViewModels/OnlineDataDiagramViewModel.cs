@@ -593,6 +593,16 @@ namespace AIC.OnLineDataPage.ViewModels
             }
         }
 
+        public void Close()//销毁所有波形
+        {
+            timeDomainOnLineVM.Close();
+            frequencyDomainOnLineVM.Close();
+            amsTrendOnLineVM.Close();
+            time3DSpectrumOnLineVM.Close();
+            powerSpectrumOnLineVM.Close();
+            powerSpectrumDensityOnLineVM.Close();
+        }
+
         private bool CanOperate(object para)
         {
             return CanOperated;
@@ -663,7 +673,8 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 //ItemIsExpanded = false; //昌邑石化
             }
-        }
+        }      
+
         private void BuildDevice(DeviceTreeItemViewModel device)
         {
             try
@@ -681,7 +692,8 @@ namespace AIC.OnLineDataPage.ViewModels
                     imageVM.Left = 50;
                     DiagramViewModel.AddItemCommand.Execute(imageVM);
                 }
-                
+
+                imageVM.Device = device;
                 imageVM.ImageDesignElement = currentEquipElement.ImageDesignElement;
 
                 var items = DiagramViewModel.Items.Except(new ImageValueDesigner[] { imageVM }).ToArray();
@@ -1114,7 +1126,7 @@ namespace AIC.OnLineDataPage.ViewModels
                             frequencyDomainOnLineVM.SetSignal(SelectedSignal, SignalPreProccessType, IsFilter);
                         }
                         break;
-                    case "AMSTrend":
+                    case "RMSTrend":
                         if (!graphFunctionCollection.Contains(amsTrendOnLineVM))
                         {
                             graphFunctionCollection.Add(amsTrendOnLineVM);
@@ -1212,7 +1224,7 @@ namespace AIC.OnLineDataPage.ViewModels
                             graphFunctionCollection.Remove(frequencyDomainOnLineVM);                           
                         }
                         break;
-                    case "AMSTrend":
+                    case "RMSTrend":
                         if (graphFunctionCollection.Contains(amsTrendOnLineVM))
                         {
                             amsTrendOnLineVM.SetSignal(null);

@@ -34,12 +34,30 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public MultiDivFreChartView()
         {
             InitializeComponent();
-            //CreateChart();
+            CreateChart();
         }
 
-        protected override void ViewModel_Closed(object sender, EventArgs e)
+        protected override void ChartViewBase_Unloaded(object sender, RoutedEventArgs e)
         {
-            base.ViewModel_Closed(sender, e);
+            base.ChartViewBase_Unloaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.None;
+            }
+        }
+
+        protected override void ChartViewBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            base.ChartViewBase_Loaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.SoftwareOnlyD11;
+            }
+        }
+
+        protected override void ViewModel_Disposed(object sender, EventArgs e)
+        {
+            base.ViewModel_Disposed(sender, e);
             // Don't forget to clear chart grid child list.
             gridChart.Children.Clear();
             if (m_chart != null)
@@ -47,11 +65,13 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.Dispose();
                 m_chart = null;
             }
+            base.Dispose();
         }
-        protected override void ViewModel_Opened(object sender, EventArgs e)
+
+        protected override void ViewModel_Closed(object sender, EventArgs e)
         {
-            base.ViewModel_Opened(sender, e);
-            CreateChart();
+            this.ViewModel_Disposed(sender, e);
+            base.GCCollect();
         }
 
         protected override void ViewModel_SignalChanged()
@@ -274,110 +294,125 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart = null;
             }
 
-            m_chart = new LightningChartUltimate();
-            m_chart.BeginUpdate();
-            m_chart.Title.Text = "";
-            //m_chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.Horizontal;
-            // m_chart.ViewXY.AxisLayout.YAxesLayout = YAxesLayout.Layered;
-            m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.LeftThenRight;
-            m_chart.ViewXY.DropOldSeriesData = true;
-            m_chart.ViewXY.DropOldEventMarkers = true;
+            try
+            {
+                m_chart = new LightningChartUltimate();
+                m_chart.BeginUpdate();
+                m_chart.Title.Text = "";
+                //m_chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.Horizontal;
+                // m_chart.ViewXY.AxisLayout.YAxesLayout = YAxesLayout.Layered;
+                m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.LeftThenRight;
+                m_chart.ViewXY.DropOldSeriesData = true;
+                m_chart.ViewXY.DropOldEventMarkers = true;
 
-            m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-            m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            m_chart.ChartBackground.GradientFill = GradientFill.Solid;
-            m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
-            m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
+                m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
+                m_chart.ChartBackground.GradientFill = GradientFill.Solid;
+                m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
+                m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
+                m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
 
-            //Disable automatic axis layouts 
-            m_chart.ViewXY.AxisLayout.AutoAdjustMargins = false;
-            m_chart.ViewXY.AxisLayout.XAxisAutoPlacement = XAxisAutoPlacement.Off;
-            m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.Off;
-            m_chart.ViewXY.AxisLayout.XAxisTitleAutoPlacement = false;
-            m_chart.ViewXY.AxisLayout.YAxisTitleAutoPlacement = false;
+                //Disable automatic axis layouts 
+                m_chart.ViewXY.AxisLayout.AutoAdjustMargins = false;
+                m_chart.ViewXY.AxisLayout.XAxisAutoPlacement = XAxisAutoPlacement.Off;
+                m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.Off;
+                m_chart.ViewXY.AxisLayout.XAxisTitleAutoPlacement = false;
+                m_chart.ViewXY.AxisLayout.YAxisTitleAutoPlacement = false;
 
-            //Almost zero margins, bottom is 3u
-            m_chart.ViewXY.Margins = new Thickness(0);
+                //Almost zero margins, bottom is 3u
+                m_chart.ViewXY.Margins = new Thickness(0);
 
-            //Setup x-axis
-            m_chart.ViewXY.XAxes[0].ValueType = AxisValueType.DateTime;
-            m_chart.ViewXY.XAxes[0].Title.Visible = false;
-            m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
-            m_chart.ViewXY.XAxes[0].AxisThickness = 2;
-            m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            //m_chart.ViewXY.XAxes[0].MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
-            m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
-            m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
-            m_chart.ViewXY.XAxes[0].LabelsPosition = Alignment.Near;
-            m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Alignment = Alignment.Near;
-            m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Alignment = Alignment.Near;
-            m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            m_chart.ViewXY.XAxes[0].VerticalAlign = AlignmentVertical.Top;
+                //Setup x-axis
+                m_chart.ViewXY.XAxes[0].ValueType = AxisValueType.DateTime;
+                m_chart.ViewXY.XAxes[0].Title.Visible = false;
+                m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
+                m_chart.ViewXY.XAxes[0].AxisThickness = 2;
+                m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                                                                                           //m_chart.ViewXY.XAxes[0].MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+                m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
+                m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+                m_chart.ViewXY.XAxes[0].LabelsPosition = Alignment.Near;
+                m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Alignment = Alignment.Near;
+                m_chart.ViewXY.XAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Alignment = Alignment.Near;
+                m_chart.ViewXY.XAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.XAxes[0].VerticalAlign = AlignmentVertical.Top;
 
-            //Setup y-axis
-            m_chart.ViewXY.YAxes[0].Title.Visible = false;
-            m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
-            m_chart.ViewXY.YAxes[0].AxisThickness = 2;
-            m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            //m_chart.ViewXY.YAxes[0].MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
-            m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
-            m_chart.ViewXY.YAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
-            m_chart.ViewXY.YAxes[0].MiniScale.Visible = false;
-            m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Alignment = Alignment.Far;
-            m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Alignment = Alignment.Far;
-            m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            m_chart.ViewXY.YAxes[0].Alignment = AlignmentHorizontal.Right;
+                //Setup y-axis
+                m_chart.ViewXY.YAxes[0].Title.Visible = false;
+                m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
+                m_chart.ViewXY.YAxes[0].AxisThickness = 2;
+                m_chart.ViewXY.YAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                                                                                           //m_chart.ViewXY.YAxes[0].MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+                m_chart.ViewXY.YAxes[0].MinorGrid.Visible = false;
+                m_chart.ViewXY.YAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+                m_chart.ViewXY.YAxes[0].MiniScale.Visible = false;
+                m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Alignment = Alignment.Far;
+                m_chart.ViewXY.YAxes[0].MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Alignment = Alignment.Far;
+                m_chart.ViewXY.YAxes[0].MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                m_chart.ViewXY.YAxes[0].Alignment = AlignmentHorizontal.Right;
 
-            //Second Y Axis
-            AxisY secondYAxis = new AxisY(m_chart.ViewXY, true);
-            secondYAxis.ValueType = AxisValueType.Number;
-            secondYAxis.Position = 100;
-            secondYAxis.Title.Visible = false;
-            secondYAxis.MinorGrid.Visible = false;
-            secondYAxis.AxisThickness = 2;
-            secondYAxis.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            //secondYAxis.MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
-            secondYAxis.AxisColor = Colors.Teal;
-            secondYAxis.MinorGrid.Visible = false;
-            secondYAxis.LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
-            secondYAxis.MiniScale.Visible = false;
-            secondYAxis.MajorDivTickStyle.Alignment = Alignment.Near;
-            secondYAxis.MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            secondYAxis.MinorDivTickStyle.Alignment = Alignment.Near;
-            secondYAxis.MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
-            secondYAxis.Alignment = AlignmentHorizontal.Left;
-            secondYAxis.SetRange(0, 360);
+                //Second Y Axis
+                AxisY secondYAxis = new AxisY(m_chart.ViewXY, true);
+                secondYAxis.ValueType = AxisValueType.Number;
+                secondYAxis.Position = 100;
+                secondYAxis.Title.Visible = false;
+                secondYAxis.MinorGrid.Visible = false;
+                secondYAxis.AxisThickness = 2;
+                secondYAxis.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                                                                               //secondYAxis.MajorGrid.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+                secondYAxis.AxisColor = Colors.Teal;
+                secondYAxis.MinorGrid.Visible = false;
+                secondYAxis.LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+                secondYAxis.MiniScale.Visible = false;
+                secondYAxis.MajorDivTickStyle.Alignment = Alignment.Near;
+                secondYAxis.MajorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                secondYAxis.MinorDivTickStyle.Alignment = Alignment.Near;
+                secondYAxis.MinorDivTickStyle.Color = Color.FromArgb(0xff, 0xff, 0xff, 0xff);// Color.FromArgb(100, 135, 205, 238);
+                secondYAxis.Alignment = AlignmentHorizontal.Left;
+                secondYAxis.SetRange(0, 360);
 
-            m_chart.ViewXY.LegendBoxes[0].Visible = true;
-            m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
-            m_chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
-            m_chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
-            m_chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
-            m_chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopCenter;
-            m_chart.ViewXY.LegendBoxes[0].Offset.SetValues(0, 0);
-            m_chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
-            m_chart.ViewXY.LegendBoxes[0].CheckBoxStateChanged += LegendBox_CheckBoxStateChanged;
+                m_chart.ViewXY.LegendBoxes[0].Visible = true;
+                m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
+                m_chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
+                m_chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
+                m_chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
+                m_chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopCenter;
+                m_chart.ViewXY.LegendBoxes[0].Offset.SetValues(0, 0);
+                m_chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+                m_chart.ViewXY.LegendBoxes[0].CheckBoxStateChanged += LegendBox_CheckBoxStateChanged;
 
-            //Add cursor
-            LineSeriesCursor cursor = new LineSeriesCursor(m_chart.ViewXY, m_chart.ViewXY.XAxes[0]);
-            m_chart.ViewXY.LineSeriesCursors.Add(cursor);
-            cursor.PositionChanged += cursor_PositionChanged;
-            cursor.LineStyle.Color = System.Windows.Media.Color.FromArgb(150, 255, 0, 0);
-            cursor.LineStyle.Width = 2;
-            cursor.SnapToPoints = true;
-            cursor.TrackPoint.Color1 = Colors.White;
-            cursor.Visible = false;
+                //Add cursor
+                LineSeriesCursor cursor = new LineSeriesCursor(m_chart.ViewXY, m_chart.ViewXY.XAxes[0]);
+                m_chart.ViewXY.LineSeriesCursors.Add(cursor);
+                cursor.PositionChanged += cursor_PositionChanged;
+                cursor.LineStyle.Color = System.Windows.Media.Color.FromArgb(150, 255, 0, 0);
+                cursor.LineStyle.Width = 2;
+                cursor.SnapToPoints = true;
+                cursor.TrackPoint.Color1 = Colors.White;
+                cursor.Visible = false;
 
-            CreateCalloutAnnotation();
+                CreateCalloutAnnotation();
 
-            // m_chart.ViewXY.FitView();
-            m_chart.EndUpdate();
-
+                // m_chart.ViewXY.FitView();
+                m_chart.EndUpdate();
+            }
+            catch (Exception ex)
+            {
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-分频(多)-初始化", ex));
+                if (m_chart != null)
+                {
+                    m_chart.EndUpdate();
+                }
+            }
+            finally
+            {
+                
+            }
             gridChart.Children.Add(m_chart);
         }
+
         private void CreateCalloutAnnotation()
         {
             AnnotationXY cursorValueDisplay = new AnnotationXY(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], m_chart.ViewXY.YAxes[0]);

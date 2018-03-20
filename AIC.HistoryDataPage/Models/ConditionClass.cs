@@ -8,7 +8,7 @@ namespace AIC.HistoryDataPage.Models
 {
     public class ConditionClass
     {
-        public static void GetConditionStr(out string conditionWave, out string conditionAlarm, bool AllowNormal, bool AllowPreWarning, bool AllowWarning, bool AllowDanger, bool AllowInvalid, bool AllowRPMFilter)
+        public static void GetConditionStr(out string conditionWave, out string conditionAlarm, out object[] objectWave, out object[] objectAlarm, bool AllowNormal, bool AllowPreWarning, bool AllowWarning, bool AllowDanger, bool AllowInvalid, bool AllowRPMFilter, string  unit, double downRPMFilter, double upRPMFilter)
         {
             string condition;
             string alarmConditionStr = string.Empty;
@@ -102,6 +102,11 @@ namespace AIC.HistoryDataPage.Models
                 }
             }
             conditionWave = condition;
+
+            unit = (unit == "Unit") ? "" : unit;
+            objectWave = new object[] { unit, downRPMFilter, upRPMFilter };
+            objectAlarm = new object[] { unit };
+
         }
     }
 }

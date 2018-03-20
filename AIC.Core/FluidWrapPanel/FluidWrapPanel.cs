@@ -27,7 +27,7 @@ namespace AIC.Core
     /// <summary>
     /// Interactions for the FluidWrapPanel
     /// </summary>
-    public class FluidWrapPanel : Panel
+    public class FluidWrapPanel : Panel, IFluidWrapPanel
     {
         #region Constants
 
@@ -50,13 +50,46 @@ namespace AIC.Core
         Point dragStartPoint = new Point();
         UIElement dragElement = null;
         UIElement lastDragElement = null;
-        List<UIElement> fluidElements = null;
+        //List<UIElement> FluidElements = null;
         FluidLayoutManager layoutManager = null;
         bool isInitializeArrangeRequired = false;
 
         #endregion
 
         #region Dependency Properties
+
+        #region DragEasing
+
+        /// <summary>
+        /// DragEasing Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty FluidElementsProperty =
+            DependencyProperty.Register("FluidElements", typeof(List<UIElement>), typeof(FluidWrapPanel),
+                new FrameworkPropertyMetadata(new List<UIElement>(),  new PropertyChangedCallback(OnFluidElementsChanged)));
+
+        /// <summary>
+        /// Gets or sets the DragEasing property. This dependency property 
+        /// indicates the Easing function to be used when the user stops dragging the child and releases it.
+        /// </summary>
+        public List<UIElement> FluidElements
+        {
+            get { return (List<UIElement>)GetValue(FluidElementsProperty); }
+            set { SetValue(FluidElementsProperty, value); }
+        }
+
+        private static void OnFluidElementsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FluidWrapPanel fwPanel = (FluidWrapPanel)d;
+            List<UIElement> oldItemWidth = (List<UIElement>)e.OldValue;
+            List<UIElement> newItemWidth = (List<UIElement>)e.NewValue;
+            fwPanel.OnFluidElementsChanged(oldItemWidth, newItemWidth);
+        }
+
+        protected virtual void OnFluidElementsChanged(List<UIElement> oldDragEasing, List<UIElement> newDragEasing)
+        {
+
+        }
+        #endregion
 
         #region DragEasing
 
@@ -464,15 +497,15 @@ namespace AIC.Core
             {
                 foreach (var item in e.OldItems)
                 {
-                    fluidElements.Remove((UIElement)item);
+                    FluidElements.Remove((UIElement)item);
                 }
             }
             if (e.NewItems != null)
             {
                 foreach (var item in e.NewItems)
                 {
-                    // Check if the child is already added to the fluidElements collection
-                    if (!fluidElements.Contains((UIElement)item))
+                    // Check if the child is already added to the FluidElements collection
+                    if (!FluidElements.Contains((UIElement)item))
                     {
                         AddChildToFluidElements((UIElement)item);
                     }
@@ -553,8 +586,8 @@ namespace AIC.Core
                 {
                     // Ask the child how much size it needs
                     child.Measure(availableItemSize);
-                    //Check if the child is already added to the fluidElements collection
-                    if (!fluidElements.Contains(child))
+                    //Check if the child is already added to the FluidElements collection
+                    if (!FluidElements.Contains(child))
                     {
                         AddChildToFluidElements(child);
                     }
@@ -562,7 +595,8 @@ namespace AIC.Core
                     if (this.Orientation == Orientation.Horizontal)
                     {
                         // Will the child fit in the current row?
-                        if (rowWidth + child.DesiredSize.Width > availableSize.Width)
+                        //if (rowWidth + child.DesiredSize.Width > availableSize.Width)
+                        if (rowWidth + this.ItemWidth > availableSize.Width)
                         {
                             // Wrap to next row
                             totalRowHeight += maxRowHeight;
@@ -575,14 +609,18 @@ namespace AIC.Core
                             maxRowHeight = 0.0;
                         }
 
-                        rowWidth += child.DesiredSize.Width;
-                        if (child.DesiredSize.Height > maxRowHeight)
-                            maxRowHeight = child.DesiredSize.Height;
+                        //rowWidth += child.DesiredSize.Width;
+                        rowWidth += this.ItemWidth;
+                        //if (child.DesiredSize.Height > maxRowHeight)
+                        //    maxRowHeight = child.DesiredSize.Height;
+                        if (this.ItemHeight > maxRowHeight)
+                            maxRowHeight = this.ItemHeight;
                     }
                     else // Vertical Orientation
                     {
                         // Will the child fit in the current column?
-                        if (colHeight + child.DesiredSize.Height > availableSize.Height)
+                        //if (colHeight + child.DesiredSize.Height > availableSize.Height)
+                        if (colHeight + this.ItemHeight > availableSize.Height)
                         {
                             // Wrap to next column
                             totalColumnWidth += maxColWidth;
@@ -595,15 +633,18 @@ namespace AIC.Core
                             maxColWidth = 0.0;
                         }
 
-                        colHeight += child.DesiredSize.Height;
-                        if (child.DesiredSize.Width > maxColWidth)
-                            maxColWidth = child.DesiredSize.Width;
+                        //colHeight += child.DesiredSize.Height;
+                        colHeight += this.ItemHeight;
+                        //if (child.DesiredSize.Width > maxColWidth)
+                        //    maxColWidth = child.DesiredSize.Width;
+                        if (this.ItemWidth > maxColWidth)
+                            maxColWidth = this.ItemWidth;
                     }
                 }
             }
 
             List<UIElement> dirtyElements = new List<UIElement>();
-            foreach (var element in fluidElements)
+            foreach (var element in FluidElements)
             {
                 if (!InternalChildren.Contains(element))
                 {
@@ -613,7 +654,7 @@ namespace AIC.Core
 
             foreach (var item in dirtyElements)
             {
-                fluidElements.Remove(item);
+                FluidElements.Remove(item);
             }
 
             if (this.Orientation == Orientation.Horizontal)
@@ -668,7 +709,7 @@ namespace AIC.Core
             UpdateFluidLayout(isEasingRequired);
 
             // Return the size taken up by the Panel's Children
-            return layoutManager.GetArrangedSize(fluidElements.Count, finalSize);
+            return layoutManager.GetArrangedSize(FluidElements.Count, finalSize);
         }
 
         #endregion
@@ -680,7 +721,10 @@ namespace AIC.Core
         /// </summary>
         public FluidWrapPanel()
         {
-            fluidElements = new List<UIElement>();
+            if (FluidElements == null)
+            {
+                FluidElements = new List<UIElement>();
+            }
             layoutManager = new FluidLayoutManager();
             isInitializeArrangeRequired = true;
         }
@@ -690,13 +734,13 @@ namespace AIC.Core
         #region Helpers
 
         /// <summary>
-        /// Adds the child to the fluidElements collection and initializes its RenderTransform.
+        /// Adds the child to the FluidElements collection and initializes its RenderTransform.
         /// </summary>
         /// <param name="child">UIElement</param>
         private void AddChildToFluidElements(UIElement child)
         {
-            // Add the child to the fluidElements collection
-            fluidElements.Add(child);
+            // Add the child to the FluidElements collection
+            FluidElements.Add(child);
             // Initialize its RenderTransform
             child.RenderTransform = layoutManager.CreateTransform(-ItemWidth, -ItemHeight, NORMAL_SCALE, NORMAL_SCALE);
         }
@@ -706,10 +750,10 @@ namespace AIC.Core
         /// </summary>
         private void InitializeArrange()
         {
-            foreach (UIElement child in fluidElements)
+            foreach (UIElement child in FluidElements)
             {
-                // Get the child's index in the fluidElements
-                int index = fluidElements.IndexOf(child);
+                // Get the child's index in the FluidElements
+                int index = FluidElements.IndexOf(child);
 
                 // Get the initial location of the child
                 Point pos = layoutManager.GetInitialLocationOfChild(index);
@@ -727,7 +771,7 @@ namespace AIC.Core
         {
             // Iterate through all the fluid elements and animate their
             // movement to their new location.
-            var validElement = fluidElements.Where(o => o != null && o.Visibility == Visibility.Visible).ToList();
+            var validElement = FluidElements.Where(o => o != null && o.Visibility == Visibility.Visible).ToList();
 
             for (int index = 0; index < validElement.Count; index++)
             {
@@ -804,12 +848,12 @@ namespace AIC.Core
         {
             // Check if the dragElement is being moved to its current place
             // If yes, then no need to proceed further. (Improves efficiency!)
-            int dragCellIndex = fluidElements.IndexOf(dragElement);
+            int dragCellIndex = FluidElements.IndexOf(dragElement);
             if (dragCellIndex == newIndex)
                 return false;
 
-            fluidElements.RemoveAt(dragCellIndex);
-            fluidElements.Insert(newIndex, dragElement);
+            FluidElements.RemoveAt(dragCellIndex);
+            FluidElements.Insert(newIndex, dragElement);
 
             return true;
         }
@@ -819,7 +863,7 @@ namespace AIC.Core
         /// </summary>
         private void ClearItemsSource()
         {
-            fluidElements.Clear();
+            FluidElements.Clear();
             Children.Clear();
         }
 
@@ -832,7 +876,7 @@ namespace AIC.Core
         /// </summary>
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position in the child where the user clicked</param>
-        internal void BeginFluidDrag(UIElement child, Point position)
+        public void BeginFluidDrag(UIElement child, Point position)
         {
             if ((child == null) || (!IsComposing))
                 return;
@@ -858,7 +902,7 @@ namespace AIC.Core
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
         /// <param name="positionInParent">Position where the user clicked w.r.t. the FluidWrapPanel (the parentFWPanel of the UIElement being dragged</param>
-        internal void FluidDrag(UIElement child, Point position, Point positionInParent)
+        public void FluidDrag(UIElement child, Point position, Point positionInParent)
         {
             if ((child == null) || (!IsComposing))
                 return;
@@ -873,15 +917,15 @@ namespace AIC.Core
                                                                                   DragScale,
                                                                                   DragScale);
 
-                    // Get the index in the fluidElements list corresponding to the current mouse location
+                    // Get the index in the FluidElements list corresponding to the current mouse location
                     Point currentPt = positionInParent;
                     int index = layoutManager.GetIndexFromPoint(currentPt);
 
                     // If no valid cell index is obtained, add the child to the end of the 
-                    // fluidElements list.
-                    if ((index == -1) || (index >= fluidElements.Count))
+                    // FluidElements list.
+                    if ((index == -1) || (index >= FluidElements.Count))
                     {
-                        index = fluidElements.Count - 1;
+                        index = FluidElements.Count - 1;
                     }
 
                     // If the dragElement is moved to a new location, then only
@@ -900,7 +944,7 @@ namespace AIC.Core
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
         /// <param name="positionInParent">Position where the user clicked w.r.t. the FluidWrapPanel (the parentFWPanel of the UIElement being dragged</param>
-        internal void EndFluidDrag(UIElement child, Point position, Point positionInParent)
+        public void EndFluidDrag(UIElement child, Point position, Point positionInParent)
         {
             if ((child == null) || (!IsComposing))
                 return;

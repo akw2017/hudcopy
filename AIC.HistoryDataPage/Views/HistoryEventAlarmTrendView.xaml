@@ -35,7 +35,7 @@
                 </Setter>
                 <!--<Setter Property="ContentTemplate" Value="{StaticResource ReplayTemplate}" />-->
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.AMSTrend}">
+                    <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.RMSTrend}">
                         <Setter Property="ContentTemplate" Value="{StaticResource ReplayTemplate}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Path=DisplayMode}" Value="{x:Static coreType:SignalDisplayType.TimeDomain}">

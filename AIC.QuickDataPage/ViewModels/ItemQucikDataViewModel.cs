@@ -46,9 +46,8 @@ namespace AIC.QuickDataPage.ViewModels
             _localConfiguration = localConfiguration;
             _loginUserService = loginUserService;
 
-            _signalProcess.StatisticalInformationDataChanged += StatisticalInformationDataChanged; 
-            InitTree();
-            
+            _signalProcess.DailyChanged += DailyChanged;
+            ServerInfoList = _localConfiguration.LoginServerInfoList;
         }
         #region 属性与字段
         public IEnumerable<ServerInfo> ServerInfoList { get; set; }
@@ -267,11 +266,10 @@ namespace AIC.QuickDataPage.ViewModels
         #endregion
 
         #region 管理树
-        private void InitTree()
+        public void Init(ServerInfo serverinfo, BaseAlarmSignal sg)
         {
-            ServerInfoList = _localConfiguration.LoginServerInfoList;
-            ServerInfo = _loginUserService.GotoServerInfo;
-            AlarmSignal = _loginUserService.GotoSignal;
+            ServerInfo = serverinfo;
+            AlarmSignal = sg;
             OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerInfo.IP));
             ItemTreeItems = new ObservableCollection<ItemTreeItemViewModel>(_cardProcess.GetItems(OrganizationTreeItems));
             FirstItemTreeItem = ItemTreeItems.Where(p => p.BaseAlarmSignal == AlarmSignal).FirstOrDefault();//默认测点
@@ -283,7 +281,7 @@ namespace AIC.QuickDataPage.ViewModels
             FirstDangerItem = new StatisticalInformationData();
             SecondDangerItem = new StatisticalInformationData();
             ThirdDangerItem = new StatisticalInformationData();
-            StatisticalInformationDataChanged();
+            DailyChanged();
             //TreeExpanded();
 
             InitTrendSeries();
@@ -311,7 +309,8 @@ namespace AIC.QuickDataPage.ViewModels
         {
             if (para is ServerInfo)
             {
-                InitTree();
+                AlarmSignal = null;
+                Init(para as ServerInfo, AlarmSignal);
             }
         }
         public void SelectedTreeChanged(object para)
@@ -319,15 +318,22 @@ namespace AIC.QuickDataPage.ViewModels
             if (para is OrganizationTreeItemViewModel)
             {                
                 ItemTreeItems = new ObservableCollection<ItemTreeItemViewModel>(_cardProcess.GetItems(para as OrganizationTreeItemViewModel));
-                FirstItemTreeItem = new ItemTreeItemViewModel() { BaseAlarmSignal = new BaseAlarmSignal(new Guid()) };//避免界面不显示
-                StatisticalInformationDataChanged();
+                if (para is ItemTreeItemViewModel)
+                {
+                    FirstItemTreeItem = para as ItemTreeItemViewModel;
+                }
+                else
+                {
+                    FirstItemTreeItem = new ItemTreeItemViewModel() { BaseAlarmSignal = new BaseAlarmSignal(new Guid()) };//避免界面不显示
+                }
+                DailyChanged();
                 ClearTrendSeries();
             }
         }
         #endregion
 
         #region 统计更新
-        private void StatisticalInformationDataChanged()
+        private void DailyChanged()
         {
             var statisticalInfo = _signalProcess.StatisticalInformation;
             if (statisticalInfo == null || !statisticalInfo.ContainsKey(ServerInfo.IP))
@@ -503,7 +509,9 @@ namespace AIC.QuickDataPage.ViewModels
         private void InitTrendSeries()
         {
             _eventAggregator.GetEvent<SignalBroadcastingEvent>().Subscribe(SignalBroadcastingEvent, ThreadOption.UIThread);//<!--昌邑石化-->
-            var dayConfig = Mappers.Xy<DateModel>().X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromSeconds(1).Ticks).Y(dayModel => dayModel.Value);
+            var dayConfig = Mappers.Xy<DateModel>().X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromSeconds(1).Ticks).Y(dayModel => dayModel.Value)
+                .Fill(dayModel => AlarmGradeColor(dayModel.AlarmGrade))
+                .Stroke(dayModel => AlarmGradeColor(dayModel.AlarmGrade));
 
             TrendSeries = new SeriesCollection(dayConfig)
             {
@@ -523,6 +531,24 @@ namespace AIC.QuickDataPage.ViewModels
             };
 
             TrendFormatter = value => new System.DateTime((long)(value * TimeSpan.FromSeconds(1).Ticks)).ToString("MM-dd HH:mm");
+        }
+
+        private SolidColorBrush AlarmGradeColor(AlarmGrade grade)
+        {
+            switch (grade)
+            {
+                case AlarmGrade.Invalid: return null;
+                case AlarmGrade.HighNormal:
+                case AlarmGrade.LowNormal: return null;
+                case AlarmGrade.HighPreAlarm:
+                case AlarmGrade.LowPreAlarm: return new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00));//黄色
+                case AlarmGrade.HighAlarm:
+                case AlarmGrade.LowAlarm: return new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00));//橙色
+                case AlarmGrade.HighDanger:
+                case AlarmGrade.LowDanger: return new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00));//红色
+                case AlarmGrade.DisConnect: return null;
+                default: return null;
+            }
         }
         private void ClearTrendSeries()
         {
@@ -549,10 +575,10 @@ namespace AIC.QuickDataPage.ViewModels
                         TrendSeries[0].Values.Remove(point);
                     }
                 }
-                TrendSeries[0].Values.AddRange(trenddata.Where(p => !olddatetimes.Contains(p.ACQDateTime)).Select(p => new DateModel { DateTime = p.ACQDateTime, Value = p.Result }));//添加历史数据
+                TrendSeries[0].Values.AddRange(trenddata.Where(p => !olddatetimes.Contains(p.ACQDateTime)).Select(p => new DateModel { DateTime = p.ACQDateTime, Value = p.Result, AlarmGrade = (AlarmGrade)(p.AlarmGrade & 0x00ffff00) }));//添加历史数据
                 if (FirstItemTreeItem.BaseAlarmSignal.Result != null && (TrendSeries[0].Values as ChartValues<DateModel>).Where(p => p.DateTime == FirstItemTreeItem.BaseAlarmSignal.ACQDatetime).Count() == 0)//添加实时数据
                 {
-                    TrendSeries[0].Values.Add(new DateModel { DateTime = FirstItemTreeItem.BaseAlarmSignal.ACQDatetime.Value, Value = FirstItemTreeItem.BaseAlarmSignal.Result.Value });
+                    TrendSeries[0].Values.Add(new DateModel { DateTime = FirstItemTreeItem.BaseAlarmSignal.ACQDatetime.Value, Value = FirstItemTreeItem.BaseAlarmSignal.Result.Value, AlarmGrade = FirstItemTreeItem.BaseAlarmSignal.AlarmGrade });
                 }
             }
         }
@@ -563,8 +589,7 @@ namespace AIC.QuickDataPage.ViewModels
         {
             if (para is BaseAlarmSignal)//测点
             {
-                AlarmSignal = para as BaseAlarmSignal;
-                InitTree();
+                Init(ServerInfo, para as BaseAlarmSignal);
             }
         }
     }
@@ -573,5 +598,7 @@ namespace AIC.QuickDataPage.ViewModels
     {
         public System.DateTime DateTime { get; set; }
         public double Value { get; set; }
+
+        public AlarmGrade AlarmGrade { get; set; }
     }
 }

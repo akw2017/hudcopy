@@ -21,7 +21,7 @@ namespace AIC.OnLineDataPage.Models
                 DisplayMode = mode;
                 switch (mode)
                 {
-                    case SignalDisplayType.AMSTrend:
+                    case SignalDisplayType.RMSTrend:
                         {
                             DataViewModel = new RMSTrendChartViewModel(Signal);
                             break;
@@ -135,7 +135,17 @@ namespace AIC.OnLineDataPage.Models
                         {
                             DataViewModel = null;
                         }
-                        break;                   
+                        break;
+                    case SignalDisplayType.Diagnose:
+                        if (Signal is BaseWaveSignal)
+                        {
+                            DataViewModel = new DiagnoseViewModel(Signal);
+                        }
+                        else
+                        {
+                            DataViewModel = null;
+                        }
+                        break;
                     default:
                         DataViewModel = null;
                         break;
@@ -151,22 +161,22 @@ namespace AIC.OnLineDataPage.Models
             }
         }
 
-        #region Public Property
-        public bool IsUpdated { get; set; }
-
-        private bool isShowAlarm = false;
-        public bool IsShowAlarm
+        public void Unload()
         {
-            get { return isShowAlarm; }
-            set
+            if (DataViewModel != null)
             {
-                if (isShowAlarm != value)
-                {
-                    isShowAlarm = value;
-                    OnPropertyChanged("IsShowAlarm");                   
-                }
+                DataViewModel.HandUnload();
             }
         }
+
+        public void Load()
+        {
+            if (DataViewModel != null)
+            {
+                DataViewModel.HandLoad();
+            }
+        }
+        #region Public Property
 
         private BaseAlarmSignal signal;
         public BaseAlarmSignal Signal

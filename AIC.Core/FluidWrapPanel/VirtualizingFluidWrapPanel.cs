@@ -23,13 +23,14 @@ using System.Windows.Media.Animation;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics;
 
 namespace AIC.Core
 {
     /// <summary>
     /// Interactions for the VirtualizingFluidWrapPanel
     /// </summary>
-    public class VirtualizingFluidWrapPanel : VirtualizingPanel, IScrollInfo
+    public class VirtualizingFluidWrapPanel : VirtualizingPanel, IScrollInfo, IFluidWrapPanel
     {
         #region Constants
 
@@ -46,6 +47,14 @@ namespace AIC.Core
         private static TimeSpan FIRST_TIME_ANIMATION_DURATION = TimeSpan.FromMilliseconds(320);
 
         private TranslateTransform trans = new TranslateTransform();//htzk123
+        private ScrollViewer owner;
+        private bool canHScroll = false;
+        private bool canVScroll = false;
+        private Size extent = new Size(0, 0);
+        private Size viewport = new Size(0, 0);
+        private Point offset;
+        private DoubleAnimation transAnimation;
+        private IEasingFunction easingFunction;
         #endregion
 
         #region Fields
@@ -56,7 +65,6 @@ namespace AIC.Core
         List<UIElement> fluidElements = null;
         FluidLayoutManager layoutManager = null;
         bool isInitializeArrangeRequired = false;
-
         #endregion
 
         #region Dependency Properties
@@ -86,7 +94,7 @@ namespace AIC.Core
         /// <param name="d">VirtualizingFluidWrapPanel</param>
         /// <param name="e">DependencyProperty changed event arguments</param>
         private static void OnDragEasingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {            
+        {
             VirtualizingFluidWrapPanel panel = (VirtualizingFluidWrapPanel)d;
             EasingFunctionBase oldDragEasing = (EasingFunctionBase)e.OldValue;
             EasingFunctionBase newDragEasing = panel.DragEasing;
@@ -438,7 +446,7 @@ namespace AIC.Core
         {
             if (oldItemsSource is INotifyCollectionChanged)
             {
-                (oldItemsSource as INotifyCollectionChanged).CollectionChanged -= ItemsSourceCollectionChanged;  
+                (oldItemsSource as INotifyCollectionChanged).CollectionChanged -= ItemsSourceCollectionChanged;
             }
 
             if (newItemsSource is INotifyCollectionChanged)
@@ -539,6 +547,16 @@ namespace AIC.Core
         }
         #endregion
 
+        #region
+        public WrapPanelAlignment HorizontalContentAlignment
+        {
+            get { return (WrapPanelAlignment)GetValue(HorizontalContentAlignmentProperty); }
+            set { SetValue(HorizontalContentAlignmentProperty, value); }
+        }
+
+        public static readonly DependencyProperty HorizontalContentAlignmentProperty =
+            DependencyProperty.RegisterAttached(nameof(HorizontalContentAlignment), typeof(WrapPanelAlignment), typeof(VirtualizingFluidWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+        #endregion
         #endregion
 
         #region Overrides
@@ -550,154 +568,120 @@ namespace AIC.Core
         /// <returns>Size required by the panel</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            #region
-            /*Size availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
-            double rowWidth = 0.0;
-            double maxRowHeight = 0.0;
-            double colHeight = 0.0;
-            double maxColWidth = 0.0;
-            double totalColumnWidth = 0.0;
-            double totalRowHeight = 0.0;
-
-            // Iterate through all the UIElements in the Children collection
-            for (int i = 0; i < InternalChildren.Count; i++)
+            try
             {
-                UIElement child = InternalChildren[i];
-                if (child != null)
-                {
-                    // Ask the child how much size it needs
-                    child.Measure(availableItemSize);
-                    //Check if the child is already added to the fluidElements collection
-                    if (!fluidElements.Contains(child))
-                    {
-                        AddChildToFluidElements(child);
-                    }
+                this.UpdateScrollInfo(availableSize);
 
-                    if (this.Orientation == Orientation.Horizontal)
+                // Figure out range that's visible based on layout algorithm
+                int firstVisibleItemIndex = 0;
+                int lastVisibleItemIndex = 0;
+                GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex);
+
+                // We need to access InternalChildren before the generator to work around a bug
+                UIElementCollection children = this.InternalChildren;
+                IItemContainerGenerator generator = this.ItemContainerGenerator;
+
+                // Get the generator position of the first visible data item
+                GeneratorPosition startPos = generator.GeneratorPositionFromIndex(firstVisibleItemIndex);
+
+                // Get index where we'd insert the child for this position. If the item is realized
+                // (position.Offset == 0), it's just position.Index, otherwise we have to add one to
+                // insert after the corresponding child
+                int childIndex = (startPos.Offset == 0) ? startPos.Index : startPos.Index + 1;
+
+                using (generator.StartAt(startPos, GeneratorDirection.Forward, true))
+                {
+                    int itemIndex = firstVisibleItemIndex;
+                    while (itemIndex <= lastVisibleItemIndex)
                     {
-                        // Will the child fit in the current row?
-                        if (rowWidth + child.DesiredSize.Width > availableSize.Width)
+                        bool newlyRealized = false;
+
+                        // Get or create the child
+                        UIElement child = generator.GenerateNext(out newlyRealized) as UIElement;
+                        if (newlyRealized)
                         {
-                            // Wrap to next row
-                            totalRowHeight += maxRowHeight;
+                            // Figure out if we need to insert the child at the end or somewhere in the middle
+                            if (childIndex >= children.Count)
+                            {
+                                base.AddInternalChild(child);
 
-                            // Is the current row width greater than the previous row widths
-                            if (rowWidth > totalColumnWidth)
-                                totalColumnWidth = rowWidth;
+                                //Check if the child is already added to the fluidElements collection
+                                if (!fluidElements.Contains(child))
+                                {
+                                    AddChildToFluidElements(child);
+                                }
+                            }
+                            else
+                            {
+                                base.InsertInternalChild(childIndex, child);
 
-                            rowWidth = 0.0;
-                            maxRowHeight = 0.0;
+                                //Check if the child is already added to the fluidElements collection
+                                if (!fluidElements.Contains(child))
+                                {
+                                    InsertChildToFluidElements(childIndex, child);
+                                }
+                            }
+                            generator.PrepareItemContainer(child);
                         }
-
-                        rowWidth += child.DesiredSize.Width;
-                        if (child.DesiredSize.Height > maxRowHeight)
-                            maxRowHeight = child.DesiredSize.Height;
-                    }
-                    else // Vertical Orientation
-                    {
-                        // Will the child fit in the current column?
-                        if (colHeight + child.DesiredSize.Height > availableSize.Height)
-                        {
-                            // Wrap to next column
-                            totalColumnWidth += maxColWidth;
-
-                            // Is the current column height greater than the previous column heights
-                            if (colHeight > totalRowHeight)
-                                totalRowHeight = colHeight;
-
-                            colHeight = 0.0;
-                            maxColWidth = 0.0;
-                        }
-
-                        colHeight += child.DesiredSize.Height;
-                        if (child.DesiredSize.Width > maxColWidth)
-                            maxColWidth = child.DesiredSize.Width;
-                    }
-                }
-            }
-
-            List<UIElement> dirtyElements = new List<UIElement>();
-            foreach (var element in fluidElements)
-            {
-                if (!InternalChildren.Contains(element))
-                {
-                    dirtyElements.Add(element);
-                }
-            }
-
-            foreach (var item in dirtyElements)
-            {
-                fluidElements.Remove(item);
-            }
-
-            if (this.Orientation == Orientation.Horizontal)
-            {
-                // Add the height of the last row
-                totalRowHeight += maxRowHeight;
-                // If there is only one row, take its width as the total width
-                if (totalColumnWidth == 0.0)
-                {
-                    totalColumnWidth = rowWidth;
-                }
-            }
-            else
-            {
-                // Add the width of the last column
-                totalColumnWidth += maxColWidth;
-                // If there is only one column, take its height as the total height
-                if (totalRowHeight == 0.0)
-                {
-                    totalRowHeight = colHeight;
-                }
-            }
-
-            Size resultSize = new Size(totalColumnWidth, totalRowHeight);
-
-            return resultSize; */
-            #endregion
-
-            this.UpdateScrollInfo(availableSize);//availableSize更新后，更新滚动条
-            int firstVisiableIndex = 0, lastVisiableIndex = 0;
-            GetVisiableRange(ref firstVisiableIndex, ref lastVisiableIndex);//availableSize更新后，获取当前viewport内可放置的item的开始和结束索引  firstIdnex-lastIndex之间的item可能部分在viewport中也可能都不在viewport中。
-
-            UIElementCollection children = this.InternalChildren;//因为配置了虚拟化，所以children的个数一直是viewport区域内的个数,如果没有虚拟化则是ItemSource的整个的个数
-            IItemContainerGenerator generator = this.ItemContainerGenerator;
-            //获得第一个可被显示的item的位置
-            GeneratorPosition startPosi = generator.GeneratorPositionFromIndex(firstVisiableIndex);
-            int childIndex = (startPosi.Offset == 0) ? startPosi.Index : startPosi.Index + 1;//startPosi在chilren中的索引
-            using (generator.StartAt(startPosi, GeneratorDirection.Forward, true))
-            {
-                int itemIndex = firstVisiableIndex;
-                while (itemIndex <= lastVisiableIndex)//生成lastVisiableIndex-firstVisiableIndex个item
-                {
-                    bool newlyRealized = false;
-                    var child = generator.GenerateNext(out newlyRealized) as UIElement;
-                    if (newlyRealized)
-                    {
-                        if (childIndex >= children.Count)
-                            base.AddInternalChild(child);
                         else
                         {
-                            base.InsertInternalChild(childIndex, child);
+                            // The child has already been created, let's be sure it's in the right spot
+                            Debug.Assert(child.Equals(children[childIndex]), "Wrong child was generated");
                         }
-                        generator.PrepareItemContainer(child);
+
+                        //Measurements will depend on layout algorithm
+                        //child.Measure(GetChildSize());
+                        Size availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+                        child.Measure(availableItemSize);
+
+                        itemIndex += 1;
+                        childIndex += 1;
                     }
-                    else
-                    {
-                        //处理 正在显示的child被移除了这种情况
-                        if (!child.Equals(children[childIndex]))
-                        {
-                            base.RemoveInternalChildRange(childIndex, 1);
-                        }
-                    }
-                    child.Measure(new Size(this.ItemWidth, this.ItemHeight));
-                    //child.DesiredSize//child想要的size
-                    itemIndex++;
-                    childIndex++;
                 }
+
+                
+                // Note: this could be deferred to idle time for efficiency
+                CleanUpItems(firstVisibleItemIndex, lastVisibleItemIndex);
+
+                //for (int i = 0; i < InternalChildren.Count; i++)
+                //{
+                //    UIElement child = InternalChildren[i];
+                //    if (child != null)
+                //    {
+                //        //Check if the child is already added to the fluidElements collection
+                //        if (!fluidElements.Contains(child))
+                //        {
+                //            AddChildToFluidElements(child);
+                //        }
+                //    }
+                //}
+
+                List<UIElement> dirtyElements = new List<UIElement>();
+                foreach (var element in fluidElements)
+                {
+                    if (!InternalChildren.Contains(element))
+                    {
+                        dirtyElements.Add(element);
+                    }
+                }
+
+                foreach (var item in dirtyElements)
+                {
+                    fluidElements.Remove(item);
+                }
+
             }
-            CleanUpItems(firstVisiableIndex, lastVisiableIndex);
-            return new Size(double.IsInfinity(availableSize.Width) ? 0 : availableSize.Width, double.IsInfinity(availableSize.Height) ? 0 : availableSize.Height);//自身想要的size
+            catch (ArgumentOutOfRangeException)
+            {
+                // No idea if we can ignore this
+            }
+            catch (NullReferenceException)
+            {
+                // No idea if we can ignore this
+            }
+
+            // Guard against possible infinity if exiting measure early
+            return new Size(double.IsInfinity(availableSize.Width) ? 0 : availableSize.Width, double.IsInfinity(availableSize.Height) ? 0 : availableSize.Height);
         }
 
         /// <summary>
@@ -707,86 +691,46 @@ namespace AIC.Core
         /// <returns>Size taken up by the Panel</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            #region
-            /*if (layoutManager == null)
+            //IItemContainerGenerator generator = this.ItemContainerGenerator;
+
+            //UpdateScrollInfo(finalSize);
+
+            //for (int i = 0; i <= this.Children.Count - 1; i++)
+            //{
+            //    UIElement child = this.Children[i];
+
+            //    // Map the child offset to an item offset
+            //    int itemIndex = generator.IndexFromGeneratorPosition(new GeneratorPosition(i, 0));
+
+            //    ArrangeChild(itemIndex, child, finalSize);
+            //}
+
+            //return finalSize;
+
+            UpdateScrollInfo(finalSize);
+
+            if (layoutManager == null)
                 layoutManager = new FluidLayoutManager();
 
-            // Initialize the LayoutManager
+            //Initialize the LayoutManager
             layoutManager.Initialize(finalSize.Width, finalSize.Height, ItemWidth, ItemHeight, Orientation);
 
             bool isEasingRequired = !isInitializeArrangeRequired;
 
-            // If the children are newly added, then set their initial location before the panel loads
+            //If the children are newly added, then set their initial location before the panel loads
             if ((isInitializeArrangeRequired) && (this.Children.Count > 0))
             {
                 InitializeArrange();
                 isInitializeArrangeRequired = false;
             }
 
-            // Update the Layout
+            //Update the Layout
             UpdateFluidLayout(isEasingRequired);
 
-            // Return the size taken up by the Panel's Children
-            return layoutManager.GetArrangedSize(fluidElements.Count, finalSize);*/
-            #endregion
-            var generator = this.ItemContainerGenerator;
-            UpdateScrollInfo(finalSize);
-            int childPerRow = CalculateChildrenPerRow(finalSize);
-            double availableItemWidth = finalSize.Width / childPerRow;
-            for (int i = 0; i <= this.Children.Count - 1; i++)
-            {
-                var child = this.Children[i];
-                int itemIndex = generator.IndexFromGeneratorPosition(new GeneratorPosition(i, 0));
-                int row = itemIndex / childPerRow;//current row
-                int column = itemIndex % childPerRow;
-                double xCorrdForItem = 0;
-
-                xCorrdForItem = column * availableItemWidth + (availableItemWidth - this.ItemWidth) / 2;
-
-                Rect rec = new Rect(xCorrdForItem, row * this.ItemHeight, this.ItemWidth, this.ItemHeight);
-                child.Arrange(rec);
-            }
-
-            if (layoutManager == null)
-               layoutManager = new FluidLayoutManager();
-
-           // Initialize the LayoutManager
-           layoutManager.Initialize(finalSize.Width, finalSize.Height, ItemWidth, ItemHeight, Orientation);
-
-           //bool isEasingRequired = !isInitializeArrangeRequired;
-
-           //// If the children are newly added, then set their initial location before the panel loads
-           //if ((isInitializeArrangeRequired) && (this.Children.Count > 0))
-           //{
-           //    InitializeArrange();
-           //    isInitializeArrangeRequired = false;
-           //}
-
-           //// Update the Layout
-           //UpdateFluidLayout(isEasingRequired);
-
-           //// Return the size taken up by the Panel's Children
-           //return layoutManager.GetArrangedSize(fluidElements.Count, finalSize);
-
+            //Return the size taken up by the Panel's Children
+            //return layoutManager.GetArrangedSize(fluidElements.Count, finalSize);//htzk123虚拟化后，删除
+            
             return finalSize;
-        }
-
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
-        {
-            base.OnRenderSizeChanged(sizeInfo);
-            this.SetVerticalOffset(this.VerticalOffset);
-        }
-        protected override void OnClearChildren()
-        {
-            base.OnClearChildren();
-            this.SetVerticalOffset(0);
-        }
-        protected override void BringIndexIntoView(int index)
-        {
-            if (index < 0 || index >= Children.Count)
-                throw new ArgumentOutOfRangeException();
-            int row = index / CalculateChildrenPerRow(RenderSize);
-            SetVerticalOffset(row * this.ItemHeight);
         }
         #endregion
 
@@ -798,6 +742,13 @@ namespace AIC.Core
         public VirtualizingFluidWrapPanel()
         {
             this.RenderTransform = trans;//构造函数
+            this.easingFunction = new SineEase() { EasingMode = EasingMode.EaseOut };
+            this.transAnimation = new DoubleAnimation()
+            {
+                Duration = Constants.SmoothScrollingDuration,
+                EasingFunction = this.easingFunction,
+                FillBehavior = FillBehavior.Stop
+            };
             fluidElements = new List<UIElement>();
             layoutManager = new FluidLayoutManager();
             isInitializeArrangeRequired = true;
@@ -815,6 +766,18 @@ namespace AIC.Core
         {
             // Add the child to the fluidElements collection
             fluidElements.Add(child);
+            // Initialize its RenderTransform
+            child.RenderTransform = layoutManager.CreateTransform(-ItemWidth, -ItemHeight, NORMAL_SCALE, NORMAL_SCALE);
+        }
+
+        /// <summary>
+        /// Adds the child to the fluidElements collection and initializes its RenderTransform.
+        /// </summary>
+        /// <param name="child">UIElement</param>
+        private void InsertChildToFluidElements(int index, UIElement child)
+        {
+            // Add the child to the fluidElements collection
+            fluidElements.Insert(index, child);
             // Initialize its RenderTransform
             child.RenderTransform = layoutManager.CreateTransform(-ItemWidth, -ItemHeight, NORMAL_SCALE, NORMAL_SCALE);
         }
@@ -862,6 +825,7 @@ namespace AIC.Core
 
                 // Get the cell position of the current index
                 Point pos = layoutManager.GetPointFromIndex(index);
+                pos.Y += ((int)(VerticalOffset / ItemHeight)) * ItemHeight;//htzk123,虚拟化修正pos，当VerticalOffset > ItemHeight时虚拟化启动，偏移需加被虚拟化的ItemHeight
 
                 Storyboard transition;
                 // Is the child being animated the same as the child which was last dragged?
@@ -929,6 +893,19 @@ namespace AIC.Core
             fluidElements.RemoveAt(dragCellIndex);
             fluidElements.Insert(newIndex, dragElement);
 
+            //int childrenPerRow = CalculateChildrenPerRow(this.extent);//没有成功
+            //var posIndex = ((int)(VerticalOffset / ItemHeight)) * childrenPerRow;
+
+            ////this.Children.RemoveAt(dragCellIndex + posIndex);
+            ////this.Children.Insert(newIndex+ posIndex, dragElement);
+            //IItemContainerGenerator generator = this.ItemContainerGenerator;
+            //GeneratorPosition childGeneratorPos = new GeneratorPosition(dragCellIndex, 0);
+            //int itemIndex = generator.IndexFromGeneratorPosition(childGeneratorPos);
+            //generator.Remove(childGeneratorPos, 1);
+            //this.RemoveInternalChildRange(dragCellIndex, 1);
+            //this.InsertInternalChild(newIndex, dragElement);
+            //generator.PrepareItemContainer(dragElement);
+
             return true;
         }
 
@@ -950,7 +927,7 @@ namespace AIC.Core
         /// </summary>
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position in the child where the user clicked</param>
-        internal void BeginFluidDrag(UIElement child, Point position)
+        public void BeginFluidDrag(UIElement child, Point position)
         {
             if ((child == null) || (!IsComposing))
                 return;
@@ -976,7 +953,7 @@ namespace AIC.Core
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
         /// <param name="positionInParent">Position where the user clicked w.r.t. the VirtualizingFluidWrapPanel (the parentFWPanel of the UIElement being dragged</param>
-        internal void FluidDrag(UIElement child, Point position, Point positionInParent)
+        public void FluidDrag(UIElement child, Point position, Point positionInParent)
         {
             if ((child == null) || (!IsComposing))
                 return;
@@ -1018,7 +995,7 @@ namespace AIC.Core
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
         /// <param name="positionInParent">Position where the user clicked w.r.t. the VirtualizingFluidWrapPanel (the parentFWPanel of the UIElement being dragged</param>
-        internal void EndFluidDrag(UIElement child, Point position, Point positionInParent)
+        public void EndFluidDrag(UIElement child, Point position, Point positionInParent)
         {
             if ((child == null) || (!IsComposing))
                 return;
@@ -1052,138 +1029,328 @@ namespace AIC.Core
         #endregion
 
         #region htzk123
-        int GetItemCount(DependencyObject element)
+        /// <summary>
+        /// When items are removed, remove the corresponding UI if necessary
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        protected override void OnItemsChanged(object sender, ItemsChangedEventArgs args)
         {
-            var itemsControl = ItemsControl.GetItemsOwner(element);
-            return itemsControl.HasItems ? itemsControl.Items.Count : 0;
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveInternalChildRange(args.Position.Index, args.ItemUICount);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    RemoveInternalChildRange(args.OldPosition.Index, args.ItemUICount);
+                    break;
+            }
         }
-        int CalculateChildrenPerRow(Size availableSize)
+
+        /// <summary>
+        /// Makes sure the Vertical scroll Offset is updated when the size changes.
+        /// </summary>
+        /// <param name="sizeInfo"></param>
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            int childPerRow = 0;
-            if (availableSize.Width == double.PositiveInfinity)
-                childPerRow = this.Children.Count;
-            else
-                childPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ItemWidth)));
-            return childPerRow;
+            base.OnRenderSizeChanged(sizeInfo);
+            this.SetVerticalOffset(this.VerticalOffset);
         }
+
+        /// <summary>
+        /// Makes sure that the Vertical scroll Offset is reset to 0 when all children are removed.
+        /// </summary>
+        protected override void OnClearChildren()
+        {
+            base.OnClearChildren();
+            this.SetVerticalOffset(0);
+        }
+
+        protected override void BringIndexIntoView(int index)
+        {
+            if (index < 0 || index >= Children.Count)
+            {
+                return;
+            }
+
+            int childrenPerRow = CalculateChildrenPerRow(RenderSize);
+            int row = index / childrenPerRow;
+            SetVerticalOffset(row * ItemHeight);
+        }
+
+        /// <summary>
+        /// Revirtualize items that are no longer visible,将不在可视区域内的item 移除
+        /// </summary>
+        /// <param name="minDesiredGenerated">first item index that should be visible</param>
+        /// <param name="maxDesiredGenerated">last item index that should be visible</param>
+        private void CleanUpItems(int minDesiredGenerated, int maxDesiredGenerated)
+        {
+            UIElementCollection children = this.InternalChildren;
+            IItemContainerGenerator generator = this.ItemContainerGenerator;
+
+            int itemCount = GetItemCount();
+            int childrenPerRow = CalculateChildrenPerRow(this.extent);
+            //if (minDesiredGenerated - 2 * childrenPerRow > 0)//去掉上两行的缓冲区,改为1行
+            //    minDesiredGenerated -= 2 * childrenPerRow;
+            //if (maxDesiredGenerated + 2 * childrenPerRow < itemCount)//去掉下两行的缓冲区
+            //    maxDesiredGenerated += 2 * childrenPerRow;
+
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                GeneratorPosition childGeneratorPos = new GeneratorPosition(i, 0);
+                int itemIndex = generator.IndexFromGeneratorPosition(childGeneratorPos);
+                //if ((itemIndex > 2 * childrenPerRow - 1 && itemIndex < minDesiredGenerated) ||
+                //    (itemIndex < itemCount - 2 * childrenPerRow - 1 && itemIndex > maxDesiredGenerated))
+                if (itemIndex < minDesiredGenerated || itemIndex > maxDesiredGenerated)
+                {
+                    generator.Remove(childGeneratorPos, 1);
+                    RemoveInternalChildRange(i, 1);
+                }
+            }
+        }
+
+        // I've isolated the layout specific code to this region. If you want to do something other than tiling, this is
+        // where you'll make your changes
+
         /// <summary>
         /// width不超过availableSize的情况下，自身实际需要的Size(高度可能会超出availableSize)
         /// </summary>
-        /// <param name="availableSize"></param>
-        /// <param name="itemsCount"></param>
+        /// <param name="availableSize">available size</param>
+        /// <param name="itemCount">number of data items</param>
         /// <returns></returns>
-        Size CalculateExtent(Size availableSize, int itemsCount)
+        private Size CalculateExtent(Size availableSize, int itemCount)
         {
-            int childPerRow = CalculateChildrenPerRow(availableSize);//现有宽度下 一行可以最多容纳多少个
-            return new Size(childPerRow * this.ItemWidth, this.ItemHeight * Math.Ceiling(Convert.ToDouble(itemsCount) / childPerRow));
+            int childrenPerRow = CalculateChildrenPerRow(availableSize);//现有宽度下 一行可以最多容纳多少个
+
+            // See how big we are
+            return new Size(childrenPerRow * this.ItemWidth, this.ItemHeight * Math.Ceiling(Convert.ToDouble(itemCount) / childrenPerRow));
         }
+
         /// <summary>
-        /// 更新滚动条
+        /// Get the range of children that are visible
+        /// 更新滚动条，获取所有item，在可视区域内第一个item和最后一个item的索引
         /// </summary>
-        /// <param name="availableSize"></param>
-        void UpdateScrollInfo(Size availableSize)
+        /// <param name="firstVisibleItemIndex">The item index of the first visible item</param>
+        /// <param name="lastVisibleItemIndex">The item index of the last visible item</param>
+        private void GetVisibleRange(ref int firstVisibleItemIndex, ref int lastVisibleItemIndex)
         {
-            var extent = CalculateExtent(availableSize, GetItemCount(this));//extent 自己实际需要
+            int childrenPerRow = CalculateChildrenPerRow(this.extent);
+
+            try
+            {
+                firstVisibleItemIndex = Convert.ToInt32(Math.Floor(this.offset.Y / this.ItemHeight)) * childrenPerRow;
+                lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((this.offset.Y + this.viewport.Height) / this.ItemHeight)) * childrenPerRow - 1;
+
+                int itemCount = GetItemCount();
+                if (lastVisibleItemIndex >= itemCount)
+                {
+                    lastVisibleItemIndex = itemCount - 1;
+                }
+            }
+            catch (OverflowException)
+            {
+                // No idea if we can ignore this
+            }
+        }
+
+        /// <summary>
+        /// Get the size of the children. We assume they are all the same
+        /// </summary>
+        /// <returns>The size</returns>
+        private Size GetChildSize()
+        {
+            return new Size(this.ItemWidth, this.ItemHeight);
+        }
+
+        /// <summary>
+        /// Position a child
+        /// </summary>
+        /// <param name="itemIndex">The data item index of the child</param>
+        /// <param name="child">The element to position</param>
+        /// <param name="finalSize">The size of the panel</param>
+        private void ArrangeChild(int itemIndex, UIElement child, Size finalSize)
+        {
+            int childrenPerRow = CalculateChildrenPerRow(finalSize);
+
+            int row = itemIndex / childrenPerRow;
+            int column = itemIndex % childrenPerRow;
+
+            double xCoordForItem = 0;
+            if (HorizontalContentAlignment == WrapPanelAlignment.Left)
+            {
+                xCoordForItem = column * this.ItemWidth;
+            }
+            else // alignment is WrapPanelAlignment.Center or WrapPanelAlignment.Right
+            {
+                if (childrenPerRow > this.Children.Count)
+                {
+                    childrenPerRow = this.Children.Count;
+                }
+                double widthOfRow = childrenPerRow * this.ItemWidth;
+                double startXForRow = finalSize.Width - widthOfRow;
+                if (HorizontalContentAlignment == WrapPanelAlignment.Center)
+                {
+                    startXForRow /= 2;
+                }
+                xCoordForItem = startXForRow + (column * this.ItemWidth);
+            }
+
+            child.Arrange(new Rect(xCoordForItem, row * this.ItemHeight, this.ItemWidth, this.ItemHeight));
+            //child.Arrange(new Rect(xCoordForItem, row * this.ItemHeight, child.DesiredSize.Width, child.DesiredSize.Height));
+        }
+
+        /// <summary>
+        /// Helper function for tiling layout
+        /// </summary>
+        /// <param name="availableSize">Size available</param>
+        /// <returns></returns>
+        private int CalculateChildrenPerRow(Size availableSize)
+        {
+            // Figure out how many children fit on each row
+            int childrenPerRow = 0;
+
+            if (availableSize.Width == double.PositiveInfinity)
+            {
+                childrenPerRow = this.Children.Count;
+            }
+            else
+            {
+                try
+                {
+                    childrenPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ItemWidth)));
+                }
+                catch (OverflowException)
+                {
+                    // No idea if we can ignore this
+                }
+            }
+            return childrenPerRow;
+        }
+
+        private int GetItemCount()
+        {
+            // See how many items there are
+            ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
+            int itemCount = itemsControl.HasItems ? itemsControl.Items.Count : 0;
+
+            return itemCount;
+        }
+
+        //更新滚动条
+        // See Ben Constable's series of posts at http://blogs.msdn.com/bencon/
+        private void UpdateScrollInfo(Size availableSize)
+        {
+            int itemCount = GetItemCount();
+
+            Size extent = CalculateExtent(availableSize, itemCount);//extent 自己实际需要
+            // Update extent
             if (extent != this.extent)
             {
                 this.extent = extent;
                 if (this.owner != null)
                 {
                     this.owner.InvalidateScrollInfo();
-                }              
+                }
             }
-            if (availableSize != this.viewPort)
+
+            // Update viewport
+            if (availableSize != this.viewport)
             {
-                this.viewPort = availableSize;
+                this.viewport = availableSize;
                 if (this.owner != null)
                 {
                     this.owner.InvalidateScrollInfo();
                 }
             }
         }
-        /// <summary>
-        /// 获取所有item，在可视区域内第一个item和最后一个item的索引
-        /// </summary>
-        /// <param name="firstIndex"></param>
-        /// <param name="lastIndex"></param>
-        void GetVisiableRange(ref int firstIndex, ref int lastIndex)
-        {
-            int childPerRow = CalculateChildrenPerRow(this.extent);
-            firstIndex = Convert.ToInt32(Math.Floor(this.offset.Y / this.ItemHeight)) * childPerRow;
-            lastIndex = Convert.ToInt32(Math.Ceiling((this.offset.Y + this.viewPort.Height) / this.ItemHeight)) * childPerRow - 1;
-            int itemsCount = GetItemCount(this);
-            if (lastIndex >= itemsCount)
-                lastIndex = itemsCount - 1;
 
-        }
-        /// <summary>
-        /// 将不在可视区域内的item 移除
-        /// </summary>
-        /// <param name="startIndex">可视区域开始索引</param>
-        /// <param name="endIndex">可视区域结束索引</param>
-        void CleanUpItems(int startIndex, int endIndex)
-        {
-            var children = this.InternalChildren;
-            var generator = this.ItemContainerGenerator;
-            for (int i = children.Count - 1; i >= 0; i--)
-            {
-                var childGeneratorPosi = new GeneratorPosition(i, 0);
-                int itemIndex = generator.IndexFromGeneratorPosition(childGeneratorPosi);
-
-                if (itemIndex < startIndex || itemIndex > endIndex)
-                {
-
-                    generator.Remove(childGeneratorPosi, 1);
-                    RemoveInternalChildRange(i, 1);
-                }
-            }
-        }
-        #endregion
-
-        #region IScrollInfo Interface
-        public bool CanVerticallyScroll { get; set; }
-        public bool CanHorizontallyScroll { get; set; }
-
-        private Size extent = new Size(0, 0);
-        public double ExtentWidth => this.extent.Width;
-
-        public double ExtentHeight => this.extent.Height;
-
-        private Size viewPort = new Size(0, 0);
-        public double ViewportWidth => this.viewPort.Width;
-
-        public double ViewportHeight => this.viewPort.Height;
-
-        private Point offset;
-        public double HorizontalOffset => this.offset.X;
-
-        public double VerticalOffset => this.offset.Y;
-
-        private ScrollViewer owner;
         public ScrollViewer ScrollOwner
         {
             get { return this.owner; }
             set { this.owner = value; }
         }
 
-        public void LineDown()
+        public bool CanHorizontallyScroll
         {
-            this.SetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
+            get { return this.canHScroll; }
+            set { this.canHScroll = value; }
         }
 
-        public void LineLeft()
+        public bool CanVerticallyScroll
         {
-            throw new NotImplementedException();
+            get { return this.canVScroll; }
+            set { this.canVScroll = value; }
         }
 
-        public void LineRight()
+        public double HorizontalOffset
         {
-            throw new NotImplementedException();
+            get { return this.offset.X; }
+        }
+
+        public double VerticalOffset
+        {
+            get { return this.offset.Y; }
+        }
+
+        public double ExtentHeight
+        {
+            get { return this.extent.Height; }
+        }
+
+        public double ExtentWidth
+        {
+            get { return this.extent.Width; }
+        }
+
+        public double ViewportHeight
+        {
+            get { return this.viewport.Height; }
+        }
+
+        public double ViewportWidth
+        {
+            get { return this.viewport.Width; }
         }
 
         public void LineUp()
         {
-            this.SetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
+            this.SetVerticalOffset(this.VerticalOffset - (this.ScrollOffset > 0 ? this.ScrollOffset : this.ItemHeight));
+        }
+
+        public void LineDown()
+        {
+            this.SetVerticalOffset(this.VerticalOffset + (this.ScrollOffset > 0 ? this.ScrollOffset : this.ItemHeight));
+        }
+
+        public void PageUp()
+        {
+            this.SetVerticalOffset(this.VerticalOffset - this.viewport.Height);
+        }
+
+        public void PageDown()
+        {
+            this.SetVerticalOffset(this.VerticalOffset + this.viewport.Height);
+        }
+
+        public void MouseWheelUp()
+        {
+            this.EasingSetVerticalOffset(this.VerticalOffset - (this.ScrollOffset > 0 ? this.ScrollOffset : this.ItemHeight));
+        }
+
+        public void MouseWheelDown()
+        {
+            this.EasingSetVerticalOffset(this.VerticalOffset + (this.ScrollOffset > 0 ? this.ScrollOffset : this.ItemHeight));
+        }
+
+        public void LineLeft()
+        {
+            throw new InvalidOperationException();
+        }
+
+        public void LineRight()
+        {
+            throw new InvalidOperationException();
         }
 
         public Rect MakeVisible(Visual visual, Rect rectangle)
@@ -1191,68 +1358,102 @@ namespace AIC.Core
             return new Rect();
         }
 
-        public void MouseWheelDown()
-        {
-            this.SetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
-        }
-
         public void MouseWheelLeft()
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
 
         public void MouseWheelRight()
         {
-            throw new NotImplementedException();
-        }
-
-        public void MouseWheelUp()
-        {
-            this.SetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
-        }
-
-        public void PageDown()
-        {
-            this.SetVerticalOffset(this.VerticalOffset + this.viewPort.Height);
+            throw new InvalidOperationException();
         }
 
         public void PageLeft()
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
 
         public void PageRight()
         {
-            throw new NotImplementedException();
-        }
-
-        public void PageUp()
-        {
-            this.SetVerticalOffset(this.VerticalOffset - this.viewPort.Height);
+            throw new InvalidOperationException();
         }
 
         public void SetHorizontalOffset(double offset)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
+        }
+
+        public void EasingSetVerticalOffset(double offset)
+        {
+            AdjustVerticalOffset(ref offset);
+
+            transAnimation.From = trans.Y;
+            transAnimation.To = -offset;
+            this.trans.BeginAnimation(TranslateTransform.YProperty, transAnimation);
+            this.trans.Y = -offset;
+
+            // Force us to realize the correct children
+            this.InvalidateMeasure();
         }
 
         public void SetVerticalOffset(double offset)
         {
-            if (offset < 0 || this.viewPort.Height >= this.extent.Height)
+            AdjustVerticalOffset(ref offset);
+
+            this.trans.Y = -offset;
+
+            // Force us to realize the correct children
+            this.InvalidateMeasure();
+        }
+
+        private void AdjustVerticalOffset(ref double offset)
+        {
+            if (offset < 0 || this.viewport.Height >= this.extent.Height)
+            {
                 offset = 0;
+            }
             else
-                if (offset + this.viewPort.Height >= this.extent.Height)
-                offset = this.extent.Height - this.viewPort.Height;
+            {
+                if (offset + this.viewport.Height >= this.extent.Height)
+                {
+                    offset = this.extent.Height - this.viewport.Height;
+                }
+            }
 
             this.offset.Y = offset;
+
             if (this.owner != null)
             {
                 this.owner.InvalidateScrollInfo();
             }
-            this.trans.Y = -offset;
-            this.InvalidateMeasure();
-            //接下来会触发MeasureOverride()
         }
         #endregion
+    }
+    public enum WrapPanelAlignment
+    {
+        Left,
+        Right,
+        Center
+    }
+
+    internal static class Constants
+    {
+        //Common
+        public static readonly Duration MouseEnterDuration = new Duration(TimeSpan.FromMilliseconds(250));
+        public static readonly Duration MouseLeaveDuration = MouseEnterDuration;
+
+        //ToggleSwitch
+        public static readonly Duration ToggleSwitchDuration = MouseEnterDuration;
+
+        //VirtualizingWrapPanel
+        public static readonly Duration SmoothScrollingDuration = MouseEnterDuration;
+
+        // UWPSlider
+        public const int UWPSliderBaseUnit = 8;
+        public const int UWPSliderCanvasLengthOffset = -2 * UWPSliderBaseUnit;
+        public const double UWPSliderButtonSize = 2 * UWPSliderBaseUnit;
+        public static readonly Thickness HorizontalUWPSliderMargin = new Thickness(-UWPSliderBaseUnit, 0, 0, 0);
+        public static readonly Thickness VerticalUWPSliderMargin = new Thickness(0, 0, 0, -UWPSliderBaseUnit);
+
     }
 }

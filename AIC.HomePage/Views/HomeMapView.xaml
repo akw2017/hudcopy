@@ -49,10 +49,10 @@
       
         <WebBrowser x:Name="webBrowser" />    
 
-        <Grid Grid.Column="1" Width="320" Background="#A6C2DE">
+        <Grid Grid.Column="1" Width="360" Background="#A6C2DE">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
@@ -62,6 +62,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <ComboBox x:Name="servers" ItemsSource="{Binding ServerInfoList}" DisplayMemberPath="Name" SelectedItem="{Binding ServerInfo}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center" IsEditable="False">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
@@ -70,11 +74,37 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                     <Button Grid.Column="1" Content="Go" Command="{Binding GotoCommand}" CommandParameter="{Binding SelectedItem.Name, ElementName=servers}" Margin="4,0,0,0"/>
+                    <UniformGrid Grid.Row="1" Grid.ColumnSpan="2" Columns="6">
+                        <Grid ToolTip="{DynamicResource strAbnormal}">
+                            <Rectangle Fill="HotPink"/>
+                            <TextBlock Text="{Binding AbnormalCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid ToolTip="{DynamicResource strNormal}">
+                            <Rectangle Fill="Green"/>
+                            <TextBlock Text="{Binding NormalCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid ToolTip="{DynamicResource strPreAlarm}">
+                            <Rectangle Fill="Yellow"/>
+                            <TextBlock Text="{Binding PreAlarmCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid ToolTip="{DynamicResource strAlarm}">
+                            <Rectangle Fill="DarkOrange"/>
+                            <TextBlock Text="{Binding AlarmCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid ToolTip="{DynamicResource strDanger}">
+                            <Rectangle Fill="Red"/>
+                            <TextBlock Text="{Binding DangerCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid ToolTip="{DynamicResource strUnConnect}">
+                            <Rectangle Fill="DarkRed"/>
+                            <TextBlock Text="{Binding UnConnectCount}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </UniformGrid>
                 </Grid>
             </GroupBox>
 
             <GroupBox Grid.Row="1" Header="报警前三(实时)">
-                <Viewbox>
+                <Viewbox VerticalAlignment="Top">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -86,8 +116,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding FirstDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        </Grid.ColumnDefinitions>       
+                        <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Width="180" Height="180" Value="{Binding FirstDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -107,7 +137,7 @@
                             </TextBlock>
                             <Button Command="{Binding GotoCommand}" CommandParameter="{Binding FirstDangerItem}" Background="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Content="{Binding FirstDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Style="{StaticResource TextButtonStyle}" Width="50" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <lvc:AngularGauge Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding SecondDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Width="180" Height="180" Value="{Binding SecondDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -126,7 +156,7 @@
                             </TextBlock>
                             <Button Command="{Binding GotoCommand}" CommandParameter="{Binding SecondDangerItem}" Background="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToColorConverter}}" Content="{Binding SecondDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToStringConverter}}" Style="{StaticResource TextButtonStyle}" Width="50" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <lvc:AngularGauge Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="150" Height="150" Value="{Binding ThirdDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
+                        <lvc:AngularGauge Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Width="180" Height="180" Value="{Binding ThirdDangerItem.PercentResult}" FromValue="0" ToValue="100" LabelsStep="200" TicksStep="10" Wedge="280" TicksForeground="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Bold" FontSize="1" SectionsInnerRadius=".8">
                             <lvc:AngularGauge.Sections>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=0}" Fill="Green"/>
                                 <lvc:AngularSection FromValue="0" ToValue="{Binding ThirdDangerItem.DelayAlarmGrade,Converter={StaticResource gradeToMyValueConverter},ConverterParameter=1}" Fill="Yellow"/>
@@ -159,7 +189,7 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="日期" Labels="{Binding Labels}" Foreground="Black"></lvc:Axis>
+                        <lvc:Axis Labels="{Binding Labels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                 </lvc:CartesianChart>
             </GroupBox>

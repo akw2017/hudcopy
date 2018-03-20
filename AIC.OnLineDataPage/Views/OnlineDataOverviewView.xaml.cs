@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.CloseTabControl;
 using AIC.Core.UserManageModels;
+using AIC.OnLineDataPage.ViewModels;
 
 namespace AIC.OnLineDataPage.Views
 {
@@ -30,14 +31,20 @@ namespace AIC.OnLineDataPage.Views
             this.Closer = new CloseableHeader("menuOnlineDataOverview", menu.Name, true, menu.IconPath);
 
             this.Loaded += new RoutedEventHandler(Window_Loaded);
+        }
 
-            //CommandManager.AddPreviewExecutedHandler(listview, new ExecutedRoutedEventHandler(OnScorllCommandForListView));
+        private OnlineDataOverviewViewModel ViewModel
+        {
+            get { return DataContext as OnlineDataOverviewViewModel; }
+            set { this.DataContext = value; }
         }
 
         public CloseableHeader Closer { get; private set; }
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
+            HorizontalAlignInit();
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)
@@ -62,22 +69,15 @@ namespace AIC.OnLineDataPage.Views
             }
         }
 
-        ///// <summary>
-        ///// Handle the OnScorllCommand event for RichTextBox
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void OnScorllCommandForListView(object sender, ExecutedRoutedEventArgs e)
-        //{
-        //    RoutedCommand command = (RoutedCommand)e.Command;            
-        //    if (command.Name.Equals("LineDown", StringComparison.CurrentCultureIgnoreCase))
-        //    {
-        //        // Do some thing
-        //    }
-        //    else if (command.Name.Equals("ScrollToVerticalOffset", StringComparison.CurrentCultureIgnoreCase))
-        //    {
-        //        // Do some thing
-        //    }
-        //}     
+        private void HorizontalAlignInit()
+        {
+            ViewModel_UpdateListShow(4, 4);
+        }
+
+        private void ViewModel_UpdateListShow(int row, int column)
+        {
+            ViewModel.ItemWidth = (listview.ActualWidth - 40 - 6 * (column + 1)) / column;
+            ViewModel.ItemHeight = (listview.ActualHeight - 20 - 6 * (row + 1)) / row;
+        } 
     }
 }

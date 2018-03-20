@@ -7,9 +7,9 @@
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Padding"
-                Value="6,2,6,2" />
+                Value="0,0,0,0" />
         <Setter Property="Margin"
-                Value="2" />
+                Value="0" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
@@ -19,9 +19,9 @@
         <Setter Property="MinHeight"
                 Value="5" />
         <Setter Property="BorderThickness"
-                Value="1,1,1,0" />
+                Value="0,0,0,0" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource AccentColorBrush}" />
+                Value="Transparent" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Foreground"
@@ -32,7 +32,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Border x:Name="Border"
-                            Margin="1,1,1,0"
+                            Margin="0,0,0,0"
                             HorizontalAlignment="Stretch"                           
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -81,18 +81,18 @@
                         <Trigger Property="IsSelected"
                                  Value="true">
                             <Setter Property="Background"
-                                    Value="{DynamicResource AccentColorBrush3}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
                             <Setter Property="Background"
-                                    Value="{DynamicResource WhiteBrush}" />
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
                                  Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{DynamicResource AccentColorBrush2}" />
+                                    Value="{DynamicResource TopMenuItemSelectionStroke}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -103,7 +103,7 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Background"
-                                    Value="{DynamicResource AccentColorBrush3}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

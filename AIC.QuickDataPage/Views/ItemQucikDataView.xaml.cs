@@ -42,29 +42,35 @@ namespace AIC.QuickDataPage.Views
         }
         public CloseableHeader Closer { get; private set; }
 
+        private ItemQucikDataViewModel ViewModel
+        {
+            get { return DataContext as ItemQucikDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                ItemQucikDataViewModel vm = this.DataContext as ItemQucikDataViewModel;
-                if (vm != null)
+                if (ViewModel != null)
                 {
-                    vm.RemoveProcessorTrend(vm.FirstItemTreeItem.BaseAlarmSignal);
+                    ViewModel.RemoveProcessorTrend(ViewModel.FirstItemTreeItem.BaseAlarmSignal);
                 }
             }
         }
 
-        public void GotoItem(BaseAlarmSignal sg)
+        public void GotoItem(ServerInfo serverinfo, BaseAlarmSignal sg)
         {
             ItemQucikDataViewModel vm = this.DataContext as ItemQucikDataViewModel;
             if (vm != null)
             {
-                vm.GotoCommand.Execute(sg);
+                vm.Init(serverinfo, sg);
             }
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)

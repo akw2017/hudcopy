@@ -28,6 +28,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.Wpf.Char
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Loya.Dameer.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\MahApps.Metro.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\MaterialDesignColors.dll
@@ -83,6 +85,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.WrapBreakPan
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Akka.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\MahApps.Metro.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\MaterialDesignThemes.Wpf.pdb
@@ -194,3 +200,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.baml

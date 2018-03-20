@@ -221,6 +221,7 @@
     <Compile Include="ViewModels\SubViewModels\RPM3DSpectrumDataViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\RPM3DSpectrumObject.cs" />
     <Compile Include="ViewModels\SubViewModels\Time3DSpectrumDataViewModel.cs" />
+    <Compile Include="ViewModels\SubViewModels\DistributionMapViewModel.cs" />
     <Compile Include="ViewModels\SubViewModels\TimeDomainDataViewModel.cs" />
     <Compile Include="Views\HistoryDataDiagramView.xaml.cs">
       <DependentUpon>HistoryDataDiagramView.xaml</DependentUpon>
@@ -272,6 +273,9 @@
     </Compile>
     <Compile Include="Views\SubViews\Time3DSpectrumView.xaml.cs">
       <DependentUpon>Time3DSpectrumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubViews\DistributionMapView.xaml.cs">
+      <DependentUpon>DistributionMapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubViews\TimeDomainDataView.xaml.cs">
       <DependentUpon>TimeDomainDataView.xaml</DependentUpon>
@@ -431,6 +435,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SubViews\Time3DSpectrumView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SubViews\DistributionMapView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AIC.HistoryDataPage.Views.OffDesignConditionDataView"
+﻿<core:DisposableUserControl x:Class="AIC.HistoryDataPage.Views.OffDesignConditionDataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,7 @@
              xmlns:lcu="http://www.arction.com/schemas/" 
              xmlns:views="clr-namespace:AIC.HistoryDataPage.Views"
              xmlns:models="clr-namespace:AIC.HistoryDataPage.Models"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              mc:Ignorable="d" 
              d:DesignHeight="307" d:DesignWidth="428">
     <Grid>
@@ -109,4 +110,4 @@
             </Grid>
         </Grid>       
     </Grid>
-</UserControl>
+</core:DisposableUserControl>

@@ -93,16 +93,20 @@ namespace AIC.HomePage.Views
 
             this.Closer = new CloseableHeader("tabFirst", (string)Application.Current.Resources["tabFirst"], false);
 
-
-            HomeMapViewModel vm = this.DataContext as HomeMapViewModel;
-            if (vm != null)
+            if (ViewModel != null)
             {
-                vm.ShowMapAlarmChanged += ShowMapAlarmChanged;
-                vm.ShowMapServerChanged += ShowMapServerChanged;
+                ViewModel.ShowMapAlarmChanged += ShowMapAlarmChanged;
+                ViewModel.ShowMapServerChanged += ShowMapServerChanged;
             }
         }
 
         public CloseableHeader Closer { get; private set; }
+
+        private HomeMapViewModel ViewModel
+        {
+            get { return DataContext as HomeMapViewModel; }
+            set { this.DataContext = value; }
+        }
 
         #region 地图数据加载
         private void WebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
@@ -266,10 +270,9 @@ namespace AIC.HomePage.Views
         {
             Dispatcher.BeginInvoke(new Action(delegate
             {
-                HomeMapViewModel vm = this.DataContext as HomeMapViewModel;
-                if (vm != null)
+                if (ViewModel != null)
                 {
-                    vm.GotoCommand.Execute(str);
+                    ViewModel.GotoCommand.Execute(str);
                 }                
             }));
         }

@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <Border Grid.Row="0" Padding="2" Background="{DynamicResource AccentColorBrush2}">
+        <Border Grid.Row="0" Padding="2">
             <StackPanel Orientation="Horizontal" Background="{DynamicResource AccentColorBrush2}">
                 <RadioButton x:Name="chkreal" Content="实时模式" Style="{StaticResource RadioButtonStyle}" IsChecked="{Binding IsRealTime,Mode=TwoWay}"/>
                 <RadioButton Content="历史模式" Style="{StaticResource RadioButtonStyle}" />

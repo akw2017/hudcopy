@@ -127,11 +127,11 @@ namespace AIC.HistoryDataPage.ViewModels
         private readonly ICollectionView _divFreObjectsView;
         public ICollectionView DivFreObjectsView { get { return _divFreObjectsView; } }
 
-        private FastObservableCollection<AMSObject> vInfoCollection = new FastObservableCollection<AMSObject>();
-        public IEnumerable<AMSObject> VInfoObjects { get { return vInfoCollection; } }
+        private FastObservableCollection<RMSObject> vInfoCollection = new FastObservableCollection<RMSObject>();
+        public IEnumerable<RMSObject> VInfoObjects { get { return vInfoCollection; } }
 
-        private FastObservableCollection<AMSObject> anInfoCollection = new FastObservableCollection<AMSObject>();
-        public IEnumerable<AMSObject> AnInfoObjects { get { return anInfoCollection; } }
+        private FastObservableCollection<RMSObject> anInfoCollection = new FastObservableCollection<RMSObject>();
+        public IEnumerable<RMSObject> AnInfoObjects { get { return anInfoCollection; } }
 
         private FastObservableCollection<DivFreObject> divFreCollection = new FastObservableCollection<DivFreObject>();
         public IEnumerable<DivFreObject> DivFreObjects { get { return divFreCollection; } }     
@@ -498,15 +498,15 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private void SelectedTreeChanged(object para)
         {
-            SelectedTreeItem = para as ItemTreeItemViewModel;
+            SelectedTreeItem = para as OrganizationTreeItemViewModel;
             if (SelectedTreeItem != null)
             {
                 var itemTree = SelectedTreeItem as ItemTreeItemViewModel;
-                if (itemTree.BaseAlarmSignal != null)
+                if (itemTree != null && itemTree.BaseAlarmSignal != null)
                 {
                     if (itemTree.BaseAlarmSignal.Unit != null)
                     {
-                        Unit = itemTree.BaseAlarmSignal.Unit;
+                        Unit = itemTree.BaseAlarmSignal.Unit;//自动获取单位
                     }
                 }
             }            
@@ -514,7 +514,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
         private void DoubleClickAddData(object para)
         {
-            SelectedTreeItem = para as ItemTreeItemViewModel;
+            SelectedTreeItem = para as OrganizationTreeItemViewModel;
             if (SelectedTreeItem is ItemTreeItemViewModel)
             {
                 AddData(para);
@@ -526,9 +526,9 @@ namespace AIC.HistoryDataPage.ViewModels
             if (SelectedTreeItem == null)
             {
 #if XBAP
-                MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("请选中要查询的组织机构", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Xceed.Wpf.Toolkit.MessageBox.Show("请选中要查询的组织机构", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
                 return;
             }
@@ -557,7 +557,9 @@ namespace AIC.HistoryDataPage.ViewModels
 
             string conditionWave;
             string conditionAlarm;
-            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter);
+            object[] objectWave;
+            object[] objectAlarm;
+            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, out objectWave, out objectAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter, Unit, DownRPMFilter, UpRPMFilter);
 
             string selectedip = _cardProcess.GetOrganizationServer(SelectedTreeItem);
 
@@ -682,121 +684,36 @@ namespace AIC.HistoryDataPage.ViewModels
 
             #region 测点
             var item = SelectedTreeItem as ItemTreeItemViewModel;
-            if (item != null && item.T_Item != null && item.T_Item.ItemType != 0)
+            if (item != null)
             {
-                try
+                if (item.T_Item != null && item.T_Item.ItemType != 0)
                 {
-                    WaitInfo = "获取数据中";
-                    Status = ViewModelStatus.Querying;
-
-                    if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+                    try
                     {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionWave, new object[] { unit, DownRPMFilter, UpRPMFilter });                        
-                        if (result == null || result.Count == 0)
-                        {
-#if XBAP
-                            MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#else
-                            Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#endif
-                            return;
-                        }
-                        result = result.OrderBy(p => p.ACQDatetime).ToList();
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            AMSObject amsObj = new AMSObject();
-                            if (item.BaseAlarmSignal != null)
-                            {
-                                amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
-                                amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
-                                amsObj.ItemName = item.BaseAlarmSignal.ItemName;
-                            }
-                            else if (item.Parent is OrganizationTreeItemViewModel)//回收站
-                            {
-                                amsObj.OrganizationName = "回收站";
-                                amsObj.DeviceName = item.ServerIP;
-                                amsObj.ItemName = item.Name;
-                            }
-
-                            amsObj.ACQDatetime = result[i].ACQDatetime;
-                            amsObj.Result = result[i].Result.Value;
-                            amsObj.Unit = result[i].Unit;
-                            amsObj.AlarmGrade =(AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
-
-                            if (vInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
-                                    && p.DeviceName == amsObj.DeviceName
-                                    && p.ItemName == amsObj.ItemName
-                                    && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
-                            {
-                                vInfoCollection.Add(amsObj);
-                            }
-                        }
+                        WaitInfo = "获取数据中";
+                        Status = ViewModelStatus.Querying;
+                        SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm);
                     }
-                    else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
+                    catch (Exception ex)
                     {
-                        string unit = (Unit == "Unit") ? "" : Unit;
-                        var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, new object[] { unit });                       
-                        if (result == null || result.Count == 0)
-                        {
-#if XBAP
-                            MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#else
-                            Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
-#endif
-                            return;
-                        }
-                        result = result.OrderBy(p => p.ACQDatetime).ToList();
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            AMSObject amsObj = new AMSObject();
-                            if (item.BaseAlarmSignal != null)
-                            {
-                                amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
-                                amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
-                                amsObj.ItemName = item.BaseAlarmSignal.ItemName;
-                            }
-                            else if (item.Parent is OrganizationTreeItemViewModel)//回收站
-                            {
-                                amsObj.OrganizationName = "回收站";
-                                amsObj.DeviceName = item.ServerIP;
-                                amsObj.ItemName = item.Name;
-                            }
-
-                            amsObj.ACQDatetime = result[i].ACQDatetime;
-                            amsObj.Result = result[i].Result.Value;
-                            amsObj.Unit = result[i].Unit;
-                            amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
-
-                            if (anInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
-                                    && p.DeviceName == amsObj.DeviceName
-                                    && p.ItemName == amsObj.ItemName
-                                    && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
-                            {
-                                anInfoCollection.Add(amsObj);
-                            }
-                        }
+                        _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-测点查询", ex));
                     }
-                }
-                catch (Exception ex)
-                {
-                    _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-测点查询", ex));
-                }
-                finally
-                {
-                    Status = ViewModelStatus.None;
-                }
+                    finally
+                    {
+                        Status = ViewModelStatus.None;
+                    }
 
-                return;
-            }
-            else
-            {
+                    return;
+                }
+                else
+                {
 #if XBAP
-                MessageBox.Show("该测点没绑定或无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("该测点没绑定或无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
-                return;
+                    return;
+                }
             }
 
             #endregion
@@ -808,69 +725,11 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     WaitInfo = "获取数据中";
                     Status = ViewModelStatus.Querying;
-                    var items = _cardProcess.GetItems(OrganizationTreeItems).Where(p => p.IsPaired);
+                    var items = _cardProcess.GetItems(SelectedTreeItem).Where(p => p.IsPaired);
 
                     foreach (var subitem in items)
                     {
-
-                        if (subitem.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
-                        {
-                            var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);                           
-                            if (result == null || result.Count == 0)
-                            {
-                                return;
-                            }
-                            result = result.OrderBy(p => p.ACQDatetime).ToList();
-                            for (int i = 0; i < result.Count; i++)
-                            {
-                                AMSObject amsObj = new AMSObject();
-                                amsObj.OrganizationName = subitem.BaseAlarmSignal.OrganizationName;
-                                amsObj.DeviceName = subitem.BaseAlarmSignal.DeviceName;
-                                amsObj.ItemName = subitem.BaseAlarmSignal.ItemName;
-
-                                amsObj.ACQDatetime = result[i].ACQDatetime;
-                                amsObj.Result = result[i].Result.Value;
-                                amsObj.Unit = result[i].Unit;
-                                amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
-
-                                if (vInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
-                                        && p.DeviceName == amsObj.DeviceName
-                                        && p.ItemName == amsObj.ItemName
-                                        && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
-                                {
-                                    vInfoCollection.Add(amsObj);
-                                }
-                            }
-                        }
-                        else if (subitem.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
-                        {
-                            var result = await _databaseComponent.GetHistoryData<D_WirelessScalarSlot>(selectedip, subitem.T_Item.Guid, null, StartTime.Value, EndTime.Value, null, null);                           
-                            if (result == null || result.Count == 0)
-                            {
-                                return;
-                            }
-                            result = result.OrderBy(p => p.ACQDatetime).ToList();
-                            for (int i = 0; i < result.Count; i++)
-                            {
-                                AMSObject amsObj = new AMSObject();
-                                amsObj.OrganizationName = subitem.BaseAlarmSignal.OrganizationName;
-                                amsObj.DeviceName = subitem.BaseAlarmSignal.DeviceName;
-                                amsObj.ItemName = subitem.BaseAlarmSignal.ItemName;
-
-                                amsObj.ACQDatetime = result[i].ACQDatetime;
-                                amsObj.Result = result[i].Result.Value;
-                                amsObj.Unit = result[i].Unit;
-                                amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
-
-                                if (anInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
-                                        && p.DeviceName == amsObj.DeviceName
-                                        && p.ItemName == amsObj.ItemName
-                                        && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
-                                {
-                                    anInfoCollection.Add(amsObj);
-                                }
-                            }
-                        }
+                        SubAddData(subitem, conditionWave, conditionAlarm,  objectWave, objectAlarm, false);
                     }
                 }
                 catch (Exception ex)
@@ -886,6 +745,74 @@ namespace AIC.HistoryDataPage.ViewModels
             #endregion
         }
 
+        private async void SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm, bool showmessagbox = true)
+        {
+            List<IBaseAlarmSlot> result = new List<IBaseAlarmSlot>();
+
+            if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+            {
+                result = await _databaseComponent.GetUniformHistoryData(item.T_Item.ItemType, item.ServerIP, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionWave, objectWave);
+            }
+            else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
+            {
+                result = await _databaseComponent.GetUniformHistoryData(item.T_Item.ItemType, item.ServerIP, item.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "AlarmGrade" }, StartTime.Value, EndTime.Value, conditionAlarm, objectAlarm);
+            }
+
+            if (result == null || result.Count == 0)
+            {
+                if (showmessagbox == true)
+                {
+#if XBAP
+                    MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                    Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                }
+                return;
+            }
+            for (int i = 0; i < result.Count; i++)
+            {
+                RMSObject amsObj = new RMSObject();
+                if (item.BaseAlarmSignal != null)
+                {
+                    amsObj.OrganizationName = item.BaseAlarmSignal.OrganizationName;
+                    amsObj.DeviceName = item.BaseAlarmSignal.DeviceName;
+                    amsObj.ItemName = item.BaseAlarmSignal.ItemName;
+                }
+                else if (item.Parent is OrganizationTreeItemViewModel)//回收站
+                {
+                    amsObj.OrganizationName = "回收站";
+                    amsObj.DeviceName = item.ServerIP;
+                    amsObj.ItemName = item.Name;
+                }
+
+                amsObj.ACQDatetime = result[i].ACQDatetime;
+                amsObj.Result = result[i].Result.Value;
+                amsObj.Unit = result[i].Unit;
+                amsObj.AlarmGrade = (AlarmGrade)(result[i].AlarmGrade & 0x00ffff00);
+
+                if (item.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+                {
+                    if (vInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
+                         && p.DeviceName == amsObj.DeviceName
+                         && p.ItemName == amsObj.ItemName
+                         && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
+                    {
+                        vInfoCollection.Add(amsObj);
+                    }
+                }
+                else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
+                {
+                    if (anInfoCollection.Where(p => p.OrganizationName == amsObj.OrganizationName
+                           && p.DeviceName == amsObj.DeviceName
+                           && p.ItemName == amsObj.ItemName
+                           && p.ACQDatetime == amsObj.ACQDatetime).Count() == 0) //去重     
+                    {
+                        anInfoCollection.Add(amsObj);
+                    }
+                }
+            }
+        }
         private void RefreshData(object para)
         {
             vInfoCollection.Clear();
@@ -901,7 +828,7 @@ namespace AIC.HistoryDataPage.ViewModels
         }
     }
 
-    public class AMSObject
+    public class RMSObject
     {
         public string OrganizationName { get; set; }
         public string DeviceName { get; set; }

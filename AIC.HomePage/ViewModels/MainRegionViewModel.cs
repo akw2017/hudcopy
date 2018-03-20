@@ -100,7 +100,12 @@ namespace AIC.HomePage.ViewModels
             WhenSlideChanged.Throttle(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseSlideChanged);
 
             InitLanguage();
-        }     
+
+            this.GCTimer.Interval = TimeSpan.FromMinutes(5); //垃圾释放定时器 我定为每五分钟释放一次，大家可根据需要修改
+            this.GCTimer.Start();
+            this.EventsRegistion();    // 注册事件
+
+        }
 
         #region 字段和属性
         private ObservableCollection<ExceptionModel> ExceptionModel;
@@ -1353,6 +1358,7 @@ namespace AIC.HomePage.ViewModels
         {
             var date = Convert.ToDateTime(SystemDate);
             _signalProcess.GetDailyMedianData(date.AddDays(-7), date.AddDays(-1));
+            _signalProcess.GetRunningDays(date);
         }
         #endregion
 
@@ -1424,6 +1430,27 @@ namespace AIC.HomePage.ViewModels
         {
             string soundName = System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\msg.wav";
             PlaySound.Play(soundName);
+        }
+        #endregion
+
+        #region 
+        System.Windows.Threading.DispatcherTimer GCTimer = new System.Windows.Threading.DispatcherTimer();
+
+        public void EventsRegistion()
+        {
+            this.GCTimer.Tick += new EventHandler(OnGarbageCollection);
+        }
+
+        public void EventDeregistration()
+        {
+            this.GCTimer.Tick -= new EventHandler(OnGarbageCollection);
+        }
+
+        void OnGarbageCollection(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
         #endregion
     }

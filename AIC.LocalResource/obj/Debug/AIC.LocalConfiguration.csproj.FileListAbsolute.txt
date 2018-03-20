@@ -238,5 +238,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\Debug\AIC.LocalConfigurat
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\obj\Debug\AIC.LocalConfiguration.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Debug\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.LocalResource\bin\Debug\Resources\AICMatlabDLL.dll

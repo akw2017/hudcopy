@@ -112,7 +112,10 @@
             <!--<Image Name="PART_Image" 
                    gif:AnimationBehavior.SourceUri="{Binding SelectedImage}" 
                    gif:AnimationBehavior.AutoStart="True"/>-->
-            <Image Name="PART_Image" gif:ImageBehavior.AnimatedSource="{Binding SelectedImage}" gif:ImageBehavior.AutoStart="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Image Name="PART_Image_run" gif:ImageBehavior.AnimatedSource="{Binding SelectedImage}" gif:ImageBehavior.AutoStart="True" VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Visible"/>
+            <Image Name="PART_Image_stop" gif:ImageBehavior.AnimatedSource="{Binding SelectedImage}" gif:ImageBehavior.AutoStart="False" VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Collapsed"/>
+            <Ellipse x:Name="ellipse_run" Width="18" Height="18" Fill="Green" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
             <s:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll" BringToFront="False" />
             <!--//PART_ConnectorContainer的Visibility不能设置为Collapsed,设置为Collapsed不触发Canvas的Load事件-->
             <s:ConnectorContainer x:Name="PART_ConnectorContainer" Visibility="Hidden"  ItemsSource="{Binding Connectors}">
@@ -139,6 +142,11 @@
                 <Setter TargetName="PART_DragThumb" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="PART_ConnectorContainer" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Device.IsRunning}" Value="false">
+                <Setter TargetName="PART_Image_run" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Image_stop" Property="Visibility" Value="Visible" />
+                <Setter TargetName="ellipse_run" Property="Fill" Value="Red" />
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>

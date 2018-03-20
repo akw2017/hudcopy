@@ -206,6 +206,7 @@
     <Compile Include="Filters\NotifyDataErrorInfoBase.cs" />
     <Compile Include="FluidWrapPanel\FluidLayoutManager.cs" />
     <Compile Include="FluidWrapPanel\FluidMouseDragBehavior.cs" />
+    <Compile Include="FluidWrapPanel\IFluidWrapPanel.cs" />
     <Compile Include="FluidWrapPanel\VirtualizingFluidWrapPanel.cs" />
     <Compile Include="FluidWrapPanel\FluidWrapPanel.cs" />
     <Compile Include="Behaviors\ItemsControlDragDropBehavior\ContentControlHelp.cs" />

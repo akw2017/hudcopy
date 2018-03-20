@@ -15,7 +15,7 @@
             </Grid>
         </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
-            <!--<Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
@@ -25,7 +25,7 @@
                         </ScrollViewer>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>-->
+            </Setter>
             <!--<Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
@@ -94,10 +94,18 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <!--<ListBox Style="{StaticResource ListBoxStyle}" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox" HorizontalAlignment="Right" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ></ListBox>-->
+        <ListBox Style="{StaticResource ListBoxStyle}" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox" HorizontalAlignment="Right" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+            <ListBox.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <!--<ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />-->
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </ListBox.Resources>
+        </ListBox>
         <!--<ListBox Style="{StaticResource ListBoxStyle2}" Grid.Row="1" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource  ListBoxDataTemplate}" x:Name="listbox2"></ListBox>-->
         <!--<ListBox Style="{StaticResource ListBoxStyle3}" Grid.Row="1" ItemTemplate="{StaticResource  ListBoxDataTemplate}"  x:Name="listbox2"></ListBox>-->
-        <ListBox x:Name="listbox2" ItemTemplate="{StaticResource  ListBoxDataTemplate}" >
+        <ListBox x:Name="listbox2" Grid.Row="1" ItemTemplate="{StaticResource  ListBoxDataTemplate}" Visibility="Collapsed">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <local:VirtualizingWrapPanelEx ChildWidth="50" ChildHeight="50" />

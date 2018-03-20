@@ -36,7 +36,7 @@ namespace AIC.OnLineDataPage.Views.SubViews
         {
             m_chart = null;
             InitializeComponent();
-            //CreateChart();
+            CreateChart();
             divCombobox.SelectionChanged += divCombobox_SelectionChanged;
             divCheckBox.Checked += divCheckBox_Checked;
             divCheckBox.Unchecked += divCheckBox_Unchecked;
@@ -44,9 +44,27 @@ namespace AIC.OnLineDataPage.Views.SubViews
             showRPMCheckBox.Unchecked += showRPMCheckBox_Unchecked;
         }
 
-        protected override void ViewModel_Closed(object sender, EventArgs e)
+        protected override void ChartViewBase_Unloaded(object sender, RoutedEventArgs e)
         {
-            base.ViewModel_Closed(sender, e);
+            base.ChartViewBase_Unloaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.None;
+            }
+        }
+
+        protected override void ChartViewBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            base.ChartViewBase_Loaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.SoftwareOnlyD11;
+            }
+        }
+
+        protected override void ViewModel_Disposed(object sender, EventArgs e)
+        {
+            base.ViewModel_Disposed(sender, e);
             // Don't forget to clear chart grid child list.
             gridChart.Children.Clear();
             if (m_chart != null)
@@ -54,12 +72,13 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.Dispose();
                 m_chart = null;
             }
+            base.Dispose();
         }
 
-        protected override void ViewModel_Opened(object sender, EventArgs e)
+        protected override void ViewModel_Closed(object sender, EventArgs e)
         {
-            base.ViewModel_Opened(sender, e);
-            CreateChart();
+            this.ViewModel_Disposed(sender, e);
+            base.GCCollect();
         }
 
         protected override void ViewModel_SignalChanged()
@@ -233,52 +252,66 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart = null;
             }
 
-            // Create a new chart.
-            m_chart = new LightningChartUltimate();
-            m_chart.Title.Text = string.Empty;
+            try
+            {
+                // Create a new chart.
+                m_chart = new LightningChartUltimate();
+                m_chart.Title.Text = string.Empty;
 
-            //Sisable rendering, strongly recommended before updating chart properties
-            m_chart.BeginUpdate();
+                //Sisable rendering, strongly recommended before updating chart properties
+                m_chart.BeginUpdate();
 
-            //Set active view to Polar
-            m_chart.ActiveView = ActiveView.ViewPolar;
-            m_chart.ViewPolar.LegendBox.Visible = false;
+                //Set active view to Polar
+                m_chart.ActiveView = ActiveView.ViewPolar;
+                m_chart.ViewPolar.LegendBox.Visible = false;
 
-            m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-            m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            m_chart.ChartBackground.GradientFill = GradientFill.Solid;
-            //m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            //m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
-            //m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
+                m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
+                m_chart.ChartBackground.GradientFill = GradientFill.Solid;
+                //m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
+                //m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
+                //m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
 
-            //Create polar axis
-            AxisPolar axis = m_chart.ViewPolar.Axes[0];
-            axis.MajorGrid.Visible = true;
-            axis.MinorGrid.Visible = true;
-            axis.Title.Text = string.Empty;
-            axis.TickMarkLocation = RoundGridTickmarkLocation.Outside;
-            axis.Reversed = true;
-            axis.InnerCircleRadiusPercentage = 10;
-            axis.MajorDivCount = 4;
-            axis.MinAmplitude = 0;
-            axis.MaxAmplitude = 1;
-            axis.Visible = true;
-            //Empty polar line series
-            // m_chart.ViewPolar.PointLineSeries.Clear();
-            m_chart.ViewPolar.Markers.Clear();
+                //Create polar axis
+                AxisPolar axis = m_chart.ViewPolar.Axes[0];
+                axis.MajorGrid.Visible = true;
+                axis.MinorGrid.Visible = true;
+                axis.Title.Text = string.Empty;
+                axis.TickMarkLocation = RoundGridTickmarkLocation.Outside;
+                axis.Reversed = true;
+                axis.InnerCircleRadiusPercentage = 10;
+                axis.MajorDivCount = 4;
+                axis.MinAmplitude = 0;
+                axis.MaxAmplitude = 1;
+                axis.Visible = true;
+                //Empty polar line series
+                // m_chart.ViewPolar.PointLineSeries.Clear();
+                m_chart.ViewPolar.Markers.Clear();
 
-            //PointLineSeriesPolar plsp = new PointLineSeriesPolar(m_chart.ViewPolar, axis);
-            //plsp.PointsVisible = true;
-            //plsp.LineVisible = false;
-            //plsp.PointStyle.Width = 5;
-            //plsp.PointStyle.Height = 5;
+                //PointLineSeriesPolar plsp = new PointLineSeriesPolar(m_chart.ViewPolar, axis);
+                //plsp.PointsVisible = true;
+                //plsp.LineVisible = false;
+                //plsp.PointStyle.Width = 5;
+                //plsp.PointStyle.Height = 5;
 
-            ////Add series to view
-            //m_chart.ViewPolar.PointLineSeries.Add(plsp);
+                ////Add series to view
+                //m_chart.ViewPolar.PointLineSeries.Add(plsp);
 
-            //Allow chart rendering
-            m_chart.EndUpdate();
+                //Allow chart rendering
+                m_chart.EndUpdate();
+            }
+            catch (Exception ex)
+            {
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-伯德-初始化", ex));
+                if (m_chart != null)
+                {
+                    m_chart.EndUpdate();
+                }
+            }
+            finally
+            {
 
+            }
             gridChart.Children.Add(m_chart);
         }
 

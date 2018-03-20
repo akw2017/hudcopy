@@ -16,7 +16,9 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         private SubscriptionToken subscriptionToken;
         private IEventAggregator _eventAggregator;
         public event EventHandler Closed;
-        public event EventHandler Opened;
+        public event EventHandler Disposed;
+        public event EventHandler HandLoaded;
+        public event EventHandler HandUnloaded;
         public event SignalChangedHandler SignalChanged;
 
         protected ChartViewModelBase(BaseAlarmSignal sg)
@@ -146,10 +148,19 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             RaisedSiganlChanged();
         }
 
-        public void Close()
+        public void ProcessorUnloaded()
         {
             Unsubscribe();
             RemoveProcessor();
+        }
+
+        public void ProcessorLoaded()
+        {
+            AddProcessor();
+        }
+
+        public void Close()
+        {
             var handler = Closed;
             if (handler != null)
             {
@@ -157,10 +168,27 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
             }
         }
 
-        public void Open()
+        public void Dispose()
         {
-            AddProcessor();
-            var handler = Opened;
+            var handler = Disposed;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        public void HandUnload()
+        {
+            var handler = HandUnloaded;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        public void HandLoad()
+        {
+            var handler = HandLoaded;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

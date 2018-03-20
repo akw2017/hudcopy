@@ -23,16 +23,16 @@ using Arction.Wpf.Charting.Views.ViewXY;
 using AIC.Core.Events;
 using AIC.MatlabMath;
 using AIC.HistoryDataPage.Models;
+using AIC.Core;
 
 namespace AIC.HistoryDataPage.Views
 {
     /// <summary>
     /// Interaction logic for FrequencyDomainDataView.xaml
     /// </summary>
-    public partial class FrequencyDomainDataView : UserControl
+    public partial class FrequencyDomainDataView : DisposableUserControl
     {
         private LightningChartUltimate m_chart;
-        private FrequencyDomainDataViewModel viewModel;
         private IDisposable channelDataChangedSubscription;
         private IDisposable channelAddedSubscription;
         private IDisposable channelRemovedSubscription;
@@ -42,15 +42,36 @@ namespace AIC.HistoryDataPage.Views
             CreateChart();
             Loaded += FrequencyDomainDataView_Loaded;
         }
+
+        private FrequencyDomainDataViewModel ViewModel
+        {
+            get { return DataContext as FrequencyDomainDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
+
         private void FrequencyDomainDataView_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= FrequencyDomainDataView_Loaded;
-            viewModel = DataContext as FrequencyDomainDataViewModel;
-            if (viewModel != null)
+            ViewModel = DataContext as FrequencyDomainDataViewModel;
+            if (ViewModel != null)
             {
-                channelAddedSubscription = viewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
-                channelRemovedSubscription = viewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
-                channelDataChangedSubscription = viewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
+                channelAddedSubscription = ViewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
+                channelRemovedSubscription = ViewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
+                channelDataChangedSubscription = ViewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
 
@@ -64,7 +85,7 @@ namespace AIC.HistoryDataPage.Views
                     return;
                 }
 
-                if (viewModel == null || !(token is BaseWaveChannelToken)) return;
+                if (ViewModel == null || !(token is BaseWaveChannelToken)) return;
 
                 m_chart.BeginUpdate();
 
@@ -241,7 +262,7 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
-                if (viewModel == null) return;
+                if (ViewModel == null) return;
                 foreach (var token in tokens)//修复隐藏时候没有添加成功
                 {
                     OnChannelAdded(token);
@@ -542,7 +563,7 @@ namespace AIC.HistoryDataPage.Views
                     envelopeCheckBox.IsChecked = false;
                     tffCheckBox.IsChecked = false;
                 }
-                if (viewModel == null) return;
+                if (ViewModel == null) return;
                 if (m_chart.ViewXY.PointLineSeries.Count == 0)
                 {
                     return;
@@ -564,7 +585,7 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
-                if (viewModel == null) return;
+                if (ViewModel == null) return;
                 if (m_chart.ViewXY.PointLineSeries.Count == 0)
                 {
                     return;
@@ -678,7 +699,7 @@ namespace AIC.HistoryDataPage.Views
 
             if (filterCheckBox.IsChecked == true)
             {
-                input = await Task.Run(() => { return viewModel.Filter(input, samplePoint, sampleFre, rpm); });
+                input = await Task.Run(() => { return ViewModel.Filter(input, samplePoint, sampleFre, rpm); });
             }
             if (envelopeCheckBox.IsChecked == true)
             {

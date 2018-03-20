@@ -37,7 +37,7 @@ namespace AIC.OnLineDataPage.Views
     /// <summary>
     /// Interaction logic for MapView.xaml
     /// </summary>
-    public partial class HistoryDataTrendView : UserControl, ICloseable
+    public partial class HistoryDataTrendView : DisposableUserControl, ICloseable
     {
         public HistoryDataTrendView()
         {
@@ -46,54 +46,82 @@ namespace AIC.OnLineDataPage.Views
             var menu = MenuManageList.GetMenu("menuDataTrendChart");
             this.Closer = new CloseableHeader("menuDataTrendChart", menu.Name, true, menu.IconPath);
 
-            ViewModel = this.DataContext as HistoryDataTrendViewModel;
-            ViewModel.SignalAdded += ViewModel_SignalAdded;
-            ViewModel.SignalRemoved += ViewModel_SignalRemoved;
-            ViewModel.SignalShowChanged += ViewModel_SignalShowChanged;
-            ViewModel.SignalSelected += ViewModel_SignalSelected;
-            ViewModel.SignalRefresh += ViewModel_SignalRefresh;
-            ViewModel.SignalAddedPoint += ViewModel_SignalAddedPoint;
+            if (ViewModel != null)
+            {
+                ViewModel.SignalAdded += ViewModel_SignalAdded;
+                ViewModel.SignalRemoved += ViewModel_SignalRemoved;
+                ViewModel.SignalShowChanged += ViewModel_SignalShowChanged;
+                ViewModel.SignalSelected += ViewModel_SignalSelected;
+                ViewModel.SignalRefresh += ViewModel_SignalRefresh;
+                ViewModel.SignalAddedPoint += ViewModel_SignalAddedPoint;
+            }
             CreateChart();
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             listBox.SizeChanged += listBox_SizeChanged;
         }       
 
+        public CloseableHeader Closer { get; private set; }
+
+        private HistoryDataTrendViewModel ViewModel
+        {
+            get { return DataContext as HistoryDataTrendViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Don't forget to clear _chart from grid child list.
+                gridChart.Children.Clear();
+
+                if (_chart != null)
+                {
+                    _chart.Dispose();
+                    _chart = null;
+                }
+            }
+        }
+
+
+        private LightningChartUltimate _chart;      
+
         private void ViewModel_SignalAdded(SignalToken token, DateTime time, double size)
         {
             try
             {
-                m_chart.BeginUpdate();
+                _chart.BeginUpdate();
 
-                var axisYnone = m_chart.ViewXY.YAxes.Where(o => o.Units.Text == "none").SingleOrDefault();
-                m_chart.ViewXY.YAxes.Remove(axisYnone);
+                var axisYnone = _chart.ViewXY.YAxes.Where(o => o.Units.Text == "none").SingleOrDefault();
+                _chart.ViewXY.YAxes.Remove(axisYnone);
 
                 #region
-                AxisY axisY = new AxisY(m_chart.ViewXY);
+                AxisY axisY = new AxisY(_chart.ViewXY);
                 if (token is BaseDivfreSignalToken)
                 {
                     var vToken = token as BaseDivfreSignalToken;
                     string unit = (vToken.DataContracts == null || vToken.DataContracts.Count == 0 || vToken.DataContracts[0].Unit == null) ? "" : vToken.DataContracts[0].Unit;
-                  
+
                     axisY.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
                     axisY.AxisThickness = 2;
                     axisY.AxisColor = vToken.SolidColorBrush.Color;//Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);  
                     axisY.Title.Text = vToken.DisplayName + "(" + unit + ")";
                     axisY.SetRange(0, 10);
-                    axisY.Tag = token;                   
-                    m_chart.ViewXY.YAxes.Add(axisY);
+                    axisY.Tag = token;
+                    _chart.ViewXY.YAxes.Add(axisY);
 
-                    if (m_chart.ViewXY.Annotations.Count == 0)
+                    if (_chart.ViewXY.Annotations.Count == 0)
                     {
                         CreateAnnotation();
                     }
 
-                    PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
+                    PointLineSeries series = new PointLineSeries(_chart.ViewXY, _chart.ViewXY.XAxes[0], axisY);
                     series.MouseInteraction = false;
                     series.Title.Text = vToken.DisplayName + "(" + unit + ")";
                     series.LineStyle.Color = token.SolidColorBrush.Color;
-                    series.Title.Color = token.SolidColorBrush.Color;                   
+                    series.Title.Color = token.SolidColorBrush.Color;
                     series.LineStyle.AntiAliasing = LineAntialias.Normal;
-                    series.LineStyle.Width = 1;                 
+                    series.LineStyle.Width = 1;
                     series.Tag = token;
 
                     if (vToken.DataContracts != null)//加入数据
@@ -101,20 +129,20 @@ namespace AIC.OnLineDataPage.Views
                         SeriesPoint[] points = new SeriesPoint[vToken.DataContracts.Count];
                         for (int i = 0; i < points.Length; i++)
                         {
-                            points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
+                            points[i].X = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
                             points[i].Y = vToken.DataContracts[i].Result.Value;
                             AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                         }
                         series.Points = points;
                     }
-                    m_chart.ViewXY.PointLineSeries.Add(series);                   
+                    _chart.ViewXY.PointLineSeries.Add(series);
 
                     if (vToken.DataContracts != null)
                     {
                         axisY.Maximum = vToken.UpperLimit;
                         axisY.Minimum = vToken.LowerLimit;
                     }
-                   
+
                 }
                 #endregion
                 #region
@@ -131,14 +159,14 @@ namespace AIC.OnLineDataPage.Views
                         axisY.Title.Text = anToken.DisplayName + "(" + unit + ")";
                         axisY.SetRange(0, 10);
                         axisY.Tag = token;
-                        m_chart.ViewXY.YAxes.Add(axisY);
+                        _chart.ViewXY.YAxes.Add(axisY);
 
-                        if (m_chart.ViewXY.Annotations.Count == 0)
+                        if (_chart.ViewXY.Annotations.Count == 0)
                         {
                             CreateAnnotation();
                         }
 
-                        PointLineSeries series = new PointLineSeries(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], axisY);
+                        PointLineSeries series = new PointLineSeries(_chart.ViewXY, _chart.ViewXY.XAxes[0], axisY);
                         series.MouseInteraction = false;
                         series.Title.Text = anToken.DisplayName + "(" + unit + ")";
                         series.LineStyle.Color = token.SolidColorBrush.Color;
@@ -152,16 +180,16 @@ namespace AIC.OnLineDataPage.Views
                             SeriesPoint[] points = new SeriesPoint[anToken.DataContracts.Count];
                             for (int i = 0; i < points.Length; i++)
                             {
-                                points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
+                                points[i].X = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = anToken.DataContracts[i].Result.Value;
                                 AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                         }
-                        m_chart.ViewXY.PointLineSeries.Add(series);
+                        _chart.ViewXY.PointLineSeries.Add(series);
 
                         if (anToken.DataContracts != null)
-                        { 
+                        {
                             axisY.Maximum = anToken.UpperLimit; ;
                             axisY.Minimum = anToken.LowerLimit; ;
                         }
@@ -169,33 +197,33 @@ namespace AIC.OnLineDataPage.Views
                 }
                 #endregion
 
-                m_chart.ViewXY.Annotations[0].AssignYAxisIndex = -1;
-                m_chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
+                _chart.ViewXY.Annotations[0].AssignYAxisIndex = -1;
+                _chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
 
-                m_chart.EndUpdate();
-                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
+                _chart.EndUpdate();
+                _chart.ViewXY.XAxes[0].SetRange(_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), _chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
                 token.LimitChanged += Token_LimitChanged;
                 axisY.RangeChanged += AxisY_RangeChanged;
 
-                if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                if (_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < _chart.ViewXY.XAxes[0].Minimum || _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > _chart.ViewXY.XAxes[0].Maximum)
                 {
-                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                    _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (_chart.ViewXY.XAxes[0].Minimum + _chart.ViewXY.XAxes[0].Maximum) / 2.0;
                 }
                 else
                 {
-                    UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                    UpdateCursorResult(_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
                 }
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势-添加信号", ex));
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
         }
 
         private void Token_LimitChanged(SignalToken token)
         {
-            var axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();            
+            var axisY = _chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
             if (axisY != null)
             {
                 axisY.RangeChanged -= AxisY_RangeChanged;
@@ -216,45 +244,45 @@ namespace AIC.OnLineDataPage.Views
         {
             try
             {
-                m_chart.BeginUpdate();
-                var series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                _chart.BeginUpdate();
+                var series = _chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
                 if (series != null)
                 {
                     series.Clear();
-                    m_chart.ViewXY.PointLineSeries.Remove(series);                   
+                    _chart.ViewXY.PointLineSeries.Remove(series);
                 }
 
-                var axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
+                var axisY = _chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
                 if (axisY != null)
-                {                    
-                    m_chart.ViewXY.YAxes.Remove(axisY);                   
-                    if (m_chart.ViewXY.YAxes.Count > 0)
+                {
+                    _chart.ViewXY.YAxes.Remove(axisY);
+                    if (_chart.ViewXY.YAxes.Count > 0)
                     {
-                        m_chart.ViewXY.Annotations[0].AssignYAxisIndex = -1;
-                        m_chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
-                        AnnotationXY cursorValueDisplay = m_chart.ViewXY.Annotations[0];
-                        float fTargetYCoord = m_chart.ViewXY.GetMarginsRect().Bottom;
+                        _chart.ViewXY.Annotations[0].AssignYAxisIndex = -1;
+                        _chart.ViewXY.Annotations[0].AssignYAxisIndex = 0;
+                        AnnotationXY cursorValueDisplay = _chart.ViewXY.Annotations[0];
+                        float fTargetYCoord = _chart.ViewXY.GetMarginsRect().Bottom;
                         double dY;
-                        m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
+                        _chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
                         cursorValueDisplay.TargetAxisValues.Y = dY;
                     }
                     else
                     {
-                        AxisY axisYnone = new AxisY(m_chart.ViewXY);
+                        AxisY axisYnone = new AxisY(_chart.ViewXY);
                         axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
                         axisYnone.AxisThickness = 2;
                         axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
                         axisYnone.Units.Text = "none";
-                        m_chart.ViewXY.YAxes.Add(axisYnone);
+                        _chart.ViewXY.YAxes.Add(axisYnone);
                     }
                 }
 
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势趋势-移除信号", ex));
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
         }
 
@@ -262,29 +290,29 @@ namespace AIC.OnLineDataPage.Views
         {
             try
             {
-                m_chart.BeginUpdate();
-                m_chart.ViewXY.PointLineSeries.ForEach(p => p.SeriesEventMarkers.Clear());
+                _chart.BeginUpdate();
+                _chart.ViewXY.PointLineSeries.ForEach(p => p.SeriesEventMarkers.Clear());
                 foreach (var token in tokens)
                 {
-                    PointLineSeries series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
-                    AxisY axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
+                    PointLineSeries series = _chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                    AxisY axisY = _chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
                     if (token is BaseDivfreSignalToken)
                     {
                         var divToken = token as BaseDivfreSignalToken;
                         if (divToken.DataContracts != null && divToken.DataContracts.Count > 0)//加入数据
                         {
-                            
+
                             SeriesPoint[] points = new SeriesPoint[divToken.DataContracts.Count];
                             for (int i = 0; i < points.Length; i++)
                             {
-                                points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(divToken.DataContracts[i].ACQDatetime);
+                                points[i].X = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(divToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = divToken.DataContracts[i].Result.Value;
                                 AddMarker(series, points[i], divToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             axisY.Title.Text = divToken.DisplayName + "(" + divToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {                               
+                            {
                                 axisY.Maximum = divToken.UpperLimit;
                                 axisY.Minimum = divToken.LowerLimit;
                             }
@@ -302,14 +330,14 @@ namespace AIC.OnLineDataPage.Views
                             SeriesPoint[] points = new SeriesPoint[vToken.DataContracts.Count];
                             for (int i = 0; i < points.Length; i++)
                             {
-                                points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
+                                points[i].X = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(vToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = vToken.DataContracts[i].Result.Value;
                                 AddMarker(series, points[i], vToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             axisY.Title.Text = vToken.DisplayName + "(" + vToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {                               
+                            {
                                 axisY.Maximum = vToken.UpperLimit;
                                 axisY.Minimum = vToken.LowerLimit;
                             }
@@ -323,18 +351,18 @@ namespace AIC.OnLineDataPage.Views
                     {
                         var anToken = token as BaseAlarmSignalToken;
                         if (anToken.DataContracts != null && anToken.DataContracts.Count > 0)//加入数据
-                        {                            
+                        {
                             SeriesPoint[] points = new SeriesPoint[anToken.DataContracts.Count];
                             for (int i = 0; i < points.Length; i++)
                             {
-                                points[i].X = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
+                                points[i].X = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(anToken.DataContracts[i].ACQDatetime);
                                 points[i].Y = anToken.DataContracts[i].Result.Value;
                                 AddMarker(series, points[i], anToken.DataContracts[i].AlarmGrade);
                             }
                             series.Points = points;
                             axisY.Title.Text = anToken.DisplayName + "(" + anToken.DataContracts[0].Unit + ")";
                             if (refresh == true)
-                            {                               
+                            {
                                 axisY.Maximum = anToken.UpperLimit;
                                 axisY.Minimum = anToken.LowerLimit;
                             }
@@ -345,25 +373,25 @@ namespace AIC.OnLineDataPage.Views
                         }
                     }
                 }
-                m_chart.ViewXY.XAxes[0].SetRange(m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
-                m_chart.EndUpdate();
+                _chart.ViewXY.XAxes[0].SetRange(_chart.ViewXY.XAxes[0].DateTimeToAxisValue(time), _chart.ViewXY.XAxes[0].DateTimeToAxisValue(time.AddHours(size)));
+                _chart.EndUpdate();
 
                 if (tokens != null && tokens.Count() > 0)
                 {
-                    if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                    if (_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < _chart.ViewXY.XAxes[0].Minimum || _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > _chart.ViewXY.XAxes[0].Maximum)
                     {
-                        m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                        _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (_chart.ViewXY.XAxes[0].Minimum + _chart.ViewXY.XAxes[0].Maximum) / 2.0;
                     }
                     else
                     {
-                        UpdateCursorResult(m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
+                        UpdateCursorResult(_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis);
                     }
                 }
             }
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势-数据翻页", ex));
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
         }
 
@@ -372,11 +400,11 @@ namespace AIC.OnLineDataPage.Views
         {
             try
             {
-                m_chart.BeginUpdate();
+                _chart.BeginUpdate();
                 foreach (var token in tokens)
                 {
-                    PointLineSeries series = m_chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
-                    AxisY axisY = m_chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
+                    PointLineSeries series = _chart.ViewXY.PointLineSeries.Where(o => o.Tag == token).SingleOrDefault();
+                    AxisY axisY = _chart.ViewXY.YAxes.Where(o => o.Tag == token).SingleOrDefault();
 
                     if (series.PointCount == 0 && token.BaseAlarmSignal.Result != null)
                     {
@@ -395,7 +423,7 @@ namespace AIC.OnLineDataPage.Views
                     DateTime lasttime = new DateTime();
                     if (series.Points != null && series.Points.Count() > 0)
                     {
-                        lasttime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(series.Points.Select(p => p.X).Max());
+                        lasttime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(series.Points.Select(p => p.X).Max());
                     }
                     datas.AddRange(token.BaseAlarmSignal.BufferData.Where(p => p.ACQDateTime > lasttime));
                     if (token.BaseAlarmSignal.ACQDatetime > lasttime)
@@ -407,14 +435,14 @@ namespace AIC.OnLineDataPage.Views
                     {
                         continue;
                     }
-                   
+
                     SeriesPoint[] points = new SeriesPoint[1];
 
                     string unit = token.BaseAlarmSignal.Unit;
 
                     for (int i = 0; i < datas.Count; i++)
                     {
-                        m_dLatestX = m_chart.ViewXY.XAxes[0].DateTimeToAxisValue(datas[i].ACQDateTime);
+                        m_dLatestX = _chart.ViewXY.XAxes[0].DateTimeToAxisValue(datas[i].ACQDateTime);
                         points[0].X = m_dLatestX;
                         points[0].Y = datas[i].Result;
                         points[0].Tag = datas[i].Unit;
@@ -426,26 +454,26 @@ namespace AIC.OnLineDataPage.Views
                 }
             }
             catch (Exception ex)
-            {               
+            {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("趋势画面-实时刷新", ex));
             }
             finally
             {
-                if (m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < m_chart.ViewXY.XAxes[0].Minimum || m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > m_chart.ViewXY.XAxes[0].Maximum)
+                if (_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis < _chart.ViewXY.XAxes[0].Minimum || _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis > _chart.ViewXY.XAxes[0].Maximum)
                 {
-                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (m_chart.ViewXY.XAxes[0].Minimum + m_chart.ViewXY.XAxes[0].Maximum) / 2.0;
+                    _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = (_chart.ViewXY.XAxes[0].Minimum + _chart.ViewXY.XAxes[0].Maximum) / 2.0;
                 }
                 else if (chkTrace.IsChecked == true)
                 {
-                    m_chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_dLatestX;
+                    _chart.ViewXY.LineSeriesCursors[0].ValueAtXAxis = m_dLatestX;
                 }
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
         }
 
         private void ViewModel_SignalShowChanged(SignalToken signalToken)
         {
-            var series = m_chart.ViewXY.PointLineSeries.Where(p => p.Tag == signalToken).FirstOrDefault();
+            var series = _chart.ViewXY.PointLineSeries.Where(p => p.Tag == signalToken).FirstOrDefault();
             if (series != null)
             {
                 series.Visible = !series.Visible;
@@ -454,13 +482,13 @@ namespace AIC.OnLineDataPage.Views
 
         private void ViewModel_SignalSelected(SignalToken signalToken)
         {
-            var series = m_chart.ViewXY.PointLineSeries.Where(p => p.Tag == signalToken).FirstOrDefault();
+            var series = _chart.ViewXY.PointLineSeries.Where(p => p.Tag == signalToken).FirstOrDefault();
             if (series != null)
             {
                 series.SetHighlight();
-                
+
             }
-            m_chart.ViewXY.PointLineSeries.ForEach(p =>
+            _chart.ViewXY.PointLineSeries.ForEach(p =>
             {
                 if (p.Tag == signalToken)
                 {
@@ -473,77 +501,72 @@ namespace AIC.OnLineDataPage.Views
             });
         }
 
-        public CloseableHeader Closer { get; private set; }
-
-        private LightningChartUltimate m_chart;
-        HistoryDataTrendViewModel ViewModel;
-
         private void CreateChart()
         {
             gridChart.Children.Clear();
-            if (m_chart != null)
+            if (_chart != null)
             {
-                m_chart.Dispose();
-                m_chart = null;
+                _chart.Dispose();
+                _chart = null;
             }
 
-            m_chart = new LightningChartUltimate();
-            m_chart.BeginUpdate();
-            m_chart.Title.Text = ""; ;
-            m_chart.ViewXY.AxisLayout.YAxesLayout = YAxesLayout.Layered;
-            m_chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.LeftThenRight;
+            _chart = new LightningChartUltimate();
+            _chart.BeginUpdate();
+            _chart.Title.Text = ""; ;
+            _chart.ViewXY.AxisLayout.YAxesLayout = YAxesLayout.Layered;
+            _chart.ViewXY.AxisLayout.YAxisAutoPlacement = YAxisAutoPlacement.LeftThenRight;
 
-            // m_chart.ViewXY.AxisLayout.AutoAdjustAxisGap = 0;
-            m_chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-            m_chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            m_chart.ChartBackground.GradientFill = GradientFill.Solid;
-            m_chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
-            m_chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
-            m_chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
+            // _chart.ViewXY.AxisLayout.AutoAdjustAxisGap = 0;
+            _chart.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            _chart.ChartBackground.Color = Color.FromArgb(0, 0, 0, 0);
+            _chart.ChartBackground.GradientFill = GradientFill.Solid;
+            _chart.ViewXY.GraphBackground.Color = Color.FromArgb(0, 0, 0, 0);
+            _chart.ViewXY.GraphBackground.GradientFill = GradientFill.Solid;
+            _chart.ViewXY.GraphBorderColor = Color.FromArgb(0, 0, 0, 0);
 
-            m_chart.ViewXY.XAxes[0].ValueType = AxisValueType.DateTime;
-            m_chart.ViewXY.XAxes[0].AutoFormatLabels = false;
-            m_chart.ViewXY.XAxes[0].LabelsTimeFormat  = "MM-dd HH:mm";
-            m_chart.ViewXY.XAxes[0].Title.Visible = false;
-            //m_chart.ViewXY.XAxes[0].MinimumDateTime = DateTime.Now.Subtract(TimeSpan.FromMinutes(5));
-            //m_chart.ViewXY.XAxes[0].MaximumDateTime = DateTime.Now;
-            m_chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
-            m_chart.ViewXY.XAxes[0].AxisThickness = 2;
-            m_chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
-            m_chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+            _chart.ViewXY.XAxes[0].ValueType = AxisValueType.DateTime;
+            _chart.ViewXY.XAxes[0].AutoFormatLabels = false;
+            _chart.ViewXY.XAxes[0].LabelsTimeFormat  = "MM-dd HH:mm";
+            _chart.ViewXY.XAxes[0].Title.Visible = false;
+            //_chart.ViewXY.XAxes[0].MinimumDateTime = DateTime.Now.Subtract(TimeSpan.FromMinutes(5));
+            //_chart.ViewXY.XAxes[0].MaximumDateTime = DateTime.Now;
+            _chart.ViewXY.XAxes[0].MinorGrid.Visible = false;
+            _chart.ViewXY.XAxes[0].AxisThickness = 2;
+            _chart.ViewXY.XAxes[0].AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
+            _chart.ViewXY.XAxes[0].LabelsFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
 
-            m_chart.ViewXY.YAxes.Clear();
-            AxisY axisYnone = new AxisY(m_chart.ViewXY);
+            _chart.ViewXY.YAxes.Clear();
+            AxisY axisYnone = new AxisY(_chart.ViewXY);
             axisYnone.Title.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 10, System.Drawing.FontStyle.Regular);
             axisYnone.AxisThickness = 2;
             axisYnone.AxisColor = Color.FromArgb(0xff, 0xff, 0xff, 0xff);//Color.FromArgb(100, 135, 205, 238);
             axisYnone.Units.Text = "none";
-            m_chart.ViewXY.YAxes.Add(axisYnone);
+            _chart.ViewXY.YAxes.Add(axisYnone);
 
-            m_chart.ViewXY.LegendBoxes[0].Visible = false;
-            m_chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
-            m_chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
-            m_chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
-            m_chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
-            m_chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopRight;
-            m_chart.ViewXY.LegendBoxes[0].Offset.SetValues(-80, 5);
-            m_chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
-            m_chart.ViewXY.LegendBoxes[0].SeriesTitleMouseMoveOverOn += LegendBox_SeriesTitleMouseMoveOverOn;
+            _chart.ViewXY.LegendBoxes[0].Visible = false;
+            _chart.ViewXY.LegendBoxes[0].Layout = LegendBoxLayout.VerticalColumnSpan;
+            _chart.ViewXY.LegendBoxes[0].Fill.Style = RectFillStyle.None;
+            _chart.ViewXY.LegendBoxes[0].Shadow.Visible = false;
+            _chart.ViewXY.LegendBoxes[0].BorderWidth = 0;
+            _chart.ViewXY.LegendBoxes[0].Position = LegendBoxPositionXY.TopRight;
+            _chart.ViewXY.LegendBoxes[0].Offset.SetValues(-80, 5);
+            _chart.ViewXY.LegendBoxes[0].SeriesTitleFont = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9, System.Drawing.FontStyle.Regular);
+            _chart.ViewXY.LegendBoxes[0].SeriesTitleMouseMoveOverOn += LegendBox_SeriesTitleMouseMoveOverOn;
 
             //Add cursor
-            LineSeriesCursor cursor = new LineSeriesCursor(m_chart.ViewXY, m_chart.ViewXY.XAxes[0]);
-            m_chart.ViewXY.LineSeriesCursors.Add(cursor);
+            LineSeriesCursor cursor = new LineSeriesCursor(_chart.ViewXY, _chart.ViewXY.XAxes[0]);
+            _chart.ViewXY.LineSeriesCursors.Add(cursor);
             cursor.PositionChanged += cursor_PositionChanged;
             cursor.LineStyle.Color = System.Windows.Media.Color.FromArgb(150, 255, 0, 0);
             cursor.LineStyle.Width = 2;
             cursor.SnapToPoints = true;
             cursor.TrackPoint.Color1 = Colors.White;
          
-            m_chart.ViewXY.ZoomToFit();
+            _chart.ViewXY.ZoomToFit();
         
-            m_chart.EndUpdate();
+            _chart.EndUpdate();
 
-            gridChart.Children.Add(m_chart);
+            gridChart.Children.Add(_chart);
 
             chkZoom.Checked += chkZoom_Checked;
             chkZoom.Unchecked += chkZoom_Unchecked;
@@ -552,16 +575,16 @@ namespace AIC.OnLineDataPage.Views
 
         private void chkZoom_Checked(object sender, RoutedEventArgs e)
         {
-            m_chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.Off;
-            m_chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.None;
-            m_chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.None;
+            _chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.Off;
+            _chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.None;
+            _chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.None;
         }
 
         private void chkZoom_Unchecked(object sender, RoutedEventArgs e)
         {
-            m_chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.HorizontalAndVertical;
-            m_chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.Zoom;
-            m_chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.Zoom;
+            _chart.ViewXY.ZoomPanOptions.MouseWheelZooming = MouseWheelZooming.HorizontalAndVertical;
+            _chart.ViewXY.ZoomPanOptions.LeftMouseButtonAction = MouseButtonAction.Zoom;
+            _chart.ViewXY.ZoomPanOptions.RightMouseButtonAction = MouseButtonAction.Zoom;
         }
 
         private void LegendBox_SeriesTitleMouseMoveOverOn(Object sender, Arction.Wpf.Charting.Views.ViewXY.SeriesTitleMouseMovedEventArgs e)
@@ -574,7 +597,7 @@ namespace AIC.OnLineDataPage.Views
   
         private void CreateAnnotation()
         {
-            AnnotationXY cursorValueDisplay = new AnnotationXY(m_chart.ViewXY, m_chart.ViewXY.XAxes[0], m_chart.ViewXY.YAxes[0]);
+            AnnotationXY cursorValueDisplay = new AnnotationXY(_chart.ViewXY, _chart.ViewXY.XAxes[0], _chart.ViewXY.YAxes[0]);
             cursorValueDisplay.Style = AnnotationStyle.Callout;
             cursorValueDisplay.LocationCoordinateSystem = CoordinateSystem.RelativeCoordinatesToTarget;
             cursorValueDisplay.LocationRelativeOffset = new PointFloatXY(80, -50);
@@ -593,7 +616,7 @@ namespace AIC.OnLineDataPage.Views
             cursorValueDisplay.AutoSizePadding = 5;
             cursorValueDisplay.Text = "";
             cursorValueDisplay.ClipInsideGraph = false;
-            m_chart.ViewXY.Annotations.Add(cursorValueDisplay);
+            _chart.ViewXY.Annotations.Add(cursorValueDisplay);
         }
 
         private void cursor_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
@@ -606,12 +629,12 @@ namespace AIC.OnLineDataPage.Views
         {
             try
             {
-                m_chart.BeginUpdate();
+                _chart.BeginUpdate();
                 List<BaseWaveSignalToken> channelList = new List<BaseWaveSignalToken>();
-                AnnotationXY cursorValueDisplay = m_chart.ViewXY.Annotations[0];
-                float fTargetYCoord = m_chart.ViewXY.GetMarginsRect().Bottom;
+                AnnotationXY cursorValueDisplay = _chart.ViewXY.Annotations[0];
+                float fTargetYCoord = _chart.ViewXY.GetMarginsRect().Bottom;
                 double dY;
-                m_chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
+                _chart.ViewXY.YAxes[0].CoordToValue(fTargetYCoord, out dY);
                 cursorValueDisplay.TargetAxisValues.X = xValue;
                 cursorValueDisplay.TargetAxisValues.Y = dY;
 
@@ -622,7 +645,7 @@ namespace AIC.OnLineDataPage.Views
                 string strValue = "";
                 bool bLabelVisible = false;
 
-                foreach (PointLineSeries series in m_chart.ViewXY.PointLineSeries)
+                foreach (PointLineSeries series in _chart.ViewXY.PointLineSeries)
                 {
                     strValue = "";
                     int index = GetNearestIndex(series, xValue);
@@ -638,7 +661,7 @@ namespace AIC.OnLineDataPage.Views
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
                             token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
-                            token.SelectedTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
+                            token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else
                         {
@@ -656,7 +679,7 @@ namespace AIC.OnLineDataPage.Views
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
                             token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
-                            token.SelectedTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
+                            token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else
                         {
@@ -672,7 +695,7 @@ namespace AIC.OnLineDataPage.Views
                             string unit = contract.Unit;
                             strValue = string.Format(strChannelStringFormat, token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
                             token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
-                            token.SelectedTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
+                            token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else
                         {
@@ -684,12 +707,12 @@ namespace AIC.OnLineDataPage.Views
                     // series.Title.Text = strValue;
                     iSeriesNumber++;
                 }
-                sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
+                sb.AppendLine("Time: " + _chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;
                 //Allow chart rendering
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
 
                 if (channelList.Count > 0)
                 {
@@ -699,13 +722,13 @@ namespace AIC.OnLineDataPage.Views
             catch (Exception ex)
             {
                 EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-趋势趋势-Track", ex));
-                m_chart.EndUpdate();
+                _chart.EndUpdate();
             }
         }
 
         private bool SolveValueAccurate(PointLineSeries series, double xValue, out double yValue)
         {
-            AxisY axisY = m_chart.ViewXY.YAxes[series.AssignYAxisIndex];
+            AxisY axisY = _chart.ViewXY.YAxes[series.AssignYAxisIndex];
             yValue = 0;
 
             LineSeriesValueSolveResult lssvs = series.SolveYValueAtXValue(xValue);
@@ -794,7 +817,7 @@ namespace AIC.OnLineDataPage.Views
                 marker.Symbol.Width = 5;
                 marker.Symbol.Height = 5;
                 //store values in label text    
-                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + m_chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy-MM-dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
+                marker.Label.Text = alarmTypeStr + "\r\n" + "X:" + _chart.ViewXY.XAxes[0].TimeString(point.X, "yyyy-MM-dd HH:mm:ss") + "\r\n" + "Y:" + point.Y.ToString("0.000");
                 marker.Label.HorizontalAlign = AlignmentHorizontal.Center;
                 marker.Label.Font = new WpfFont(System.Drawing.FontFamily.GenericSansSerif, 9f, System.Drawing.FontStyle.Bold);
                 marker.Label.Shadow.Style = TextShadowStyle.HighContrast;

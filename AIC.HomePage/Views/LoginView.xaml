@@ -26,15 +26,15 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--<Image x:Name="image" Opacity="1" Stretch="Fill" Source="/AIC.Resources;component/Images/Splash.png" ></Image>-->
-        <!--<StackPanel HorizontalAlignment="Right" Margin="0,0,50,0">            
+        <StackPanel HorizontalAlignment="Right" Margin="0,0,50,0" VerticalAlignment="Center">            
             <TextBlock Text="●在线振动监测"  FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0"/>
             <TextBlock Text="●海量数据分析" FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             <TextBlock Text="●在线故障诊断" FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             <TextBlock Text="●历史数据回放" FontSize="28" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-        </StackPanel>-->
-        <!--<StackPanel VerticalAlignment="Bottom" Margin="0,0,0,50">
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,50">
             <TextBlock Text="专业振动监测平台" FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"/>            
-        </StackPanel>-->
+        </StackPanel>
         <Expander ExpandDirection="Down" Header="服务器列表" Width="300" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left">
             <ListBox x:Name="myListBox" ItemsSource="{Binding ServerInfoList}" Background="Transparent">
             <!--<ListBox.ItemsPanel>

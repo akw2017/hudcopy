@@ -15,5 +15,9 @@ namespace AIC.Core.Models
         public string Name { get; set; }
         public int AlarmGrade { get; set; }//1正常，2预警，3报警，4危险
         public double AlarmRate { get; set; }
+        public int DangerNumber { get; set; }
+        public int AlarmNumber { get; set; }
+        public int PreAlarmNumber { get; set; }
+        public List<Tuple<DateTime, bool>> DateRunning { get; set; }
     }
 }

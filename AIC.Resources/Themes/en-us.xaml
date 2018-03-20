@@ -43,6 +43,13 @@
     <s:String x:Key="strSlot">Slot</s:String>
     <s:String x:Key="strChannel">Channel</s:String>
 
+    <s:String x:Key="strDanger">Danger</s:String>
+    <s:String x:Key="strAlarm">Alarm</s:String>
+    <s:String x:Key="strPreAlarm">PreAlarm</s:String>
+    <s:String x:Key="strNormal">Normal</s:String>
+    <s:String x:Key="strAbnormal">Abnormal</s:String>
+    <s:String x:Key="strUnConnect">UnConnect</s:String>
+
     <s:String x:Key="tabFirst">Home</s:String>   
 
     <s:String x:Key="menuUser">User</s:String>
@@ -83,6 +90,7 @@
     <s:String x:Key="menuImportDBData">ImportDBData</s:String>
     <s:String x:Key="menuFilterDBData">SearchDBData</s:String>
 
+    <s:String x:Key="menuServerQucikData">ServerQucikData</s:String>
     <s:String x:Key="menuDeviceQucikData">DeviceQucikData</s:String>
     <s:String x:Key="menuItemQucikData">ItemQucikData</s:String>
 

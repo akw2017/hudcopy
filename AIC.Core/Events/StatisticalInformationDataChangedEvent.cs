@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.Events
 {
-    public delegate void StatisticalInformationDataChangedEvent();
+    public delegate void DailyChangedEvent();
 }

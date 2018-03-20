@@ -1,4 +1,5 @@
-﻿using AIC.Core.LMModels;
+﻿using AIC.Core.DataModels;
+using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.M9600.Common.DTO.Web;
 using AIC.M9600.Common.SlaveDB.Generated;
@@ -77,5 +78,7 @@ namespace AIC.ServiceInterface
 
         Task<List<T>> GetDailyMedianData<T>(string ip, string table, DateTime startTime, DateTime endTime, string columns = "*");
         Task<Dictionary<string, List<T>>> GetDailyMedianData<T>(DateTime startTime, DateTime endTime, string columns = "*");
+
+        Task<List<IBaseAlarmSlot>> GetUniformHistoryData(int itemType, string ip, Guid guid, string[] columns, DateTime startTime, DateTime endTime, string condition, object[] args);
     }
 }

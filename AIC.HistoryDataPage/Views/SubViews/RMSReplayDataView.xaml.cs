@@ -1,4 +1,6 @@
-﻿using AIC.Core.Events;
+﻿using AIC.Core;
+using AIC.Core.DataModels;
+using AIC.Core.Events;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
@@ -34,10 +36,9 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for RMSReplayDataView.xaml
     /// </summary>
-    public partial class RMSReplayDataView : UserControl
+    public partial class RMSReplayDataView : DisposableUserControl
     {
         private LightningChartUltimate m_chart;
-        private RMSReplayDataViewModel viewModel;
         private IDisposable channelDataChangedSubscription;
         private IDisposable channelAddedSubscription;
         private IDisposable channelRemovedSubscription;
@@ -55,19 +56,38 @@ namespace AIC.HistoryDataPage.Views
 
             readDataTimer.Tick += new EventHandler(timeCycle);
             readDataTimer.Interval = new TimeSpan(0, 0, 0, 2);
-
         }
+
+        private RMSReplayDataViewModel ViewModel
+        {
+            get { return DataContext as RMSReplayDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
+        }
+
         private void AMSReplayDataView_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= AMSReplayDataView_Loaded;
-            viewModel = DataContext as RMSReplayDataViewModel;
-            if (viewModel != null)
+            if (ViewModel != null)
             {
-                channelAddedSubscription = viewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
-                channelRemovedSubscription = viewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
-                channelDataChangedSubscription = viewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
-                multicursorlChanngedSubscription = viewModel.WhenCursorlChannged.Subscribe(OnCursorlChannged);
-                AddAlarmMarker = viewModel.AddAlarmMarker;
+                channelAddedSubscription = ViewModel.WhenChannelAdded.Subscribe(OnChannelAdded);
+                channelRemovedSubscription = ViewModel.WhenChannelRemoved.Subscribe(OnChannelRemoved);
+                channelDataChangedSubscription = ViewModel.WhenChannelDataChanged.Subscribe(OnChannelDataChanged);
+                multicursorlChanngedSubscription = ViewModel.WhenCursorlChannged.Subscribe(OnCursorlChannged);
+                AddAlarmMarker = ViewModel.AddAlarmMarker;
+                ViewModel.Closed += ViewModel_Closed;         
             }
         }
 
@@ -774,7 +794,7 @@ namespace AIC.HistoryDataPage.Views
         {
             if (e.Series is PointLineSeries)
             {
-                viewModel.AllCount = ((PointLineSeries)e.Series).PointCount;
+                ViewModel.AllCount = ((PointLineSeries)e.Series).PointCount;
             }
         }
         private void CreateAnnotation()
@@ -852,14 +872,14 @@ namespace AIC.HistoryDataPage.Views
         private void bandX_MovedByMouse(object sender, MouseEventArgs e)
         {
             Band band = sender as Band;
-            viewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(band.ValueBegin);
-            viewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(band.ValueEnd);
+            ViewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(band.ValueBegin);
+            ViewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(band.ValueEnd);
         }
         private void bandX_ResizedByMouse(Object sender, BandResizedByMouseEventArgs e)
         {
             e.CancelRendering = true;
-            viewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueBegin);
-            viewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueEnd);
+            ViewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueBegin);
+            ViewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(e.ValueEnd);
         }
         private void cursor_PositionChanged(Object sender, Arction.Wpf.Charting.Views.ViewXY.PositionChangedEventArgs e)
         {
@@ -899,7 +919,7 @@ namespace AIC.HistoryDataPage.Views
                         channelList.Add(token);
                         if (index != -1)
                         {
-                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            var contract = token.DataContracts[index] as IBaseDivfreSlot;  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
                             strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
@@ -916,7 +936,7 @@ namespace AIC.HistoryDataPage.Views
                         channelList.Add(token);
                         if (index != -1)
                         {
-                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            var contract = token.DataContracts[index] as IBaseDivfreSlot;  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;                           
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result??0.0, 3), unit);
                             strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
@@ -969,7 +989,7 @@ namespace AIC.HistoryDataPage.Views
 
                 if (channelList.Count > 0)
                 {
-                    viewModel.RaiseTrackChanged(channelList);
+                    ViewModel.RaiseTrackChanged(channelList);
                 }
             }
             catch (Exception ex)
@@ -1020,7 +1040,7 @@ namespace AIC.HistoryDataPage.Views
                         channelList.Add(token);
                         if (index != -1)
                         {
-                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            var contract = token.DataContracts[index] as IBaseDivfreSlot;  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
                             strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
@@ -1037,7 +1057,7 @@ namespace AIC.HistoryDataPage.Views
                         channelList.Add(token);
                         if (index != -1)
                         {
-                            var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
+                            var contract = token.DataContracts[index] as IBaseDivfreSlot;  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
                             strValue += (contract.IsValidWave == true) ? " ~" : string.Empty;
@@ -1090,7 +1110,7 @@ namespace AIC.HistoryDataPage.Views
 
                 if (channelList.Count > 0)
                 {
-                    viewModel.RaiseTrack2Changed(channelList);
+                    ViewModel.RaiseTrack2Changed(channelList);
                 }
             }
             catch (Exception ex)
@@ -1142,10 +1162,10 @@ namespace AIC.HistoryDataPage.Views
             if ((bool)tgBtn.IsChecked)
             {
                 Band bandx = m_chart.ViewXY.Bands[0];
-                if (viewModel != null)
+                if (ViewModel != null)
                 {
-                    viewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(bandx.ValueBegin);
-                    viewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(bandx.ValueEnd);
+                    ViewModel.StartTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(bandx.ValueBegin);
+                    ViewModel.EndTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(bandx.ValueEnd);
                 }
                 bandx.Visible = true;
             }

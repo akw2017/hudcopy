@@ -404,5 +404,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInter
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMatlabDLL.dll

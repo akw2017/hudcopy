@@ -27,7 +27,8 @@ namespace AIC.Core
     {
         #region Fields
 
-        FluidWrapPanel parentFWPanel = null;
+        //FluidWrapPanel parentFWPanel = null;
+        IFluidWrapPanel parentFWPanel = null;
         UIElement parentLBItem = null;
 
         #endregion
@@ -110,6 +111,13 @@ namespace AIC.Core
                 if (ancestor is FluidWrapPanel)
                 {
                     parentFWPanel = ancestor as FluidWrapPanel;
+                    // No need to go further up
+                    return;
+                }
+
+                if (ancestor is VirtualizingFluidWrapPanel)
+                {
+                    parentFWPanel = ancestor as VirtualizingFluidWrapPanel;
                     // No need to go further up
                     return;
                 }

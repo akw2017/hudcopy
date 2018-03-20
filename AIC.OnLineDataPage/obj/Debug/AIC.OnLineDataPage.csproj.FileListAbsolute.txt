@@ -889,3 +889,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.Wpf.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Debug\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\SubViews\DiagnoseView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Debug\Views\SubViews\DiagnoseView.baml

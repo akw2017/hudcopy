@@ -50,6 +50,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\phone.pn
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\point-collection\blue-marke-15x16.png
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\point-collection\red-marker-10x13.png
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\quanjing.png
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\red.png
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\ruler.cur
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\stop_icon.png
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\js\fox.gif
@@ -2551,6 +2552,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.LocalConfiguration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.PDAPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.QuickDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.SignalProcess.dll
@@ -2559,6 +2561,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.UserPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\log4net.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Loya.Dameer.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MahApps.Metro.dll
@@ -2617,6 +2621,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.HistoryDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.OnLineDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.PDAPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.QuickDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.SignalProcess.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.Themes.pdb
@@ -2637,6 +2642,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.VirtualizingWrapPanel.pd
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\log4net.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MahApps.Metro.xml
@@ -2725,10 +2734,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.TrustInfo.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MyData\Htmls\images\red.png
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.xml
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\LiveCharts.Wpf.xml

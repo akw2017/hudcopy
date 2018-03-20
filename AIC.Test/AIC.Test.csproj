@@ -121,6 +121,10 @@
       <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
       <Name>AIC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
+      <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
+      <Name>AIC.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.GridSelected\Wpf.GridSelected.csproj">
       <Project>{9388d1e7-a59f-4e89-875a-e31086b31d45}</Project>
       <Name>Wpf.GridSelected</Name>

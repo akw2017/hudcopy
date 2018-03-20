@@ -864,4 +864,67 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
+
+    <DataTemplate x:Key="DiagnoseTemplate" DataType="{x:Type models:SignalTileViewModel}">
+        <Grid Width="{Binding ItemWidth}" Height="{Binding ItemHeight}">
+            <i:Interaction.Behaviors>
+                <core:FluidMouseDragBehavior DragButton="Left"/>
+            </i:Interaction.Behaviors>
+            <Grid Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Margin="3,3,3,0" Background="{DynamicResource AccentColorBrush}">
+                    <Grid.ToolTip>
+                        <TextBlock Foreground="#FF87CDEE" VerticalAlignment="Center" >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}({1})">
+                                    <Binding Path="Signal.DeviceItemName"/>
+                                    <Binding Path="Signal.Unit" Converter="{StaticResource enumDescriptionConverter}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid.ToolTip>
+                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                        <TextBlock Foreground="#FF87CDEE" VerticalAlignment="Center" >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}({1})">
+                                    <Binding Path="Signal.DeviceItemName"/>
+                                    <Binding Path="Signal.Unit" Converter="{StaticResource enumDescriptionConverter}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <views:MoreInformation DataContext="{Binding Signal}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Grid HorizontalAlignment="Right" Margin="0, 0, 30, 0" Visibility="{Binding Signal.HasBattery,Converter={StaticResource boolToVisibilityConverter}}">
+                        <Border BorderBrush="Black" BorderThickness="1" Width="32" Height="20">
+                            <Controls:MetroProgressBar Width="30" Height="18" Value="{Binding Signal.BatteryEnergy}" Foreground="Green" />
+                        </Border>
+                        <TextBlock Text="{Binding Signal.BatteryEnergy, StringFormat=F0}" TextAlignment="Center" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Button HorizontalAlignment="Right" Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" >
+                        <Image Source="/AIC.Resources;component/Images/delete3.png" />
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="3,0,3,3" Background="{DynamicResource ChartBackgroundAccentColorBrush}">
+                    <subviews:DiagnoseView DataContext="{Binding  DataViewModel}"/>
+                </Grid>
+
+                <Path x:Name="TopLeftPath" Grid.RowSpan="2" Data="M81.666667,24.163333 L67.999664,24.163333 67.999664,35.080334" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+                <Path x:Name="TopRightPath" Grid.RowSpan="2" Data="M51.833333,23.83 L62.916999,23.83 62.916999,33.663333" HorizontalAlignment="Right" VerticalAlignment="Top" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+                <Path x:Name="BottomLeftPath" Grid.RowSpan="2" Data="M68.4375,6.7258333 L68.4375,18.913167 82.687,18.913167" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3" />
+                <Path x:Name="BottomRightPath" Grid.RowSpan="2" Data="M64.625,10.788333 L64.625,19.851166 54,19.851166" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Width="15" Stretch="Fill" Stroke="#FF87CDEE" StrokeThickness="3"/>
+            </Grid>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="TopLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="TopRightPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomLeftPath" Property="Stroke" Value="Orange" />
+                <Setter TargetName="BottomRightPath" Property="Stroke" Value="Orange" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 </ResourceDictionary>

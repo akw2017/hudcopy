@@ -27,12 +27,30 @@ namespace AIC.OnLineDataPage.Views.SubViews
         public PowerSpectrumDensityChartView()
         {
             InitializeComponent();
-            //CreateChart();
+            CreateChart();
         }
 
-        protected override void ViewModel_Closed(object sender, EventArgs e)
+        protected override void ChartViewBase_Unloaded(object sender, RoutedEventArgs e)
         {
-            base.ViewModel_Closed(sender, e);
+            base.ChartViewBase_Unloaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.None;
+            }
+        }
+
+        protected override void ChartViewBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            base.ChartViewBase_Loaded(sender, e);
+            if (m_chart != null)
+            {
+                m_chart.ChartRenderOptions.DeviceType = RendererDeviceType.SoftwareOnlyD11;
+            }
+        }
+
+        protected override void ViewModel_Disposed(object sender, EventArgs e)
+        {
+            base.ViewModel_Disposed(sender, e);
             // Don't forget to clear chart grid child list.
             gridChart.Children.Clear();
             if (m_chart != null)
@@ -40,13 +58,15 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.Dispose();
                 m_chart = null;
             }
+            base.Dispose();
         }
 
-        protected override void ViewModel_Opened(object sender, EventArgs e)
+        protected override void ViewModel_Closed(object sender, EventArgs e)
         {
-            base.ViewModel_Opened(sender, e);
-            CreateChart();
+            this.ViewModel_Disposed(sender, e);
+            base.GCCollect();
         }
+
 
         protected override void ViewModel_SignalChanged()
         {
@@ -340,9 +360,13 @@ namespace AIC.OnLineDataPage.Views.SubViews
                 m_chart.ViewXY.ZoomToFit();
                 m_chart.EndUpdate();
             }
-            catch
+            catch (Exception ex)
             {
-                m_chart.EndUpdate();
+                EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("在线监测-功率谱密度-初始化", ex));
+                if (m_chart != null)
+                {
+                    m_chart.EndUpdate();
+                }
             }
             finally
             {

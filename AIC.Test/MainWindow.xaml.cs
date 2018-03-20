@@ -23,12 +23,12 @@ namespace AIC.Test
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 50; i++)
             {
                 list.Add(i);
             }
-            //listbox.ItemsSource = list;
-            //listbox2.ItemsSource = list;
+            listbox.ItemsSource = list;
+            listbox2.ItemsSource = list;
         }
 
         List<int> list = new List<int>();

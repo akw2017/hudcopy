@@ -41,6 +41,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ColorStyle.bam
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\en-us.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\Generic.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ScrollBar.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\zh-cn.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\PopupWindow.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\TaskbarNotifier.baml
@@ -50,12 +51,12 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\WaitingDlg.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\BottomAsyncWorkStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\AsyncWorkStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\DataGridStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\GreyStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\GridSplitterStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\Style.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TreeViewStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Views\WaitingDlg.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.g.resources

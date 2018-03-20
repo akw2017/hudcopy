@@ -386,7 +386,7 @@ namespace AIC.DatabaseService
             }
             region.Add(view, viewName);
             region.Activate(view);
-            return null;
+            return viewObj;
         }
         public void TabLanguageShift()
         {
@@ -468,21 +468,18 @@ namespace AIC.DatabaseService
             }
         }
 
-        public void SetGotoServerInfo(string servername)
+        public ServerInfo GetServerInfo(string servername)
         {
-            GotoServerInfo = _localConfiguration.ServerInfoList.Where(p => p.Name == servername).FirstOrDefault();
-            if (GotoServerInfo == null)
+            var serverinfo = _localConfiguration.ServerInfoList.Where(p => p.Name == servername).FirstOrDefault();
+            if (serverinfo == null)
             {
-                GotoServerInfo = _localConfiguration.ServerInfoList.Where(p => p.IP == servername).FirstOrDefault();
-                if (GotoServerInfo == null)
+                serverinfo = _localConfiguration.ServerInfoList.Where(p => p.IP == servername).FirstOrDefault();
+                if (serverinfo == null)
                 {
-                    GotoServerInfo = _localConfiguration.ServerInfoList.FirstOrDefault();
+                    serverinfo = _localConfiguration.ServerInfoList.FirstOrDefault();
                 }
             }
-        }
-        public void SetGotoSignal(BaseAlarmSignal sg)
-        {
-            GotoSignal = sg;
+            return serverinfo;
         }
         #endregion
     }

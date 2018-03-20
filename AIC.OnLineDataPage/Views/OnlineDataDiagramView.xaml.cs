@@ -1,4 +1,6 @@
-﻿using AIC.Core.UserManageModels;
+﻿using AIC.Core;
+using AIC.Core.UserManageModels;
+using AIC.OnLineDataPage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,7 @@ namespace AIC.OnLineDataPage.Views
     /// <summary>
     /// Interaction logic for OnLineEquipmentView.xaml
     /// </summary>
-    public partial class OnlineDataDiagramView : UserControl, ICloseable
+    public partial class OnlineDataDiagramView : DisposableUserControl, ICloseable
     {
         public OnlineDataDiagramView()
         {
@@ -33,8 +35,23 @@ namespace AIC.OnLineDataPage.Views
         }
         public CloseableHeader Closer { get; private set; }
 
+        private OnlineDataDiagramViewModel ViewModel
+        {
+            get { return DataContext as OnlineDataDiagramViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ViewModel.Close();
+            }
+        }
+
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)

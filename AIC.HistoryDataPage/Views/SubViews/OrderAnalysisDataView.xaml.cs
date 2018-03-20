@@ -1,4 +1,5 @@
-﻿using AIC.Core.Events;
+﻿using AIC.Core;
+using AIC.Core.Events;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
 using Arction.Wpf.Charting.Series3D;
@@ -27,14 +28,13 @@ namespace AIC.HistoryDataPage.Views
     /// <summary>
     /// Interaction logic for OrderAnalysisDataView.xaml
     /// </summary>
-    public partial class OrderAnalysisDataView : UserControl
+    public partial class OrderAnalysisDataView : DisposableUserControl
     {
         private SynchronizationContext uiContext = SynchronizationContext.Current; 
         int iColumnCount = 60;
         int iRowCount = 100;
         private SurfaceMeshSeries3D m_series;
         private LightningChartUltimate m_chart;
-        private OrderAnalysisDataViewModel ViewModel;
         private IDisposable orderAnalysisDataSubscrible;
         
 
@@ -43,6 +43,26 @@ namespace AIC.HistoryDataPage.Views
             InitializeComponent();
             CreateChart();
             Loaded += OrderAnalysisDataView_Loaded;
+        }
+
+        private OrderAnalysisDataViewModel ViewModel
+        {
+            get { return DataContext as OrderAnalysisDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+
+        protected void ViewModel_Closed(object sender, EventArgs e)
+        {
+            // Don't forget to clear chart grid child list.
+            gridChart.Children.Clear();
+            if (m_chart != null)
+            {
+                m_chart.Dispose();
+                m_chart = null;
+            }
+            base.Dispose();
+            base.GCCollect();
         }
 
         void OrderAnalysisDataView_Loaded(object sender, RoutedEventArgs e)
@@ -56,6 +76,7 @@ namespace AIC.HistoryDataPage.Views
                     orderAnalysisDataSubscrible.Dispose();
                 }
                 orderAnalysisDataSubscrible = ViewModel.WhenPropertyChanged.Where(o => o.ToString() == "OrderAnalysisData").ObserveOn(uiContext).Subscribe(OnOrderAnalysisDataChanged);
+                ViewModel.Closed += ViewModel_Closed;
             }
         }
 

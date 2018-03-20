@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.OrganizationModels;
 using AIC.Core.UserManageModels;
 using AIC.QuickDataPage.ViewModels;
 using Prism.Events;
@@ -41,17 +42,23 @@ namespace AIC.QuickDataPage.Views
         }
         public CloseableHeader Closer { get; private set; }
 
-        public void GotoServer(ServerInfo serverinfo)
+        private DeviceQucikDataViewModel ViewModel
         {
-            DeviceQucikDataViewModel vm = this.DataContext as DeviceQucikDataViewModel;
-            if (vm != null)
+            get { return DataContext as DeviceQucikDataViewModel; }
+            set { this.DataContext = value; }
+        }
+
+        public void GotoDevice(ServerInfo serverinfo, DeviceTreeItemViewModel device)
+        {
+            if (ViewModel != null)
             {
-                vm.ServerInfo = serverinfo;
+                ViewModel.Init(serverinfo, device);
             }
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= Window_Loaded;
             //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
             Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (btnGrdSplitter != null)

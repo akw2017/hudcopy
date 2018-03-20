@@ -1,4 +1,4 @@
-﻿D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\GeneratedInternalTypeHelper.g.cs
+﻿
 
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Themes\HistoryDataDiagramTemplate.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\HistoryDataDiagramView.xaml;;
@@ -9,5 +9,6 @@ FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\FrequencyDo
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\OffDesignConditionDataView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\PowerSpectrumDataView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\PowerSpectrumDensityDataView.xaml;;
+FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\DistributionMapView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\Views\SubViews\TimeDomainDataView.xaml;;
 
