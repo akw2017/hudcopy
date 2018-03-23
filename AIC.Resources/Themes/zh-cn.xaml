@@ -81,7 +81,7 @@
     <s:String x:Key="menuManageLog">管理日志</s:String>
 
     <s:String x:Key="menuDeviceData">设备数据</s:String>
-    <s:String x:Key="menuDeviceRunStatus">设备运行状态</s:String>
+    <s:String x:Key="menuDeviceRunTime">设备运行时长</s:String>
     <s:String x:Key="menuDeviceRunAnalyze">设备运行分析</s:String>
     <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
 
@@ -111,7 +111,7 @@
     <s:String x:Key="menuHistoricalData">历史数据</s:String>
     <s:String x:Key="menuAlartmData">报警数据</s:String>
     <s:String x:Key="menuRunningMonitor">设备运行监测</s:String>
-    <s:String x:Key="menuRunningAnalyze">设备运行分析</s:String>
+    <s:String x:Key="menuRunningAnalyze">设备运行时长</s:String>
 
     <s:String x:Key="menuLanguage">语言选择</s:String>
     <s:String x:Key="menuChinese">中文</s:String>

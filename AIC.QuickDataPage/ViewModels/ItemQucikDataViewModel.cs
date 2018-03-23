@@ -117,9 +117,9 @@ namespace AIC.QuickDataPage.ViewModels
             {
                 if (FirstItemTreeItem != null && FirstItemTreeItem.T_Item != null)
                 {
-                    return "测点名称:" + FirstItemTreeItem.Name + "\n\r" +
-                        "测点类型:" + FirstItemTreeItem.T_Item.GetHardWaveType() + "\n\r" +
-                        "测点地址:" + FirstItemTreeItem.T_Item.GetHardWaveInfo() + "\n\r" +
+                    return "测点名称:" + FirstItemTreeItem.Name + "\r\n" +
+                        "测点类型:" + FirstItemTreeItem.T_Item.GetHardWaveType() + "\r\n" +
+                        "测点地址:" + FirstItemTreeItem.T_Item.GetHardWaveInfo() + "\r\n" +
                         "测点报警:" + FirstItemTreeItem.BaseAlarmSignal.AlarmLimitString;
                 }
                 else

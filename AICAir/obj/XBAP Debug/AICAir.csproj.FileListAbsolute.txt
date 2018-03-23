@@ -2733,3 +2733,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.QuickDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.QuickDataPage.pdb

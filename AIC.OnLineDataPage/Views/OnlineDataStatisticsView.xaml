@@ -16,6 +16,7 @@
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
              xmlns:view="clr-namespace:AIC.OnLineDataPage.Views"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -149,7 +150,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <GroupBox Grid.Column ="0" Header="报警分布">
-                <Grid Name="gridChart" />
+                <lvc:PieChart Series="{Binding PieSeries}" DataClickCommand="{Binding SliceClickCommand}" LegendLocation="Right">
+                    <lvc:PieChart.AxisX>
+                        <lvc:Axis Foreground="Black">
+                            <lvc:Axis.Separator>
+                                <!--step 1 forces the axis to display all labels, disabling it makes it invisible-->
+                                <lvc:Separator Step="1" IsEnabled="False"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:PieChart.AxisX>
+                    <lvc:PieChart.ChartLegend>
+                        <lvc:DefaultLegend ></lvc:DefaultLegend>
+                    </lvc:PieChart.ChartLegend>
+                    <lvc:PieChart.DataTooltip>
+                        <lvc:DefaultTooltip ></lvc:DefaultTooltip>
+                    </lvc:PieChart.DataTooltip>
+                </lvc:PieChart>
             </GroupBox>
             <GroupBox Grid.Column ="1" Header="{Binding AlarmEventTitle}">
                 <ScrollViewer Margin="5" x:Name="scrollvw" Grid.Column ="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" BorderThickness="1" BorderBrush="{Binding AccentColorBrush}">

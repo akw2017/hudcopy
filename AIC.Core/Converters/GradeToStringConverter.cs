@@ -17,6 +17,10 @@ namespace AIC.Core
             if (value is AlarmGrade || value is int)
             {
                 AlarmGrade grade = (AlarmGrade)((int)value & 0x00ffff00);//兼容历史数据没有去除后8位
+                if ((AlarmGrade)value == AlarmGrade.DisConnect)//DisConnect没有在中间8位
+                {
+                    grade = AlarmGrade.DisConnect;
+                }
                 switch (grade)
                 {
                     case AlarmGrade.Invalid: return "无效";
@@ -29,7 +33,7 @@ namespace AIC.Core
                     case AlarmGrade.HighDanger: 
                     case AlarmGrade.LowDanger: return "危险";
                     case AlarmGrade.DisConnect:return "断线";
-                    default: return "正常";
+                    default: return "";
                 }
             }
             return null;

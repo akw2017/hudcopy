@@ -511,9 +511,9 @@ namespace AIC.OnLineDataPage.ViewModels
             if (sg != null && sg.DiagnosticAdvice != null)
             {
 #if XBAP
-                MessageBox.Show(sg.DiagnosticInfo + "\n\r" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sg.DiagnosticInfo + "\r\n" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show(sg.DiagnosticInfo + "\n\r" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
+                Xceed.Wpf.Toolkit.MessageBox.Show(sg.DiagnosticInfo + "\r\n" + sg.DiagnosticAdvice, "诊断详情", MessageBoxButton.OK, MessageBoxImage.Information);
 #endif
             }
         }

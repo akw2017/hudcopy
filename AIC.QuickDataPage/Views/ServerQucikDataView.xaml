@@ -380,7 +380,7 @@
                     <lvc:CartesianChart.AxisY>
                         <lvc:Axis Title="报警点数" LabelFormatter="{Binding TrendFormatter}" Foreground="Black" MinValue="0">
                             <lvc:Axis.Separator>
-                                <lvc:Separator Step="1" />
+                                <lvc:Separator Step="1"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>

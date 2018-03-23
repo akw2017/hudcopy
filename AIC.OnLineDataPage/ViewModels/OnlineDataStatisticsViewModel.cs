@@ -26,6 +26,10 @@ using System.Windows;
 using AIC.M9600.Client.DataProvider;
 using AIC.Core;
 using AIC.Core.LMModels;
+using LiveCharts;
+using LiveCharts.Wpf;
+using System.Windows.Media;
+using LiveCharts.Defaults;
 
 namespace AIC.OnLineDataPage.ViewModels
 {
@@ -37,8 +41,6 @@ namespace AIC.OnLineDataPage.ViewModels
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ILoginUserService _loginUserService;
-        public delegate void UpdatePie3D(IList<int> countlist);
-        public event UpdatePie3D UpdateChart;
 
         public OnlineDataStatisticsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, ILoginUserService loginUserService)
         {
@@ -82,6 +84,7 @@ namespace AIC.OnLineDataPage.ViewModels
             _view.GroupDescriptions.Add(new PropertyGroupDescription("DelayAlarmGrade"));//对视图进行分组
             _view.SortDescriptions.Add(new SortDescription("DelayAlarmGrade", ListSortDirection.Descending));
             InitTree();
+            Refresh();
 
             _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);//<!--昌邑石化-->
         }
@@ -226,6 +229,23 @@ namespace AIC.OnLineDataPage.ViewModels
                 }
             }
         }
+
+        private SeriesCollection pieSeries;
+        public SeriesCollection PieSeries
+        {
+            get { return pieSeries; }
+            set
+            {
+
+                if (pieSeries != value)
+                {
+                    pieSeries = value;
+                    OnPropertyChanged("PieSeries");
+                }
+            }
+        }
+
+        public Func<double, string> PieFormatter { get; set; }
         #endregion
 
         #region Command
@@ -255,6 +275,15 @@ namespace AIC.OnLineDataPage.ViewModels
                 return this.refreshCommand ?? (this.refreshCommand = new DelegateCommand(() => this.Refresh()));
             }
         }
+
+        private DelegateCommand<object> sliceClickCommand;
+        public DelegateCommand<object> SliceClickCommand
+    {
+            get
+            {
+                return this.sliceClickCommand ?? (this.sliceClickCommand = new DelegateCommand<object>(para => this.SliceClick(para)));
+            }
+        }
         #endregion
 
         private IEnumerable<BaseAlarmSignal> selectedsignals;
@@ -274,7 +303,10 @@ namespace AIC.OnLineDataPage.ViewModels
 
         private void CustomSystemHappenEvent(Tuple<string, T1_SystemEvent> ex)
         {
-            AlarmEventTitle = "报警事件(" + ex.Item2.EventTime.ToString("yyyy-MM-dd")+ "),最新" + CustomSystemException.Count() + "条";
+            if (ex != null)
+            {
+                AlarmEventTitle = "报警事件(" + ex.Item2.EventTime.ToString("yyyy-MM-dd") + "),最新" + CustomSystemException.Count() + "条";
+            }            
             Refresh();
         }
 
@@ -287,18 +319,147 @@ namespace AIC.OnLineDataPage.ViewModels
             
             _view.Refresh();           
             int NormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighNormal || o.DelayAlarmGrade == AlarmGrade.LowNormal)).Count();
-            int PreAlertCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
-            int AlertCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
+            int PreAlarmCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighPreAlarm || o.DelayAlarmGrade == AlarmGrade.LowPreAlarm)).Count();
+            int AlarmCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighAlarm || o.DelayAlarmGrade == AlarmGrade.LowAlarm)).Count();
             int DangerCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.HighDanger || o.DelayAlarmGrade == AlarmGrade.LowDanger)).Count();
             int AbnormalCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.Abnormal)).Count();
             int UnConnectCount = selectedsignals.Where(o => (o.DelayAlarmGrade == AlarmGrade.DisConnect)).Count();
-            if (UpdateChart != null)
+            if (PieSeries == null)
             {
-                UpdateChart(new List<int> { NormalCount, PreAlertCount, AlertCount, DangerCount, AbnormalCount, UnConnectCount });
+                InitPieSerices(NormalCount, PreAlarmCount, AlarmCount, DangerCount, AbnormalCount, UnConnectCount);
+            }
+            else
+            {
+                UpdatePieSerices(NormalCount, PreAlarmCount, AlarmCount, DangerCount, AbnormalCount, UnConnectCount);
             }
         }
 
-        public void SliceClick(AlarmGrade alarmgrade)
+        private void InitPieSerices(int NormalCount, int PreAlarmCount, int AlarmCount, int DangerCount, int AbnormalCount, int UnConnectCount)
+        {
+            PieSeries = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "无效",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(AbnormalCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0x69, 0x84)),//粉色  
+                },
+                new PieSeries
+                {
+                    Title = "正常",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(NormalCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00)),//绿色 
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "预警",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(PreAlarmCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色 
+                },
+                new PieSeries
+                {
+                    Title = "警告",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(AlarmCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色     
+                },
+                new PieSeries
+                {
+                    Title = "危险",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(DangerCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                },
+                new PieSeries
+                {
+                    Title = "断线",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(UnConnectCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0x8B, 0x00, 0x00)),//黄色   
+                },
+            };
+        }
+
+        private void UpdatePieSerices(int NormalCount, int PreAlarmCount, int AlarmCount, int DangerCount, int AbnormalCount, int UnConnectCount)
+        {
+            if ((PieSeries[0].Values[0] as ObservableValue).Value != AbnormalCount)
+            {
+                PieSeries[0] = new PieSeries
+                {
+                    Title = "无效",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(AbnormalCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0x69, 0x84)),//粉色  
+                    DataLabels = (AbnormalCount > 0) ? true : false,
+                };
+            }
+            if ((PieSeries[1].Values[0] as ObservableValue).Value != NormalCount)
+            {
+                PieSeries[1] = new PieSeries
+                {
+                    Title = "正常",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(NormalCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00)),//绿色 
+                    DataLabels = (NormalCount > 0) ? true : false,
+                };
+            }
+            if ((PieSeries[2].Values[0] as ObservableValue).Value != PreAlarmCount)
+            {
+                PieSeries[2] = new PieSeries
+                {
+                    Title = "预警",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(PreAlarmCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色 
+                    DataLabels = (PreAlarmCount > 0) ? true : false,
+                };
+            }
+            if ((PieSeries[3].Values[0] as ObservableValue).Value != AlarmCount)
+            {
+                PieSeries[3] = new PieSeries
+                {
+                    Title = "警告",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(AlarmCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色 
+                    DataLabels = (AlarmCount > 0) ? true : false,
+                };
+            }
+            if ((PieSeries[4].Values[0] as ObservableValue).Value != DangerCount)
+            {
+                PieSeries[4] = new PieSeries
+                {
+                    Title = "危险",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(DangerCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                    DataLabels = (DangerCount > 0) ? true : false,
+                };
+            }
+            if ((PieSeries[5].Values[0] as ObservableValue).Value != UnConnectCount)
+            {
+                PieSeries[5] = new PieSeries
+                {
+                    Title = "断线",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(UnConnectCount) },
+                    Fill = new SolidColorBrush(Color.FromRgb(0x8B, 0x00, 0x00)),//黄色
+                    DataLabels = (UnConnectCount > 0) ? true : false,
+                };
+            }
+        }
+
+        private void SliceClick (object para)
+        {
+            ChartPoint point = para as ChartPoint;
+            if (point != null)
+            {
+                switch (point.SeriesView.Title)
+                {
+                    case "无效": SliceClick(AlarmGrade.Invalid); break;
+                    case "正常": SliceClick(AlarmGrade.HighNormal | AlarmGrade.LowNormal); break;
+                    case "预警": SliceClick(AlarmGrade.HighPreAlarm | AlarmGrade.LowPreAlarm); break;
+                    case "警告": SliceClick(AlarmGrade.HighAlarm | AlarmGrade.LowAlarm); break;
+                    case "危险": SliceClick(AlarmGrade.HighDanger | AlarmGrade.LowDanger); break;
+                    case "断线": SliceClick(AlarmGrade.DisConnect); break;                 
+                }
+            }
+        }
+
+        private void SliceClick(AlarmGrade alarmgrade)
         {
             List<AlarmGrade> grades = new List<AlarmGrade>();
             foreach (AlarmGrade grade in Enum.GetValues(typeof(AlarmGrade)))
@@ -317,7 +478,6 @@ namespace AIC.OnLineDataPage.ViewModels
             {
                 FirstAlarmGrade = sg.DelayAlarmGrade;
             }
-            //_view.Refresh();
         }
     }
 }

@@ -70,7 +70,7 @@ namespace AIC.HistoryDataPage.Models
         public string Unit { get; set; }
 
         private double selectedResult;
-        public double SelectedResult
+        public double DeviceHourlySelectedResult
         {
             get { return selectedResult; }
             set
@@ -78,7 +78,7 @@ namespace AIC.HistoryDataPage.Models
                 if (selectedResult != value)
                 {
                     selectedResult = value;
-                    OnPropertyChanged(() => SelectedResult);
+                    OnPropertyChanged(() => DeviceHourlySelectedResult);
                 }
             }
         }

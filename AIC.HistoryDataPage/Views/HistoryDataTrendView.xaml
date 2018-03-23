@@ -358,7 +358,7 @@
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 
-                <DataGridTextColumn Header="选择值"  Binding="{Binding SelectedResult, StringFormat=F3}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="选择值"  Binding="{Binding DeviceHourlySelectedResult, StringFormat=F3}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="选择时间"  Binding="{Binding SelectedTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="当前值"  Binding="{Binding BaseAlarmSignal.Result, StringFormat=F3}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="删除" >

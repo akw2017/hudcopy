@@ -660,7 +660,7 @@ namespace AIC.OnLineDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})|{3}", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit, Math.Round(contract.RPM ?? 0.0, 3));
-                            token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
+                            token.DeviceHourlySelectedResult = Math.Round(contract.Result ?? 0.0, 3);
                             token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else
@@ -678,7 +678,7 @@ namespace AIC.OnLineDataPage.Views
                             var contract = token.DataContracts[index];  //. series.Points[index].Tag as VInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format("{0}: {1}({2})", token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
-                            token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
+                            token.DeviceHourlySelectedResult = Math.Round(contract.Result ?? 0.0, 3);
                             token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else
@@ -694,7 +694,7 @@ namespace AIC.OnLineDataPage.Views
                             var contract = token.DataContracts[index]; //series.Points[index].Tag as AnInfoTableAMSContract;
                             string unit = contract.Unit;
                             strValue = string.Format(strChannelStringFormat, token.DisplayName, Math.Round(contract.Result ?? 0.0, 3), unit);
-                            token.SelectedResult = Math.Round(contract.Result ?? 0.0, 3);
+                            token.DeviceHourlySelectedResult = Math.Round(contract.Result ?? 0.0, 3);
                             token.SelectedTime = _chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);
                         }
                         else

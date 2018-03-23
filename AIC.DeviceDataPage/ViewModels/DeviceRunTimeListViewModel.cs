@@ -30,22 +30,24 @@ using AIC.M9600.Common.SlaveDB.Generated;
 using Newtonsoft.Json;
 using AIC.M9600.Common.DTO.Device;
 using System.Diagnostics;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using System.Windows.Media;
+using System.Collections;
+using AIC.M9600.Common.DTO;
 
 namespace AIC.DeviceDataPage.ViewModels
 {
-    class DeviceRunStatusListViewModel : BindableBase
+    class DeviceRunTimeListViewModel : BindableBase
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IOrganizationService _organizationService;
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
-        public delegate void UpdateBarSeries(IEnumerable<DeviceRunInfo> deviceList);
-        public event UpdateBarSeries UpdateChart;
-        public delegate void ShowBarSeries(DeviceRunInfo device);
-        public event ShowBarSeries ShowBarSeriesChanged;
 
-        public DeviceRunStatusListViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
+        public DeviceRunTimeListViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
         {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
@@ -171,7 +173,71 @@ namespace AIC.DeviceDataPage.ViewModels
                 OnPropertyChanged("StartTime");
             }
         }
-      
+        private SeriesCollection columnSeries;
+        public SeriesCollection ColumnSeries
+        {
+            get { return columnSeries; }
+            set
+            {
+                if (columnSeries != value)
+                {
+                    columnSeries = value;
+                    OnPropertyChanged("ColumnSeries");
+                }
+            }
+        }
+
+        private string[] columnLabels;
+        public string[] ColumnLabels
+        {
+            get { return columnLabels; }
+            set
+            {
+                if (columnLabels != value)
+                {
+                    columnLabels = value;
+                    OnPropertyChanged("ColumnLabels");
+                }
+            }
+        }
+
+        public Func<double, string> ColumnFormatter
+        {
+            get { return value => value.ToString("f1"); }
+        }
+
+        private SeriesCollection moreColumnSeries;
+        public SeriesCollection MoreColumnSeries
+        {
+            get { return moreColumnSeries; }
+            set
+            {
+                if (moreColumnSeries != value)
+                {
+                    moreColumnSeries = value;
+                    OnPropertyChanged("MoreColumnSeries");
+                }
+            }
+        }
+
+        private string[] moreColumnLabels;
+        public string[] MoreColumnLabels
+        {
+            get { return moreColumnLabels; }
+            set
+            {
+                if (moreColumnLabels != value)
+                {
+                    moreColumnLabels = value;
+                    OnPropertyChanged("MoreColumnLabels");
+                }
+            }
+        }
+
+        public Func<double, string> MoreColumnFormatter
+        {
+            get { return value => value.ToString("f1"); }
+        }
         #endregion
 
         #region Command
@@ -220,10 +286,21 @@ namespace AIC.DeviceDataPage.ViewModels
 
         public void SelectedDataGridChanged(object para)
         {
-            var device = para as DeviceRunInfo;
-            if (device != null && ShowBarSeriesChanged != null)
+            var devices = (para as IList).OfType<DeviceRunInfo>();
+            if (devices != null)
             {
-                ShowBarSeriesChanged(device);
+                string[] names = devices.Select(p => p.DeviceTreeItemViewModel.Name).ToArray();
+                foreach (var serie in MoreColumnSeries.OfType<ColumnSeries>())
+                {
+                    if (names.Contains(serie.Title))
+                    {
+                        serie.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        serie.Visibility = Visibility.Collapsed;
+                    }
+                }
             }
         }
 
@@ -243,19 +320,27 @@ namespace AIC.DeviceDataPage.ViewModels
                     return;
                 }
 
+                bool newmethod = true;
                 foreach (var deviceTree in deviceTrees)
                 {
                     DeviceRunInfo device = new DeviceRunInfo();
                     device.DeviceTreeItemViewModel = deviceTree;
                     WaitInfo = "数据统计: " + number.ToString();
-                    await GetDeviceRunInfo(device, StartTime, SelectedDay);
+                    if (newmethod == true)
+                    {
+                        newmethod = await NewGetDeviceRunInfo(device, StartTime, SelectedDay);//优先使用新方法                       
+                    }
+                    if (newmethod == false)
+                    {
+                        await GetDeviceRunInfo(device, StartTime, SelectedDay);//兼容没有统计方法的服务器
+                    }                    
                     number++;
 
                     DevicesView.Add(device);
                 }
-                if (UpdateChart != null && number > 0)
+                if (number > 0)
                 {
-                    UpdateChart(DevicesView);
+                    UpdateChart();
                 }
             }
             catch (Exception ex)
@@ -269,9 +354,49 @@ namespace AIC.DeviceDataPage.ViewModels
             }
         }
 
-        private async Task GetDeviceRunInfo(DeviceRunInfo device, DateTime start, int day)
+        private void UpdateChart()
         {
-            //List<Task<List<D_WirelessVibrationSlot>>> lttask = new List<Task<List<D_WirelessVibrationSlot>>>();
+            ColumnSeries = new SeriesCollection
+                            {
+                                new ColumnSeries
+                                {
+                                    Title = "运行时间",
+                                    Values = new ChartValues<ObservableValue>(DevicesView.Select(p => new ObservableValue(p.RunHours))),
+                                    Fill = new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00)), //绿色     
+                                    DataLabels = true
+                                },
+                                 new ColumnSeries
+                                {
+                                    Title = "停止时间",
+                                    Values = new ChartValues<ObservableValue>(DevicesView.Select(p => new ObservableValue(p.StopHours))),
+                                    Fill = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)), //红色     
+                                    DataLabels = true
+                                },
+                            };
+            ColumnLabels = DevicesView.Select(p => p.DeviceTreeItemViewModel.Name).ToArray();
+
+            MoreColumnSeries = new SeriesCollection();
+            MoreColumnLabels = null;
+            foreach (var device in DevicesView)
+            {
+                if (device.RunInfo == null || device.RunInfo.Count == 0)
+                {
+                    continue;
+                }
+                MoreColumnSeries.Add(new ColumnSeries
+                {
+                    Title = device.DeviceTreeItemViewModel.Name,
+                    Values = new ChartValues<ObservableValue>(device.RunInfo.Select(p => new ObservableValue((p == null) ? 0 : p.RunHours))),
+                    DataLabels = true
+                });
+                if (MoreColumnLabels == null)
+                {
+                    MoreColumnLabels = device.RunInfo.Select(p => p.Time.ToString("MM/dd")).ToArray();
+                }
+            }
+        }
+        private async Task GetDeviceRunInfo(DeviceRunInfo device, DateTime start, int day)
+        {           
             List<Guid> guids = new List<Guid>();
             foreach (var child in device.DeviceTreeItemViewModel.Children)
             {
@@ -280,13 +405,11 @@ namespace AIC.DeviceDataPage.ViewModels
                     ItemTreeItemViewModel itemTree = child as ItemTreeItemViewModel;
                     if (itemTree.T_Item != null && itemTree.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
                     {
-                        guids.Add(itemTree.T_Item.Guid);
-                        //lttask.Add(_databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(itemTree.ServerIP, itemTree.T_Item.Guid, new string[] { "ACQDatetime", "Result", "Unit", "RPM", "AlarmGrade", "ExtraInfoJSON" }, StartTime, StartTime.AddDays(SelectedDay), null, null));                        
+                        guids.Add(itemTree.T_Item.Guid);                       
                     }
                 }
             }
-            //await Task.WhenAll(lttask.ToArray());
-            //var infoList = lttask.Select(p => GetSubDeviceRunInfo(p.Result, StartTime, SelectedDay, device)).OrderBy(p => p.Result.RunHours).Select(p => p.Result).ToList();
+           
             var result = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(device.DeviceTreeItemViewModel.ServerIP, guids.ToArray(), new string[] { "T_Item_Guid", "ACQDatetime", "Result", "Unit", "AlarmGrade", "ExtraInfoJSON" }, start, start.AddDays(day), null, null);
             if (result == null || result.Count == 0)
             {
@@ -312,90 +435,7 @@ namespace AIC.DeviceDataPage.ViewModels
                 device.DangerCount = infoList.Select(p => p.DangerCount).Sum();
                 device.RunInfo = midinfo.RunInfo;
             }
-        }
-        #endregion
-
-        //private async void Search()
-        //{
-        //    _view.Refresh();
-        //    var sw = Stopwatch.StartNew();
-        //    try
-        //    {
-        //        int number = 0;
-        //        Status = ViewModelStatus.Querying;
-        //        var progress = new Progress<double>();
-        //        progress.ProgressChanged += (sender, args) =>
-        //        {
-        //            number++;
-        //            WaitInfo = "数据统计: " + number.ToString();
-        //        };
-        //        WaitInfo = "数据统计: " + number.ToString();
-
-        //        Dictionary<DeviceRunInfo, Task<List<D_WirelessVibrationSlot>>> lttask = new Dictionary<DeviceRunInfo, Task<List<D_WirelessVibrationSlot>>>();
-        //        List<DeviceRunInfo> deviceList = new List<DeviceRunInfo>();
-        //        foreach (var sub in _view.AsParallel())
-        //        {
-        //            var device = sub as DeviceRunInfo;
-        //            if (device != null)
-        //            {                        
-        //                List<Guid> guids = new List<Guid>();
-        //                foreach (var child in device.DeviceTreeItemViewModel.Children)
-        //                {
-        //                    if (child is ItemTreeItemViewModel)
-        //                    {
-        //                        ItemTreeItemViewModel itemTree = child as ItemTreeItemViewModel;
-        //                        if (itemTree.T_Item != null && itemTree.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
-        //                        {
-        //                            guids.Add(itemTree.T_Item.Guid);
-        //                        }
-        //                    }
-        //                }
-
-        //                lttask.Add(device, _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(device.DeviceTreeItemViewModel.ServerIP, guids.ToArray(), new string[] { "T_Item_Guid", "ACQDatetime", "Result", "Unit", "AlarmGrade", "ExtraInfoJSON" }, StartTime, StartTime.AddDays(SelectedDay), null, null, progress));
-
-        //                deviceList.Add(device);
-        //            }                  
-        //        }
-        //        await Task.WhenAll(lttask.Values.ToArray());
-        //        foreach (var task in lttask)
-        //        {
-        //            var device = task.Key;
-        //            if (task.Value.Result == null || task.Value.Result.Count == 0)
-        //            {
-        //                continue;
-        //            }
-        //            var infoList = task.Value.Result.GroupBy(p => p.T_Item_Guid, (key, group) => new { Key = key, Value = group }).Select(p => GetSubDeviceRunInfo(p.Value.ToList(), StartTime, SelectedDay)).OrderBy(p => p.RunHours).ToList();
-        //            if (infoList.Count > 0)
-        //            {
-        //                int count = infoList.Count;
-        //                var midinfo = infoList[count / 2];
-        //                device.StartTime = StartTime;
-        //                device.EndTime = StartTime.AddDays(SelectedDay);
-        //                device.RunHours = midinfo.RunHours;
-        //                device.TotalHours = SelectedDay * 24;
-        //                device.StopHours = device.TotalHours - device.RunHours;
-        //                device.PreAlarmCount = infoList.Select(p => p.PreAlarmCount).Sum();
-        //                device.AlarmCount = infoList.Select(p => p.AlarmCount).Sum();
-        //                device.DangerCount = infoList.Select(p => p.DangerCount).Sum();
-        //                device.RunInfo = midinfo.RunInfo;
-        //            }
-        //        }
-        //        if (UpdateChart != null && number > 0)
-        //        {
-        //            UpdateChart(deviceList);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设备数据-运行状态查询", ex));
-        //    }
-        //    finally
-        //    {
-        //        Console.WriteLine("消耗时间" + sw.Elapsed.ToString());
-        //        Status = ViewModelStatus.None;
-        //    }
-        //}        
-
+        }            
         private DeviceRunInfo GetSubDeviceRunInfo(List<D_WirelessVibrationSlot> result, DateTime start, int day)
         {
             DeviceRunInfo devicerunInfo = new DeviceRunInfo();
@@ -425,36 +465,155 @@ namespace AIC.DeviceDataPage.ViewModels
                         {
                             M9600.Common.DTO.Device.ExtraInfo extraInfo = JsonConvert.DeserializeObject<M9600.Common.DTO.Device.ExtraInfo>(extraInfoJson.Substring(1, extraInfoJson.Length - 2));
                             if (extraInfo != null)
-                            {
-                                //hours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
-                                switch (data.AlarmGrade& 0xff)
+                            {                               
+                                switch (data.AlarmGrade & 0xff)
                                 {
                                     case 0: break;
                                     case 1: hours += extraInfo.NormalTimeLength / 3600; break;
                                     case 2: hours += extraInfo.PreAlarmTimeLength / 3600; break;
                                     case 3: hours += extraInfo.AlarmTimeLength / 3600; break;
                                     case 4: hours += extraInfo.DangerTimeLength / 3600; break;
-                                }
-                                
-                                //DeviceRunInfo.RunHours += (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                                }                                
+                               
                                 devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
                                 devicerunInfo.AlarmCount += extraInfo.AlarmCount;
                                 devicerunInfo.DangerCount += extraInfo.DangerCount;
                             }
                         }
                     }
+                    hours = (hours > 24) ? 24 : hours;
                     DateTime time = groupdata.First().ACQDatetime;
                     devicerunInfo.RunHours += hours;
                     RunInfo runinfo = devicerunInfo.RunInfo.Where(p => p.Time.Year == time.Year && p.Time.Month == time.Month && p.Time.Day == time.Day).First();
                     runinfo.RunHours = hours;
-                    runinfo.MaxResult = groupdata.OrderBy(p => p.AlarmGrade & 0xff).ThenBy(n => n.Result).Select(p => p.Result.Value).LastOrDefault();
-                    runinfo.MinResult = groupdata.OrderBy(p => p.AlarmGrade & 0xff).ThenBy(n => n.Result).Select(p => p.Result.Value).FirstOrDefault();
+                    runinfo.Result = groupdata.OrderBy(p => p.AlarmGrade & 0xff).ThenBy(n => n.Result).Select(p => p.Result.Value).LastOrDefault();
+                  
                 }
             }
 
             return devicerunInfo;
         }
+        private async Task<bool> NewGetDeviceRunInfo(DeviceRunInfo device, DateTime start, int day)
+        {
+            HashSet<Guid> guidlist = new HashSet<Guid>();
+            foreach (var child in device.DeviceTreeItemViewModel.Children)
+            {
+                if (child is ItemTreeItemViewModel)
+                {
+                    ItemTreeItemViewModel itemTree = child as ItemTreeItemViewModel;
+                    if (itemTree.T_Item != null && itemTree.T_Item.ItemType == (int)ChannelType.WirelessVibrationChannelInfo)
+                    {
+                        guidlist.Add(itemTree.T_Item.Guid);
+                    }
+                }
+            }
 
+            var result = await _databaseComponent.GetDailyStatisticsData(device.DeviceTreeItemViewModel.ServerIP, guidlist, start.AddDays(1), start.AddDays(1 + day));
+            if (result == null || result.Count == 0)
+            {
+                return false;
+            }
+            foreach (var subresult in result)
+            {
+                if (subresult.Value.Count < day)//数据不完整
+                {
+                    return false;
+                }
+            }
+            var infoList = result.Select(p => NewGetSubDeviceRunInfo(p.Value, start, day)).OrderBy(p => p.RunHours).ToList();
+            if (infoList.Count > 0)
+            {
+                int count = infoList.Count;
+                var midinfo = infoList[count / 2];
+                device.StartTime = start;
+                device.EndTime = start.AddDays(day);
+                device.RunHours = midinfo.RunHours;
+                device.TotalHours = day * 24;
+                device.StopHours = device.TotalHours - device.RunHours;
+                device.PreAlarmCount = infoList.Select(p => p.PreAlarmCount).Sum();
+                device.AlarmCount = infoList.Select(p => p.AlarmCount).Sum();
+                device.DangerCount = infoList.Select(p => p.DangerCount).Sum();
+                device.RunInfo = midinfo.RunInfo;
+
+                device.ACQDatetime = midinfo.ACQDatetime;
+                device.RecordLab = midinfo.RecordLab;
+                device.T_Item_Guid = midinfo.T_Item_Guid;
+                device.RPM = (float)midinfo.RPM;
+                device.MaxResult = midinfo.MaxResult;
+                device.Unit = midinfo.Unit;
+                device.AlarmGrade = midinfo.AlarmGrade;
+            }
+            return true;
+        }
+        private DeviceRunInfo NewGetSubDeviceRunInfo(List<D_SlotStatistic> result, DateTime start, int day)
+        {
+            DeviceRunInfo devicerunInfo = new DeviceRunInfo();
+            devicerunInfo.RunInfo = new List<RunInfo>();
+            for (int i = 0; i < day; i++)
+            {
+                devicerunInfo.RunInfo.Add(new RunInfo() { Time = start.AddDays(i), });
+            }
+
+            devicerunInfo.RunHours = 0;
+            devicerunInfo.PreAlarmCount = 0;
+            devicerunInfo.AlarmCount = 0;
+            devicerunInfo.DangerCount = 0;
+
+            if (result != null && result.Count > 0)
+            {
+                //分组               
+                foreach (var dayresult in result)
+                {
+                    DateTime time = dayresult.StatisticsTime.AddDays(-1);
+                    double hours = 0;
+                    var extraData = JsonConvert.DeserializeObject<SlotExtraData>(dayresult.ExtraData);
+                    if (extraData != null)
+                    {
+                        M9600.Common.DTO.Device.ExtraInfo extraInfo = new M9600.Common.DTO.Device.ExtraInfo();
+                        extraInfo = DictionaryToClassHelper.DicToObject<M9600.Common.DTO.Device.ExtraInfo>(extraData.StatisticsInfo.ToDictionary(p => p.Key, p => p.Value as object));
+
+                        var runhours = (extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+                        var allhours = (extraInfo.InvalidTimeLength + extraInfo.NotOKTimeLength + extraInfo.NormalTimeLength + extraInfo.PreAlarmTimeLength + extraInfo.AlarmTimeLength + extraInfo.DangerTimeLength) / 3600;
+
+                        devicerunInfo.RunHours += runhours / allhours * 24;
+                        hours = runhours / allhours * 24;
+                        devicerunInfo.PreAlarmCount += extraInfo.PreAlarmCount;
+                        devicerunInfo.AlarmCount += extraInfo.AlarmCount;
+                        devicerunInfo.DangerCount += extraInfo.DangerCount;
+                    }
+
+
+                    RunInfo runinfo = devicerunInfo.RunInfo.Where(p => p.Time.Year == time.Year && p.Time.Month == time.Month && p.Time.Day == time.Day).First();
+                    runinfo.RunHours = hours;
+                    var secondmax = JsonConvert.DeserializeObject<SlotDiagnosticData>(dayresult.SecondaryMaxDiagnosticData);
+                    if (secondmax != null)
+                    {
+                        runinfo.Result = secondmax.Result;
+                        runinfo.ACQDatetime = secondmax.ACQDateTime;
+                        runinfo.RecordLab = secondmax.RecordLab.Value;
+                        runinfo.T_Item_Guid = dayresult.T_Item_Guid;
+                        runinfo.RPM = (float)secondmax.RPM;
+                        runinfo.Unit = secondmax.Unit;
+                        runinfo.AlarmGrade = (AlarmGrade)(secondmax.AlarmGrade & 0x00ffff00);
+                    }
+
+                }
+
+                RunInfo maxruninfo = devicerunInfo.RunInfo.OrderBy(p => p.Result).LastOrDefault();
+                devicerunInfo.ACQDatetime = maxruninfo.ACQDatetime;
+                devicerunInfo.RecordLab = maxruninfo.RecordLab;
+                devicerunInfo.T_Item_Guid = maxruninfo.T_Item_Guid;
+                devicerunInfo.RPM = maxruninfo.RPM;
+                devicerunInfo.MaxResult = maxruninfo.Result;
+                devicerunInfo.Unit = maxruninfo.Unit;
+                devicerunInfo.AlarmGrade = maxruninfo.AlarmGrade;
+            }
+
+            return devicerunInfo;
+        }
+        #endregion
+
+        #region 废弃
         private async void SearchAll()
         {  
             HashSet<Guid> guidlist = new HashSet<Guid>();
@@ -513,11 +672,9 @@ namespace AIC.DeviceDataPage.ViewModels
                 }
                 DevicesView.Add(device);
             }
-            if (UpdateChart != null)
-            {
-                UpdateChart(DevicesView);
-            }
+            UpdateChart();           
             
         }
+        #endregion
     }
 }

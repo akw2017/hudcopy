@@ -16,7 +16,7 @@ namespace AIC.DeviceDataPage.Models
             //TableRowGroup groupOverview = doc.FindName("rowsOverview") as TableRowGroup;
 
             Style styleCell = doc.Resources["BorderedCell"] as Style;
-            foreach (DeviceHourlyDataInfo item in ((PrintResult)data).DeviceHourlyDataInfo)
+            foreach (DeviceHourlyDataInfo item in ((DeviceHourlyPrintResult)data).DeviceHourlyDataInfo)
             {
                 TableRow row = new TableRow();
 

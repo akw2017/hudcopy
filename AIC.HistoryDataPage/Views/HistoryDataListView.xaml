@@ -411,7 +411,7 @@
         </Border>
 
         <TabControl Grid.Row="1" Grid.Column="2" Margin="0,1,0,0">
-            <TabItem Header="振动数据" Style="{x:Null}" IsSelected="{Binding VInfoSelected}">
+            <TabItem Header="振动数据" Style="{StaticResource TabItemStyle}" IsSelected="{Binding VInfoSelected}">
                 <Grid>
                     <DataGrid Background="{x:Null}" ItemsSource="{Binding VInfoObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow">
                         <DataGrid.RowHeaderTemplate>
@@ -512,7 +512,7 @@
                     </DataGrid>                   
                 </Grid>
             </TabItem>
-            <TabItem Header="温度数据" Style="{x:Null}" IsSelected="{Binding AnInfoSelected}">
+            <TabItem Header="温度数据" Style="{StaticResource TabItemStyle}" IsSelected="{Binding AnInfoSelected}">
                 <Grid>
                     <DataGrid Background="{x:Null}" ItemsSource="{Binding AnInfoObjectsView}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True" ScrollViewer.CanContentScroll="True" GridLinesVisibility="None" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="False" LoadingRow="FilterDataGrid_LoadingRow" >
                         <DataGrid.RowHeaderTemplate>

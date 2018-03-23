@@ -845,6 +845,8 @@ D:\SupportProject\AIC_HUD\AICHUID\DiagramDesigner\obj\Debug\DiagramDesigner.Prop
 D:\SupportProject\AIC_HUD\AICHUID\DiagramDesigner\obj\Debug\DiagramDesigner.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\DiagramDesigner\obj\Debug\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUID\DiagramDesigner\obj\Debug\DiagramDesigner.pdb
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\DiagramDesigner.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\DiagramDesigner.pdb
@@ -857,11 +859,12 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Prism.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.CoreType.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\FluentValidation.dll
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Microsoft.Practices.ServiceLocation.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.DTO.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.PetaPoco.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.Domain.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\System.Reactive.Core.xml
@@ -872,11 +875,12 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Prism.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.CoreType.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\FluentValidation.pdb
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.MasterDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.DTO.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.SlaveDB.pdb
+D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.MasterDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\de\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\es\FluentValidation.resources.dll
@@ -911,7 +915,3 @@ D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.Prope
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.dll
 D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\obj\Debug\DiagramDesigner.pdb
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\AIC.MatlabMath.pdb
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\DiagramDesigner\bin\Debug\Resources\AICMatlabDLL.dll

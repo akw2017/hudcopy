@@ -175,7 +175,7 @@
                 </Button>
             </wrap:WrapBreakPanel>
         </Border>
-        <ListView Grid.Row="1" Grid.Column="2" x:Name="listView" ItemsSource="{Binding SelectedResult}">
+        <ListView Grid.Row="1" Grid.Column="2" x:Name="listView" ItemsSource="{Binding DeviceHourlySelectedResult}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>

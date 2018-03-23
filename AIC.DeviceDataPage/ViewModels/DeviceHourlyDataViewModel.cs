@@ -104,14 +104,14 @@ namespace AIC.DeviceDataPage.ViewModels
             }
         }
 
-        private ObservableCollection<SelectedResult> selectedResult = new ObservableCollection<SelectedResult>();
-        public ObservableCollection<SelectedResult> SelectedResult
+        private ObservableCollection<DeviceHourlySelectedResult> selectedResult = new ObservableCollection<DeviceHourlySelectedResult>();
+        public ObservableCollection<DeviceHourlySelectedResult> DeviceHourlySelectedResult
         {
             get { return selectedResult; }
             set
             {
                 selectedResult = value;
-                OnPropertyChanged("SelectedResult");
+                OnPropertyChanged("DeviceHourlySelectedResult");
             }
         }
 
@@ -254,7 +254,7 @@ namespace AIC.DeviceDataPage.ViewModels
 
         public void SelectedChanged(object para)
         {
-            var selected =  para as SelectedResult;
+            var selected =  para as DeviceHourlySelectedResult;
             if (selected != null)
             {              
                 DevicesView = new ObservableCollection<Models.DeviceHourlyDataInfo>();
@@ -276,11 +276,11 @@ namespace AIC.DeviceDataPage.ViewModels
 
                 DevicesView.Clear();
                 resultDevices.Clear();
-                SelectedResult.Clear();
+                DeviceHourlySelectedResult.Clear();
                
                 for (int i = 0; i < SelectedDay; i++)
                 {
-                    SelectedResult.Add(new SelectedResult() { DateTime = StartTime.AddDays(i), IsChecked = true });                  
+                    DeviceHourlySelectedResult.Add(new DeviceHourlySelectedResult() { DateTime = StartTime.AddDays(i), IsChecked = true });                  
                 }
 
 
@@ -495,16 +495,16 @@ namespace AIC.DeviceDataPage.ViewModels
         #endregion
         private void Print()
         {
-            List<PrintResult> printList = new List<Models.PrintResult>();
-            foreach(var result in SelectedResult.Where(p => p.IsChecked == true))
+            List<DeviceHourlyPrintResult> printList = new List<Models.DeviceHourlyPrintResult>();
+            foreach(var result in DeviceHourlySelectedResult.Where(p => p.IsChecked == true))
             {
-                PrintResult print = new Models.PrintResult();
+                DeviceHourlyPrintResult print = new Models.DeviceHourlyPrintResult();
                 print.DateTime = result.DateTime;
                 print.DeviceHourlyDataInfo = new List<DeviceHourlyDataInfo>(resultDevices.SelectMany(p => p.Where(d => d.ACQDate.Date == result.DateTime.Date)));
                 printList.Add(print);
-            }           
+            }
 
-            PrintPreviewWindow previewWnd = new PrintPreviewWindow("/AIC.DeviceDataPage;component/Views/DeviceHourlyDataFlowDocument.xaml", printList, new DeviceHourlyDataDocumentRenderer());
+            DeviceHourlyDataPrintPreviewWindow previewWnd = new DeviceHourlyDataPrintPreviewWindow("/AIC.DeviceDataPage;component/Views/DeviceHourlyDataFlowDocument.xaml", printList, new DeviceHourlyDataDocumentRenderer());
             previewWnd.ShowDialog();
         }
 
@@ -540,7 +540,7 @@ namespace AIC.DeviceDataPage.ViewModels
             dt.Columns.Add(new DataColumn("23h", typeof(string)));
 
 
-            foreach (var result in SelectedResult.Where(p => p.IsChecked == true))
+            foreach (var result in DeviceHourlySelectedResult.Where(p => p.IsChecked == true))
             {               
                 var dayList = new List<DeviceHourlyDataInfo>(resultDevices.SelectMany(p => p.Where(d => d.ACQDate.Date == result.DateTime.Date)));
                 foreach (var day in dayList)
@@ -580,7 +580,7 @@ namespace AIC.DeviceDataPage.ViewModels
 
         private void CheckedAll()
         {
-            foreach (var result in SelectedResult)
+            foreach (var result in DeviceHourlySelectedResult)
             {
                 result.IsChecked = true;
             }
@@ -588,7 +588,7 @@ namespace AIC.DeviceDataPage.ViewModels
 
         private void UnCheckedAll()
         {
-            foreach(var result in SelectedResult)
+            foreach(var result in DeviceHourlySelectedResult)
             {
                 result.IsChecked = false;
             }

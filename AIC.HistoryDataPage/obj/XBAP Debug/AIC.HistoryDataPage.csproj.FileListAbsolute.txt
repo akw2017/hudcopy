@@ -153,3 +153,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\Histor
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventListView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryDataTrendView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\HistoryEventAlarmTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\SubViews\DistributionMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Debug\Views\SubViews\DistributionMapView.baml

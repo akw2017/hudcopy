@@ -1,0 +1,88 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              ColumnWidth="400" FontSize="14" FontFamily="宋体"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" TextOptions.TextFormattingMode="Display">
+    <FlowDocument.Resources>
+        <Style TargetType="Table" x:Key="BorderedTable">
+            <Setter Property="CellSpacing" Value="0"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="#000"></Setter>
+        </Style>
+        <Style TargetType="TableCell" x:Key="BorderedCell">
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="BorderBrush" Value="#000"></Setter>
+            <Setter Property="Padding" Value="3"></Setter>
+        </Style>
+        <Style x:Key="Heading">
+            <Setter Property="Paragraph.FontSize" Value="20"></Setter>
+            <Setter Property="Paragraph.TextDecorations" Value="Underline"></Setter>
+            <Setter Property="Paragraph.TextAlignment" Value="Center"></Setter>
+        </Style>
+    </FlowDocument.Resources>
+
+    <!--<Table FontSize="16">
+        <Table.Columns>
+            <TableColumn Width="200"></TableColumn>
+            <TableColumn Width="600"></TableColumn>
+        </Table.Columns>
+        <TableRowGroup>
+            <TableRow>
+                <TableCell>
+                    <Paragraph>
+                        标题
+                    </Paragraph>
+                </TableCell>
+                <TableCell>
+                    <Paragraph>
+                        <Run Text="{Binding Header}"></Run>
+                    </Paragraph>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell>
+                    <Paragraph>
+                        时间
+                    </Paragraph>
+                </TableCell>
+                <TableCell>
+                    <Paragraph>
+                        <Run Text="{Binding DateTime}"></Run>
+                    </Paragraph>
+                </TableCell>
+            </TableRow>
+        </TableRowGroup>
+    </Table>-->
+
+    <Paragraph Style="{StaticResource Heading}" >
+        <Run Text="设备运行分析"/>
+    </Paragraph>
+
+    <Paragraph Foreground="DarkBlue" FontSize="16">分析的设备: </Paragraph>
+    <Paragraph FontSize="16">
+        <Run Text="{Binding ConclusionDevices}"/>
+    </Paragraph>
+
+    <Paragraph Foreground="DarkBlue" FontSize="16">设备运行时长曲线:</Paragraph>
+    <BlockUIContainer>
+        <Image Source="{Binding RunTimeImage}" Stretch="Fill" Height="200"/>
+    </BlockUIContainer>
+
+    <Paragraph Foreground="DarkBlue" FontSize="16">设备运行最大值曲线:</Paragraph>
+    <BlockUIContainer>
+        <Image Source="{Binding MaxValueImage}" Stretch="Fill" Height="200"/>
+    </BlockUIContainer>
+
+    <Paragraph Foreground="DarkBlue" FontSize="16">设备运行分析结论:</Paragraph>
+    <Paragraph FontSize="16">
+        <Run Text="{Binding ConclusionHeader}"/>
+    </Paragraph>
+    <Paragraph FontSize="16">
+        <Run Foreground="Yellow" Text="{Binding ConclusionAlarm}"/>
+    </Paragraph>
+    <Paragraph FontSize="16">
+        <Run Foreground="Red" Text="{Binding ConclusionDanger}"/>
+    </Paragraph>
+    <Paragraph FontSize="16">
+        <Run Text="{Binding ConclusionEnd}"/>
+    </Paragraph>
+
+</FlowDocument>

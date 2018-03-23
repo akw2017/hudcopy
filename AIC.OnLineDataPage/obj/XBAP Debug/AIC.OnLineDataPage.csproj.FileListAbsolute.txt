@@ -193,3 +193,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.Virtualiz
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Debug\Views\SubViews\DiagnoseView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Debug\Views\SubViews\DiagnoseView.baml

@@ -34,7 +34,7 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuHistoryDataStatistics { get; set; }
         public MyMenu MenuDataTrendChart { get; set; }
         public MyMenu MenuSystemEventList { get; set; }
-        public MyMenu MenuDeviceRunStatus { get; set; }
+        public MyMenu MenuDeviceRunTime { get; set; }
         public MyMenu MenuDeviceRunAnalyze { get; set; }
         public MyMenu MenuDeviceHourlyData { get; set; }
         public MyMenu MenuExportDBData { get; set; }
@@ -72,15 +72,15 @@ namespace AIC.Core.UserManageModels
             MenuHistoryDataStatistics = new MyMenu(21, (string)Application.Current.Resources["menuHistoryDataStatistics"], "/AIC.Resources;component/Images/chart_curve.png");
             MenuSystemEventList = new MyMenu(22, (string)Application.Current.Resources["menuSystemEventList"], "/AIC.Resources;component/Images/monitor_lightning.png");
             MenuDataTrendChart = new MyMenu(23, (string)Application.Current.Resources["menuDataTrendChart"], "/AIC.Resources;component/Images/chart_curve.png");
-            MenuDeviceRunStatus = new MyMenu(24, (string)Application.Current.Resources["menuDeviceRunStatus"], "/AIC.Resources;component/Images/cog_go.png");
+            MenuDeviceRunTime = new MyMenu(24, (string)Application.Current.Resources["menuDeviceRunTime"], "/AIC.Resources;component/Images/cog_go.png");
             MenuDeviceRunAnalyze = new MyMenu(25, (string)Application.Current.Resources["menuDeviceRunAnalyze"], "/AIC.Resources;component/Images/cog_error.png");
             MenuDeviceHourlyData = new MyMenu(26, (string)Application.Current.Resources["menuDeviceHourlyData"], "/AIC.Resources;component/Images/cog_edit.png");
             MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"], "/AIC.Resources;component/Images/export32.png");
             MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"], "/AIC.Resources;component/Images/import32.png");
             MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"], "/AIC.Resources;component/Images/search.png");
-            ServerQucikData = new MyMenu(30, (string)Application.Current.Resources["menuServerQucikData"], "/AIC.Resources;component/Images/search.png");
-            DeviceQucikData = new MyMenu(31, (string)Application.Current.Resources["menuDeviceQucikData"], "/AIC.Resources;component/Images/search.png");
-            ItemQucikData = new MyMenu(32, (string)Application.Current.Resources["menuItemQucikData"], "/AIC.Resources;component/Images/search.png");
+            ServerQucikData = new MyMenu(30, (string)Application.Current.Resources["menuServerQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            DeviceQucikData = new MyMenu(31, (string)Application.Current.Resources["menuDeviceQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            ItemQucikData = new MyMenu(32, (string)Application.Current.Resources["menuItemQucikData"], "/AIC.Resources;component/Images/lightning.png");
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(0, MenuUserManage);
             Dictionary.Add(1, MenuRoleManage);
@@ -106,7 +106,7 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(21, MenuHistoryDataStatistics);
             Dictionary.Add(22, MenuSystemEventList);
             Dictionary.Add(23, MenuDataTrendChart);
-            Dictionary.Add(24, MenuDeviceRunStatus);
+            Dictionary.Add(24, MenuDeviceRunTime);
             Dictionary.Add(25, MenuDeviceRunAnalyze);
             Dictionary.Add(26, MenuDeviceHourlyData);
             Dictionary.Add(27, MenuExportDBData);

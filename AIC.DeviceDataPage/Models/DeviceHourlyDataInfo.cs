@@ -379,7 +379,7 @@ namespace AIC.DeviceDataPage.Models
         public bool HasData { get; set; }
     }
 
-    public class SelectedResult : BindableBase
+    public class DeviceHourlySelectedResult : BindableBase
     {
         public DateTime DateTime { get; set; }
 
@@ -398,7 +398,7 @@ namespace AIC.DeviceDataPage.Models
         }
     }
 
-    public class PrintResult
+    public class DeviceHourlyPrintResult
     {
         public List<DeviceHourlyDataInfo> DeviceHourlyDataInfo { get; set; }
         public DateTime DateTime { get; set; }

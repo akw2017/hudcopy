@@ -116,6 +116,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\LightningChart\v8\Arction.Wpf.Charting.LightningChartUltimate.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -178,6 +186,7 @@
   <ItemGroup>
     <Compile Include="Models\DeviceHourlyDataDocumentRenderer.cs" />
     <Compile Include="Models\DeviceHourlyDataInfo.cs" />
+    <Compile Include="Models\DeviceRunAnalyzeDataInfo.cs" />
     <Compile Include="Models\DeviceRunInfo.cs" />
     <Compile Include="Models\IDocumentRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -194,26 +203,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\DeviceHourlyDataViewModel.cs" />
-    <Compile Include="ViewModels\DeviceRunTestListViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunAnalyzeListViewModel.cs" />
-    <Compile Include="ViewModels\DeviceRunStatusListViewModel.cs" />
+    <Compile Include="ViewModels\DeviceRunTimeListViewModel.cs" />
+    <Compile Include="Views\DeviceRunAnalyzePrintPreviewWindow.xaml.cs">
+      <DependentUpon>DeviceRunAnalyzePrintPreviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeviceHourlyDataView.xaml.cs">
       <DependentUpon>DeviceHourlyDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DeviceRunTestListView.xaml.cs">
-      <DependentUpon>DeviceRunTestListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeviceRunAnalyzeListView.xaml.cs">
       <DependentUpon>DeviceRunAnalyzeListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceRunStatusListView.xaml.cs">
-      <DependentUpon>DeviceRunStatusListView.xaml</DependentUpon>
+    <Compile Include="Views\DeviceRunTimeListView.xaml.cs">
+      <DependentUpon>DeviceRunTimeListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExportPreviewWindow.xaml.cs">
       <DependentUpon>ExportPreviewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PrintPreviewWindow.xaml.cs">
-      <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
+    <Compile Include="Views\DeviceHourlyDataPrintPreviewWindow.xaml.cs">
+      <DependentUpon>DeviceHourlyDataPrintPreviewWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -235,6 +243,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DeviceRunAnalyzePrintPreviewWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceRunAnalyzeFlowDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DeviceHourlyDataFlowDocument.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,15 +259,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DeviceRunTestListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\DeviceRunAnalyzeListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DeviceRunStatusListView.xaml">
+    <Page Include="Views\DeviceRunTimeListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -259,7 +271,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PrintPreviewWindow.xaml">
+    <Page Include="Views\DeviceHourlyDataPrintPreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

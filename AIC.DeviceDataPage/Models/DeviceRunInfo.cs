@@ -139,20 +139,6 @@ namespace AIC.DeviceDataPage.Models
             }
         }
 
-        private double minResult;
-        public double MinResult  //最小值      
-        {
-            get { return minResult; }
-            set
-            {
-                if (minResult != value)
-                {
-                    minResult = value;
-                    OnPropertyChanged("MinResult");
-                }
-            }
-        }
-
         private string diagnosticInfo;
         public string DiagnosticInfo
         {
@@ -227,14 +213,15 @@ namespace AIC.DeviceDataPage.Models
                 }
             }
         }
+
+        public int ItemType { get; set; }
     }
 
     public class RunInfo
     {
         public DateTime Time { get; set; }
         public double RunHours { get; set; }
-        public double MaxResult { get; set; }
-        public double MinResult { get; set; }
+        public double Result { get; set; }
         public Guid RecordLab { get; set; }//诊断用
         public DateTime ACQDatetime { get; set; }//诊断用
         public Guid T_Item_Guid { get; set; }//诊断用

@@ -79,3 +79,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.Resource
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\Wpf.CloseTabControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Debug\Wpf.CloseTabControl.pdb

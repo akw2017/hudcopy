@@ -1,6 +1,7 @@
 ﻿using AIC.Core;
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
+using AIC.Core.Helpers;
 using AIC.Core.Models;
 using AIC.CoreType;
 using AIC.HomePage.ViewModels;
@@ -276,33 +277,27 @@ namespace AIC.HomePage.Views
                 }                
             }));
         }
-
-
-        //public CloseableHeader Closer { get; private set; }
-        //IList<ServerInfo> ServerInfo;
-        //private void AddMarker(IList<ServerInfo> serverInfo)
-        //{
-        //    ServerInfo = serverInfo;
-        //}
-
         #endregion
-
         private void HideHtml(int para)
         {
-#if XBAP
             if (para == 0)
             {
-                //隐藏并用Image替代WebBrowser
-                imageResource.Source = WebScreenshot.BrowserSnapShot(webBrowser);
-                webBrowser.Visibility = Visibility.Hidden;
+                if (webBrowser.Visibility == Visibility.Visible)
+                {
+                    //隐藏并用Image替代WebBrowser
+                    imageResource.Source = WebScreenshotHelp.BrowserSnapShot(webBrowser);
+                    webBrowser.Visibility = Visibility.Hidden;
+                }
             }
             else
             {
-                //恢复WebBrowser
-                imageResource.Source = null;
-                webBrowser.Visibility = Visibility.Visible;
+                if (webBrowser.Visibility == Visibility.Hidden)
+                {
+                    //恢复WebBrowser
+                    imageResource.Source = null;
+                    webBrowser.Visibility = Visibility.Visible;
+                }
             }
-#endif
         }
         
     }

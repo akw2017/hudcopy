@@ -81,7 +81,7 @@
     <s:String x:Key="menuManageLog">SettingLog</s:String>
 
     <s:String x:Key="menuDeviceData">EquipmentData</s:String>
-    <s:String x:Key="menuDeviceRunStatus">EquipmentRunStatus</s:String>
+    <s:String x:Key="menuDeviceRunTime">EquipmentRunStatus</s:String>
     <s:String x:Key="menuDeviceRunAnalyze">EquipmentRunAnalyze</s:String>
     <s:String x:Key="menuDeviceHourlyData">EquipmentHourlyData</s:String>
 

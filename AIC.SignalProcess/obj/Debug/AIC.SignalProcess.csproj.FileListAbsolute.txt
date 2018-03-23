@@ -243,6 +243,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Common.DT
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Common.PetaPoco.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Kent.Boogaart.Truss.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Microsoft.Practices.ServiceLocation.dll
@@ -266,6 +267,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Snappy.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Crc32C.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.CoreType.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.Core.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.ServiceInterface.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Client.DataProvider.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.M9600.Common.DTO.pdb
@@ -307,5 +309,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\tr\FluentValidation
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.MatlabMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.MatlabMath.pdb

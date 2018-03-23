@@ -1080,16 +1080,13 @@ namespace AIC.HistoryDataPage.ViewModels
                         {
                             data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                         }
-                        else
-                        {
-                            token.VData = null;
-                        }
                         if (data != null && data.Count > 0)
                         {
                             result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
                         }
                         else
                         {
+                            result.Add(null);//与validTokens对齐
                             token.VData = null;
                         }
                     }    
@@ -1097,6 +1094,10 @@ namespace AIC.HistoryDataPage.ViewModels
 
                 await Task.Run(() => Parallel.For(0, result.Count, i =>
                 {      
+                    if (result[i] == null)
+                    {
+                        return;
+                    }
                     VibrationData vdata = new VibrationData();
                     vdata.Waveform = Algorithm.ByteToSingle(result[i].WaveData);
                     vdata.SampleFre = result[i].SampleFre ?? 0;
@@ -1240,16 +1241,13 @@ namespace AIC.HistoryDataPage.ViewModels
                         {
                             data = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot_Waveform>(divtoken.IP, divtoken.Guid, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit" }, divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(-1), divtoken.DataContracts[divtoken.CurrentIndex].ACQDatetime.AddSeconds(20), "(RecordLab = @0)", new object[] { divtoken.DataContracts[divtoken.CurrentIndex].RecordLab });
                         }
-                        else
-                        {
-                            token.VData = null;
-                        }
                         if (data != null && data.Count > 0)
                         {
                             result.Add(ClassCopyHelper.AutoCopy<D_WirelessVibrationSlot_Waveform, WirelessVibrationSlotData_Waveform>(data[0]));
                         }
                         else
                         {
+                            result.Add(null);//与validTokens对齐
                             token.VData = null;
                         }
                     }
@@ -1257,6 +1255,10 @@ namespace AIC.HistoryDataPage.ViewModels
 
                 await Task.Run(() => Parallel.For(0, result.Count, i =>
                 {
+                    if (result[i] == null)
+                    {
+                        return;
+                    }
                     VibrationData vdata = new VibrationData();
                     vdata.Waveform = Algorithm.ByteToSingle(result[i].WaveData);
                     vdata.SampleFre = result[i].SampleFre ?? 0;

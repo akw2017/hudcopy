@@ -228,6 +228,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Common.DTO.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Common.PetaPoco.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Microsoft.Practices.ServiceLocation.dll
@@ -244,6 +245,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\log4net.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Snappy.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Crc32C.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.CoreType.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Client.DataProvider.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.M9600.Common.DTO.pdb
@@ -275,9 +277,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\ru\FluentValidation.resource
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\Interop.Office.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csproj.ResolveComReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.pdb

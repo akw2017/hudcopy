@@ -10,6 +10,7 @@
              xmlns:control="clr-namespace:AIC.Core.OrganizationModels;assembly=AIC.Core"   
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -23,15 +24,16 @@
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
             <core:StringShowLenghtConverter x:Key="stringShowLenghtConverter"/>
                 <DataTemplate x:Key="enumComboItemTemplate">
-                <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
-            </DataTemplate>
+                <TextBlock Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />            </DataTemplate>
+            
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Name="grdWorkbench">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -39,7 +41,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TreeView Grid.Row="0" Grid.RowSpan="4" Name="treeview"                        
+        <TreeView Grid.Row="0" Grid.RowSpan="5" Name="treeview"                        
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
             <TreeView.Resources>
@@ -129,7 +131,7 @@
 
         </TreeView>
 
-        <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+        <GridSplitter x:Name="gsSplitterr"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
         <Border Grid.Row="0" Grid.Column="2" Padding="2" Background="{DynamicResource AccentColorBrush2}">
             <WrapPanel>
@@ -146,10 +148,19 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+                <Button Command="{Binding PrintCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/print.png"  />
+                            <TextBlock Text="{DynamicResource print}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>              
             </WrapPanel>
         </Border>
+        
         <DataGrid x:Name="gridview" Grid.Row="1" Grid.Column="2" GridLinesVisibility="None" Margin="0,1,0,0"
-                                 ItemsSource="{Binding DevicesView}" SelectionMode="Single"          
+                                 ItemsSource="{Binding DevicesView}" SelectionMode="Extended"          
                                  CanUserAddRows="False" ColumnWidth="Auto" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.IsVirtualizingWhenGrouping="True"
                                  AutoGenerateColumns="False" EnableRowVirtualization="True" EnableColumnVirtualization="True" RowDetailsVisibilityMode="Collapsed" ScrollViewer.CanContentScroll="True">
             <DataGrid.Resources>
@@ -161,13 +172,15 @@
                 <DataGridTextColumn Header="设备名称"  Binding="{Binding DeviceTreeItemViewModel.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="开始时间"  Binding="{Binding StartTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="结束时间"  Binding="{Binding EndTime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="运行时长"  Binding="{Binding RunHours,StringFormat={}{0:F1}h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="停止时长"  Binding="{Binding StopHours,StringFormat={}{0:F1}h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="总时长"  Binding="{Binding TotalHours,StringFormat={}{0:F1}h}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="预警次数"  Binding="{Binding PreAlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="报警次数"  Binding="{Binding AlarmCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="危险次数"  Binding="{Binding DangerCount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="分析时间"  Binding="{Binding ACQDatetime, StringFormat=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="级别"  Binding="{Binding AlarmGrade,Converter={StaticResource gradeToStringConverter}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="最大值"  Binding="{Binding MaxResult,StringFormat={}{0:F1}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="最小值"  Binding="{Binding MinResult,StringFormat={}{0:F1}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="最大值"  Binding="{Binding MaxResult,StringFormat={}{0:F3}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="单位"  Binding="{Binding Unit}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="诊断结果">
                     <DataGridTemplateColumn.CellTemplate>
@@ -279,23 +292,71 @@
             </DataGrid.Style>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectedDataGridChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=gridview}"/>
+                    <i:InvokeCommandAction Command="{Binding SelectedDataGridChangedComamnd}" CommandParameter="{Binding SelectedItems, ElementName=gridview}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding MouseDoubleClickComamnd}" CommandParameter="{Binding SelectedItem, ElementName=gridview}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>
-
-        <GridSplitter Grid.Row="2" Grid.Column="2" Height="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-
-        <TabControl Grid.Row="3" Grid.Column ="2">
-            <TabItem Header="总览" Style="{x:Null}">
-                <Grid Name="gridChart"/>
+    
+        <TabControl  Grid.Row="2" Grid.Column ="2" Style="{StaticResource MidTabControlStyle}">
+            <TabItem Header="运行时长总览" Style="{StaticResource TabItemStyle}">
+                <lvc:CartesianChart Series="{Binding RunColumnSeries}" x:Name="runControl">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Labels="{Binding RunColumnLabels}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis LabelFormatter="{Binding RunColumnFormatter}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
             </TabItem>
-            <TabItem Header="详情" Style="{x:Null}">
-                <Grid Name="gridChartMore"/>
+            <TabItem Header="运行时长详情" Style="{StaticResource TabItemStyle}">
+                <lvc:CartesianChart Series="{Binding RunMoreColumnSeries}">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Labels="{Binding RunMoreColumnLabels}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis LabelFormatter="{Binding RunMoreColumnFormatter}" MinValue="0" MaxValue="24" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
             </TabItem>
         </TabControl>
+
+        <TabControl  Grid.Row="3" Grid.Column ="2" Style="{StaticResource MidTabControlStyle}">
+                <TabItem Header="最大值总览" Style="{StaticResource TabItemStyle}">
+                <lvc:CartesianChart Series="{Binding MaxColumnSeries}" x:Name="maxControl">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Labels="{Binding MaxColumnLabels}" Foreground="Black"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis LabelFormatter="{Binding MaxColumnFormatter}" Foreground="Black"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </TabItem>
+                <TabItem Header="最大值详情" Style="{StaticResource TabItemStyle}">
+                    <lvc:CartesianChart Series="{Binding MaxMoreColumnSeries}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Labels="{Binding MaxMoreColumnLabels}" Foreground="Black"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis LabelFormatter="{Binding MaxMoreColumnFormatter}" Foreground="Black"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </TabItem>
+            </TabControl>
+
+        <GroupBox Grid.Row="4" Grid.Column ="2" Header="结论" Margin="0">
+            <ScrollViewer x:Name="scrolls" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ScrollViewer.Content>
+                    <StackPanel x:Name="numberedItemsStackPanel" Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <TextBlock Text="{Binding DeviceRunAnalyze.ConclusionHeader}"/>
+                        <TextBlock Foreground="Yellow" Text="{Binding DeviceRunAnalyze.ConclusionAlarm}"/>
+                        <TextBlock Foreground="Red" Text="{Binding DeviceRunAnalyze.ConclusionDanger}"/>
+                        <TextBlock Text="{Binding DeviceRunAnalyze.ConclusionEnd}"/>
+                    </StackPanel>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+        </GroupBox>
     </Grid>
 </core:DisposableUserControl>

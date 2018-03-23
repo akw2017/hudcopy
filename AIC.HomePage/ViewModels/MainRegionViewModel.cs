@@ -101,7 +101,7 @@ namespace AIC.HomePage.ViewModels
 
             InitLanguage();
 
-            this.GCTimer.Interval = TimeSpan.FromMinutes(5); //垃圾释放定时器 我定为每五分钟释放一次，大家可根据需要修改
+            this.GCTimer.Interval = TimeSpan.FromMinutes(10); //垃圾释放定时器 我定为每十分钟释放一次，大家可根据需要修改
             this.GCTimer.Start();
             this.EventsRegistion();    // 注册事件
 
@@ -869,7 +869,6 @@ namespace AIC.HomePage.ViewModels
         #endregion
 
         #region 菜单管理
-
         private async void Navigate(object para)
         {
             string viewName = para as string;
@@ -954,9 +953,9 @@ namespace AIC.HomePage.ViewModels
             {
                 _loginUserService.GotoTab<HistoryDataTrendView>(viewName);
             }
-            else if (viewName == "MenuDeviceRunStatus")
+            else if (viewName == "MenuDeviceRunTime")
             {
-                _loginUserService.GotoTab<DeviceRunStatusListView>(viewName);
+                _loginUserService.GotoTab<DeviceRunTimeListView>(viewName);
             }
             else if (viewName == "MenuDeviceRunAnalyze")
             {
@@ -977,10 +976,6 @@ namespace AIC.HomePage.ViewModels
             else if (viewName == "MenuFilterDBData")
             {
                 _loginUserService.GotoTab<FilterDBDataView>(viewName);
-            }
-            else if(viewName == "MenuDeviceNewData")
-            {
-                _loginUserService.GotoTab<DeviceRunTestListView>(viewName);
             }
             else if (viewName == "MenuRefreshData")
             {
@@ -1370,24 +1365,27 @@ namespace AIC.HomePage.ViewModels
 
         private void CustomSystemHappenEvent(Tuple<string, T1_SystemEvent> ex)
         {
-            ex.Item2.id = (CustomSystemException.LastOrDefault() ?? new T1_SystemEvent()).id + 1;
-            CustomSystemException.Add(ex.Item2);
-
-            //保留当天100条数据
-            if (CustomSystemException.Count >= 100)
+            if (ex != null)
             {
-                CustomSystemException.RemoveAt(0);
-            }
+                ex.Item2.id = (CustomSystemException.LastOrDefault() ?? new T1_SystemEvent()).id + 1;
+                CustomSystemException.Add(ex.Item2);
 
-            var olds = CustomSystemException.Where(p => p.EventTime.Date != ex.Item2.EventTime.Date).ToList();
-            if (olds != null)
-            {
-               for(int i =0; i < olds.Count; i++ )
+                //保留当天100条数据
+                if (CustomSystemException.Count >= 100)
                 {
-                    CustomSystemException.Remove(olds[i]);
+                    CustomSystemException.RemoveAt(0);
                 }
+
+                var olds = CustomSystemException.Where(p => p.EventTime.Date != ex.Item2.EventTime.Date).ToList();
+                if (olds != null)
+                {
+                    for (int i = 0; i < olds.Count; i++)
+                    {
+                        CustomSystemException.Remove(olds[i]);
+                    }
+                }
+                _loginUserService.AddSystemEvent(ex.Item1, ex.Item2);
             }
-            _loginUserService.AddSystemEvent(ex.Item1, ex.Item2);
             //if (heightoffsets.Count >= 5)//避免太多弹出窗口//htzk123，弹出窗口太多，废弃
             //{
             //    return;
@@ -1433,7 +1431,7 @@ namespace AIC.HomePage.ViewModels
         }
         #endregion
 
-        #region 
+        #region 清理垃圾
         System.Windows.Threading.DispatcherTimer GCTimer = new System.Windows.Threading.DispatcherTimer();
 
         public void EventsRegistion()

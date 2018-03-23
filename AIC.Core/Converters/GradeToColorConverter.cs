@@ -18,6 +18,10 @@ namespace AIC.Core
             if (value is AlarmGrade || value is int)
             {
                 AlarmGrade grade = (AlarmGrade)((int)value & 0x00ffff00);//兼容历史数据没有去除后8位
+                if ((AlarmGrade)value == AlarmGrade.DisConnect)//DisConnect没有在中间8位
+                {
+                    grade = AlarmGrade.DisConnect;
+                }
                 switch (grade)
                 {
                     case AlarmGrade.Invalid: return new SolidColorBrush(Color.FromRgb(0x00, 0x80, 0x00));//绿色

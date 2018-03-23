@@ -242,6 +242,7 @@ namespace AIC.Core.SignalModels
         {
             if (alarmstring == null || itemtype == (int)ChannelType.None || ACQDatetime == null)
             {
+                _eventAggregator.GetEvent<CustomSystemEvent>().Publish(null);
                 return;
             }
             T1_SystemEvent systemEvent = new T1_SystemEvent()
@@ -287,7 +288,7 @@ namespace AIC.Core.SignalModels
             }
         }
         //报警级别
-        private AlarmGrade alarmGrade;
+        private AlarmGrade alarmGrade = AlarmGrade.None;
         public AlarmGrade AlarmGrade
         {
             get { return alarmGrade; }
