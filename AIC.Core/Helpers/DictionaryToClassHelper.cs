@@ -29,9 +29,9 @@ namespace AIC.Core.Helpers
                     var value = d.Value;
                     md.GetType().GetProperty(filed).SetValue(md, value);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-
+                    throw ex;
                 }
             }
             return md;

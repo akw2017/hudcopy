@@ -11,6 +11,7 @@ using AIC.Core.Events;
 using AIC.Core.Models;
 using System;
 using AIC.Core.LMModels;
+using AIC.Core.HardwareModels;
 
 namespace AIC.Core.SignalModels
 {

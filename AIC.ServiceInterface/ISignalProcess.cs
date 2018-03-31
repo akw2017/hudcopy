@@ -1,4 +1,5 @@
 ﻿using AIC.Core.Events;
+using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
 using AIC.Core.SignalModels;
 using System;
@@ -32,7 +33,10 @@ namespace AIC.ServiceInterface
         event DailyChangedEvent DailyChanged;
 
         Dictionary<string, List<StatisticalInformationData>>  StatisticalInformation { get; }
-        Dictionary<string, List<Tuple<DateTime, int, int, int, int>>> ServerLevelStatisticalResult { get; }
+        List<Tuple<DateTime, int, int, int, int>> GetStatisticalAlarmNumber(string serverip, Guid[] guids);
+        AlarmObjectInfo GetStatisticalAlarmAlarmRate(string serverip);
+        List<AlarmObjectInfo> GetStatisticalAlarmAlarmRate(string serverip, DeviceTreeItemViewModel[] devices);
+        List<AlarmObjectInfo> GetStatisticalAlarmAlarmRate(string serverip, ItemTreeItemViewModel[] items);
         void GetRunningDays(DateTime now);
         Dictionary<string, double> RunningDays { get; }
     }

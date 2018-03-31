@@ -184,10 +184,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DeviceDiagnosisInfo.cs" />
     <Compile Include="Models\DeviceHourlyDataDocumentRenderer.cs" />
     <Compile Include="Models\DeviceHourlyDataInfo.cs" />
     <Compile Include="Models\DeviceRunAnalyzeDataInfo.cs" />
     <Compile Include="Models\DeviceRunInfo.cs" />
+    <Compile Include="Models\DiagnoseResult.cs" />
     <Compile Include="Models\IDocumentRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -202,9 +204,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DeviceFaultDiagnoseViewModel.cs" />
     <Compile Include="ViewModels\DeviceHourlyDataViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunAnalyzeListViewModel.cs" />
     <Compile Include="ViewModels\DeviceRunTimeListViewModel.cs" />
+    <Compile Include="Views\DeviceFaultDiagnoseView.xaml.cs">
+      <DependentUpon>DeviceFaultDiagnoseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeviceRunAnalyzePrintPreviewWindow.xaml.cs">
       <DependentUpon>DeviceRunAnalyzePrintPreviewWindow.xaml</DependentUpon>
     </Compile>
@@ -240,6 +246,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceFaultDiagnoseView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -284,6 +294,14 @@
     <ProjectReference Include="..\AIC.Core\AIC.Core.csproj">
       <Project>{258c4ef5-c2af-4aee-8057-bd4b1ef45fa8}</Project>
       <Name>AIC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.MatlabMath\AIC.MatlabMath.csproj">
+      <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
+      <Name>AIC.MatlabMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.OnLineDataPage\AIC.OnLineDataPage.csproj">
+      <Project>{4d9542c6-3bcc-4c44-b371-1416b837c2a8}</Project>
+      <Name>AIC.OnLineDataPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
       <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>

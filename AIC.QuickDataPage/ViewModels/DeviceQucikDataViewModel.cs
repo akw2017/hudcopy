@@ -51,6 +51,7 @@ namespace AIC.QuickDataPage.ViewModels
 
             _signalProcess.DailyChanged += DailyChanged;
             ServerInfoList = _localConfiguration.LoginServerInfoList;
+            Init(null, null);
 
             readDataTimer.Tick += new EventHandler(timeCycle);
             readDataTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -181,8 +182,8 @@ namespace AIC.QuickDataPage.ViewModels
 
         public Func<double, string> YFormatter { get; set; }
 
-        private ObservableCollection<AlarmServerInfo> alarmServerInfoList;
-        public ObservableCollection<AlarmServerInfo> AlarmServerInfoList
+        private ObservableCollection<AlarmObjectInfo> alarmServerInfoList;
+        public ObservableCollection<AlarmObjectInfo> AlarmObjectInfoList
         {
             get { return alarmServerInfoList; }
             set
@@ -190,7 +191,7 @@ namespace AIC.QuickDataPage.ViewModels
                 if (alarmServerInfoList != value)
                 {
                     alarmServerInfoList = value;
-                    OnPropertyChanged("AlarmServerInfoList");
+                    OnPropertyChanged("AlarmObjectInfoList");
                 }
             }
         }
@@ -309,7 +310,14 @@ namespace AIC.QuickDataPage.ViewModels
         #region 管理树
         public void Init(ServerInfo serverinfo, DeviceTreeItemViewModel device)
         {
-            ServerInfo = serverinfo;
+            if (serverinfo != null)
+            {
+                ServerInfo = serverinfo;
+            }
+            else
+            {
+                ServerInfo = _localConfiguration.ServerInfoList.Where(p => p.IP == _loginUserService.LoginInfo.ServerInfo.IP).FirstOrDefault();
+            }
             OrganizationTreeItems = new ObservableCollection<OrganizationTreeItemViewModel>(_organizationService.OrganizationTreeItems.Where(p => p.ServerIP == ServerInfo.IP));
             OrganizationTreeItem = device;
             if (OrganizationTreeItem == null)
@@ -369,6 +377,10 @@ namespace AIC.QuickDataPage.ViewModels
         private void timeCycle(object sender, EventArgs e)
         {
             #region 更新前三报警
+            if (selectedsignals == null)
+            {
+                return;
+            }
             selectedsignals = selectedsignals.OrderByDescending(p => p.Low8Alarm).ThenByDescending(p => p.PercentResult).ToList();
             if (selectedsignals == null || selectedsignals.Count == 0)
             {
@@ -421,96 +433,44 @@ namespace AIC.QuickDataPage.ViewModels
 
             System.Windows.Application.Current.Dispatcher.Invoke((Action)(() =>//调用线程必须为 STA
             {
-                SeriesCollection = new SeriesCollection
-                {
-                    new LineSeries
-                    {
-                        Title = "预警点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色                        
-                    },
-                    new LineSeries
-                    {
-                        Title = "警告点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                        
-                    },
-                    new LineSeries
-                    {
-                        Title = "危险点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
-                    },
-                };
-                YFormatter = value => value.ToString("0");
+                var selectedguids = selectedsignals.Select(p => p.Guid).ToArray();              
+                var tuple = _signalProcess.GetStatisticalAlarmNumber(ServerInfo.IP, selectedguids);
+                DrawSeriesCollection(tuple);
 
-                var serverInfoList = new List<AlarmServerInfo>();  
-                var selectedguids = selectedsignals.Select(p => p.Guid).ToArray();
-                var selectStatisticalInfo = statisticalInfo[ServerInfo.IP].Where(p => (selectedsignals == null || selectedguids.Contains(p.T_Item_Guid))).ToArray();
-
-                if (selectStatisticalInfo != null)
-                {
-                    //统计总报警
-                    {
-                        List<Tuple<DateTime, int, int, int, int>> tuple = new List<Tuple<DateTime, int, int, int, int>>();
-                        var daySelectStatisticalInfo = selectStatisticalInfo.OrderBy(p => p.ACQDatetime).GroupBy(p => p.ACQDatetime.Value.Date);
-                        foreach (var daysignals in daySelectStatisticalInfo)
-                        {
-                            var allNumber = daysignals.Count();
-                            var dangerNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 4).Count();
-                            var alarmNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 3).Count();
-                            var prealarmNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 2).Count();
-                            tuple.Add(new Tuple<DateTime, int, int, int, int>(daysignals.FirstOrDefault().ACQDatetime.Value.Date, allNumber, dangerNumber, alarmNumber, prealarmNumber));
-                        }
-
-                        Labels = tuple.Select(p => p.Item1.ToString("MM/dd")).ToArray();
-                        SeriesCollection[2].Values.AddRange(tuple.Select(p => p.Item3 as object));
-                        SeriesCollection[1].Values.AddRange(tuple.Select(p => p.Item4 as object));
-                        SeriesCollection[0].Values.AddRange(tuple.Select(p => p.Item5 as object));
-                    }
-
-                    foreach (var device in DeviceTreeItems)
-                    {
-                        var itemguids = device.Children.OfType<ItemTreeItemViewModel>().Where(p => p.BaseAlarmSignal != null).Select(p => p.BaseAlarmSignal.Guid).ToArray();
-                        List<Tuple<DateTime, int, int, int, int>> tuple = new List<Tuple<DateTime, int, int, int, int>>();
-                        var daySelectStatisticalInfo = selectStatisticalInfo.Where(p => itemguids.Contains(p.T_Item_Guid)).OrderBy(p => p.ACQDatetime).GroupBy(p => p.ACQDatetime.Value.Date);
-                        foreach (var daysignals in daySelectStatisticalInfo)
-                        {
-                            var allNumber = daysignals.Count();
-                            var dangerNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 4).Count();
-                            var alarmNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 3).Count();
-                            var prealarmNumber = daysignals.Where(p => (p.AlarmGrade & 0xff) == 2).Count();
-                            tuple.Add(new Tuple<DateTime, int, int, int, int>(daysignals.FirstOrDefault().ACQDatetime.Value.Date, allNumber, dangerNumber, alarmNumber, prealarmNumber));
-                        }
-                        AlarmServerInfo serverinfo = new AlarmServerInfo();
-                        serverinfo.Name = device.Name;
-                        if (tuple.Count != 0)
-                        {
-                            serverinfo.AlarmRate = tuple.Select(p => (p.Item2 == 0) ? 0 : (double)(p.Item3 + p.Item4) / p.Item2).Average();
-                            if (tuple.Select(p => (p.Item2 == 0) ? 0 : (p.Item3)).Average() > 0)
-                            {
-                                serverinfo.AlarmGrade = 4;
-                            }
-                            else if (tuple.Select(p => (p.Item2 == 0) ? 0 : (p.Item4)).Average() > 0)
-                            {
-                                serverinfo.AlarmGrade = 3;
-                            }
-                            else if (tuple.Select(p => (p.Item2 == 0) ? 0 : (p.Item5)).Average() > 0)
-                            {
-                                serverinfo.AlarmGrade = 2;
-                            }
-                            else
-                            {
-                                serverinfo.AlarmGrade = 1;
-                            }
-                        }
-                        serverInfoList.Add(serverinfo);
-                        serverInfoList = serverInfoList.OrderByDescending(p => p.AlarmRate).ToList();
-                        serverInfoList.ForEach(p => p.Index = serverInfoList.IndexOf(p) + 1);
-                    }
-                }
-                AlarmServerInfoList = new ObservableCollection<AlarmServerInfo>(serverInfoList);
+                var serverInfoList = _signalProcess.GetStatisticalAlarmAlarmRate(ServerInfo.IP, DeviceTreeItems.ToArray());
+                AlarmObjectInfoList = new ObservableCollection<AlarmObjectInfo>(serverInfoList);
             }));
+        }
+
+        private void DrawSeriesCollection(List<Tuple<DateTime, int, int, int, int>> tuple)
+        {
+            if (tuple == null) return;
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "预警点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色                        
+                },
+                new LineSeries
+                {
+                    Title = "警告点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                        
+                },
+                new LineSeries
+                {
+                    Title = "危险点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                },
+            };
+            YFormatter = value => value.ToString("0");
+            Labels = tuple.Select(p => p.Item1.ToString("MM/dd")).ToArray();
+            SeriesCollection[2].Values.AddRange(tuple.Select(p => p.Item3 as object));
+            SeriesCollection[1].Values.AddRange(tuple.Select(p => p.Item4 as object));
+            SeriesCollection[0].Values.AddRange(tuple.Select(p => p.Item5 as object));
         }
 
         private void Goto(object para)

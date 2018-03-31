@@ -11,8 +11,10 @@ using AIC.HistoryDataPage.Views;
 using AIC.HomePage.Menus;
 using AIC.HomePage.Models;
 using AIC.HomePage.Views;
+using AIC.NetWorksPage.Views;
 using AIC.OnLineDataPage.Views;
 using AIC.PDAPage.Views;
+using AIC.QuickDataPage.Views;
 using AIC.Resources.Models;
 using AIC.Resources.Views;
 using AIC.ServiceInterface;
@@ -977,6 +979,30 @@ namespace AIC.HomePage.ViewModels
             {
                 _loginUserService.GotoTab<FilterDBDataView>(viewName);
             }
+            else if (viewName == "MenuServerQucikData")
+            {
+                _loginUserService.GotoTab<ServerQucikDataView>(viewName);
+            }
+            else if (viewName == "MenuDeviceQucikData")
+            {
+                _loginUserService.GotoTab<DeviceQucikDataView>(viewName);
+            }
+            else if (viewName == "MenuItemQucikData")
+            {
+                _loginUserService.GotoTab<ItemQucikDataView>(viewName);
+            }
+            else if (viewName == "MenuBPNetWorks")
+            {
+                _loginUserService.GotoTab<BPNetWorksView>(viewName);
+            }
+            else if (viewName == "MenuSOMNetWorks")
+            {
+                _loginUserService.GotoTab<SOMNetWorksView>(viewName);
+            }
+            else if (viewName == "MenuDeviceFaultDiagnose")
+            {
+                _loginUserService.GotoTab<DeviceFaultDiagnoseView>(viewName);
+            }
             else if (viewName == "MenuRefreshData")
             {
                 Status = ViewModelStatus.Querying;
@@ -1085,8 +1111,8 @@ namespace AIC.HomePage.ViewModels
 
         private void AlarmList()
         {
-            ShowAlarmWin win = new ShowAlarmWin();
-            win.ShowDialog();
+            //ShowAlarmWin win = new ShowAlarmWin();
+            //win.ShowDialog();
         }
 
         private void ExceptList()
@@ -1351,9 +1377,16 @@ namespace AIC.HomePage.ViewModels
         #region 统计数据
         private void OnSystemDateChanged(string propertyName)//刷新统计数据
         {
-            var date = Convert.ToDateTime(SystemDate);
-            _signalProcess.GetDailyMedianData(date.AddDays(-7), date.AddDays(-1));
-            _signalProcess.GetRunningDays(date);
+            if (_loginUserService.LoginInfo.LoginStatus == true)
+            {
+                try
+                {
+                    var date = Convert.ToDateTime(SystemDate);
+                    _signalProcess.GetDailyMedianData(date.AddDays(-7), date);
+                    _signalProcess.GetRunningDays(date);
+                }
+                catch { }
+            }
         }
         #endregion
 

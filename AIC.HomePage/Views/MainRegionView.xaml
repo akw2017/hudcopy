@@ -131,6 +131,23 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="{DynamicResource menuQucikData}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuServerQucikData}" Command="{Binding NavigateCommand}" CommandParameter="MenuServerQucikData" Visibility="{Binding MenuManageList.MenuServerQucikData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuServerQucikData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuDeviceQucikData}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceQucikData" Visibility="{Binding MenuManageList.MenuDeviceQucikData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDeviceQucikData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuItemQucikData}" Command="{Binding NavigateCommand}" CommandParameter="MenuItemQucikData" Visibility="{Binding MenuManageList.MenuItemQucikData.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuItemQucikData.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="{DynamicResource menuDeviceData}" Background="{DynamicResource TransparentWhiteBrush}">
                     <!--昌邑石化-->
                     <!--<MenuItem Header="{DynamicResource menuDeviceRunTime}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceRunTime" Visibility="{Binding MenuManageList.MenuDeviceRunTime.Visibility}">
@@ -148,7 +165,24 @@
                             <Image Source="{Binding MenuManageList.MenuDeviceHourlyData.IconPath}"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                </MenuItem>              
+                    <MenuItem Header="{DynamicResource menuDeviceFaultDiagnose}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceFaultDiagnose" Visibility="{Binding MenuManageList.MenuDeviceFaultDiagnose.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuDeviceFaultDiagnose.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuNetWorks}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuBPNetWorks}" Command="{Binding NavigateCommand}" CommandParameter="MenuBPNetWorks" Visibility="{Binding MenuManageList.MenuBPNetWorks.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuBPNetWorks.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuSOMNetWorks}" Command="{Binding NavigateCommand}" CommandParameter="MenuSOMNetWorks" Visibility="{Binding MenuManageList.MenuSOMNetWorks.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuSOMNetWorks.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="{DynamicResource menuGeneralManage}" Background="{DynamicResource TransparentWhiteBrush}">
                     <!--<MenuItem Header="{DynamicResource menuLogin}" Command="{Binding LoginCommand}">
                         <MenuItem.Icon>

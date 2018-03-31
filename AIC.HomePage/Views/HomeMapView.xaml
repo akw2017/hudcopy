@@ -195,7 +195,7 @@
             </GroupBox>
 
             <GroupBox Grid.Row="3" Header="报警排名(七天)">
-                <ListBox x:Name="myListBox" ItemsSource="{Binding AlarmServerInfoList}" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox x:Name="myListBox" ItemsSource="{Binding AlarmObjectInfoList}" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="10, 2">

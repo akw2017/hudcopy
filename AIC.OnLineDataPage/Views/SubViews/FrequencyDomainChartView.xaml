@@ -212,7 +212,7 @@
                     </Grid>
                 </xctk:DropDownButton.DropDownContent>
             </xctk:DropDownButton>
-            <ComboBox IsEditable="False" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:SignalPreProccessType}" SelectedItem="{Binding SignalPreProccessType}" Width="80" VerticalAlignment="Center" Background="Transparent" Margin="5,0,5,0">
+            <ComboBox x:Name="preCheckBox" IsEditable="False" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:SignalPreProccessType}" SelectedItem="{Binding SignalPreProccessType}" Width="80" VerticalAlignment="Center" Background="Transparent" Margin="5,0,5,0">
                 <ComboBox.Style>
                     <Style BasedOn="{StaticResource VirtualisedMetroComboBox}" TargetType="{x:Type ComboBox}">
                         <Setter Property="BorderThickness" Value="0"/>

@@ -2573,7 +2573,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Microsoft.Practices.ServiceL
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Microsoft.Practices.Unity.Configuration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Microsoft.Practices.Unity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Microsoft.Practices.Unity.RegistrationByConvention.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\ModularityWithUnity.ModuleTracking.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Newtonsoft.Json.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Prism.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Prism.Unity.Wpf.dll
@@ -2637,7 +2636,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.Core.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.HomePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.LocalConfiguration.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.ServiceInterface.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\ModularityWithUnity.ModuleTracking.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Xceed.Wpf.Toolkit.pdb
@@ -2734,3 +2732,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.TrustInfo.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Release\AICAir.exe
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.NetWorksPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.Arrows.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.ZoomableCanvas.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.NetWorksPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.Arrows.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.ZoomableCanvas.pdb

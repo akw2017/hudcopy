@@ -37,6 +37,8 @@ using System.Windows.Media;
 using AIC.M9600.Common.DTO;
 using System.Collections;
 using AIC.DeviceDataPage.Views;
+using AIC.Core.HardwareModels;
+using AIC.Core.DiagnosticModels;
 
 namespace AIC.DeviceDataPage.ViewModels
 {

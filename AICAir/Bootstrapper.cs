@@ -9,7 +9,6 @@ using AIC.ServiceInterface;
 using System;
 using Prism.Events;
 using System.Threading;
-using ModuleTracking;
 using System.Text;
 using System.Collections.Generic;
 using System.Windows.Threading;
@@ -18,7 +17,6 @@ using Prism.Regions;
 using AIC.Core;
 using AIC.HomePage;
 using MahApps.Metro.Controls.Dialogs;
-using AICAir.ModuleTracker;
 using System.Windows.Navigation;
 using AIC.LocalConfiguration;
 using AIC.HardwareService;
@@ -31,7 +29,6 @@ namespace AICAir
 {
     class Bootstrapper : UnityBootstrapper
     {
-        private readonly CallbackLogger callbackLogger = new CallbackLogger();
         private List<Exception> exceptionList = new List<Exception>();
         public static DependencyObject ShellPage { private get; set; }//XBAP.6
         protected override DependencyObject CreateShell()
@@ -112,8 +109,6 @@ namespace AICAir
             this.Container.RegisterType<ILoginUserService, LoginUserService>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<IUserManageService, UserManageService>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<ICardProcess, CardProcess>(new ContainerControlledLifetimeManager());               
-            this.RegisterTypeIfMissing(typeof(IModuleTracker), typeof(ModuleTracker.ModuleTracker), true);
-            this.Container.RegisterInstance<CallbackLogger>(this.callbackLogger);
             this.Container.RegisterType<IRegionNavigationContentLoader, ScopedRegionNavigationContentLoader>(new ContainerControlledLifetimeManager());
             //this.Container.RegisterType<IDialogCoordinator, DialogCoordinator>(new ContainerControlledLifetimeManager());
         }
@@ -145,13 +140,13 @@ namespace AICAir
             catalog.AddModule(typeof(SignalProcessModule));
         }
 
-        protected override ILoggerFacade CreateLogger()
-        {
-            // Because the Shell is displayed after most of the interesting boostrapper work has been performed,
-            // this quickstart uses a special logger class to hold on to early log entries and display them 
-            // after the UI is visible.
-            return this.callbackLogger;
-        }
+        //protected override ILoggerFacade CreateLogger()
+        //{
+        //    // Because the Shell is displayed after most of the interesting boostrapper work has been performed,
+        //    // this quickstart uses a special logger class to hold on to early log entries and display them 
+        //    // after the UI is visible.
+         
+        //}
     }
 
     public class CloseSplashEvent : PubSubEvent<object>

@@ -25,6 +25,31 @@ namespace AIC.OnLineDataPage.Views.SubViews
     /// </summary>
     public partial class FrequencyDomainChartView : ChartViewBase
     {
+        public bool IsHideProccess
+        {
+            get { return Convert.ToBoolean(GetValue(IsHideProccessProperty)); }
+            set { SetValue(IsHideProccessProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsHideProccessProperty =
+            DependencyProperty.RegisterAttached(nameof(IsHideProccess), typeof(bool), typeof(FrequencyDomainChartView), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsHideProccessChanged)));
+        private static void OnIsHideProccessChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            FrequencyDomainChartView pager = (FrequencyDomainChartView)sender;
+            if ((bool)e.NewValue == true)
+            {
+                pager.filterCheckBox.Visibility = Visibility.Collapsed;
+                pager.dropDownButton.Visibility = Visibility.Collapsed;
+                pager.preCheckBox.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                pager.filterCheckBox.Visibility = Visibility.Visible;
+                pager.dropDownButton.Visibility = Visibility.Visible;
+                pager.preCheckBox.Visibility = Visibility.Visible;
+            }
+        }
+
         private LightningChartUltimate m_chart;
     
         public FrequencyDomainChartView()

@@ -24,6 +24,7 @@ using AIC.CoreType;
 using System.ComponentModel;
 using System.Windows.Data;
 using AIC.HistoryDataPage.Models;
+using AIC.Core.HardwareModels;
 
 namespace AIC.HistoryDataPage.ViewModels
 {

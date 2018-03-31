@@ -111,7 +111,7 @@ namespace AIC.Core.Helpers
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return d;
         }

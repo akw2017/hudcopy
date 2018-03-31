@@ -84,15 +84,26 @@
     <s:String x:Key="menuDeviceRunTime">设备运行时长</s:String>
     <s:String x:Key="menuDeviceRunAnalyze">设备运行分析</s:String>
     <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
+    <s:String x:Key="menuDeviceFaultDiagnose">设备故障诊断</s:String>
 
     <s:String x:Key="menuDBManage">数据库管理</s:String>
     <s:String x:Key="menuExportDBData">数据库导出</s:String>
     <s:String x:Key="menuImportDBData">数据库导入</s:String>
     <s:String x:Key="menuFilterDBData">数据库筛选</s:String>
 
+    <s:String x:Key="menuQucikData">数据快览</s:String>
     <s:String x:Key="menuServerQucikData">服务数据快览</s:String>
     <s:String x:Key="menuDeviceQucikData">设备数据快览</s:String>
     <s:String x:Key="menuItemQucikData">测点数据快览</s:String>
+
+    <s:String x:Key="menuNetWorks">网络诊断</s:String>
+    <s:String x:Key="menuBPNetWorks">BP神经网络</s:String>
+    <s:String x:Key="menuSOMNetWorks">SOM神经网络</s:String>
+    <s:String x:Key="strStartTrain">开始训练</s:String>
+    <s:String x:Key="strTestTrain">测试训练</s:String>
+    <s:String x:Key="strLoadNetWorks">加载网络</s:String>
+    <s:String x:Key="strSaveNetWorks">保存网络</s:String>
+    <s:String x:Key="strUnloadNetWorks">卸载网络</s:String>
 
     <s:String x:Key="menuGeneralManage">综合管理</s:String>
     <s:String x:Key="menuSystemManage">系统管理</s:String>

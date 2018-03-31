@@ -636,7 +636,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <ListView Grid.Row="0" x:Name="listMainCard" ItemsSource="{Binding MainCard}" ItemContainerStyle="{StaticResource UnSelectedListViewItem}" Grid.RowSpan="2">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>

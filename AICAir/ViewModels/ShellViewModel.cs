@@ -1,6 +1,4 @@
 ﻿using AIC.Core;
-using AICAir.ModuleTracker;
-using ModuleTracking;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Logging;

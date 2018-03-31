@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:arrows="clr-namespace:Wpf.Arrows;assembly=Wpf.Arrows"
+                    xmlns:model="clr-namespace:AIC.NetWorksPage.Models">
+    <DataTemplate DataType="{x:Type model:NodeViewModel}">
+        <ContentControl >
+            <Grid Width="{Binding Width}" Height="{Binding Height}" Background="#FFFB1010">
+                <TextBlock Text="{Binding Path=Index}" Margin="4" Foreground="#FFFDFBFB" TextAlignment="Center"/>
+            </Grid>
+        </ContentControl>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type model:EllipseNodeViewModel}">
+        <ContentControl >
+            <Grid Width="{Binding Width}" Height="{Binding Height}" ToolTip="{Binding ShowValue}">
+                <Ellipse x:Name="node" Fill="{DynamicResource DeepLinearAccentColorBrush}"></Ellipse>
+                <TextBlock Text="{Binding Path=Index}" Margin="4" Foreground="#FFFDFBFB" TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ContentControl>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="node" Property="Fill" Value="Green" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type model:RectangleNodeViewModel}">
+        <ContentControl >
+            <Grid Width="{Binding Width}" Height="{Binding Height}" ToolTip="{Binding ShowValue}">
+                <Rectangle x:Name="node" Fill="{DynamicResource RadialAccentColorBrush}"></Rectangle>
+                <TextBlock Text="{Binding Path=Index}" Margin="4" Foreground="#FFFDFBFB" TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ContentControl>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected}">
+                <Setter TargetName="node" Property="Fill" Value="Green" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type model:LineNodeViewModel}">
+        <ContentControl >
+            <Grid>
+                <arrows:ArrowLine Stroke="Black" StartPoint="0,0" EndPoint="{Binding EndPoint}" />
+            </Grid>
+        </ContentControl>
+    </DataTemplate>
+</ResourceDictionary>

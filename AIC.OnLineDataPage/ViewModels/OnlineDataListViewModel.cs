@@ -22,6 +22,7 @@ using AIC.MatlabMath;
 using AIC.OnLineDataPage.Models;
 using System.Diagnostics;
 using System.Threading;
+using AIC.Core.HardwareModels;
 
 namespace AIC.OnLineDataPage.ViewModels
 {

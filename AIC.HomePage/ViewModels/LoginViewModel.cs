@@ -336,11 +336,11 @@ namespace AIC.HomePage.ViewModels
         }
 
         private async void LoginSuccess()
-        {
-            //把登录配置保存到本地
-            _localConfiguration.WriteServerInfo(_localConfiguration.ServerInfoList);
+        {            
             await _loginUserService.SetUserLogin();
             _eventAggregator.GetEvent<LoginEvent>().Publish(_loginUserService.LoginInfo);
+            //把登录配置保存到本地
+            _localConfiguration.WriteServerInfo(_localConfiguration.ServerInfoList);
             Status = ViewModelStatus.None;
             //加载后续数据   
             await _loginUserService.LazyLoading();

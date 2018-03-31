@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AIC.M9600.Common.SlaveDB.Generated;
+using AIC.Core.DiagnosticModels;
 
 namespace AIC.SignalProcess
 {
@@ -1299,7 +1300,7 @@ namespace AIC.SignalProcess
         private void setwave(BaseDivfreSignal sg, IBaseDivfreSlot idata)
         {
             sg.MountDegree = idata.MountDegree.Value;
-            sg.TPDirCode = (int)idata.TPDirCode.Value;
+            sg.TPDirCode = idata.TPDirCode.Value;
             sg.IsValidWave = idata.IsValidWave.Value;
             sg.WaveUnit = idata.WaveUnit;
             sg.RPM = (float)idata.RPM.Value;

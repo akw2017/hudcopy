@@ -44,7 +44,7 @@ namespace AIC.Core.SignalModels
 
         #region 属性 
         public int MountDegree { get; set; }//安装角度
-        public int TPDirCode { get; set; }//测点方向
+        public byte? TPDirCode { get; set; }//测点方向
 
         public bool IsValidWave { get; set; }//有效通道
 

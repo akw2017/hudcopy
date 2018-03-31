@@ -23,6 +23,7 @@ using System.Xml.Linq;
 using AIC.Core.LMModels;
 using AIC.CoreType;
 using AIC.HistoryDataPage.Views;
+using AIC.Core.HardwareModels;
 
 namespace AIC.HistoryDataPage.ViewModels
 {

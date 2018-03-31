@@ -1,4 +1,6 @@
-﻿using AIC.Core.Models;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Helpers;
+using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
 using AIC.Core.Validation;
 using Newtonsoft.Json;

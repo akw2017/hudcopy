@@ -1,4 +1,5 @@
-﻿using AIC.Core.Models;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
 using System;
 using System.Collections.Generic;

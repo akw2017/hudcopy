@@ -40,9 +40,12 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuExportDBData { get; set; }
         public MyMenu MenuImportDBData { get; set; }
         public MyMenu MenuFilterDBData { get; set; }
-        public MyMenu ServerQucikData { get; set; }
-        public MyMenu DeviceQucikData { get; set; }
-        public MyMenu ItemQucikData { get; set; }
+        public MyMenu MenuServerQucikData { get; set; }
+        public MyMenu MenuDeviceQucikData { get; set; }
+        public MyMenu MenuItemQucikData { get; set; }
+        public MyMenu MenuBPNetWorks { get; set; }
+        public MyMenu MenuSOMNetWorks { get; set; }
+        public MyMenu MenuDeviceFaultDiagnose { get; set; }
 
         public static Dictionary<int, MyMenu> Dictionary;
 
@@ -78,43 +81,49 @@ namespace AIC.Core.UserManageModels
             MenuExportDBData = new MyMenu(27, (string)Application.Current.Resources["menuExportDBData"], "/AIC.Resources;component/Images/export32.png");
             MenuImportDBData = new MyMenu(28, (string)Application.Current.Resources["menuImportDBData"], "/AIC.Resources;component/Images/import32.png");
             MenuFilterDBData = new MyMenu(29, (string)Application.Current.Resources["menuFilterDBData"], "/AIC.Resources;component/Images/search.png");
-            ServerQucikData = new MyMenu(30, (string)Application.Current.Resources["menuServerQucikData"], "/AIC.Resources;component/Images/lightning.png");
-            DeviceQucikData = new MyMenu(31, (string)Application.Current.Resources["menuDeviceQucikData"], "/AIC.Resources;component/Images/lightning.png");
-            ItemQucikData = new MyMenu(32, (string)Application.Current.Resources["menuItemQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            MenuServerQucikData = new MyMenu(30, (string)Application.Current.Resources["menuServerQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            MenuDeviceQucikData = new MyMenu(31, (string)Application.Current.Resources["menuDeviceQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            MenuItemQucikData = new MyMenu(32, (string)Application.Current.Resources["menuItemQucikData"], "/AIC.Resources;component/Images/lightning.png");
+            MenuBPNetWorks = new MyMenu(33, (string)Application.Current.Resources["menuBPNetWorks"], "/AIC.Resources;component/Images/lightbulb.png");
+            MenuSOMNetWorks = new MyMenu(34, (string)Application.Current.Resources["menuSOMNetWorks"], "/AIC.Resources;component/Images/lightbulb.png");
+            MenuDeviceFaultDiagnose = new MyMenu(35, (string)Application.Current.Resources["menuDeviceFaultDiagnose"], "/AIC.Resources;component/Images/lightbulb.png");
             Dictionary = new Dictionary<int, MyMenu>();
-            Dictionary.Add(0, MenuUserManage);
-            Dictionary.Add(1, MenuRoleManage);
-            Dictionary.Add(2, MenuMenuManage);
-            Dictionary.Add(3, MenuOrganizationManage);
-            Dictionary.Add(4, MenuManageLog);
-            Dictionary.Add(5, MenuServerSetting);
-            Dictionary.Add(6, MenuCollectorSetting);
+            Dictionary.Add(MenuUserManage.Number, MenuUserManage);
+            Dictionary.Add(MenuRoleManage.Number, MenuRoleManage);
+            Dictionary.Add(MenuMenuManage.Number, MenuMenuManage);
+            Dictionary.Add(MenuOrganizationManage.Number, MenuOrganizationManage);
+            Dictionary.Add(MenuManageLog.Number, MenuManageLog);
+            Dictionary.Add(MenuServerSetting.Number, MenuServerSetting);
+            Dictionary.Add(MenuCollectorSetting.Number, MenuCollectorSetting);
             //Dictionary.Add(7, MenuEquipmentSetting);
             //Dictionary.Add(8, MenuOnlineData);
             //Dictionary.Add(9, MenuHistoricalData);
             //Dictionary.Add(10, MenuAlarmData);
             //Dictionary.Add(11, MenuRunningMonitor);
             //Dictionary.Add(12, MenuRunningAnalyze);
-            Dictionary.Add(13, MenuOnlineDataList);
-            Dictionary.Add(14, MenuOnlineDataTile);
-            Dictionary.Add(15, MenuOnlineDataDiagram);
-            Dictionary.Add(16, MenuOnlineDataOverview);
-            Dictionary.Add(17, MenuHistoryDataList);
-            Dictionary.Add(18, MenuHistoryDataDiagram);
-            Dictionary.Add(19, MenuOnlineDataDiagnosis);//<!--昌邑石化-->
-            Dictionary.Add(20, MenuOnlineDataStatistics);
-            Dictionary.Add(21, MenuHistoryDataStatistics);
-            Dictionary.Add(22, MenuSystemEventList);
-            Dictionary.Add(23, MenuDataTrendChart);
-            Dictionary.Add(24, MenuDeviceRunTime);
-            Dictionary.Add(25, MenuDeviceRunAnalyze);
-            Dictionary.Add(26, MenuDeviceHourlyData);
-            Dictionary.Add(27, MenuExportDBData);
-            Dictionary.Add(28, MenuImportDBData);
-            Dictionary.Add(29, MenuFilterDBData);
-            Dictionary.Add(30, ServerQucikData);
-            Dictionary.Add(31, DeviceQucikData);
-            Dictionary.Add(32, ItemQucikData);
+            Dictionary.Add(MenuOnlineDataList.Number, MenuOnlineDataList);
+            Dictionary.Add(MenuOnlineDataTile.Number, MenuOnlineDataTile);
+            Dictionary.Add(MenuOnlineDataDiagram.Number, MenuOnlineDataDiagram);
+            Dictionary.Add(MenuOnlineDataOverview.Number, MenuOnlineDataOverview);
+            Dictionary.Add(MenuHistoryDataList.Number, MenuHistoryDataList);
+            Dictionary.Add(MenuHistoryDataDiagram.Number, MenuHistoryDataDiagram);
+            Dictionary.Add(MenuOnlineDataDiagnosis.Number, MenuOnlineDataDiagnosis);//<!--昌邑石化-->
+            Dictionary.Add(MenuOnlineDataStatistics.Number, MenuOnlineDataStatistics);
+            Dictionary.Add(MenuHistoryDataStatistics.Number, MenuHistoryDataStatistics);
+            Dictionary.Add(MenuSystemEventList.Number, MenuSystemEventList);
+            Dictionary.Add(MenuDataTrendChart.Number, MenuDataTrendChart);
+            Dictionary.Add(MenuDeviceRunTime.Number, MenuDeviceRunTime);
+            Dictionary.Add(MenuDeviceRunAnalyze.Number, MenuDeviceRunAnalyze);
+            Dictionary.Add(MenuDeviceHourlyData.Number, MenuDeviceHourlyData);
+            Dictionary.Add(MenuExportDBData.Number, MenuExportDBData);
+            Dictionary.Add(MenuImportDBData.Number, MenuImportDBData);
+            Dictionary.Add(MenuFilterDBData.Number, MenuFilterDBData);
+            Dictionary.Add(MenuServerQucikData.Number, MenuServerQucikData);
+            Dictionary.Add(MenuDeviceQucikData.Number, MenuDeviceQucikData);
+            Dictionary.Add(MenuItemQucikData.Number, MenuItemQucikData);
+            Dictionary.Add(MenuBPNetWorks.Number, MenuBPNetWorks);
+            Dictionary.Add(MenuSOMNetWorks.Number, MenuSOMNetWorks);
+            Dictionary.Add(MenuDeviceFaultDiagnose.Number, MenuDeviceFaultDiagnose);
         }
 
         public static MyMenu GetMenu(string strname)

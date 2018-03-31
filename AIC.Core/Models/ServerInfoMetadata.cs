@@ -1,4 +1,5 @@
-﻿using AIC.Core.Validation;
+﻿using AIC.Core.Helpers;
+using AIC.Core.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

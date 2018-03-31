@@ -127,7 +127,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\VersionWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\DefaultSettingWin.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAlarmWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAbnormalWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\SendEmailWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TabView.g.cs
@@ -147,7 +146,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\PwdEditWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TestWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\VersionWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\DefaultSettingWin.baml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAlarmWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\ShowAbnormalWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\SendEmailWin.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\Views\TabView.baml
@@ -166,3 +164,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Release\AIC.HomePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.NetWorksPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.ZoomableCanvas.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\AIC.NetWorksPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Release\Wpf.ZoomableCanvas.pdb

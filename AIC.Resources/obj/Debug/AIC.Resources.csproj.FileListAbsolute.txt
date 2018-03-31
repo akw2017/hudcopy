@@ -141,7 +141,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\System.Windows.Interact
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\XamlAnimatedGif.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MahApps.Metro.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Resources\Icons.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Resources\IconsNonShared.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGrayAddition.baml
@@ -200,3 +199,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.Propertie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache

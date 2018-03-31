@@ -15,7 +15,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\AIC.MatlabMath.d
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\AIC.Themes.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Akka.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.DirectX.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.DirectXInit.dll
@@ -83,7 +82,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.PageNavigati
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Xceed.Wpf.Toolkit.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Akka.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.xml

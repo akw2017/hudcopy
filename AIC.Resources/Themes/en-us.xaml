@@ -80,19 +80,30 @@
     <s:String x:Key="menuOrganizationManage">OrganizationManage</s:String>
     <s:String x:Key="menuManageLog">SettingLog</s:String>
 
-    <s:String x:Key="menuDeviceData">EquipmentData</s:String>
-    <s:String x:Key="menuDeviceRunTime">EquipmentRunStatus</s:String>
-    <s:String x:Key="menuDeviceRunAnalyze">EquipmentRunAnalyze</s:String>
-    <s:String x:Key="menuDeviceHourlyData">EquipmentHourlyData</s:String>
+    <s:String x:Key="menuDeviceData">DeviceData</s:String>
+    <s:String x:Key="menuDeviceRunTime">DeviceRunStatus</s:String>
+    <s:String x:Key="menuDeviceRunAnalyze">DeviceRunAnalyze</s:String>
+    <s:String x:Key="menuDeviceHourlyData">DeviceHourlyData</s:String>
+    <s:String x:Key="menuDeviceFaultDiagnose">DeviceFaultDiagnose</s:String>
 
     <s:String x:Key="menuDBManage">DBManage</s:String>
     <s:String x:Key="menuExportDBData">ExportDBData</s:String>
     <s:String x:Key="menuImportDBData">ImportDBData</s:String>
     <s:String x:Key="menuFilterDBData">SearchDBData</s:String>
 
+    <s:String x:Key="menuQucikData">QucikData</s:String>
     <s:String x:Key="menuServerQucikData">ServerQucikData</s:String>
     <s:String x:Key="menuDeviceQucikData">DeviceQucikData</s:String>
     <s:String x:Key="menuItemQucikData">ItemQucikData</s:String>
+
+    <s:String x:Key="menuNetWorks">NetWorks</s:String>
+    <s:String x:Key="menuBPNetWorks">BPNetWorks</s:String>
+    <s:String x:Key="menuSOMNetWorks">SOMNetWorks</s:String>
+    <s:String x:Key="strStartTrain">StartTrain</s:String>
+    <s:String x:Key="strTestTrain">TestTrain</s:String>
+    <s:String x:Key="strLoadNetWorks">LoadNetWorks</s:String>
+    <s:String x:Key="strSaveNetWorks">SaveNetWorks</s:String>
+    <s:String x:Key="strUnloadNetWorks">UnloadNetWorks</s:String>
 
     <s:String x:Key="menuGeneralManage">GeneralManage</s:String>
     <s:String x:Key="menuSystemManage">SystemManage</s:String>

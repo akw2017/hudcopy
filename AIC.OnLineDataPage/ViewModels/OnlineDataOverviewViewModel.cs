@@ -521,7 +521,6 @@ namespace AIC.OnLineDataPage.ViewModels
 
         #region       
         private List<DeviceTreeItemViewModel> selecteddevices;
-        private OrganizationTreeItemViewModel SelectedOrganization;
         public void SelectedTreeChanged(object para)
         {
             if (para is OrganizationTreeItemViewModel)

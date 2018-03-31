@@ -1,4 +1,5 @@
-﻿using AIC.Core.Models;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Models;
 using AIC.M9600.Common.MasterDB.Generated;
 using AIC.PDAPage.Models;
 using System;

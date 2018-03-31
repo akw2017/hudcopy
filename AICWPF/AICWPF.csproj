@@ -179,7 +179,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Chart\LicenseKeyStrings.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\SplashViewModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -3426,10 +3425,6 @@
     <ProjectReference Include="..\Loya.Dameer\Loya.Dameer.csproj">
       <Project>{e67965a7-6224-4441-9513-d724ff662307}</Project>
       <Name>Loya.Dameer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ModuleTracking\ModuleTracking.csproj">
-      <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
-      <Name>ModuleTracking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Truss\Truss.csproj">
       <Project>{d316baf2-3cc2-4e41-9b68-bf49ab9a0b6d}</Project>

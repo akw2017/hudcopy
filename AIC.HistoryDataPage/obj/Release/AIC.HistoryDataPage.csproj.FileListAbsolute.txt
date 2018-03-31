@@ -35,7 +35,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\System.Reactive
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\System.Reactive.Interfaces.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\System.Windows.Interactivity.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\Util.Controls.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Release\Wpf.WrapBreakPanel.dll

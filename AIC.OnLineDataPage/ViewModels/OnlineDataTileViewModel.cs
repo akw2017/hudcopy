@@ -413,7 +413,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
         #region 添加、删除显示
         private bool adding = false;
-        private async void  Add(object para)
+        private void Add(object para)
         {
             try
             {
@@ -432,7 +432,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
-                    await Task.Delay(500);
+                    //await Task.Delay(500);
                 }
                 else if (organization is ItemTreeItemViewModel)//测点
                 {
@@ -456,7 +456,7 @@ namespace AIC.OnLineDataPage.ViewModels
 
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
-                    await Task.Delay(500);
+                    //await Task.Delay(500);
                 }
                 else if (organization is DeviceTreeItemViewModel)//设备
                 {
@@ -481,7 +481,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                         SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
-                        await Task.Delay(500);
+                        ///await Task.Delay(500);
                     }
                 }
                 else if (organization is OrganizationTreeItemViewModel)//组织
@@ -508,7 +508,7 @@ namespace AIC.OnLineDataPage.ViewModels
                         }
                         SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, CurrentSignalDisplayType, IsFilter, SignalPreProccessType);
                         SignalMonitors.Add(viewModel);
-                        await Task.Delay(500);
+                        //await Task.Delay(500);
                     }
                 }
 
@@ -688,9 +688,6 @@ namespace AIC.OnLineDataPage.ViewModels
         #region 页面控制       
         private double listWidth;
         private double listHeight;
-        private int lineCount;
-        private int startNo;
-        private int endNo;
         private void ListBoxLoaded(object value)
         {
             var sender = ((ExCommandParameter)value).Sender as ListBox;

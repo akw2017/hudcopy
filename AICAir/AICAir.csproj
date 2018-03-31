@@ -226,19 +226,12 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Chart\LicenseKeyStrings.cs" />
-    <Compile Include="ModuleTracker\CallbackLogger.cs" />
-    <Compile Include="ModuleTracker\DiscoveryMethod.cs" />
-    <Compile Include="ModuleTracker\DownloadTiming.cs" />
-    <Compile Include="ModuleTracker\ModuleInitializationStatus.cs" />
-    <Compile Include="ModuleTracker\ModuleTracker.cs" />
-    <Compile Include="ModuleTracker\ModuleTrackingState.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\SplashViewModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -333,6 +326,10 @@
       <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
       <Name>AIC.MatlabMath</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AIC.NetWorksPage\AIC.NetWorksPage.csproj">
+      <Project>{7cc3a90a-4ff6-425f-9ffb-28fd63e6247c}</Project>
+      <Name>AIC.NetWorksPage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AIC.OnLineDataPage\AIC.OnLineDataPage.csproj">
       <Project>{4d9542c6-3bcc-4c44-b371-1416b837c2a8}</Project>
       <Name>AIC.OnLineDataPage</Name>
@@ -373,6 +370,10 @@
       <Project>{d316baf2-3cc2-4e41-9b68-bf49ab9a0b6d}</Project>
       <Name>Truss</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wpf.Arrows\Wpf.Arrows.csproj">
+      <Project>{ff7b78aa-8eb3-4300-8468-331a63867200}</Project>
+      <Name>Wpf.Arrows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.GridSelected\Wpf.GridSelected.csproj">
       <Project>{9388d1e7-a59f-4e89-875a-e31086b31d45}</Project>
       <Name>Wpf.GridSelected</Name>
@@ -397,10 +398,6 @@
       <Project>{1b41d49f-0857-482b-a58b-83ca1938ef0f}</Project>
       <Name>AIC.ServiceInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModuleTracking\ModuleTracking.csproj">
-      <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
-      <Name>ModuleTracking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wpf.VirtualizingWrapPanel\Wpf.VirtualizingWrapPanel.csproj">
       <Project>{ae99aa83-1d97-4b90-b3e9-0efa421c2d46}</Project>
       <Name>Wpf.VirtualizingWrapPanel</Name>
@@ -408,6 +405,10 @@
     <ProjectReference Include="..\Wpf.WrapBreakPanel\Wpf.WrapBreakPanel.csproj">
       <Project>{534ba357-3aa8-454c-84c6-423ba82f7ee1}</Project>
       <Name>Wpf.WrapBreakPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.ZoomableCanvas\Wpf.ZoomableCanvas.csproj">
+      <Project>{52cae6eb-ad0a-4b97-8a7b-f65633c88d7b}</Project>
+      <Name>Wpf.ZoomableCanvas</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xceed.Wpf\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.csproj">
       <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
@@ -8030,16 +8031,23 @@
     <Content Include="MyData\Htmls\tools\TextIconOverlay_min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\AICMath.dll" />
-    <Content Include="Resources\AICMatlabDLL.dll" />
+    <Content Include="Resources\AICMath.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AICMatlabDLL.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Danger.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\msg.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SFDAlgorithm.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Waring.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

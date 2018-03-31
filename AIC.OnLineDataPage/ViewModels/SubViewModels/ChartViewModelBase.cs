@@ -2,7 +2,6 @@
 using AIC.Core.SignalModels;
 using AIC.CoreType;
 using AIC.Domain;
-using Akka.Actor;
 using Microsoft.Practices.ServiceLocation;
 using Prism.Events;
 using Prism.Mvvm;
@@ -162,15 +161,6 @@ namespace AIC.OnLineDataPage.ViewModels.SubViewModels
         public void Close()
         {
             var handler = Closed;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
-
-        public void Dispose()
-        {
-            var handler = Disposed;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

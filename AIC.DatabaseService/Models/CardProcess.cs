@@ -1,4 +1,5 @@
-﻿using AIC.Core.Helpers;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Helpers;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
@@ -630,7 +631,7 @@ namespace AIC.DatabaseService.Models
                 }
             }
             return items;
-        }
+        }        
 
         //将组织树中所有测点list出来
         public List<ItemTreeItemViewModel> GetItems(OrganizationTreeItemViewModel organization)

@@ -16,6 +16,7 @@ using AIC.M9600.Common.DTO.Device;
 using AIC.M9600.Common.SlaveDB.Generated;
 using AIC.Core.DataModels;
 using AIC.Core.Models;
+using AIC.Core.HardwareModels;
 
 namespace AIC.DatabaseService
 {
@@ -284,7 +285,7 @@ namespace AIC.DatabaseService
             return await Task.Run(() =>
             {
                 var client = new DataProvider(ip, LocalSetting.ServerPort, LocalSetting.MajorVersion, LocalSetting.MinorVersion);
-                var historyResult = client.QueryHistoryWaveformData<T>(recordLabs, new string[] { "WaveData", "SampleFre", "SamplePoint", "WaveUnit", "T_Item_Guid", "AlarmGrade" });
+                var historyResult = client.QueryHistoryWaveformData<T>(recordLabs, new string[] {"WaveData", "SampleFre", "SamplePoint", "WaveUnit", "T_Item_Guid", "ACQDatetime", "AlarmGrade" });
 
                 //先判断是不是OK
                 if (historyResult.IsOK)

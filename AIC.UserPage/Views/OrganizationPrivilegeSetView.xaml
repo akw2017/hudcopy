@@ -167,13 +167,13 @@
             </i:Interaction.Triggers>            
         </DataGrid>
    
-        <page:PageNavigation Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize, Mode=TwoWay}" 
+        <!--<page:PageNavigation Name="pager" PageSizeList="{Binding PageSizeList}" PageSize="{Binding PageSize, Mode=TwoWay}" 
             TotalItems="{Binding TotalItems,Mode=TwoWay}" CurrentPage="{Binding CurrentPage,Mode=OneWayToSource}" Grid.Row="2">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CurrentPageChanged">
                     <command:ExInvokeCommandAction Command="{Binding CurrentPageChangedComamnd}" CommandParameter="{Binding ElementName=pager}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </page:PageNavigation>
+        </page:PageNavigation>-->
     </Grid>
 </UserControl>

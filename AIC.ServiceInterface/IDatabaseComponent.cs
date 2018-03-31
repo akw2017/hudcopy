@@ -1,4 +1,5 @@
 ﻿using AIC.Core.DataModels;
+using AIC.Core.HardwareModels;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
 using AIC.M9600.Common.DTO.Web;

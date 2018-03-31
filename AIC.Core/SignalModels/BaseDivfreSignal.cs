@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AIC.Core.DiagnosticModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -31,5 +32,7 @@ namespace AIC.Core.SignalModels
                 divFreCollection.Add(divfre);
             }
         }
+
+        public NetWorkIO NetWorkIO { get; set; }
     }
 }

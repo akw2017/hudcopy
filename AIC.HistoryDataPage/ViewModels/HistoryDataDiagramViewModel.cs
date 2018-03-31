@@ -30,6 +30,7 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Windows.Media;
 using Arction.Wpf.Charting;
+using AIC.Core.HardwareModels;
 
 namespace AIC.HistoryDataPage.ViewModels
 {

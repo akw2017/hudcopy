@@ -1,4 +1,5 @@
-﻿using AIC.Core.Helpers;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Helpers;
 using AIC.Core.Models;
 using AIC.PDAPage.Models;
 using MahApps.Metro.Controls;

@@ -225,7 +225,6 @@
     <Compile Include="ViewModels\MainRegionViewModel.cs" />
     <Compile Include="ViewModels\HomeMapViewModel.cs" />
     <Compile Include="ViewModels\ServerSetViewModel.cs" />
-    <Compile Include="ViewModels\ShowAlarmWinViewModel.cs" />
     <Compile Include="Views\AlarmAckListWin.xaml.cs">
       <DependentUpon>AlarmAckListWin.xaml</DependentUpon>
     </Compile>
@@ -243,9 +242,6 @@
     </Compile>
     <Compile Include="Views\DefaultSettingWin.xaml.cs">
       <DependentUpon>DefaultSettingWin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ShowAlarmWin.xaml.cs">
-      <DependentUpon>ShowAlarmWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowAbnormalWin.xaml.cs">
       <DependentUpon>ShowAbnormalWin.xaml</DependentUpon>
@@ -333,10 +329,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ShowAlarmWin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\ShowAbnormalWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -410,6 +402,10 @@
     <ProjectReference Include="..\AIC.LocalResource\AIC.LocalConfiguration.csproj">
       <Project>{9d1d2644-a75b-437c-981b-dfd643cd1180}</Project>
       <Name>AIC.LocalConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.NetWorksPage\AIC.NetWorksPage.csproj">
+      <Project>{7cc3a90a-4ff6-425f-9ffb-28fd63e6247c}</Project>
+      <Name>AIC.NetWorksPage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.OnLineDataPage\AIC.OnLineDataPage.csproj">
       <Project>{4d9542c6-3bcc-4c44-b371-1416b837c2a8}</Project>

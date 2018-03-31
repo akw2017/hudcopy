@@ -218,6 +218,9 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.Core\bin\Debug\tr\FluentValidation.resourc
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Core\obj\Debug\AIC.Core.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Core\obj\Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Core\obj\Debug\AIC.Core.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\Interop.Office.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csproj.ResolveComReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\AIC.Core.dll
@@ -276,8 +279,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\pt\FluentValidation.resource
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\Debug\tr\FluentValidation.resources.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\Interop.Office.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.csproj.ResolveComReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\Debug\AIC.Core.pdb

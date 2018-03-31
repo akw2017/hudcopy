@@ -231,6 +231,7 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.SignalProcess\bin\Debug\tr\FluentValidatio
 D:\SupportProject\AIC_HUD\AICHUID\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\AIC.SignalProcess.dll.config
@@ -306,6 +307,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\pt\FluentValidation
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\bin\Debug\tr\FluentValidation.resources.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.SignalProcess\obj\Debug\AIC.SignalProcess.pdb

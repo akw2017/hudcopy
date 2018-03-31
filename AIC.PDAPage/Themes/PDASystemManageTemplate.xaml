@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
-                    xmlns:model="clr-namespace:AIC.Core.Models;assembly=AIC.Core"
+                    xmlns:model="clr-namespace:AIC.Core.HardwareModels;assembly=AIC.Core"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
                     xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core" >

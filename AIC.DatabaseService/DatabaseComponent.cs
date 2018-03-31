@@ -15,6 +15,7 @@ using AIC.Core;
 using AIC.Core.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using AIC.Core.HardwareModels;
 
 namespace AIC.DatabaseService
 {

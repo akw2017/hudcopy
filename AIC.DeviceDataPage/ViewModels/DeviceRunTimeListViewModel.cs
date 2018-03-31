@@ -36,6 +36,7 @@ using LiveCharts.Defaults;
 using System.Windows.Media;
 using System.Collections;
 using AIC.M9600.Common.DTO;
+using AIC.Core.HardwareModels;
 
 namespace AIC.DeviceDataPage.ViewModels
 {

@@ -35,8 +35,6 @@ namespace AIC.ServiceInterface
         Task AddSystemEvent(string ip, T1_SystemEvent exception);
         Task<List<T1_SystemEvent>> GetSystemEvent(string ip, DateTime start, DateTime end, string name, CustomSystemType systemtype);
 
-        ServerInfo GotoServerInfo { get; }
-        BaseAlarmSignal GotoSignal { get; }
         object GotoTab<T>(string viewName);
         void TabLanguageShift();
         void CloseTabs(bool firstTabClosed = true);

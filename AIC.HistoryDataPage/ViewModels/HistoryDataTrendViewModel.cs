@@ -36,6 +36,7 @@ using AIC.M9600.Common.DTO.Device;
 using Newtonsoft.Json;
 using AIC.Core.Servers;
 using System.IO;
+using AIC.Core.HardwareModels;
 
 namespace AIC.OnLineDataPage.ViewModels
 {

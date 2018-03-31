@@ -5,7 +5,6 @@ using AIC.Core.Events;
 using AIC.Core.SignalModels;
 using AIC.CoreType;
 using AIC.Domain;
-using Akka.Actor;
 using Arction.Wpf.Charting;
 using Microsoft.Practices.ServiceLocation;
 using System;

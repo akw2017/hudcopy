@@ -26,6 +26,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Deb
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Debug\Snappy.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Debug\Crc32C.NET.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\bin\Debug\Snappy.NET.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Debug\CitizenSoftwareLib.Common.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Debug\CitizenSoftwareLib.Common.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Debug\CitizenSoftwareLib.Common.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Common\obj\Debug\CitizenSoftwareLib.Common.csprojResolveAssemblyReference.cache

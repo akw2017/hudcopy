@@ -30,6 +30,7 @@ using AIC.Core.LMModels;
 using AIC.M9600.Common.MasterDB.Generated;
 using System.IO;
 using System.Windows.Threading;
+using AIC.Core.HardwareModels;
 
 namespace AIC.PDAPage.ViewModels
 {
@@ -74,11 +75,6 @@ namespace AIC.PDAPage.ViewModels
         private ChannelTreeItemViewModel SelectedChannelTree;
 
         private MainControlCard CopyMainControlCard;
-        private WireMatchingCard CopyWireMatchingCard;
-        private IWireSlot CopySlot;
-        private IChannel CopyChannel;
-        private DivFreInfo CopyDivFre;
-        private List<ChannelTreeItemViewModel> ChannelTreeItems;
 
         //private WireMatchingCard SelectedCard;
         //private IWireSlot SelectedSlot;

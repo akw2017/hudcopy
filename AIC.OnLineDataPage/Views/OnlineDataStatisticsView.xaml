@@ -10,7 +10,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True" 
              xmlns:page="clr-namespace:Wpf.PageNavigationControl;assembly=Wpf.PageNavigationControl"
              xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"
-             xmlns:conveter="clr-namespace:AIC.OnLineDataPage.Converters"
+             xmlns:converter="clr-namespace:AIC.OnLineDataPage.Converters"
              xmlns:bsFilter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"      
              xmlns:signal="clr-namespace:AIC.Core.SignalModels;assembly=AIC.Core"
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
@@ -27,7 +27,7 @@
             </ResourceDictionary.MergedDictionaries>
             <core:GradeToStringConverter x:Key="gradeToStringConverter"/>
             <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
-            <conveter:EqualBindingConverter x:Key="equalBindingConverter"/>
+            <core:EqualBindingConverter x:Key="equalBindingConverter"/>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">

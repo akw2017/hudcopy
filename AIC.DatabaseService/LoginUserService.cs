@@ -43,8 +43,6 @@ namespace AIC.DatabaseService
         public MenuManageList MenuManageList { get; set; }
         public ObservableCollection<ExceptionModel> ExceptionModel { get; private set; }
         public ObservableCollection<T1_SystemEvent> CustomSystemException { get; private set; }
-        public ServerInfo GotoServerInfo { get; set; }
-        public BaseAlarmSignal GotoSignal { get; set; }
 
         public LoginUserService(ILocalConfiguration localConfiguration, IHardwareService hardwareService, IOrganizationService organizationService, IUserManageService userManageService, ICardProcess cardProcess, ISignalProcess signalProcess, IDatabaseComponent databaseComponent, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
@@ -149,8 +147,11 @@ namespace AIC.DatabaseService
                    
                     await Task.WhenAll(lttask.ToArray());
                 }
-                _hardwareService.InitServers(_localConfiguration.LoginServerInfoList);
-                _signalProcess.LazyInitSignals();               
+                if (LoginInfo.LoginStatus == true)
+                {
+                    _hardwareService.InitServers(_localConfiguration.LoginServerInfoList);
+                    _signalProcess.LazyInitSignals();
+                }        
             }
             finally
             {

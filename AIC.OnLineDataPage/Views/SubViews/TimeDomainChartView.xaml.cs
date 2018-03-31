@@ -23,6 +23,31 @@ namespace AIC.OnLineDataPage.Views.SubViews
     /// </summary>
     public partial class TimeDomainChartView : ChartViewBase
     {
+        public bool IsHideProccess
+        {
+            get { return Convert.ToBoolean(GetValue(IsHideProccessProperty)); }
+            set { SetValue(IsHideProccessProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsHideProccessProperty =
+            DependencyProperty.RegisterAttached(nameof(IsHideProccess), typeof(bool), typeof(TimeDomainChartView), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsHideProccessChanged)));
+        private static void OnIsHideProccessChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            TimeDomainChartView pager = (TimeDomainChartView)sender;
+            if ((bool)e.NewValue == true)
+            {
+                pager.filterCheckBox.Visibility = Visibility.Collapsed;
+                pager.dropDownButton.Visibility = Visibility.Collapsed;
+                pager.preCheckBox.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                pager.filterCheckBox.Visibility = Visibility.Visible;
+                pager.dropDownButton.Visibility = Visibility.Visible;
+                pager.preCheckBox.Visibility = Visibility.Visible;
+            }
+        }
+
         private LightningChartUltimate m_chart;
 
         public TimeDomainChartView()
@@ -67,7 +92,6 @@ namespace AIC.OnLineDataPage.Views.SubViews
             this.ViewModel_Disposed(sender, e);
             base.GCCollect();
         }
-
 
         protected override void ViewModel_SignalChanged()
         {

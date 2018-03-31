@@ -1,4 +1,5 @@
-﻿using AIC.Core.Helpers;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.Helpers;
 using AIC.Core.Models;
 using AIC.Core.OrganizationModels;
 using AIC.M9600.Common.MasterDB.Generated;

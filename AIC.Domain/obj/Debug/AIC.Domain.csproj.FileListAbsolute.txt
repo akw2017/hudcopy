@@ -349,6 +349,9 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.Properties.Res
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.Domain.dll.config
@@ -399,8 +402,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\pt\FluentValidation.resour
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\tr\FluentValidation.resources.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.Properties.Resources.resources
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.pdb

@@ -1,4 +1,5 @@
-﻿using AIC.Core.LMModels;
+﻿using AIC.Core.HardwareModels;
+using AIC.Core.LMModels;
 using AIC.Core.Models;
 using System;
 using System.Collections.Generic;

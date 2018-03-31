@@ -1,5 +1,6 @@
 ﻿
 using AIC.Core;
+using AIC.Core.Events;
 using AIC.HistoryDataPage.Models;
 using AIC.HistoryDataPage.ViewModels;
 using Arction.Wpf.Charting;
@@ -114,7 +115,7 @@ namespace AIC.HistoryDataPage.Views
             }
             catch (Exception ex)
             {
-                //_eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-趋势", ex));
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-趋势", ex));
                 m_chart.EndUpdate();
             }
         }
@@ -178,7 +179,7 @@ namespace AIC.HistoryDataPage.Views
             }
             catch (Exception ex)
             {
-                //_eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-时域", ex));
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-时域", ex));
             }
         }
         private void DrawFrequencyDomain(bool fitView)
@@ -249,7 +250,7 @@ namespace AIC.HistoryDataPage.Views
             }
             catch (Exception ex)
             {
-                //_eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-频域", ex));
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-报警点趋势-频域", ex));
             }
         }
         private int GetNearestPointIndex(PointLineSeries series, double xValue)

@@ -149,8 +149,8 @@ namespace AIC.HomePage.ViewModels
 
         public Func<double, string> YFormatter { get; set; }
 
-        private ObservableCollection<AlarmServerInfo> alarmServerInfoList;
-        public ObservableCollection<AlarmServerInfo> AlarmServerInfoList
+        private ObservableCollection<AlarmObjectInfo> alarmServerInfoList;
+        public ObservableCollection<AlarmObjectInfo> AlarmObjectInfoList
         {
             get { return alarmServerInfoList; }
             set
@@ -158,7 +158,7 @@ namespace AIC.HomePage.ViewModels
                 if (alarmServerInfoList != value)
                 {
                     alarmServerInfoList = value;
-                    OnPropertyChanged("AlarmServerInfoList");
+                    OnPropertyChanged("AlarmObjectInfoList");
                 }
             }
         }
@@ -355,72 +355,58 @@ namespace AIC.HomePage.ViewModels
 
         private void DailyChanged()
         {
-            var statisticalresult = _signalProcess.ServerLevelStatisticalResult;
             System.Windows.Application.Current.Dispatcher.Invoke((Action)(() =>//调用线程必须为 STA
             {
-                SeriesCollection = new SeriesCollection
+                var tuple = _signalProcess.GetStatisticalAlarmNumber(ServerInfo.IP, null);
+                DrawSeries(tuple);
+
+                var serverInfoList = new List<AlarmObjectInfo>();
+                foreach (var server in ServerInfoList)
                 {
-                    new LineSeries
+                    var serverinfo = _signalProcess.GetStatisticalAlarmAlarmRate(server.IP);
+                    if (serverinfo == null)
                     {
-                        Title = "预警点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色                        
-                    },
-                    new LineSeries
-                    {
-                        Title = "警告点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                                         
-                    },
-                    new LineSeries
-                    {
-                        Title = "危险点数",
-                        Values = new ChartValues<int> { },
-                        Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
-                    },
-                };
-                Labels = new string[] { };
-                YFormatter = value => value.ToString("0");
-
-               var serverInfoList = new List<AlarmServerInfo>();
-
-                if (statisticalresult != null && statisticalresult.ContainsKey(ServerInfo.IP))
-                {
-                    var tuple = statisticalresult[ServerInfo.IP];
-
-                    Labels = tuple.Select(p => p.Item1.ToString("MM/dd")).ToArray();
-                    SeriesCollection[2].Values.AddRange(tuple.Select(p => p.Item3 as object));
-                    SeriesCollection[1].Values.AddRange(tuple.Select(p => p.Item4 as object));
-                    SeriesCollection[0].Values.AddRange(tuple.Select(p => p.Item5 as object));
-
-                    foreach (var serverkey in statisticalresult)
-                    {
-                        AlarmServerInfo serverinfo = new AlarmServerInfo();
-                        serverinfo.Name = ServerInfoList.Where(p => p.IP == serverkey.Key).Select(p => p.Name).FirstOrDefault();
-                        serverinfo.AlarmRate = serverkey.Value.Select(p => (p.Item2 == 0) ? 0 : (double)(p.Item3 + p.Item4) / p.Item2).Average();
-                        if (serverkey.Value.Select(p => (p.Item2 == 0) ? 0 : (p.Item3)).Average() > 0)
-                        {
-                            serverinfo.AlarmGrade = 4;
-                        }
-                        else if (serverkey.Value.Select(p => (p.Item2 == 0) ? 0 : (p.Item4)).Average() > 0)
-                        {
-                            serverinfo.AlarmGrade = 3;
-                        }
-                        else if (serverkey.Value.Select(p => (p.Item2 == 0) ? 0 : (p.Item5)).Average() > 0)
-                        {
-                            serverinfo.AlarmGrade = 2;
-                        }
-                        else
-                        {
-                            serverinfo.AlarmGrade = 1;
-                        }
-                        serverInfoList.Add(serverinfo);
+                        continue;
                     }
-                    serverInfoList = serverInfoList.OrderByDescending(p => p.AlarmRate).ToList();
-                    serverInfoList.ForEach(p => p.Index = serverInfoList.IndexOf(p) + 1);
+                    serverinfo.Name = server.Name;
+                    serverInfoList.Add(serverinfo);
                 }
-                AlarmServerInfoList = new ObservableCollection<AlarmServerInfo>(serverInfoList);
+                serverInfoList = serverInfoList.OrderByDescending(p => p.AlarmRate).ToList();
+                serverInfoList.ForEach(p => p.Index = serverInfoList.IndexOf(p) + 1);
+                AlarmObjectInfoList = new ObservableCollection<AlarmObjectInfo>(serverInfoList);
             }));
+        }
+
+        private void DrawSeries(List<Tuple<DateTime, int, int, int, int>> tuple)
+        {
+            if (tuple == null) return;
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "预警点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xff, 0x00)),//黄色                        
+                },
+                new LineSeries
+                {
+                    Title = "警告点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0xa5, 0x00)),//橙色                                         
+                },
+                new LineSeries
+                {
+                    Title = "危险点数",
+                    Values = new ChartValues<int> { },
+                    Stroke = new SolidColorBrush(Color.FromRgb(0xff, 0x00, 0x00)),//红色
+                },
+            };
+            Labels = new string[] { };
+            YFormatter = value => value.ToString("0");
+            Labels = tuple.Select(p => p.Item1.ToString("MM/dd")).ToArray();
+            SeriesCollection[2].Values.AddRange(tuple.Select(p => p.Item3 as object));
+            SeriesCollection[1].Values.AddRange(tuple.Select(p => p.Item4 as object));
+            SeriesCollection[0].Values.AddRange(tuple.Select(p => p.Item5 as object));
         }
 
         private void Goto(object para)
@@ -435,7 +421,7 @@ namespace AIC.HomePage.ViewModels
             }
             else if (para is string)//服务器
             {
-                ServerQucikDataView view = _loginUserService.GotoTab<ServerQucikDataView>("MenuDeviceQucikData") as ServerQucikDataView;
+                ServerQucikDataView view = _loginUserService.GotoTab<ServerQucikDataView>("MenuServerQucikData") as ServerQucikDataView;
                 if (view != null)
                 {
                     view.GotoServer(_loginUserService.GetServerInfo(para as string));

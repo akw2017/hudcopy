@@ -116,8 +116,6 @@ namespace AIC.OnLineDataPage.Views.SubViews
             }
         }
 
-        private IDatabaseComponent _databaseComponent;
-
         private void SubInitDataChart(List<TrendPointData> datas)
         {
             try

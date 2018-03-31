@@ -32,6 +32,7 @@ using AIC.M9600.Common.DTO.Device;
 using System.Diagnostics;
 using AIC.DeviceDataPage.Views;
 using System.Data;
+using AIC.Core.HardwareModels;
 
 namespace AIC.DeviceDataPage.ViewModels
 {

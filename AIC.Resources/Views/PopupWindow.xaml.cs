@@ -21,8 +21,8 @@ namespace AIC.Resources.Views
     /// </summary>
     public partial class PopupWindow : Window
     {
-        public delegate void TransferClosed(double heightoffset);
-        public event TransferClosed ThisClosed;
+        //public delegate void TransferClosed(double heightoffset);
+        //public event TransferClosed ThisClosed;
 
         DispatcherTimer timer;
         public double EndTop { get; set; }

@@ -340,8 +340,9 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.ServiceInterface\obj\Debug\AIC.ServiceInte
 D:\SupportProject\AIC_HUD\AICHUID\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.ServiceInterface.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\AIC.ServiceInterface.pdb
@@ -401,8 +402,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\pt\FluentValidat
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\tr\FluentValidation.resources.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.Properties.Resources.resources
-D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\obj\Debug\AIC.ServiceInterface.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.ServiceInterface\bin\Debug\Resources\AICMatlabDLL.dll
