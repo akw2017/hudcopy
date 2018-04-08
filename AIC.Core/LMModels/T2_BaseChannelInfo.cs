@@ -95,7 +95,7 @@ namespace AIC.Core.LMModels
         bool? LowDangerIsAllow { get; set; }
         bool? LowDangerIsACQWave { get; set; }
         List<AlarmCategory> AlarmCategory{ get;set;}
-        ImportOperate Operate { get; set; }//操作，增，删，改
+        EditOperateType Operate { get; set; }//操作，增，删，改
         string Hint { get; set; }//提示
     }
 
@@ -137,7 +137,7 @@ namespace AIC.Core.LMModels
         public bool? LowDangerIsAllow { get; set; }
         public bool? LowDangerIsACQWave { get; set; }
         public List<AlarmCategory> AlarmCategory { get; set; }
-        public ImportOperate Operate { get; set; }//操作，增，删，改
+        public EditOperateType Operate { get; set; }//操作，增，删，改
         public string Hint { get; set; }//提示
       
     }
@@ -183,7 +183,7 @@ namespace AIC.Core.LMModels
         public bool? LowDangerIsAllow { get; set; }
         public bool? LowDangerIsACQWave { get; set; }
         public List<AlarmCategory> AlarmCategory { get; set; }
-        public ImportOperate Operate { get; set; }//操作，增，删，改
+        public EditOperateType Operate { get; set; }//操作，增，删，改
         public string Hint { get; set; }//提示
     }
 }

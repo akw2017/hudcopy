@@ -85,6 +85,7 @@
     <s:String x:Key="menuDeviceRunAnalyze">DeviceRunAnalyze</s:String>
     <s:String x:Key="menuDeviceHourlyData">DeviceHourlyData</s:String>
     <s:String x:Key="menuDeviceFaultDiagnose">DeviceFaultDiagnose</s:String>
+    <s:String x:Key="menuEditDeviceComponents">EditDeviceComponents</s:String>
 
     <s:String x:Key="menuDBManage">DBManage</s:String>
     <s:String x:Key="menuExportDBData">ExportDBData</s:String>
@@ -211,7 +212,7 @@
     <s:String x:Key="checkedExpanded">CheckedExpanded</s:String>
 
     <s:String x:Key="operateRecord">OperateRecord</s:String>
-    <s:String x:Key="operateType">OperateType</s:String>
+    <s:String x:Key="operateType">UserOperateType</s:String>
     <s:String x:Key="operateDateTime">OperateDateTime</s:String>
     <s:String x:Key="remarks">Remarks</s:String>
     <s:String x:Key="end">End</s:String>

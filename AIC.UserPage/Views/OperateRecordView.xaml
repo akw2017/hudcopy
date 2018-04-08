@@ -43,7 +43,7 @@
                 <TextBlock Text="{DynamicResource name}" Margin="4,0,0,0" VerticalAlignment="Center"/>
                 <TextBox Text="{Binding SearchName}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" />
                 <TextBlock Text="{DynamicResource operateType}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <ComboBox IsEditable="False" Width="200" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:OperateType}" SelectedItem="{Binding OperateType}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center"/>
+                <ComboBox IsEditable="False" Width="200" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:UserOperateType}" SelectedItem="{Binding UserOperateType}" Style="{DynamicResource VirtualisedMetroComboBox}" VerticalAlignment="Center"/>
                 <TextBlock Text="{DynamicResource operateDateTime}" Margin="4,0,0,0" VerticalAlignment="Center"/>
                 <timeTool:Dameer Format="Custom" CustomFormat="yyyy-MM-dd HH:mm:ss" ShowCheckBox="False" Value="{Binding SearchStartTime}" VerticalAlignment="Center" />
                 <TextBlock Text="{DynamicResource end}" Margin="4,0,0,0" VerticalAlignment="Center"/>
@@ -65,7 +65,7 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding id}"  MinWidth="60"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding T_User_Name}"  MinWidth="60"></DataGridTextColumn>
                 <!--<DataGridTextColumn Header="{DynamicResource code}" Binding="{Binding T_User_Code}"  MinWidth="60"></DataGridTextColumn>-->
-                <DataGridTextColumn Header="{DynamicResource operateType}" Binding="{Binding OperateType,Converter={StaticResource intOperateStringConverter}}"  MinWidth="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource operateType}" Binding="{Binding UserOperateType,Converter={StaticResource intOperateStringConverter}}"  MinWidth="60"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource operateDateTime}" Binding="{Binding OperateTime,StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"  MinWidth="60"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource remarks}" Binding="{Binding Remarks}"  MinWidth="60"></DataGridTextColumn>               
             </DataGrid.Columns>

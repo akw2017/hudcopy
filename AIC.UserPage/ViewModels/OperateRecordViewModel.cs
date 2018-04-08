@@ -186,8 +186,8 @@ namespace AIC.UserPage.ViewModels
             }
         }
 
-        private OperateType operateType;
-        public OperateType OperateType
+        private UserOperateType operateType;
+        public UserOperateType UserOperateType
         {
             get
             {
@@ -196,7 +196,7 @@ namespace AIC.UserPage.ViewModels
             set
             {
                 operateType = value;
-                OnPropertyChanged("OperateType");
+                OnPropertyChanged("UserOperateType");
             }
         }
 
@@ -277,7 +277,7 @@ namespace AIC.UserPage.ViewModels
                     SearchStartTime = SearchEndTime.AddDays(-1);
                 }
 
-                T_OperateRecord = await _loginUserService.GetOperateRecord(ServerIP, SearchStartTime, SearchEndTime, SearchName, OperateType);
+                T_OperateRecord = await _loginUserService.GetOperateRecord(ServerIP, SearchStartTime, SearchEndTime, SearchName, UserOperateType);
                 TotalItems = T_OperateRecord.Count;
                 T_OperateRecordLast.Clear();
                 T_OperateRecordLast = T_OperateRecord.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();

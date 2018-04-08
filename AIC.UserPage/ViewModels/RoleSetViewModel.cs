@@ -440,7 +440,7 @@ namespace AIC.UserPage.ViewModels
                     default: return;
                 }
 
-                _loginUserService.AddOperateRecord(ServerIP, OperateType.RoleManage);
+                _loginUserService.AddOperateRecord(ServerIP, UserOperateType.RoleManage);
 
                 T_RoleMid = (from p in T_Role where p.Name.Contains(SearchName) || SearchName == "" group p by p.Name into s select s).ToList();
                 TotalItems = T_RoleMid.Count;

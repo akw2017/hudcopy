@@ -85,6 +85,7 @@
     <s:String x:Key="menuDeviceRunAnalyze">设备运行分析</s:String>
     <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
     <s:String x:Key="menuDeviceFaultDiagnose">设备故障诊断</s:String>
+    <s:String x:Key="menuEditDeviceComponents">设备组件编辑</s:String>
 
     <s:String x:Key="menuDBManage">数据库管理</s:String>
     <s:String x:Key="menuExportDBData">数据库导出</s:String>

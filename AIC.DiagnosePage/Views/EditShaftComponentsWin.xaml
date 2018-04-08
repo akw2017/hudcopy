@@ -1,0 +1,531 @@
+﻿<Controls:MetroWindow x:Class="AIC.DiagnosePage.Views.EditShaftComponentsWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIC.DiagnosePage.Views"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+        xmlns:model="clr-namespace:AIC.DiagnosePage.Models"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"               
+        mc:Ignorable="d"
+        ShowMinButton="false" ShowMaxRestoreButton="False" 
+        BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" 
+        Title="轴设置" Height="690" Width="1000" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True" >
+    <Control.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <core:IntVisibilityConverter x:Key="intVisibilityConverter"/>
+            <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+            <core:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <core:EnumToVisibilityConverter x:Key="enumToVisibilityConverter" Reverse="False"/>
+            <DataTemplate x:Key="enumComboItemTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="/AIC.Resources;component/Images/Impeller.png"></Image>
+                    <TextBlock Margin="2, 0" Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+            <Style x:Key="enumCombobox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=enumComboItemTemplate}"/>
+            </Style>
+        </ResourceDictionary>      
+    </Control.Resources>
+    <Grid Background = "{DynamicResource AccentColorBrush2}">
+        <Grid Margin="10" Height="630">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>           
+            <Grid x:Name="myGrid" Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="名称:" VerticalAlignment="Center"/>
+                <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding ShaftComponent.Name, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="是否为滑动轴承"  VerticalAlignment="Center" />
+                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding ShaftComponent.Component.IsSlidingBearing}" VerticalAlignment="Center"/>
+
+                <TextBlock  Grid.Row="1" Grid.Column="2" Text="默认转速:" VerticalAlignment="Center"/>
+                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Minimum="0" Value="{Binding ShaftComponent.Component.DefaultRPM,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="转速差:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Value="{Binding ShaftComponent.Component.DeltaRPM,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="转速系数:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"/>
+                <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Minimum="0" Value="{Binding ShaftComponent.Component.RPMCoeff,UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="部件" VerticalAlignment="Center"/>
+                <ListBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" ItemsSource="{Binding ShaftComponent.Component.MachComponents}" SelectedItem="{Binding ShaftComponent.Component.SelectedComponent}" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type model:BearingComponent}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Bearing.png"/>
+                                <TextBlock x:Name="title" Text="{Binding Name}" FontSize="28" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center">
+                                        <Run>型号:</Run>
+                                        <Run Text="{Binding Component.Designation}"/>
+                                </TextBlock>
+                                <StackPanel.ToolTip>
+                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <TextBlock>                                                           
+                                                <Run>内圈频率:</Run>
+                                                <Run Text="{Binding Component.InnerRingFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>外圈频率:</Run>
+                                                <Run Text="{Binding Component.OuterRingFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>滚动体频率:</Run>
+                                                <Run Text="{Binding Component.RollerFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>保持架频率:</Run>
+                                                <Run Text="{Binding Component.MaintainsFrequency}"/>
+                                        </TextBlock>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:GearComponent}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Gear.png"/>
+                                <TextBlock x:Name="title" Text="{Binding Name}" FontSize="28" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center">
+                                        <Run>齿数:</Run>
+                                        <Run Text="{Binding Component.TeethNumber}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:BeltComponent}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Belt.png"/>
+                                <TextBlock x:Name="title" Text="{Binding Name}" FontSize="28" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center">
+                                        <Run>皮带轮直径:</Run>
+                                        <Run Text="{Binding Component.PulleyDiameter}"/>
+                                        <Run>皮带长度:</Run>
+                                        <Run Text="{Binding Component.BeltLength}"/>
+                                </TextBlock>
+                                <StackPanel.ToolTip>
+                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <TextBlock>                                 
+                                                <Run>转频:</Run> 
+                                                <Run Text="{Binding Component.Frequency, Mode=OneWay}"/>
+                                        </TextBlock>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:ImpellerComponent}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Impeller.png"/>
+                                <TextBlock x:Name="title" Text="{Binding Name}" FontSize="28" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center">             
+                                        <Run>叶片数:</Run>
+                                        <Run Text="{Binding Component.NumberOfBlades}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:MotorComponent}">
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Motor.png"/>
+                                <TextBlock x:Name="title" Text="{Binding Name}" FontSize="28" Margin="5,0" VerticalAlignment="Center"/>
+                                <StackPanel VerticalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="电网工频:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.LineFrequency}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="磁极数:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.Poles}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="转子条数:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.RotorBars}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="定子线圈数:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.StatorCoils}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="绕组槽数:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.WindingSlots}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="可控硅整流器数:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.SCRs}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="交流电机:" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Component.IsAC}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding DataContext.EditComponentCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </Grid>
+           
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <Expander IsExpanded="True">
+                    <Expander.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="否定分频诊断策略" VerticalAlignment="Center"/>
+                                <!--<Button Width="20" Height="20" Padding="0" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" 
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.AddNegationDivFreStrategyCommand}">
+                                    <Viewbox Width="20" Height="20">
+                                        <Canvas Width="24" Height="24">
+                                            <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                        </Canvas>
+                                    </Viewbox>
+                                </Button>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </Expander.HeaderTemplate>
+                    <!--<DataGrid Grid.Row="0" ItemsSource="{Binding Shaft.NegationDivFreStrategies}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="故障名称" Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="垂直相对值" Binding="{Binding RelativeY,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="水平相对值" Binding="{Binding RelativeX,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="轴向相对值" Binding="{Binding RelativeZ,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            -->
+                    <!--<Button Style="{StaticResource MaterialDesignToolForegroundButton}" ToolTip="删除" Padding="0" Width="16" Height="16" IsEnabled="{Binding IsValid}"
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.RemoveNegationDivFreStrategyCommand}" CommandParameter="{Binding}">
+                                                <Viewbox Width="16" Height="16">
+                                                    <Canvas Width="24" Height="24">
+                                                        <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Button>-->
+                    <!--
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>-->
+                </Expander>
+                <Expander IsExpanded="True">
+                    <Expander.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="特征频率" VerticalAlignment="Center"/>
+                                <!--<Button Width="20" Height="20" Padding="0" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                                 Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.AddNaturalFreCommand}">
+                                        <Viewbox Width="20" Height="20">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                            </Canvas>
+                                        </Viewbox>
+                                    </Button>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </Expander.HeaderTemplate>
+                    <!--<DataGrid Grid.Row="1" ItemsSource="{Binding Shaft.NaturalFres}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="故障名称"  Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <materialDesign:MaterialDataGridComboBoxColumn Header="分频类型" ItemsSource="{Binding Source={StaticResource divFreTypeEnum}}" SelectedValueBinding="{Binding DivFre,UpdateSourceTrigger=LostFocus}">
+                                    <DataGridComboBoxColumn.ElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.ElementStyle>
+                                    <DataGridComboBoxColumn.EditingElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.EditingElementStyle>
+                                </materialDesign:MaterialDataGridComboBoxColumn>
+                                <DataGridTextColumn Header="值1" Binding="{Binding Value1,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="值2" Binding="{Binding Value2,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="建议" Binding="{Binding Proposal}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="危害" Binding="{Binding Harm}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <materialDesign:MaterialDataGridComboBoxColumn Header="模式" ItemsSource="{Binding Source={StaticResource naturalFreModeEnum}}" SelectedValueBinding="{Binding Mode,UpdateSourceTrigger=LostFocus}">
+                                    <DataGridComboBoxColumn.ElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.ElementStyle>
+                                    <DataGridComboBoxColumn.EditingElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.EditingElementStyle>
+                                </materialDesign:MaterialDataGridComboBoxColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}" ToolTip="删除" Padding="0" Width="16" Height="16" IsEnabled="{Binding IsValid}"
+                                                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.RemoveNaturalFreCommand}" CommandParameter="{Binding}">
+                                                <Viewbox Width="16" Height="16">
+                                                    <Canvas Width="24" Height="24">
+                                                        <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>-->
+                </Expander>
+                <Expander IsExpanded="True">
+                    <Expander.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="分频门槛与加权" VerticalAlignment="Center"/>
+                                <!--<Button Width="20" Height="20" Padding="0" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" 
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.AddDivFreThresholdProportionCommand}">
+                                        <Viewbox Width="20" Height="20">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                            </Canvas>
+                                        </Viewbox>
+                                    </Button>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </Expander.HeaderTemplate>
+                    <!--<DataGrid Grid.Row="2" ItemsSource="{Binding Shaft.DivFreThresholdProportiones}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="故障名称"  Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <materialDesign:MaterialDataGridComboBoxColumn Header="分频类型" ItemsSource="{Binding Source={StaticResource divFreTypeEnum}}" SelectedValueBinding="{Binding DivFre,UpdateSourceTrigger=LostFocus}">
+                                    <DataGridComboBoxColumn.ElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.ElementStyle>
+                                    <DataGridComboBoxColumn.EditingElementStyle>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignDataGridComboBox}">
+                                            <Setter Property="ItemTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.EditingElementStyle>
+                                </materialDesign:MaterialDataGridComboBoxColumn>
+                                <DataGridTextColumn Header="值1"  Binding="{Binding Value1,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="值2"  Binding="{Binding Value2,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="故障概率"  Binding="{Binding Proportion,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="门槛值"  Binding="{Binding Threshold,StringFormat=P2,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" EditingElementStyle="{StaticResource dataGridTextColumnEditingStyle}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}" ToolTip="删除" Padding="0" Width="16" Height="16" IsEnabled="{Binding IsValid}"
+                                                               Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ShaftEditView}}, Path=DataContext.RemoveDivFreThresholdProportionCommand}" CommandParameter="{Binding}">
+                                                <Viewbox Width="16" Height="16">
+                                                    <Canvas Width="24" Height="24">
+                                                        <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>-->
+                </Expander>
+                <Expander IsExpanded="True" Header="滤波器">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="*"/>
+                            <!--<RowDefinition Height="30"/>-->
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Foreground="Black" Content="不滤波" IsChecked="{Binding Shaft.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}"/>
+                            <RadioButton x:Name="bandPassRb"  Foreground="Black" Content="带通" IsChecked="{Binding Shaft.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}"/>
+                            <RadioButton x:Name="highPassRb" Foreground="Black" Content="高通" IsChecked="{Binding Shaft.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}"/>
+                            <RadioButton x:Name="lowPassRb" Foreground="Black" Content="低通" IsChecked="{Binding Shaft.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}"/>
+                        </StackPanel>
+                        <CheckBox Foreground="Black" Grid.Row="1" Content="绑定转速" IsChecked="{Binding Shaft.BindRPMForFilter}"/>
+                        <!--<Grid Grid.Row="2" Margin="5,5,25,0" Visibility="{Binding Shaft.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreTypes:FilterType.BandPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Shaft.BandPassFilter.PassbandAttenuationDB}"
+                                                       Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0"  Value="{Binding Shaft.BandPassFilter.StopbandAttenuationDB}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="3" Content="低逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Shaft.BandPassFilter.BPPassbandFreLow}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="4" Content="高逼近带通"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Shaft.BandPassFilter.BPPassbandFreHigh}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="5" Content="过渡带宽"/>
+                                <xctk:DoubleUpDown  Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding Shaft.BandPassFilter.TransitionBandwidth}"
+                                                         Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="5,5,25,0" Visibility="{Binding Shaft.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreTypes:FilterType.HighPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Shaft.HighPassFilter.PassbandAttenuationDB}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding Shaft.HighPassFilter.StopbandAttenuationDB}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Shaft.HighPassFilter.PassbandFre}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Shaft.HighPassFilter.StopbandFre}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="5,5,25,0" Visibility="{Binding Shaft.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreTypes:FilterType.LowPass},FallbackValue=Collapsed}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="通带衰减"/>
+                                <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Shaft.LowPassFilter.PassbandAttenuationDB}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="1" Content="阻带衰减"/>
+                                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding  Shaft.LowPassFilter.StopbandAttenuationDB}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="3" Content="通带"/>
+                                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding Shaft.LowPassFilter.PassbandFre}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                                <Label Grid.Row="4" Content="阻带"/>
+                                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Minimum="0" Value="{Binding Shaft.LowPassFilter.StopbandFre}"
+                                                        Validation.ErrorTemplate="{DynamicResource MaterialDesignValidationErrorTemplate}" Margin="10"/>
+                            </Grid>-->
+                    </Grid>
+                </Expander>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnOK" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnOK_Click" IsDefault="True" Margin="10, 0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />
+                            <TextBlock Text="{DynamicResource strOK}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnClose" Style="{DynamicResource AccentedSquareButtonStyle}" Width="100" Click="btnClose_Click" IsCancel="True" Margin="10, 0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="None" Source="/AIC.Resources;component/Images/cancel.png"  />
+                            <TextBlock Text="{DynamicResource strCancel}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

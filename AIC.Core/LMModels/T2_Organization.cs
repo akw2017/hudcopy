@@ -31,7 +31,7 @@ namespace AIC.Core.LMModels
             }
         }
         public string Structure { get; set; }//结构   
-        public ImportOperate Operate { get; set; }//操作，增，删，改
+        public EditOperateType Operate { get; set; }//操作，增，删，改
         public string Hint { get; set; }//提示       
 
     }

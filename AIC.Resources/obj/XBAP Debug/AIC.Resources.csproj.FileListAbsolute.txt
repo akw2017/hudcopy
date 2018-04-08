@@ -64,3 +64,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\PopupWindow.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\PopupWindow.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\BottomAsyncWorkStyle.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\ListBoxStyle.baml

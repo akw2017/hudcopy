@@ -14,7 +14,7 @@ namespace AIC.DeviceDataPage.Models
         private ObservableCollection<DiagnoseFault> descriptionCollection = new ObservableCollection<DiagnoseFault>();
         private string error;
         private string warning;
-        private string result;
+      
 
         public IEnumerable<DiagnoseFault> description { get { return descriptionCollection; } }
         public string Error
@@ -28,20 +28,57 @@ namespace AIC.DeviceDataPage.Models
             set { this.SetProperty(ref warning, value); }
         }
 
+        private string descriptionString;
         public string DescriptionString
         {
-            get
+            get { return descriptionString; }
+            set { this.SetProperty(ref descriptionString, value); }
+        }
+
+        public void SetDiagnosticResult(string name)
+        {
+            Name = name;
+            if (Error != null && Error != "")
             {
-                return string.Join("" , descriptionCollection.Select(p => p.Result));
+                DescriptionString = "错误" + Error;
+            }
+            else
+            {
+                DescriptionString = null;
+            }
+            if (Warning != null && Warning != "")
+            {
+                DescriptionString += "警告" + Warning;
+            }
+            if (descriptionCollection.Count != 0)
+            {              
+                DescriptionString += "结论" + string.Join("\r\n", descriptionCollection.Select(p => p.Result));
+            }
+            if (DescriptionString == null)
+            {
+                Result = "正常";
+            }
+            else
+            {
+                Result = "异常";
             }
         }
 
+        private string name;
+        [JsonIgnore]
+        public string Name
+        {
+            get { return name; }
+            set { this.SetProperty(ref name, value);  }
+        }
+        private string result;
         [JsonIgnore]
         public string Result
         {
             get { return result; }
             set { this.SetProperty(ref result, value); }
         }
+
     }
 
     public class DiagnoseFault : BindableBase
@@ -74,7 +111,7 @@ namespace AIC.DeviceDataPage.Models
 
         public string Result
         {
-            get { return Code.ToString() + Fault + Harm + Proposal; }
+            get { return Code.ToString() + "." + Fault + Harm + Proposal; }
         }
     }
 }

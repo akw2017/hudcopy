@@ -389,5 +389,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\obj\Debug\AIC.UserPage.Properties.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\obj\Debug\AIC.UserPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\obj\Debug\AIC.UserPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\obj\Debug\AIC.UserPage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Debug\Resources\AICMatlabDLL.dll

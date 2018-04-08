@@ -7,6 +7,7 @@ using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
 using AIC.DeviceDataPage.Views;
+using AIC.DiagnosePage.Views;
 using AIC.HistoryDataPage.Views;
 using AIC.HomePage.Menus;
 using AIC.HomePage.Models;

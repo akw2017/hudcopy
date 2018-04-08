@@ -18,7 +18,7 @@ namespace AIC.ServiceInterface
         //Dictionary<string, List<T1_OrganizationPrivilege>> T_OrganizationPrivilege { get; set; }
         //void InitUserManage();
 
-        //void AddOperateRecord(string ip, string name, string code, OperateType operateType);
+        //void AddOperateRecord(string ip, string name, string code, EditOperateType operateType);
 
     }
 }

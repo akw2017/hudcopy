@@ -10,10 +10,10 @@ namespace AIC.CoreType
 {
     public enum DivFreType
     {
-        [EnumDescription(EnumValue = DivFreType.RPM)]
-        RPM=0,
-        [EnumDescription(EnumValue = DivFreType.Custom)]
-        Custom=1,
+        [EnumDescription(EnumValue = DivFreType.RPM)]//Const
+        RPM =0,
+        [EnumDescription(EnumValue = DivFreType.Custom)]//Order
+        Custom =1,
         [EnumDescription(EnumValue = DivFreType.Range)]
         Range = 2,
 

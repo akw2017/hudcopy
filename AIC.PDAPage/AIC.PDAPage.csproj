@@ -399,7 +399,6 @@
     <Compile Include="Converters\StringGuidBoolConverter.cs" />
     <Compile Include="Converters\StringWidthConverter.cs" />
     <Compile Include="Converters\CodeSelectedItemConverter.cs" />
-    <Compile Include="Converters\IntVisibilityConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Models\AddChannelClass.cs" />
     <Compile Include="Models\CardCopyHelper.cs" />

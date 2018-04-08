@@ -241,6 +241,9 @@
     <Compile Include="Views\SplashView.xaml.cs">
       <DependentUpon>SplashView.xaml</DependentUpon>
     </Compile>
+    <Content Include="Resources\诊断报告模板.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Page Include="Views\Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -317,6 +320,10 @@
     <ProjectReference Include="..\AIC.DeviceDataPage\AIC.DeviceDataPage.csproj">
       <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
       <Name>AIC.DeviceDataPage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIC.DiagnosePage\AIC.DiagnosePage.csproj">
+      <Project>{92ed342a-ee88-48bb-be41-bf72f143b266}</Project>
+      <Name>AIC.DiagnosePage</Name>
     </ProjectReference>
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>

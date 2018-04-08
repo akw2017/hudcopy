@@ -32,7 +32,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\System.React
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\System.Reactive.Interfaces.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\System.Windows.Interactivity.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\Util.Controls.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Debug\Wpf.WrapBreakPanel.dll

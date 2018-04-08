@@ -32,7 +32,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Microsoft.Practices.Servi
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Microsoft.Practices.Unity.Configuration.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Microsoft.Practices.Unity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Microsoft.Practices.Unity.RegistrationByConvention.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\ModularityWithUnity.ModuleTracking.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Newtonsoft.Json.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Prism.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Prism.Unity.Wpf.dll
@@ -89,7 +88,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Loya.Dameer.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Kent.Boogaart.Truss.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Kent.Boogaart.Truss.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.PageNavigationControl.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\ModularityWithUnity.ModuleTracking.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Arction.Wpf.Charting.LightningChartUltimate.xml
@@ -2735,3 +2733,15 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\LiveCharts.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.QuickDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.QuickDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\诊断报告模板.docx
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Resources\SFDAlgorithm.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.DiagnosePage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.NetWorksPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.Arrows.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.ZoomableCanvas.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\OpenXmlPowerTools.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\DocumentFormat.OpenXml.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.DiagnosePage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.NetWorksPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.Arrows.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.ZoomableCanvas.pdb

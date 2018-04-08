@@ -114,14 +114,14 @@
     <Compile Include="DiagnoseState.cs" />
     <Compile Include="DiagnosisMethod.cs" />
     <Compile Include="FilterType.cs" />
-    <Compile Include="Execl\ImportOperate.cs" />
+    <Compile Include="Execl\EditOperateType.cs" />
     <Compile Include="InSignalCategory.cs" />
     <Compile Include="Integration.cs" />
     <Compile Include="MotorType.cs" />
     <Compile Include="NaturalFreMode.cs" />
     <Compile Include="Signal\SignalPreProccessType.cs" />
     <Compile Include="Unit\UnitType.cs" />
-    <Compile Include="UserManager\OperateType.cs" />
+    <Compile Include="UserManager\UserOperateType.cs" />
     <Compile Include="ThresholdMode.cs" />
     <Compile Include="RunningState.cs" />
     <Compile Include="SampleType.cs" />

@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AIC.PDAPage.Views.SubViews"
              xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
+             xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="300">
     <UserControl.Resources>
-        <convert:IntVisibilityConverter x:Key="intVisibilityConverter"/>
+        <core:IntVisibilityConverter x:Key="intVisibilityConverter"/>
         <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
     </UserControl.Resources>
     <Grid>

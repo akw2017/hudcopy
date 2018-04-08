@@ -314,6 +314,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\ListBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\ScrollBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -632,12 +636,6 @@
     <Resource Include="Images\cog_go.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\excel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\excel_32px.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\excel_16px.png" />
   </ItemGroup>
   <ItemGroup>
@@ -666,6 +664,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\lightbulb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\word.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Bearing.png" />
+    <Resource Include="Images\Belt.png" />
+    <Resource Include="Images\Device.png" />
+    <Resource Include="Images\Gear.png" />
+    <Resource Include="Images\Impeller.png" />
+    <Resource Include="Images\Motor.png" />
+    <Resource Include="Images\shaft.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

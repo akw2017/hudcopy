@@ -667,5 +667,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\Debug\AIC.HomePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.ZoomableCanvas.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Wpf.ZoomableCanvas.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\OpenXmlPowerTools.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\DocumentFormat.OpenXml.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.DiagnosePage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\AIC.DiagnosePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\bin\Debug\Resources\AICMatlabDLL.dll

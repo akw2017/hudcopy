@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"       
+        xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
         xmlns:convert="clr-namespace:AIC.PDAPage.Converters"
         mc:Ignorable="d"       
         xmlns:System="clr-namespace:System;assembly=mscorlib"
@@ -11,7 +12,7 @@
         Title="编辑设备" Height="160" Width="600"
         WindowStartupLocation="CenterScreen" Icon="/AIC.Resources;component/Images/user_go.png" Topmost="True">
     <Controls:MetroWindow.Resources>
-        <convert:IntVisibilityConverter x:Key="intVisibilityConverter"/>
+        <core:IntVisibilityConverter x:Key="intVisibilityConverter"/>
         <convert:CodeSelectedItemConverter x:Key="codeSelectedItemConverter"/>
         <System:Double x:Key="ContentFontSize">16</System:Double>
     </Controls:MetroWindow.Resources>

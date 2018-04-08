@@ -4,3 +4,4 @@ D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Debug\Wpf.WrapBreakPanel
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Debug\Wpf.WrapBreakPanel.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Debug\Wpf.WrapBreakPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Debug\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Wpf.WrapBreakPanel\obj\Debug\Wpf.WrapBreakPanel.csprojResolveAssemblyReference.cache

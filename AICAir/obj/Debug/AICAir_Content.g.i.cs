@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/%e8%af%8a%e6%96%ad%e6%8a%a5%e5%91%8a%e6%a8%a1%e6%9d%bf.docx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/gif/null.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/gif/%e5%88%ae%e6%9d%bf.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mydata/gif/%e5%8e%8b%e7%bc%a9%e6%9c%ba.gif")]

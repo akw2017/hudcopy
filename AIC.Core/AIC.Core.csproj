@@ -153,6 +153,7 @@
     <Compile Include="Converters\EqualBindingConverter.cs" />
     <Compile Include="Converters\GradeToMyValueConverter.cs" />
     <Compile Include="Converters\GradeToColorConverter.cs" />
+    <Compile Include="Converters\IntVisibilityConverter.cs" />
     <Compile Include="Converters\RowToIndexConv.cs" />
     <Compile Include="Converters\IntToUnitConverter.cs" />
     <Compile Include="Converters\IndexConverter.cs" />

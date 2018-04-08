@@ -334,7 +334,7 @@ namespace AIC.PDAPage.ViewModels
                                     if (olddata == null)
                                     {
                                         SetInformation("组织机构", "添加一条数据, execl第 " + indexdata.Index.ToString() + " 行");
-                                        newdata.Operate = ImportOperate.Add;
+                                        newdata.Operate = EditOperateType.Add;
                                         olddatas.Add(newdata);
                                         resolvedatas.Add(newdata);
                                     }
@@ -342,14 +342,14 @@ namespace AIC.PDAPage.ViewModels
                                     {
                                         if (ExportDBHelper.OrganizationEqual(newdata, olddata))
                                         {
-                                            newdata.Operate = ImportOperate.None;
+                                            newdata.Operate = EditOperateType.None;
                                             resolvedatas.Add(olddata);
                                         }
                                         else
                                         {
                                             SetInformation("组织机构", "修改一条数据, execl第 " + indexdata.Index.ToString() + " 行");
                                             ExportDBHelper.OrganizationLeftCopyToRight(newdata, olddata);
-                                            olddata.Operate = ImportOperate.Modify;
+                                            olddata.Operate = EditOperateType.Modify;
                                             resolvedatas.Add(olddata);
                                         }
                                     }
@@ -357,7 +357,7 @@ namespace AIC.PDAPage.ViewModels
                                 List<T2_Organization> deletes = olddatas.Except(resolvedatas).ToList();
                                 foreach (var delete in deletes)
                                 {
-                                    delete.Operate = ImportOperate.Delete;
+                                    delete.Operate = EditOperateType.Delete;
                                 }
                                 OrganizationView = new List<T2_Organization>(olddatas);
                                 SetInformation("组织机构", "导入完成");
@@ -417,7 +417,7 @@ namespace AIC.PDAPage.ViewModels
                                     if (olddata == null)
                                     {
                                         SetInformation("测点", "添加一条数据, execl第 " + indexdata.Index.ToString() + " 行");
-                                        newdata.Operate = ImportOperate.Add;
+                                        newdata.Operate = EditOperateType.Add;
                                         olddatas.Add(newdata);
                                         resolvedatas.Add(newdata);
                                     }
@@ -425,14 +425,14 @@ namespace AIC.PDAPage.ViewModels
                                     {
                                         if (ExportDBHelper.ItemEqual(newdata, olddata))
                                         {
-                                            newdata.Operate = ImportOperate.None;
+                                            newdata.Operate = EditOperateType.None;
                                             resolvedatas.Add(olddata);
                                         }
                                         else
                                         {
                                             SetInformation("测点", "修改一条数据, execl第 " + indexdata.Index.ToString() + " 行");
                                             ExportDBHelper.ItemLeftCopyToRight(newdata, olddata);
-                                            olddata.Operate = ImportOperate.Modify;
+                                            olddata.Operate = EditOperateType.Modify;
                                             resolvedatas.Add(olddata);
                                         }
                                     }
@@ -440,7 +440,7 @@ namespace AIC.PDAPage.ViewModels
                                 List<T2_Item> deletes = olddatas.Except(resolvedatas).ToList();
                                 foreach (var delete in deletes)
                                 {
-                                    delete.Operate = ImportOperate.Delete;
+                                    delete.Operate = EditOperateType.Delete;
                                 }
                                 ItemView = new List<T2_Item>(olddatas);
                                 SetInformation("测点", "导入完成");
@@ -504,7 +504,7 @@ namespace AIC.PDAPage.ViewModels
                                     if (olddata == null)
                                     {
                                         SetInformation("无线标量", "添加一条数据, execl第 " + indexdata.Index.ToString() + " 行");
-                                        newdata.Operate = ImportOperate.Add;
+                                        newdata.Operate = EditOperateType.Add;
                                         olddatas.Add(newdata);
                                         resolvedatas.Add(newdata);
                                     }
@@ -512,14 +512,14 @@ namespace AIC.PDAPage.ViewModels
                                     {
                                         if (ExportDBHelper.WirelessScalarChannelInfoEqual(newdata as T2_WirelessScalarChannelInfo, olddata as T2_WirelessScalarChannelInfo))
                                         {
-                                            newdata.Operate = ImportOperate.None;
+                                            newdata.Operate = EditOperateType.None;
                                             resolvedatas.Add(olddata);
                                         }
                                         else
                                         {
                                             SetInformation("无线标量", "修改一条数据, execl第 " + indexdata.Index.ToString() + " 行");
                                             ExportDBHelper.WirelessScalarChannelInfoLeftCopyToRight(newdata as T2_WirelessScalarChannelInfo, olddata as T2_WirelessScalarChannelInfo);
-                                            olddata.Operate = ImportOperate.Modify;
+                                            olddata.Operate = EditOperateType.Modify;
                                             resolvedatas.Add(olddata);
                                         }
                                     }
@@ -527,7 +527,7 @@ namespace AIC.PDAPage.ViewModels
                                 List<I_WirelessChannelExport> deletes = olddatas.Except(resolvedatas).ToList();
                                 foreach (var delete in deletes)
                                 {
-                                    delete.Operate = ImportOperate.Delete;
+                                    delete.Operate = EditOperateType.Delete;
                                 }
                                 WirelessScalarChannelInfoView = new List<I_WirelessChannelExport>(olddatas);
                                 SetInformation("无线标量", "导入完成");
@@ -591,7 +591,7 @@ namespace AIC.PDAPage.ViewModels
                                     if (olddata == null)
                                     {
                                         SetInformation("无线振动", "添加一条数据, execl第 " + indexdata.Index.ToString() + " 行");
-                                        newdata.Operate = ImportOperate.Add;
+                                        newdata.Operate = EditOperateType.Add;
                                         olddatas.Add(newdata);
                                         resolvedatas.Add(newdata);
                                     }
@@ -599,14 +599,14 @@ namespace AIC.PDAPage.ViewModels
                                     {
                                         if (ExportDBHelper.WirelessVibrationChannelInfoEqual(newdata as T2_WirelessVibrationChannelInfo, olddata as T2_WirelessVibrationChannelInfo))
                                         {
-                                            newdata.Operate = ImportOperate.None;
+                                            newdata.Operate = EditOperateType.None;
                                             resolvedatas.Add(olddata);
                                         }
                                         else
                                         {
                                             SetInformation("无线振动", "修改一条数据, execl第 " + indexdata.Index.ToString() + " 行");
                                             ExportDBHelper.WirelessVibrationChannelInfoLeftCopyToRight(newdata as T2_WirelessVibrationChannelInfo, olddata as T2_WirelessVibrationChannelInfo);
-                                            olddata.Operate = ImportOperate.Modify;
+                                            olddata.Operate = EditOperateType.Modify;
                                             resolvedatas.Add(olddata);
                                         }
                                     }
@@ -614,7 +614,7 @@ namespace AIC.PDAPage.ViewModels
                                 List<I_WirelessChannelExport> deletes = olddatas.Except(resolvedatas).ToList();
                                 foreach (var delete in deletes)
                                 {
-                                    delete.Operate = ImportOperate.Delete;
+                                    delete.Operate = EditOperateType.Delete;
                                 }
                                 WirelessVibrationChannelInfoView = new List<I_WirelessChannelExport>(olddatas);
                                 SetInformation("无线振动", "导入完成");

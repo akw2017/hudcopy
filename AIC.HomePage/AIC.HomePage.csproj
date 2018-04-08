@@ -395,6 +395,10 @@
       <Project>{ffea1bb3-32ba-4e0b-bd8e-3b1c6a6f467f}</Project>
       <Name>AIC.DeviceDataPage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AIC.DiagnosePage\AIC.DiagnosePage.csproj">
+      <Project>{92ed342a-ee88-48bb-be41-bf72f143b266}</Project>
+      <Name>AIC.DiagnosePage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AIC.HistoryDataPage\AIC.HistoryDataPage.csproj">
       <Project>{e37067f1-a30d-4cf5-8322-d8dd944f502f}</Project>
       <Name>AIC.HistoryDataPage</Name>
@@ -463,6 +467,9 @@
       <Project>{72e591d6-8f83-4d8c-8f67-9c325e623234}</Project>
       <Name>Xceed.Wpf.Toolkit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

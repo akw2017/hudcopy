@@ -469,7 +469,7 @@ namespace AIC.UserPage.ViewModels
                     default: return;
                 }
 
-                _loginUserService.AddOperateRecord(ServerIP, OperateType.UserManage);
+                _loginUserService.AddOperateRecord(ServerIP, UserOperateType.UserManage);
 
                 T_UserMid = (from p in T_User where p.Name.Contains(SearchName) || SearchName == "" select p).ToList();
                 TotalItems = T_UserMid.Count;

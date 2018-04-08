@@ -130,7 +130,7 @@ namespace AIC.DatabaseService
 
             //_hardwareService.InitServers();//改为延时加载
             _signalProcess.InitSignals();
-            //AddOperateRecord(OperateType.Login);  //登录记录取消
+            //AddOperateRecord(UserOperateType.Login);  //登录记录取消
         }
 
         private readonly SemaphoreSlim locker = new SemaphoreSlim(1);
@@ -209,7 +209,7 @@ namespace AIC.DatabaseService
         #endregion
 
         #region 操作记录
-        public void AddOperateRecord(string ip, OperateType operateType)
+        public void AddOperateRecord(string ip, UserOperateType operateType)
         {         
             T1_OperateRecord LM_OperateRecord = new T1_OperateRecord()
             {               
@@ -222,24 +222,24 @@ namespace AIC.DatabaseService
             _databaseComponent.Add<T_OperateRecord>(ip, LM_OperateRecord);
         }
 
-        public async Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, OperateType operateType)
+        public async Task<List<T1_OperateRecord>> GetOperateRecord(string ip, DateTime start, DateTime end, string name, UserOperateType operateType)
         {
             List<T_OperateRecord> list = new List<T_OperateRecord>();
-            if (name.Trim() == "" && operateType == OperateType.None)
+            if (name.Trim() == "" && operateType == UserOperateType.None)
             {
                 list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "(OperateTime >= @0 and OperateTime <= @1)", new object[] { start, end, });
              }
-            else if (name.Trim() != "" && operateType == OperateType.None)
+            else if (name.Trim() != "" && operateType == UserOperateType.None)
             {
                 list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%')", new object[] { start, end, name });
             }
-            else if (name.Trim() == "" && operateType != OperateType.None)
+            else if (name.Trim() == "" && operateType != UserOperateType.None)
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and OperateType = @2)", new object[] { start, end, ((short)operateType) });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and UserOperateType = @2)", new object[] { start, end, ((short)operateType) });
             }
             else
             {
-                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and OperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
+                list = await _databaseComponent.Query<T_OperateRecord>(ip, null, "((OperateTime >= @0 and OperateTime <= @1) and T_User_Name like '%'+ @2+ '%' and UserOperateType = @3)", new object[] { start, end, name, ((short)operateType).ToString() });
             }
             return list.Select(p => ClassCopyHelper.AutoCopy<T_OperateRecord, T1_OperateRecord>(p)).ToList();
         }

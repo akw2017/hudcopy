@@ -46,6 +46,7 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuBPNetWorks { get; set; }
         public MyMenu MenuSOMNetWorks { get; set; }
         public MyMenu MenuDeviceFaultDiagnose { get; set; }
+        public MyMenu MenuEditDeviceComponents { get; set; }
 
         public static Dictionary<int, MyMenu> Dictionary;
 
@@ -87,6 +88,7 @@ namespace AIC.Core.UserManageModels
             MenuBPNetWorks = new MyMenu(33, (string)Application.Current.Resources["menuBPNetWorks"], "/AIC.Resources;component/Images/lightbulb.png");
             MenuSOMNetWorks = new MyMenu(34, (string)Application.Current.Resources["menuSOMNetWorks"], "/AIC.Resources;component/Images/lightbulb.png");
             MenuDeviceFaultDiagnose = new MyMenu(35, (string)Application.Current.Resources["menuDeviceFaultDiagnose"], "/AIC.Resources;component/Images/lightbulb.png");
+            MenuEditDeviceComponents = new MyMenu(36, (string)Application.Current.Resources["menuEditDeviceComponents"], "/AIC.Resources;component/Images/lightbulb.png");
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(MenuUserManage.Number, MenuUserManage);
             Dictionary.Add(MenuRoleManage.Number, MenuRoleManage);
@@ -124,19 +126,28 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(MenuBPNetWorks.Number, MenuBPNetWorks);
             Dictionary.Add(MenuSOMNetWorks.Number, MenuSOMNetWorks);
             Dictionary.Add(MenuDeviceFaultDiagnose.Number, MenuDeviceFaultDiagnose);
+            Dictionary.Add(MenuEditDeviceComponents.Number, MenuEditDeviceComponents);
         }
 
         public static MyMenu GetMenu(string strname)
         {
-            string name = (string)Application.Current.Resources[strname];
-            var menu = (from p in Dictionary where p.Value.Name == name select p.Value).FirstOrDefault();
-            return menu;
+            try
+            {
+                string name = (string)Application.Current.Resources[strname];
+                var menu = (from p in Dictionary where p.Value.Name == name select p.Value).FirstOrDefault();
+                return menu;
+            }
+            catch { return null; }
         }
 
         public static string GetIconPath(int internalNumber)
         {
-            var path = (from p in Dictionary where p.Value.Number == internalNumber select p.Value.IconPath).FirstOrDefault();
-            return path;
+            try
+            {
+                var path = (from p in Dictionary where p.Value.Number == internalNumber select p.Value.IconPath).FirstOrDefault();
+                return path;
+            }
+            catch { return null; }
         }
     }
 }

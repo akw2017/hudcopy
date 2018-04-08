@@ -23,19 +23,19 @@ namespace AIC.UserPage.Converters
                 {
                     return "登陆";
                 }
-                if ((short)value == (short)OperateType.MenuManage)
+                if ((short)value == (short)UserOperateType.MenuManage)
                 {
                     return "菜单管理";
                 }
-                if ((short)value == (short)OperateType.OrganizationManage)
+                if ((short)value == (short)UserOperateType.OrganizationManage)
                 {
                     return "组织管理";
                 }
-                if ((short)value == (short)OperateType.RoleManage)
+                if ((short)value == (short)UserOperateType.RoleManage)
                 {
                     return "角色管理";
                 }
-                if ((short)value == (short)OperateType.UserManage)
+                if ((short)value == (short)UserOperateType.UserManage)
                 {
                     return "用户管理";
                 }

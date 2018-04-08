@@ -1,0 +1,67 @@
+<Application x:Class="AICDiagnose.MyApp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Styles/BaseGray.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Styles/BlueAddition.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
+               
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/GreyStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/AsyncWorkStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/BottomAsyncWorkStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/GridSplitterStyle.xaml" />
+                <!--<ResourceDictionary Source="/AIC.Resources;component/Themes/ScrollBar.xaml" />-->
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/ColorStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/TreeViewStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/DataGridStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/CheckBoxStyle.xaml" />
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/TabControlStyle.xaml" />
+                
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/en-us.xaml"/>
+                <ResourceDictionary Source="/AIC.Resources;component/Themes/zh-cn.xaml"/>
+                <ResourceDictionary>
+
+                    <System:Double x:Key="WindowTitleFontSize">18</System:Double>
+                    <System:Double x:Key="NormalFontSize">18</System:Double>
+                    <System:Double x:Key="ContentFontSize">16</System:Double>
+                    <System:Double x:Key="FlatButtonFontSize">18</System:Double>
+                    <System:Double x:Key="MenuFontSize">18</System:Double>
+                    <System:Double x:Key="ContextMenuFontSize">18</System:Double>
+                    <System:Double x:Key="StatusBarFontSize">18</System:Double>
+                    <!--<Style TargetType="{x:Type TextElement}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="FontSize" Value="18"/>
+                    </Style>
+                    <Style TargetType="{x:Type ListView}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>-->                   
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

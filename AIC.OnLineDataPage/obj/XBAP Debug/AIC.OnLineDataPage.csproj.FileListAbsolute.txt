@@ -14,7 +14,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.M9600.Com
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\AIC.Themes.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Akka.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Arction.DirectX.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Arction.DirectXInit.dll
@@ -70,7 +69,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\ItemsFilter.p
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.CloseTabControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Wpf.PageNavigationControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Xceed.Wpf.Toolkit.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Akka.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Debug\MahApps.Metro.xml

@@ -237,3 +237,4 @@ D:\SupportProject\AIC_HUD\AICHUD\FluentValidation\obj\Debug\sv\FluentValidation.
 D:\SupportProject\AIC_HUD\AICHUD\FluentValidation\obj\Debug\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\FluentValidation\obj\Debug\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\FluentValidation\obj\Debug\FluentValidation.pdb
+D:\SupportProject\AIC_HUD\AICHUD\FluentValidation\obj\Debug\FluentValidation.csprojResolveAssemblyReference.cache

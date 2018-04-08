@@ -73,7 +73,7 @@ namespace AICAir
             base.OnStartup(e);
 
             bool ret;
-            mutex = new System.Threading.Mutex(true, "ElectronicNeedleTherapySystem", out ret);
+            mutex = new System.Threading.Mutex(true, "AICAirSystem", out ret);
 
             if (!ret)
             {

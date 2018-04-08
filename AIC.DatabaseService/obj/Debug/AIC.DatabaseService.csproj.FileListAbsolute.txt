@@ -382,5 +382,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\sv\FluentValidati
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Debug\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\Debug\AIC.DatabaseService.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\Debug\Resources\AICMatlabDLL.dll

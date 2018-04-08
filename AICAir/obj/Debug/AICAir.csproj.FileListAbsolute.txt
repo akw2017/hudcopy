@@ -5662,3 +5662,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\SFDAlgorithm.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\诊断报告模板.docx
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\OpenXmlPowerTools.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\DocumentFormat.OpenXml.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.pdb

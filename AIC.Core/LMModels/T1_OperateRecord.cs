@@ -12,7 +12,7 @@ namespace AIC.Core.LMModels
         //public int id { get; set; }//自增ID
         //public string T_User_Name { get; set; }//用户登录名
         //public string T_User_Code { get; set; }//用户代号
-        //public int OperateType { get; set; }//操作类型
+        //public int EditOperateType { get; set; }//操作类型
         //public DateTime OperateTime { get; set; }//操作时间
         //public string Remarks { get; set; }//描述
     }

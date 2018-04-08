@@ -138,7 +138,7 @@ namespace AIC.DatabaseService
             //T_User[ip].Add(new T1_User() { id = 3, Name = "operator", Alias_Name = "操作员丙", Password = "operator", T_Role_Guid = T_Role[ip][2].Guid, T_Menu_Guid = T_Menu[ip][16].Guid, T_OrganizationPrivilege_Guid = T_OrganizationPrivilege[ip][17].Guid, Is_Disabled = false, Is_Inside = false });
         }
 
-        //public void AddOperateRecord(string ip, string name, string code, OperateType operateType)
+        //public void AddOperateRecord(string ip, string name, string code, UserOperateType operateType)
         //{
         //    int max = T_OperateRecord.Count;
         //    T_OperateRecord[ip].Add(new LM_OperateRecord()
@@ -147,7 +147,7 @@ namespace AIC.DatabaseService
         //        T_User_Name = name,
         //        T_User_Code = code,
         //        OperateTime = DateTime.Now,
-        //        OperateType = (short)operateType,
+        //        UserOperateType = (short)operateType,
         //    });
         //}       
 

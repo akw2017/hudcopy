@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIC.CoreType
 {
-    enum ImportOperate
+    enum EditOperateType
     {
         Add = 0,
         Delete,
