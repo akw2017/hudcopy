@@ -144,14 +144,12 @@ namespace AIC.DatabaseService
                     List<Task> lttask = new List<Task>();
                     lttask.Add(_databaseComponent.LoadHardwave(server.IP));
                     lttask.Add(_databaseComponent.GetMeasureUnit(server.IP));
-                   
+
                     await Task.WhenAll(lttask.ToArray());
                 }
-                if (LoginInfo.LoginStatus == true)
-                {
-                    _hardwareService.InitServers(_localConfiguration.LoginServerInfoList);
-                    _signalProcess.LazyInitSignals();
-                }        
+
+                _hardwareService.InitServers(_localConfiguration.LoginServerInfoList);
+                _signalProcess.LazyInitSignals();
             }
             finally
             {
@@ -168,15 +166,23 @@ namespace AIC.DatabaseService
                 locker.Release();
             }
         }
-        public void SetUserLogout()//注销
+        public async Task SetUserLogout()//注销
         {
-            LoginInfo.ClearLoginInfo();
-            _databaseComponent.ClearDatabase();
-            //重新获取本地配置文件
-            _localConfiguration.ReadServerInfo();
-            
-            //_eventAggregator.GetEvent<ServerChangedEvent>().Publish(_localConfiguration.ServerInfoList);
-            MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Collapsed);
+            await locker.WaitAsync();
+            try
+            {
+                LoginInfo.ClearLoginInfo();
+                _databaseComponent.ClearDatabase();
+                //重新获取本地配置文件
+                _localConfiguration.ReadServerInfo();
+
+                //_eventAggregator.GetEvent<ServerChangedEvent>().Publish(_localConfiguration.ServerInfoList);
+                MenuManageList.Dictionary.Values.ToList().ForEach(p => p.Visibility = Visibility.Collapsed);
+            }
+            finally
+            {
+                locker.Release();
+            }
         }
 
         public LoginInfo InitLoginServer(ServerInfo serverinfo)

@@ -4,17 +4,17 @@
 library
 C#
 .cs
-D:\SupportProject\SourceCode\AIC_HUD\AIC_HUD1.0\AIC.Map\obj\x64\Debug\
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\x64\Debug\
 AIC.HomePage
 none
 false
 DEBUG;TRACE
 
-131684911422
+19829463610
 
-39-608857882
-83-1794008827
-Views\HomeView.xaml;Views\LoginView.xaml;Views\LoginWin.xaml;Views\MainMenuView.xaml;Views\MainNavigationView.xaml;Views\MainStatusBarView.xaml;Views\MainToolBarView.xaml;Views\MapView.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;
+36-2111894025
+108826960628
+Views\AlarmAckListWin.xaml;Views\HistoryQuickPlayWin.xaml;Views\PwdEditWin.xaml;Views\TestWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\TabView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\HomeMapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
 
-False
+True
 

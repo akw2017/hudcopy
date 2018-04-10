@@ -86,6 +86,7 @@
     <s:String x:Key="menuDeviceHourlyData">DeviceHourlyData</s:String>
     <s:String x:Key="menuDeviceFaultDiagnose">DeviceFaultDiagnose</s:String>
     <s:String x:Key="menuEditDeviceComponents">EditDeviceComponents</s:String>
+    <s:String x:Key="menuEditDeviceTemplate">menuEditDeviceTemplate</s:String>
 
     <s:String x:Key="menuDBManage">DBManage</s:String>
     <s:String x:Key="menuExportDBData">ExportDBData</s:String>
@@ -97,7 +98,7 @@
     <s:String x:Key="menuDeviceQucikData">DeviceQucikData</s:String>
     <s:String x:Key="menuItemQucikData">ItemQucikData</s:String>
 
-    <s:String x:Key="menuNetWorks">NetWorks</s:String>
+    <s:String x:Key="menuDiagnose">Diagnose</s:String>
     <s:String x:Key="menuBPNetWorks">BPNetWorks</s:String>
     <s:String x:Key="menuSOMNetWorks">SOMNetWorks</s:String>
     <s:String x:Key="strStartTrain">StartTrain</s:String>
@@ -234,4 +235,6 @@
 
     <s:String x:Key="rememberUser">RememberUser</s:String>
     <s:String x:Key="rememberPwd">RememberPassword</s:String>
+
+    <s:String x:Key="templateManage">TemplateManage</s:String>
 </ResourceDictionary>

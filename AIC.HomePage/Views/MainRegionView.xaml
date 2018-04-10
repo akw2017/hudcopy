@@ -165,13 +165,24 @@
                             <Image Source="{Binding MenuManageList.MenuDeviceHourlyData.IconPath}"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                   
+                </MenuItem>
+                <MenuItem Header="{DynamicResource menuDiagnose}" Background="{DynamicResource TransparentWhiteBrush}">
                     <MenuItem Header="{DynamicResource menuDeviceFaultDiagnose}" Command="{Binding NavigateCommand}" CommandParameter="MenuDeviceFaultDiagnose" Visibility="{Binding MenuManageList.MenuDeviceFaultDiagnose.Visibility}">
                         <MenuItem.Icon>
                             <Image Source="{Binding MenuManageList.MenuDeviceFaultDiagnose.IconPath}"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource menuNetWorks}" Background="{DynamicResource TransparentWhiteBrush}">
+                    <MenuItem Header="{DynamicResource menuEditDeviceComponents}" Command="{Binding NavigateCommand}" CommandParameter="MenuEditDeviceComponents" Visibility="{Binding MenuManageList.MenuEditDeviceComponents.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuEditDeviceComponents.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource menuEditDeviceTemplate}" Command="{Binding NavigateCommand}" CommandParameter="MenuEditDeviceTemplate" Visibility="{Binding MenuManageList.MenuEditDeviceTemplate.Visibility}">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding MenuManageList.MenuEditDeviceTemplate.IconPath}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="{DynamicResource menuBPNetWorks}" Command="{Binding NavigateCommand}" CommandParameter="MenuBPNetWorks" Visibility="{Binding MenuManageList.MenuBPNetWorks.Visibility}">
                         <MenuItem.Icon>
                             <Image Source="{Binding MenuManageList.MenuBPNetWorks.IconPath}"/>

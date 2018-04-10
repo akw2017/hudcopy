@@ -64,3 +64,9 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.Propert
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ListBoxStyle.baml

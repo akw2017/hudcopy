@@ -80,8 +80,8 @@ namespace AIC.PDAPage.ViewModels
         //private IWireSlot SelectedSlot;
         //private IChannel SelectedChannel;
         private OrganizationTreeItemViewModel SelectedOrganizationTree;
-        private int SelectedDivFreInfoIndex;
-        private bool DivFreDoubleClick = false;
+        private int selectedDivFreInfoIndex;
+        private bool divFreDoubleClick = false;
 
         private string Identifier;
 
@@ -3490,9 +3490,9 @@ namespace AIC.PDAPage.ViewModels
         AnalogRransducerOutChannelInfoWin analogRransducerOutChannelInfoWin;
         private void ChannelEdit(object para)
         {
-            if (DivFreDoubleClick)//避免channeltree编辑事件
+            if (divFreDoubleClick)//避免channeltree编辑事件
             {
-                DivFreDoubleClick = false;
+                divFreDoubleClick = false;
                 return;
             }
 
@@ -3803,8 +3803,8 @@ namespace AIC.PDAPage.ViewModels
                 {                  
                     if (SelectedChannel is DivFreIChannel)
                     {
-                        SelectedDivFreInfoIndex = (int)para;
-                        DivFreInfo divfreinfo = (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex];
+                        selectedDivFreInfoIndex = (int)para;
+                        DivFreInfo divfreinfo = (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex];
                         divFreInfoWin = new DivFreInfoWin(divfreinfo);
                         divFreInfoWin.Parachanged += Win_Parachanged; ;
                         divFreInfoWin.ShowDialog();
@@ -3814,7 +3814,7 @@ namespace AIC.PDAPage.ViewModels
 
             finally
             {
-                DivFreDoubleClick = true;//避免channeltree编辑事件
+                divFreDoubleClick = true;//避免channeltree编辑事件
                 winshow = false;
             }
         }
@@ -3824,17 +3824,17 @@ namespace AIC.PDAPage.ViewModels
             try
             {
                 Status = ViewModelStatus.Querying;              
-                _convertToDataBaseFormat.DivFreInfoTempConvert(divfreinfo, (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex]);
+                _convertToDataBaseFormat.DivFreInfoTempConvert(divfreinfo, (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex]);
                 if (SelectedChannel is DivFreIChannel)
                 {
                     Dictionary<string, Tuple<ICollection<string>, ICollection<object>>> editDic = new Dictionary<string, Tuple<ICollection<string>, ICollection<object>>>();
-                    editDic.Add("T_DivFreInfo", new Tuple<ICollection<string>, ICollection<object>>(null, new List<object> { (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex].T_DivFreInfo.TempData }));
+                    editDic.Add("T_DivFreInfo", new Tuple<ICollection<string>, ICollection<object>>(null, new List<object> { (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex].T_DivFreInfo.TempData }));
                     if (await _databaseComponent.Complex(ServerIP, null, editDic, null) == true)
                     {
-                        (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex].T_DivFreInfo.GetTempData();
-                        CardCopyHelper.DivFreInfoLeftCopyToRight(divfreinfo, (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex]);
+                        (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex].T_DivFreInfo.GetTempData();
+                        CardCopyHelper.DivFreInfoLeftCopyToRight(divfreinfo, (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex]);
                         divFreInfoWin.Close();
-                        (SelectedChannel as DivFreIChannel).DivFreInfo[SelectedDivFreInfoIndex].IsEdited = true;
+                        (SelectedChannel as DivFreIChannel).DivFreInfo[selectedDivFreInfoIndex].IsEdited = true;
                     }
                 }
             }

@@ -47,6 +47,7 @@ namespace AIC.Core.UserManageModels
         public MyMenu MenuSOMNetWorks { get; set; }
         public MyMenu MenuDeviceFaultDiagnose { get; set; }
         public MyMenu MenuEditDeviceComponents { get; set; }
+        public MyMenu MenuEditDeviceTemplate { get; set; }
 
         public static Dictionary<int, MyMenu> Dictionary;
 
@@ -89,6 +90,7 @@ namespace AIC.Core.UserManageModels
             MenuSOMNetWorks = new MyMenu(34, (string)Application.Current.Resources["menuSOMNetWorks"], "/AIC.Resources;component/Images/lightbulb.png");
             MenuDeviceFaultDiagnose = new MyMenu(35, (string)Application.Current.Resources["menuDeviceFaultDiagnose"], "/AIC.Resources;component/Images/lightbulb.png");
             MenuEditDeviceComponents = new MyMenu(36, (string)Application.Current.Resources["menuEditDeviceComponents"], "/AIC.Resources;component/Images/lightbulb.png");
+            MenuEditDeviceTemplate = new MyMenu(37, (string)Application.Current.Resources["menuEditDeviceTemplate"], "/AIC.Resources;component/Images/lightbulb.png");
             Dictionary = new Dictionary<int, MyMenu>();
             Dictionary.Add(MenuUserManage.Number, MenuUserManage);
             Dictionary.Add(MenuRoleManage.Number, MenuRoleManage);
@@ -127,6 +129,7 @@ namespace AIC.Core.UserManageModels
             Dictionary.Add(MenuSOMNetWorks.Number, MenuSOMNetWorks);
             Dictionary.Add(MenuDeviceFaultDiagnose.Number, MenuDeviceFaultDiagnose);
             Dictionary.Add(MenuEditDeviceComponents.Number, MenuEditDeviceComponents);
+            Dictionary.Add(MenuEditDeviceTemplate.Number, MenuEditDeviceTemplate);
         }
 
         public static MyMenu GetMenu(string strname)

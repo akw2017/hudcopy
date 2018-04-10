@@ -137,10 +137,16 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.Resources\obj\Debug\Styles\AmberAddition.b
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MaterialDesignThemes.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\XamlAnimatedGif.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Resources\Icons.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Resources\IconsNonShared.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Styles\BlueGrayAddition.baml
@@ -175,6 +181,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\CheckBoxStyle.ba
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\ColorStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\en-us.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\ListBoxStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\ScrollBar.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\zh-cn.baml
@@ -199,5 +206,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.Propertie
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\AIC.Resources.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Debug\Themes\ListBoxStyle.baml

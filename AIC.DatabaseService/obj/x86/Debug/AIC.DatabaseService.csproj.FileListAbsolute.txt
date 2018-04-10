@@ -156,3 +156,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\x86\Debug\AIC.DatabaseS
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\x86\Debug\AIC.DatabaseService.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\x86\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\x86\Debug\Resources\AICMatlabDLL.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\x86\Debug\Wpf.CloseTabControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\x86\Debug\Wpf.CloseTabControl.pdb

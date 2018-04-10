@@ -193,7 +193,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\AIC.MatlabMath
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\AIC.Themes.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Akka.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Arction.DirectX.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Arction.DirectXInit.dll
@@ -258,7 +257,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Wpf.GridSelect
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Xceed.Wpf.Toolkit.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Akka.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\MahApps.Metro.xml
@@ -371,3 +369,11 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\AIC.OnLineData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\AIC.OnLineDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\AIC.OnLineDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\x86\Debug\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\Views\SubViews\DiagnoseView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\x86\Debug\Views\SubViews\DiagnoseView.baml

@@ -60,3 +60,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Release\sv\FluentValidation.r
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\bin\XBAP Release\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Release\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Release\AIC.Core.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Release\Interop.Office.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Core\obj\XBAP Release\AIC.Core.csproj.ResolveComReference.cache

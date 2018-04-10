@@ -47,7 +47,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\System.Rea
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\System.Reactive.Interfaces.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\System.Windows.Interactivity.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\Util.Controls.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\Wpf.WrapBreakPanel.dll
@@ -143,3 +142,16 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\AIC.Histor
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\AIC.HistoryDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\MahApps.Metro.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\XBAP Release\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryDataStatisticsView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryEventListView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryDataStatisticsView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryDataTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryEventAlarmTrendView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryEventListView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\SubViews\DistributionMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryDataTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\HistoryEventAlarmTrendView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\XBAP Release\Views\SubViews\DistributionMapView.baml

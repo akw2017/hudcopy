@@ -416,8 +416,6 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataP
 D:\SupportProject\AIC_HUD\AICHUID\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\AIC.HistoryDataPage.dll.config
@@ -526,6 +524,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\pt\FluentValidati
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\Debug\tr\FluentValidation.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataListView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataStatisticsView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryEventListView.baml
@@ -555,6 +554,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\SubViews\Ti
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\SubViews\DistributionMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\SubViews\TimeDomainDataView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\AIC.HistoryDataPage_MarkupCompile.lref
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Themes\HistoryDataDiagramTemplate.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Debug\Views\HistoryDataDiagramView.baml

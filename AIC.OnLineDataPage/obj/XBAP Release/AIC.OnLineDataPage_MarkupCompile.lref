@@ -6,12 +6,13 @@ FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Themes\OnlineDataTileTempla
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Themes\OnlineDataDiagramTemplate.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\InfoViews\MoreInformation.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\AlarmGradeFilterView.xaml;;
-FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataStatisticsView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataDiagnosisView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataListView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataDiagramView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataOverviewView.xaml;;
+FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataStatisticsView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\OnlineDataTileView.xaml;;
+FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\DiagnoseView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\OrderAnalysisChartView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\NyquistChartView.xaml;;
 FD:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\Views\SubViews\BodeChartView.xaml;;

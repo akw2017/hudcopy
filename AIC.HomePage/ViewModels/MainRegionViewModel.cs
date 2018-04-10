@@ -790,7 +790,7 @@ namespace AIC.HomePage.ViewModels
             LoginVisibility = Visibility.Visible;
         }
 
-        private void Logout()
+        private async void Logout()
         {
 #if XBAP
             MessageBoxResult result = MessageBox.Show((string)Application.Current.Resources["strLogoutSystem"], (string)Application.Current.Resources["strLogout"], MessageBoxButton.OKCancel, MessageBoxImage.Question);
@@ -799,15 +799,15 @@ namespace AIC.HomePage.ViewModels
 #endif
             if (result == MessageBoxResult.OK)
             {
-                _regionManager.RequestNavigate(RegionNames.MainBodyRegion, loginView);
-
-                _loginUserService.SetUserLogout();
-
+                Status = ViewModelStatus.Querying;
+                WaitInfo = "注销数据中";        
+                await _loginUserService.SetUserLogout();
                 LoginUser = null;
-
                 _loginUserService.CloseTabs();
-
                 LoginVisibility = Visibility.Collapsed;
+                _regionManager.RequestNavigate(RegionNames.MainBodyRegion, loginView);                
+                Status = ViewModelStatus.None;
+                return;
             }
         }
 
@@ -1003,6 +1003,14 @@ namespace AIC.HomePage.ViewModels
             else if (viewName == "MenuDeviceFaultDiagnose")
             {
                 _loginUserService.GotoTab<DeviceFaultDiagnoseView>(viewName);
+            }
+            else if (viewName == "MenuEditDeviceComponents")
+            {
+                _loginUserService.GotoTab<EditDeviceComponentsView>(viewName);
+            }
+            else if (viewName == "MenuEditDeviceTemplate")
+            {
+                _loginUserService.GotoTab<EditDeviceTemplateView>(viewName);
             }
             else if (viewName == "MenuRefreshData")
             {

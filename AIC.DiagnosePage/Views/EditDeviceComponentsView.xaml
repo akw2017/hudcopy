@@ -8,11 +8,14 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:timeTool= "clr-namespace:Loya.Dameer;assembly=Loya.Dameer"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              prism:ViewModelLocator.AutoWireViewModel="True"      
              xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"    
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
+             xmlns:coreType="clr-namespace:AIC.CoreType;assembly=AIC.CoreType"
              xmlns:view="clr-namespace:AIC.DiagnosePage.Views"
-            xmlns:model="clr-namespace:AIC.DiagnosePage.Models"
+             xmlns:model="clr-namespace:AIC.Core.DiagnosticBaseModels;assembly=AIC.Core"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
@@ -23,21 +26,31 @@
                 <ResourceDictionary Source="/AIC.DiagnosePage;component/Themes/DeviceFaultDiagnoseTemplate.xaml" />
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ListBoxStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <core:IntVisibilityConverter x:Key="intVisibilityConverter"/>
             <core:EqualBindingConverter x:Key="equalBindingConverter"/>
+            <core:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <core:EnumDescriptionConverter x:Key="enumDescriptionConverter"/>
+            <core:EnumToVisibilityConverter x:Key="enumToVisibilityConverter" Reverse="False"/>
+            <DataTemplate x:Key="enumComboItemTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="2, 0" Text="{Binding Path=., Converter={StaticResource ResourceKey=enumDescriptionConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+            <Style x:Key="enumCombobox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=enumComboItemTemplate}"/>
+            </Style>           
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <TreeView Name="treeview" Grid.RowSpan="2"                       
+        <TreeView Name="treeview"                      
                         ItemsSource="{Binding OrganizationTreeItems}" 
                         Style="{DynamicResource VirtualisedMetroTreeView}" >
             <TreeView.Resources>
@@ -112,295 +125,373 @@
                 <i:EventTrigger EventName="SelectedItemChanged">
                     <i:InvokeCommandAction Command="{Binding SelectedTreeChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
                 </i:EventTrigger>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding DoubleClickAddDataCommand}"  CommandParameter="{Binding SelectedItem, ElementName=treeview}"/>
-                </i:EventTrigger>
             </i:Interaction.Triggers>
 
         </TreeView>
 
-        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
+        <GridSplitter x:Name="gsSplitterr" Grid.Row="0" Grid.Column="1" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Style="{StaticResource GridSplitterStyleExpend}"/>
 
-        <Border Grid.Row="0" Grid.Column="2" Padding="5" Background="{DynamicResource AccentColorBrush2}">
-            <Grid>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="设备" VerticalAlignment="Center"/>
-                    <TextBox DataContext="{Binding SelectedTreeItem}" Text="{Binding Path=Name}" Margin="4,0,0,0" Style="{DynamicResource MetroTextBox}" Width="200" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                    <Button Command="{Binding StartDiagnosisCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="4,0,0,0" >
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Stretch="None" Source="/AIC.Resources;component/Images/flag_green.png"  />
-                                <TextBlock Text="{DynamicResource strStart}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
-
-        <Grid Grid.Row="1" Grid.Column="2" DataContext="{Binding SelectedDeviceDiagnosisModel}">
+        <Grid Grid.Column="2" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="24" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Image Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Source="/AIC.Resources;component/Images/Device.png">
-                <Image.ToolTip>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="2">  
-                    <Run>诊断方式:</Run>
-                    <Run Text="{Binding DiagnosisMethod,Converter={StaticResource enumDescriptionConverter}}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">  
-                    <Run>故障概率:</Run>
-                    <Run Text="{Binding IsFaultprobability}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>总分频门槛值:</Run>
-                    <Run Text="{Binding HeadDivFreThreshold}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>频谱峰值筛选间隔(△f):</Run>
-                    <Run Text="{Binding FrePeakFilterInterval}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>频率诊断设置间隔(△f):</Run>
-                    <Run Text="{Binding FreDiagnosisSetupInterval}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>峭度指标:</Run>
-                    <Run Text="{Binding KurtosisIndexThreshold}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>脉冲指标:</Run>
-                    <Run Text="{Binding PulseIndexThreshold}"/>
-                        </TextBlock>
-                        <TextBlock Margin="2">
-                    <Run>峰值指标:</Run>
-                    <Run Text="{Binding PeakIndexThreshold}"/>
-                        </TextBlock>
-                    </StackPanel>
-                </Image.ToolTip>
-            </Image>
-            <StackPanel x:Name="controlpanel" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden">
-                <Button Command="{Binding DataContext.AddShaftCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
-                            CommandParameter="{Binding}"
-                            Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="添加轴" Background="{DynamicResource AccentColorBrush}" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <Button.Content>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+                            <TextBlock Text="设备诊断模型" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding DataContext.DeleteShaftCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
-                            CommandParameter="{Binding}"
-                            Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="删除轴" Background="{DynamicResource AccentColorBrush}" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Path Width="12" Height="2.4" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}"  Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Command="{Binding ClearDeviceCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="清除并重置" Height="30">
+                                <Button.Content>
+                                    <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+                                </Button.Content>
+                            </Button>
+                            <Button Command="{Binding SaveDeviceCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="保存并上传" Height="30">
+                                <Button.Content>
+                                    <Path Width="12" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 34,57L 42,57L 42,32.25L 52,42.25L 52,31.75L 38,17.75L 24,31.75L 24,42.25L 34,32.25L 34,57 Z "/>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-            <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Shafts}" SelectedItem="{Binding SelectedShaft}" ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}"  HorizontalContentAlignment="Stretch" >
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" Margin="2">
-                                <TextBlock x:Name="title" VerticalAlignment="Center">
-                                    <Run Text="{Binding Name}"/>
-                                    <Run>(</Run>
-                                    <Run Text="{Binding Component.Name}"/>
-                                    <Run>)</Run>
-                                </TextBlock>
-                                <ListBox ItemsSource="{Binding Component.MachComponents}" SelectedItem="{Binding Component.SelectedComponent}" ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}" HorizontalContentAlignment="Stretch">
-                                    <ListBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ListBox.ItemsPanel>
-                                    <ListBox.Resources>
-                                        <DataTemplate DataType="{x:Type model:BearingComponent}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Width="32" Height="32" Source="/AIC.Resources;component/Images/Bearing.png"/>
-                                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                <StackPanel.ToolTip>
-                                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <TextBlock>
-                                                            <Run>型号:</Run>
-                                                            <Run Text="{Binding Component.Designation}"/>
-                                                            <Run>内圈频率:</Run>
-                                                            <Run Text="{Binding Component.InnerRingFrequency}"/>
-                                                            <LineBreak/>
-                                                            <Run>外圈频率:</Run>
-                                                            <Run Text="{Binding Component.OuterRingFrequency}"/>
-                                                            <LineBreak/>
-                                                            <Run>滚动体频率:</Run>
-                                                            <Run Text="{Binding Component.RollerFrequency}"/>
-                                                            <LineBreak/>
-                                                            <Run>保持架频率:</Run>
-                                                            <Run Text="{Binding Component.MaintainsFrequency}"/>
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </StackPanel.ToolTip>
+                    </Grid>
+                </GroupBox.Header>
+                <Grid Height="180">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="设备" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="设备模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" />
+                    <ComboBox Grid.Row="0" Grid.Column="3" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                    <TextBlock Text="设备模型" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="诊断方式" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
+                    <ComboBox Grid.Row="2" Grid.Column="1" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.DiagnosisMethod}" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:DiagnosisMethod}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                    <TextBlock Text="峭度指标" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" />
+                    <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.KurtosisIndexThreshold}" />
+                    <TextBlock Text="脉冲指标" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" />
+                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.PulseIndexThreshold}"/>
+                    <TextBlock Text="峰值指标" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center"/>
+                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.PeakIndexThreshold}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="故障概率" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.IsFaultprobability}" ToolTip="是否显示故障概率"/>
+                    <TextBlock Text="总分频门槛值:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" />
+                    <xctk:DoubleUpDown Grid.Row="4" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.HeadDivFreThreshold}" />
+                    <TextBlock Text="频谱峰值筛选间隔(△f)" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
+                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.FrePeakFilterInterval}"/>
+                    <TextBlock Text="频率诊断设置间隔(△f)" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" />
+                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.FreDiagnosisSetupInterval}"/>
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="未分配测点">
+                    <ListBox ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems}"  HorizontalContentAlignment="Stretch" AllowDrop="True" MinHeight="30">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Stretch="Fill" Source="/AIC.Resources;component/Images/stop.png" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="title" HorizontalAlignment="Center" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <command:ExInvokeCommandAction Command="{Binding MouseDownComamnd}"  CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseMove">
+                                <command:ExInvokeCommandAction Command="{Binding MouseMoveComamnd}"  CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragEnter">
+                                <command:ExInvokeCommandAction Command="{Binding DragEnterCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragOver">
+                                <command:ExInvokeCommandAction Command="{Binding DragOverCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragLeave">
+                                <command:ExInvokeCommandAction Command="{Binding DragLeaveCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Drop">
+                                <command:ExInvokeCommandAction Command="{Binding DropCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Grid.Column="0" Header="轴模型">
+                    <ListBox x:Name="mylist" ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts}" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft}" HorizontalContentAlignment="Stretch" AllowDrop="True">
+                        <!--ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}"-->
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border x:Name="border" BorderThickness="0" BorderBrush="{DynamicResource AccentColorBrush}" CornerRadius="2" Margin="0">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" Margin="2">
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock x:Name="title" FontSize="20" HorizontalAlignment="Center">
+                                        <Run Text="{Binding Name}"/>
+                                        <Run>(</Run>
+                                        <Run Text="{Binding Component.Name}"/>
+                                        <Run>)</Run>
+                                                </TextBlock>
+                                                <Image Width="200" Height="100" Source="/AIC.Resources;component/Images/shaft.png"/>
                                             </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type model:GearComponent}">
-                                            <StackPanel Orientation="Horizontal" >
-                                                <Image Width="32" Height="32" Source="/AIC.Resources;component/Images/Gear.png"/>
-                                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                <StackPanel.ToolTip>
-                                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <TextBlock VerticalAlignment="Center">
-                                                            <Run>齿数:</Run>
-                                                            <Run Text="{Binding Component.TeethNumber}"/>
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </StackPanel.ToolTip>
-                                            </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type model:BeltComponent}">
-                                            <StackPanel Orientation="Horizontal" >
-                                                <Image Width="32" Height="32" Source="/AIC.Resources;component/Images/Belt.png"/>
-                                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                <StackPanel.ToolTip>
-                                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <TextBlock>
-                                                            <Run>皮带轮直径:</Run>
-                                                            <Run Text="{Binding Component.PulleyDiameter}"/>
-                                                            <Run>皮带长度:</Run>
-                                                            <Run Text="{Binding Component.BeltLength}"/>
-                                                            <Run>转频:</Run> 
-                                                            <Run Text="{Binding Component.Frequency, Mode=OneWay}"/>
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </StackPanel.ToolTip>
-                                            </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type model:ImpellerComponent}">
-                                            <StackPanel Orientation="Horizontal" >
-                                                <Image Width="32" Height="32" Source="/AIC.Resources;component/Images/Impeller.png"/>
-                                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                <StackPanel.ToolTip>
-                                                    <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <TextBlock>             
-                                                            <Run>叶片数:</Run>
-                                                            <Run Text="{Binding Component.NumberOfBlades}"/>
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </StackPanel.ToolTip>
-                                            </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type model:MotorComponent}">
-                                            <StackPanel Orientation="Horizontal" Background="Transparent">
-                                                <Image Width="32" Height="32" Source="/AIC.Resources;component/Images/Motor.png"/>
-                                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                <StackPanel.ToolTip>
-                                                    <StackPanel>
+                                            <ListBox ItemsSource="{Binding Component.MachComponents}" SelectedItem="{Binding Component.SelectedComponent}" AllowDrop="True" HorizontalContentAlignment="Stretch">
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                                <ListBox.Resources>
+                                                    <DataTemplate DataType="{x:Type model:BearingComponent}">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="电网工频:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.LineFrequency}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="磁极数:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.Poles}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="转子条数:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.RotorBars}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="定子线圈数:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.StatorCoils}" VerticalAlignment="Center"/>
+                                                            <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Bearing.png"/>
+                                                            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="20" Margin="5,0" VerticalAlignment="Center"/>
+                                                            <TextBlock VerticalAlignment="Center">
+                                        <Run>型号:</Run>
+                                        <Run Text="{Binding Component.Designation}"/>
+                                                            </TextBlock>
+                                                            <StackPanel.ToolTip>
+                                                                <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                                    <TextBlock>                                                           
+                                                <Run>内圈频率:</Run>
+                                                <Run Text="{Binding Component.InnerRingFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>外圈频率:</Run>
+                                                <Run Text="{Binding Component.OuterRingFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>滚动体频率:</Run>
+                                                <Run Text="{Binding Component.RollerFrequency}"/>
+                                                <LineBreak/>
+                                                <Run>保持架频率:</Run>
+                                                <Run Text="{Binding Component.MaintainsFrequency}"/>
+                                                                    </TextBlock>
+                                                                </ToolTip>
+                                                            </StackPanel.ToolTip>
                                                         </StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="绕组槽数:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.WindingSlots}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="可控硅整流器数:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.SCRs}" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="交流电机:" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Component.IsAC}" VerticalAlignment="Center"/>
+                                                        <!--<DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>-->
+                                                    </DataTemplate>
+
+                                                    <DataTemplate DataType="{x:Type model:GearComponent}">
+                                                        <StackPanel Orientation="Horizontal" >
+                                                            <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Gear.png"/>
+                                                            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="20" Margin="5,0" VerticalAlignment="Center"/>
+                                                            <TextBlock VerticalAlignment="Center">
+                                        <Run>齿数:</Run>
+                                        <Run Text="{Binding Component.TeethNumber}"/>
+                                                            </TextBlock>
                                                         </StackPanel>
-                                                    </StackPanel>
-                                                </StackPanel.ToolTip>
-                                            </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-                                    </ListBox.Resources>
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDoubleClick">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.EditComponentCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ListBox>
-                            </StackPanel>
-                            <StackPanel x:Name="controlpanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="Hidden">
-                                <Button Command="{Binding DataContext.AddComponentCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" 
-                                            CommandParameter="{Binding}"
-                                            Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="添加轴" Background="{DynamicResource AccentColorBrush}" BorderBrush="{DynamicResource AccentColorBrush}">
-                                    <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+                                                        <!--<DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>-->
+                                                    </DataTemplate>
+
+                                                    <DataTemplate DataType="{x:Type model:BeltComponent}">
+                                                        <StackPanel Orientation="Horizontal" >
+                                                            <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Belt.png"/>
+                                                            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="20" Margin="5,0" VerticalAlignment="Center"/>
+                                                            <TextBlock VerticalAlignment="Center">
+                                        <Run>皮带轮直径:</Run>
+                                        <Run Text="{Binding Component.PulleyDiameter}"/>
+                                        <Run>皮带长度:</Run>
+                                        <Run Text="{Binding Component.BeltLength}"/>
+                                                            </TextBlock>
+                                                            <StackPanel.ToolTip>
+                                                                <ToolTip HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                                    <TextBlock>                                 
+                                                <Run>转频:</Run> 
+                                                <Run Text="{Binding Component.Frequency, Mode=OneWay}"/>
+                                                                    </TextBlock>
+                                                                </ToolTip>
+                                                            </StackPanel.ToolTip>
+                                                        </StackPanel>
+                                                        <!--<DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>-->
+                                                    </DataTemplate>
+
+                                                    <DataTemplate DataType="{x:Type model:ImpellerComponent}">
+                                                        <StackPanel Orientation="Horizontal" >
+                                                            <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Impeller.png"/>
+                                                            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="20" Margin="5,0" VerticalAlignment="Center"/>
+                                                            <TextBlock VerticalAlignment="Center">             
+                                        <Run>叶片数:</Run>
+                                        <Run Text="{Binding Component.NumberOfBlades}"/>
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                        <!--<DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>-->
+                                                    </DataTemplate>
+
+                                                    <DataTemplate DataType="{x:Type model:MotorComponent}">
+                                                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                                                            <Image Width="60" Height="60" Source="/AIC.Resources;component/Images/Motor.png"/>
+                                                            <TextBlock x:Name="title" Text="{Binding Name}" FontSize="20" Margin="5,0" VerticalAlignment="Center"/>
+                                                            <StackPanel VerticalAlignment="Center" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="电网工频:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.LineFrequency}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="磁极数:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.Poles}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="转子条数:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.RotorBars}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="定子线圈数:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.StatorCoils}" VerticalAlignment="Center"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="绕组槽数:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.WindingSlots}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="可控硅整流器数:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.SCRs}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="交流电机:" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Component.IsAC}" VerticalAlignment="Center"/>
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <!--<DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>-->
+                                                    </DataTemplate>
+                                                </ListBox.Resources>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectionChanged">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.ComponentSelectionChangedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.EditComponentCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.MouseDownComamnd}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseMove">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.MouseMoveComamnd}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="DragEnter">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.DragEnterCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="DragOver">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.DragOverCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="DragLeave">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.DragLeaveCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="Drop">
+                                                        <command:ExInvokeCommandAction Command="{Binding DataContext.DropCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </ListBox>
+                                            <ListBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding Component.AllotItems}" SelectedItem="{Binding Component.SelectedItem}"  HorizontalContentAlignment="Stretch" AllowDrop="True">
+                                                <!--ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}"-->
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Width="16" Height="16" Stretch="Fill" Source="/AIC.Resources;component/Images/stop.png" VerticalAlignment="Center"/>
+                                                                <TextBlock x:Name="title" HorizontalAlignment="Center" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
                                         </StackPanel>
-                                    </Button.Content>
-                                </Button>
-                                <Button Command="{Binding DataContext.DeleteComponentCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
-                                            CommandParameter="{Binding}"
-                                            Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="删除轴" Background="{DynamicResource AccentColorBrush}" BorderBrush="{DynamicResource AccentColorBrush}">
-                                    <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Width="12" Height="2.4" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}"  Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
-                                        </StackPanel>
-                                    </Button.Content>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
-                                <Setter TargetName="controlpanel" Property="Visibility" Value="Visible"/>
-                                <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding DataContext.EditShaftCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ListBox>
+                                    </Grid>
+                                </Border>
+                                <!--<DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="title" Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                    <Setter TargetName="border" Property="BorderThickness" Value="3"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>-->
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding EditShaftCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ShaftSelectionChangedCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <command:ExInvokeCommandAction Command="{Binding MouseDownComamnd}"  CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseMove">
+                                <command:ExInvokeCommandAction Command="{Binding MouseMoveComamnd}"  CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragEnter">
+                                <command:ExInvokeCommandAction Command="{Binding DragEnterCommand}" CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragOver">
+                                <command:ExInvokeCommandAction Command="{Binding DragOverCommand}" CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragLeave">
+                                <command:ExInvokeCommandAction Command="{Binding DragLeaveCommand}" CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Drop">
+                                <command:ExInvokeCommandAction Command="{Binding DropCommand}" CommandParameter="{Binding SelectedItem, ElementName=mylist}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </GroupBox>
+            </Grid>
         </Grid>
+
+        <GridSplitter Grid.Row="0" Grid.Column="3" Width="3" Background="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <Grid Grid.Column="4" Margin="3">
+            <Border>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ContentControl prism:RegionManager.RegionName="EditComponentRegion" VerticalAlignment="Top"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
     </Grid>
 </core:DisposableUserControl>

@@ -65,3 +65,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Views\PopupWindow.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\BottomAsyncWorkStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\XBAP Debug\Themes\ListBoxStyle.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\XBAP Debug\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\XBAP Debug\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\XBAP Debug\MaterialDesignThemes.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\XBAP Debug\MaterialDesignThemes.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\XBAP Debug\MaterialDesignThemes.Wpf.xml

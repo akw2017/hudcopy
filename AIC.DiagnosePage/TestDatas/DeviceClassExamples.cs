@@ -1,4 +1,5 @@
-﻿using AIC.DiagnosePage.Models;
+﻿using AIC.Core.DiagnosticBaseModels;
+using AIC.CoreType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace AIC.DiagnosePage.TestDatas
 {
-    public class DeviceClassExamples
+    public static class DeviceClassExamples
     {
-        public DeviceDiagnosisModel DeviceClass1 { get; set; }
-        public DeviceDiagnosisModel DeviceClass2 { get; set; }
-        public DeviceClassExamples()
+        public static DeviceDiagnosisClass DeviceClass1 { get; set; }
+        public static DeviceDiagnosisClass DeviceClass2 { get; set; }
+
+        public static List<DeviceDiagnosisClass> DeviceDiagnosisClassLib { get; set; } = new List<DeviceDiagnosisClass>();
+
+        static DeviceClassExamples()
         {
-            this.DeviceClass1 = new Models.DeviceDiagnosisModel()
+            DeviceClass1 = new DeviceDiagnosisClass()
             {
                 DeviceID = Guid.NewGuid(),
                 DiagnosisMethod = DiagnosisMethod.FrequencyPeakValue,
@@ -29,28 +33,28 @@ namespace AIC.DiagnosePage.TestDatas
                 PulseIndexThreshold = 1,
                 Shafts = new System.Collections.ObjectModel.ObservableCollection<ShaftComponent>(),                
             };
-            this.DeviceClass1.Shafts.Add(
-                new Models.ShaftComponent()
+            DeviceClass1.AddChild(
+                new ShaftComponent()
                 {
-                    Component = new ShaftClassExamples().GetShaftClass1(this.DeviceClass1),
+                    Component = ShaftClassExamples.ShaftClass1,
                     ID = Guid.NewGuid(),
                     Name = "前轴",
                 });
-            this.DeviceClass1.Shafts.Add(
-                new Models.ShaftComponent()
+            DeviceClass1.AddChild(
+                new ShaftComponent()
                 {
-                    Component = new ShaftClassExamples().GetShaftClass2(this.DeviceClass1),
+                    Component = ShaftClassExamples.ShaftClass2,
                     ID = Guid.NewGuid(),
                     Name = "后轴",
                 });
-             this.DeviceClass1.Shafts.Add(
-                 new Models.ShaftComponent()
+             DeviceClass1.AddChild(
+                 new ShaftComponent()
                  {
-                     Component = new ShaftClassExamples().GetShaftClass2(this.DeviceClass1),
+                     Component = ShaftClassExamples.ShaftClass2,
                      ID = Guid.NewGuid(),
                      Name = "电机轴",
                  });
-            this.DeviceClass2 = new Models.DeviceDiagnosisModel()
+            DeviceClass2 = new DeviceDiagnosisClass()
             {
                 DeviceID = Guid.NewGuid(),
                 DiagnosisMethod = DiagnosisMethod.Energy,
@@ -67,23 +71,15 @@ namespace AIC.DiagnosePage.TestDatas
                 Shafts = new System.Collections.ObjectModel.ObservableCollection<ShaftComponent>()
                 
             };
-            this.DeviceClass2.Shafts.Add(
-                new Models.ShaftComponent()
+            DeviceClass2.AddChild(
+                new ShaftComponent()
                 {
-                    Component = new ShaftClassExamples().GetShaftClass1(this.DeviceClass2),
+                    Component = ShaftClassExamples.ShaftClass1,
                     ID = Guid.NewGuid(),
                     Name = "前轴",
                 });
-        }
-
-        public DeviceDiagnosisModel GetDeviceClass1(Object obj)
-        {
-            return DeviceClass1;
-        }
-
-        public DeviceDiagnosisModel GetDeviceClass2(Object obj)
-        {
-            return DeviceClass2;
+            DeviceDiagnosisClassLib.Add(DeviceClass1);
+            DeviceDiagnosisClassLib.Add(DeviceClass2);
         }
     }
 }

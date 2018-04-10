@@ -238,7 +238,7 @@
                     <DataGrid.CellStyle>
                         <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-                            <Setter Property="Margin" Value="0,0,5,0"/>
+                            <Setter Property="Padding" Value="0,0,5,0"/>
                         </Style>
                     </DataGrid.CellStyle>
                     <DataGrid.RowStyle>
@@ -314,7 +314,7 @@
                 <DataGrid.CellStyle>
                     <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-                        <Setter Property="Margin" Value="0,0,5,0"/>
+                        <Setter Property="Padding" Value="0,0,5,0"/>
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
                     </Style>
                 </DataGrid.CellStyle>
@@ -334,10 +334,10 @@
         </Border>
         <GroupBox Grid.Row="2" Grid.Column="2" Header="诊断结构">
             <Grid>
-                <ListBox x:Name="list" ItemsSource="{Binding DeviceDiagnosisModel}" SelectedItem="{Binding SelectedDeviceDiagnosisModel}" Grid.Column="6" Grid.Row="1" AllowDrop="{Binding AllowDropList}" ItemTemplate="{StaticResource DeviceDataTemplate}" ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}" SelectionMode="Single">
+                <ListBox x:Name="list" ItemsSource="{Binding DeviceTreeItems}" Grid.Column="6" Grid.Row="1" ItemTemplate="{StaticResource DeviceDataTemplate}" SelectionMode="Single">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
-                            <i:InvokeCommandAction Command="{Binding DeviceEditCommand}" CommandParameter="{Binding SelectedItem, ElementName=list}"/>
+                            <i:InvokeCommandAction Command="{Binding EditDeviceCommand}" CommandParameter="{Binding SelectedItem, ElementName=list}"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding DeviceChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=list}"/>
@@ -352,7 +352,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-             
+
             </Grid>
         </GroupBox>
     </Grid>

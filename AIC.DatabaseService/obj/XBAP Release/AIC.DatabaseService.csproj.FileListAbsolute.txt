@@ -78,3 +78,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\sv\FluentV
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\tr\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\XBAP Release\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\obj\XBAP Release\AIC.DatabaseService.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\AIC.Resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\Wpf.CloseTabControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.DatabaseService\bin\XBAP Release\Wpf.CloseTabControl.pdb

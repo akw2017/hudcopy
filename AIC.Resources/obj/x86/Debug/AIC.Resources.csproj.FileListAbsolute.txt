@@ -92,3 +92,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\AIC.Resources.Prope
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\AIC.Resources.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\x86\Debug\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\x86\Debug\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\x86\Debug\MaterialDesignThemes.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\x86\Debug\MaterialDesignThemes.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\x86\Debug\MaterialDesignThemes.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\Themes\ListBoxStyle.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\x86\Debug\Themes\BottomAsyncWorkStyle.baml

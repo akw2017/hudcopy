@@ -143,3 +143,12 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\AIC.HomePage.Prop
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\AIC.HomePage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\AIC.HomePage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\AlarmAckListWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\AlarmAckWin.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\AlarmAckListWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\HistoryQuickPlayWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\PwdEditWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\TestWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\TabView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\HomeMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HomePage\obj\XBAP Release\Views\AlarmAckWin.g.cs

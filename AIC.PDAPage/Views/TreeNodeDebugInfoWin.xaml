@@ -26,7 +26,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}"></TextBlock>
+                            <TextBox Text="{Binding .}" IsReadOnly="True"></TextBox>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

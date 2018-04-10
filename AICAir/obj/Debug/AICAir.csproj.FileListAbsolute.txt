@@ -2920,6 +2920,7 @@ D:\SupportProject\AIC_HUD\AICHUDold\AICAir\obj\Debug\AICAir.csproj.GenerateResou
 D:\SupportProject\AIC_HUD\AICHUDold\AICAir\obj\Debug\AICAir.TrustInfo.xml
 D:\SupportProject\AIC_HUD\AICHUDold\AICAir\obj\Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUDold\AICAir\obj\Debug\AICAir.application
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe.config
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\Views\Shell.baml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\Views\ShellPage.baml
@@ -2931,6 +2932,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\MyApp.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir_Content.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir_MarkupCompile.cache
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\诊断报告模板.docx
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Gif\Null.gif
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Gif\刮板.gif
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Gif\压缩机.gif
@@ -5466,13 +5468,13 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tools\Heatmap_min
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tools\MarkerClusterer_min.js
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tools\RectangleZoom_min.js
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Htmls\tools\TextIconOverlay_min.js
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Configuration\config.ini
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\Danger.wav
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\msg.wav
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\SFDAlgorithm.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\Waring.wav
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe.config
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MyData\Configuration\config.ini
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.exe
@@ -5480,6 +5482,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AICAir.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.Core.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DatabaseService.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DeviceDataPage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.HomePage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.LocalConfiguration.dll
@@ -5502,6 +5505,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\log4net.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Loya.Dameer.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MahApps.Metro.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MaterialDesignThemes.MahApps.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MaterialDesignThemes.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Microsoft.Expression.Interactions.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Microsoft.Practices.ServiceLocation.dll
@@ -5517,6 +5521,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.GridSelected.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\WpfAnimatedGif.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\XamlAnimatedGif.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Xceed.Wpf.Toolkit.dll
@@ -5526,6 +5531,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.M9600.Common.SlaveDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.CoreType.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.CloseTabControl.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\OpenXmlPowerTools.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\MathNet.Numerics.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Nito.AsyncEx.dll
@@ -5543,6 +5549,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Arction.RenderingEngine11.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Arction.RenderingEngine9.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\CitizenSoftwareLib.Network.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.M9600.Common.PetaPoco.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\DocumentFormat.OpenXml.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\System.Reactive.Interfaces.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Nito.AsyncEx.Enlightenment.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Arction.DirectXInit.dll
@@ -5552,6 +5559,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Crc32C.NET.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DatabaseService.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DeviceDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.HistoryDataPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.MatlabMath.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.NetWorksPage.pdb
@@ -5575,6 +5583,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.LocalConfiguration.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.ServiceInterface.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Xceed.Wpf.Toolkit.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\LiveCharts.pdb
@@ -5659,11 +5668,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.exe.manifest
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.application
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.exe
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\obj\Debug\AICAir.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Wpf.ZoomableCanvas.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\SFDAlgorithm.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\Resources\诊断报告模板.docx
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\OpenXmlPowerTools.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\DocumentFormat.OpenXml.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.dll
-D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Debug\AIC.DiagnosePage.pdb

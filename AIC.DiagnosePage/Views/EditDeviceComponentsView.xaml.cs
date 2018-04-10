@@ -1,7 +1,9 @@
 ﻿using AIC.Core;
 using AIC.Core.ControlModels;
+using AIC.Core.DiagnosticBaseModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.OrganizationModels;
 using AIC.Core.UserManageModels;
 using AIC.DiagnosePage.ViewModels;
 using Prism.Events;
@@ -43,11 +45,20 @@ namespace AIC.DiagnosePage.Views
         }
         public CloseableHeader Closer { get; private set; }
 
-        private DeviceFaultDiagnoseViewModel ViewModel
+        private EditDeviceComponentsViewModel ViewModel
         {
-            get { return DataContext as DeviceFaultDiagnoseViewModel; }
-            set { this.DataContext = value; }
+            get { return DataContext as EditDeviceComponentsViewModel; }
+            set { DataContext = value; }
         }
+
+        public void GotoDevice(DeviceTreeItemViewModel device)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.Init(device);
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {

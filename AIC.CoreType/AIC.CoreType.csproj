@@ -112,12 +112,13 @@
     <Compile Include="CustomSystem\CustomSystemDegree.cs" />
     <Compile Include="CustomSystem\CustomSystemType.cs" />
     <Compile Include="DiagnoseState.cs" />
-    <Compile Include="DiagnosisMethod.cs" />
+    <Compile Include="Diagnostic\DeviceComponentType.cs" />
+    <Compile Include="Diagnostic\DiagnosisMethod.cs" />
+    <Compile Include="Diagnostic\MotorType.cs" />
     <Compile Include="FilterType.cs" />
     <Compile Include="Execl\EditOperateType.cs" />
     <Compile Include="InSignalCategory.cs" />
     <Compile Include="Integration.cs" />
-    <Compile Include="MotorType.cs" />
     <Compile Include="NaturalFreMode.cs" />
     <Compile Include="Signal\SignalPreProccessType.cs" />
     <Compile Include="Unit\UnitType.cs" />

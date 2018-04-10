@@ -24,6 +24,7 @@ using AIC.DatabaseService;
 using AIC.DatabaseService.Models;
 using AIC.UserPage;
 using AIC.SignalProcess;
+using AIC.DiagnosePage;
 
 namespace AICAir
 {
@@ -138,6 +139,7 @@ namespace AICAir
             catalog.AddModule(typeof(HomePageModule));
             catalog.AddModule(typeof(UserPageModule));
             catalog.AddModule(typeof(SignalProcessModule));
+            catalog.AddModule(typeof(DiagnosePageModule));
         }
 
         //protected override ILoggerFacade CreateLogger()

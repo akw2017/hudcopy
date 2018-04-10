@@ -10,11 +10,11 @@ none
 false
 TRACE;XBAP
 
-15-1133705109
+19829463610
 
-31-35372214
-1012108631123
-Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAlarmWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\HomeView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\MapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;
+36-2111894025
+108-1135835869
+Views\AlarmAckListWin.xaml;Views\HistoryQuickPlayWin.xaml;Views\PwdEditWin.xaml;Views\TestWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\TabView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\HomeMapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
 
-False
+True
 

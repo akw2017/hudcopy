@@ -35,6 +35,63 @@ namespace AIC.Core.LMModels
         //public string ServerIP { get; set; }//服务器IP
         //public int ItemType { get; set; }//测点类型
         //public string SlaveIdentifier { get; set; }//发送卡ID
+        public bool IsVibration
+        {
+            get
+            {
+                switch (this.ItemType)
+                {
+                    case (int)ChannelType.IEPEChannelInfo:
+                        {
+                            return true;
+                        }
+                    case (int)ChannelType.EddyCurrentDisplacementChannelInfo:
+                        {
+                            return true;
+                        }
+                    case (int)ChannelType.EddyCurrentKeyPhaseChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.DigitTachometerChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.AnalogRransducerInChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.RelayChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.DigitRransducerInChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.DigitRransducerOutChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.AnalogRransducerOutChannelInfo:
+                        {
+                            return false;
+                        }
+                    case (int)ChannelType.WirelessVibrationChannelInfo:
+                        {
+                            return true;
+                        }
+                    case (int)ChannelType.WirelessScalarChannelInfo:
+                        {
+                            return false;
+                        }
+                    default:
+                        {
+                            return false;
+                        }
+                }
+            }
+        }
 
         public void BindTemp(ChannelTreeItemViewModel channel, string ip, string identifier, string serverIP)
         {

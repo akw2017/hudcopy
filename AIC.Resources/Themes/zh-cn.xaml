@@ -86,6 +86,7 @@
     <s:String x:Key="menuDeviceHourlyData">设备整点数据</s:String>
     <s:String x:Key="menuDeviceFaultDiagnose">设备故障诊断</s:String>
     <s:String x:Key="menuEditDeviceComponents">设备组件编辑</s:String>
+    <s:String x:Key="menuEditDeviceTemplate">设备模板编辑</s:String>
 
     <s:String x:Key="menuDBManage">数据库管理</s:String>
     <s:String x:Key="menuExportDBData">数据库导出</s:String>
@@ -97,7 +98,7 @@
     <s:String x:Key="menuDeviceQucikData">设备数据快览</s:String>
     <s:String x:Key="menuItemQucikData">测点数据快览</s:String>
 
-    <s:String x:Key="menuNetWorks">网络诊断</s:String>
+    <s:String x:Key="menuDiagnose">专家诊断</s:String>
     <s:String x:Key="menuBPNetWorks">BP神经网络</s:String>
     <s:String x:Key="menuSOMNetWorks">SOM神经网络</s:String>
     <s:String x:Key="strStartTrain">开始训练</s:String>
@@ -234,4 +235,6 @@
 
     <s:String x:Key="rememberUser">记住用户</s:String>
     <s:String x:Key="rememberPwd">记住密码</s:String>
+
+    <s:String x:Key="templateManage">模板管理</s:String>
 </ResourceDictionary>

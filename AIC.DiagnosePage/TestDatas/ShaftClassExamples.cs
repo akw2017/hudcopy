@@ -1,83 +1,77 @@
-﻿using AIC.DiagnosePage.FilterModels;
-using AIC.DiagnosePage.Models;
+﻿using AIC.Core.DiagnosticBaseModels;
+using AIC.Core.DiagnosticFilterModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AIC.DiagnosePage.TestDatas
 {
-    public class ShaftClassExamples
+    public static class ShaftClassExamples
     {
-        public ShaftClass ShaftClass1 { get; set; }
-        public ShaftClass ShaftClass2 { get; set; }
-
-        public ShaftClassExamples()
-        {       
-            this.ShaftClass1 = new ShaftClass()
+        public static ShaftClass ShaftClass1 { get; set; }
+        public static ShaftClass ShaftClass2 { get; set; }
+        public static List<ShaftClass> ShaftClassLib { get; set; } = new List<ShaftClass>();
+        static ShaftClassExamples()
+        {
+            ShaftClass1 = new ShaftClass()
             {
-                BandPassFilterPara = new BandPassFilterPara(),
+                DgBandPassFilter = new DgBandPassFilter(),
                 BindRPMForFilter = false,
                 DefaultRPM = 6000,
                 DeltaRPM = 100,
-                DivFreThresholdProportiones = new List<Models.DivFreThresholdProportion>(),
+                DivFreThresholdProportiones = new ObservableCollection<DivFreThresholdProportion>(),
                 FilterType = CoreType.FilterType.BandPass,
-                HighPassFilterPara = new FilterModels.HighPassFilterPara(),
+                DgHighPassFilter = new DgHighPassFilter(),
                 ID = 1,
                 IsSlidingBearing = false,
-                LowPassFilterPara = new FilterModels.LowPassFilterPara(),
-                MachComponents = new System.Collections.ObjectModel.ObservableCollection<IMachComponent>()
+                DgLowPassFilter = new DgLowPassFilter(),
+                MachComponents = new ObservableCollection<IMachComponent>()
                 {
-                    new BearingComponent() {Component = new BearClassExamples().BearingClass1, ID = Guid.NewGuid(), Name = "轴承1" },
+                    new BearingComponent() {Component = BearClassExamples.BearingClass1, ID = Guid.NewGuid(), Name = "轴承1" },
                     new GearComponent() {Component = new GearClass() {TeethNumber = 3 }, ID = Guid.NewGuid(), Name = "齿轮1" },
                     new BeltComponent() {Component = new BeltClass() {BeltLength = 15, PulleyDiameter = 3 }, ID = Guid.NewGuid(), Name = "皮带1" },
                     new ImpellerComponent() {Component = new ImpellerClass() { NumberOfBlades = 2 }, ID = Guid.NewGuid(), Name = "叶轮1" },
                 },
                 Name = "轴1",
-                NaturalFres = new List<NaturalFre>()
+                NaturalFres = new ObservableCollection<NaturalFre>()
                 {
                     new NaturalFre() {DivFre = CoreType.DivFreType.Custom, Fault="不平衡", Harm = "危害1", Mode = CoreType.NaturalFreMode.Additive, Proposal = "建议1", Value1 = 0, Value2 = 0 },
                 },
-                NegationDivFreStrategies = new List<NegationDivFreStrategy>(),
+                NegationDivFreStrategies = new ObservableCollection<NegationDivFreStrategy>()
+                {
+                    new NegationDivFreStrategy() {Code = 0, Fault = "测试", RelativeX = 0.1, RelativeY = 0.1, RelativeZ = 0.1 }
+                },
                 RPMCoeff = 1,
                 ShaftID = Guid.NewGuid(),
             };
-            this.ShaftClass2 = new ShaftClass()
+            ShaftClass2 = new ShaftClass()
             {
-                BandPassFilterPara = new BandPassFilterPara(),
+                DgBandPassFilter = new DgBandPassFilter(),
                 BindRPMForFilter = false,
                 DefaultRPM = 6000,
                 DeltaRPM = 100,
-                DivFreThresholdProportiones = new List<Models.DivFreThresholdProportion>(),
+                DivFreThresholdProportiones = new ObservableCollection<DivFreThresholdProportion>(),
                 FilterType = CoreType.FilterType.BandPass,
-                HighPassFilterPara = new FilterModels.HighPassFilterPara(),
+                DgHighPassFilter = new DgHighPassFilter(),
                 ID = 2,
                 IsSlidingBearing = false,
-                LowPassFilterPara = new FilterModels.LowPassFilterPara(),
+                DgLowPassFilter = new DgLowPassFilter(),
                 MachComponents = new System.Collections.ObjectModel.ObservableCollection<IMachComponent>()
                 {
-                    new BearingComponent() {Component = new BearClassExamples().BearingClass2, ID = Guid.NewGuid(), Name = "轴承2" },
+                    new BearingComponent() {Component = BearClassExamples.BearingClass2, ID = Guid.NewGuid(), Name = "轴承2" },
                     new GearComponent() {Component = new GearClass() {TeethNumber = 23 }, ID = Guid.NewGuid(), Name = "齿轮2" },
                 },
                 Name = "轴2",
-                NaturalFres = new List<NaturalFre>(),
-                NegationDivFreStrategies = new List<NegationDivFreStrategy>(),
+                NaturalFres = new ObservableCollection<NaturalFre>(),
+                NegationDivFreStrategies = new ObservableCollection<NegationDivFreStrategy>(),
                 RPMCoeff = 1,
                 ShaftID = Guid.NewGuid(),
             };
-        }
-
-        public ShaftClass GetShaftClass1(DeviceDiagnosisModel device)
-        {
-            ShaftClass1.Parent = device;
-            return ShaftClass1;
-        }
-
-        public ShaftClass GetShaftClass2(DeviceDiagnosisModel device)
-        {
-            ShaftClass2.Parent = device;
-            return ShaftClass2;
+            ShaftClassLib.Add(ShaftClass1);
+            ShaftClassLib.Add(ShaftClass2);
         }
     }
 }

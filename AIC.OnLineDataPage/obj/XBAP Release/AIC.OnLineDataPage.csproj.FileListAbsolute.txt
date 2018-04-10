@@ -58,7 +58,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\AIC.MatlabM
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\AIC.ServiceInterface.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\AIC.Themes.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Akka.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Arction.DirectX.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Arction.DirectXFiles.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Arction.DirectXInit.dll
@@ -116,7 +115,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\ItemsFilter
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.CloseTabControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.PageNavigationControl.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Xceed.Wpf.Toolkit.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Akka.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\MahApps.Metro.xml
@@ -186,3 +184,19 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\AIC.OnLineD
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\AIC.OnLineDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\AIC.OnLineDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.Wpf.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Loya.Dameer.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.GridSelected.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.VirtualizingWrapPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.WrapBreakPanel.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Loya.Dameer.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.GridSelected.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.VirtualizingWrapPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\Wpf.WrapBreakPanel.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\XBAP Release\LiveCharts.Wpf.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\Views\SubViews\DiagnoseView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\XBAP Release\Views\SubViews\DiagnoseView.baml

@@ -31,7 +31,6 @@ using AIC.Core.DiagnosticModels;
 using AIC.Core.ExCommand;
 using System.Windows.Controls;
 using AIC.MatlabMath;
-using AIC.DiagnosePage.Models;
 using Newtonsoft.Json;
 using System.IO;
 using OpenXmlPowerTools;
@@ -39,6 +38,8 @@ using System.Xml.Linq;
 using AIC.DiagnosePage.TestDatas;
 using AIC.DiagnosePage.Views;
 using AIC.PDAPage.Models;
+using AIC.Core;
+using AIC.Core.DiagnosticBaseModels;
 
 namespace AIC.DiagnosePage.ViewModels
 {
@@ -49,14 +50,18 @@ namespace AIC.DiagnosePage.ViewModels
         private readonly ISignalProcess _signalProcess;
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
+        private readonly IRegionManager _regionManager;
+        private readonly ILoginUserService _loginUserService;
 
-        public DeviceFaultDiagnoseViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent)
+        public DeviceFaultDiagnoseViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, IRegionManager regionManager, ILoginUserService loginUserService)
         {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
             _signalProcess = signalProcess;
             _cardProcess = cardProcess;
             _databaseComponent = databaseComponent;
+            _regionManager = regionManager;
+            _loginUserService = loginUserService;
 
             _view = new ListCollectionView(vibrationSignals);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
@@ -162,27 +167,27 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private ObservableCollection<DeviceDiagnosisModel> deviceDiagnosisModel = new ObservableCollection<DeviceDiagnosisModel>();
-        public ObservableCollection<DeviceDiagnosisModel> DeviceDiagnosisModel
+        private ObservableCollection<DeviceTreeItemViewModel> deviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel>();
+        public ObservableCollection<DeviceTreeItemViewModel> DeviceTreeItems
         {
-            get { return deviceDiagnosisModel; }
+            get { return deviceTreeItems; }
             set
             {
-                deviceDiagnosisModel = value;
-                OnPropertyChanged("DeviceDiagnosisModel");
+                deviceTreeItems = value;
+                OnPropertyChanged("DeviceTreeItems");
             }
         }
 
-        private DeviceDiagnosisModel selectedDeviceDiagnosisModel;
-        public DeviceDiagnosisModel SelectedDeviceDiagnosisModel
+        private DeviceTreeItemViewModel selectedDeviceTreeItem;
+        public DeviceTreeItemViewModel SelectedDeviceTreeItem
         {
-            get { return selectedDeviceDiagnosisModel; }
+            get { return selectedDeviceTreeItem; }
             set
             {
-                if (selectedDeviceDiagnosisModel != value)
+                if (selectedDeviceTreeItem != value)
                 {
-                    selectedDeviceDiagnosisModel = value;
-                    OnPropertyChanged("SelectedDeviceDiagnosisModel");
+                    selectedDeviceTreeItem = value;
+                    OnPropertyChanged("SelectedDeviceTreeItem");
                 }
             }
         }
@@ -243,67 +248,12 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private ICommand addComponentCommand;
-        public ICommand AddComponentCommand
+        private ICommand editDeviceCommand;
+        public ICommand EditDeviceCommand
         {
             get
             {
-                return this.addComponentCommand ?? (this.addComponentCommand = new DelegateCommand<object>(para => this.AddComponent(para)));
-            }
-        }
-
-
-        private ICommand addShaftCommand;
-        public ICommand AddShaftCommand
-        {
-            get
-            {
-                return this.addShaftCommand ?? (this.addShaftCommand = new DelegateCommand<object>(para => this.AddShaft(para)));
-            }
-        }
-
-        private ICommand deleteShaftCommand;
-        public ICommand DeleteShaftCommand
-        {
-            get
-            {
-                return this.deleteShaftCommand ?? (this.deleteShaftCommand = new DelegateCommand<object>(para => this.DeleteShaft(para)));
-            }
-        }
-
-        private ICommand deleteComponentCommand;
-        public ICommand DeleteComponentCommand
-        {
-            get
-            {
-                return this.deleteComponentCommand ?? (this.deleteComponentCommand = new DelegateCommand<object>(para => this.DeleteComponent(para)));
-            }
-        }
-
-        private ICommand editShaftCommand;
-        public ICommand EditShaftCommand
-        {
-            get
-            {
-                return this.editShaftCommand ?? (this.editShaftCommand = new DelegateCommand<object>(para => this.EditShaft(para)));
-            }
-        }
-
-        private ICommand editComponentCommand;
-        public ICommand EditComponentCommand
-        {
-            get
-            {
-                return this.editComponentCommand ?? (this.editComponentCommand = new DelegateCommand<object>(para => this.EditComponent(para)));
-            }
-        }
-
-        private ICommand deviceEditCommand;
-        public ICommand DeviceEditCommand
-        {
-            get
-            {
-                return this.deviceEditCommand ?? (this.deviceEditCommand = new DelegateCommand<object>(para => this.DeviceEdit(para)));
+                return this.editDeviceCommand ?? (this.editDeviceCommand = new DelegateCommand<object>(para => this.EditDevice(para)));
             }
         }
 
@@ -322,8 +272,8 @@ namespace AIC.DiagnosePage.ViewModels
         {
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
-            DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass1(this));
-            DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass2(this));
+            //DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass1(this));
+            //DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass2(this));
         }
 
         private void TreeExpanded()
@@ -346,7 +296,21 @@ namespace AIC.DiagnosePage.ViewModels
         #region 选择项
         private void SelectedTreeChanged(object para)
         {
+            DeviceTreeItems.Clear();
             SelectedTreeItem = para as OrganizationTreeItemViewModel;
+            if (SelectedTreeItem != null)
+            {
+                List<DeviceTreeItemViewModel> devices = _cardProcess.GetDevices(SelectedTreeItem);
+                foreach(var device in devices)
+                {
+                    if (device.DeviceDiagnosisComponent == null)
+                    {
+                        var items = _cardProcess.GetItems(device).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
+                        device.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, device.Name);
+                    }
+                }
+                DeviceTreeItems.AddRange(devices);
+            }
         }
 
         private void SelectedDataGridChanged(object para)
@@ -797,127 +761,25 @@ namespace AIC.DiagnosePage.ViewModels
 
             }
         }
+
         private void PrintDiagnosisResult(object para)
         {
-
+    
         }
         #endregion
 
         #region 编辑模型
-        private void AddShaft(object para)
-        {
-            DeviceDiagnosisModel deviceclass = para as DeviceDiagnosisModel;
-            if (deviceclass != null && deviceclass.SelectedShaft != null)
-            {
-                int index = deviceclass.Shafts.IndexOf(deviceclass.SelectedShaft);
-                deviceclass.Shafts.Insert(index, new Models.ShaftComponent()
-                {
-                    Component = new ShaftClassExamples().GetShaftClass2(deviceclass),
-                    ID = Guid.NewGuid(),
-                    Name = "后轴",
-                });
-            }
-            else
-            {
-                deviceclass.Shafts.Add(new Models.ShaftComponent()
-                {
-                    Component = new ShaftClassExamples().GetShaftClass1(deviceclass),
-                    ID = Guid.NewGuid(),
-                    Name = "后轴",
-                });
-            }
-        }
 
-        private void DeleteShaft(object para)
+        private void EditDevice(object para)
         {
-            DeviceDiagnosisModel deviceclass = para as DeviceDiagnosisModel;
-            if (deviceclass != null && deviceclass.SelectedShaft != null)
-            {
-                deviceclass.Shafts.Remove(deviceclass.SelectedShaft);
-            }
-        }
-
-        private void EditShaft(object para)
-        {
-            DeviceDiagnosisModel deviceclass = para as DeviceDiagnosisModel;
-            if (deviceclass != null && deviceclass.SelectedShaft != null)
-            {
-                EditShaftComponentsWin win = new Views.EditShaftComponentsWin(deviceclass.SelectedShaft);
-                win.ShowDialog();
-            }
-        }
-
-        ShaftComponent selectedshaft;
-        private void AddComponent(object para)
-        {
-            selectedshaft = para as ShaftComponent;
-            if (selectedshaft != null)
-            {
-                EditMachComponentsWin win = new Views.EditMachComponentsWin(null);
-                win.Parachanged += Component_Parachanged;
-                win.ShowDialog();
-            }
-        }       
-
-        private void DeleteComponent(object para)
-        {
-            selectedshaft = para as ShaftComponent;
-            if (selectedshaft != null && selectedshaft.Component.SelectedComponent != null)
-            {
-                EditMachComponentsWin win = new Views.EditMachComponentsWin(selectedshaft.Component.SelectedComponent, EditOperateType.Delete);
-                win.Parachanged += Component_Parachanged;
-                win.ShowDialog();
-            }
-        }
-
-        private void EditComponent(object para)
-        {
-            selectedshaft = para as ShaftComponent;
-            if (selectedshaft != null && selectedshaft.Component.SelectedComponent != null)
-            {
-                EditMachComponentsWin win = new Views.EditMachComponentsWin(selectedshaft.Component.SelectedComponent, EditOperateType.Modify);
-                win.Parachanged += Component_Parachanged;
-                win.ShowDialog();
-            }
-        }
-
-        private void Component_Parachanged(IMachComponent i_component, EditOperateType operateType)
-        {
-            switch (operateType)
-            {
-                case EditOperateType.Add:
-                    {
-                        if (selectedshaft != null && selectedshaft.Component.SelectedComponent != null)
-                        {
-                            int index = selectedshaft.Component.MachComponents.IndexOf(selectedshaft.Component.SelectedComponent);
-                            selectedshaft.Component.MachComponents.Insert(index, i_component);
-                        }
-                        else
-                        {
-                            selectedshaft.Component.MachComponents.Add(i_component);
-                        }
-                        break;
-                    }
-                case EditOperateType.Delete:
-                    {
-                        if (selectedshaft != null && selectedshaft.Component.SelectedComponent != null)
-                        {
-
-                            selectedshaft.Component.MachComponents.Remove(selectedshaft.Component.SelectedComponent);
-                        }
-                        break;
-                    }
-            }
-        }
-
-        private void DeviceEdit(object para)
-        {
-            DeviceDiagnosisModel device = para as DeviceDiagnosisModel;
+            DeviceTreeItemViewModel device = para as DeviceTreeItemViewModel;
             if (device != null)
             {
-                EditDeviceComponentsWin win = new Views.EditDeviceComponentsWin();
-                win.GotoDevice(device);
-                win.ShowDialog();
+                EditDeviceComponentsView view = _loginUserService.GotoTab<EditDeviceComponentsView>("MenuEditDeviceComponents") as EditDeviceComponentsView;
+                if (view != null)
+                {
+                    view.GotoDevice(device);
+                }
             }
         }
 

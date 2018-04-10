@@ -249,7 +249,7 @@
             <DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource MetroDataGridCell}"
                        TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Margin" Value="0,0,20,0"/>
+                    <Setter Property="Padding" Value="0,0,20,0"/>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.RowStyle>

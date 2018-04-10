@@ -13,8 +13,8 @@ TRACE
 19829463610
 
 36-2111894025
-107-496292747
+108-1314612013
 Views\AlarmAckListWin.xaml;Views\HistoryQuickPlayWin.xaml;Views\PwdEditWin.xaml;Views\TestWin.xaml;Views\VersionWin.xaml;Views\DefaultSettingWin.xaml;Views\ShowAbnormalWin.xaml;Views\SendEmailWin.xaml;Views\TabView.xaml;Views\LoginView.xaml;Views\LockWin.xaml;Views\AboutWin.xaml;Views\LoginWin.xaml;Views\MainRegionView.xaml;Views\HomeMapView.xaml;Views\ServerSetWin.xaml;Views\ServerSetView.xaml;Themes\Generic.xaml;Views\AlarmAckWin.xaml;
 
-False
+True
 

@@ -26,7 +26,7 @@ namespace AIC.ServiceInterface
 
         bool GetUserLoginStatus();
         Task SetUserLogin();
-        void SetUserLogout();
+        Task SetUserLogout();
         Task LazyLoading();
         Task AwaitLazyLoading();
         void AddOperateRecord(string ip, UserOperateType operateType);

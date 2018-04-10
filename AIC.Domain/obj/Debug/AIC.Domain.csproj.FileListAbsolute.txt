@@ -349,9 +349,6 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.Properties.Res
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.Domain\obj\Debug\AIC.Domain.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.Properties.Resources.resources
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.Domain.dll.config
@@ -371,8 +368,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.DTO.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.SlaveDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.MasterDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.SlaveDB.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.PetaPoco.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.CoreType.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.Core.pdb
@@ -388,8 +385,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\System.Reactive.Linq.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.DTO.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.SlaveDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.MasterDB.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.SlaveDB.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\de\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\es\FluentValidation.resources.dll
@@ -402,5 +399,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\pt\FluentValidation.resour
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\ru\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\sv\FluentValidation.resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\bin\Debug\tr\FluentValidation.resources.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Domain\obj\Debug\AIC.Domain.pdb

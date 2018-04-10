@@ -9,6 +9,8 @@
         public const string MainBodyRegion = "MainBodyRegion";
         public const string MainMenuRegion = "MainMenuRegion";        
         public const string MainNavigationRegion = "MainNavigationRegion";
-        public const string MainStatusBarRegion = "MainStatusBarRegion"; 
+        public const string MainStatusBarRegion = "MainStatusBarRegion";
+        public const string EditComponentRegion = "EditComponentRegion";
+        public const string TestRegion = "TestRegion";
     }
 }

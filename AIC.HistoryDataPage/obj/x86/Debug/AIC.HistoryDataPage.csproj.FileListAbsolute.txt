@@ -173,7 +173,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\System.Reacti
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\System.Reactive.Interfaces.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\System.Reactive.Linq.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\System.Windows.Interactivity.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\Util.Controls.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\bin\x86\Debug\Wpf.WrapBreakPanel.dll
@@ -291,3 +290,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\AIC.HistoryDa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\AIC.HistoryDataPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\Views\SubViews\DistributionMapView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\x86\Debug\Views\SubViews\DistributionMapView.baml

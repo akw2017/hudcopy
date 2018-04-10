@@ -1,4 +1,4 @@
-﻿using AIC.DiagnosePage.Models;
+﻿using AIC.Core.DiagnosticBaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace AIC.DiagnosePage.TestDatas
 {
-    public class BearClassExamples
+    public static class BearClassExamples
     {
-        public BearingClass BearingClass1 { get; set; }
-        public BearingClass BearingClass2 { get; set; }
-        public BearClassExamples()
+        public static BearingClass BearingClass1 { get; set; }
+        public static BearingClass BearingClass2 { get; set; }
+
+        public static List<BearingClass> BearingClassLib { get; set; } = new List<BearingClass>();
+        static BearClassExamples()
         {
-            this.BearingClass1 = new BearingClass()
+            BearingClass1 = new BearingClass()
             {
+                Name = "测试轴承1",
                 BearingID = Guid.NewGuid(),
                 BearingSeries = "滚动轴承",
                 ContactAngle = 0,
@@ -32,8 +35,9 @@ namespace AIC.DiagnosePage.TestDatas
                 RollerDiameter = 4,
                 RollerFrequency = 8.596,
             };
-            this.BearingClass2 = new BearingClass()
+            BearingClass2 = new BearingClass()
             {
+                Name = "测试轴承2",
                 BearingID = Guid.NewGuid(),
                 BearingSeries = "滚动轴承",
                 ContactAngle = 0,
@@ -51,6 +55,8 @@ namespace AIC.DiagnosePage.TestDatas
                 RollerDiameter = 4,
                 RollerFrequency = 9.2229,
             };
+            BearingClassLib.Add(BearingClass1);
+            BearingClassLib.Add(BearingClass2);
         }
     }
 }

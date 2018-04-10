@@ -1,4 +1,5 @@
 ﻿using AIC.Core.ControlModels;
+using AIC.Core.DiagnosticBaseModels;
 using AIC.Core.LMModels;
 using AIC.CoreType;
 using System;
@@ -22,7 +23,18 @@ namespace AIC.Core.OrganizationModels
                 OnPropertyChanged("IsRunning");
             }
         }
-       
+
+        private DeviceDiagnosisComponent deviceDiagnosisComponent;
+        public DeviceDiagnosisComponent DeviceDiagnosisComponent
+        {
+            get { return deviceDiagnosisComponent; }
+            set
+            {
+                deviceDiagnosisComponent = value;
+                OnPropertyChanged("DeviceDiagnosisComponent");
+            }
+        }
+
         public T1_Device T_Device { get; set; }
         public DeviceTreeItemViewModel(OrganizationTreeItemViewModel parent) : this("", parent) { }
 
