@@ -25,68 +25,88 @@ namespace AIC.DiagnosePage.Views
     /// </summary>
     public partial class EditDeviceClassWin : MetroWindow
     {
-        DeviceDiagnosisClass Component = new DeviceDiagnosisClass();
         public EditDeviceClassWin(DeviceDiagnosisClass component)
         {
             InitializeComponent();
 
             Component = component;
+            Templates = new ObservableCollection<ShaftClass>(ShaftClassExamples.ShaftClassLib);
             this.DataContext = this;
-
-            ShaftTemplates = new ObservableCollection<ShaftClass>(ShaftClassExamples.ShaftClassLib);
         }
 
-        private ObservableCollection<ShaftClass> shaftTemplates;
-        public ObservableCollection<ShaftClass> ShaftTemplates
+        #region 属性与字段
+        private ObservableCollection<ShaftClass> templates;
+        public ObservableCollection<ShaftClass> Templates
         {
-            get { return shaftTemplates; }
+            get { return templates; }
             set
             {
-                shaftTemplates = value;
-                OnPropertyChanged("ShaftTemplates");
+                templates = value;
+                OnPropertyChanged("Templates");
             }
         }
 
-        private ShaftClass selectedShaftTemplate;
-        public ShaftClass SelectedShaftTemplate
+        private ShaftClass selectedTemplate;
+        public ShaftClass SelectedTemplate
         {
-            get { return selectedShaftTemplate; }
+            get { return selectedTemplate; }
             set
             {
-                selectedShaftTemplate = value;
-                OnPropertyChanged("SelectedShaftTemplate");
+                selectedTemplate = value;
+                OnPropertyChanged("SelectedTemplate");
             }
         }
+
+        private string newName;
+        public string NewName
+        {
+            get { return newName; }
+            set
+            {
+                newName = value;
+                OnPropertyChanged("NewName");
+            }
+        }
+
+        public DeviceDiagnosisClass Component { get; set; }
+        #endregion
 
         #region 命令
-        private ICommand addShaftCommand;
-        public ICommand AddShaftCommand
+        private ICommand addCommand;
+        public ICommand AddCommand
         {
             get
             {
-                return this.addShaftCommand ?? (this.addShaftCommand = new DelegateCommand(() => this.AddShaft()));
+                return this.addCommand ?? (this.addCommand = new DelegateCommand(() => this.Add()));
             }
         }
 
-        private ICommand deleteShaftCommand;
-        public ICommand DeleteShaftCommand
+        private ICommand deleteCommand;
+        public ICommand DeleteCommand
         {
             get
             {
-                return this.deleteShaftCommand ?? (this.deleteShaftCommand = new DelegateCommand(() => this.DeleteShaft()));
+                return this.deleteCommand ?? (this.deleteCommand = new DelegateCommand(() => this.Delete()));
             }
         }
         #endregion
 
         #region 编辑
-        private void AddShaft()
+        private void Add()
         {
-            Component.AddChild(new ShaftComponent() { Component = SelectedShaftTemplate });
+            if (NewName == null || NewName == "")
+            {
+                NewName = "新建轴";
+            }
+            if (SelectedTemplate != null)
+            {
+                Component.AddChild(new ShaftComponent() { Name = NewName, Component = SelectedTemplate });
+            }
         }
 
-        private void DeleteShaft()
+        private void Delete()
         {
-
+            Component.RemoveChild(Component.SelectedShaft);
         }
         #endregion
 

@@ -58,19 +58,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="轴名称:" VerticalAlignment="Center"/>
-            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Component.Name,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="是否为滑动轴承"  VerticalAlignment="Center" />
-            <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsSlidingBearing,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Component.IsSlidingBearing,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
 
             <TextBlock  Grid.Row="1" Grid.Column="2" Text="默认转速:" VerticalAlignment="Center"/>
-            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding DefaultRPM,UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding Component.DefaultRPM,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="转速差:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding DeltaRPM,UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding Component.DeltaRPM,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="转速系数:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"/>
-            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" Minimum="0" Value="{Binding RPMCoeff,UpdateSourceTrigger=PropertyChanged}" />
+            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" Minimum="0" Value="{Binding Component.RPMCoeff,UpdateSourceTrigger=PropertyChanged}" />
 
             <StackPanel Grid.Row="3" Grid.ColumnSpan="4">
                 <Expander IsExpanded="True">
@@ -81,7 +81,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </Expander.HeaderTemplate>
-                    <DataGrid Grid.Row="0" ItemsSource="{Binding NegationDivFreStrategies}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" >
+                    <DataGrid Grid.Row="0" ItemsSource="{Binding Component.NegationDivFreStrategies}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="故障名称" Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"/>
                             <DataGridTextColumn Header="垂直相对值" Binding="{Binding RelativeY,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"/>
@@ -112,7 +112,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </Expander.HeaderTemplate>
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding NaturalFres}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False">
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding Component.NaturalFres}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="故障名称"  Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" />
                             <DataGridComboBoxColumn Header="分频类型" ItemsSource="{Binding Source={StaticResource divFreTypeEnum}}" SelectedValueBinding="{Binding DivFre,UpdateSourceTrigger=LostFocus}">
@@ -192,7 +192,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </Expander.HeaderTemplate>
-                    <DataGrid Grid.Row="2" ItemsSource="{Binding DivFreThresholdProportiones}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False">
+                    <DataGrid Grid.Row="2" ItemsSource="{Binding Component.DivFreThresholdProportiones}" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="故障名称"  Binding="{Binding Fault,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"/>
                             <DataGridComboBoxColumn Header="分频类型" ItemsSource="{Binding Source={StaticResource divFreTypeEnum}}" SelectedValueBinding="{Binding DivFre,UpdateSourceTrigger=LostFocus}">
@@ -247,14 +247,14 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal">
-                            <RadioButton Foreground="Black" Content="不滤波" IsChecked="{Binding FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}"/>
-                            <RadioButton x:Name="bandPassRb"  Foreground="Black" Content="带通" IsChecked="{Binding FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}"/>
-                            <RadioButton x:Name="highPassRb" Foreground="Black" Content="高通" IsChecked="{Binding FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}"/>
-                            <RadioButton x:Name="lowPassRb" Foreground="Black" Content="低通" IsChecked="{Binding FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}"/>
-                            <CheckBox Foreground="Black" Grid.Row="1" Content="绑定转速" IsChecked="{Binding BindRPMForFilter}"/>
+                            <RadioButton Foreground="Black" Content="不滤波" IsChecked="{Binding Component.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=None}"/>
+                            <RadioButton x:Name="bandPassRb"  Foreground="Black" Content="带通" IsChecked="{Binding Component.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=BandPass}"/>
+                            <RadioButton x:Name="highPassRb" Foreground="Black" Content="高通" IsChecked="{Binding Component.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=HighPass}"/>
+                            <RadioButton x:Name="lowPassRb" Foreground="Black" Content="低通" IsChecked="{Binding Component.FilterType,Converter={StaticResource enumBooleanConverter}, ConverterParameter=LowPass}"/>
+                            <CheckBox Foreground="Black" Grid.Row="1" Content="绑定转速" IsChecked="{Binding Component.BindRPMForFilter}"/>
                         </StackPanel>
 
-                        <Grid Grid.Row="1" Visibility="{Binding FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.BandPass},FallbackValue=Collapsed}">
+                        <Grid Grid.Row="1" Visibility="{Binding Component.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.BandPass},FallbackValue=Collapsed}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -267,17 +267,17 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding DgBandPassFilter.PassbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Component.DgBandPassFilter.PassbandAttenuationDB}"/>
                             <Label Grid.Row="0" Grid.Column="2" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0"  Value="{Binding DgBandPassFilter.StopbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0"  Value="{Binding Component.DgBandPassFilter.StopbandAttenuationDB}"/>
                             <Label Grid.Row="1" Content="低逼近带通"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding DgBandPassFilter.BPPassbandFreLow}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding Component.DgBandPassFilter.BPPassbandFreLow}"/>
                             <Label Grid.Row="1" Grid.Column="2" Content="高逼近带通"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding DgBandPassFilter.BPPassbandFreHigh}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding Component.DgBandPassFilter.BPPassbandFreHigh}"/>
                             <Label Grid.Row="2" Content="过渡带宽"/>
-                            <xctk:DoubleUpDown  Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding DgBandPassFilter.TransitionBandwidth}"/>
+                            <xctk:DoubleUpDown  Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding Component.DgBandPassFilter.TransitionBandwidth}"/>
                         </Grid>
-                        <Grid Grid.Row="1" Visibility="{Binding FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.HighPass},FallbackValue=Collapsed}">
+                        <Grid Grid.Row="1" Visibility="{Binding Component.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.HighPass},FallbackValue=Collapsed}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -290,15 +290,15 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding DgHighPassFilter.PassbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Component.DgHighPassFilter.PassbandAttenuationDB}"/>
                             <Label Grid.Row="0" Grid.Column="2" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0" Value="{Binding DgHighPassFilter.StopbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0" Value="{Binding Component.DgHighPassFilter.StopbandAttenuationDB}"/>
                             <Label Grid.Row="1" Content="通带"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding DgHighPassFilter.PassbandFre}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding Component.DgHighPassFilter.PassbandFre}"/>
                             <Label Grid.Row="1" Grid.Column="2" Content="阻带"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding DgHighPassFilter.StopbandFre}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding Component.DgHighPassFilter.StopbandFre}"/>
                         </Grid>
-                        <Grid Grid.Row="1" Visibility="{Binding FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.LowPass},FallbackValue=Collapsed}">
+                        <Grid Grid.Row="1" Visibility="{Binding Component.FilterType,Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static coreType:FilterType.LowPass},FallbackValue=Collapsed}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -311,13 +311,13 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="通带衰减"/>
-                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding DgLowPassFilter.PassbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Column="1" Minimum="0.01" Increment="0.1" Value="{Binding Component.DgLowPassFilter.PassbandAttenuationDB}"/>
                             <Label Grid.Row="0" Grid.Column="2" Content="阻带衰减"/>
-                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0" Value="{Binding DgLowPassFilter.StopbandAttenuationDB}"/>
+                            <xctk:DoubleUpDown Grid.Row="0" Grid.Column="3" Minimum="0" Value="{Binding Component.DgLowPassFilter.StopbandAttenuationDB}"/>
                             <Label Grid.Row="1" Grid.Column="0" Content="通带"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding DgLowPassFilter.PassbandFre}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding Component.DgLowPassFilter.PassbandFre}"/>
                             <Label Grid.Row="1" Grid.Column="2" Content="阻带"/>
-                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding DgLowPassFilter.StopbandFre}"/>
+                            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="3" Minimum="0" Value="{Binding Component.DgLowPassFilter.StopbandFre}"/>
                         </Grid>
                     </Grid>
                 </Expander>
@@ -327,19 +327,18 @@
                 <GroupBox.Header>
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="组件编辑" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock Text="组件类型" VerticalAlignment="Center" Margin="4, 0"/>
                             <ComboBox x:Name="myComBox" Grid.Row="0" Grid.Column="1" Width="100" IsEditable="False" SelectedItem="{Binding ComponentType}" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:DeviceComponentType}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
                             <TextBlock Text="组件模板" VerticalAlignment="Center" Margin="4, 0"/>
-                            <ComboBox Grid.Row="1" Grid.Column="1" Width="100" SelectedItem="{Binding SelectedComponentTemplate}" ItemTemplate="{Binding ShaftComponents}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
-                            <Button Command="{Binding AddShaftCommand}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
+                            <ComboBox Width="100" SelectedItem="{Binding SelectedTemplate}" ItemsSource="{Binding Templates}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                            <TextBlock Text="新建组件名" VerticalAlignment="Center" Margin="4, 0"/>
+                            <TextBox Text="{Binding NewName}" Width="100" Controls:TextBoxHelper.Watermark="新建组件" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Button Command="{Binding AddCommand}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
                                 <Button.Content>
                                     <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
                                 </Button.Content>
                             </Button>
-                            <Button Command="{Binding DeleteShaftCommand}"  Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
+                            <Button Command="{Binding DeleteCommand}"  Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
                                 <Button.Content>
                                     <Path Width="12" Height="2.4" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}"  Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
                                 </Button.Content>
@@ -347,7 +346,7 @@
                         </StackPanel>
                     </Grid>
                 </GroupBox.Header>
-                <ListBox x:Name="mylist"  ItemsSource="{Binding MachComponents}" HorizontalContentAlignment="Stretch">
+                <ListBox x:Name="mylist"  ItemsSource="{Binding Component.MachComponents}" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>

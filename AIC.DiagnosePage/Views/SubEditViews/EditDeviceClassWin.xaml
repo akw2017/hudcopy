@@ -65,17 +65,16 @@
                 <GroupBox.Header>
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="轴编辑" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock Text="轴模板" VerticalAlignment="Center" Margin="4, 0"/>
-                            <ComboBox Grid.Row="1" Grid.Column="1" Width="100" SelectedItem="{Binding SelectedShaftTemplate}" ItemTemplate="{Binding ShaftTemplates}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
-                            <Button Command="{Binding AddShaftCommand}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
+                            <ComboBox Width="100" SelectedItem="{Binding SelectedTemplate}" ItemsSource="{Binding Templates}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                            <TextBlock Text="新建轴名" VerticalAlignment="Center" Margin="4, 0"/>
+                            <TextBox Text="{Binding NewName}" Width="100" Controls:TextBoxHelper.Watermark="新建轴" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Button Command="{Binding AddCommand}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
                                 <Button.Content>
                                     <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
                                 </Button.Content>
                             </Button>
-                            <Button Command="{Binding DeleteShaftCommand}"  Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
+                            <Button Command="{Binding DeleteCommand}"  Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0">
                                 <Button.Content>
                                     <Path Width="12" Height="2.4" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}"  Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
                                 </Button.Content>
@@ -83,7 +82,7 @@
                         </StackPanel>
                     </Grid>
                 </GroupBox.Header>
-                <ListBox x:Name="mylist" Grid.Row="5" Grid.ColumnSpan="4" ItemsSource="{Binding Component.Shafts}" HorizontalContentAlignment="Stretch">
+                <ListBox x:Name="mylist" Grid.Row="5" Grid.ColumnSpan="4" ItemsSource="{Binding Component.Shafts}" SelectedItem="{Binding Component.SelectedShaft}" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>

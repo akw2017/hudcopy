@@ -13,10 +13,3 @@ C:\Users\AIC\Downloads\Loya.Dameer\Loya.Dameer\Loya.Dameer\obj\Debug\Loya.Dameer
 C:\Users\AIC\Downloads\Loya.Dameer\Loya.Dameer\Loya.Dameer\obj\Debug\Loya.Dameer.csproj.GenerateResource.Cache
 C:\Users\AIC\Downloads\Loya.Dameer\Loya.Dameer\Loya.Dameer\obj\Debug\Loya.Dameer.dll
 C:\Users\AIC\Downloads\Loya.Dameer\Loya.Dameer\Loya.Dameer\obj\Debug\Loya.Dameer.pdb
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\bin\Debug\Loya.Dameer.dll
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\bin\Debug\Loya.Dameer.pdb
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Debug\Loya.Dameer.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Debug\Loya.Dameer.Properties.Resources.resources
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Debug\Loya.Dameer.csproj.GenerateResource.Cache
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Debug\Loya.Dameer.dll
-D:\SupportProject\AIC_HUD\AICHUD\Loya.Dameer\obj\Debug\Loya.Dameer.pdb

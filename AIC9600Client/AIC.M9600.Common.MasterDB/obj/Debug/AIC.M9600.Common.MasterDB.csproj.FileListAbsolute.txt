@@ -12,11 +12,3 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.MasterDB\bin\De
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\bin\Debug\AIC.M9600.Common.MasterDB.dll.config
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\bin\Debug\AIC.M9600.Common.MasterDB.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\bin\Debug\AIC.M9600.Common.MasterDB.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\bin\Debug\AIC.M9600.Common.PetaPoco.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.csprojResolveAssemblyReference.cache
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.MasterDB\obj\Debug\AIC.M9600.Common.MasterDB.pdb

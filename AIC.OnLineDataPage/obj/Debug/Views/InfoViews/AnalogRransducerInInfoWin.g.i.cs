@@ -9,6 +9,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using AIC.Core;
+using AIC.CoreType;
+using AIC.OnLineDataPage.Models;
+using AIC.OnLineDataPage.ViewModels;
+using AIC.OnLineDataPage.ViewModels.SubViewModels;
+using AIC.OnLineDataPage.Views;
+using AIC.OnLineDataPage.Views.SubViews;
+using DiagramDesigner;
 using MahApps.Metro.Controls;
 using System;
 using System.Diagnostics;
@@ -20,6 +28,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -30,6 +39,7 @@ using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using WpfAnimatedGif;
 
 
 namespace AIC.OnLineDataPage.Views {

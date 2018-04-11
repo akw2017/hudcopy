@@ -16,5 +16,5 @@ DEBUG;TRACE
 15-374941401
 Themes\GridControl.xaml;Themes\EditorTabControl.xaml;Themes\Menu.xaml;Themes\TextBox.xaml;Themes\Brushes.xaml;Themes\Button.xaml;Themes\ToggleButton.xaml;Themes\ArrowButtons.xaml;Themes\CheckBox.xaml;Themes\RadioButton.xaml;Themes\ComboBox.xaml;Themes\Slider.xaml;Themes\TabControl.xaml;Themes\ScrollBar.xaml;Themes\Generic.xaml;
 
-True
+False
 
