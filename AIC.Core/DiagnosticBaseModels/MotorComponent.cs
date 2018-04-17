@@ -2,10 +2,12 @@
 using AIC.CoreType;
 using Prism.Mvvm;
 using System;
+using System.ComponentModel;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
-    public class MotorComponent :BindableBase, IMachComponent
+    [Serializable]
+    public class MotorComponent : INotifyPropertyChanged, IMachComponent
     {
         public Guid ID { get; set; } = Guid.NewGuid();
 
@@ -19,7 +21,18 @@ namespace  AIC.Core.DiagnosticBaseModels
                 OnPropertyChanged("Name");
             }
         }
-        public MotorClass Component { get; set; } = new MotorClass();
+
+        private MotorClass component = new MotorClass();
+        public MotorClass Component
+        {
+            get { return component; }
+            set
+            {
+                component = value;
+                OnPropertyChanged("Component");
+            }
+        }
+
         IMach IMachComponent.Component
         {
             get
@@ -37,6 +50,16 @@ namespace  AIC.Core.DiagnosticBaseModels
             get
             {
                 return DeviceComponentType.Motor;
+            }
+        }
+
+        [field: NonSerializedAttribute()]
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

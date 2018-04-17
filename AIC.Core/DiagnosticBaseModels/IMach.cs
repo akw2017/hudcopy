@@ -1,4 +1,4 @@
-﻿namespace  AIC.Core.DiagnosticBaseModels
+﻿namespace AIC.Core.DiagnosticBaseModels
 {
     public interface IMach
     {

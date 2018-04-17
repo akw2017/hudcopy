@@ -44,7 +44,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>           
             <TextBlock Text="设备名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Component.Name, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Component.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBlock Text="诊断方式" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
             <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Component.DiagnosisMethod, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:DiagnosisMethod}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
             <TextBlock Text="峭度指标" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />
@@ -95,10 +95,10 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/shaft.png"/>
                                         <TextBlock x:Name="title" HorizontalAlignment="Center">
-                                        <Run Text="{Binding Name}"/>
-                                        <Run>(</Run>
-                                        <Run Text="{Binding Component.Name}"/>
-                                        <Run>)</Run>
+                                            <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)</Run>
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>

@@ -58,7 +58,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="轴名称:" VerticalAlignment="Center"/>
-            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Component.Name,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
+            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Component.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{DynamicResource MetroTextBox}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="是否为滑动轴承"  VerticalAlignment="Center" />
             <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Component.IsSlidingBearing,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
@@ -346,7 +346,7 @@
                         </StackPanel>
                     </Grid>
                 </GroupBox.Header>
-                <ListBox x:Name="mylist"  ItemsSource="{Binding Component.MachComponents}" HorizontalContentAlignment="Stretch">
+                <ListBox x:Name="mylist"  ItemsSource="{Binding Component.MachComponents}" SelectedItem="{Binding Component.SelectedComponent}" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>
@@ -356,7 +356,13 @@
                         <DataTemplate DataType="{x:Type model:BearingComponent}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/Bearing.png"/>
-                                <TextBlock x:Name="title" Text="{Binding Name}" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                     <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)
+                                     </Run>
+                                </TextBlock>
                                 <TextBlock VerticalAlignment="Center">
                                                     <Run>型号:</Run>
                                                     <Run Text="{Binding Component.Designation}"/>
@@ -379,13 +385,18 @@
                                     </ToolTip>
                                 </StackPanel.ToolTip>
                             </StackPanel>
-
                         </DataTemplate>
 
                         <DataTemplate DataType="{x:Type model:GearComponent}">
                             <StackPanel Orientation="Horizontal" >
                                 <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/Gear.png"/>
-                                <TextBlock x:Name="title" Text="{Binding Name}" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                     <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)
+                                     </Run>
+                                </TextBlock>
                                 <TextBlock VerticalAlignment="Center">
                                                     <Run>齿数:</Run>
                                                     <Run Text="{Binding Component.TeethNumber}"/>
@@ -396,7 +407,13 @@
                         <DataTemplate DataType="{x:Type model:BeltComponent}">
                             <StackPanel Orientation="Horizontal" >
                                 <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/Belt.png"/>
-                                <TextBlock x:Name="title" Text="{Binding Name}" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                     <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)
+                                     </Run>
+                                </TextBlock>
                                 <TextBlock VerticalAlignment="Center">
                                                     <Run>皮带轮直径:</Run>
                                                     <Run Text="{Binding Component.PulleyDiameter}"/>
@@ -417,7 +434,13 @@
                         <DataTemplate DataType="{x:Type model:ImpellerComponent}">
                             <StackPanel Orientation="Horizontal" >
                                 <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/Impeller.png"/>
-                                <TextBlock x:Name="title" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                     <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)
+                                     </Run>
+                                </TextBlock>
                                 <TextBlock VerticalAlignment="Center">             
                                                     <Run>叶片数:</Run>
                                                     <Run Text="{Binding Component.NumberOfBlades}"/>
@@ -428,7 +451,13 @@
                         <DataTemplate DataType="{x:Type model:MotorComponent}">
                             <StackPanel Orientation="Horizontal" Background="Transparent">
                                 <Image Width="24" Height="24" Source="/AIC.Resources;component/Images/Motor.png"/>
-                                <TextBlock x:Name="title" Text="{Binding Name}" Margin="5,0" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                     <Run Text="{Binding Name}"/>
+                                            <Run>(</Run>
+                                            <Run Text="{Binding Component.Name}"/>
+                                            <Run>)
+                                     </Run>
+                                </TextBlock>
                                 <StackPanel VerticalAlignment="Center" >
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="电网工频:" VerticalAlignment="Center"/>

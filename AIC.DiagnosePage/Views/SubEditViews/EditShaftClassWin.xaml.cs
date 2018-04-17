@@ -31,6 +31,8 @@ namespace AIC.DiagnosePage.Views
             InitializeComponent();
 
             Component = component;
+            Templates = new ObservableCollection<IMach>(BearClassExamples.BearingClassLib.Select(p => p as IMach));
+
             this.DataContext = this;
         }
 
@@ -51,8 +53,8 @@ namespace AIC.DiagnosePage.Views
             }
         }
 
-        private ObservableCollection<IMachComponent> templates;
-        public ObservableCollection<IMachComponent> Templates
+        private ObservableCollection<IMach> templates = new ObservableCollection<IMach>();
+        public ObservableCollection<IMach> Templates
         {
             get { return templates; }
             set
@@ -62,8 +64,8 @@ namespace AIC.DiagnosePage.Views
             }
         }
 
-        private IMachComponent selectedTemplate;
-        public IMachComponent SelectedTemplate
+        private IMach selectedTemplate;
+        public IMach SelectedTemplate
         {
             get { return selectedTemplate; }
             set
@@ -112,17 +114,34 @@ namespace AIC.DiagnosePage.Views
         {
             if (NewName == null || NewName == "")
             {
-                NewName = "新建轴";
+                NewName = "新建组件";
             }
             if (SelectedTemplate != null)
             {
-                Component.MachComponents.Add(SelectedTemplate);
+                switch (ComponentType)
+                {
+                    case DeviceComponentType.Bearing:
+                        Component.MachComponents.Add(new BearingComponent() { Name = NewName, Component = SelectedTemplate as BearingClass });
+                        break;
+                    case DeviceComponentType.Belt:
+                        Component.MachComponents.Add(new BeltComponent() { Name = NewName, Component = SelectedTemplate as BeltClass });
+                        break;
+                    case DeviceComponentType.Gear:
+                        Component.MachComponents.Add(new GearComponent() { Name = NewName, Component = SelectedTemplate as GearClass });
+                        break;
+                    case DeviceComponentType.Impeller:
+                        Component.MachComponents.Add(new ImpellerComponent() { Name = NewName, Component = SelectedTemplate as ImpellerClass });
+                        break;
+                    case DeviceComponentType.Motor:
+                        Component.MachComponents.Add(new MotorComponent() { Name = NewName, Component = SelectedTemplate as MotorClass });
+                        break;
+                }
             }
         }
 
         private void Delete()
         {
-
+            Component.MachComponents.Remove(Component.SelectedComponent);
         }
 
         private void ShiftTemplate(DeviceComponentType type)
@@ -130,23 +149,28 @@ namespace AIC.DiagnosePage.Views
             switch (type)
             {
                 case DeviceComponentType.Bearing:
-                    Templates = new ObservableCollection<IMachComponent>(BearClassExamples.BearingClassLib.Select(p => p as IMachComponent));
+                    Templates.Clear();
+                    Templates.AddRange(BearClassExamples.BearingClassLib.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Belt:
-                    Templates = new ObservableCollection<IMachComponent>(BeltClassExamples.BeltClassLib.Select(p => p as IMachComponent));
+                    Templates.Clear();
+                    Templates.AddRange(BeltClassExamples.BeltClassLib.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Gear:
-                    Templates = new ObservableCollection<IMachComponent>(GearClassExamples.GearClassLib.Select(p => p as IMachComponent));
+                    Templates.Clear();
+                    Templates.AddRange(GearClassExamples.GearClassLib.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Impeller:
-                    Templates = new ObservableCollection<IMachComponent>(ImpellerClassExamples.ImpellerClassLib.Select(p => p as IMachComponent));
+                    Templates.Clear();
+                    Templates.AddRange(ImpellerClassExamples.ImpellerClassLib.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Motor:
-                    Templates = new ObservableCollection<IMachComponent>(MotorClassExamples.MotorClassLib.Select(p => p as IMachComponent));
+                    Templates.Clear();
+                    Templates.AddRange(MotorClassExamples.MotorClassLib.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
             }

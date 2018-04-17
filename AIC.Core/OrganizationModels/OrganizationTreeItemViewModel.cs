@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ using System.Windows.Input;
 
 namespace AIC.Core.OrganizationModels
 {
-    public class OrganizationTreeItemViewModel : BindableBase//组织机构树节点
+    [Serializable]
+    public class OrganizationTreeItemViewModel : INotifyPropertyChanged//组织机构树节点
     {
         #region 基本属性 
         //private string name;
@@ -437,5 +439,13 @@ namespace AIC.Core.OrganizationModels
             return allnames.ToArray();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

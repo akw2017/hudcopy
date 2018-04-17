@@ -52,8 +52,9 @@ namespace AIC.DiagnosePage.ViewModels
         private readonly ICardProcess _cardProcess;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly IRegionManager _regionManager;
+        private readonly IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
 
-        public EditDeviceComponentsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, IRegionManager regionManager)
+        public EditDeviceComponentsViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, IRegionManager regionManager, IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService)
         {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
@@ -61,10 +62,14 @@ namespace AIC.DiagnosePage.ViewModels
             _cardProcess = cardProcess;
             _databaseComponent = databaseComponent;
             _regionManager = regionManager;
+            _deviceDiagnoseTemplateService = deviceDiagnoseTemplateService;
 
             InitTree();
         }
+
         #region 属性与字段
+
+
         private ObservableCollection<OrganizationTreeItemViewModel> _organizationTreeItems;
         public ObservableCollection<OrganizationTreeItemViewModel> OrganizationTreeItems
         {
@@ -129,6 +134,28 @@ namespace AIC.DiagnosePage.ViewModels
                     selectedDeviceTreeItemViewModel = value;
                     OnPropertyChanged("SelectedDeviceTreeItemViewModel");
                 }
+            }
+        }    
+
+        private ObservableCollection<DeviceDiagnosisClass> devices;
+        public ObservableCollection<DeviceDiagnosisClass> Devices
+        {
+            get { return devices; }
+            set
+            {
+                devices = value;
+                OnPropertyChanged("Devices");
+            }
+        }
+
+        private DeviceDiagnosisClass selectedDevice;
+        public DeviceDiagnosisClass SelectedDevice
+        {
+            get { return selectedDevice; }
+            set
+            {
+                selectedDevice = value;
+                OnPropertyChanged("SelectedDevice");
             }
         }
         #endregion
@@ -286,6 +313,21 @@ namespace AIC.DiagnosePage.ViewModels
                 return dropCommand;
             }
         }
+
+        public DelegateCommand<object> selectedDeviceChangedComamnd;
+        public DelegateCommand<object> SelectedDeviceChangedComamnd
+        {
+            get
+            {
+                if (selectedDeviceChangedComamnd == null)
+                {
+                    selectedDeviceChangedComamnd = new DelegateCommand<object>(
+                        para => SelectedDeviceChanged(para)
+                        );
+                }
+                return selectedDeviceChangedComamnd;
+            }
+        }
         #endregion
 
         #region 管理树
@@ -293,11 +335,17 @@ namespace AIC.DiagnosePage.ViewModels
         {
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
+           
+            if (Devices == null)
+            {
+                Devices = _deviceDiagnoseTemplateService.DeviceClassList;
+            }
         }
 
         public void Init(DeviceTreeItemViewModel device)
         {
             SelectedDeviceTreeItemViewModel = device;
+            SelectedDeviceTreeItemViewModel.IsSelected = true;
         }
 
         private void TreeExpanded()
@@ -320,7 +368,8 @@ namespace AIC.DiagnosePage.ViewModels
         #region 选择项
         private void SelectedTreeChanged(object para)
         {
-             SelectedDeviceTreeItemViewModel = para as DeviceTreeItemViewModel;
+            SelectedDevice = null;
+            SelectedDeviceTreeItemViewModel = para as DeviceTreeItemViewModel;
             if (SelectedDeviceTreeItemViewModel != null)
             {
                 if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent == null)
@@ -423,6 +472,16 @@ namespace AIC.DiagnosePage.ViewModels
         private void SaveDevice(object para)
         {
 
+        }
+
+        private void SelectedDeviceChanged(object para)
+        {
+            DeviceDiagnosisClass deviceclass = para as DeviceDiagnosisClass;
+            if (deviceclass != null && SelectedDeviceTreeItemViewModel != null)
+            {
+                var items = _cardProcess.GetItems(SelectedDeviceTreeItemViewModel).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
+                SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, SelectedDeviceTreeItemViewModel.Name, deviceclass.DeepClone());        
+            }
         }
         #endregion
 

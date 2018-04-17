@@ -425,7 +425,7 @@
     <Compile Include="ViewModels\ImportDBDataViewModel.cs" />
     <Compile Include="ViewModels\FilterDBDataViewModel.cs" />
     <Compile Include="ViewModels\ExportDBDataViewModel.cs" />
-    <Compile Include="ViewModels\PDASystemManageViewModelMetadata.cs" />
+    <Compile Include="ViewModels\PDASystemManageViewModel.Metadata.cs" />
     <Compile Include="ViewModels\PDASystemManageViewModel.cs" />
     <Compile Include="Models\TreeProcess.cs" />
     <Compile Include="Views\DeviceEditWin.xaml.cs">

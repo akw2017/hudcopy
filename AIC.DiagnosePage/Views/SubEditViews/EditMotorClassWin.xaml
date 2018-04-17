@@ -32,7 +32,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="电机名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" VerticalAlignment="Center"/>
             <TextBlock Text="电网工频(Hz)" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
             <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding LineFrequency, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="电机类型" VerticalAlignment="Center"/>

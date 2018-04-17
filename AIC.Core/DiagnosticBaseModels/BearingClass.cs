@@ -1,8 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public class BearingClass : IMach
+    [Serializable]
+    public partial class BearingClass : IMach
     {
         public int ID { get; set; } = -1;//新增为-1
         public Guid BearingID { get; set; }
@@ -36,5 +40,26 @@ namespace AIC.Core.DiagnosticBaseModels
         //转速
         public double RPM { get; set; }
         public string Name { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public BearingClass DeepClone()
+        {
+            using (Stream objectStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(objectStream, this);
+                objectStream.Seek(0, SeekOrigin.Begin);
+                return formatter.Deserialize(objectStream) as BearingClass;
+            }
+        }
+
+        public BearingClass ShallowClone()
+        {
+            return Clone() as BearingClass;
+        }
     }
 }

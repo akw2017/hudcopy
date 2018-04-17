@@ -85,8 +85,14 @@
                 <TextBlock Text="轴名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ShaftComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="轴模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
-                
+                <ComboBox x:Name="myCbo" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Shafts}" SelectedItem="{Binding SelectedShaft}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedShaftChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCbo}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="轴模型名称:" VerticalAlignment="Center"/>
                 <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding ShaftComponent.Component.Name, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MetroTextBox}"/>
 

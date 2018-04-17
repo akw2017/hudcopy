@@ -58,3 +58,14 @@ D:\SupportProject\AIC_HUD\AICHUID\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xm
 D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Kent.Boogaart.Truss.dll
 D:\SupportProject\AIC_HUD\AICHUID\Truss\obj\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.dll.CodeAnalysisLog.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.Truss.dll.lastcodeanalysissucceeded
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Truss\bin\Debug\Kent.Boogaart.HelperTrinity.xml
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Truss.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Kent.Boogaart.Truss.dll
+D:\SupportProject\AIC_HUD\AICHUD\Truss\obj\Debug\Kent.Boogaart.Truss.pdb

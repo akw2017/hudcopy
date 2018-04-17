@@ -3,6 +3,7 @@ using AIC.Core.Events;
 using AIC.Core.Helpers;
 using AIC.Core.LMModels;
 using AIC.Core.Models;
+using AIC.Core.OrganizationModels;
 using AIC.Core.SignalModels;
 using AIC.Core.UserManageModels;
 using AIC.CoreType;
@@ -99,6 +100,7 @@ namespace AIC.HomePage.ViewModels
 
             _eventAggregator.GetEvent<LoginEvent>().Subscribe(LoginFinishEvent);
             _eventAggregator.GetEvent<CustomSystemEvent>().Subscribe(CustomSystemHappenEvent, ThreadOption.UIThread);//<!--昌邑石化-->
+            _eventAggregator.GetEvent<DeviceDiagnoseEvent>().Subscribe(DeviceDiagnoseOpen);//<!--诊断-->
 
             WhenSlideChanged.Throttle(TimeSpan.FromMilliseconds(500)).ObserveOn(SynchronizationContext.Current).Subscribe(RaiseSlideChanged);
 
@@ -1470,6 +1472,29 @@ namespace AIC.HomePage.ViewModels
         {
             string soundName = System.AppDomain.CurrentDomain.BaseDirectory + @"Resources\msg.wav";
             PlaySound.Play(soundName);
+        }
+        #endregion
+
+        #region 诊断
+        private void DeviceDiagnoseOpen(Tuple<DateTime, DeviceTreeItemViewModel> data)
+        {
+            if (MenuManageList.MenuDeviceFaultDiagnose.Visibility != Visibility.Visible)
+            {
+#if XBAP
+                MessageBox.Show("请确定自己的权限是否可以使用诊断", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("请确定自己的权限是否可以使用诊断", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
+            if (data != null && data.Item1 != null && data.Item2 != null)
+            {
+                DeviceFaultDiagnoseView view = _loginUserService.GotoTab<DeviceFaultDiagnoseView>("MenuDeviceFaultDiagnose") as DeviceFaultDiagnoseView;
+                if (view != null)
+                {
+                    view.GotoDevice(data.Item2, data.Item1);
+                }
+            }
         }
         #endregion
 

@@ -123,6 +123,7 @@
     <Compile Include="ICardProcess.cs" />
     <Compile Include="IConvertFromDataBaseFormat.cs" />
     <Compile Include="IConvertToDataBaseFormat.cs" />
+    <Compile Include="IDeviceDiagnoseTemplateService.cs" />
     <Compile Include="IHardwareService.cs" />
     <Compile Include="ILocalConfiguration.cs" />
     <Compile Include="ILoginUserService.cs" />

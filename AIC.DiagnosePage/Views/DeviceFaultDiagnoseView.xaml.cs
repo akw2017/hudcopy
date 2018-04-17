@@ -2,6 +2,7 @@
 using AIC.Core.ControlModels;
 using AIC.Core.Events;
 using AIC.Core.Models;
+using AIC.Core.OrganizationModels;
 using AIC.Core.UserManageModels;
 using AIC.DiagnosePage.ViewModels;
 using Prism.Events;
@@ -45,6 +46,14 @@ namespace AIC.DiagnosePage.Views
         {
             get { return DataContext as DeviceFaultDiagnoseViewModel; }
             set { this.DataContext = value; }
+        }
+
+        public void GotoDevice(DeviceTreeItemViewModel device, DateTime dt)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.Init(device, dt);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -12,6 +12,7 @@
              xmlns:command="clr-namespace:AIC.Core.ExCommand;assembly=AIC.Core"    
              xmlns:core="clr-namespace:AIC.Core;assembly=AIC.Core"
              xmlns:view="clr-namespace:AIC.DiagnosePage.Views"
+            xmlns:subview="clr-namespace:AIC.OnLineDataPage.Views.SubViews;assembly=AIC.OnLineDataPage"
              Style="{DynamicResource AsyncWorkUserControlStyle}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
@@ -23,6 +24,63 @@
                 <ResourceDictionary Source="/AIC.Resources;component/Themes/ListBoxStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <core:EqualBindingConverter x:Key="equalBindingConverter"/>
+            <Style x:Key="DeviceModelStyle" TargetType="{x:Type ListBoxItem}" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid>
+                                <Border x:Name="Bd" BorderBrush="Transparent" BorderThickness="6,3,3,3"
+                                        Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                                        SnapsToDevicePixels="true">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Transparent" Opacity="0.5" ShadowDepth="2" />
+                                    </Border.Effect>
+                                </Border>
+                                <Border BorderThickness="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" BorderBrush="Transparent">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}" />
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="false" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd"
+                                            Value="{DynamicResource AccentColorBrush}" />
+                                    <Setter Property="Foreground"
+                                            Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+                                </MultiTrigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground"
+                                            Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                </Trigger>
+                                <Trigger SourceName="ContentSite"
+                                 Property="IsMouseOver"
+                                 Value="True">
+                                    <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContentTemplate" Value="{StaticResource DeviceDataTemplate}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.IsDeviceModelShow,RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="ContentTemplate" Value="{StaticResource DeviceDataTemplate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.IsDeviceModelShow,RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="False">
+                        <Setter Property="ContentTemplate" Value="{StaticResource DeviceFrequencyTemplate}" />
+                    </DataTrigger>                  
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Control.Resources>
     <Grid Name="grdWorkbench">
@@ -332,9 +390,15 @@
                 </DataGrid.Style>
             </DataGrid>
         </Border>
-        <GroupBox Grid.Row="2" Grid.Column="2" Header="诊断结构">
+        <GroupBox Grid.Row="2" Grid.Column="2">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="radioDevice" Content="设备结构" IsChecked="{Binding IsDeviceModelShow}" GroupName="pregroup" VerticalAlignment="Center" />
+                    <RadioButton Content="设备频率" GroupName="pregroup" VerticalAlignment="Center" />
+                </StackPanel>
+            </GroupBox.Header>
             <Grid>
-                <ListBox x:Name="list" ItemsSource="{Binding DeviceTreeItems}" Grid.Column="6" Grid.Row="1" ItemTemplate="{StaticResource DeviceDataTemplate}" SelectionMode="Single">
+                <ListBox x:Name="list" ItemsSource="{Binding DeviceTreeItems}" Grid.Column="6" Grid.Row="1" ItemContainerStyle="{StaticResource DeviceModelStyle}" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
                             <i:InvokeCommandAction Command="{Binding EditDeviceCommand}" CommandParameter="{Binding SelectedItem, ElementName=list}"/>
@@ -346,13 +410,17 @@
                 </ListBox>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Grid.Column="3" Header="时域频域">
+        <GroupBox Grid.Row="2" Grid.Column="3">
+            <GroupBox.Header>
+                <TextBlock Text="时域频域"/>
+            </GroupBox.Header>
             <Grid Background="{DynamicResource ChartBackgroundAccentColorBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <subview:TimeDomainChartView DataContext="{Binding TimeDomainOnLineVM}" IsHideProccess="True"/>
+                <subview:FrequencyDomainChartView Grid.Row="1" DataContext="{Binding FrequencyDomainOnLineVM}" IsHideProccess="True"/>
             </Grid>
         </GroupBox>
     </Grid>

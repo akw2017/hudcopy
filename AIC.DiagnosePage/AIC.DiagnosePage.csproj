@@ -257,6 +257,10 @@
       <Project>{7b5ba862-2c0b-4285-b4bf-6ad8a418b585}</Project>
       <Name>AIC.MatlabMath</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AIC.OnLineDataPage\AIC.OnLineDataPage.csproj">
+      <Project>{4D9542C6-3BCC-4C44-B371-1416B837C2A8}</Project>
+      <Name>AIC.OnLineDataPage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AIC.Resources\AIC.Resources.csproj">
       <Project>{7696156a-cc8d-4f57-8622-3d7fb319f4ee}</Project>
       <Name>AIC.Resources</Name>

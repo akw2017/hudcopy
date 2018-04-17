@@ -25,10 +25,13 @@ namespace AIC.DiagnosePage.ViewModels
     {
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ILocalConfiguration _localConfiguration;
-        public EditDeviceTemplateViewModel(IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration)
+        private readonly IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+
+        public EditDeviceTemplateViewModel(IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration, IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService)
         {
             _databaseComponent = databaseComponent;
             _localConfiguration = localConfiguration;
+            _deviceDiagnoseTemplateService = deviceDiagnoseTemplateService;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
@@ -558,36 +561,44 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
+        private DelegateCommand<object> loadCommand;
+        public DelegateCommand<object> LoadCommand
+        {
+            get
+            {
+                return this.loadCommand ?? (this.loadCommand = new DelegateCommand<object>(value => this.Load(value), value => CanOperate(value)));
+            }
+        }
         #endregion
         private void Init(string ip)
         {
             if (Bearings == null)
             {
-                Bearings = new ObservableCollection<BearingClass>(BearClassExamples.BearingClassLib);
+                Bearings = _deviceDiagnoseTemplateService.BearingClassList;
             }
             if (Belts == null)
             {
-                Belts = new ObservableCollection<BeltClass>(BeltClassExamples.BeltClassLib);
+                Belts = _deviceDiagnoseTemplateService.BeltClassList;
             }
             if (Gears == null)
             {
-                Gears = new ObservableCollection<GearClass>(GearClassExamples.GearClassLib);
+                Gears = _deviceDiagnoseTemplateService.GearClassList;
             }
             if (Impellers == null)
             {
-                Impellers = new ObservableCollection<ImpellerClass>(ImpellerClassExamples.ImpellerClassLib);
+                Impellers = _deviceDiagnoseTemplateService.ImpellerClassList;
             }
             if (Motors == null)
             {
-                Motors = new ObservableCollection<MotorClass>(MotorClassExamples.MotorClassLib);
+                Motors = _deviceDiagnoseTemplateService.MotorClassList;
             }
             if (Shafts == null)
             {
-                Shafts = new ObservableCollection<ShaftClass>(ShaftClassExamples.ShaftClassLib);
+                Shafts = _deviceDiagnoseTemplateService.ShaftClassList;
             }
             if (Devices == null)
             {
-                Devices = new ObservableCollection<DeviceDiagnosisClass>(DeviceClassExamples.DeviceDiagnosisClassLib);
+                Devices = _deviceDiagnoseTemplateService.DeviceClassList;
             }            
 
             QueryCommand.RaiseCanExecuteChanged();
@@ -722,6 +733,10 @@ namespace AIC.DiagnosePage.ViewModels
 
         }
 
+        private void Load(object value)
+        {
+            _deviceDiagnoseTemplateService.GetClasses(ServerIP);
+        }
         private void ShowWin()
         {
             if (DevicesIsSelected == true)

@@ -9,8 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using AIC.Core;
-using AIC.PDAPage.Converters;
 using AIC.PDAPage.Views.SubViews;
 using System;
 using System.Diagnostics;

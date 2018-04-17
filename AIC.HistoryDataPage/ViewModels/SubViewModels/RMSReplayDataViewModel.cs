@@ -265,6 +265,10 @@ namespace AIC.HistoryDataPage.ViewModels
         }
         #endregion
 
+        #region Property SelectedTime
+        public DateTime? SelectedTime { get; set; }
+        #endregion
+
         private int advancedCount;
         public int AdvancedCount
         {

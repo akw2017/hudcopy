@@ -23,11 +23,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="皮带名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
             <TextBlock Text="皮带轮直径" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding PulleyDiameter, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding PulleyDiameter, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
             <TextBlock Text="皮带长度" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
-            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding BeltLength, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" Minimum="0" Value="{Binding BeltLength, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
 
             <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="btnOK" Click="btnOK_Click" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" IsDefault="True">
                 <Button.Content>

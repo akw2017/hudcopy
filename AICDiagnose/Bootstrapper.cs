@@ -110,6 +110,7 @@ namespace AICDiagnose
             this.Container.RegisterType<IUserManageService, UserManageService>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<ICardProcess, CardProcess>(new ContainerControlledLifetimeManager());               
             this.Container.RegisterType<IRegionNavigationContentLoader, ScopedRegionNavigationContentLoader>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IDeviceDiagnoseTemplateService, DeviceDiagnoseTemplateService>(new ContainerControlledLifetimeManager());
             //this.Container.RegisterType<IDialogCoordinator, DialogCoordinator>(new ContainerControlledLifetimeManager());
         }
 

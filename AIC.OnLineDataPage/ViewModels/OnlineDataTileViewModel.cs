@@ -544,7 +544,7 @@ namespace AIC.OnLineDataPage.ViewModels
             SignalMonitors.Clear();
         }
 
-        private async void ShowFunctions(object args)
+        private void ShowFunctions(object args)
         {
             var item = args as ItemTreeItemViewModel;
 
@@ -583,7 +583,7 @@ namespace AIC.OnLineDataPage.ViewModels
                     }
                     SignalTileViewModel viewModel = BuildSignalTileViewModel(signal, displayType, IsFilter, SignalPreProccessType);
                     SignalMonitors.Add(viewModel);
-                    await Task.Delay(500);
+                    //await Task.Delay(500);
                 }
               
             }

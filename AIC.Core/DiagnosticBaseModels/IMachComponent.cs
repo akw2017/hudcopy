@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
     public interface IMachComponent
     {

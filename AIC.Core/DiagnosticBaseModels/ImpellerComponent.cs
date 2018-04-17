@@ -3,13 +3,15 @@ using AIC.CoreType;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
-    public class ImpellerComponent :BindableBase, IMachComponent
+    [Serializable]
+    public class ImpellerComponent : INotifyPropertyChanged, IMachComponent
     {
         public Guid ID { get; set; } = Guid.NewGuid();
 
@@ -23,7 +25,18 @@ namespace  AIC.Core.DiagnosticBaseModels
                 OnPropertyChanged("Name");
             }
         }
-        public ImpellerClass Component { get; set; } = new ImpellerClass();
+
+        private ImpellerClass component = new ImpellerClass();
+        public ImpellerClass Component
+        {
+            get { return component; }
+            set
+            {
+                component = value;
+                OnPropertyChanged("Component");
+            }
+        }
+
         IMach IMachComponent.Component
         {
             get
@@ -34,7 +47,7 @@ namespace  AIC.Core.DiagnosticBaseModels
             {
                 Component = value as ImpellerClass;
             }
-             
+
         }
 
         public DeviceComponentType ComponentType
@@ -42,6 +55,16 @@ namespace  AIC.Core.DiagnosticBaseModels
             get
             {
                 return DeviceComponentType.Impeller;
+            }
+        }
+
+        [field: NonSerializedAttribute()]
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         //public ImpellerComponent Clone()

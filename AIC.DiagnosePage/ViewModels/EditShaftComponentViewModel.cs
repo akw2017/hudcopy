@@ -1,6 +1,7 @@
 ﻿using AIC.Core.DiagnosticBaseModels;
 using AIC.DiagnosePage.TestDatas;
 using AIC.PDAPage.Models;
+using AIC.ServiceInterface;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -17,9 +18,16 @@ namespace AIC.DiagnosePage.ViewModels
 {
     public class EditShaftComponentViewModel : BindableBase, INavigationAware
     {
-        public EditShaftComponentViewModel()
-        {
 
+        private readonly IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+        public EditShaftComponentViewModel(IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService)
+        {
+            _deviceDiagnoseTemplateService = deviceDiagnoseTemplateService;
+
+            if (Shafts == null)
+            {
+                Shafts = _deviceDiagnoseTemplateService.ShaftClassList;
+            }
         }
 
         #region 属性与字段
@@ -32,6 +40,28 @@ namespace AIC.DiagnosePage.ViewModels
             {
                 shaftComponent = value;
                 OnPropertyChanged("ShaftComponent");
+            }
+        }    
+
+        private ObservableCollection<ShaftClass> shafts;
+        public ObservableCollection<ShaftClass> Shafts
+        {
+            get { return shafts; }
+            set
+            {
+                shafts = value;
+                OnPropertyChanged("Shafts");
+            }
+        }
+
+        private ShaftClass selectedShaft;
+        public ShaftClass SelectedShaft
+        {
+            get { return selectedShaft; }
+            set
+            {
+                selectedShaft = value;
+                OnPropertyChanged("SelectedShaft");
             }
         }
         #endregion
@@ -79,6 +109,15 @@ namespace AIC.DiagnosePage.ViewModels
             get
             {
                 return this.removeDivFreThresholdProportionCommand ?? (this.removeDivFreThresholdProportionCommand = new DelegateCommand<object>(para => this.RemoveDivFreThresholdProportion(para)));
+            }
+        }
+
+        private ICommand selectedShaftChangedComamnd;
+        public ICommand SelectedShaftChangedComamnd
+        {
+            get
+            {
+                return this.selectedShaftChangedComamnd ?? (this.selectedShaftChangedComamnd = new DelegateCommand<object>(para => this.SelectedShaftChanged(para)));
             }
         }
         #endregion
@@ -138,6 +177,15 @@ namespace AIC.DiagnosePage.ViewModels
             if (fre != null)
             {
                 ShaftComponent.Component.DivFreThresholdProportiones.Remove(fre);
+            }
+        }
+
+        private void SelectedShaftChanged(object para)
+        {
+            ShaftClass shaftclass = para as ShaftClass;
+            if (shaftclass != null)
+            {
+                devicemodel.Component.SelectedShaft.Component = shaftclass.DeepClone();
             }
         }
         #endregion

@@ -341,6 +341,7 @@ namespace AIC.HomePage.ViewModels
             _eventAggregator.GetEvent<LoginEvent>().Publish(_loginUserService.LoginInfo);
             //把登录配置保存到本地
             _localConfiguration.WriteServerInfo(_localConfiguration.ServerInfoList);
+            await Task.Delay(TimeSpan.FromSeconds(1));
             Status = ViewModelStatus.None;
             //加载后续数据   
             await _loginUserService.LazyLoading();

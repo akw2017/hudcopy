@@ -19,6 +19,7 @@ using System.Windows.Input;
 
 namespace AIC.Core.OrganizationModels
 {
+    [Serializable]
     public class ItemTreeItemViewModel : OrganizationTreeItemViewModel//测点组织机构树节点
     {
         private bool isRunning;

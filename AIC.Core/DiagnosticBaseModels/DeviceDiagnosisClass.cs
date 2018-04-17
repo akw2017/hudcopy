@@ -5,10 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public class DeviceDiagnosisClass : IMach
+    [Serializable]
+    public partial class DeviceDiagnosisClass : INotifyPropertyChanged, IMach, ICloneable
     {
         public DeviceDiagnosisClass()
         {
@@ -109,22 +113,147 @@ namespace AIC.Core.DiagnosticBaseModels
         }
 
         //总分频门槛值，如DivFreThresholdProportionInfo.Threshold分频存在，忽略HeadDivFreThreshold，否则起作用。
-        public double HeadDivFreThreshold { get; set; }
+        private double headDivFreThreshold;
+        public double HeadDivFreThreshold
+        {
+            get { return headDivFreThreshold; }
+            set
+            {
+                headDivFreThreshold = value;
+                OnPropertyChanged("HeadDivFreThreshold");
+            }
+        }
+
         //=1为多个测点诊断一台设备；=0一个测点诊断一台设备。
-        public bool IsDeviceDiagnosis { get; set; }
+        private bool isDeviceDiagnosis;
+        public bool IsDeviceDiagnosis
+        {
+            get { return isDeviceDiagnosis; }
+            set
+            {
+                isDeviceDiagnosis = value;
+                OnPropertyChanged("IsDeviceDiagnosis");
+            }
+        }
+
+        //绝对平均值门槛值
+        private double meanThreshold;
+        public double MeanThreshold
+        {
+            get { return meanThreshold; }
+            set
+            {
+                meanThreshold = value;
+                OnPropertyChanged("MeanThreshold");
+            }
+        }
+
         //峭度指标阀值
-        public double KurtosisIndexThreshold { get; set; }
+        private double kurtosisIndexThreshold;
+        public double KurtosisIndexThreshold
+        {
+            get { return kurtosisIndexThreshold; }
+            set
+            {
+                kurtosisIndexThreshold = value;
+                OnPropertyChanged("KurtosisIndexThreshold");
+            }
+        }
+
+        //峰值门槛值
+        private double peakThreshold;
+        public double PeakThreshold
+        {
+            get { return peakThreshold; }
+            set
+            {
+                peakThreshold = value;
+                OnPropertyChanged("PeakThreshold");
+            }
+        }
+
         //脉冲指标阀值
-        public double PulseIndexThreshold { get; set; }
+        private double pulseIndexThreshold;
+        public double PulseIndexThreshold
+        {
+            get { return pulseIndexThreshold; }
+            set
+            {
+                pulseIndexThreshold = value;
+                OnPropertyChanged("PulseIndexThreshold");
+            }
+        }
+
         //峰值指标阀值
-        public double PeakIndexThreshold { get; set; }
+        private double peakIndexThreshold;
+        public double PeakIndexThreshold
+        {
+            get { return peakIndexThreshold; }
+            set
+            {
+                peakIndexThreshold = value;
+                OnPropertyChanged("PeakIndexThreshold");
+            }
+        }
+
+        //有效值门槛值。
+        private double rMSThreshold;
+        public double RMSThreshold
+        {
+            get { return rMSThreshold; }
+            set
+            {
+                rMSThreshold = value;
+                OnPropertyChanged("RMSThreshold");
+            }
+        }
+
         //频谱峰值筛选间隔，默认值为5
-        public double FrePeakFilterInterval { get; set; }
+        private double frePeakFilterInterval;
+        public double FrePeakFilterInterval
+        {
+            get { return frePeakFilterInterval; }
+            set
+            {
+                frePeakFilterInterval = value;
+                OnPropertyChanged("FrePeakFilterInterval");
+            }
+        }
+
         //频率诊断设置间隔，默认值为1
-        public double FreDiagnosisSetupInterval { get; set; }
+        private double freDiagnosisSetupInterval;
+        public double FreDiagnosisSetupInterval
+        {
+            get { return freDiagnosisSetupInterval; }
+            set
+            {
+                freDiagnosisSetupInterval = value;
+                OnPropertyChanged("FreDiagnosisSetupInterval");
+            }
+        }
+
         //是否显示故障概率
-        public bool IsFaultprobability { get; set; }
-        public DiagnosisMethod DiagnosisMethod { get; set; }
+        private bool isFaultprobability;
+        public bool IsFaultprobability
+        {
+            get { return isFaultprobability; }
+            set
+            {
+                isFaultprobability = value;
+                OnPropertyChanged("IsFaultprobability");
+            }
+        }
+
+        private DiagnosisMethod diagnosisMethod;
+        public DiagnosisMethod DiagnosisMethod
+        {
+            get { return diagnosisMethod; }
+            set
+            {
+                diagnosisMethod = value;
+                OnPropertyChanged("DiagnosisMethod");
+            }
+        }
 
 
         private ObservableCollection<ItemTreeItemViewModel> unAllotItems = new ObservableCollection<ItemTreeItemViewModel>();
@@ -138,6 +267,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -145,6 +275,27 @@ namespace AIC.Core.DiagnosticBaseModels
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public DeviceDiagnosisClass DeepClone()
+        {
+            using (Stream objectStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(objectStream, this);
+                objectStream.Seek(0, SeekOrigin.Begin);
+                return formatter.Deserialize(objectStream) as DeviceDiagnosisClass;
+            }
+        }
+
+        public DeviceDiagnosisClass ShallowClone()
+        {
+            return Clone() as DeviceDiagnosisClass;
         }
     }
 }

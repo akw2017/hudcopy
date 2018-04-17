@@ -24,3 +24,14 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\CitizenSoftwareLib.Network\bin\D
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\CitizenSoftwareLib.Network.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\CitizenSoftwareLib.Network.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\CitizenSoftwareLib.Common.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Crc32C.NET.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Snappy.NET.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\CitizenSoftwareLib.Common.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Crc32C.NET.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\bin\Debug\Snappy.NET.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\CitizenSoftwareLib.Network\obj\Debug\CitizenSoftwareLib.Network.pdb

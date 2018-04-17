@@ -1,10 +1,14 @@
 ﻿
 using AIC.CoreType;
 using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
-    public class MotorClass : IMach
+    [Serializable]
+    public partial class MotorClass : IMach
     {
         public MotorClass()
         {
@@ -30,5 +34,26 @@ namespace  AIC.Core.DiagnosticBaseModels
         public int SCRs { get; set; }
         //交流电机 默认值true
         public MotorType MotorType { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public MotorClass DeepClone()
+        {
+            using (Stream objectStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(objectStream, this);
+                objectStream.Seek(0, SeekOrigin.Begin);
+                return formatter.Deserialize(objectStream) as MotorClass;
+            }
+        }
+
+        public MotorClass ShallowClone()
+        {
+            return Clone() as MotorClass;
+        }
     }
 }

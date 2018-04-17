@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.DiagnosticFilterModels
 {
-    public class DgBandPassFilter : BindableBase
+    [Serializable]
+    public class DgBandPassFilter
     {
         public DgBandPassFilter()
         {

@@ -71,3 +71,15 @@ D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\BolapanControl.ItemsFilt
 D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.dll
 D:\SupportProject\AIC_HUD\AICHUID\ItemsFilter\obj\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUD\Bin\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\Bin\Debug\ItemsFilter.pdb
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter_MarkupCompile.lref
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.g.resources
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\BolapanControl.ItemsFilter.Properties.Resources.resources
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.csproj.GenerateResource.Cache
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.dll
+D:\SupportProject\AIC_HUD\AICHUD\ItemsFilter\obj\Debug\ItemsFilter.pdb

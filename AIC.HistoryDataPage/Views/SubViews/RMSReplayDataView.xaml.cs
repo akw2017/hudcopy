@@ -891,6 +891,8 @@ namespace AIC.HistoryDataPage.Views
         {
             try
             {
+                ViewModel.SelectedTime = m_chart.ViewXY.XAxes[0].AxisValueToDateTime(xValue);//获取轴时间
+
                 m_chart.BeginUpdate();
                 List<BaseWaveChannelToken> channelList = new List<BaseWaveChannelToken>();
                 AnnotationXY cursorValueDisplay = m_chart.ViewXY.Annotations[0];
@@ -981,6 +983,7 @@ namespace AIC.HistoryDataPage.Views
                     iSeriesNumber++;
                 }
                 sb.AppendLine("Time: " + m_chart.ViewXY.XAxes[0].TimeString(xValue, "yyyy-MM-dd HH:mm:ss"));
+                
                 ////Set text
                 cursorValueDisplay.Text = sb.ToString().Trim();
                 cursorValueDisplay.Visible = bLabelVisible;

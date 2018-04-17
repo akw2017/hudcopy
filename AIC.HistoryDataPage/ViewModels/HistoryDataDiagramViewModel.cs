@@ -31,20 +31,21 @@ using System.ComponentModel;
 using System.Windows.Media;
 using Arction.Wpf.Charting;
 using AIC.Core.HardwareModels;
+using AIC.Core.SignalModels;
 
 namespace AIC.HistoryDataPage.ViewModels
 {
     class HistoryDataDiagramViewModel : BindableBase
     {
-        
-        private readonly IEventAggregator _eventAggregator;       
+
+        private readonly IEventAggregator _eventAggregator;
         private readonly IOrganizationService _organizationService;
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ICardProcess _cardProcess;
         private readonly IHardwareService _hardwareService;
 
         public HistoryDataDiagramViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, IDatabaseComponent databaseComponent, ICardProcess cardProcess, IHardwareService hardwareService)
-        {           
+        {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
             _databaseComponent = databaseComponent;
@@ -57,7 +58,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
         #region 管理树
         private void InitTree()
-        { 
+        {
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             RecycledTreeItems = _organizationService.RecycledTreeItems; ;
             SelectedTreeItem = _cardProcess.GetSelectedTree(OrganizationTreeItems);//可能无效了
@@ -288,7 +289,7 @@ namespace AIC.HistoryDataPage.ViewModels
             {
                 if (value != startTime)
                 {
-                    startTime = value;                   
+                    startTime = value;
                     this.OnPropertyChanged("StartTime");
                 }
             }
@@ -302,7 +303,7 @@ namespace AIC.HistoryDataPage.ViewModels
             {
                 if (value != endTime)
                 {
-                    endTime = value;                  
+                    endTime = value;
                     this.OnPropertyChanged("EndTime");
                 }
             }
@@ -362,7 +363,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     OnPropertyChanged(() => this.IsMulticursor);
                     if (ShowTimeDomain)//多光标新增
                     {
-                        timeDomainVM2.IsVisible = value;                      
+                        timeDomainVM2.IsVisible = value;
                     }
                     else
                     {
@@ -414,7 +415,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         powerSpectrumVM2.ItemWidth = ItemWidth;//多光标新增
                         powerSpectrumDensityVM2.ItemWidth = ItemWidth;//多光标新增                       
                     }
-                    amsReplayVM.CursorlChannged(isMulticursor);
+                    rmsReplayVM.CursorlChannged(isMulticursor);
                 }
             }
         }
@@ -429,7 +430,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     itemWidth = value;
                     OnPropertyChanged("ItemWidth");
-                    amsReplayVM.ItemWidth = value;
+                    rmsReplayVM.ItemWidth = value;
                     if (isMulticursor)
                     {
                         timeDomainVM.ItemWidth = value / 2 - 8;
@@ -473,7 +474,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     itemHeight = value;
                     OnPropertyChanged("ItemHeight");
-                    amsReplayVM.ItemHeight = value;
+                    rmsReplayVM.ItemHeight = value;
                     timeDomainVM.ItemHeight = value;
                     frequencyDomainVM.ItemHeight = value;
                     powerSpectrumVM.ItemHeight = value;
@@ -518,7 +519,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     showAMS = value;
                     OnPropertyChanged("ShowAMS");
-                    amsReplayVM.IsVisible = value;
+                    rmsReplayVM.IsVisible = value;
                 }
             }
         }
@@ -750,8 +751,6 @@ namespace AIC.HistoryDataPage.ViewModels
             }
         }
 
-    
-
         private double upRPMFilter;
         public double UpRPMFilter
         {
@@ -779,8 +778,6 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
             }
         }
-
-       
 
         public List<string> UnitCategory
         {
@@ -814,6 +811,20 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     selectedTreeItem = value;
                     OnPropertyChanged("SelectedTreeItem");
+                }
+            }
+        }
+
+        private DeviceTreeItemViewModel selectedDeviceTreeItem;
+        public DeviceTreeItemViewModel SelectedDeviceTreeItem
+        {
+            get { return selectedDeviceTreeItem; }
+            set
+            {
+                if (selectedDeviceTreeItem != value)
+                {
+                    selectedDeviceTreeItem = value;
+                    OnPropertyChanged("SelectedDeviceTreeItem");
                 }
             }
         }
@@ -869,10 +880,28 @@ namespace AIC.HistoryDataPage.ViewModels
                 return this.removeDataCommand ?? (this.removeDataCommand = new DelegateCommand<object>(para => this.RemoveData(para)));
             }
         }
+
+        private ICommand deviceDiagnoseDataCommand;
+        public ICommand DeviceDiagnoseDataCommand
+        {
+            get
+            {
+                return this.deviceDiagnoseDataCommand ?? (this.deviceDiagnoseDataCommand = new DelegateCommand<object>(para => this.DeviceDiagnoseData(para)));
+            }
+        }
+
+        private ICommand deviceDiagnoseCommand;
+        public ICommand DeviceDiagnoseCommand
+        {
+            get
+            {
+                return this.deviceDiagnoseCommand ?? (this.deviceDiagnoseCommand = new DelegateCommand<object>(para => this.DeviceDiagnose(para)));
+            }
+        }      
         #endregion
 
         #region 私有变量
-        private RMSReplayDataViewModel amsReplayVM;
+        private RMSReplayDataViewModel rmsReplayVM;
         private TimeDomainDataViewModel timeDomainVM;
         private FrequencyDomainDataViewModel frequencyDomainVM;
         private PowerSpectrumDataViewModel powerSpectrumVM;
@@ -902,10 +931,10 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             try
             {
-                amsReplayVM = new RMSReplayDataViewModel();
-                amsReplayVM.Title = "趋势";
-                amsReplayVM.ItemWidth = ItemWidth;
-                amsReplayVM.ItemHeight = ItemHeight;              
+                rmsReplayVM = new RMSReplayDataViewModel();
+                rmsReplayVM.Title = "趋势";
+                rmsReplayVM.ItemWidth = ItemWidth;
+                rmsReplayVM.ItemHeight = ItemHeight;
 
                 timeDomainVM = new TimeDomainDataViewModel();
                 timeDomainVM.Title = "时域";
@@ -997,10 +1026,10 @@ namespace AIC.HistoryDataPage.ViewModels
                 trackTask = AMSTrackChanged;
                 track2Task = AMSTrack2Changed;
 
-                amsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
-                amsReplayVM.WhenTrack2Changed.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrack2Changed);
+                rmsReplayVM.WhenTrackChanged.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrackChanged);
+                rmsReplayVM.WhenTrack2Changed.Sample(TimeSpan.FromMilliseconds(500)).ObserveOn(uiContext).Subscribe(RaiseTrack2Changed);
 
-                historicalDataCollection.Add(amsReplayVM);
+                historicalDataCollection.Add(rmsReplayVM);
                 //historicalDataCollection.Add(alarmPointTrendVM);
                 historicalDataCollection.Add(timeDomainVM);
                 historicalDataCollection.Add(timeDomainVM2);//多光标新增
@@ -1008,19 +1037,19 @@ namespace AIC.HistoryDataPage.ViewModels
                 historicalDataCollection.Add(frequencyDomainVM2);//多光标新增
                 historicalDataCollection.Add(powerSpectrumVM);
                 historicalDataCollection.Add(powerSpectrumVM2);//多光标新增
-                historicalDataCollection.Add(powerSpectrumDensityVM);                    
+                historicalDataCollection.Add(powerSpectrumDensityVM);
                 historicalDataCollection.Add(powerSpectrumDensityVM2);//多光标新增
                 historicalDataCollection.Add(orthoDataVM);
                 historicalDataCollection.Add(offDesignConditionVM);
                 historicalDataCollection.Add(orderAnalysisVM);
                 historicalDataCollection.Add(time3DSpectrumVM);
                 historicalDataCollection.Add(rpm3DSpectrumVM);
-                historicalDataCollection.Add(distributionMapVM);             
+                historicalDataCollection.Add(distributionMapVM);
             }
             catch (Exception e)
             {
                 _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-初始化异常", e));
-            }            
+            }
         }
         private async void RaiseTrackChanged(IEnumerable<BaseWaveChannelToken> tokens)
         {
@@ -1062,7 +1091,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 }
 
                 var validTokens = tokens.Where(o => o.CurrentIndex != -1).ToArray();
-              
+
                 if (validTokens.Length == 0) return;
 
                 //var globalIndexes = validTokens.Select(o => o.DataContracts[o.CurrentIndex].ChannelGlobalIndex).ToArray();
@@ -1090,11 +1119,11 @@ namespace AIC.HistoryDataPage.ViewModels
                             result.Add(null);//与validTokens对齐
                             token.VData = null;
                         }
-                    }    
+                    }
                 }
 
                 await Task.Run(() => Parallel.For(0, result.Count, i =>
-                {      
+                {
                     if (result[i] == null)
                     {
                         return;
@@ -1175,7 +1204,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 if (ShowOrtho)
                 {
                     //await orthoDataVM.ChangeOrthoData(updatetokens);
-                }              
+                }
             }
             catch (Exception ex)
             {
@@ -1359,6 +1388,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     }
                 }
             }
+            SelectedDeviceTreeItem = para as DeviceTreeItemViewModel;
         }
         private void DoubleClickAddData(object para)
         {
@@ -1368,26 +1398,37 @@ namespace AIC.HistoryDataPage.ViewModels
                 AddData(para);
             }
         }
-        private async void AddData(object para)
+        private async void AddData(object para, bool ShowMessagBox = true)
         {
-            var item = SelectedTreeItem as ItemTreeItemViewModel;
+            var item = para as ItemTreeItemViewModel;
+            if (para == null)
+            {
+                item = SelectedTreeItem as ItemTreeItemViewModel;
+            }
+
             if (item == null)
             {
+                if (ShowMessagBox == true)
+                {
 #if XBAP
-                MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("请选中要查询的测点", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+                }
                 return;
             }
 
             if (Unit == null || Unit == "")
             {
+                if (ShowMessagBox == true)
+                {
 #if XBAP
-                MessageBox.Show("请选择要查询的测点的数据类型", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("请选择要查询的测点的数据类型", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("请选择要查询的测点的数据类型", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("请选择要查询的测点的数据类型", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+                }
                 return;
             }
 
@@ -1400,9 +1441,9 @@ namespace AIC.HistoryDataPage.ViewModels
             string conditionAlarm;
             object[] objectWave;
             object[] objectAlarm;
-            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, out objectWave, out objectAlarm,  AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter,Unit, DownRPMFilter, UpRPMFilter);
+            ConditionClass.GetConditionStr(out conditionWave, out conditionAlarm, out objectWave, out objectAlarm, AllowNormal, AllowPreWarning, AllowWarning, AllowDanger, AllowInvalid, AllowRPMFilter, Unit, DownRPMFilter, UpRPMFilter);
 
-            string selectedip = SelectedTreeItem.ServerIP;
+            string selectedip = item.ServerIP;
 
             #region 分频            
             var divfre = SelectedTreeItem as DivFreTreeItemViewModel;
@@ -1490,7 +1531,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         ChannelType = channelType,
                     };
 
-                    amsReplayVM.AddChannel(channeltoken);
+                    rmsReplayVM.AddChannel(channeltoken);
                     offDesignConditionVM.AddChannel(channeltoken);
 
                     addedChannels.Add(channeltoken);
@@ -1515,7 +1556,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 {
                     WaitInfo = "获取数据中";
                     Status = ViewModelStatus.Querying;
-                    SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm);
+                    await SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm, ShowMessagBox);
                 }
                 catch (Exception ex)
                 {
@@ -1528,27 +1569,33 @@ namespace AIC.HistoryDataPage.ViewModels
             }
             else
             {
+                if (ShowMessagBox == true)
+                {
 #if XBAP
-                MessageBox.Show("该测点没绑定或无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("该测点无信息", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+                }
                 return;
             }
             #endregion
         }
 
-        private async void SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm)
+        private async Task SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm, bool ShowMessagBox = true)
         {
             List<IBaseAlarmSlot> result = await GetData(item.ServerIP, item.T_Item.Guid, item.T_Item.ItemType, conditionWave, conditionAlarm, objectWave, objectAlarm);
 
             if (result == null || result.Count == 0)
             {
+                if (ShowMessagBox == true)
+                {
 #if XBAP
-                MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #else
-                Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("没有数据，请重新选择条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+                }
                 return;
             }
 
@@ -1571,7 +1618,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         break;
                     }
                 }
-                amsReplayVM.AddChannel(channeltoken);
+                rmsReplayVM.AddChannel(channeltoken);
                 timeDomainVM.AddChannel(channeltoken);
                 frequencyDomainVM.AddChannel(channeltoken);
                 powerSpectrumVM.AddChannel(channeltoken);
@@ -1587,7 +1634,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 addedChannels.Add(channeltoken);
             }
             else if (item.T_Item.ItemType == (int)ChannelType.WirelessScalarChannelInfo)
-            {             
+            {
                 BaseAlarmChannelToken channeltoken = new BaseAlarmChannelToken()
                 {
                     DisplayName = (item.BaseAlarmSignal != null) ? item.BaseAlarmSignal.DeviceItemName : item.FullName,
@@ -1606,7 +1653,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     }
                 }
 
-                amsReplayVM.AddChannel(channeltoken);
+                rmsReplayVM.AddChannel(channeltoken);
                 distributionMapVM.AddChannel(channeltoken);
                 addedChannels.Add(channeltoken);
             }
@@ -1647,7 +1694,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     foreach (var item in vibratonChannels)
                     {
                         List<IBaseAlarmSlot> result = await GetData(item.IP, item.Guid, item.ItemType, conditionWave, conditionAlarm, objectWave, objectAlarm);
-                        item.DataContracts = result;                        
+                        item.DataContracts = result;
                     }
                 }
                 var alarmChannels = addedChannels.OfType<BaseAlarmChannelToken>().ToArray();
@@ -1673,7 +1720,7 @@ namespace AIC.HistoryDataPage.ViewModels
                         switch (channelType)
                         {
                             case ChannelType.IEPEChannelInfo:
-                                {                                  
+                                {
                                     var resultslot = await _databaseComponent.GetHistoryData<D_IEPESlot>(item.IP, item.Guid, null, StartTime.Value, EndTime.Value, null, null);
                                     if (resultslot.Count == 0)
                                     {
@@ -1683,7 +1730,7 @@ namespace AIC.HistoryDataPage.ViewModels
                                     break;
                                 }
                             case ChannelType.EddyCurrentDisplacementChannelInfo:
-                                {                                   
+                                {
                                     var resultslot = await _databaseComponent.GetHistoryData<D_EddyCurrentDisplacementSlot>(item.IP, item.Guid, null, StartTime.Value, EndTime.Value, null, null);
                                     if (resultslot.Count == 0)
                                     {
@@ -1693,7 +1740,7 @@ namespace AIC.HistoryDataPage.ViewModels
                                     break;
                                 }
                             case ChannelType.WirelessVibrationChannelInfo:
-                                {                                  
+                                {
                                     var resultslot = await _databaseComponent.GetHistoryData<D_WirelessVibrationSlot>(item.IP, item.Guid, null, StartTime.Value, EndTime.Value, null, null);
                                     if (resultslot.Count == 0)
                                     {
@@ -1704,20 +1751,20 @@ namespace AIC.HistoryDataPage.ViewModels
                                 }
                             default: continue;
                         }
-                       
+
                         item.DataContracts = result;
                         item.SlotDataContracts = slotdata;
                     }
                 }
                 #endregion
 
-                amsReplayVM.ChannelDataChanged(addedChannels);
+                rmsReplayVM.ChannelDataChanged(addedChannels);
                 distributionMapVM.ChangeChannelData(addedChannels);
                 offDesignConditionVM.ChannelDataChanged(addedChannels);
             }
             catch (Exception ex)
             {
-                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-通道数据跟新失败", ex));               
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据回放-通道数据跟新失败", ex));
             }
             finally
             {
@@ -1728,8 +1775,8 @@ namespace AIC.HistoryDataPage.ViewModels
         {
             ColorList.Clear();
             foreach (var token in addedChannels)
-            {                
-                amsReplayVM.RemoveChannel(token);
+            {
+                rmsReplayVM.RemoveChannel(token);
                 //alarmPointTrendVM.RemoveChannel(token);
                 timeDomainVM.RemoveChannel(token);
                 frequencyDomainVM.RemoveChannel(token);
@@ -1754,7 +1801,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 ColorList.Remove(token.SolidColorBrush.Color);
 
                 addedChannels.Remove(token);
-                amsReplayVM.RemoveChannel(token);
+                rmsReplayVM.RemoveChannel(token);
                 //alarmPointTrendVM.RemoveChannel(token);
                 timeDomainVM.RemoveChannel(token);
                 frequencyDomainVM.RemoveChannel(token);
@@ -1769,7 +1816,7 @@ namespace AIC.HistoryDataPage.ViewModels
                 offDesignConditionVM.RemoveChannel(token);
                 distributionMapVM.RemoveChannel(token);
             }
-        }     
+        }
 
         public void Close()
         {
@@ -1778,6 +1825,49 @@ namespace AIC.HistoryDataPage.ViewModels
                 viewmodel.Close();
             }
         }
+
+        #region 专家诊断
+        private void DeviceDiagnoseData(object para)
+        {
+            if (SelectedDeviceTreeItem == null)
+            {
+#if XBAP
+                MessageBox.Show("请选中要诊断的设备", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("请选中要诊断的设备", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
+            ClearData(null);
+
+            if (Unit == null)
+            {
+                Unit = "mm/s";
+            }
+            foreach (var item in SelectedDeviceTreeItem.Children.OfType<ItemTreeItemViewModel>().Where(p => p.BaseAlarmSignal is BaseDivfreSignal))
+            {
+                AddData(item, false);
+            }
+        }
+
+        private void DeviceDiagnose(object para)
+        {
+            if (SelectedDeviceTreeItem == null)
+            {
+#if XBAP
+                MessageBox.Show("请选中要诊断的设备", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+                Xceed.Wpf.Toolkit.MessageBox.Show("请选中要诊断的设备", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+#endif
+                return;
+            }
+            DateTime? dt = rmsReplayVM.SelectedTime;
+            if (dt != null)
+            {
+                _eventAggregator.GetEvent<DeviceDiagnoseEvent>().Publish(new Tuple<DateTime, DeviceTreeItemViewModel>(dt.Value, SelectedDeviceTreeItem));
+            }
+        }
+        #endregion
     }
-  
+
 }

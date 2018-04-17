@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
+    [Serializable]
     public class NaturalFre
     {
         public DivFreType DivFre { get; set; }

@@ -237,4 +237,5 @@
     <s:String x:Key="rememberPwd">RememberPassword</s:String>
 
     <s:String x:Key="templateManage">TemplateManage</s:String>
+    <s:String x:Key="addData">AddData</s:String>
 </ResourceDictionary>

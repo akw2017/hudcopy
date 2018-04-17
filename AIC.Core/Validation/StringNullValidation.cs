@@ -23,7 +23,7 @@ namespace AIC.Core.Validation
 
         public override string FormatErrorMessage(string name)
         {
-            return "用户名不能为空, 请输入用户名！！！";
+            return "不能为空, 请输入字符！！！";
         }
     }
 }

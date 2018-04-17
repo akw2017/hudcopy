@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm.Diagnosis.cs" />
     <Compile Include="Algorithm.FFT.cs" />
     <Compile Include="Algorithm.Filter.cs" />
     <Compile Include="Algorithm.Filter.HighPass.cs" />
@@ -114,6 +115,9 @@
     <Content Include="Resources\AICMatlabDLL.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithm.Bearing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

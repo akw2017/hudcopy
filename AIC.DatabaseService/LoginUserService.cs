@@ -144,7 +144,6 @@ namespace AIC.DatabaseService
                     List<Task> lttask = new List<Task>();
                     lttask.Add(_databaseComponent.LoadHardwave(server.IP));
                     lttask.Add(_databaseComponent.GetMeasureUnit(server.IP));
-
                     await Task.WhenAll(lttask.ToArray());
                 }
 

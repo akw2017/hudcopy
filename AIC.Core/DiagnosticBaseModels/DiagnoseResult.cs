@@ -3,36 +3,37 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
-    public class DiagnoseResult : BindableBase
+    public class DiagnoseResult : INotifyPropertyChanged
     {
         private ObservableCollection<DiagnoseFault> descriptionCollection = new ObservableCollection<DiagnoseFault>();
         private string error;
         private string warning;
-      
+
 
         public IEnumerable<DiagnoseFault> description { get { return descriptionCollection; } }
         public string Error
         {
             get { return error; }
-            set { this.SetProperty(ref error, value); }
+            set { error = value; OnPropertyChanged("Error"); }
         }
         public string Warning
         {
             get { return warning; }
-            set { this.SetProperty(ref warning, value); }
+            set {  warning= value; OnPropertyChanged("Warning"); }
         }
 
         private string descriptionString;
         public string DescriptionString
         {
             get { return descriptionString; }
-            set { this.SetProperty(ref descriptionString, value); }
+            set { descriptionString = value; OnPropertyChanged("DescriptionString"); }
         }
 
         public void SetDiagnosticResult(string name)
@@ -51,7 +52,7 @@ namespace  AIC.Core.DiagnosticBaseModels
                 DescriptionString += "警告" + Warning;
             }
             if (descriptionCollection.Count != 0)
-            {              
+            {
                 DescriptionString += "结论" + string.Join("\r\n", descriptionCollection.Select(p => p.Result));
             }
             if (DescriptionString == null)
@@ -69,16 +70,24 @@ namespace  AIC.Core.DiagnosticBaseModels
         public string Name
         {
             get { return name; }
-            set { this.SetProperty(ref name, value);  }
+            set { name = value; OnPropertyChanged("Name"); }
         }
         private string result;
         [JsonIgnore]
         public string Result
         {
             get { return result; }
-            set { this.SetProperty(ref result, value); }
+            set {  result = value; OnPropertyChanged("Result"); }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 
     public class DiagnoseFault : BindableBase

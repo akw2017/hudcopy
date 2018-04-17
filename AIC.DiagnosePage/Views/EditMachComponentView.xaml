@@ -73,7 +73,13 @@
                 <TextBlock Text="轴承名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding BearingComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="轴承模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                <ComboBox x:Name="myCboBearing" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Bearings}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedBearingChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCboBearing}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <TextBlock Text="轴承模型名称" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BearingComponent.Component.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="轴承型号" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"/>
@@ -127,7 +133,13 @@
                 <TextBlock Text="皮带名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding BeltComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="皮带模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                <ComboBox x:Name="myCboBelt" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Belts}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedBeltChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCboBelt}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <TextBlock Text="皮带模型名称" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1"  Text="{Binding BeltComponent.Component.Name,UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Text="皮带轮直径" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
@@ -157,7 +169,13 @@
                 <TextBlock Text="齿轮名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GearComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="齿轮模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                <ComboBox x:Name="myCboGear" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Gears}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedGearChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCboGear}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <TextBlock Text="齿轮模型名称" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
                 <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding GearComponent.Component.Name,UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="齿数" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
@@ -185,7 +203,13 @@
                 <TextBlock Text="电机名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding MotorComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="电机模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                <ComboBox x:Name="myCboMotor" Grid.Row="0" Grid.Column="3"  ItemsSource="{Binding Motors}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedMotorChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCboMotor}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <TextBlock Text="电机模型名称" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MotorComponent.Component.Name,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                 <TextBlock Text="电网工频(Hz)" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
@@ -251,7 +275,13 @@
                 <TextBlock Text="叶轮名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ImpellerComponent.Name}" Style="{DynamicResource MetroTextBox}"/>
                 <TextBlock Text="叶轮模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="3" IsEditable="True" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                <ComboBox x:Name="myCboImpeller" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Impellers}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedImpellerChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCboImpeller}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <TextBlock Text="叶轮模型名称" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
                 <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding ImpellerComponent.Component.Name,UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="叶片数" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />

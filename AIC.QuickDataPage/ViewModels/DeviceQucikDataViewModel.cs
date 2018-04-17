@@ -326,6 +326,7 @@ namespace AIC.QuickDataPage.ViewModels
             }
             else
             {
+                OrganizationTreeItem.IsSelected = true;
                 DeviceTreeItems = new ObservableCollection<DeviceTreeItemViewModel> { device };
             }
             selectedsignals = _signalProcess.Signals.OfType<BaseAlarmSignal>().Where(p => p.ServerIP == ServerInfo.IP).ToList();
@@ -486,6 +487,7 @@ namespace AIC.QuickDataPage.ViewModels
             else if (para is string)//设备名
             {
                 var device = DeviceTreeItems.Where(p => p.Name == para as string).FirstOrDefault();
+                device.IsSelected = true;
                 SelectedTreeChanged(device);
             }
         }

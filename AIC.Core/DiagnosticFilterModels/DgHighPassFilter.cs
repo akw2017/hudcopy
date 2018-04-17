@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.DiagnosticFilterModels
 {
-    public class DgHighPassFilter : BindableBase
+    [Serializable]
+    public class DgHighPassFilter
     {
         public DgHighPassFilter()
         {

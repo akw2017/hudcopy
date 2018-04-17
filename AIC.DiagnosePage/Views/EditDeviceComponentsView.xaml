@@ -174,7 +174,13 @@
                     <TextBlock Text="设备" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBlock Text="设备模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" />
-                    <ComboBox Grid.Row="0" Grid.Column="3" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                    <ComboBox x:Name="myCbo" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDeviceChangedComamnd}" CommandParameter="{Binding SelectedItem, ElementName=myCbo}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBlock Text="设备模型" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBlock Text="诊断方式" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />

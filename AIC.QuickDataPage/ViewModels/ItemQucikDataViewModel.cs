@@ -283,6 +283,7 @@ namespace AIC.QuickDataPage.ViewModels
             FirstItemTreeItem = ItemTreeItems.Where(p => p.BaseAlarmSignal == AlarmSignal).FirstOrDefault();//默认测点
             if (FirstItemTreeItem != null)
             {
+                FirstItemTreeItem.IsSelected = true;
                 ItemTreeItems = new ObservableCollection<ItemTreeItemViewModel> { FirstItemTreeItem };//默认只选择该测点
             }
             else

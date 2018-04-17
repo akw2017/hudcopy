@@ -11,14 +11,13 @@
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="title" FontSize="24" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="title" FontSize="24" Margin="2" HorizontalAlignment="Center" Grid.ColumnSpan="2">
                 <Run Text="{Binding DeviceDiagnosisComponent.Name}"/>
                 <Run>(</Run>
                 <Run Text="{Binding DeviceDiagnosisComponent.Component.Name}"/>
@@ -190,6 +189,84 @@
                                         </DataTemplate>
                                     </ItemsControl.Resources>
                                 </ItemsControl>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <CheckBox Grid.Column="1" IsChecked="{Binding DeviceDiagnosisComponent.Component.IsDeviceDiagnosis}" ToolTip="是：设备诊断；否：单点诊断" HorizontalAlignment="Right"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="DeviceFrequencyTemplate" DataType="model:DeviceClass">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" MaxHeight="200"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="title" FontSize="24" Margin="2" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                <Run Text="{Binding DeviceDiagnosisComponent.Name}"/>
+                <Run>(</Run>
+                <Run Text="{Binding DeviceDiagnosisComponent.Component.Name}"/>
+                <Run>)</Run>
+            </TextBlock>
+            <Image Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Source="/AIC.Resources;component/Images/Device.png">
+                <Image.ToolTip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="2">  
+                    <Run>诊断方式:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.DiagnosisMethod,Converter={StaticResource enumDescriptionConverter}}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">  
+                    <Run>故障概率:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.IsFaultprobability}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>总分频门槛值:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.HeadDivFreThreshold}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>频谱峰值筛选间隔(△f):</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.FrePeakFilterInterval}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>频率诊断设置间隔(△f):</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.FreDiagnosisSetupInterval}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>峭度指标:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.KurtosisIndexThreshold}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>脉冲指标:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.PulseIndexThreshold}"/>
+                        </TextBlock>
+                        <TextBlock Margin="2">
+                    <Run>峰值指标:</Run>
+                    <Run Text="{Binding DeviceDiagnosisComponent.Component.PeakIndexThreshold}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Image.ToolTip>
+            </Image>
+            <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DeviceDiagnosisComponent.ComponentNaturalFrequency}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Margin="10,0">
+                                <TextBlock x:Name="title" VerticalAlignment="Center">
+                                    <Run Text="{Binding Name}"/>
+                                    <Run>(</Run>
+                                    <Run Text="{Binding Frequency}"/>
+                                    <Run>)</Run>
+                                </TextBlock>                               
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

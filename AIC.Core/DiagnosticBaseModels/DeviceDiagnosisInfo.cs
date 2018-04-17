@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using AIC.Core.DiagnosticFilterModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  AIC.Core.DiagnosticBaseModels
+namespace AIC.Core.DiagnosticBaseModels
 {
     public class DeviceDiagnosisInfo//设备诊断模型
     {
@@ -68,6 +69,17 @@ namespace  AIC.Core.DiagnosticBaseModels
         public string Name;
         public int VaneNumber;//叶片数
     };
+    public class MotorInfo//电机信息
+    {
+        public string Name;
+        public double LineFrequency; //电网工频,单位HZ,默认值50
+        public int Poles; //磁极数,必须为大于等于2的偶数，如2,4,6,8，… 默认值2
+        public int RotorBars;//转子条数
+        public int StatorCoils;//定子线圈数(同步电机)
+        public int WindingSlots; //绕组槽数
+        public int SCRs;//可控硅整流器数,只有3与6两种选择。默认值6
+        public int MotorType; //电机类型,默认交流电机
+    };
     public class NegationDivFreStrategyInfo //否定分频诊断策略
     {
         public int Code;  //故障代码
@@ -82,6 +94,8 @@ namespace  AIC.Core.DiagnosticBaseModels
         public string Name; //故障名称
         public double Value1; //DivFreType=0时表示倍频，如1；DivFreType=1时表示固定分频，如80；DivFreType=2时频率起始值，如40；
         public double Value2;//DivFreType=2时频率结束值，如80；其它两种分频值为此项忽略。
+        public string Proposal;//建议
+        public string Harm;//危害
     };
     public class DivFreThresholdProportionInfo//分频门槛与加权
     {
@@ -105,9 +119,46 @@ namespace  AIC.Core.DiagnosticBaseModels
         public int SamplePoint;//采样点数
         public string VData;// 经过反BASE64转换的data，即原始时域数据。
     };
+    public class BandPassFilterInfo
+    {
+        public double PassbandAttenuationDB;
+        //阻带衰减，建议值60
+        public double StopbandAttenuationDB;
+        //带通低逼近通带频率
+        public double BPPassbandFreLow;
+        //带通高逼近通带频率
+        public double BPPassbandFreHigh;
+        //带通低阻带频率
+        public double BPStopbandFreLow;
+        //带通高阻带频率
+        public double BPStopbandFreHigh;
+    }
+    public class HighPassFilterInfo
+    {
+        //通带衰减，建议值0.2
+        public double PassbandAttenuationDB;
+        //阻带衰减，建议值60
+        public double StopbandAttenuationDB;
+        //通带频率
+        public double PassbandFre;
+        //阻带频率
+        public double StopbandFre;
+    }
+    public class LowPassFilterInfo
+    {
+        //通带衰减，建议值0.2
+        public double PassbandAttenuationDB;
+        //阻带衰减，建议值60
+        public double StopbandAttenuationDB;
+        //通带频率
+        public double PassbandFre;
+        //阻带频率
+        public double StopbandFre;
+    }
     public class ShaftInfo
     {
         public string Name;//轴名称；
+        public double DeltaRPM;//转速差；
         public double RPM;//轴转速
         public double RPMCoeff;//转速系数，默认值为1
         public bool IsSlidingBearing;//是否滑动轴承
@@ -115,11 +166,17 @@ namespace  AIC.Core.DiagnosticBaseModels
         public GearInfo[] GearInfos;
         public BeltInfo[] BeltInfos;
         public ImpellerInfo[] ImpellerInfos;
+        public MotorInfo[] MotorInfos;
         public NaturalFreInfo[] AddNaturalFres;
         public NaturalFreInfo[] DeleteNaturalFres;
         public DivFreThresholdProportionInfo[] DivFreThresholdProportions;
         public NegationDivFreStrategyInfo[] NegationDivFreStrategies;
         public TestPointGroupInfo[] TestPointGroupInfos;
+        public int FilterType;//滤波类型，=0无滤波，=1带通滤波，=2高通滤波，=3低通滤波
+        public bool BindRPMForFilter;
+        public BandPassFilterInfo BandPassFilter;
+        public HighPassFilterInfo HighPassFilter;
+        public LowPassFilterInfo LowPassFilter;
     };
     public class SingleTestPointInfo
     {

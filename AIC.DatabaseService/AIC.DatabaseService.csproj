@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseComponent.cs" />
+    <Compile Include="DeviceDiagnoseTemplateService.cs" />
     <Compile Include="HardwareService.cs" />
     <Compile Include="LoginUserService.cs" />
     <Compile Include="Models\CardProcess.cs" />
@@ -158,6 +159,13 @@
     <Compile Include="OrganizationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseServiceModule.cs" />
+    <Compile Include="TestDatas\BearingClassExamples.cs" />
+    <Compile Include="TestDatas\BeltClassExamples.cs" />
+    <Compile Include="TestDatas\DeviceClassExamples.cs" />
+    <Compile Include="TestDatas\GearClassExamples.cs" />
+    <Compile Include="TestDatas\ImpellerClassExamples.cs" />
+    <Compile Include="TestDatas\MotorClassExamples.cs" />
+    <Compile Include="TestDatas\ShaftClassExamples.cs" />
     <Compile Include="Tests\JsonTest.cs" />
     <Compile Include="Tests\JsonTestAddWrieless.cs" />
     <Compile Include="UserManageService.cs" />

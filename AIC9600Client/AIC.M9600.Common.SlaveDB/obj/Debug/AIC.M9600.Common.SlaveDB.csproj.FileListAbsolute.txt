@@ -12,3 +12,11 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Deb
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Debug\AIC.M9600.Common.SlaveDB.dll.config
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Debug\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Debug\AIC.M9600.Common.SlaveDB.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Debug\AIC.M9600.Common.PetaPoco.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\bin\Debug\AIC.M9600.Common.PetaPoco.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.csprojResolveAssemblyReference.cache
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC9600Client\AIC.M9600.Common.SlaveDB\obj\Debug\AIC.M9600.Common.SlaveDB.pdb

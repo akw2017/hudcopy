@@ -22,9 +22,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="齿轮名称" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
             <TextBlock Text="齿数" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding TeethNumber, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Minimum="0" Value="{Binding TeethNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
 
             <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" x:Name="btnOK" Click="btnOK_Click" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" IsDefault="True">
                 <Button.Content>

@@ -38,7 +38,7 @@ namespace AIC.DiagnosePage.TestDatas
                 Name = "轴1",
                 NaturalFres = new ObservableCollection<NaturalFre>()
                 {
-                    new NaturalFre() {DivFre = CoreType.DivFreType.Custom, Fault="不平衡", Harm = "危害1", Mode = CoreType.NaturalFreMode.Additive, Proposal = "建议1", Value1 = 0, Value2 = 0 },
+                    new NaturalFre() {DivFre = CoreType.DivFreType.Custom, Fault="不平衡", Harm = "危害1", Mode = CoreType.NaturalFreMode.Additive, Proposal = "建议1", Value1 = 1, Value2 = 0 },
                 },
                 NegationDivFreStrategies = new ObservableCollection<NegationDivFreStrategy>()
                 {

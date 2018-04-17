@@ -3,13 +3,15 @@ using AIC.CoreType;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public class BearingComponent : BindableBase, IMachComponent
+    [Serializable]
+    public class BearingComponent : INotifyPropertyChanged, IMachComponent
     {
         public Guid ID { get; set; } = Guid.NewGuid();
 
@@ -23,7 +25,17 @@ namespace AIC.Core.DiagnosticBaseModels
                 OnPropertyChanged("Name");
             }
         }
-        public BearingClass Component { get; set; } = new BearingClass();
+
+        private BearingClass component = new BearingClass();
+        public BearingClass Component
+        {
+            get { return component; }
+            set
+            {
+                component = value;
+                OnPropertyChanged("Component");
+            }
+        }
 
         IMach IMachComponent.Component
         {
@@ -42,6 +54,16 @@ namespace AIC.Core.DiagnosticBaseModels
             get
             {
                 return DeviceComponentType.Bearing;
+            }
+        }
+
+        [field: NonSerializedAttribute()]
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

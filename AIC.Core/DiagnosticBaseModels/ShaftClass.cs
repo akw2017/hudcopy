@@ -6,10 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public class ShaftClass : IMach
+    [Serializable]
+    public partial class ShaftClass : INotifyPropertyChanged, IMach
     {
         public ShaftClass()
         {
@@ -19,16 +23,66 @@ namespace AIC.Core.DiagnosticBaseModels
         }
         public int ID { get; set; } = -1;//新增为-1
         public Guid ShaftID { get; set; }
-        //[AllowNull]
-        public string Name { get; set; }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
         //是否为滑动轴承
-        public bool IsSlidingBearing { get; set; }
+        private bool isSlidingBearing;
+        public bool IsSlidingBearing
+        {
+            get { return isSlidingBearing; }
+            set
+            {
+                isSlidingBearing = value;
+                OnPropertyChanged("IsSlidingBearing");
+            }
+        }
+
         //转速差
-        public double DeltaRPM { get; set; }
+        private double deltaRPM;
+        public double DeltaRPM
+        {
+            get { return deltaRPM; }
+            set
+            {
+                deltaRPM = value;
+                OnPropertyChanged("DeltaRPM");
+            }
+        }
+
         //默认转速
-        public double DefaultRPM { get; set; }
+        private double defaultRPM;
+        public double DefaultRPM
+        {
+            get { return defaultRPM; }
+            set
+            {
+                defaultRPM = value;
+                OnPropertyChanged("DefaultRPM");
+            }
+        }
+
         //转速系数，默认值为1
-        public double RPMCoeff { get; set; }
+        private double rPMCoeff;
+        public double RPMCoeff
+        {
+            get { return rPMCoeff; }
+            set
+            {
+                rPMCoeff = value;
+                OnPropertyChanged("RPMCoeff");
+            }
+        }
+
         public DeviceDiagnosisClass Parent { get; set; }
 
         private ObservableCollection<IMachComponent> machComponents = new ObservableCollection<IMachComponent>();
@@ -125,6 +179,7 @@ namespace AIC.Core.DiagnosticBaseModels
         public DgHighPassFilter DgHighPassFilter { get; set; } = new DgHighPassFilter();
         public DgLowPassFilter DgLowPassFilter { get; set; } = new DgLowPassFilter();
 
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -132,6 +187,27 @@ namespace AIC.Core.DiagnosticBaseModels
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public ShaftClass DeepClone()
+        {
+            using (Stream objectStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(objectStream, this);
+                objectStream.Seek(0, SeekOrigin.Begin);
+                return formatter.Deserialize(objectStream) as ShaftClass;
+            }
+        }
+
+        public ShaftClass ShallowClone()
+        {
+            return Clone() as ShaftClass;
         }
     }
 }

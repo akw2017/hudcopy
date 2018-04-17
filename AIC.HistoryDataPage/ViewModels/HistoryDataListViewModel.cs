@@ -693,7 +693,7 @@ namespace AIC.HistoryDataPage.ViewModels
                     {
                         WaitInfo = "获取数据中";
                         Status = ViewModelStatus.Querying;
-                        SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm);
+                        await SubAddData(item, conditionWave, conditionAlarm, objectWave, objectAlarm);
                     }
                     catch (Exception ex)
                     {
@@ -730,7 +730,7 @@ namespace AIC.HistoryDataPage.ViewModels
 
                     foreach (var subitem in items)
                     {
-                        SubAddData(subitem, conditionWave, conditionAlarm,  objectWave, objectAlarm, false);
+                        await SubAddData(subitem, conditionWave, conditionAlarm,  objectWave, objectAlarm, false);
                     }
                 }
                 catch (Exception ex)
@@ -746,7 +746,7 @@ namespace AIC.HistoryDataPage.ViewModels
             #endregion
         }
 
-        private async void SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm, bool showmessagbox = true)
+        private async Task SubAddData(ItemTreeItemViewModel item, string conditionWave, string conditionAlarm, object[] objectWave, object[] objectAlarm, bool showmessagbox = true)
         {
             List<IBaseAlarmSlot> result = new List<IBaseAlarmSlot>();
 

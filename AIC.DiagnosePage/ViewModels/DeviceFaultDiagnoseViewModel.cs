@@ -40,6 +40,7 @@ using AIC.DiagnosePage.Views;
 using AIC.PDAPage.Models;
 using AIC.Core;
 using AIC.Core.DiagnosticBaseModels;
+using AIC.OnLineDataPage.ViewModels.SubViewModels;
 
 namespace AIC.DiagnosePage.ViewModels
 {
@@ -66,6 +67,9 @@ namespace AIC.DiagnosePage.ViewModels
             _view = new ListCollectionView(vibrationSignals);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
             InitTree();
+
+            TimeDomainOnLineVM = new TimeDomainChartViewModel(null);
+            FrequencyDomainOnLineVM = new FrequencyDomainChartViewModel(null);
         }
         #region 属性与字段
         private ObservableCollection<OrganizationTreeItemViewModel> _organizationTreeItems;
@@ -178,17 +182,72 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private DeviceTreeItemViewModel selectedDeviceTreeItem;
-        public DeviceTreeItemViewModel SelectedDeviceTreeItem
+        //private DeviceTreeItemViewModel selectedDeviceTreeItem;
+        //public DeviceTreeItemViewModel SelectedDeviceTreeItem
+        //{
+        //    get { return selectedDeviceTreeItem; }
+        //    set
+        //    {
+        //        if (selectedDeviceTreeItem != value)
+        //        {
+        //            selectedDeviceTreeItem = value;
+        //            OnPropertyChanged("SelectedDeviceTreeItem");
+        //        }
+        //    }
+        //}
+
+        private TimeDomainChartViewModel timeDomainOnLineVM;
+        public TimeDomainChartViewModel TimeDomainOnLineVM
         {
-            get { return selectedDeviceTreeItem; }
+            get { return timeDomainOnLineVM; }
             set
             {
-                if (selectedDeviceTreeItem != value)
+                if (value != timeDomainOnLineVM)
                 {
-                    selectedDeviceTreeItem = value;
-                    OnPropertyChanged("SelectedDeviceTreeItem");
+                    timeDomainOnLineVM = value;
+                    this.OnPropertyChanged("TimeDomainOnLineVM");
                 }
+            }
+        }
+        private FrequencyDomainChartViewModel frequencyDomainOnLineVM;
+        public FrequencyDomainChartViewModel FrequencyDomainOnLineVM
+        {
+            get { return frequencyDomainOnLineVM; }
+            set
+            {
+                if (value != frequencyDomainOnLineVM)
+                {
+                    frequencyDomainOnLineVM = value;
+                    this.OnPropertyChanged("FrequencyDomainOnLineVM");
+                }
+            }
+        }
+
+        private ObservableCollection<ComponentNaturalFrequency> componentNaturalFrequency;
+        public ObservableCollection<ComponentNaturalFrequency> ComponentNaturalFrequency
+        {
+            get { return componentNaturalFrequency; }
+            set
+            {
+                if (value != componentNaturalFrequency)
+                {
+                    componentNaturalFrequency = value;
+                    this.OnPropertyChanged("ComponentNaturalFrequency");
+                }
+            }
+        }
+
+        public bool isDeviceModelShow = true;
+        public bool IsDeviceModelShow
+        {
+            get
+            {
+                return isDeviceModelShow;
+            }
+            set
+            {
+                isDeviceModelShow = value;
+                OnPropertyChanged("IsDeviceModelShow");
             }
         }
         #endregion
@@ -276,6 +335,15 @@ namespace AIC.DiagnosePage.ViewModels
             //DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass2(this));
         }
 
+        public void Init(DeviceTreeItemViewModel device, DateTime dt)
+        {
+            SelectedTreeItem = device;
+            SelectedTreeItem.IsSelected = true;
+            StartTime = dt;
+            SelectedTreeChanged(SelectedTreeItem);
+            StartDiagnosis(null);
+        }
+
         private void TreeExpanded()
         {
             foreach (var first in OrganizationTreeItems)
@@ -318,7 +386,12 @@ namespace AIC.DiagnosePage.ViewModels
             BaseDivfreSignal sg = para as BaseDivfreSignal;
             if (sg != null)
             {
-
+                //波形展示
+                ClearFrequencyProcess(FrequencyDomainOnLineVM.Signal as BaseWaveSignal);
+                FrequencyProcess(sg);
+                TimeProcess(sg);
+                TimeDomainOnLineVM.SetSignal(sg);
+                FrequencyDomainOnLineVM.SetSignal(sg);
             }
         }
 
@@ -481,6 +554,7 @@ namespace AIC.DiagnosePage.ViewModels
                     firstresult.Waveform = waveform;
                     sg.SampleFre = firstresult.Waveform.SampleFre.Value;
                     sg.SamplePoint = firstresult.Waveform.SamplePoint.Value;
+                    sg.Waveform = Algorithm.ByteToSingle(firstresult.Waveform.WaveData);
                     sg.Bytes = firstresult.Waveform.WaveData;
                 }
             }
@@ -502,7 +576,7 @@ namespace AIC.DiagnosePage.ViewModels
                 {
                     ItemTreeItemViewModel itemTree = SelectedTreeItem as ItemTreeItemViewModel;
                     await AddData(itemTree);
-                    DiagnoseResult diagnoseResult = FilterData(vibrationSignals);
+                    DiagnoseResult diagnoseResult = FilterData(itemTree, vibrationSignals);
                     DiagnoseResults.Add(diagnoseResult);                    
                 }
                 else if (SelectedTreeItem is DeviceTreeItemViewModel)
@@ -511,7 +585,7 @@ namespace AIC.DiagnosePage.ViewModels
                     if (deviceTree != null)
                     {
                         await AddData(deviceTree);
-                        DiagnoseResult diagnoseResult = FilterData(vibrationSignals);
+                        DiagnoseResult diagnoseResult = FilterData(deviceTree, vibrationSignals);
                         DiagnoseResults.Add(diagnoseResult);                       
                     }
                 }
@@ -521,10 +595,12 @@ namespace AIC.DiagnosePage.ViewModels
                     if (oragnizationTree != null)
                     {
                         await AddData(oragnizationTree);
-                        var devicevibrationSignals = vibrationSignals.GroupBy(p => p.DeviceName);
-                        foreach (var sgs in devicevibrationSignals)
-                        {
-                            DiagnoseResult diagnoseResult = FilterData(sgs.ToArray());
+
+                        var deviceTrees = _cardProcess.GetDevices(oragnizationTree);
+                        foreach (var deviceTree in deviceTrees)
+                        { 
+                            var devicevibrationSignals = vibrationSignals.Where(p => p.DeviceName == deviceTree.Name);                       
+                            DiagnoseResult diagnoseResult = FilterData(deviceTree, devicevibrationSignals.ToArray());
                             DiagnoseResults.Add(diagnoseResult);
                         }                        
                     }
@@ -542,7 +618,7 @@ namespace AIC.DiagnosePage.ViewModels
 
         }
 
-        private DiagnoseResult FilterData(IList<BaseDivfreSignal> sgs)
+        private DiagnoseResult FilterData(OrganizationTreeItemViewModel organizationTree, IList<BaseDivfreSignal> sgs)
         {
             DiagnoseResult diagnoseResult = new DiagnoseResult();
             foreach (var sg in sgs)
@@ -571,24 +647,398 @@ namespace AIC.DiagnosePage.ViewModels
                     diagnoseResult.SetDiagnosticResult(waveSignals[0].DeviceName);
                     return null;
                 }
-                var firstwavesignal = waveSignals.OrderByDescending(p => p.Result).FirstOrDefault();
-                diagnoseResult =  GetDiagnosticInfo(firstwavesignal);
-                diagnoseResult.SetDiagnosticResult(waveSignals[0].DeviceName);
-                return diagnoseResult;
+                else
+                {
+                    if (organizationTree is ItemTreeItemViewModel)
+                    {
+                        var devicediagnosis = GetItemDiagnosticInfo(sgs);
+                        string json = JsonConvert.SerializeObject(devicediagnosis);
+                        StringBuilder condition = new StringBuilder(json);
+                        var conculsion = Algorithm.Instance.GetDiagnosisConclusionAction(condition);
+                        diagnoseResult = JsonConvert.DeserializeObject<DiagnoseResult>(conculsion);
+                        diagnoseResult.SetDiagnosticResult(organizationTree.Name);
+                        return diagnoseResult;
+                    }
+                    else if (organizationTree is DeviceTreeItemViewModel)
+                    {
+                        var deviceTree = organizationTree as DeviceTreeItemViewModel;
+                        DeviceDiagnosisInfo devicediagnosis = GetDeviceDiagnosisInfo(deviceTree, rpm, sgs);
+                        string json = JsonConvert.SerializeObject(devicediagnosis);
+                        StringBuilder condition = new StringBuilder(json);
+                        var conculsion = Algorithm.Instance.GetDiagnosisConclusionAction(condition);
+                        diagnoseResult = JsonConvert.DeserializeObject<DiagnoseResult>(conculsion);
+                        diagnoseResult.SetDiagnosticResult(organizationTree.Name);
+
+                        deviceTree.DeviceDiagnosisComponent.ComponentNaturalFrequency.Clear();
+                        deviceTree.DeviceDiagnosisComponent.ComponentNaturalFrequency.AddRange(CalculateNatureFrequency(devicediagnosis));//获取特征频率
+                        return diagnoseResult;
+                    }
+                }
             }
-            if (sgs.Count == 1)
-            {
-                diagnoseResult.SetDiagnosticResult(sgs[0].ItemName);
-            }
-            else if (sgs.Count > 1)
+            if (sgs.Count >= 1)
             {
                 diagnoseResult.SetDiagnosticResult(sgs[0].DeviceName);
             }            
             return diagnoseResult;
+        }     
+
+        private DeviceDiagnosisInfo GetDeviceDiagnosisInfo(DeviceTreeItemViewModel device, float rpm, IList<BaseDivfreSignal> sgs)
+        {
+            if (device != null && device.DeviceDiagnosisComponent != null && device.DeviceDiagnosisComponent.Component != null)
+            {
+                DeviceDiagnosisClass deviceDiagnosisClass = device.DeviceDiagnosisComponent.Component;
+
+                DeviceDiagnosisInfo devicediagnosis = new DeviceDiagnosisInfo();
+                devicediagnosis.HeadDivFreThreshold = deviceDiagnosisClass.HeadDivFreThreshold;//
+                devicediagnosis.FreDiagnosisSetupInterval = deviceDiagnosisClass.FreDiagnosisSetupInterval;//
+                devicediagnosis.FrePeakFilterInterval = deviceDiagnosisClass.FrePeakFilterInterval;//
+                devicediagnosis.IsDeviceDiagnosis = deviceDiagnosisClass.IsDeviceDiagnosis;//
+                devicediagnosis.KurtosisIndexThreshold = deviceDiagnosisClass.KurtosisIndexThreshold;//
+                devicediagnosis.MeanThreshold = deviceDiagnosisClass.MeanThreshold;//htzk123 界面是否漏了这个字段
+                devicediagnosis.PeakIndexThreshold = deviceDiagnosisClass.PeakIndexThreshold;//
+                devicediagnosis.PeakThreshold = deviceDiagnosisClass.PeakThreshold;//htzk123 界面是否漏了这个字段
+                devicediagnosis.PulseIndexThreshold = deviceDiagnosisClass.PulseIndexThreshold;//
+                devicediagnosis.RMSThreshold = deviceDiagnosisClass.RMSThreshold;//htzk123 界面是否漏了这个字段
+                devicediagnosis.DiagnosisMethod = (int)deviceDiagnosisClass.DiagnosisMethod;//
+                devicediagnosis.IsFaultprobability = deviceDiagnosisClass.IsFaultprobability;//
+
+                #region 设备诊断
+                if (devicediagnosis.IsDeviceDiagnosis == true)
+                {
+                    List<ShaftInfo> shaftInfoList = new List<ShaftInfo>();
+                    foreach (var shaftComponent in deviceDiagnosisClass.Shafts)
+                    {
+                        ShaftComponent shaftProxy = shaftComponent as ShaftComponent;
+                        ShaftInfo shaftInfo = new ShaftInfo();
+                        shaftInfo.Name = shaftProxy.Name;
+                        if (shaftProxy.Component != null)
+                        {
+                            shaftInfo.DeltaRPM = shaftProxy.Component.DeltaRPM;
+                            shaftInfo.RPM = shaftProxy.Component.DefaultRPM;
+                            shaftInfo.RPMCoeff = shaftProxy.Component.RPMCoeff;
+                            shaftInfo.IsSlidingBearing = shaftProxy.Component.IsSlidingBearing;
+
+                            var bearingProxys = shaftProxy.Component.MachComponents.OfType<BearingComponent>().ToArray();
+                            if (bearingProxys.Length > 0)
+                            {
+                                shaftInfo.BearingInfos = new BearingInfo[bearingProxys.Length];
+                                for (int j = 0; j < bearingProxys.Length; j++)
+                                {
+                                    if (bearingProxys[j].Component != null)
+                                    {
+                                        shaftInfo.BearingInfos[j] = new BearingInfo
+                                        {
+                                            Name = bearingProxys[j].Name,
+                                            ContactAngle = bearingProxys[j].Component.ContactAngle,
+                                            InnerRingDiameter = bearingProxys[j].Component.InnerRingDiameter,
+                                            NumberOfColumns = bearingProxys[j].Component.NumberOfColumns,
+                                            NumberOfRoller = bearingProxys[j].Component.NumberOfRoller,
+                                            OuterRingDiameter = bearingProxys[j].Component.OuterRingDiameter,
+                                            PitchDiameter = bearingProxys[j].Component.PitchDiameter,
+                                            RollerDiameter = bearingProxys[j].Component.RollerDiameter,
+                                        };
+                                    }
+                                }
+                            }
+
+
+                            var gears = shaftProxy.Component.MachComponents.OfType<GearComponent>().ToArray();
+                            if (gears.Length > 0)
+                            {
+                                shaftInfo.GearInfos = new GearInfo[gears.Length];
+                                for (int j = 0; j < gears.Length; j++)
+                                {
+                                    shaftInfo.GearInfos[j] = new GearInfo
+                                    {
+                                        Name = gears[j].Name,
+                                        TeethNumber = gears[j].Component.TeethNumber
+                                    };
+                                }
+                            }
+
+                            var belts = shaftProxy.Component.MachComponents.OfType<BeltComponent>().ToArray();
+                            if (belts.Length > 0)
+                            {
+                                shaftInfo.BeltInfos = new BeltInfo[belts.Length];
+                                for (int j = 0; j < belts.Length; j++)
+                                {
+                                    shaftInfo.BeltInfos[j] = new BeltInfo
+                                    {
+                                        Name = belts[j].Name,
+                                        BeltLength = belts[j].Component.BeltLength,
+                                        PulleyDiameter = belts[j].Component.PulleyDiameter,
+                                    };
+                                }
+                            }
+
+                            var impellers = shaftProxy.Component.MachComponents.OfType<ImpellerComponent>().ToArray();
+                            if (impellers.Length > 0)
+                            {
+                                shaftInfo.ImpellerInfos = new ImpellerInfo[impellers.Length];
+                                for (int j = 0; j < impellers.Length; j++)
+                                {
+                                    shaftInfo.ImpellerInfos[j] = new ImpellerInfo
+                                    {
+                                        Name = impellers[j].Name,
+                                        VaneNumber = impellers[j].Component.NumberOfBlades,
+                                    };
+                                }
+                            }
+
+                            var motors = shaftProxy.Component.MachComponents.OfType<MotorComponent>().ToArray();
+                            if (motors.Length > 0)
+                            {
+                                shaftInfo.MotorInfos = new MotorInfo[motors.Length];
+                                for (int j = 0; j < motors.Length; j++)
+                                {
+                                    shaftInfo.MotorInfos[j] = new MotorInfo
+                                    {
+                                        Name = motors[j].Name,
+                                        LineFrequency = motors[j].Component.LineFrequency,
+                                        Poles = motors[j].Component.Poles,
+                                        RotorBars = motors[j].Component.RotorBars,
+                                        StatorCoils = motors[j].Component.StatorCoils,
+                                        WindingSlots = motors[j].Component.WindingSlots,
+                                        SCRs = motors[j].Component.SCRs,
+                                        MotorType = (int)motors[j].Component.MotorType,
+                                    };
+                                }
+                            }
+
+                            var negationDivFreStrategies = shaftProxy.Component.NegationDivFreStrategies.ToArray();
+                            if (negationDivFreStrategies.Length > 0)
+                            {
+                                shaftInfo.NegationDivFreStrategies = new NegationDivFreStrategyInfo[negationDivFreStrategies.Length];
+                                for (int j = 0; j < negationDivFreStrategies.Length; j++)
+                                {
+                                    shaftInfo.NegationDivFreStrategies[j] = new NegationDivFreStrategyInfo
+                                    {
+                                        Code = negationDivFreStrategies[j].Code,
+                                        Name = negationDivFreStrategies[j].Fault,
+                                        RelativeX = negationDivFreStrategies[j].RelativeX,
+                                        RelativeY = negationDivFreStrategies[j].RelativeY,
+                                        RelativeZ = negationDivFreStrategies[j].RelativeZ
+                                    };
+                                }
+                            }
+
+                            var naturalFres = shaftProxy.Component.NaturalFres.ToArray();
+                            if (naturalFres.Length > 0)
+                            {
+                                foreach (var naturalFreGroup in naturalFres.GroupBy(o => o.Mode))
+                                {
+                                    if (naturalFreGroup.Key == NaturalFreMode.Additive)
+                                    {
+                                        var addNaturalFres = naturalFreGroup.ToArray();
+                                        shaftInfo.AddNaturalFres = new NaturalFreInfo[addNaturalFres.Length];
+                                        for (int j = 0; j < addNaturalFres.Length; j++)
+                                        {
+                                            shaftInfo.AddNaturalFres[j] = new NaturalFreInfo
+                                            {
+                                                DivFreType = (int)addNaturalFres[j].DivFre,
+                                                Name = addNaturalFres[j].Fault,
+                                                Value1 = addNaturalFres[j].Value1,
+                                                Value2 = addNaturalFres[j].Value2,
+                                                Proposal = addNaturalFres[j].Proposal,
+                                                Harm = addNaturalFres[j].Harm,
+                                            };
+                                        }
+                                    }
+                                    else if (naturalFreGroup.Key == NaturalFreMode.Subtractive)
+                                    {
+                                        var subNaturalFres = naturalFreGroup.ToArray();
+                                        shaftInfo.DeleteNaturalFres = new NaturalFreInfo[subNaturalFres.Length];
+                                        for (int j = 0; j < subNaturalFres.Length; j++)
+                                        {
+                                            shaftInfo.DeleteNaturalFres[j] = new NaturalFreInfo
+                                            {
+                                                DivFreType = (int)subNaturalFres[j].DivFre,
+                                                Name = subNaturalFres[j].Fault,
+                                                Value1 = subNaturalFres[j].Value1,
+                                                Value2 = subNaturalFres[j].Value2
+                                            };
+                                        }
+                                    }
+                                }
+                            }
+
+                            var dvFreThresholdProportiones = shaftProxy.Component.DivFreThresholdProportiones.ToArray();
+                            if (dvFreThresholdProportiones.Length > 0)
+                            {
+                                shaftInfo.DivFreThresholdProportions = new DivFreThresholdProportionInfo[dvFreThresholdProportiones.Length];
+                                for (int j = 0; j < dvFreThresholdProportiones.Length; j++)
+                                {
+                                    shaftInfo.DivFreThresholdProportions[j] = new DivFreThresholdProportionInfo
+                                    {
+                                        DivFreType = (int)dvFreThresholdProportiones[j].DivFre,
+                                        Name = dvFreThresholdProportiones[j].Fault,
+                                        Proportion = dvFreThresholdProportiones[j].Proportion,
+                                        Threshold = dvFreThresholdProportiones[j].Threshold,
+                                        Value1 = dvFreThresholdProportiones[j].Value1,
+                                        Value2 = dvFreThresholdProportiones[j].Value2
+                                    };
+                                }
+                            }
+
+                            shaftInfo.FilterType = (int)shaftProxy.Component.FilterType;
+                            shaftInfo.BindRPMForFilter = shaftProxy.Component.BindRPMForFilter;
+                            var bpFilter = shaftProxy.Component.DgBandPassFilter;
+                            if (bpFilter != null)
+                            {
+                                shaftInfo.BandPassFilter = new BandPassFilterInfo()
+                                {
+                                    PassbandAttenuationDB = bpFilter.PassbandAttenuationDB,
+                                    StopbandAttenuationDB = bpFilter.StopbandAttenuationDB,
+                                    BPPassbandFreLow = bpFilter.BPPassbandFreLow,
+                                    BPPassbandFreHigh = bpFilter.BPPassbandFreHigh,
+                                    BPStopbandFreLow = bpFilter.BPStopbandFreLow,
+                                    BPStopbandFreHigh = bpFilter.BPStopBandFreHigh,
+                                };
+                            }
+
+                            var hpFilter = shaftProxy.Component.DgHighPassFilter;
+                            if (hpFilter != null)
+                            {
+                                shaftInfo.HighPassFilter = new HighPassFilterInfo()
+                                {
+                                    PassbandAttenuationDB = hpFilter.PassbandAttenuationDB,
+                                    StopbandAttenuationDB = hpFilter.StopbandAttenuationDB,
+                                    PassbandFre = hpFilter.PassbandFre,
+                                    StopbandFre = hpFilter.StopbandFre,
+                                };
+                            }
+
+                            var lpFilter = shaftProxy.Component.DgLowPassFilter;
+                            if (lpFilter != null)
+                            {
+                                shaftInfo.LowPassFilter = new LowPassFilterInfo()
+                                {
+                                    PassbandAttenuationDB = lpFilter.PassbandAttenuationDB,
+                                    StopbandAttenuationDB = lpFilter.StopbandAttenuationDB,
+                                    PassbandFre = lpFilter.PassbandFre,
+                                    StopbandFre = lpFilter.StopbandFre,
+                                };
+                            }
+
+                            var items = shaftProxy.Component.AllotItems;
+                            if (items != null && sgs != null)
+                            {
+                                List<TestPointGroupInfo> tpGroupInfos = new List<TestPointGroupInfo>();
+                                for (int i = 0; i < items.Count; i++)
+                                {
+                                    TestPointGroupInfo tpGroupInfo = new TestPointGroupInfo();
+                                    for (int j = 0; j < 3; j++)
+                                    {
+                                        var sg = sgs.Where(p => p.Guid == items[i].BaseAlarmSignal.Guid).FirstOrDefault();
+                                        if (sg != null)
+                                        {
+                                            if (j == 0)
+                                            {
+                                                if (sg.Bytes != null)
+                                                {
+                                                    tpGroupInfo.X = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                                }
+                                            }
+                                            else if (j == 1)
+                                            {
+                                                if (sg.Bytes != null)
+                                                {
+                                                    tpGroupInfo.Y = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                                }
+                                            }
+                                            else if (j == 2)
+                                            {
+                                                if (sg.Bytes != null)
+                                                {
+                                                    tpGroupInfo.Z = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                                }
+                                            }
+                                        }
+                                        i++;
+                                        if (i >= items.Count)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    tpGroupInfos.Add(tpGroupInfo);
+                                }
+                                shaftInfo.TestPointGroupInfos = tpGroupInfos.ToArray();
+                            }
+                            shaftInfoList.Add(shaftInfo);
+                        }
+                    }
+                    devicediagnosis.ShaftInfos = shaftInfoList.ToArray();
+                }
+                #endregion
+                else
+                {
+                    ShaftInfo shaftInfo = new ShaftInfo();
+                    shaftInfo.Name = device.Name;
+                    shaftInfo.RPM = rpm;
+                    shaftInfo.RPMCoeff = 1;
+                    shaftInfo.IsSlidingBearing = false;
+                    devicediagnosis.ShaftInfos = new ShaftInfo[] { shaftInfo };
+
+                    SingleTestPointInfo singleTestPointInfo = new SingleTestPointInfo();
+                    singleTestPointInfo.RPM = rpm;
+                    singleTestPointInfo.ShaftName = device.Name;
+                    
+                    var items = deviceDiagnosisClass.UnAllotItems;
+                    if (items != null && items.Count > 0 && sgs != null)
+                    {
+                        TestPointGroupInfo testPointGroupInfo = new TestPointGroupInfo();
+                        int i = 0;
+                        for (int j = 0; j < 3; j++)
+                        {
+                            var sg = sgs.Where(p => p.Guid == items[i].BaseAlarmSignal.Guid).FirstOrDefault();
+                            if (sg != null)
+                            {
+                                if (j == 0)
+                                {
+                                    if (sg.Bytes != null)
+                                    {
+                                        testPointGroupInfo.X = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                    }
+                                }
+                                else if (j == 1)
+                                {
+                                    if (sg.Bytes != null)
+                                    {
+                                        testPointGroupInfo.Y = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                    }
+                                }
+                                else if (j == 2)
+                                {
+                                    if (sg.Bytes != null)
+                                    {
+                                        testPointGroupInfo.Z = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) };
+                                    }
+                                }
+                            }
+                            i++;
+                            if (i >= items.Count)
+                            {
+                                break;
+                            }
+
+                        }
+                        singleTestPointInfo.TestPointGroupInfo = testPointGroupInfo;
+
+                    }
+                    devicediagnosis.SingleTestPointInfo = singleTestPointInfo;
+                }
+                return devicediagnosis;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private DiagnoseResult GetDiagnosticInfo(BaseDivfreSignal sg)
+        private DeviceDiagnosisInfo GetItemDiagnosticInfo(IList<BaseDivfreSignal> sgs)
         {
+            var sg = sgs.OrderByDescending(p => p.Result).FirstOrDefault();
+
             DeviceDiagnosisInfo devicediagnosis = new DeviceDiagnosisInfo();
             devicediagnosis.HeadDivFreThreshold = 0.1;
             devicediagnosis.FreDiagnosisSetupInterval = 5;
@@ -605,68 +1055,11 @@ namespace AIC.DiagnosePage.ViewModels
             shaftInfo.Name = sg.DeviceName;
             shaftInfo.RPM = sg.RPM;
             shaftInfo.RPMCoeff = 1;
-            shaftInfo.IsSlidingBearing = false;
-            //shaftInfo.BearingInfos = new BearingInfo[]
-            //{
-            //    new BearingInfo() {Name="轴承1", ContactAngle = 0.0, InnerRingDiameter = 10.0, NumberOfColumns = 1, NumberOfRoller = 1, OuterRingDiameter = 100.0, PitchDiameter = 20.0, RollerDiameter = 15.0 },
-            //    new BearingInfo() {Name="轴承2", ContactAngle = 0.0, InnerRingDiameter = 10.0, NumberOfColumns = 1, NumberOfRoller = 1, OuterRingDiameter = 100.0, PitchDiameter = 20.0, RollerDiameter = 15.0 },
-            //};
-            //shaftInfo.GearInfos = new GearInfo[]
-            //{
-            //    new GearInfo { Name="齿轮1", TeethNumber = 10 },
-            //    new GearInfo { Name="齿轮2", TeethNumber = 10 },
-            //};
-            //shaftInfo.BeltInfos = new BeltInfo[]
-            //{
-            //    new BeltInfo {Name="皮带1", BeltLength = 100, PulleyDiameter = 10 },
-            //    new BeltInfo {Name="皮带2", BeltLength = 100, PulleyDiameter = 10 },
-            //};
-            //shaftInfo.ImpellerInfos = new ImpellerInfo[]
-            //{
-            //    new ImpellerInfo {Name="叶轮1", VaneNumber = 15 } ,
-            //    new ImpellerInfo {Name="叶轮2", VaneNumber = 15 },
-            //};
-            //shaftInfo.AddNaturalFres = new NaturalFreInfo[]
-            //{
-            //    new NaturalFreInfo() { DivFreType = 0, Name = "不平衡", Value1 = 1 },
-            //    new NaturalFreInfo() { DivFreType = 0, Name = "不对中", Value1 = 1 },
-            //};
-            //shaftInfo.DeleteNaturalFres = new NaturalFreInfo[]
-            //{
-            //    new NaturalFreInfo() { DivFreType = 0, Name = "不平衡", Value1 = 1 },
-            //    new NaturalFreInfo() { DivFreType = 0, Name = "不对中", Value1 = 1 },
-            //};
-            //shaftInfo.DivFreThresholdProportions = new DivFreThresholdProportionInfo[]
-            //{
-            //    new DivFreThresholdProportionInfo() { DivFreType = 0, Name = "不平衡", Proportion = 1.0, Threshold = 0.1, Value1 = 1.0, Value2 = 2.0 },
-            //    new DivFreThresholdProportionInfo() { DivFreType = 0, Name = "不对中", Proportion = 1.0, Threshold = 0.1, Value1 = 1.0, Value2 = 2.0 },
-            //};
-            //shaftInfo.NegationDivFreStrategies = new NegationDivFreStrategyInfo[]
-            //{
-            //    new NegationDivFreStrategyInfo { Code = 1, Name = "不平衡", RelativeX = 1, RelativeY = 1, RelativeZ = 2 },
-            //    new NegationDivFreStrategyInfo { Code = 1, Name = "不对中", RelativeX = 1, RelativeY = 1, RelativeZ = 2 }
-            //};
-            //shaftInfo.TestPointGroupInfos = new TestPointGroupInfo[]
-            //{
-            //    new TestPointGroupInfo()
-            //    {
-            //        X = new TestPointInfo() { Name = "测点1X方向", SampleFre = 2560, SamplePoint = 1024 },
-            //        Y = new TestPointInfo() { Name = "测点1Y方向", SampleFre = 2560, SamplePoint = 1024 },
-            //        Z = new TestPointInfo() { Name = "测点1Z方向", SampleFre = 2560, SamplePoint = 1024 },
-            //    },
-            //    new TestPointGroupInfo()
-            //    {
-            //        X = new TestPointInfo() { Name = "测点2X方向", SampleFre = 2560, SamplePoint = 1024 },
-            //        Y = new TestPointInfo() { Name = "测点2Y方向", SampleFre = 2560, SamplePoint = 1024 },
-            //        Z = new TestPointInfo() { Name = "测点2Z方向", SampleFre = 2560, SamplePoint = 1024 },
-            //    }
-            //};
+            shaftInfo.IsSlidingBearing = false;        
 
             SingleTestPointInfo singleTestPointInfo = new SingleTestPointInfo();
             singleTestPointInfo.RPM = sg.RPM;
-            singleTestPointInfo.ShaftName = sg.DeviceName;
-            singleTestPointInfo.TestPointGroupInfo = new TestPointGroupInfo();
-          
+            singleTestPointInfo.ShaftName = sg.DeviceName;          
             singleTestPointInfo.TestPointGroupInfo = new TestPointGroupInfo()
             {
                 X = new TestPointInfo() { Name = sg.ItemName, SampleFre = sg.SampleFre, SamplePoint = sg.SamplePoint, VData = Convert.ToBase64String(sg.Bytes) },
@@ -676,12 +1069,40 @@ namespace AIC.DiagnosePage.ViewModels
 
             devicediagnosis.ShaftInfos = new ShaftInfo[] { shaftInfo };
             devicediagnosis.SingleTestPointInfo = singleTestPointInfo;
+                           
+            return devicediagnosis;
+        }
 
-            string json = JsonConvert.SerializeObject(devicediagnosis);
-            StringBuilder condition = new StringBuilder(json);
-            var conculsion = Algorithm.Instance.GetDiagnosisConclusionAction(condition);
-            DiagnoseResult diagnoseResult = JsonConvert.DeserializeObject<DiagnoseResult>(conculsion);         
-            return diagnoseResult;
+        private IEnumerable<ComponentNaturalFrequency> CalculateNatureFrequency(DeviceDiagnosisInfo deviceInfo)
+        {
+            List<ComponentNaturalFrequency> list = new List<ComponentNaturalFrequency>();
+            if (deviceInfo.ShaftInfos != null)
+            {
+                foreach (var shaftInfo in deviceInfo.ShaftInfos)
+                {
+                    double rotaryFrequency = shaftInfo.RPM * shaftInfo.RPMCoeff / 60;
+                    list.Add(new ComponentNaturalFrequency(shaftInfo.Name + "_转频", rotaryFrequency));
+                    if (shaftInfo.BearingInfos != null)
+                    {
+                        foreach (var bearing in shaftInfo.BearingInfos)
+                        {
+                            list.Add(new ComponentNaturalFrequency(bearing.Name + "_内环特征频率", Algorithm.Instance.GetBearingInnerRingFrequencyAction(bearing.PitchDiameter, bearing.NumberOfRoller, bearing.RollerDiameter, bearing.ContactAngle)));
+                            list.Add(new ComponentNaturalFrequency(bearing.Name + "_外环特征频率", Algorithm.Instance.GetBearingOuterRingFrequencyAction(bearing.PitchDiameter, bearing.NumberOfRoller, bearing.RollerDiameter, bearing.ContactAngle)));
+                            list.Add(new ComponentNaturalFrequency(bearing.Name + "_滚动体特征频率", Algorithm.Instance.GetBearingRollerFrequencyAction(bearing.PitchDiameter, bearing.NumberOfRoller, bearing.RollerDiameter, bearing.ContactAngle)));
+                            list.Add(new ComponentNaturalFrequency(bearing.Name + "_保持架特征频率", Algorithm.Instance.GetBearingMaintainsFrequencyAction(bearing.PitchDiameter, bearing.NumberOfRoller, bearing.RollerDiameter, bearing.ContactAngle)));
+                        }
+                    }
+
+                    if (shaftInfo.GearInfos != null)
+                    {
+                        foreach (var gear in shaftInfo.GearInfos)
+                        {
+                            list.Add(new ComponentNaturalFrequency(gear.Name + "_啮合频率", gear.TeethNumber * rotaryFrequency));
+                        }
+                    }
+                }
+            }
+            return list;
         }
         #endregion
 

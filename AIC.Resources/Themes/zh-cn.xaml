@@ -237,4 +237,5 @@
     <s:String x:Key="rememberPwd">记住密码</s:String>
 
     <s:String x:Key="templateManage">模板管理</s:String>
+    <s:String x:Key="addData">添加数据</s:String>
 </ResourceDictionary>
