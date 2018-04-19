@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public partial class DeviceDiagnosisClass : IDataErrorInfo
+    public partial class DeviceDiagnoseClass : IDataErrorInfo
     {
-        class DeviceDiagnosisClassMetadata
+        class DeviceDiagnoseClassMetadata
         {
             [StringNullValidation]
             public string Name { get; set; }
@@ -32,7 +32,7 @@ namespace AIC.Core.DiagnosticBaseModels
                     //循环遍历属性
                     if (pinfo.CanRead && pinfo.CanWrite)
                     {
-                        error = this.ValidateProperty<DeviceDiagnosisClassMetadata>(pinfo.Name);
+                        error = this.ValidateProperty<DeviceDiagnoseClassMetadata>(pinfo.Name);
                         if (error != null && error.Length > 0)
                         {
                             break;
@@ -47,7 +47,7 @@ namespace AIC.Core.DiagnosticBaseModels
         {
             get
             {
-                return this.ValidateProperty<DeviceDiagnosisClassMetadata>(columnName);
+                return this.ValidateProperty<DeviceDiagnoseClassMetadata>(columnName);
             }
         }
     }

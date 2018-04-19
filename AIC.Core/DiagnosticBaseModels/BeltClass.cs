@@ -1,4 +1,5 @@
 ﻿//using NullGuard;
+using AIC.M9600.Common.MasterDB.Generated;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
@@ -9,9 +10,9 @@ namespace AIC.Core.DiagnosticBaseModels
     [Serializable]
     public partial class BeltClass : IMach
     {
-        public int ID { get; set; } = -1;//新增为-1
+        public long id { get; set; } = -1; //新增为-1
         public string Name { get; set; }
-        public Guid BeltID { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         //皮带轮直径
         public double PulleyDiameter { get; set; }
         //皮带长度
@@ -38,6 +39,30 @@ namespace AIC.Core.DiagnosticBaseModels
         public BeltClass ShallowClone()
         {
             return Clone() as BeltClass;
+        }
+
+        public static BeltClass ConvertFromDB(T_Belt t_belt)
+        {
+            BeltClass belt = new BeltClass();
+            belt.Name = t_belt.Name;
+            belt.id = t_belt.id;
+            belt.Guid = t_belt.Guid ?? new Guid();
+            belt.PulleyDiameter = t_belt.PulleyDiameter ?? 0;
+            belt.BeltLength = t_belt.BeltLength ?? 0;
+          
+            return belt;
+        }
+
+        public static T_Belt ConvertToDB(BeltClass belt)
+        {
+            T_Belt t_belt = new T_Belt();
+            t_belt.Name = belt.Name;
+            t_belt.id = belt.id;
+            t_belt.Guid = belt.Guid;
+            t_belt.PulleyDiameter = belt.PulleyDiameter;
+            t_belt.BeltLength = belt.BeltLength;
+          
+            return t_belt;
         }
     }
 }

@@ -49,8 +49,8 @@ namespace AIC.ServiceInterface
         Task<bool> UploadHardwave(string ip, T1_RootCard rootcard);
         Task<bool> DeleteHardwave(string ip, T1_RootCard rootcard);
 
-        Task<bool> Add<T>(string ip, ICollection<T> objs);
-        Task<bool> Add<T>(string ip, T obj);
+        Task<long[]> Add<T>(string ip, ICollection<T> objs);
+        Task<long> Add<T>(string ip, T obj);
         Task<List<T>> Query<T>(string ip, ICollection<string> columns, string condition, object[] args);
         //Task<List<T>> Query<T>(string ip, string condition, object[] args);
         Task<bool> Modify<T>(string ip, ICollection<string> columns, ICollection<T> objs);

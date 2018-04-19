@@ -397,7 +397,7 @@ namespace AIC.UserPage.ViewModels
                                     }
                                 }
 
-                                if (await _databaseComponent.Add<T_Menu>(ServerIP, tempadd.Select(p => p as T_Menu).ToList()) == true)
+                                if (await _databaseComponent.Add<T_Menu>(ServerIP, tempadd.Select(p => p as T_Menu).ToList()) != null)
                                 {
                                     //T_Menu.AddRange(tempadd);//在DatabaseComponent添加
                                 }

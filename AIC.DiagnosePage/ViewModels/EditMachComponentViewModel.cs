@@ -264,31 +264,31 @@ namespace AIC.DiagnosePage.ViewModels
             {
                 case DeviceComponentType.Bearing:
                     {
-                        component = new BearingComponent() { Component = new BearingClass() { BearingID = Guid.NewGuid() }, ID = Guid.NewGuid(), Name = "新建轴承" };
+                        component = new BearingComponent() { Component = new BearingClass() { Guid = Guid.NewGuid() }, Guid = Guid.NewGuid(), Name = "新建轴承" };
                         BearingComponent = component as BearingComponent;
                         break;
                     }
                 case DeviceComponentType.Belt:
                     {
-                        component = new BeltComponent() { Component = new BeltClass(), ID = Guid.NewGuid(), Name = "新建皮带" };
+                        component = new BeltComponent() { Component = new BeltClass(), Guid = Guid.NewGuid(), Name = "新建皮带" };
                         BeltComponent = component as BeltComponent;
                         break;
                     }
                 case DeviceComponentType.Gear:
                     {
-                        component = new GearComponent() { Component = new GearClass(), ID = Guid.NewGuid(), Name = "新建齿轮" };
+                        component = new GearComponent() { Component = new GearClass(), Guid = Guid.NewGuid(), Name = "新建齿轮" };
                         GearComponent = component as GearComponent;
                         break;
                     }
                 case DeviceComponentType.Impeller:
                     {
-                        component = new ImpellerComponent() { Component = new ImpellerClass(), ID = Guid.NewGuid(), Name = "新建叶轮" };
+                        component = new ImpellerComponent() { Component = new ImpellerClass(), Guid = Guid.NewGuid(), Name = "新建叶轮" };
                         ImpellerComponent = component as ImpellerComponent;
                         break;
                     }
                 case DeviceComponentType.Motor:
                     {
-                        component = new MotorComponent() { Component = new MotorClass(), ID = Guid.NewGuid(), Name = "新建电机" };
+                        component = new MotorComponent() { Component = new MotorClass(), Guid = Guid.NewGuid(), Name = "新建电机" };
                         MotorComponent = component as MotorComponent;
                         break;
                     }
@@ -323,27 +323,27 @@ namespace AIC.DiagnosePage.ViewModels
             {
                 case DeviceComponentType.Bearing:
                     {
-                        component = new BearingComponent() { Component = new BearingClass() { BearingID = Guid.NewGuid() }, ID = Guid.NewGuid(), Name = "新建轴承" };
+                        component = new BearingComponent() { Component = new BearingClass() { Guid = Guid.NewGuid() }, Guid = Guid.NewGuid(), Name = "新建轴承" };
                         break;
                     }
                 case DeviceComponentType.Belt:
                     {
-                        component = new BeltComponent() { Component = new BeltClass(), ID = Guid.NewGuid(), Name = "新建皮带" };
+                        component = new BeltComponent() { Component = new BeltClass(), Guid = Guid.NewGuid(), Name = "新建皮带" };
                         break;
                     }
                 case DeviceComponentType.Gear:
                     {
-                        component = new GearComponent() { Component = new GearClass(), ID = Guid.NewGuid(), Name = "新建齿轮" };
+                        component = new GearComponent() { Component = new GearClass(), Guid = Guid.NewGuid(), Name = "新建齿轮" };
                         break;
                     }
                 case DeviceComponentType.Impeller:
                     {
-                        component = new ImpellerComponent() { Component = new ImpellerClass(), ID = Guid.NewGuid(), Name = "新建叶轮" };
+                        component = new ImpellerComponent() { Component = new ImpellerClass(), Guid = Guid.NewGuid(), Name = "新建叶轮" };
                         break;
                     }
                 case DeviceComponentType.Motor:
                     {
-                        component = new MotorComponent() { Component = new MotorClass(), ID = Guid.NewGuid(), Name = "新建电机" };
+                        component = new MotorComponent() { Component = new MotorClass(), Guid = Guid.NewGuid(), Name = "新建电机" };
                         break;
                     }
             }

@@ -364,7 +364,7 @@ namespace AIC.UserPage.ViewModels
                             else
                             {
                                 //role.id = max + 1;                                
-                                if (await _databaseComponent.Add<T_Role>(ServerIP, role) == true)
+                                if (await _databaseComponent.Add<T_Role>(ServerIP, role) > 0)
                                 {
                                     //T_Role.Add(role);//在DatabaseComponent添加
                                 }

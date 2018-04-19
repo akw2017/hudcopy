@@ -18,13 +18,13 @@ namespace AIC.DatabaseService.TestDatas
             GearClass1 = new GearClass()
             {
                 Name = "测试齿轮1",
-                BeltID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 TeethNumber = 6,              
             };
             GearClass2 = new GearClass()
             {
                 Name = "测试齿轮2",
-                BeltID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 TeethNumber = 3,
             };
             GearClassLib.Add(GearClass1);

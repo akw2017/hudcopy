@@ -10,21 +10,20 @@ namespace AIC.DatabaseService.TestDatas
 {
     public static class DeviceClassExamples
     {
-        public static DeviceDiagnosisClass DeviceClass1 { get; set; }
-        public static DeviceDiagnosisClass DeviceClass2 { get; set; }
+        public static DeviceDiagnoseClass DeviceClass1 { get; set; }
+        public static DeviceDiagnoseClass DeviceClass2 { get; set; }
 
-        public static List<DeviceDiagnosisClass> DeviceDiagnosisClassLib { get; set; } = new List<DeviceDiagnosisClass>();
+        public static List<DeviceDiagnoseClass> DeviceDiagnoseClassLib { get; set; } = new List<DeviceDiagnoseClass>();
 
         static DeviceClassExamples()
         {
-            DeviceClass1 = new DeviceDiagnosisClass()
+            DeviceClass1 = new DeviceDiagnoseClass()
             {
-                DeviceID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 DiagnosisMethod = DiagnosisMethod.FrequencyPeakValue,
                 FreDiagnosisSetupInterval = 2,
                 FrePeakFilterInterval = 5,
                 HeadDivFreThreshold = 0.3,
-                ID = 1,
                 IsDeviceDiagnosis = true,
                 IsFaultprobability = false,
                 KurtosisIndexThreshold = 1,
@@ -33,35 +32,34 @@ namespace AIC.DatabaseService.TestDatas
                 PulseIndexThreshold = 1,
                 Shafts = new System.Collections.ObjectModel.ObservableCollection<ShaftComponent>(),                
             };
-            DeviceClass1.AddChild(
+            DeviceClass1.AddShaftComponent(
                 new ShaftComponent()
                 {
                     Component = ShaftClassExamples.ShaftClass1.DeepClone(),
-                    ID = Guid.NewGuid(),
+                    Guid = Guid.NewGuid(),
                     Name = "前轴",
                 });
-            DeviceClass1.AddChild(
+            DeviceClass1.AddShaftComponent(
                 new ShaftComponent()
                 {
                     Component = ShaftClassExamples.ShaftClass2.DeepClone(),
-                    ID = Guid.NewGuid(),
+                    Guid = Guid.NewGuid(),
                     Name = "后轴",
                 });
-             DeviceClass1.AddChild(
+             DeviceClass1.AddShaftComponent(
                  new ShaftComponent()
                  {
                      Component = ShaftClassExamples.ShaftClass2.DeepClone(),
-                     ID = Guid.NewGuid(),
+                     Guid = Guid.NewGuid(),
                      Name = "电机轴",
                  });
-            DeviceClass2 = new DeviceDiagnosisClass()
+            DeviceClass2 = new DeviceDiagnoseClass()
             {
-                DeviceID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 DiagnosisMethod = DiagnosisMethod.Energy,
                 FreDiagnosisSetupInterval = 1,
                 FrePeakFilterInterval = 5,
                 HeadDivFreThreshold = 0.15,
-                ID = 4,
                 IsDeviceDiagnosis = true,
                 IsFaultprobability = false,
                 KurtosisIndexThreshold = 50,
@@ -71,15 +69,15 @@ namespace AIC.DatabaseService.TestDatas
                 Shafts = new System.Collections.ObjectModel.ObservableCollection<ShaftComponent>()
                 
             };
-            DeviceClass2.AddChild(
+            DeviceClass2.AddShaftComponent(
                 new ShaftComponent()
                 {
                     Component = ShaftClassExamples.ShaftClass1.DeepClone(),
-                    ID = Guid.NewGuid(),
+                    Guid = Guid.NewGuid(),
                     Name = "前轴",
                 });
-            DeviceDiagnosisClassLib.Add(DeviceClass1);
-            DeviceDiagnosisClassLib.Add(DeviceClass2);
+            DeviceDiagnoseClassLib.Add(DeviceClass1);
+            DeviceDiagnoseClassLib.Add(DeviceClass2);
         }
     }
 }

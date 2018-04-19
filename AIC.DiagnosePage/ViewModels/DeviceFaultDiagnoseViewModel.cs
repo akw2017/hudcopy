@@ -35,12 +35,13 @@ using Newtonsoft.Json;
 using System.IO;
 using OpenXmlPowerTools;
 using System.Xml.Linq;
-using AIC.DiagnosePage.TestDatas;
 using AIC.DiagnosePage.Views;
 using AIC.PDAPage.Models;
 using AIC.Core;
 using AIC.Core.DiagnosticBaseModels;
 using AIC.OnLineDataPage.ViewModels.SubViewModels;
+using AIC.M9600.Common.MasterDB.Generated;
+using AIC.DiagnosePage.Models;
 
 namespace AIC.DiagnosePage.ViewModels
 {
@@ -53,8 +54,8 @@ namespace AIC.DiagnosePage.ViewModels
         private readonly IDatabaseComponent _databaseComponent;
         private readonly IRegionManager _regionManager;
         private readonly ILoginUserService _loginUserService;
-
-        public DeviceFaultDiagnoseViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, IRegionManager regionManager, ILoginUserService loginUserService)
+        private readonly IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+        public DeviceFaultDiagnoseViewModel(IEventAggregator eventAggregator, IOrganizationService organizationService, ISignalProcess signalProcess, ICardProcess cardProcess, IDatabaseComponent databaseComponent, IRegionManager regionManager, ILoginUserService loginUserService, IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService)
         {
             _eventAggregator = eventAggregator;
             _organizationService = organizationService;
@@ -63,6 +64,7 @@ namespace AIC.DiagnosePage.ViewModels
             _databaseComponent = databaseComponent;
             _regionManager = regionManager;
             _loginUserService = loginUserService;
+            _deviceDiagnoseTemplateService = deviceDiagnoseTemplateService;
 
             _view = new ListCollectionView(vibrationSignals);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("OrganizationDeviceName"));//对视图进行分组
@@ -324,6 +326,7 @@ namespace AIC.DiagnosePage.ViewModels
                 return this.deviceChangedCommand ?? (this.deviceChangedCommand = new DelegateCommand<object>(para => this.DeviceChanged(para)));
             }
         }
+        
         #endregion
 
         #region 管理树
@@ -331,8 +334,8 @@ namespace AIC.DiagnosePage.ViewModels
         {
             OrganizationTreeItems = _organizationService.OrganizationTreeItems;
             //TreeExpanded();
-            //DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass1(this));
-            //DeviceDiagnosisModel.Add(new DeviceClassExamples().GetDeviceClass2(this));
+            //DeviceDiagnoseModel.Add(new DeviceClassExamples().GetDeviceClass1(this));
+            //DeviceDiagnoseModel.Add(new DeviceClassExamples().GetDeviceClass2(this));
         }
 
         public void Init(DeviceTreeItemViewModel device, DateTime dt)
@@ -362,7 +365,7 @@ namespace AIC.DiagnosePage.ViewModels
         #endregion
 
         #region 选择项
-        private void SelectedTreeChanged(object para)
+        private async void SelectedTreeChanged(object para)
         {
             DeviceTreeItems.Clear();
             SelectedTreeItem = para as OrganizationTreeItemViewModel;
@@ -371,10 +374,10 @@ namespace AIC.DiagnosePage.ViewModels
                 List<DeviceTreeItemViewModel> devices = _cardProcess.GetDevices(SelectedTreeItem);
                 foreach(var device in devices)
                 {
-                    if (device.DeviceDiagnosisComponent == null)
+                    if (device.DeviceDiagnoseComponent == null)
                     {
-                        var items = _cardProcess.GetItems(device).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
-                        device.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, device.Name);
+                        var component = await _deviceDiagnoseTemplateService.GetDeviceDiagnoseComponent(device.ServerIP, device.T_Organization.Guid);
+                        device.IntiDeviceDiagnoseComponent(component);
                     }
                 }
                 DeviceTreeItems.AddRange(devices);
@@ -662,15 +665,15 @@ namespace AIC.DiagnosePage.ViewModels
                     else if (organizationTree is DeviceTreeItemViewModel)
                     {
                         var deviceTree = organizationTree as DeviceTreeItemViewModel;
-                        DeviceDiagnosisInfo devicediagnosis = GetDeviceDiagnosisInfo(deviceTree, rpm, sgs);
+                        DeviceDiagnoseInfo devicediagnosis = GetDeviceDiagnoseInfo(deviceTree, rpm, sgs);
                         string json = JsonConvert.SerializeObject(devicediagnosis);
                         StringBuilder condition = new StringBuilder(json);
                         var conculsion = Algorithm.Instance.GetDiagnosisConclusionAction(condition);
                         diagnoseResult = JsonConvert.DeserializeObject<DiagnoseResult>(conculsion);
                         diagnoseResult.SetDiagnosticResult(organizationTree.Name);
 
-                        deviceTree.DeviceDiagnosisComponent.ComponentNaturalFrequency.Clear();
-                        deviceTree.DeviceDiagnosisComponent.ComponentNaturalFrequency.AddRange(CalculateNatureFrequency(devicediagnosis));//获取特征频率
+                        deviceTree.DeviceDiagnoseComponent.ComponentNaturalFrequency.Clear();
+                        deviceTree.DeviceDiagnoseComponent.ComponentNaturalFrequency.AddRange(CalculateNatureFrequency(devicediagnosis));//获取特征频率
                         return diagnoseResult;
                     }
                 }
@@ -682,13 +685,13 @@ namespace AIC.DiagnosePage.ViewModels
             return diagnoseResult;
         }     
 
-        private DeviceDiagnosisInfo GetDeviceDiagnosisInfo(DeviceTreeItemViewModel device, float rpm, IList<BaseDivfreSignal> sgs)
+        private DeviceDiagnoseInfo GetDeviceDiagnoseInfo(DeviceTreeItemViewModel device, float rpm, IList<BaseDivfreSignal> sgs)
         {
-            if (device != null && device.DeviceDiagnosisComponent != null && device.DeviceDiagnosisComponent.Component != null)
+            if (device != null && device.DeviceDiagnoseComponent != null && device.DeviceDiagnoseComponent.Component != null)
             {
-                DeviceDiagnosisClass deviceDiagnosisClass = device.DeviceDiagnosisComponent.Component;
+                DeviceDiagnoseClass deviceDiagnosisClass = device.DeviceDiagnoseComponent.Component;
 
-                DeviceDiagnosisInfo devicediagnosis = new DeviceDiagnosisInfo();
+                DeviceDiagnoseInfo devicediagnosis = new DeviceDiagnoseInfo();
                 devicediagnosis.HeadDivFreThreshold = deviceDiagnosisClass.HeadDivFreThreshold;//
                 devicediagnosis.FreDiagnosisSetupInterval = deviceDiagnosisClass.FreDiagnosisSetupInterval;//
                 devicediagnosis.FrePeakFilterInterval = deviceDiagnosisClass.FrePeakFilterInterval;//
@@ -929,7 +932,7 @@ namespace AIC.DiagnosePage.ViewModels
                                     TestPointGroupInfo tpGroupInfo = new TestPointGroupInfo();
                                     for (int j = 0; j < 3; j++)
                                     {
-                                        var sg = sgs.Where(p => p.Guid == items[i].BaseAlarmSignal.Guid).FirstOrDefault();
+                                        var sg = sgs.Where(p => p.Guid == items[i].Guid).FirstOrDefault();
                                         if (sg != null)
                                         {
                                             if (j == 0)
@@ -990,7 +993,7 @@ namespace AIC.DiagnosePage.ViewModels
                         int i = 0;
                         for (int j = 0; j < 3; j++)
                         {
-                            var sg = sgs.Where(p => p.Guid == items[i].BaseAlarmSignal.Guid).FirstOrDefault();
+                            var sg = sgs.Where(p => p.Guid == items[i].Guid).FirstOrDefault();
                             if (sg != null)
                             {
                                 if (j == 0)
@@ -1035,11 +1038,11 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private DeviceDiagnosisInfo GetItemDiagnosticInfo(IList<BaseDivfreSignal> sgs)
+        private DeviceDiagnoseInfo GetItemDiagnosticInfo(IList<BaseDivfreSignal> sgs)
         {
             var sg = sgs.OrderByDescending(p => p.Result).FirstOrDefault();
 
-            DeviceDiagnosisInfo devicediagnosis = new DeviceDiagnosisInfo();
+            DeviceDiagnoseInfo devicediagnosis = new DeviceDiagnoseInfo();
             devicediagnosis.HeadDivFreThreshold = 0.1;
             devicediagnosis.FreDiagnosisSetupInterval = 5;
             devicediagnosis.FrePeakFilterInterval = 5;
@@ -1073,7 +1076,7 @@ namespace AIC.DiagnosePage.ViewModels
             return devicediagnosis;
         }
 
-        private IEnumerable<ComponentNaturalFrequency> CalculateNatureFrequency(DeviceDiagnosisInfo deviceInfo)
+        private IEnumerable<ComponentNaturalFrequency> CalculateNatureFrequency(DeviceDiagnoseInfo deviceInfo)
         {
             List<ComponentNaturalFrequency> list = new List<ComponentNaturalFrequency>();
             if (deviceInfo.ShaftInfos != null)
@@ -1185,7 +1188,8 @@ namespace AIC.DiagnosePage.ViewModels
 
         private void PrintDiagnosisResult(object para)
         {
-    
+            DeviceFaultDiagnosePrintPreviewWindow previewWnd = new DeviceFaultDiagnosePrintPreviewWindow("/AIC.DiagnosePage;component/Views/DeviceFaultDiagnoseFlowDocument.xaml", DiagnoseResults.ToArray(), new DeviceFaultDiagnoseDocumentRenderer());
+            previewWnd.ShowDialog();
         }
         #endregion
 

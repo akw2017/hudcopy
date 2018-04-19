@@ -1,5 +1,7 @@
 ﻿using AIC.Core.OrganizationModels;
 using AIC.CoreType;
+using AIC.M9600.Common.MasterDB.Generated;
+using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace AIC.Core.DiagnosticBaseModels
 {
     [Serializable]
-    public partial class DeviceDiagnosisClass : INotifyPropertyChanged, IMach, ICloneable
+    public partial class DeviceDiagnoseClass : INotifyPropertyChanged, IMach, ICloneable
     {
-        public DeviceDiagnosisClass()
+        public DeviceDiagnoseClass()
         {
             HeadDivFreThreshold = 0.1;
             KurtosisIndexThreshold = 50;
@@ -24,8 +26,8 @@ namespace AIC.Core.DiagnosticBaseModels
             FrePeakFilterInterval = 5.0;
             FreDiagnosisSetupInterval = 1;
         }
-        public int ID { get; set; } = -1;//新增为-1
-        public Guid DeviceID { get; set; }
+        public long id { get; set; } = -1; //新增为-1
+        public Guid Guid { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
 
         private ObservableCollection<ShaftComponent> shafts = new ObservableCollection<ShaftComponent>();
@@ -39,7 +41,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
-        public void InsertChild(int index, ShaftComponent child)
+        public void InsertShaftComponent(int index, ShaftComponent child)
         {
             if (!Shafts.Contains(child))
             {
@@ -48,7 +50,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
-        public void AddChild(ShaftComponent child)
+        public void AddShaftComponent(ShaftComponent child)
         {
             if (!Shafts.Contains(child))
             {
@@ -57,7 +59,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
-        public void AddChildRange(IEnumerable<ShaftComponent> childs)
+        public void AddCShaftComponentdRange(IEnumerable<ShaftComponent> childs)
         {
             foreach (var child in childs)
             {
@@ -69,7 +71,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
-        public void RemoveChild(ShaftComponent child)
+        public void RemoveShaftComponent(ShaftComponent child)
         {
             if (Shafts.Contains(child))
             {
@@ -87,6 +89,7 @@ namespace AIC.Core.DiagnosticBaseModels
         }
 
         private ShaftComponent selectedShaft;
+        [JsonIgnore]
         public ShaftComponent SelectedShaft
         {
             get { return selectedShaft; }
@@ -125,13 +128,13 @@ namespace AIC.Core.DiagnosticBaseModels
         }
 
         //=1为多个测点诊断一台设备；=0一个测点诊断一台设备。
-        private bool isDeviceDiagnosis;
+        private bool isDeviceDiagnose;
         public bool IsDeviceDiagnosis
         {
-            get { return isDeviceDiagnosis; }
+            get { return isDeviceDiagnose; }
             set
             {
-                isDeviceDiagnosis = value;
+                isDeviceDiagnose = value;
                 OnPropertyChanged("IsDeviceDiagnosis");
             }
         }
@@ -256,8 +259,8 @@ namespace AIC.Core.DiagnosticBaseModels
         }
 
 
-        private ObservableCollection<ItemTreeItemViewModel> unAllotItems = new ObservableCollection<ItemTreeItemViewModel>();
-        public ObservableCollection<ItemTreeItemViewModel> UnAllotItems
+        private ObservableCollection<ItemInfo> unAllotItems = new ObservableCollection<ItemInfo>();
+        public ObservableCollection<ItemInfo> UnAllotItems
         {
             get { return unAllotItems; }
             set
@@ -282,20 +285,105 @@ namespace AIC.Core.DiagnosticBaseModels
             return this.MemberwiseClone();
         }
 
-        public DeviceDiagnosisClass DeepClone()
+        public DeviceDiagnoseClass DeepClone()
         {
             using (Stream objectStream = new MemoryStream())
             {
                 IFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(objectStream, this);
                 objectStream.Seek(0, SeekOrigin.Begin);
-                return formatter.Deserialize(objectStream) as DeviceDiagnosisClass;
+                return formatter.Deserialize(objectStream) as DeviceDiagnoseClass;
             }
         }
 
-        public DeviceDiagnosisClass ShallowClone()
+        public DeviceDiagnoseClass ShallowClone()
         {
-            return Clone() as DeviceDiagnosisClass;
+            return Clone() as DeviceDiagnoseClass;
+        }
+
+        public static DeviceDiagnoseClass ConvertFromDB(T_DeviceDiagnose t_device)
+        {
+            DeviceDiagnoseClass device = new DeviceDiagnoseClass();
+            device.id = t_device.id;
+            device.Name = t_device.Name;
+            device.Guid = t_device.Guid ?? new Guid();
+            if (!string.IsNullOrWhiteSpace(t_device.ShaftsJson))
+            {
+                device.Shafts = JsonConvert.DeserializeObject<ObservableCollection<ShaftComponent>>(t_device.ShaftsJson);//可能有问题
+                //修复一些不进行json的字段
+                foreach (var shaft in device.Shafts)
+                {
+                    if (shaft.Component != null)
+                    {
+                        shaft.Component.Parent = device;
+                        shaft.Component.InitMachComponents();
+                    }
+                }
+            }
+            else
+            {
+                device.Shafts = new ObservableCollection<ShaftComponent>();
+            }
+            device.HeadDivFreThreshold = t_device.HeadDivFreThreshold ?? 0;
+            device.IsDeviceDiagnosis = t_device.IsDeviceDiagnosis ?? false;
+            device.MeanThreshold = t_device.MeanThreshold ?? 0;
+            device.KurtosisIndexThreshold = t_device.KurtosisIndexThreshold ?? 0;
+            device.PeakThreshold = t_device.PeakThreshold ?? 0;
+            device.PulseIndexThreshold = t_device.PulseIndexThreshold ?? 0;
+            device.PeakIndexThreshold = t_device.PeakIndexThreshold ?? 0;
+            device.RMSThreshold = t_device.RMSThreshold ?? 0;
+            device.FrePeakFilterInterval = t_device.FrePeakFilterInterval ?? 0;
+            device.FreDiagnosisSetupInterval = t_device.FreDiagnosisSetupInterval ?? 0;
+            device.IsFaultprobability = t_device.IsFaultprobability ?? false;
+            device.DiagnosisMethod = (DiagnosisMethod)(t_device.DiagnosisMethod ?? 0);
+            if (!string.IsNullOrWhiteSpace(t_device.UnAllotItemsJson))
+            {
+                device.UnAllotItems = JsonConvert.DeserializeObject<ObservableCollection<ItemInfo>>(t_device.UnAllotItemsJson);
+            }
+            else
+            {
+                device.UnAllotItems = new ObservableCollection<ItemInfo>();
+            }
+
+            return device;
+        }
+
+        public static T_DeviceDiagnose ConvertToDB(DeviceDiagnoseClass device)
+        {
+            T_DeviceDiagnose t_device = new T_DeviceDiagnose();
+            t_device.id = device.id;
+            t_device.Name = device.Name;
+            t_device.Guid = device.Guid;
+            if (device.Shafts != null)
+            {
+                t_device.ShaftsJson = JsonConvert.SerializeObject(device.Shafts);//可能有问题
+            }
+            else
+            {
+                t_device.ShaftsJson = null;
+            }
+            t_device.HeadDivFreThreshold = device.HeadDivFreThreshold;
+            t_device.IsDeviceDiagnosis = device.IsDeviceDiagnosis;
+            t_device.MeanThreshold = device.MeanThreshold;
+            t_device.KurtosisIndexThreshold = device.KurtosisIndexThreshold;
+            t_device.PeakThreshold = device.PeakThreshold;
+            t_device.PulseIndexThreshold = device.PulseIndexThreshold;
+            t_device.PeakIndexThreshold = device.PeakIndexThreshold;
+            t_device.RMSThreshold = device.RMSThreshold;
+            t_device.FrePeakFilterInterval = device.FrePeakFilterInterval;
+            t_device.FreDiagnosisSetupInterval = device.FreDiagnosisSetupInterval;
+            t_device.IsFaultprobability = device.IsFaultprobability;
+            t_device.DiagnosisMethod = (int)device.DiagnosisMethod;
+            if (device.UnAllotItems != null)
+            {
+                t_device.UnAllotItemsJson = JsonConvert.SerializeObject(device.UnAllotItems);
+            }
+            else
+            {
+                t_device.UnAllotItemsJson = null;
+            }
+
+            return t_device;
         }
     }
 }

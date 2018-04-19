@@ -12,5 +12,6 @@
         public const string MainStatusBarRegion = "MainStatusBarRegion";
         public const string EditComponentRegion = "EditComponentRegion";
         public const string TestRegion = "TestRegion";
+        public const string DiagnoseMainRegionRegion = "DiagnoseMainRegionRegion";
     }
 }

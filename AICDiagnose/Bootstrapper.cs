@@ -36,7 +36,7 @@ namespace AICDiagnose
 #if XBAP//XBAP.4
             NavigationWindow parent = ((ShellPage)ShellPage).Parent as NavigationWindow;
             parent.ShowsNavigationUI = false;
-            RegionManager.SetRegionName(((ShellPage)ShellPage).MainRegionContent, "MainRegionRegion");  
+            RegionManager.SetRegionName(((ShellPage)ShellPage).DiagnoseMainRegionContent, "DiagnoseMainRegionRegion");  
             return ShellPage;
 #else
             return this.Container.TryResolve<Shell>();
@@ -136,7 +136,7 @@ namespace AICDiagnose
             //catalog.AddModule(typeof(RTDataServiceModule));
             //catalog.AddModule(typeof(OnLineDataPageModule));
             //catalog.AddModule(typeof(PDAModule));
-            catalog.AddModule(typeof(HomePageModule));
+            catalog.AddModule(typeof(AICDiagnoseModule));
             catalog.AddModule(typeof(UserPageModule));
             catalog.AddModule(typeof(SignalProcessModule));
         }

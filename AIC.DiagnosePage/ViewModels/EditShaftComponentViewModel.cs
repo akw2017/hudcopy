@@ -1,5 +1,4 @@
 ﻿using AIC.Core.DiagnosticBaseModels;
-using AIC.DiagnosePage.TestDatas;
 using AIC.PDAPage.Models;
 using AIC.ServiceInterface;
 using Prism.Commands;
@@ -127,17 +126,10 @@ namespace AIC.DiagnosePage.ViewModels
         {
             ShaftComponent = new ShaftComponent()
             {
-                Component = new ShaftClass()
-                {
-                    MachComponents = new ObservableCollection<IMachComponent>()
-                    {
-                        new BearingComponent(),
-                    }
-                },
-                ID = Guid.NewGuid(),
-                Name = "新建轴",
+                Component = new ShaftClass(),
             };
-            devicemodel.Component.AddChild(ShaftComponent);
+            ShaftComponent.Component.AddBearingComponent(new BearingComponent());
+            devicemodel.Component.AddShaftComponent(ShaftComponent);
         }
 
         private void DeleteShaft()
@@ -149,7 +141,9 @@ namespace AIC.DiagnosePage.ViewModels
 #endif
             if (result == MessageBoxResult.OK)
             {
+                var items = devicemodel.Component.SelectedShaft.Component.AllotItems;
                 devicemodel.Component.Shafts.Remove(devicemodel.Component.SelectedShaft);
+                devicemodel.Component.UnAllotItems.AddRange(items);
             }
         }
 
@@ -191,11 +185,11 @@ namespace AIC.DiagnosePage.ViewModels
         #endregion
 
         #region 导航
-        private DeviceDiagnosisComponent devicemodel;
+        private DeviceDiagnoseComponent devicemodel;
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             var navigationService = navigationContext.NavigationService;
-            devicemodel = navigationContext.Parameters["DeviceDiagnosisComponent"] as DeviceDiagnosisComponent;
+            devicemodel = navigationContext.Parameters["DeviceDiagnoseComponent"] as DeviceDiagnoseComponent;
             if (devicemodel != null && devicemodel.Component.SelectedShaft != null)
             {
                 ShaftComponent = devicemodel.Component.SelectedShaft as ShaftComponent;

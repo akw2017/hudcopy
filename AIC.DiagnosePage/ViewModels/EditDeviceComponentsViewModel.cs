@@ -35,12 +35,12 @@ using Newtonsoft.Json;
 using System.IO;
 using OpenXmlPowerTools;
 using System.Xml.Linq;
-using AIC.DiagnosePage.TestDatas;
 using AIC.DiagnosePage.Views;
 using AIC.PDAPage.Models;
 using AIC.Core;
 using System.Windows.Media;
 using AIC.Core.DiagnosticBaseModels;
+using AIC.M9600.Common.MasterDB.Generated;
 
 namespace AIC.DiagnosePage.ViewModels
 {
@@ -137,8 +137,8 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }    
 
-        private ObservableCollection<DeviceDiagnosisClass> devices;
-        public ObservableCollection<DeviceDiagnosisClass> Devices
+        private ObservableCollection<DeviceDiagnoseClass> devices;
+        public ObservableCollection<DeviceDiagnoseClass> Devices
         {
             get { return devices; }
             set
@@ -148,8 +148,8 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private DeviceDiagnosisClass selectedDevice;
-        public DeviceDiagnosisClass SelectedDevice
+        private DeviceDiagnoseClass selectedDevice;
+        public DeviceDiagnoseClass SelectedDevice
         {
             get { return selectedDevice; }
             set
@@ -221,6 +221,24 @@ namespace AIC.DiagnosePage.ViewModels
             get
             {
                 return this.saveDeviceCommand ?? (this.saveDeviceCommand = new DelegateCommand<object>(para => this.SaveDevice(para)));
+            }
+        }        
+
+        private ICommand saveToFileCommand;
+        public ICommand SaveToFileCommand
+        {
+            get
+            {
+                return this.saveToFileCommand ?? (this.saveToFileCommand = new DelegateCommand<object>(para => this.SaveToFile(para)));
+            }
+        }
+
+        private ICommand loadCommand;
+        public ICommand LoadCommand
+        {
+            get
+            {
+                return this.loadCommand ?? (this.loadCommand = new DelegateCommand<object>(para => this.Load(para)));
             }
         }
 
@@ -366,16 +384,16 @@ namespace AIC.DiagnosePage.ViewModels
         #endregion
 
         #region 选择项
-        private void SelectedTreeChanged(object para)
+        private async void SelectedTreeChanged(object para)
         {
             SelectedDevice = null;
             SelectedDeviceTreeItemViewModel = para as DeviceTreeItemViewModel;
             if (SelectedDeviceTreeItemViewModel != null)
             {
-                if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent == null)
+                if (SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent == null)
                 {
-                    var items = _cardProcess.GetItems(SelectedDeviceTreeItemViewModel).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
-                    SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, SelectedDeviceTreeItemViewModel.Name);
+                    var component = await _deviceDiagnoseTemplateService.GetDeviceDiagnoseComponent(SelectedDeviceTreeItemViewModel.ServerIP, SelectedDeviceTreeItemViewModel.T_Organization.Guid);
+                    SelectedDeviceTreeItemViewModel.IntiDeviceDiagnoseComponent(component);
                 }
             }
         }
@@ -390,13 +408,13 @@ namespace AIC.DiagnosePage.ViewModels
         private void EditShaft(object para)
         {
             DeviceTreeItemViewModel devicemodel = para as DeviceTreeItemViewModel;
-            if (devicemodel != null && devicemodel.DeviceDiagnosisComponent != null && devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft != null && devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft.Component != null && devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Count == 0)
+            if (devicemodel != null && devicemodel.DeviceDiagnoseComponent != null && devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft != null && devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft.Component != null && devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.Count == 0)
             {
                 BearingComponent bear = NewComponent();
-                devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Add(bear);
-                devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.SelectedComponent = bear;
+                devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.AddBearingComponent(bear);
+                devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.SelectedComponent = bear;
 
-                ComponentSelectionChanged(devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft);
+                ComponentSelectionChanged(devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft);
             }
             else
             {
@@ -417,10 +435,10 @@ namespace AIC.DiagnosePage.ViewModels
                 return;
             }
             DeviceTreeItemViewModel devicemodel = para as DeviceTreeItemViewModel;
-            if (devicemodel != null && devicemodel.DeviceDiagnosisComponent != null && devicemodel.DeviceDiagnosisComponent.Component.SelectedShaft != null)
+            if (devicemodel != null && devicemodel.DeviceDiagnoseComponent != null && devicemodel.DeviceDiagnoseComponent.Component.SelectedShaft != null)
             {
                 var navigationParameters = new NavigationParameters();
-                navigationParameters.Add("DeviceDiagnosisComponent", devicemodel.DeviceDiagnosisComponent);
+                navigationParameters.Add("DeviceDiagnoseComponent", devicemodel.DeviceDiagnoseComponent);
                 _regionManager.RequestNavigate(RegionNames.EditComponentRegion, editShaftComponentView, navigationParameters);
             }
             else
@@ -464,23 +482,85 @@ namespace AIC.DiagnosePage.ViewModels
 #endif
             if (result == MessageBoxResult.OK)
             {
-                var items = _cardProcess.GetItems(device).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
-                device.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, device.Name);
+                _deviceDiagnoseTemplateService.DeleteDeviceDiagnoseComponent(device.ServerIP, device.DeviceDiagnoseComponent.id);
+                device.IntiDeviceDiagnoseComponent();
             }
         }
 
-        private void SaveDevice(object para)
+        private async void SaveDevice(object para)
         {
+            DeviceTreeItemViewModel device = para as DeviceTreeItemViewModel;
+            if (device != null)
+            {
+                try
+                {
+                    WaitInfo = "模型保存中";
+                    Status = ViewModelStatus.Querying;
+                    T_Diagnosis_Model t_model = DeviceDiagnoseComponent.ConvertToDB(device.DeviceDiagnoseComponent);
+                    if (device.DeviceDiagnoseComponent.id == -1)
+                    {
+                        device.DeviceDiagnoseComponent.id  = await _deviceDiagnoseTemplateService.AddDeviceDiagnoseComponent(device.ServerIP, t_model);
+                    }
+                    else
+                    {
+                        await _deviceDiagnoseTemplateService.ModifyDeviceDiagnoseComponent(device.ServerIP, t_model);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设备诊断模型保存", ex));
+                }
+                finally
+                {
+                    Status = ViewModelStatus.None;
+                }
+            }
+        }
 
+        private void SaveToFile(object para)
+        {
+            DeviceTreeItemViewModel device = para as DeviceTreeItemViewModel;
+            if (device != null && device.DeviceDiagnoseComponent != null)
+            {
+                string json = JsonConvert.SerializeObject(device.DeviceDiagnoseComponent);
+                using (StreamWriter sw = new StreamWriter("设备" + device.Name.Replace(@"\","").Replace(@"/", "") + "诊断模型文件" + DateTime.Now.ToString("yyyy-MM-dd") + ".json", false))
+                {
+                    sw.Write(json);
+                    sw.Close();
+                    string dir = System.AppDomain.CurrentDomain.BaseDirectory;
+                    System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(dir));
+                }
+            }
+        }
+
+        private async void Load(object para)
+        {
+            DeviceTreeItemViewModel device = para as DeviceTreeItemViewModel;
+            if (device != null && device.DeviceDiagnoseComponent != null)
+            {
+                try
+                {
+                    WaitInfo = "模板加载中";
+                    Status = ViewModelStatus.Querying;
+                    await _deviceDiagnoseTemplateService.GetClasses(device.ServerIP);
+                }
+                catch (Exception ex)
+                {
+                    _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设备诊断模板加载", ex));
+                }
+                finally
+                {
+                    Status = ViewModelStatus.None;
+                }
+            }
         }
 
         private void SelectedDeviceChanged(object para)
         {
-            DeviceDiagnosisClass deviceclass = para as DeviceDiagnosisClass;
+            DeviceDiagnoseClass deviceclass = para as DeviceDiagnoseClass;
             if (deviceclass != null && SelectedDeviceTreeItemViewModel != null)
             {
-                var items = _cardProcess.GetItems(SelectedDeviceTreeItemViewModel).Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).ToArray();
-                SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent = new DeviceDiagnosisComponent(items, SelectedDeviceTreeItemViewModel.Name, deviceclass.DeepClone());        
+                SelectedDeviceTreeItemViewModel.IntiDeviceDiagnoseComponent(deviceclass);
             }
         }
         #endregion
@@ -534,9 +614,9 @@ namespace AIC.DiagnosePage.ViewModels
                         }
                     }
                 }
-                else if (item is ItemTreeItemViewModel)
+                else if (item is ItemInfo)
                 {
-                    var sourceItem = item as ItemTreeItemViewModel;
+                    var sourceItem = item as ItemInfo;
                     if (sourceItem != null)
                     {
                         DragDropEffects finalDropEffect = DragDrop.DoDragDrop(sender, sourceItem, DragDropEffects.Move);
@@ -572,7 +652,7 @@ namespace AIC.DiagnosePage.ViewModels
             object item = GetlistBoxItem(sender, e);
             if (item is ShaftComponent)
             {
-                if (!e.Data.GetDataPresent(typeof(ShaftComponent)) && !e.Data.GetDataPresent(typeof(ItemTreeItemViewModel)))
+                if (!e.Data.GetDataPresent(typeof(ShaftComponent)) && !e.Data.GetDataPresent(typeof(ItemInfo)))
                 {
                     e.Effects = DragDropEffects.None;//放置目标不接受该数据
                     e.Handled = true;
@@ -580,7 +660,7 @@ namespace AIC.DiagnosePage.ViewModels
             }
             else if (item is IMachComponent)
             {
-                if (e.Data.GetDataPresent(typeof(ItemTreeItemViewModel)))
+                if (e.Data.GetDataPresent(typeof(ItemInfo)))
                 {
                 }
                 else
@@ -595,16 +675,16 @@ namespace AIC.DiagnosePage.ViewModels
                         e.Handled = true;
                     }
                     var targetComponent = item as IMachComponent;
-                    if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft != null && !SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Contains(targetComponent))
+                    if (SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft != null && !SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.Contains(targetComponent))
                     {
                         e.Effects = DragDropEffects.None;//放置目标不接受该数据
                         e.Handled = true;
                     }
                 }
             }
-            else if (item is ItemTreeItemViewModel)
+            else if (item is ItemInfo)
             {
-                if (!e.Data.GetDataPresent(typeof(ItemTreeItemViewModel)))
+                if (!e.Data.GetDataPresent(typeof(ItemInfo)))
                 {
                     e.Effects = DragDropEffects.None;//放置目标不接受该数据
                     e.Handled = true;
@@ -636,28 +716,28 @@ namespace AIC.DiagnosePage.ViewModels
                     }
                     if (sourceShaft != null && targetShaft != null)
                     {
-                        int index = SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts.IndexOf(targetShaft);
-                        SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts.Remove(sourceShaft);
-                        SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts.Insert(index, sourceShaft);
+                        int index = SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Shafts.IndexOf(targetShaft);
+                        SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Shafts.Remove(sourceShaft);
+                        SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Shafts.Insert(index, sourceShaft);
                     }
                     return;
                 }
                 //查找元数据,从unallot -> allot或allot -> allot
-                var sourceItem = e.Data.GetData(typeof(ItemTreeItemViewModel)) as ItemTreeItemViewModel;
+                var sourceItem = e.Data.GetData(typeof(ItemInfo)) as ItemInfo;
                 if (sourceItem != null)
                 {
                     if (sourceItem != null && targetShaft != null)
                     {
                         //从unallot->allot
-                        if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.Contains(sourceItem))
+                        if (SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.Contains(sourceItem))
                         {
                             targetShaft.Component.AllotItems.Add(sourceItem);
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.Remove(sourceItem);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.Remove(sourceItem);
                         }
                         else//allot -> allot
                         {
                             targetShaft.Component.AllotItems.Add(sourceItem);
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.AllotItems.Remove(sourceItem);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.AllotItems.Remove(sourceItem);
                         }   
                     }
                     return;
@@ -672,21 +752,22 @@ namespace AIC.DiagnosePage.ViewModels
                 {
                     if (sourceComponent != null && targetComponent != null)
                     {
-                        if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Contains(targetComponent))
+                        //自身交换
+                        if (SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.Contains(targetComponent))
                         {
-                            int index = SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.IndexOf(targetComponent);
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Remove(sourceComponent);
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.MachComponents.Insert(index, sourceComponent);
+                            int index = SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.IndexOf(targetComponent);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.Remove(sourceComponent);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.MachComponents.Insert(index, sourceComponent);
                         }
                     }
                     return;
                 }
             }
-            else if (item is ItemTreeItemViewModel)
+            else if (item is ItemInfo)
             {
-                var targetItem = item as ItemTreeItemViewModel;
+                var targetItem = item as ItemInfo;
                 //查找元数据
-                var sourceItem = e.Data.GetData(typeof(ItemTreeItemViewModel)) as ItemTreeItemViewModel;
+                var sourceItem = e.Data.GetData(typeof(ItemInfo)) as ItemInfo;
                 if (sourceItem != null)
                 {
                     if (ReferenceEquals(targetItem, sourceItem))
@@ -718,19 +799,19 @@ namespace AIC.DiagnosePage.ViewModels
             else
             {
                 //从allot->unallot
-                var arr1 = sender.Items.OfType<ItemTreeItemViewModel>().ToArray();
-                var arr2 = SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.ToArray();
+                var arr1 = sender.Items.OfType<ItemInfo>().ToArray();
+                var arr2 = SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.ToArray();
                 var q = from a in arr1 join b in arr2 on a equals b select a;
                 bool flag = arr1.Length == arr2.Length && q.Count() == arr1.Length;
                 if (flag == true)
                 {
-                    var sourceItem = e.Data.GetData(typeof(ItemTreeItemViewModel)) as ItemTreeItemViewModel;
+                    var sourceItem = e.Data.GetData(typeof(ItemInfo)) as ItemInfo;
                     if (sourceItem != null)
                     {
-                        if (!SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.Contains(sourceItem))
+                        if (!SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.Contains(sourceItem))
                         {
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft.Component.AllotItems.Remove(sourceItem);
-                            SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.Add(sourceItem);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft.Component.AllotItems.Remove(sourceItem);
+                            SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.Add(sourceItem);
                         }                                            
                         return;
                     }
@@ -738,15 +819,15 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private IList<ItemTreeItemViewModel> GetItemList(ItemTreeItemViewModel item)
+        private IList<ItemInfo> GetItemList(ItemInfo item)
         {
-            if (SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems.Contains(item))
+            if (SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems.Contains(item))
             {
-                return SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems;
+                return SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems;
             }
             else
             {
-                foreach (var shaft in SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts)
+                foreach (var shaft in SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Shafts)
                 {
                     if (shaft.Component.AllotItems.Contains(item))
                     {

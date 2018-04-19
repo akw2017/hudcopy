@@ -18,7 +18,7 @@ namespace AIC.DatabaseService.TestDatas
             MotorClass1 = new MotorClass()
             {
                 Name = "测试电机1",
-                MotorID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 LineFrequency = 50,
                 Poles = 2,
                 RotorBars = 3,
@@ -30,7 +30,7 @@ namespace AIC.DatabaseService.TestDatas
             MotorClass2 = new MotorClass()
             {
                 Name = "测试电机2",
-                MotorID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 LineFrequency = 50,
                 Poles = 4,
                 RotorBars = 3,

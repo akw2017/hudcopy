@@ -381,7 +381,7 @@ namespace AIC.UserPage.ViewModels
                                 user.T_Menu_Name = (from menu in T_Menu where menu.Guid == user.T_Menu_Guid select menu.Name).FirstOrDefault();
                                 user.T_OrganizationPrivilege_Name = (from organization in T_OrganizationPrivilege where organization.Guid == user.T_OrganizationPrivilege_Guid select organization.Name).FirstOrDefault();
                                 user.Password = MyEncrypt.EncryptDES(user.Password);
-                                if (await _databaseComponent.Add<T_User>(ServerIP, user) == true)
+                                if (await _databaseComponent.Add<T_User>(ServerIP, user) > 0)
                                 {
                                     //T_User.Add(user);//在DatabaseComponent添加
                                 }

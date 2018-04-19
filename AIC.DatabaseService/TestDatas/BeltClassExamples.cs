@@ -18,14 +18,14 @@ namespace AIC.DatabaseService.TestDatas
             BeltClass1 = new BeltClass()
             {
                 Name = "测试皮带1",
-                BeltID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 PulleyDiameter = 15,
                 BeltLength = 3,              
             };
             BeltClass2 = new BeltClass()
             {
                 Name = "测试皮带2",
-                BeltID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 PulleyDiameter = 16,
                 BeltLength = 3.5,
             };

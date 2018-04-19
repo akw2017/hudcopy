@@ -20,7 +20,7 @@
     <Grid>
         <Grid.RowDefinitions>                    
             <RowDefinition Height="*"/>           
-        </Grid.RowDefinitions>           
-        <ContentControl x:Name="MainRegionContent" Grid.Row="0"/>       
+        </Grid.RowDefinitions>
+        <ContentControl x:Name="DiagnoseMainRegionContent" Grid.Row="0"/>       
     </Grid>
 </Page>

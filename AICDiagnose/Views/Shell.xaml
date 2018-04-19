@@ -96,6 +96,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ContentControl prism:RegionManager.RegionName="MainRegionRegion" Grid.Row="0" />
+        <ContentControl prism:RegionManager.RegionName="DiagnoseMainRegionRegion" Grid.Row="0" />
     </Grid>
 </Controls:MetroWindow>

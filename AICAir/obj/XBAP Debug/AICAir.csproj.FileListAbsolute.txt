@@ -2745,3 +2745,4 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.DiagnosePage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\AIC.NetWorksPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.Arrows.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\Wpf.ZoomableCanvas.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\XBAP Debug\MaterialDesignThemes.MahApps.dll

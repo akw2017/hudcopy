@@ -1,4 +1,5 @@
-﻿using AIC.Core.Helpers;
+﻿using AIC.Core.FlowDoc;
+using AIC.Core.Helpers;
 using AIC.DeviceDataPage.Models;
 using AIC.DeviceDataPage.ViewModels;
 using System;

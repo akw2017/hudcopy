@@ -9,7 +9,7 @@ namespace AIC.Core.DiagnosticBaseModels
     [Serializable]
     public class MotorComponent : INotifyPropertyChanged, IMachComponent
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; } = Guid.NewGuid();
 
         private string name = "新建电机";
         public string Name

@@ -13,7 +13,7 @@ namespace AIC.Core.DiagnosticBaseModels
     [Serializable]
     public class ImpellerComponent : INotifyPropertyChanged, IMachComponent
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; } = Guid.NewGuid();
 
         private string name = "新建叶轮";
         public string Name

@@ -46,7 +46,7 @@ using Wpf.CloseTabControl;
 
 namespace AIC.HomePage.ViewModels
 {
-    class MainRegionViewModel : BindableBase
+    public class MainRegionViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _eventAggregator;

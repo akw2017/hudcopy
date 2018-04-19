@@ -353,8 +353,10 @@
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Border x:Name="border" BorderBrush="{DynamicResource AccentColorBrush2}" BorderThickness="2" CornerRadius="2" Margin="5" Padding="5">
-                            <TextBlock Text="{Binding DescriptionString}" MaxWidth="660" TextWrapping="Wrap"/>                           
+                        <Border x:Name="border" BorderBrush="{DynamicResource AccentColorBrush2}" MaxWidth="660" MaxHeight="300" BorderThickness="2" CornerRadius="2" Margin="5" Padding="5">
+                            <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                                <TextBlock Text="{Binding DescriptionString}" TextWrapping="Wrap"/>
+                            </ScrollViewer>
                         </Border>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding DescriptionString}" Value="{x:Null}">

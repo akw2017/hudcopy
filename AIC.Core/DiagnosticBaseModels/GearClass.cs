@@ -1,4 +1,5 @@
 ﻿//using NullGuard;
+using AIC.M9600.Common.MasterDB.Generated;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +14,9 @@ namespace AIC.Core.DiagnosticBaseModels
     [Serializable]
     public partial class GearClass : IMach
     {
-        public int ID { get; set; } = -1;//新增为-1
+        public long id { get; set; } = -1; //新增为-1
         public string Name { get; set; }
-        public Guid BeltID { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         public int TeethNumber { get; set; }
 
         public object Clone()
@@ -37,6 +38,28 @@ namespace AIC.Core.DiagnosticBaseModels
         public GearClass ShallowClone()
         {
             return Clone() as GearClass;
+        }
+
+        public static GearClass ConvertFromDB(T_Gear t_gear)
+        {
+            GearClass gear = new GearClass();
+            gear.id = t_gear.id;
+            gear.Name = t_gear.Name;
+            gear.Guid = t_gear.Guid ?? new Guid();
+            gear.TeethNumber = t_gear.TeethNumber ?? 0;
+            
+            return gear;
+        }
+
+        public static T_Gear ConvertToDB(GearClass gear)
+        {
+            T_Gear t_gear = new T_Gear();
+            t_gear.id = gear.id;
+            t_gear.Name = gear.Name;
+            t_gear.Guid = gear.Guid;
+            t_gear.TeethNumber = gear.TeethNumber;
+         
+            return t_gear;
         }
 
         //public Gear Clone()

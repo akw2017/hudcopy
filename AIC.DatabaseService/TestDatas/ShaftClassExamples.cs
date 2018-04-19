@@ -25,15 +25,23 @@ namespace AIC.DatabaseService.TestDatas
                 DivFreThresholdProportiones = new ObservableCollection<DivFreThresholdProportion>(),
                 FilterType = CoreType.FilterType.BandPass,
                 DgHighPassFilter = new DgHighPassFilter(),
-                ID = 1,
                 IsSlidingBearing = false,
                 DgLowPassFilter = new DgLowPassFilter(),
-                MachComponents = new ObservableCollection<IMachComponent>()
+                BearingComponents = new List<BearingComponent>()
                 {
-                    new BearingComponent() {Component = BearingClassExamples.BearingClass1, ID = Guid.NewGuid(), Name = "轴承1" },
-                    new GearComponent() {Component = new GearClass() {TeethNumber = 3 }, ID = Guid.NewGuid(), Name = "齿轮1" },
-                    new BeltComponent() {Component = new BeltClass() {BeltLength = 15, PulleyDiameter = 3 }, ID = Guid.NewGuid(), Name = "皮带1" },
-                    new ImpellerComponent() {Component = new ImpellerClass() { NumberOfBlades = 2 }, ID = Guid.NewGuid(), Name = "叶轮1" },
+                    new BearingComponent() {Component = BearingClassExamples.BearingClass1, Guid = Guid.NewGuid(), Name = "轴承1" },
+                },
+                GearComponents = new List<GearComponent>()
+                {
+                    new GearComponent() {Component = new GearClass() {TeethNumber = 3 }, Guid = Guid.NewGuid(), Name = "齿轮1" },
+                },
+                BeltComponents = new List<BeltComponent>()
+                {
+                    new BeltComponent() {Component = new BeltClass() {BeltLength = 15, PulleyDiameter = 3 }, Guid = Guid.NewGuid(), Name = "皮带1" },
+                },
+                ImpellerComponents = new List<ImpellerComponent>()
+                {
+                    new ImpellerComponent() {Component = new ImpellerClass() { NumberOfBlades = 2 }, Guid = Guid.NewGuid(), Name = "叶轮1" },
                 },
                 Name = "轴1",
                 NaturalFres = new ObservableCollection<NaturalFre>()
@@ -45,8 +53,9 @@ namespace AIC.DatabaseService.TestDatas
                     new NegationDivFreStrategy() {Code = 0, Fault = "测试", RelativeX = 0.1, RelativeY = 0.1, RelativeZ = 0.1 }
                 },
                 RPMCoeff = 1,
-                ShaftID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
             };
+            ShaftClass1.InitMachComponents();
             ShaftClass2 = new ShaftClass()
             {
                 DgBandPassFilter = new DgBandPassFilter(),
@@ -56,20 +65,23 @@ namespace AIC.DatabaseService.TestDatas
                 DivFreThresholdProportiones = new ObservableCollection<DivFreThresholdProportion>(),
                 FilterType = CoreType.FilterType.BandPass,
                 DgHighPassFilter = new DgHighPassFilter(),
-                ID = 2,
                 IsSlidingBearing = false,
-                DgLowPassFilter = new DgLowPassFilter(),
-                MachComponents = new System.Collections.ObjectModel.ObservableCollection<IMachComponent>()
+                DgLowPassFilter = new DgLowPassFilter(),               
+                BearingComponents = new List<BearingComponent>()
                 {
-                    new BearingComponent() {Component = BearingClassExamples.BearingClass2, ID = Guid.NewGuid(), Name = "轴承2" },
-                    new GearComponent() {Component = new GearClass() {TeethNumber = 23 }, ID = Guid.NewGuid(), Name = "齿轮2" },
+                     new BearingComponent() {Component = BearingClassExamples.BearingClass2, Guid = Guid.NewGuid(), Name = "轴承2" },
+                },
+                GearComponents = new List<GearComponent>()
+                {
+                     new GearComponent() {Component = new GearClass() {TeethNumber = 23 }, Guid = Guid.NewGuid(), Name = "齿轮2" },
                 },
                 Name = "轴2",
                 NaturalFres = new ObservableCollection<NaturalFre>(),
                 NegationDivFreStrategies = new ObservableCollection<NegationDivFreStrategy>(),
                 RPMCoeff = 1,
-                ShaftID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
             };
+            ShaftClass2.InitMachComponents();
             ShaftClassLib.Add(ShaftClass1);
             ShaftClassLib.Add(ShaftClass2);
         }

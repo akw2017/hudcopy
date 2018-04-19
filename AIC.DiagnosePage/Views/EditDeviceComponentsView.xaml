@@ -140,17 +140,27 @@
                 <GroupBox.Header>
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="设备诊断模型" VerticalAlignment="Center"/>
+                            <TextBlock Text="设备诊断模型" VerticalAlignment="Center"/>                         
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Command="{Binding LoadCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="加载诊断模板" Height="30">
+                                <Button.Content>
+                                    <Path Width="16" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 38,19C 47.3888,19 55,21.0147 55,23.5038L 55,25.5C 55,27.9853 47.3888,30 38,30C 28.6112,30 21,27.9853 21,25.5L 21,23.5C 21,21.0147 28.6112,19 38,19 Z M 55,52.5C 55,54.9853 47.3888,57 38,57C 28.6112,57 21,54.9853 21,52.5L 21,46.5C 21,48.9853 28.6112,51 38,51C 47.384,51 54.9921,48.9874 55,46.5039L 55,52.5 Z M 55,43.5C 55,45.9853 47.3888,48 38,48C 28.6112,48 21,45.9853 21,43.5L 21,37.5C 21,39.9853 28.6112,42 38,42C 47.384,42 54.9921,39.9874 55,37.5038L 55,43.5 Z M 55,34.5C 55,36.9853 47.3888,39 38,39C 28.6112,39 21,36.9853 21,34.5L 21,28.5C 21,30.9853 28.6112,33 38,33C 47.384,33 54.9921,30.9874 55,28.5038L 55,34.5 Z "/>
+                                </Button.Content>
+                            </Button>
+                            <Button Command="{Binding SaveToFileCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="保存到json文件" Height="30">
+                                <Button.Content>
+                                    <Path Width="16" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 20,17L 44.25,17L 56,28.75L 56,59L 20,59L 20,17 Z M 24,21L 24,55L 52,55L 52,33L 40,33L 40,21L 24,21 Z M 44,22.25L 44,29L 50.75,29L 44,22.25 Z M 26,23L 38,23L 38,28L 26,28L 26,23 Z M 26,30L 38,30L 38,33L 26,33L 26,30 Z M 26,35L 50,35L 50,38L 26,38L 26,35 Z M 26,40L 50,40L 50,43L 26,43L 26,40 Z M 26,45L 50,45L 50,48L 26,48L 26,45 Z M 26,50L 50,50L 50,53L 26,53L 26,50 Z "/>
+                                </Button.Content>
+                            </Button>
                             <Button Command="{Binding ClearDeviceCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="清除并重置" Height="30">
                                 <Button.Content>
-                                    <Path Width="12" Height="12" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+                                    <Path Width="16" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
                                 </Button.Content>
                             </Button>
                             <Button Command="{Binding SaveDeviceCommand}" CommandParameter="{Binding SelectedDeviceTreeItemViewModel}" Style="{DynamicResource MetroFlatButton}" Margin="4,0,0,0" ToolTip="保存并上传" Height="30">
                                 <Button.Content>
-                                    <Path Width="12" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 34,57L 42,57L 42,32.25L 52,42.25L 52,31.75L 38,17.75L 24,31.75L 24,42.25L 34,32.25L 34,57 Z "/>
+                                    <Path Width="16" Height="16" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" Data="F1 M 48,60L 56,60L 56,50L 63.25,50L 52,38.75L 40.75,50L 48,50L 48,60 Z M 20,20L 50.25,20L 56,25.75L 56,40.25L 52,36.25L 52,27.25L 48.75,24L 48,24L 48,37L 28,37L 28,24L 24,24L 24,52L 46,52L 46,56L 20,56L 20,20 Z M 39,24L 39,34L 44,34L 44,24L 39,24 Z "/>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
@@ -172,7 +182,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="设备" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBlock Text="设备模型选择" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" />
                     <ComboBox x:Name="myCbo" Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="Name" Style="{DynamicResource VirtualisedMetroComboBox}">
                         <i:Interaction.Triggers>
@@ -182,23 +192,23 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                     <TextBlock Text="设备模型" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Name}" Style="{DynamicResource MetroTextBox}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBlock Text="诊断方式" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
-                    <ComboBox Grid.Row="2" Grid.Column="1" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.DiagnosisMethod}" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:DiagnosisMethod}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.DiagnosisMethod}" ItemTemplate="{StaticResource ResourceKey=enumComboItemTemplate}" core:EnumHelper.Enum="{x:Type coreType:DiagnosisMethod}" Style="{DynamicResource VirtualisedMetroComboBox}"/>
                     <TextBlock Text="峭度指标" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" />
-                    <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.KurtosisIndexThreshold}" />
+                    <xctk:DoubleUpDown Grid.Row="2" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.KurtosisIndexThreshold}" />
                     <TextBlock Text="脉冲指标" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" />
-                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.PulseIndexThreshold}"/>
+                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.PulseIndexThreshold}"/>
                     <TextBlock Text="峰值指标" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center"/>
-                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.PeakIndexThreshold}"/>
+                    <xctk:DoubleUpDown Grid.Row="3" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.PeakIndexThreshold}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="故障概率" VerticalAlignment="Center" />
-                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.IsFaultprobability}" ToolTip="是否显示故障概率"/>
+                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.IsFaultprobability}" ToolTip="是否显示故障概率"/>
                     <TextBlock Text="总分频门槛值:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" />
-                    <xctk:DoubleUpDown Grid.Row="4" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.HeadDivFreThreshold}" />
+                    <xctk:DoubleUpDown Grid.Row="4" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.HeadDivFreThreshold}" />
                     <TextBlock Text="频谱峰值筛选间隔(△f)" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.FrePeakFilterInterval}"/>
+                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="1" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.FrePeakFilterInterval}"/>
                     <TextBlock Text="频率诊断设置间隔(△f)" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" />
-                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.FreDiagnosisSetupInterval}"/>
+                    <xctk:DoubleUpDown Grid.Row="5" Grid.Column="3" Minimum="0" Value="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.FreDiagnosisSetupInterval}"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Row="1">
@@ -212,7 +222,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <GroupBox Header="未分配测点">
-                    <ListBox ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.UnAllotItems}"  HorizontalContentAlignment="Stretch" AllowDrop="True" MinHeight="30">
+                    <ListBox ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.UnAllotItems}"  HorizontalContentAlignment="Stretch" AllowDrop="True" MinHeight="30">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
@@ -251,7 +261,7 @@
                     </ListBox>
                 </GroupBox>
                 <GroupBox Grid.Row="1" Grid.Column="0" Header="轴模型">
-                    <ListBox x:Name="mylist" ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.Shafts}" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnosisComponent.Component.SelectedShaft}" HorizontalContentAlignment="Stretch" AllowDrop="True">
+                    <ListBox x:Name="mylist" ItemsSource="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.Shafts}" SelectedItem="{Binding SelectedDeviceTreeItemViewModel.DeviceDiagnoseComponent.Component.SelectedShaft}" HorizontalContentAlignment="Stretch" AllowDrop="True">
                         <!--ItemContainerStyle="{StaticResource UnSelectedAndMouseOverListBoxItem}"-->
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>

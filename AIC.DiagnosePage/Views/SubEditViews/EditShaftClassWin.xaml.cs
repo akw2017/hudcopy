@@ -17,7 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AIC.CoreType;
-using AIC.DiagnosePage.TestDatas;
+using AIC.ServiceInterface;
+using Microsoft.Practices.ServiceLocation;
 
 namespace AIC.DiagnosePage.Views
 {
@@ -26,12 +27,16 @@ namespace AIC.DiagnosePage.Views
     /// </summary>
     public partial class EditShaftClassWin : MetroWindow
     {
+
+        private static IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+
         public EditShaftClassWin(ShaftClass component)
         {
             InitializeComponent();
 
+            _deviceDiagnoseTemplateService = ServiceLocator.Current.GetInstance<IDeviceDiagnoseTemplateService>();
             Component = component;
-            Templates = new ObservableCollection<IMach>(BearClassExamples.BearingClassLib.Select(p => p as IMach));
+            Templates = new ObservableCollection<IMach>(_deviceDiagnoseTemplateService.BearingClassList.Select(p => p as IMach));
 
             this.DataContext = this;
         }
@@ -121,19 +126,19 @@ namespace AIC.DiagnosePage.Views
                 switch (ComponentType)
                 {
                     case DeviceComponentType.Bearing:
-                        Component.MachComponents.Add(new BearingComponent() { Name = NewName, Component = SelectedTemplate as BearingClass });
+                        Component.AddBearingComponent(new BearingComponent() { Name = NewName, Component = SelectedTemplate as BearingClass });
                         break;
                     case DeviceComponentType.Belt:
-                        Component.MachComponents.Add(new BeltComponent() { Name = NewName, Component = SelectedTemplate as BeltClass });
+                        Component.AddBeltComponent(new BeltComponent() { Name = NewName, Component = SelectedTemplate as BeltClass });
                         break;
                     case DeviceComponentType.Gear:
-                        Component.MachComponents.Add(new GearComponent() { Name = NewName, Component = SelectedTemplate as GearClass });
+                        Component.AddGearComponent(new GearComponent() { Name = NewName, Component = SelectedTemplate as GearClass });
                         break;
                     case DeviceComponentType.Impeller:
-                        Component.MachComponents.Add(new ImpellerComponent() { Name = NewName, Component = SelectedTemplate as ImpellerClass });
+                        Component.AddImpellerComponent(new ImpellerComponent() { Name = NewName, Component = SelectedTemplate as ImpellerClass });
                         break;
                     case DeviceComponentType.Motor:
-                        Component.MachComponents.Add(new MotorComponent() { Name = NewName, Component = SelectedTemplate as MotorClass });
+                        Component.AddMotorComponent(new MotorComponent() { Name = NewName, Component = SelectedTemplate as MotorClass });
                         break;
                 }
             }
@@ -141,7 +146,25 @@ namespace AIC.DiagnosePage.Views
 
         private void Delete()
         {
-            Component.MachComponents.Remove(Component.SelectedComponent);
+            switch (Component.SelectedComponent.ComponentType)
+            {
+                case DeviceComponentType.Bearing:
+                    Component.RemoveBearingComponent(Component.SelectedComponent as BearingComponent);
+                    break;
+                case DeviceComponentType.Belt:
+                    Component.RemoveBeltComponent(Component.SelectedComponent as BeltComponent);
+                    break;
+                case DeviceComponentType.Gear:
+                    Component.RemoveGearComponent(Component.SelectedComponent as GearComponent);
+                    break;
+                case DeviceComponentType.Impeller:
+                    Component.RemoveImpellerComponent(Component.SelectedComponent as ImpellerComponent);
+                    break;
+                case DeviceComponentType.Motor:
+                    Component.RemoveMotorComponent(Component.SelectedComponent as MotorComponent);
+                    break;
+            }
+           
         }
 
         private void ShiftTemplate(DeviceComponentType type)
@@ -150,27 +173,27 @@ namespace AIC.DiagnosePage.Views
             {
                 case DeviceComponentType.Bearing:
                     Templates.Clear();
-                    Templates.AddRange(BearClassExamples.BearingClassLib.Select(p => p as IMach));
+                    Templates.AddRange(_deviceDiagnoseTemplateService.BearingClassList.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Belt:
                     Templates.Clear();
-                    Templates.AddRange(BeltClassExamples.BeltClassLib.Select(p => p as IMach));
+                    Templates.AddRange(_deviceDiagnoseTemplateService.BeltClassList.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Gear:
                     Templates.Clear();
-                    Templates.AddRange(GearClassExamples.GearClassLib.Select(p => p as IMach));
+                    Templates.AddRange(_deviceDiagnoseTemplateService.GearClassList.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Impeller:
                     Templates.Clear();
-                    Templates.AddRange(ImpellerClassExamples.ImpellerClassLib.Select(p => p as IMach));
+                    Templates.AddRange(_deviceDiagnoseTemplateService.ImpellerClassList.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
                 case DeviceComponentType.Motor:
                     Templates.Clear();
-                    Templates.AddRange(MotorClassExamples.MotorClassLib.Select(p => p as IMach));
+                    Templates.AddRange(_deviceDiagnoseTemplateService.MotorClassList.Select(p => p as IMach));
                     SelectedTemplate = null;
                     break;
             }

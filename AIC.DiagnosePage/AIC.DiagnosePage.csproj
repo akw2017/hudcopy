@@ -84,6 +84,7 @@
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -112,6 +113,14 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceFaultDiagnoseFlowDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceFaultDiagnosePrintPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SubEditViews\EditDeviceClassWin.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiagnosePageModule.cs" />
+    <Compile Include="Models\DeviceFaultDiagnoseDocumentRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -181,18 +191,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TestDatas\BearClassExamples.cs" />
-    <Compile Include="TestDatas\MotorClassExamples.cs" />
-    <Compile Include="TestDatas\ImpellerClassExamples.cs" />
-    <Compile Include="TestDatas\GearClassExamples.cs" />
-    <Compile Include="TestDatas\BeltClassExamples.cs" />
-    <Compile Include="TestDatas\DeviceClassExamples.cs" />
-    <Compile Include="TestDatas\ShaftClassExamples.cs" />
     <Compile Include="ViewModels\EditDeviceComponentsViewModel.cs" />
     <Compile Include="ViewModels\DeviceFaultDiagnoseViewModel.cs" />
     <Compile Include="ViewModels\EditDeviceTemplateViewModel.cs" />
     <Compile Include="ViewModels\EditMachComponentViewModel.cs" />
     <Compile Include="ViewModels\EditShaftComponentViewModel.cs" />
+    <Compile Include="Views\DeviceFaultDiagnosePrintPreviewWindow.xaml.cs">
+      <DependentUpon>DeviceFaultDiagnosePrintPreviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubEditViews\EditDeviceClassWin.xaml.cs">
       <DependentUpon>EditDeviceClassWin.xaml</DependentUpon>
     </Compile>
@@ -302,9 +308,7 @@
       <Name>Xceed.Wpf.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

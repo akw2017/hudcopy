@@ -1,5 +1,7 @@
 ﻿//using NullGuard;
 using AIC.CoreType;
+using AIC.M9600.Common.MasterDB.Generated;
+using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ namespace AIC.Core.DiagnosticBaseModels
     [Serializable]
     public class ShaftComponent : INotifyPropertyChanged, IMachComponent
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public long id { get; set; } = -1; //新增为-1
+        public Guid Guid { get; set; } = Guid.NewGuid();
 
         private string name = "新建轴";
         public string Name
@@ -49,6 +52,7 @@ namespace AIC.Core.DiagnosticBaseModels
             }
         }
 
+        [JsonIgnore]
         public DeviceComponentType ComponentType
         {
             get
@@ -66,6 +70,7 @@ namespace AIC.Core.DiagnosticBaseModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         //public ShaftComponent Clone()
         //{
         //    return new ShaftComponent()

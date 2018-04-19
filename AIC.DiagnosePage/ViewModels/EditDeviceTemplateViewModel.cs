@@ -1,11 +1,13 @@
 ﻿using AIC.Core.DiagnosticBaseModels;
+using AIC.Core.Events;
 using AIC.CoreType;
-using AIC.DiagnosePage.TestDatas;
 using AIC.DiagnosePage.Views;
+using AIC.M9600.Common.MasterDB.Generated;
 using AIC.PDAPage.Models;
 using AIC.Resources.Models;
 using AIC.ServiceInterface;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -26,17 +28,25 @@ namespace AIC.DiagnosePage.ViewModels
         private readonly IDatabaseComponent _databaseComponent;
         private readonly ILocalConfiguration _localConfiguration;
         private readonly IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+        private readonly IEventAggregator _eventAggregator;
 
-        public EditDeviceTemplateViewModel(IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration, IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService)
+        public EditDeviceTemplateViewModel(IDatabaseComponent databaseComponent, ILocalConfiguration localConfiguration, IDeviceDiagnoseTemplateService deviceDiagnoseTemplateService, IEventAggregator eventAggregator)
         {
             _databaseComponent = databaseComponent;
             _localConfiguration = localConfiguration;
             _deviceDiagnoseTemplateService = deviceDiagnoseTemplateService;
+            _eventAggregator = eventAggregator;
 
             ServerIPCategory = _databaseComponent.GetServerIPCategory();
             ServerIP = _databaseComponent.MainServerIp;
 
-            Init(ServerIP);
+            Bearings = _deviceDiagnoseTemplateService.BearingClassList;
+            Belts = _deviceDiagnoseTemplateService.BeltClassList;
+            Gears = _deviceDiagnoseTemplateService.GearClassList;
+            Impellers = _deviceDiagnoseTemplateService.ImpellerClassList;
+            Motors = _deviceDiagnoseTemplateService.MotorClassList;
+            Shafts = _deviceDiagnoseTemplateService.ShaftClassList;
+            Devices = _deviceDiagnoseTemplateService.DeviceClassList;
 
             bearingsView = new ListCollectionView(Bearings);
             bearingsView.Filter = (object item) =>
@@ -108,7 +118,7 @@ namespace AIC.DiagnosePage.ViewModels
             devicesView.Filter = (object item) =>
             {
                 if (SearchName == null || SearchName == "") return true;
-                var itemPl = (DeviceDiagnosisClass)item;
+                var itemPl = (DeviceDiagnoseClass)item;
                 if (itemPl.Name.Contains(SearchName))
                 {
                     return true;
@@ -259,8 +269,8 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private ObservableCollection<DeviceDiagnosisClass> devices;
-        public ObservableCollection<DeviceDiagnosisClass> Devices
+        private ObservableCollection<DeviceDiagnoseClass> devices;
+        public ObservableCollection<DeviceDiagnoseClass> Devices
         {
             get { return devices; }
             set
@@ -379,8 +389,8 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private DeviceDiagnosisClass selectedDevice;
-        public DeviceDiagnosisClass SelectedDevice
+        private DeviceDiagnoseClass selectedDevice;
+        public DeviceDiagnoseClass SelectedDevice
         {
             get { return selectedDevice; }
             set
@@ -501,6 +511,17 @@ namespace AIC.DiagnosePage.ViewModels
                 OnPropertyChanged("WaitInfo");
             }
         }
+
+        private bool uploadError = false;
+        public bool UploadError
+        {
+            get { return uploadError; }
+            set
+            {
+                uploadError = value;
+                OnPropertyChanged("UploadError");
+            }
+        }
         #endregion
 
         private bool CanOperate(object para)
@@ -552,15 +573,6 @@ namespace AIC.DiagnosePage.ViewModels
             }
         }
 
-        private DelegateCommand<object> uploadCommand;
-        public DelegateCommand<object> UploadCommand
-        {
-            get
-            {
-                return this.uploadCommand ?? (this.uploadCommand = new DelegateCommand<object>(value => this.Upload(value), value => CanOperate(value)));
-            }
-        }
-
         private DelegateCommand<object> loadCommand;
         public DelegateCommand<object> LoadCommand
         {
@@ -569,43 +581,16 @@ namespace AIC.DiagnosePage.ViewModels
                 return this.loadCommand ?? (this.loadCommand = new DelegateCommand<object>(value => this.Load(value), value => CanOperate(value)));
             }
         }
+
         #endregion
-        private void Init(string ip)
+        private async void Init(string ip)
         {
-            if (Bearings == null)
-            {
-                Bearings = _deviceDiagnoseTemplateService.BearingClassList;
-            }
-            if (Belts == null)
-            {
-                Belts = _deviceDiagnoseTemplateService.BeltClassList;
-            }
-            if (Gears == null)
-            {
-                Gears = _deviceDiagnoseTemplateService.GearClassList;
-            }
-            if (Impellers == null)
-            {
-                Impellers = _deviceDiagnoseTemplateService.ImpellerClassList;
-            }
-            if (Motors == null)
-            {
-                Motors = _deviceDiagnoseTemplateService.MotorClassList;
-            }
-            if (Shafts == null)
-            {
-                Shafts = _deviceDiagnoseTemplateService.ShaftClassList;
-            }
-            if (Devices == null)
-            {
-                Devices = _deviceDiagnoseTemplateService.DeviceClassList;
-            }            
+            await Load(null);
 
             QueryCommand.RaiseCanExecuteChanged();
             AddCommand.RaiseCanExecuteChanged();
             EditCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
-            UploadCommand.RaiseCanExecuteChanged();
         }
 
         #region 编辑
@@ -614,7 +599,7 @@ namespace AIC.DiagnosePage.ViewModels
             if (DevicesIsSelected == true)
             {
                 devicesView.Refresh();
-                SelectedDevice = devicesView.CurrentItem as DeviceDiagnosisClass;
+                SelectedDevice = devicesView.CurrentItem as DeviceDiagnoseClass;
             }
             else if (ShaftsIsSelected == true)
             {
@@ -652,7 +637,7 @@ namespace AIC.DiagnosePage.ViewModels
         {
             if (DevicesIsSelected == true)
             {
-                SelectedDevice = new DeviceDiagnosisClass() { Name = "新建设备" };
+                SelectedDevice = new DeviceDiagnoseClass() { Name = "新建设备" };
                 Devices.Add(SelectedDevice);
             }
             else if (ShaftsIsSelected == true)
@@ -695,84 +680,262 @@ namespace AIC.DiagnosePage.ViewModels
             //立即更新到服务器
         }
 
-        private void Delete(object value)
+        private async void Delete(object value)
         {
-            if (DevicesIsSelected == true)
+#if XBAP
+            MessageBoxResult result = MessageBox.Show("确定要删除?", "删除", MessageBoxButton.OK, MessageBoxImage.Warning);
+#else
+            MessageBoxResult result = Xceed.Wpf.Toolkit.MessageBox.Show("确定要删除?", "删除", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+#endif
+            if (result == MessageBoxResult.OK)
             {
-                Devices.Remove(SelectedDevice);
+                if (DevicesIsSelected == true)
+                {                  
+                    T_DeviceDiagnose t_model = DeviceDiagnoseClass.ConvertToDB(SelectedDevice);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_DeviceDiagnose>(ServerIP, t_model.id);
+                    }
+                    Devices.Remove(SelectedDevice);
+                }
+                else if (ShaftsIsSelected == true)
+                {                  
+                    T_Shaft t_model = ShaftClass.ConvertToDB(SelectedShaft);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Shaft>(ServerIP, t_model.id);
+                    }
+                    Shafts.Remove(SelectedShaft);
+                }
+                else if (BearingsIsSelected == true)
+                {                   
+                    T_Bearing t_model = BearingClass.ConvertToDB(SelectedBearing);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Bearing>(ServerIP, t_model.id);
+                    }
+                    Bearings.Remove(SelectedBearing);
+                }
+                else if (BeltsIsSelected == true)
+                {
+                    Belts.Remove(SelectedBelt);
+                    T_Belt t_model = BeltClass.ConvertToDB(SelectedBelt);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Belt>(ServerIP, t_model.id);
+                    }
+                }
+                else if (GearsIsSelected == true)
+                {                   
+                    T_Gear t_model = GearClass.ConvertToDB(SelectedGear);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Gear>(ServerIP, t_model.id);
+                    }
+                    Gears.Remove(SelectedGear);
+                }
+                else if (ImpellersIsSelected == true)
+                {                   
+                    T_Impeller t_model = ImpellerClass.ConvertToDB(SelectedImpeller);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Impeller>(ServerIP, t_model.id);
+                    }
+                    Impellers.Remove(SelectedImpeller);
+                }
+                else if (MotorsIsSelected == true)
+                {                  
+                    T_Motor t_model = MotorClass.ConvertToDB(SelectedMotor);
+                    if (t_model.id != -1)
+                    {
+                        await _databaseComponent.Delete<T_Motor>(ServerIP, t_model.id);
+                    }
+                    Motors.Remove(SelectedMotor);
+                }
             }
-            else if (ShaftsIsSelected == true)
-            { 
-                Shafts.Remove(SelectedShaft);
-            }
-            else if (BearingsIsSelected == true)
-            {
-                Bearings.Remove(SelectedBearing);
-            }
-            else if (BeltsIsSelected == true)
-            {
-                Belts.Remove(SelectedBelt);
-            }
-            else if (GearsIsSelected == true)
-            {
-                Gears.Remove(SelectedGear);
-            }
-            else if (ImpellersIsSelected == true)
-            {
-                Impellers.Remove(SelectedImpeller);
-            }
-            else if (MotorsIsSelected == true)
-            {
-                Motors.Remove(SelectedMotor);
-            }
-            //立即更新到服务器
         }
 
-        private void Upload(object value)
+        private async Task Load(object value)
         {
-
+            try
+            {
+                WaitInfo = "模板加载中";
+                Status = ViewModelStatus.Querying;
+                await _deviceDiagnoseTemplateService.GetClasses(ServerIP);
+                UploadError = false;
+            }
+            catch (Exception ex)
+            {
+                _eventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("设备诊断模板加载", ex));
+            }
+            finally
+            {
+                Status = ViewModelStatus.None;
+            }
         }
 
-        private void Load(object value)
-        {
-            _deviceDiagnoseTemplateService.GetClasses(ServerIP);
-        }
-        private void ShowWin()
+        private async void ShowWin()
         {
             if (DevicesIsSelected == true)
             {
                 EditDeviceClassWin win = new EditDeviceClassWin(SelectedDevice);
                 win.ShowDialog();
+
+                T_DeviceDiagnose t_model = DeviceDiagnoseClass.ConvertToDB(SelectedDevice);
+                if (SelectedDevice.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_DeviceDiagnose>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedDevice.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_DeviceDiagnose>(ServerIP, null, t_model);
+                }
             }
             else if (ShaftsIsSelected == true)
             {
                 EditShaftClassWin win = new EditShaftClassWin(SelectedShaft);
                 win.ShowDialog();
+
+                T_Shaft t_model = ShaftClass.ConvertToDB(SelectedShaft);
+                if (SelectedShaft.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Shaft>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedShaft.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_Shaft>(ServerIP, null, t_model);
+                }
             }
             else if (BearingsIsSelected == true)
             {
                 EditBearingClassWin win = new EditBearingClassWin(SelectedBearing);
                 win.ShowDialog();
+
+                T_Bearing t_model = BearingClass.ConvertToDB(SelectedBearing);
+                if (SelectedBearing.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Bearing>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedBearing.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError =  !await _databaseComponent.Modify<T_Bearing>(ServerIP, null, t_model);
+                }
             }
             else if (BeltsIsSelected == true)
             {
                 EditBeltClassWin win = new EditBeltClassWin(SelectedBelt);
                 win.ShowDialog();
+
+                T_Belt t_model = BeltClass.ConvertToDB(SelectedBelt);
+                if (SelectedBelt.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Belt>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedBelt.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_Belt>(ServerIP, null, t_model);
+                }
             }
             else if (GearsIsSelected == true)
             {;
                 EditGearClassWin win = new EditGearClassWin(SelectedGear);
                 win.ShowDialog();
+
+                T_Gear t_model = GearClass.ConvertToDB(SelectedGear);
+                if (SelectedGear.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Gear>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedGear.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_Gear>(ServerIP, null, t_model);
+                }
             }
             else if (ImpellersIsSelected == true)
             {
                 EditImpellerClassWin win = new EditImpellerClassWin(SelectedImpeller);
                 win.ShowDialog();
+
+                T_Impeller t_model = ImpellerClass.ConvertToDB(SelectedImpeller);
+                if (SelectedImpeller.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Impeller>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedImpeller.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_Impeller>(ServerIP, null, t_model);
+                }
             }
             else if (MotorsIsSelected == true)
             {
                 EditMotorClassWin win = new EditMotorClassWin(SelectedMotor);
                 win.ShowDialog();
+
+                T_Motor t_model = MotorClass.ConvertToDB(SelectedMotor);
+                if (SelectedMotor.id == -1)
+                {
+                    var id = await _databaseComponent.Add<T_Motor>(ServerIP, t_model);
+                    if (id == -1)
+                    {
+                        UploadError = true;
+                    }
+                    else
+                    {
+                        SelectedMotor.id = id;
+                    }
+                }
+                else
+                {
+                    UploadError = !await _databaseComponent.Modify<T_Motor>(ServerIP, null, t_model);
+                }
             }
         }
         #endregion

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AIC.Core.DiagnosticBaseModels
 {
-    public class DeviceDiagnosisInfo//设备诊断模型
+    public class DeviceDiagnoseInfo//设备诊断模型
     {
         public int DiagnosisMethod;//诊断方法;=0为能量方式 =1为频率峰值方式 默认为0.
         public bool IsFaultprobability; //是否显示故障概率

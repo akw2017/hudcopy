@@ -708,6 +708,10 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 
+	[PrimaryKey("id")]
+
+
+
 
 	[ExplicitColumns]
 
@@ -819,6 +823,66 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public double? RPM { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.T_Belt")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_Belt : MasterORM.Record<T_Belt>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public double? PulleyDiameter { get; set; }
+
+
+
+
+
+		[Column] public double? BeltLength { get; set; }
 
 
 
@@ -1173,6 +1237,132 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public string Remarks { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.T_DeviceDiagnose")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_DeviceDiagnose : MasterORM.Record<T_DeviceDiagnose>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public string ShaftsJson { get; set; }
+
+
+
+
+
+		[Column] public double? HeadDivFreThreshold { get; set; }
+
+
+
+
+
+		[Column] public bool? IsDeviceDiagnosis { get; set; }
+
+
+
+
+
+		[Column] public double? MeanThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? KurtosisIndexThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? PeakThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? PulseIndexThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? PeakIndexThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? RMSThreshold { get; set; }
+
+
+
+
+
+		[Column] public double? FrePeakFilterInterval { get; set; }
+
+
+
+
+
+		[Column] public double? FreDiagnosisSetupInterval { get; set; }
+
+
+
+
+
+		[Column] public bool? IsFaultprobability { get; set; }
+
+
+
+
+
+		[Column] public int? DiagnosisMethod { get; set; }
+
+
+
+
+
+		[Column] public string UnAllotItemsJson { get; set; }
 
 
 
@@ -1954,6 +2144,54 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
     
 
+	[TableName("dbo.T_Gear")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_Gear : MasterORM.Record<T_Gear>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public int? TeethNumber { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.T_IEPEChannelInfo")]
 
 
@@ -2055,6 +2293,54 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public string T_AbstractSlotInfo_Code { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.T_Impeller")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_Impeller : MasterORM.Record<T_Impeller>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public int? NumberOfBlades { get; set; }
 
 
 
@@ -2470,6 +2756,90 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
     
 
+	[TableName("dbo.T_Motor")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_Motor : MasterORM.Record<T_Motor>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public double? LineFrequency { get; set; }
+
+
+
+
+
+		[Column] public int? Poles { get; set; }
+
+
+
+
+
+		[Column] public int? RotorBars { get; set; }
+
+
+
+
+
+		[Column] public int? StatorCoils { get; set; }
+
+
+
+
+
+		[Column] public int? WindingSlots { get; set; }
+
+
+
+
+
+		[Column] public int? SCRs { get; set; }
+
+
+
+
+
+		[Column] public int? MotorType { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.T_OperateRecord")]
 
 
@@ -2829,6 +3199,156 @@ namespace AIC.M9600.Common.MasterDB.Generated
 
 
 		[Column] public string Remark { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.T_Shaft")]
+
+
+
+	[PrimaryKey("id")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class T_Shaft : MasterORM.Record<T_Shaft>  
+    {
+
+
+
+		[Column] public long id { get; set; }
+
+
+
+
+
+		[Column] public string Vendor { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
+
+
+
+
+
+		[Column] public Guid? Guid { get; set; }
+
+
+
+
+
+		[Column] public bool? IsSlidingBearing { get; set; }
+
+
+
+
+
+		[Column] public double? DeltaRPM { get; set; }
+
+
+
+
+
+		[Column] public double? DefaultRPM { get; set; }
+
+
+
+
+
+		[Column] public double? RPMCoeff { get; set; }
+
+
+
+
+
+		[Column] public string BearingComponentsJson { get; set; }
+
+
+
+
+
+		[Column] public string BeltComponentsJson { get; set; }
+
+
+
+
+
+		[Column] public string GearComponentsJson { get; set; }
+
+
+
+
+
+		[Column] public string MotorComponentsJson { get; set; }
+
+
+
+
+
+		[Column] public string ImpellerComponentsJson { get; set; }
+
+
+
+
+
+		[Column] public string AllotItemsJson { get; set; }
+
+
+
+
+
+		[Column] public string NegationDivFreStrategiesJson { get; set; }
+
+
+
+
+
+		[Column] public string NaturalFresJson { get; set; }
+
+
+
+
+
+		[Column] public string DivFreThresholdProportionesJson { get; set; }
+
+
+
+
+
+		[Column] public int? FilterType { get; set; }
+
+
+
+
+
+		[Column] public bool? BindRPMForFilter { get; set; }
+
+
+
+
+
+		[Column] public string DgBandPassFilterJson { get; set; }
+
+
+
+
+
+		[Column] public string DgHighPassFilterJson { get; set; }
+
+
+
+
+
+		[Column] public string DgLowPassFilterJson { get; set; }
 
 
 

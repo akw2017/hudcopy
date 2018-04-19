@@ -192,7 +192,6 @@
     <Compile Include="Models\DeviceRunAnalyzeDataInfo.cs" />
     <Compile Include="Models\DeviceRunInfo.cs" />
     <Compile Include="Models\DiagnoseResult.cs" />
-    <Compile Include="Models\IDocumentRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

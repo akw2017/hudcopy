@@ -421,7 +421,7 @@ namespace AIC.DatabaseService
             }
         }
 
-        public async Task<bool> Add<T>(string ip, ICollection<T> objs)
+        public async Task<long[]> Add<T>(string ip, ICollection<T> objs)
         {
             return await Task.Run(() =>
             {
@@ -438,19 +438,19 @@ namespace AIC.DatabaseService
                         add(ip, obj, id);
                         i++;
                     }
-                    return true;
+                    return addResult.ResponseItem;
                 }
                 else
                 {
                     string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-                    return false;
+                    return null;
                 }
             });                
         }
 
-        public async Task<bool> Add<T>(string ip, T obj)
+        public async Task<long> Add<T>(string ip, T obj)
         {            
             return await Task.Run(() =>
             {
@@ -462,14 +462,14 @@ namespace AIC.DatabaseService
                 {
                     //添加成功
                     add(ip, obj, addResult.ResponseItem[0]);//更新到内存                  
-                    return true;
+                    return addResult.ResponseItem[0];
                 }
                 else
                 {
                     string error = "服务器" + ip + " " + "类型" + typeof(T).Name + DateTime.Now.ToString() + "添加错误:" + addResult.ErrorType + "-" + addResult.ErrorMessage;
                     //ErrorMessage是错误信息
                     EventAggregatorService.Instance.EventAggregator.GetEvent<ThrowExceptionEvent>().Publish(Tuple.Create<string, Exception>("数据库操作", new Exception(error)));
-                    return false;
+                    return -1;
                 }
             });            
         }

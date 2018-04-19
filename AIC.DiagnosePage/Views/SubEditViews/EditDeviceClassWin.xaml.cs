@@ -1,6 +1,7 @@
 ﻿using AIC.Core.DiagnosticBaseModels;
-using AIC.DiagnosePage.TestDatas;
+using AIC.ServiceInterface;
 using MahApps.Metro.Controls;
+using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,14 @@ namespace AIC.DiagnosePage.Views
     /// </summary>
     public partial class EditDeviceClassWin : MetroWindow
     {
-        public EditDeviceClassWin(DeviceDiagnosisClass component)
+        private static IDeviceDiagnoseTemplateService _deviceDiagnoseTemplateService;
+        public EditDeviceClassWin(DeviceDiagnoseClass component)
         {
             InitializeComponent();
 
+            _deviceDiagnoseTemplateService = ServiceLocator.Current.GetInstance<IDeviceDiagnoseTemplateService>();
             Component = component;
-            Templates = new ObservableCollection<ShaftClass>(ShaftClassExamples.ShaftClassLib);
+            Templates = _deviceDiagnoseTemplateService.ShaftClassList;
             this.DataContext = this;
         }
 
@@ -68,7 +71,7 @@ namespace AIC.DiagnosePage.Views
             }
         }
 
-        public DeviceDiagnosisClass Component { get; set; }
+        public DeviceDiagnoseClass Component { get; set; }
         #endregion
 
         #region 命令
@@ -100,13 +103,13 @@ namespace AIC.DiagnosePage.Views
             }
             if (SelectedTemplate != null)
             {
-                Component.AddChild(new ShaftComponent() { Name = NewName, Component = SelectedTemplate });
+                Component.AddShaftComponent(new ShaftComponent() { Name = NewName, Component = SelectedTemplate });
             }
         }
 
         private void Delete()
         {
-            Component.RemoveChild(Component.SelectedShaft);
+            Component.RemoveShaftComponent(Component.SelectedShaft);
         }
         #endregion
 

@@ -7,9 +7,9 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"    
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="轴承编辑" Height="360" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/Bearing.png" Topmost="True">
+        Title="轴承编辑" Height="390" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/AIC.Resources;component/Images/Bearing.png" Topmost="True">
     <Grid Background = "{DynamicResource AccentColorBrush2}">
-        <Grid Margin="10" Height="300">
+        <Grid Margin="10" Height="330">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -17,6 +17,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -58,8 +59,12 @@
             <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding MaintainsFrequency,UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="转速" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
             <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding RPM,UpdateSourceTrigger=PropertyChanged}" />
-
-            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" x:Name="btnOK" Click="btnOK_Click" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" IsDefault="True">
+            <TextBlock Text="轴承系列" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding BearingSeries,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="轴承系列ID" Grid.Row="9" Grid.Column="2" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="9" Grid.Column="3" Text="{Binding BearingSeriesID,UpdateSourceTrigger=PropertyChanged}" />
+            
+            <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" x:Name="btnOK" Click="btnOK_Click" Style="{DynamicResource AccentedSquareButtonStyle}"  Width="100" IsDefault="True">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Stretch="None" Source="/AIC.Resources;component/Images/accept.png"  />

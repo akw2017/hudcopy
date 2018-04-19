@@ -9,7 +9,7 @@ namespace AIC.Core.DiagnosticBaseModels
 {
     public interface IMachComponent
     {
-        Guid ID { get; set; }
+        Guid Guid { get; set; }
         string Name { get; set; }
         IMach Component { get; set; }
         DeviceComponentType ComponentType { get; }

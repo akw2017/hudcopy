@@ -1,10 +1,15 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\AIC.Resources.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignColors.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\System.Windows.Interactivity.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\XamlAnimatedGif.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MahApps.Metro.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csprojResolveAssemblyReference.cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Resources\Icons.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Resources\IconsNonShared.baml
@@ -40,6 +45,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\CheckBoxStyle.
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ColorStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\en-us.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\Generic.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ListBoxStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ScrollBar.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\TabControlStyle.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\zh-cn.baml
@@ -64,9 +70,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.Propert
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\AIC.Resources.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignColors.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.MahApps.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\bin\Release\MaterialDesignThemes.Wpf.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.Resources\obj\Release\Themes\ListBoxStyle.baml

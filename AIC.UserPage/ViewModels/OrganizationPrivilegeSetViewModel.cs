@@ -398,7 +398,7 @@ namespace AIC.UserPage.ViewModels
                                     //organization.id = ++max;                                
                                     tempadd.Add(organization);
                                 }                               
-                                if (await _databaseComponent.Add<T_OrganizationPrivilege>(ServerIP, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) == true)
+                                if (await _databaseComponent.Add<T_OrganizationPrivilege>(ServerIP, tempadd.Select(p => p as T_OrganizationPrivilege).ToList()) != null)
                                 {
                                     //T_OrganizationPrivilege.AddRange(tempadd);//在DatabaseComponent添加
                                     MyOrganizationPrivilege myorganization = new MyOrganizationPrivilege();

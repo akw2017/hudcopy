@@ -1,3 +1,4 @@
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\AIC.OnLineDataPage.dll.config
@@ -82,7 +83,6 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.PageNavigati
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.VirtualizingWrapPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Wpf.WrapBreakPanel.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Xceed.Wpf.Toolkit.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\Arction.Wpf.Charting.LightningChartUltimate.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\bin\Release\LiveCharts.Wpf.pdb
@@ -154,6 +154,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\OnlineData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\InfoViews\IEPEInfoWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\InfoViews\WirelessScalarInfoWin.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\InfoViews\WirelessVibrationInfoWin.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\OrderAnalysisChartView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\NyquistChartView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\BodeChartView.g.cs
@@ -181,6 +182,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\OnlineData
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\OnlineDataOverviewView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\OnlineDataStatisticsView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\OnlineDataTileView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\OrderAnalysisChartView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\NyquistChartView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\BodeChartView.baml
@@ -198,5 +200,3 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPa
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\AIC.OnLineDataPage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.OnLineDataPage\obj\Release\Views\SubViews\DiagnoseView.baml

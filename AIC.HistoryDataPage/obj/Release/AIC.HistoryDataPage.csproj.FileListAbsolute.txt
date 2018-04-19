@@ -134,6 +134,7 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\PowerSpectrumDensityDataView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\RPM3DSpectrumDataView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\Time3DSpectrumView.g.cs
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\TimeDomainDataView.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\GeneratedInternalTypeHelper.g.cs
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage_MarkupCompile.cache
@@ -147,11 +148,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\OffDesignConditionDataView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\PowerSpectrumDataView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\PowerSpectrumDensityDataView.baml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\TimeDomainDataView.baml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.g.resources
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.Properties.Resources.resources
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\AIC.HistoryDataPage.pdb
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.g.cs
-D:\SupportProject\AIC_HUD\AICHUD\AIC.HistoryDataPage\obj\Release\Views\SubViews\DistributionMapView.baml

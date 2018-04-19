@@ -540,8 +540,6 @@ D:\SupportProject\AIC_HUD\AICHUID\AIC.PDAPage\obj\Debug\AIC.PDAPage.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.PDAPage\obj\Debug\AIC.PDAPage.pdb
 D:\SupportProject\AIC_HUD\AICHUID\AIC.PDAPage\bin\Debug\Resources\AICMath.dll
 D:\SupportProject\AIC_HUD\AICHUID\AIC.PDAPage\bin\Debug\Resources\AICMatlabDLL.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMath.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMatlabDLL.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\AIC.PDAPage.dll.config
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\AIC.PDAPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\AIC.PDAPage.pdb
@@ -736,3 +734,5 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\AIC.PDAPage.Properties.Re
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\AIC.PDAPage.csproj.GenerateResource.Cache
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\AIC.PDAPage.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\obj\Debug\AIC.PDAPage.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMath.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.PDAPage\bin\Debug\Resources\AICMatlabDLL.dll

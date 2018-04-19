@@ -18,13 +18,13 @@ namespace AIC.DatabaseService.TestDatas
             ImpellerClass1 = new ImpellerClass()
             {
                 Name = "测试叶轮1",
-                ImpellerID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 NumberOfBlades = 15,              
             };
             ImpellerClass2 = new ImpellerClass()
             {
                 Name = "测试叶轮2",
-                ImpellerID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 NumberOfBlades = 16,
             };
             ImpellerClassLib.Add(ImpellerClass1);

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 
-namespace AIC.DeviceDataPage.Models
+namespace AIC.Core.FlowDoc
 {
     public interface IDocumentRenderer
     {

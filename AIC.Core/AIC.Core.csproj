@@ -183,7 +183,8 @@
     <Compile Include="DataModels\D1_WirelessVibrationSlot.cs" />
     <Compile Include="DataModels\IBaseTypeSlot.cs" />
     <Compile Include="DiagnosticBaseModels\BearingClass.cs" />
-    <Compile Include="DiagnosticBaseModels\DeviceDiagnosisClass.Metadata.cs" />
+    <Compile Include="DiagnosticBaseModels\DeviceDiagnoseClass.Metadata.cs" />
+    <Compile Include="DiagnosticBaseModels\ItemInfo.cs" />
     <Compile Include="DiagnosticBaseModels\ShaftClass.Metadata.cs" />
     <Compile Include="DiagnosticBaseModels\MotorClass.Metadata.cs" />
     <Compile Include="DiagnosticBaseModels\ImpellerClass.Metadata.cs" />
@@ -194,9 +195,9 @@
     <Compile Include="DiagnosticBaseModels\BeltClass.cs" />
     <Compile Include="DiagnosticBaseModels\BeltComponent.cs" />
     <Compile Include="DiagnosticBaseModels\ComponentNaturalFrequency.cs" />
-    <Compile Include="DiagnosticBaseModels\DeviceDiagnosisComponent.cs" />
-    <Compile Include="DiagnosticBaseModels\DeviceDiagnosisInfo.cs" />
-    <Compile Include="DiagnosticBaseModels\DeviceDiagnosisClass.cs" />
+    <Compile Include="DiagnosticBaseModels\DeviceDiagnoseComponent.cs" />
+    <Compile Include="DiagnosticBaseModels\DeviceDiagnoseInfo.cs" />
+    <Compile Include="DiagnosticBaseModels\DeviceDiagnoseClass.cs" />
     <Compile Include="DiagnosticBaseModels\DiagnoseResult.cs" />
     <Compile Include="DiagnosticBaseModels\DivFreThresholdProportion.cs" />
     <Compile Include="DiagnosticBaseModels\GearClass.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Filters\LowPassFilter.cs" />
     <Compile Include="Filters\LowPassFilterValidator.cs" />
     <Compile Include="Filters\NotifyDataErrorInfoBase.cs" />
+    <Compile Include="FlowDoc\IDocumentRenderer.cs" />
     <Compile Include="FluidWrapPanel\FluidLayoutManager.cs" />
     <Compile Include="FluidWrapPanel\FluidMouseDragBehavior.cs" />
     <Compile Include="FluidWrapPanel\IFluidWrapPanel.cs" />

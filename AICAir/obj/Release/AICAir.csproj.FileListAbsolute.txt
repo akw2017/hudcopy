@@ -2738,3 +2738,10 @@ D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.ZoomableCanvas.dll
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.NetWorksPage.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.Arrows.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Wpf.ZoomableCanvas.pdb
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Resources\诊断报告模板.docx
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\Resources\SFDAlgorithm.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.DiagnosePage.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\MaterialDesignThemes.MahApps.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\OpenXmlPowerTools.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\DocumentFormat.OpenXml.dll
+D:\SupportProject\AIC_HUD\AICHUD\AICAir\bin\Release\AIC.DiagnosePage.pdb

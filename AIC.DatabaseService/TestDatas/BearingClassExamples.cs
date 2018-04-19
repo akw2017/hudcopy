@@ -18,11 +18,10 @@ namespace AIC.DatabaseService.TestDatas
             BearingClass1 = new BearingClass()
             {
                 Name = "测试轴承1",
-                BearingID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 BearingSeries = "滚动轴承",
                 ContactAngle = 0,
                 Designation = "RNNAF65856009080",
-                ID=5001,
                 InnerRingDiameter = 1,
                 InnerRingFrequency = 15.8696,
                 MaintainsFrequency = 0.470999985933304,
@@ -38,11 +37,10 @@ namespace AIC.DatabaseService.TestDatas
             BearingClass2 = new BearingClass()
             {
                 Name = "测试轴承2",
-                BearingID = Guid.NewGuid(),
+                Guid = Guid.NewGuid(),
                 BearingSeries = "滚动轴承",
                 ContactAngle = 0,
                 Designation = "RNNAF65856009080",
-                ID = 5002,
                 InnerRingDiameter = 1,
                 InnerRingFrequency = 16.864,
                 MaintainsFrequency = 0.472970008850098,

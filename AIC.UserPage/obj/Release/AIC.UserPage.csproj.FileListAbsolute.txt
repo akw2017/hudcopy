@@ -24,8 +24,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\System.Windows.Interac
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Wpf.CloseTabControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Wpf.PageNavigationControl.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Xceed.Wpf.Toolkit.dll
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\AIC.M9600.Common.DTO.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\System.Reactive.Linq.dll
+D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\AIC.M9600.Common.DTO.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Newtonsoft.Json.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\FluentValidation.dll
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\System.Reactive.Core.dll
@@ -53,8 +53,8 @@ D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Microsoft.Practices.Un
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Prism.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Prism.Unity.Wpf.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Prism.Wpf.xml
-D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\AIC.M9600.Common.DTO.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\System.Reactive.Linq.xml
+D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\AIC.M9600.Common.DTO.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\Newtonsoft.Json.xml
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\FluentValidation.pdb
 D:\SupportProject\AIC_HUD\AICHUD\AIC.UserPage\bin\Release\FluentValidation.xml

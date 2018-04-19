@@ -1,6 +1,7 @@
 ﻿using AIC.Core.ControlModels;
 using AIC.Core.DiagnosticBaseModels;
 using AIC.Core.LMModels;
+using AIC.Core.SignalModels;
 using AIC.CoreType;
 using System;
 using System.Collections.Generic;
@@ -24,14 +25,14 @@ namespace AIC.Core.OrganizationModels
             }
         }
 
-        private DeviceDiagnosisComponent deviceDiagnosisComponent;
-        public DeviceDiagnosisComponent DeviceDiagnosisComponent
+        private DeviceDiagnoseComponent deviceDiagnosisComponent;
+        public DeviceDiagnoseComponent DeviceDiagnoseComponent
         {
             get { return deviceDiagnosisComponent; }
             set
             {
                 deviceDiagnosisComponent = value;
-                OnPropertyChanged("DeviceDiagnosisComponent");
+                OnPropertyChanged("DeviceDiagnoseComponent");
             }
         }
 
@@ -98,5 +99,23 @@ namespace AIC.Core.OrganizationModels
             IsExpanded = false;
         }
 
+        //初始化诊断模型
+        public void IntiDeviceDiagnoseComponent(DeviceDiagnoseClass deviceclass = null)
+        {
+             var items = Children.OfType<ItemTreeItemViewModel>().Where(p => p.BaseAlarmSignal != null && p.BaseAlarmSignal is BaseDivfreSignal).Select(p => new ItemInfo(p.BaseAlarmSignal.ItemName, p.BaseAlarmSignal.Guid)).ToArray();
+             this.DeviceDiagnoseComponent = new DeviceDiagnoseComponent(items, this.T_Organization.Guid, this.Name, (deviceclass != null) ? deviceclass.DeepClone() : null);        
+        }
+
+        public void IntiDeviceDiagnoseComponent(DeviceDiagnoseComponent devicecomponent)
+        {
+            if (devicecomponent != null)
+            {
+                this.DeviceDiagnoseComponent = devicecomponent;
+            }
+            else
+            {
+                IntiDeviceDiagnoseComponent();
+            }
+        }
     }
 }

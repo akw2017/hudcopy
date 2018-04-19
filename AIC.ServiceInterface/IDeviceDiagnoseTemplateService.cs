@@ -10,13 +10,18 @@ namespace AIC.ServiceInterface
 {
     public interface IDeviceDiagnoseTemplateService
     {
-        ObservableCollection<DeviceDiagnosisClass> DeviceClassList { get; }
+        ObservableCollection<DeviceDiagnoseClass> DeviceClassList { get; }
         ObservableCollection<ShaftClass> ShaftClassList { get; }
         ObservableCollection<BearingClass> BearingClassList { get; }
         ObservableCollection<BeltClass> BeltClassList { get; }
         ObservableCollection<GearClass> GearClassList { get; }
         ObservableCollection<ImpellerClass> ImpellerClassList { get; }
         ObservableCollection<MotorClass> MotorClassList { get; }
-        void GetClasses(string serverip);
+        Task GetClasses(string serverip);
+
+        Task<DeviceDiagnoseComponent> GetDeviceDiagnoseComponent(string serverip, Guid guid);
+        Task<long> AddDeviceDiagnoseComponent(string serverip, object obj);
+        Task<bool> DeleteDeviceDiagnoseComponent(string serverip, long id);
+        Task<bool> ModifyDeviceDiagnoseComponent(string serverip, object obj);
     }
 }
